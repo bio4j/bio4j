@@ -5,10 +5,12 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
 import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
 import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -34,7 +36,6 @@ public class ImportUniref implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportaUniref");
     private static FileHandler fh;
-    public static int contadorIsoformas = 0;
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -78,75 +79,28 @@ public class ImportUniref implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                //inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                //indexService = new LuceneIndexBatchInserterImpl(inserter);
+                indexService = new LuceneIndexBatchInserterImpl(inserter);
 
-                StringBuilder entryStBuilder = new StringBuilder();
-
-                BufferedReader reader = new BufferedReader(new FileReader(uniref100File));
-                String line = null;
-
-                //-----------------------------------------------------------
                 //------------------- UNIREF 100----------------------------
-
                 System.out.println("Reading Uniref 100 file...");
-
-                while ((line = reader.readLine()) != null) {
-                    //----we reached a entry line-----
-                    if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
-
-                        while (!line.trim().startsWith("</" + CommonData.ENTRY_TAG_NAME + ">")) {
-                            entryStBuilder.append(line);
-                            line = reader.readLine();
-                        }
-                        //linea final del organism
-                        entryStBuilder.append(line);
-                        //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
-                        XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-                        entryStBuilder.delete(0, entryStBuilder.length());
-
-                        ArrayList<String> membersAccessionList = new ArrayList<String>();
-                        Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
-                        String representantAccession = getRepresentantAccession(representativeMember);
-
-                        List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
-                        for (Element member : members) {
-                            Element memberDbReference = member.getChild("dbReference");
-                            List<Element> memberProperties = memberDbReference.getChildren("property");
-                            for (Element prop : memberProperties) {
-                                if (prop.getAttributeValue("type").equals("UniProtKB accession")) {
-                                    String memberAccession = prop.getAttributeValue("value");
-                                    membersAccessionList.add(memberAccession);
-                                }
-                            }
-                        }
-
-                        if (representantAccession.contains("-")) {
-                            //Here we already have the ids of the members of the cluster and the representatn id
-                            for (String memberAccession : membersAccessionList) {
-                            }
-                            
-                        }else{
-                            long representantId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
-                        }
-                        
-                        
-
-
-                    }
-                }
-                reader.close();
-
+                importUnirefFile(inserter, indexService, uniref100File, uniRef100MemberRel);
                 System.out.println("Done! :)");
-                System.out.println(contadorIsoformas + " representant isoforms where found in UniRef100...");
+                System.out.println("Reading Uniref 90 file...");
+                importUnirefFile(inserter, indexService, uniref90File, uniRef90MemberRel);
+                System.out.println("Done! :)");
+                System.out.println("Reading Uniref 50 file...");
+                importUnirefFile(inserter, indexService, uniref50File, uniRef50MemberRel);
+                System.out.println("Done! :)");
+
 
             } catch (Exception ex) {
                 Logger.getLogger(ImportUniref.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
-                //indexService.shutdown();
-                //inserter.shutdown();
+                indexService.shutdown();
+                inserter.shutdown();
             }
 
             System.out.println("Program finished!! :D");
@@ -162,12 +116,73 @@ public class ImportUniref implements Executable {
         for (Element prop : properties) {
             if (prop.getAttributeValue("type").equals("UniProtKB accession")) {
                 result = prop.getAttributeValue("value");
-                if (result.contains("-")) {
-                    System.out.println("representantAccession = " + result);
-                    contadorIsoformas++;
-                }
             }
         }
         return result;
+    }
+
+    private static void importUnirefFile(BatchInserter inserter,
+            LuceneIndexBatchInserter indexService,
+            File unirefFile,
+            BasicRelationship relationship) throws Exception {
+
+        StringBuilder entryStBuilder = new StringBuilder();
+
+        BufferedReader reader = new BufferedReader(new FileReader(unirefFile));
+        String line = null;
+
+        while ((line = reader.readLine()) != null) {
+            //----we reached a entry line-----
+            if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
+
+                while (!line.trim().startsWith("</" + CommonData.ENTRY_TAG_NAME + ">")) {
+                    entryStBuilder.append(line);
+                    line = reader.readLine();
+                }
+                //linea final del organism
+                entryStBuilder.append(line);
+                //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
+                XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+                entryStBuilder.delete(0, entryStBuilder.length());
+
+                ArrayList<String> membersAccessionList = new ArrayList<String>();
+                Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+                String representantAccession = getRepresentantAccession(representativeMember);
+
+                List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
+                for (Element member : members) {
+                    Element memberDbReference = member.getChild("dbReference");
+                    List<Element> memberProperties = memberDbReference.getChildren("property");
+                    for (Element prop : memberProperties) {
+                        if (prop.getAttributeValue("type").equals("UniProtKB accession")) {
+                            String memberAccession = prop.getAttributeValue("value");
+                            membersAccessionList.add(memberAccession);
+                        }
+                    }
+                }
+
+                long representantId = -1;
+
+                //---The representant is an isoform----
+                if (representantAccession.contains("-")) {
+                    representantId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, representantAccession);
+                } //---The representant is a protein
+                else {
+                    representantId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
+                }
+
+                for (String memberAccession : membersAccessionList) {
+                    long memberId = -1;
+                    if (memberAccession.contains("-")) {
+                        memberId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, memberAccession);
+                    } else {
+                        memberId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
+                    }
+                    inserter.createRelationship(representantId, memberId, relationship, null);
+                }
+            }
+        }
+        reader.close();
+
     }
 }
