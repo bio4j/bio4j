@@ -71,6 +71,7 @@ public class CreaBDUniprot implements Executable {
     public static Map<String, Object> publisherProperties = new HashMap<String, Object>();
     public static Map<String, Object> cityProperties = new HashMap<String, Object>();
     public static Map<String, Object> journalProperties = new HashMap<String, Object>();
+    public static Map<String, Object> onlineJournalProperties = new HashMap<String, Object>();
     public static Map<String, Object> countryProperties = new HashMap<String, Object>();
     public static Map<String, Object> isoformProperties = new HashMap<String, Object>();
     public static Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
@@ -82,6 +83,7 @@ public class CreaBDUniprot implements Executable {
     public static Map<String, Object> proteinSubcellularLocationProperties = new HashMap<String, Object>();
     public static Map<String, Object> bookProteinCitationProperties = new HashMap<String, Object>();
     public static Map<String, Object> articleJournalProperties = new HashMap<String, Object>();
+    public static Map<String, Object> onlineArticleJournalProperties = new HashMap<String, Object>();
     public static Map<String, Object> commentProperties = new HashMap<String, Object>();
     public static Map<String, Object> onlineInformationCommentProperties = new HashMap<String, Object>();
     public static Map<String, Object> biophysicochemicalCommentProperties = new HashMap<String, Object>();
@@ -116,6 +118,10 @@ public class CreaBDUniprot implements Executable {
     public static ArticleAuthorConsortiumRel articleAuthorConsortiumRel = new ArticleAuthorConsortiumRel(null);
     public static ArticleJournalRel articleJournalRel = new ArticleJournalRel(null);
     public static ArticleProteinCitationRel articleProteinCitationRel = new ArticleProteinCitationRel(null);
+    public static OnlineArticleAuthorPersonRel onlineArticleAuthorPersonRel = new OnlineArticleAuthorPersonRel(null);
+    public static OnlineArticleAuthorConsortiumRel onlineArticleAuthorConsortiumRel = new OnlineArticleAuthorConsortiumRel(null);
+    public static OnlineArticleJournalRel onlineArticleJournalRel = new OnlineArticleJournalRel(null);
+    public static OnlineArticleProteinCitationRel onlineArticleProteinCitationRel = new OnlineArticleProteinCitationRel(null);
     public static UnpublishedObservationAuthorRel unpublishedObservationAuthorRel = new UnpublishedObservationAuthorRel(null);
     public static UnpublishedObservationProteinCitationRel unpublishedObservationProteinCitationRel = new UnpublishedObservationProteinCitationRel(null);
     public static InstituteCountryRel instituteCountryRel = new InstituteCountryRel(null);
@@ -1282,9 +1288,53 @@ public class CreaBDUniprot implements Executable {
                     //-----------------------------ONLINE ARTICLE-----------------------------------------
                 } else if (citationType.equals(OnlineArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
+                    String locatorSt = citation.getChildText("locator");;
+                    String nameSt = citation.getAttributeValue("name");
+                    String titleSt = citation.getChildText("title");
 
-                    
+                    if (titleSt == null) {
+                        titleSt = "";
+                    }
+                    if (nameSt == null) {
+                        nameSt = "";
+                    }
+                    if (locatorSt == null) {
+                        locatorSt = "";
+                    }
 
+                    long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_INDEX, titleSt);
+                    if (onlineArticleId < 0) {
+                        onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
+                        onlineArticleId = inserter.createNode(onlineArticleProperties);
+                        if (!titleSt.equals("")) {
+                            indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_INDEX, titleSt);
+                        }
+
+                        //---authors person association-----
+                        for (long personId : authorsPersonNodesIds) {
+                            inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorPersonRel, null);
+                        }
+                        //---authors consortium association-----
+                        for (long consortiumId : authorsConsortiumNodesIds) {
+                            inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorConsortiumRel, null);
+                        }
+
+                        //------journal-----------
+                        if (!nameSt.equals("")) {
+                            long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            if (onlineJournalId < 0) {
+                                onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
+                                onlineJournalId = inserter.createNode(onlineJournalProperties);
+                                indexService.index(onlineJournalId, OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            }
+
+                            onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
+                            inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
+                        }
+                        //----------------------------
+                    }
+                    //protein citation
+                    inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
 
 
                     //----------------------------------------------------------------------------
