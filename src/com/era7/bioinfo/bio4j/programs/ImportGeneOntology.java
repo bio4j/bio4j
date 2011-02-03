@@ -21,6 +21,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.index.lucene.LuceneIndexBatchInserter;
 import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
@@ -31,10 +35,9 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  *
  * @author ppareja
  */
-public class ImportGeneOntology implements Executable{
+public class ImportGeneOntology implements Executable {
 
     public static final String PROPERTIES_FILE_NAME = "batchInserter.properties";
-
     public static final String TERM_TAG_NAME = "term";
     public static final String ID_TAG_NAME = "id";
     public static final String NAME_TAG_NAME = "name";
@@ -43,10 +46,11 @@ public class ImportGeneOntology implements Executable{
     public static final String IS_A_TAG_NAME = "is_a";
     public static final String IS_ROOT_TAG_NAME = "is_root";
     public static final String NAMESPACE_TAG_NAME = "namespace";
-
     public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
     public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
     public static final String CELLULAR_COMPONENT_GO_ID = "GO:0005575";
+    private static final Logger logger = Logger.getLogger("ImportGeneOntology");
+    private static FileHandler fh;
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -60,14 +64,21 @@ public class ImportGeneOntology implements Executable{
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.out.println("El programa espera un parametro: \n"
-                    + "1. Nombre del archivo xml con la ontologia de go comleta \n");
+            System.out.println("This program expects one parameter: \n"
+                    + "1. Gene ontology xml filename \n");
         } else {
             File inFile = new File(args[0]);
 
-            //boolean transactionDone = true;
 
             try {
+
+                // This block configures the logger with handler and formatter
+                fh = new FileHandler("ImportGeneOntology.log", true);
+                SimpleFormatter formatter = new SimpleFormatter();
+                fh.setFormatter(formatter);
+                logger.addHandler(fh);
+                logger.setLevel(Level.ALL);
+
                 // create the batch inserter
                 BatchInserter inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(PROPERTIES_FILE_NAME));
 
@@ -88,7 +99,7 @@ public class ImportGeneOntology implements Executable{
 
                 Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
 
-                int contador = 1;
+                int counter = 1;
                 int limitForPrintingOut = 10000;
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -115,18 +126,18 @@ public class ImportGeneOntology implements Executable{
 
                         String goId = termXMLElement.asJDomElement().getChildText(ID_TAG_NAME);
                         String goName = termXMLElement.asJDomElement().getChildText(NAME_TAG_NAME);
-                        if(goName == null){
+                        if (goName == null) {
                             goName = "";
                         }
                         String goNamespace = termXMLElement.asJDomElement().getChildText(NAMESPACE_TAG_NAME);
-                        if(goNamespace == null){
+                        if (goNamespace == null) {
                             goNamespace = "";
                         }
                         String goDefinition = "";
                         Element defElem = termXMLElement.asJDomElement().getChild(DEF_TAG_NAME);
-                        if(defElem != null){
+                        if (defElem != null) {
                             Element defstrElem = defElem.getChild(DEFSTR_TAG_NAME);
-                            if(defstrElem != null){
+                            if (defstrElem != null) {
                                 goDefinition = defstrElem.getText();
                             }
                         }
@@ -137,7 +148,7 @@ public class ImportGeneOntology implements Executable{
                         for (Element elem : termParentTerms) {
                             array.add(elem.getText().trim());
                         }
-                        termParentsMap.put(goId,array);
+                        termParentsMap.put(goId, array);
                         //---------------------
 
                         goProperties.put(GoTermNode.ID_PROPERTY, goId);
@@ -149,26 +160,26 @@ public class ImportGeneOntology implements Executable{
 
                         //----IS ROOT ? ----
                         Element isRootElem = termXMLElement.asJDomElement().getChild(IS_ROOT_TAG_NAME);
-                        if(isRootElem != null){
+                        if (isRootElem != null) {
                             String temp = isRootElem.getTextTrim();
-                            if(temp.equals("1")){
+                            if (temp.equals("1")) {
                                 inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, mainGoRel, null);
-                                if(goId.equals(MOLECULAR_FUNCTION_GO_ID)){
+                                if (goId.equals(MOLECULAR_FUNCTION_GO_ID)) {
                                     inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, molecularFunctionRel, null);
-                                }else if(goId.equals(BIOLOGICAL_PROCESS_GO_ID)){
+                                } else if (goId.equals(BIOLOGICAL_PROCESS_GO_ID)) {
                                     inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, biologicalProcessRel, null);
-                                }else if(goId.equals(CELLULAR_COMPONENT_GO_ID)){
+                                } else if (goId.equals(CELLULAR_COMPONENT_GO_ID)) {
                                     inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, cellularComponentRel, null);
                                 }
-                                
+
                             }
                         }
                         //----------------------                        
 
                     }
-                    contador++;
-                    if ((contador % limitForPrintingOut) == 0) {
-                        System.out.println(contador + " terms inserted!!");
+                    counter++;
+                    if ((counter % limitForPrintingOut) == 0) {
+                        logger.log(Level.INFO, (counter + " terms inserted!!"));
                     }
                 }
                 reader.close();
@@ -195,11 +206,15 @@ public class ImportGeneOntology implements Executable{
                 // shutdown, makes sure all changes are written to disk
                 inserter.shutdown();
                 indexService.shutdown();
-                
+
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.log(Level.SEVERE, e.getMessage());
+                StackTraceElement[] trace = e.getStackTrace();
+                for (StackTraceElement stackTraceElement : trace) {
+                    logger.log(Level.SEVERE, stackTraceElement.toString());
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class ImportFeatures implements Executable{
 
-    private static final Logger logger = Logger.getLogger("MyLog");
+    private static final Logger logger = Logger.getLogger("ImportFeatures");
     private static FileHandler fh;
 
     @Override
@@ -48,8 +48,8 @@ public class ImportFeatures implements Executable{
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.out.println("El programa espera un parametro: \n"
-                    + "1. Nombre del archivo xml a importar \n");
+            System.out.println("This program expects one parameter: \n"
+                    + "1. Uniprot xml filename \n");
         } else {
             File inFile = new File(args[0]);
 
@@ -61,8 +61,8 @@ public class ImportFeatures implements Executable{
 
             try {
 
-                // This block configure the logger with handler and formatter
-                fh = new FileHandler("LogFile.log", true);
+                // This block configures the logger with handler and formatter
+                fh = new FileHandler("ImportFeatures.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
@@ -307,7 +307,7 @@ public class ImportFeatures implements Executable{
 
                         contador++;
                         if ((contador % limitForPrintingOut) == 0) {
-                            System.out.println(contador + " proteins updated with features!!");
+                            logger.log(Level.INFO, (contador + " proteins updated with features!!"));
                         }
 
                     }
@@ -320,7 +320,7 @@ public class ImportFeatures implements Executable{
 
 
             } catch (Exception e) {
-                logger.log(Level.INFO, ("Exception retrieving protein " + accessionSt));
+                logger.log(Level.SEVERE, ("Exception retrieving protein " + accessionSt));
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();
                 for (StackTraceElement stackTraceElement : trace) {

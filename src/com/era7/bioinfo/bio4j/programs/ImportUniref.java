@@ -34,7 +34,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class ImportUniref implements Executable {
 
-    private static final Logger logger = Logger.getLogger("ImportaUniref");
+    private static final Logger logger = Logger.getLogger("ImportUniref");
     private static FileHandler fh;
 
     @Override
@@ -49,10 +49,10 @@ public class ImportUniref implements Executable {
     public static void main(String[] args) {
 
         if (args.length != 3) {
-            System.out.println("El programa espera tres parametros: \n"
-                    + "1. Nombre del archivo xml de uniref 100 a importar \n"
-                    + "2. Nombre del archivo xml de uniref 90 a importar \n"
-                    + "3. Nombre del archivo xml de uniref 50 a importar \n");
+            System.out.println("This program expects three parameters: \n"
+                    + "1. Uniref 100 xml filename \n"
+                    + "2. Uniref 90 xml filename \n"
+                    + "3. Uniref 50 xml filename \n");
         } else {
 
             File uniref100File = new File(args[0]);
@@ -72,7 +72,7 @@ public class ImportUniref implements Executable {
             try {
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("ImportaUniref.log", true);
+                fh = new FileHandler("ImportUniref.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
