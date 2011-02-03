@@ -27,9 +27,8 @@ import org.neo4j.index.IndexService;
  */
 public class ImportIsoformSequences implements Executable {
 
-    private static final Logger logger = Logger.getLogger("MyLog");
+    private static final Logger logger = Logger.getLogger("ImportIsoformSequences");
     private static FileHandler fh;
-    public static final String PROPERTIES_FILE_NAME = "batchInserter.properties";
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -43,8 +42,8 @@ public class ImportIsoformSequences implements Executable {
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.out.println("El programa espera un parametro: \n"
-                    + "1. Nombre del archivo fasta con todas las isoformas \n");
+            System.out.println("This program expects one parameter: \n"
+                    + "1. Fasta file including all isoforms \n");
         } else {
             File inFile = new File(args[0]);
 
@@ -61,19 +60,13 @@ public class ImportIsoformSequences implements Executable {
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
-                System.out.println("creating manager...");
+                logger.log(Level.INFO, "creating manager...");
                 manager = Neo4jManager.getNeo4JManager(CommonData.DATABASE_FOLDER);
-                System.out.println("creating index manager...");
+                logger.log(Level.INFO, "creating index manager...");
                 IndexService indexService = manager.getIndexService();
                 txn = manager.beginTransaction();
 
-                //------------------nodes properties maps-----------------------------------
-                Map<String, Object> goProperties = new HashMap<String, Object>();
-                //--------------------------------------------------------------------------
-
-                Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
-
-                int contador = 1;
+                int counter = 1;
                 int limitForTransaction = 100;
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -82,7 +75,7 @@ public class ImportIsoformSequences implements Executable {
 
 
 
-                System.out.println("updating isoform data....");
+                logger.log(Level.INFO, "updating isoform data....");
 
                 //-----first I create all the elements whitout their relationships-------------
 
@@ -109,21 +102,21 @@ public class ImportIsoformSequences implements Executable {
                         node.setName(isoformNameSt);
                     }
 
-                    contador++;
-                    if ((contador % limitForTransaction) == 0) {
+                    counter++;
+                    if ((counter % limitForTransaction) == 0) {
                         txn.success();
                         txn.finish();
                     }
                 }
 
-                if(contador % limitForTransaction != 0){
+                if(counter % limitForTransaction != 0){
                     txn.success();
                     txn.finish();
                 }
 
                 reader.close();
 
-                System.out.println("Done! :)");    
+                logger.log(Level.INFO, "Done! :)");
 
             } catch (Exception e) {
                 txn.failure();
@@ -135,7 +128,7 @@ public class ImportIsoformSequences implements Executable {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
             }finally{                
-                System.out.println("Closing up inserter and index service....");
+                logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 manager.shutDown();
             }

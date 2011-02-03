@@ -107,7 +107,7 @@ public class ImportGeneOntology implements Executable {
                 StringBuilder termStBuilder = new StringBuilder();
 
 
-                System.out.println("inserting nodes....");
+                logger.log(Level.INFO, "inserting nodes....");
 
                 //-----first I create all the elements whitout their relationships-------------
 
@@ -186,7 +186,7 @@ public class ImportGeneOntology implements Executable {
 
                 //-----------------------------------------------------------------------
 
-                System.out.println("Inserting relationships....");
+                logger.log(Level.INFO, "Inserting relationships....");
 
                 //-------------------now I create the relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
@@ -200,9 +200,9 @@ public class ImportGeneOntology implements Executable {
                 }
                 //------------------------------------------------------------------
 
-                System.out.println("Done! :)");
+                logger.log(Level.INFO, "Done! :)");
 
-                System.out.println("Closing up inserter and index service....");
+                logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 inserter.shutdown();
                 indexService.shutdown();

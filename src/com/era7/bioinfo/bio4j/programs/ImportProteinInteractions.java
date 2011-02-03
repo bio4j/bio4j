@@ -36,7 +36,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class ImportProteinInteractions implements Executable{
 
-    private static final Logger logger = Logger.getLogger("MyLog");
+    private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
     private static FileHandler fh;
 
     @Override
@@ -51,12 +51,10 @@ public class ImportProteinInteractions implements Executable{
     public static void main(String[] args){
 
         if (args.length != 1) {
-            System.out.println("El programa espera un parametro: \n"
-                    + "1. Nombre del archivo xml a importar \n");
+            System.out.println("This program expects one parameter: \n"
+                    + "1. Uniprot xml filename \n");
         } else {
             File inFile = new File(args[0]);
-
-            //boolean transactionDone = true;
 
             BatchInserter inserter = null;
             LuceneIndexBatchInserter indexService = null;
@@ -71,7 +69,7 @@ public class ImportProteinInteractions implements Executable{
                 outbBuff = new BufferedWriter(new FileWriter(new File("conflictEntries.txt")));
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("LogFile.log", true);
+                fh = new FileHandler("ImportProteinInteractions.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
@@ -102,7 +100,7 @@ public class ImportProteinInteractions implements Executable{
                 StringBuilder entryStBuilder = new StringBuilder();
 
 
-                int contador = 1;
+                int counter = 1;
                 int limitForPrintingOut = 10000;
 
                 while ((line = reader.readLine()) != null) {
@@ -201,9 +199,9 @@ public class ImportProteinInteractions implements Executable{
 
                             }
 
-                            contador++;
-                            if ((contador % limitForPrintingOut) == 0) {
-                                System.out.println(contador + " proteins updated with interactions!!");
+                            counter++;
+                            if ((counter % limitForPrintingOut) == 0) {
+                                logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
                             }
 
                         }
@@ -212,7 +210,7 @@ public class ImportProteinInteractions implements Executable{
 
 
             } catch (Exception e) {
-                logger.log(Level.INFO, ("Exception retrieving protein " + accessionSt));
+                logger.log(Level.SEVERE, ("Exception retrieving protein " + accessionSt));
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();
                 for (StackTraceElement stackTraceElement : trace) {

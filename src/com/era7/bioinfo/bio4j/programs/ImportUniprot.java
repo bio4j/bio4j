@@ -48,7 +48,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class ImportUniprot implements Executable {
 
-    private static final Logger logger = Logger.getLogger("CreaBDUniprot");
+    private static final Logger logger = Logger.getLogger("ImportUniprot");
     private static FileHandler fh;
     //------------------nodes properties maps-----------------------------------
     public static Map<String, Object> organismProperties = new HashMap<String, Object>();
@@ -196,29 +196,30 @@ public class ImportUniprot implements Executable {
     public static void main(String[] args) {
 
         if (args.length != 1) {
-            System.out.println("El programa espera un parametro: \n"
-                    + "1. Nombre del archivo xml a importar \n");
+            System.out.println("This program expects one parameter: \n"
+                    + "1. Uniprot xml filename \n");
         } else {
             File inFile = new File(args[0]);
 
-            //boolean transactionDone = true;
-
             String currentAccessionId = "";
+
+            BatchInserter inserter = null;
+            LuceneIndexBatchInserter indexService = null;
 
             try {
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("CreaBDUniprot.log", true);
+                fh = new FileHandler("ImportUniprot.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                BatchInserter inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                LuceneIndexBatchInserter indexService = new LuceneIndexBatchInserterImpl(inserter);
+                indexService = new LuceneIndexBatchInserterImpl(inserter);
 
 
                 //----------------------------------------------------------------------------------------------------------------
@@ -273,7 +274,7 @@ public class ImportUniprot implements Executable {
                 StringBuilder entryStBuilder = new StringBuilder();
 
 
-                int contador = 1;
+                int counter = 1;
                 int limitForPrintingOut = 10000;
 
                 while ((line = reader.readLine()) != null) {
@@ -511,10 +512,10 @@ public class ImportUniprot implements Executable {
 
                         inserter.createRelationship(currentProteinId, organismNodeId, proteinOrganismRel, null);
 
-                        contador++;
-                        if ((contador % limitForPrintingOut) == 0) {
-                            String countProteinsSt = contador + " proteins inserted!!";
-                            System.out.println(countProteinsSt);
+                        counter++;
+                        if ((counter % limitForPrintingOut) == 0) {
+                            String countProteinsSt = counter + " proteins inserted!!";
+                            //System.out.println(countProteinsSt);
                             logger.log(Level.INFO, countProteinsSt);
                         }
 
@@ -524,18 +525,20 @@ public class ImportUniprot implements Executable {
                 }
 
 
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
+                
 
 
             } catch (Exception e) {
-                logger.log(Level.INFO, ("Exception retrieving protein " + currentAccessionId));
+                logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
+            } finally{
+                // shutdown, makes sure all changes are written to disk
+                inserter.shutdown();
+                indexService.shutdown();
             }
         }
 
