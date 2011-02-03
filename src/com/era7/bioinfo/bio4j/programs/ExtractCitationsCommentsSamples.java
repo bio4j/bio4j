@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  * @author ppareja
  */
-public class ExtraeCitationsCommentsDiferentes {
+public class ExtractCitationsCommentsSamples {
     
 
     public static void main(String[] args) throws FileNotFoundException, IOException, Exception {

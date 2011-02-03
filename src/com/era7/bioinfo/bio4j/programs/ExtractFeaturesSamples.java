@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  * @author ppareja
  */
-public class ExtraeFeaturesDiferentes {
+public class ExtractFeaturesSamples {
 
     public static void main(String[] args) throws FileNotFoundException, IOException, Exception {
 

@@ -34,7 +34,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  *
  * @author ppareja
  */
-public class IncorporaProteinInteractions implements Executable{
+public class ImportProteinInteractions implements Executable{
 
     private static final Logger logger = Logger.getLogger("MyLog");
     private static FileHandler fh;
@@ -226,7 +226,7 @@ public class IncorporaProteinInteractions implements Executable{
                     indexService.shutdown();
                     outbBuff.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(IncorporaProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

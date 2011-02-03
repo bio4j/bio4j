@@ -33,7 +33,7 @@ import org.neo4j.graphdb.Transaction;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GeneraGexfGo {
+public class GenerateGexfGo {
 
     public static int edgesIdCounter = 0;
     public static int nodesCounter = 0;
@@ -129,7 +129,7 @@ public class GeneraGexfGo {
 
 
             } catch (IOException ex) {
-                Logger.getLogger(GeneraGexfGo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GenerateGexfGo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }

@@ -46,7 +46,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  *
  * @author ppareja
  */
-public class CreaBDUniprot implements Executable {
+public class ImportUniprot implements Executable {
 
     private static final Logger logger = Logger.getLogger("CreaBDUniprot");
     private static FileHandler fh;
@@ -1288,7 +1288,7 @@ public class CreaBDUniprot implements Executable {
                     //-----------------------------ONLINE ARTICLE-----------------------------------------
                 } else if (citationType.equals(OnlineArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
-                    String locatorSt = citation.getChildText("locator");;
+                    String locatorSt = citation.getChildText("locator");
                     String nameSt = citation.getAttributeValue("name");
                     String titleSt = citation.getChildText("title");
 
