@@ -127,7 +127,9 @@ public class ImportIsoformSequences implements Executable {
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
-            }finally{                
+            }finally{
+                //closing logger file handler
+                fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 manager.shutDown();

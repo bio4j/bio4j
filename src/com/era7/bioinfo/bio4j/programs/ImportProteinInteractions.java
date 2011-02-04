@@ -34,7 +34,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  *
  * @author ppareja
  */
-public class ImportProteinInteractions implements Executable{
+public class ImportProteinInteractions implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
     private static FileHandler fh;
@@ -45,10 +45,15 @@ public class ImportProteinInteractions implements Executable{
         for (int i = 0; i < array.size(); i++) {
             args[i] = array.get(i);
         }
-        main(args);
+        try{
+            main(args);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
             System.out.println("This program expects one parameter: \n"
@@ -218,14 +223,15 @@ public class ImportProteinInteractions implements Executable{
                 }
 
             } finally {
-                try {
-                    // shutdown, makes sure all changes are written to disk
-                    inserter.shutdown();
-                    indexService.shutdown();
-                    outbBuff.close();
-                } catch (IOException ex) {
-                    Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                outbBuff.close();
+
+                //closing logger file handler
+                fh.close();
+                
+                // shutdown, makes sure all changes are written to disk
+                inserter.shutdown();
+                indexService.shutdown();
+
             }
         }
 

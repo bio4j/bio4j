@@ -328,6 +328,8 @@ public class ImportFeatures implements Executable{
                 }
             }
             finally{
+                //closing logger file handler
+                fh.close();
                 // shutdown, makes sure all changes are written to disk
                 inserter.shutdown();
                 indexService.shutdown();

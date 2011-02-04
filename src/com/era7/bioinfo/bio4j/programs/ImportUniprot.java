@@ -210,6 +210,7 @@ public class ImportUniprot implements Executable {
 
                 // This block configure the logger with handler and formatter
                 fh = new FileHandler("ImportUniprot.log", true);
+
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
@@ -524,10 +525,6 @@ public class ImportUniprot implements Executable {
                     }
                 }
 
-
-                
-
-
             } catch (Exception e) {
                 logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
                 logger.log(Level.SEVERE, e.getMessage());
@@ -536,6 +533,8 @@ public class ImportUniprot implements Executable {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
             } finally{
+                // closing logger file handler
+                fh.close();
                 // shutdown, makes sure all changes are written to disk
                 inserter.shutdown();
                 indexService.shutdown();

@@ -99,6 +99,9 @@ public class ImportUniref implements Executable {
             } catch (Exception ex) {
                 Logger.getLogger(ImportUniref.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
+                //closing logger file handler
+                fh.close();
+                //closing no4j managers
                 indexService.shutdown();
                 inserter.shutdown();
             }

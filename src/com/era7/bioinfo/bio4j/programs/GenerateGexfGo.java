@@ -17,6 +17,8 @@ import com.era7.lib.bioinfoxml.gexf.EdgeXML;
 import com.era7.lib.bioinfoxml.gexf.GexfXML;
 import com.era7.lib.bioinfoxml.gexf.GraphXML;
 import com.era7.lib.bioinfoxml.gexf.NodeXML;
+import com.era7.lib.bioinfoxml.gexf.viz.VizColorXML;
+import com.era7.lib.era7xmlapi.model.XMLElementException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jdom.Element;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
@@ -38,8 +41,14 @@ public class GenerateGexfGo {
     public static int edgesIdCounter = 0;
     public static int nodesCounter = 0;
     public static GoParentRel goParentRel = new GoParentRel(null);
-    public static int maxTerms = 200;
+    public static int maxTerms = 2000000;
+    public static int termsPerTxn = 1000;
     public static ArrayList<String> alreadyVisitedNodes = new ArrayList<String>();
+    public static VizColorXML bioColor;
+    public static VizColorXML molColor;
+    public static VizColorXML cellColor;
+    public static Transaction txn = null;
+    public static Neo4jManager manager = null;
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -49,6 +58,22 @@ public class GenerateGexfGo {
 
             BufferedWriter outBuff = null;
             try {
+
+                bioColor = new VizColorXML();
+                bioColor.setR(241);
+                bioColor.setG(134);
+                bioColor.setB(21);
+                bioColor.setA(255);
+                molColor = new VizColorXML();
+                molColor.setR(21);
+                molColor.setG(155);
+                molColor.setB(241);
+                molColor.setA(243);
+                cellColor = new VizColorXML();
+                cellColor.setR(34);
+                cellColor.setG(177);
+                cellColor.setB(76);
+                cellColor.setA(243);
 
                 outBuff = new BufferedWriter(new FileWriter(new File(args[0])));
 
@@ -90,8 +115,8 @@ public class GenerateGexfGo {
 //                graphXML.setNodes(nodesXML);
 //                graphXML.setEdges(edgesXML);
 
-                Transaction txn = null;
-                Neo4jManager manager = null;
+
+
 
                 try {
                     System.out.println("creating neo4j manager...");
@@ -100,7 +125,7 @@ public class GenerateGexfGo {
                     txn = manager.beginTransaction();
 
                     Iterator<Relationship> iterator = manager.getReferenceNode().getRelationships(new MainGoRel(null), Direction.OUTGOING).iterator();
-                    if (iterator.hasNext()) {
+                    while (iterator.hasNext()) {
                         GoTermNode mainGoTermNode = new GoTermNode(iterator.next().getEndNode());
                         System.out.println("getting ontology for " + mainGoTermNode.getName());
                         getGoDescendants(mainGoTermNode, nodesXMLStBuilder, edgesXMLStBuilder);
@@ -135,13 +160,23 @@ public class GenerateGexfGo {
         }
     }
 
-    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes, StringBuilder edges) {
+    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes, StringBuilder edges) throws XMLElementException {
+
+        //System.out.println("ddd");
 
         nodesCounter++;
 
         NodeXML nodeXML = new NodeXML();
         nodeXML.setId(parent.getId());
         nodeXML.setLabel(parent.getName());
+
+        if (parent.getNamespace().equals(GoTermNode.BIOLOGICAL_PROCESS_NAMESPACE)) {
+            nodeXML.setColor(new VizColorXML((Element)bioColor.getRoot().clone()));
+        } else if (parent.getNamespace().equals(GoTermNode.MOLECULAR_FUNCTION_NAMESPACE)) {
+            nodeXML.setColor(new VizColorXML((Element)molColor.getRoot().clone()));
+        } else if (parent.getNamespace().equals(GoTermNode.CELLULAR_COMPONENT_NAMESPACE)) {
+            nodeXML.setColor(new VizColorXML((Element)cellColor.getRoot().clone()));
+        }
 
         alreadyVisitedNodes.add(parent.getId());
 
@@ -162,27 +197,36 @@ public class GenerateGexfGo {
         //nodes.addNode(nodeXML);
         nodes.append((nodeXML.toString() + "\n"));
 
-        if (nodesCounter <= maxTerms) {
-            Iterator<Relationship> iterator = parent.getNode().getRelationships(goParentRel, Direction.INCOMING).iterator();
-            while (iterator.hasNext()) {
-
-                goParentRel = new GoParentRel(iterator.next());
-                EdgeXML edge = new EdgeXML();
-                edge.setId(String.valueOf(edgesIdCounter++));
-                edge.setTarget(parent.getId());
-                GoTermNode childGo = new GoTermNode(goParentRel.getStartNode());
-                edge.setSource(childGo.getId());
-                edge.setType(EdgeXML.DIRECTED_TYPE);
-                //edges.addEdge(edge);
-
-                edges.append((edge.toString() + "\n"));
-
-                if (!alreadyVisitedNodes.contains(childGo.getId())) {
-                    getGoDescendants(childGo, nodes, edges);
-                }
-
-            }
+        if(nodesCounter % termsPerTxn == 0){
+            txn.success();
+            txn.finish();
+            txn = manager.beginTransaction();
         }
+
+
+        Iterator<Relationship> iterator = parent.getNode().getRelationships(goParentRel, Direction.INCOMING).iterator();
+        while (iterator.hasNext()) {
+
+            goParentRel = new GoParentRel(iterator.next());
+            EdgeXML edge = new EdgeXML();
+            edge.setId(String.valueOf(edgesIdCounter++));
+            edge.setTarget(parent.getId());
+            GoTermNode childGo = new GoTermNode(goParentRel.getStartNode());
+            edge.setSource(childGo.getId());
+            edge.setType(EdgeXML.DIRECTED_TYPE);
+            //edges.addEdge(edge);
+
+            edges.append((edge.toString() + "\n"));
+
+            if (!alreadyVisitedNodes.contains(childGo.getId())) {
+                //System.out.println("bbb");
+                getGoDescendants(childGo, nodes, edges);
+            }
+
+            //System.out.println("aaaa");
+
+        }
+
 
 
     }

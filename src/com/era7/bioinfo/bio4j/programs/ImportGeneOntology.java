@@ -70,6 +70,9 @@ public class ImportGeneOntology implements Executable {
             File inFile = new File(args[0]);
 
 
+            BatchInserter inserter = null;
+            LuceneIndexBatchInserter indexService = null;
+
             try {
 
                 // This block configures the logger with handler and formatter
@@ -80,10 +83,10 @@ public class ImportGeneOntology implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                BatchInserter inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                LuceneIndexBatchInserter indexService = new LuceneIndexBatchInserterImpl(inserter);
+                indexService = new LuceneIndexBatchInserterImpl(inserter);
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -202,10 +205,7 @@ public class ImportGeneOntology implements Executable {
 
                 logger.log(Level.INFO, "Done! :)");
 
-                logger.log(Level.INFO, "Closing up inserter and index service....");
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
+                
 
 
 
@@ -215,6 +215,13 @@ public class ImportGeneOntology implements Executable {
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
+            } finally{
+                //closing logger file handler
+                fh.close();
+                logger.log(Level.INFO, "Closing up inserter and index service....");
+                // shutdown, makes sure all changes are written to disk
+                inserter.shutdown();
+                indexService.shutdown();
             }
         }
     }
