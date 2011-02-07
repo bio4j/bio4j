@@ -74,7 +74,7 @@ public class ImportProteinInteractions implements Executable {
                 outbBuff = new BufferedWriter(new FileWriter(new File("conflictEntries.txt")));
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("ImportProteinInteractions.log", true);
+                fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);

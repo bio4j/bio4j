@@ -62,7 +62,7 @@ public class ImportFeatures implements Executable{
             try {
 
                 // This block configures the logger with handler and formatter
-                fh = new FileHandler("ImportFeatures.log", true);
+                fh = new FileHandler("ImportFeatures" + args[0].split("\\.")[0] + ".log", false);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);

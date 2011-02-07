@@ -209,7 +209,7 @@ public class ImportUniprot implements Executable {
             try {
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("ImportUniprot.log", true);
+                fh = new FileHandler("ImportUniprot" + args[0].split("\\.")[0] + ".log", false);
 
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
