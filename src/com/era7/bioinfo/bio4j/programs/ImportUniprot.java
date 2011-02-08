@@ -20,7 +20,6 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.patent.PatentAuthorRel
 import com.era7.bioinfo.bio4jmodel.relationships.citation.patent.PatentProteinCitationRel;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
-import com.era7.bioinfo.uniprotneo4jmodel.model.neo4j.relationships.sc.ErroneousInitiationRel;
 
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
