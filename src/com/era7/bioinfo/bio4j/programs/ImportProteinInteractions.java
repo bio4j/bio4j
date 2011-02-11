@@ -45,12 +45,12 @@ public class ImportProteinInteractions implements Executable {
         for (int i = 0; i < array.size(); i++) {
             args[i] = array.get(i);
         }
-        try{
+        try {
             main(args);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
     public static void main(String[] args) throws IOException {
@@ -107,6 +107,7 @@ public class ImportProteinInteractions implements Executable {
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
+                int limitForClosingBatchInserter = 100000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -208,6 +209,14 @@ public class ImportProteinInteractions implements Executable {
                             if ((counter % limitForPrintingOut) == 0) {
                                 logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
                             }
+                            if ((counter % limitForClosingBatchInserter) == 0) {
+                                inserter.shutdown();
+                                indexService.shutdown();
+                                // create the batch inserter again
+                                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                                // create the batch index service again
+                                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                            }
 
                         }
                     }
@@ -227,7 +236,7 @@ public class ImportProteinInteractions implements Executable {
 
                 //closing logger file handler
                 fh.close();
-                
+
                 // shutdown, makes sure all changes are written to disk
                 inserter.shutdown();
                 indexService.shutdown();

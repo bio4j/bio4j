@@ -132,6 +132,7 @@ public class ImportFeatures implements Executable{
 
                 int contador = 1;
                 int limitForPrintingOut = 10000;
+                int limitForClosingBatchInserter = 100000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -310,13 +311,17 @@ public class ImportFeatures implements Executable{
                             logger.log(Level.INFO, (contador + " proteins updated with features!!"));
                         }
 
+                        if((contador % limitForClosingBatchInserter) == 0){
+                            inserter.shutdown();
+                            indexService.shutdown();
+                            // create the batch inserter
+                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                            // create the batch index service
+                            indexService = new LuceneIndexBatchInserterImpl(inserter);
+                        }
+
                     }
                 }
-
-
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
 
 
             } catch (Exception e) {

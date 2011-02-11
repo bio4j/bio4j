@@ -156,7 +156,7 @@ public class ImportUniprot implements Executable {
     public static PathwayCommentRel pathwayCommentRel = new PathwayCommentRel(null);
     public static PharmaceuticalCommentRel pharmaceuticalCommentRel = new PharmaceuticalCommentRel(null);
     public static PolymorphismCommentRel polymorphismCommentRel = new PolymorphismCommentRel(null);
-    public static PostTransactionalModificationCommentRel postTransactionalModificationCommentRel = new PostTransactionalModificationCommentRel(null);
+    public static PostTranslationalModificationCommentRel postTranslationalModificationCommentRel = new PostTranslationalModificationCommentRel(null);
     public static RnaEditingCommentRel rnaEditingCommentRel = new RnaEditingCommentRel(null);
     public static SimilarityCommentRel similarityCommentRel = new SimilarityCommentRel(null);
     public static SubunitCommentRel subunitCommentRel = new SubunitCommentRel(null);
@@ -276,6 +276,7 @@ public class ImportUniprot implements Executable {
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
+                int limitForClosingBatchInserter = 100000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -518,6 +519,14 @@ public class ImportUniprot implements Executable {
                             //System.out.println(countProteinsSt);
                             logger.log(Level.INFO, countProteinsSt);
                         }
+                        if((counter % limitForClosingBatchInserter) == 0){
+                            inserter.shutdown();
+                            indexService.shutdown();
+                            // create the batch inserter again
+                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                            // create the batch index service again
+                            indexService = new LuceneIndexBatchInserterImpl(inserter);
+                        }
 
 
 
@@ -632,8 +641,8 @@ public class ImportUniprot implements Executable {
             else if (commentTypeSt.equals(DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
             } //----------post transactional modification----------------
-            else if (commentTypeSt.equals(PostTransactionalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, postTransactionalModificationCommentRel, commentProperties);
+            else if (commentTypeSt.equals(PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
             } //----------catalytic activity----------------
             else if (commentTypeSt.equals(CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);

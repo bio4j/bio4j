@@ -65,17 +65,26 @@ public class GetProteinData {
         IndexService indexService = manager.getIndexService();
         System.out.println("getting node...");
         Transaction txn = manager.beginTransaction();
-//
-//        BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
-//
-//        System.out.println("Getting proteins with Interpro motif ID:  IPR000847...");
-//        InterproNode interproNode = new InterproNode(indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, "IPR000847"));
-//        Iterator<Relationship> interproRelIterator = interproNode.getNode().getRelationships(new ProteinInterproRel(null),Direction.INCOMING).iterator();
-//        while(interproRelIterator.hasNext()){
-//            ProteinNode tempProt = new ProteinNode(interproRelIterator.next().getStartNode());
-//            interproBuffer.write(tempProt.getAccession() + "\n");
-//        }
-//        interproBuffer.close();
+
+        BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
+
+        System.out.println("Getting proteins with Interpro motif ID:  IPR000847...");
+        int interproCounter = 0;
+        InterproNode interproNode = new InterproNode(indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, "IPR000847"));
+        Iterator<Relationship> interproRelIterator = interproNode.getNode().getRelationships(new ProteinInterproRel(null),Direction.INCOMING).iterator();
+        while(interproRelIterator.hasNext()){
+            ProteinNode tempProt = new ProteinNode(interproRelIterator.next().getStartNode());
+            interproCounter++;
+            if(interproCounter > 1000){
+                System.out.println("1000 more!");
+                interproCounter = 0;
+                txn.success();
+                txn.finish();
+                txn = manager.beginTransaction();
+            }
+            interproBuffer.write(tempProt.getAccession() + "\n");
+        }
+        interproBuffer.close();
 
 
 
@@ -183,12 +192,13 @@ public class GetProteinData {
             txn.failure();
         } finally {
             txn.finish();
+            manager.shutDown();
         }
 
 
 
 
 
-        manager.shutDown();
+        
     }
 }
