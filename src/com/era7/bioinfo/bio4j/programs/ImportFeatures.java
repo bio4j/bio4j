@@ -132,7 +132,7 @@ public class ImportFeatures implements Executable{
 
                 int contador = 1;
                 int limitForPrintingOut = 10000;
-                int limitForClosingBatchInserter = 100000;
+                int limitForClosingBatchInserter = 50000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -312,8 +312,9 @@ public class ImportFeatures implements Executable{
                         }
 
                         if((contador % limitForClosingBatchInserter) == 0){
-                            inserter.shutdown();
+                            indexService.optimize();
                             indexService.shutdown();
+                            inserter.shutdown();
                             // create the batch inserter
                             inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                             // create the batch index service

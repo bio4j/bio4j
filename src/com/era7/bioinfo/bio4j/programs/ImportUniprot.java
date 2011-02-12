@@ -276,7 +276,7 @@ public class ImportUniprot implements Executable {
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
-                int limitForClosingBatchInserter = 100000;
+                int limitForClosingBatchInserter = 50000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -520,8 +520,9 @@ public class ImportUniprot implements Executable {
                             logger.log(Level.INFO, countProteinsSt);
                         }
                         if((counter % limitForClosingBatchInserter) == 0){
-                            inserter.shutdown();
+                            indexService.optimize();
                             indexService.shutdown();
+                            inserter.shutdown();
                             // create the batch inserter again
                             inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                             // create the batch index service again
@@ -544,8 +545,9 @@ public class ImportUniprot implements Executable {
                 // closing logger file handler
                 fh.close();
                 // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
                 indexService.shutdown();
+                inserter.shutdown();
+                
             }
         }
 
