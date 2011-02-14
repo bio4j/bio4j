@@ -18,6 +18,8 @@ import com.era7.lib.bioinfoxml.gexf.GexfXML;
 import com.era7.lib.bioinfoxml.gexf.GraphXML;
 import com.era7.lib.bioinfoxml.gexf.NodeXML;
 import com.era7.lib.bioinfoxml.gexf.viz.VizColorXML;
+import com.era7.lib.bioinfoxml.gexf.viz.VizPositionXML;
+import com.era7.lib.bioinfoxml.gexf.viz.VizSizeXML;
 import com.era7.lib.era7xmlapi.model.XMLElementException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -49,6 +51,12 @@ public class GenerateGexfGo {
     public static VizColorXML cellColor;
     public static Transaction txn = null;
     public static Neo4jManager manager = null;
+
+    public static int MAX_NODE_SIZE = 50;
+    public static int MIN_NODE_SIZE = 5;
+
+    public static int Y_LEVEL_FACTOR = 100;
+    public static int X_LEVEL_FACTOR = 10;
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -92,18 +100,21 @@ public class GenerateGexfGo {
                 attributesXML.setClass(AttributesXML.NODE_CLASS);
                 AttributeXML idAttributeXML = new AttributeXML();
                 idAttributeXML.setId("0");
-                idAttributeXML.setTitle("Go Term ID");
+                idAttributeXML.setTitle("ID");
                 idAttributeXML.setType("string");
                 attributesXML.addAttribute(idAttributeXML);
                 AttributeXML nameAttributeXML = new AttributeXML();
                 nameAttributeXML.setId("1");
-                nameAttributeXML.setTitle("Go Term Name");
+                nameAttributeXML.setTitle("Name");
                 nameAttributeXML.setType("string");
                 attributesXML.addAttribute(nameAttributeXML);
+                AttributeXML aspectAttributeXML = new AttributeXML();
+                aspectAttributeXML.setId("2");
+                aspectAttributeXML.setTitle("Aspect");
+                aspectAttributeXML.setType("string");
+                attributesXML.addAttribute(aspectAttributeXML);
 
                 outBuff.write(attributesXML.toString() + "\n");
-
-                //graphXML.addAttributes(attributesXML);
 
 
 //                NodesXML nodesXML = new NodesXML();
@@ -128,7 +139,7 @@ public class GenerateGexfGo {
                     while (iterator.hasNext()) {
                         GoTermNode mainGoTermNode = new GoTermNode(iterator.next().getEndNode());
                         System.out.println("getting ontology for " + mainGoTermNode.getName());
-                        getGoDescendants(mainGoTermNode, nodesXMLStBuilder, edgesXMLStBuilder);
+                        getGoDescendants(mainGoTermNode, nodesXMLStBuilder, edgesXMLStBuilder, 1,0);
                     }
 
                     txn.success();
@@ -160,7 +171,8 @@ public class GenerateGexfGo {
         }
     }
 
-    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes, StringBuilder edges) throws XMLElementException {
+    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes, 
+            StringBuilder edges, int currentLevel, int xLevelFactor) throws XMLElementException {
 
         //System.out.println("ddd");
 
@@ -171,11 +183,11 @@ public class GenerateGexfGo {
         nodeXML.setLabel(parent.getName());
 
         if (parent.getNamespace().equals(GoTermNode.BIOLOGICAL_PROCESS_NAMESPACE)) {
-            nodeXML.setColor(new VizColorXML((Element)bioColor.getRoot().clone()));
+            nodeXML.setColor(new VizColorXML((Element) bioColor.getRoot().clone()));
         } else if (parent.getNamespace().equals(GoTermNode.MOLECULAR_FUNCTION_NAMESPACE)) {
-            nodeXML.setColor(new VizColorXML((Element)molColor.getRoot().clone()));
+            nodeXML.setColor(new VizColorXML((Element) molColor.getRoot().clone()));
         } else if (parent.getNamespace().equals(GoTermNode.CELLULAR_COMPONENT_NAMESPACE)) {
-            nodeXML.setColor(new VizColorXML((Element)cellColor.getRoot().clone()));
+            nodeXML.setColor(new VizColorXML((Element) cellColor.getRoot().clone()));
         }
 
         alreadyVisitedNodes.add(parent.getId());
@@ -192,19 +204,23 @@ public class GenerateGexfGo {
         goNameAttValueXML.setValue(parent.getName());
         attValuesXML.addAttValue(goNameAttValueXML);
 
-        nodeXML.setAttvalues(attValuesXML);
+        AttValueXML aspectAttValue = new AttValueXML();
+        aspectAttValue.setFor(2);
+        aspectAttValue.setValue(parent.getNamespace());
+        attValuesXML.addAttValue(aspectAttValue);
 
-        //nodes.addNode(nodeXML);
-        nodes.append((nodeXML.toString() + "\n"));
+        nodeXML.setAttvalues(attValuesXML);        
 
-        if(nodesCounter % termsPerTxn == 0){
+        if (nodesCounter % termsPerTxn == 0) {
             txn.success();
             txn.finish();
             txn = manager.beginTransaction();
         }
 
+        int subNodesCounter = 1;
 
         Iterator<Relationship> iterator = parent.getNode().getRelationships(goParentRel, Direction.INCOMING).iterator();
+        int xPosition = 0;
         while (iterator.hasNext()) {
 
             goParentRel = new GoParentRel(iterator.next());
@@ -220,14 +236,34 @@ public class GenerateGexfGo {
 
             if (!alreadyVisitedNodes.contains(childGo.getId())) {
                 //System.out.println("bbb");
-                getGoDescendants(childGo, nodes, edges);
+                getGoDescendants(childGo, nodes, edges, currentLevel + 1,xPosition * X_LEVEL_FACTOR);
             }
 
-            //System.out.println("aaaa");
+            //subNodesCounter++;
+            xPosition++;
 
         }
 
+        //setting node size proportional to number of children
+        VizSizeXML goSize = new VizSizeXML();
+        goSize.setValue(subNodesCounter);
+        if(subNodesCounter > MAX_NODE_SIZE){
+            goSize.setValue(MAX_NODE_SIZE);
+        }
+//        if(currentLevel < MIN_NODE_SIZE){
+//            goSize.setValue(MIN_NODE_SIZE);
+//        }else{
+//            goSize.setValue(currentLevel);
+//        }
+        nodeXML.setSize(goSize);
 
+//        VizPositionXML goPosition = new VizPositionXML();
+//        goPosition.setY(currentLevel * Y_LEVEL_FACTOR);
+//        goPosition.setX(xLevelFactor);
+//        nodeXML.setPosition(goPosition);
+
+        //nodes.addNode(nodeXML);
+        nodes.append((nodeXML.toString() + "\n"));
 
     }
 }
