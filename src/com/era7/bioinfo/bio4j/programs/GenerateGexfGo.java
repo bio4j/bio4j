@@ -17,6 +17,8 @@ import com.era7.lib.bioinfoxml.gexf.EdgeXML;
 import com.era7.lib.bioinfoxml.gexf.GexfXML;
 import com.era7.lib.bioinfoxml.gexf.GraphXML;
 import com.era7.lib.bioinfoxml.gexf.NodeXML;
+import com.era7.lib.bioinfoxml.gexf.SpellXML;
+import com.era7.lib.bioinfoxml.gexf.SpellsXML;
 import com.era7.lib.bioinfoxml.gexf.viz.VizColorXML;
 import com.era7.lib.bioinfoxml.gexf.viz.VizPositionXML;
 import com.era7.lib.bioinfoxml.gexf.viz.VizSizeXML;
@@ -57,6 +59,8 @@ public class GenerateGexfGo {
 
     public static int Y_LEVEL_FACTOR = 100;
     public static int X_LEVEL_FACTOR = 10;
+
+    public static String DEFAULT_END = "2011-01-31";
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -239,7 +243,7 @@ public class GenerateGexfGo {
                 getGoDescendants(childGo, nodes, edges, currentLevel + 1,xPosition * X_LEVEL_FACTOR);
             }
 
-            //subNodesCounter++;
+            subNodesCounter++;
             xPosition++;
 
         }
@@ -259,8 +263,21 @@ public class GenerateGexfGo {
 
 //        VizPositionXML goPosition = new VizPositionXML();
 //        goPosition.setY(currentLevel * Y_LEVEL_FACTOR);
-//        goPosition.setX(xLevelFactor);
+//        goPosition.setX(Math.round(Math.random() * 100));
+//        goPosition.setZ(Math.round(Math.random() * 100));
 //        nodeXML.setPosition(goPosition);
+
+
+        SpellsXML spells = new SpellsXML();
+        SpellXML spell = new SpellXML();
+        spell.setEnd(DEFAULT_END);
+        String tempSt = String.valueOf(currentLevel);
+        if(currentLevel < 10){
+            tempSt = "0" + tempSt;
+        }
+        spell.setStart("2011-01-" + tempSt);
+        spells.addSpell(spell);
+        nodeXML.setSpells(spells);
 
         //nodes.addNode(nodeXML);
         nodes.append((nodeXML.toString() + "\n"));

@@ -276,8 +276,8 @@ public class ImportUniprot implements Executable {
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
-                int limitForClosingBatchInserter = 100000000;
-                int limitForOptimizingIndexService = 20000;
+                //int limitForClosingBatchInserter = 100000;
+                //int limitForOptimizingIndexService = 100000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -520,17 +520,17 @@ public class ImportUniprot implements Executable {
                             //System.out.println(countProteinsSt);
                             logger.log(Level.INFO, countProteinsSt);
                         }
-                        if((counter % limitForOptimizingIndexService) == 0){
-                            indexService.optimize();
-                        }
-                        if((counter % limitForClosingBatchInserter) == 0){                            
-                            indexService.shutdown();
-                            inserter.shutdown();
-                            // create the batch inserter again
-                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
-                            // create the batch index service again
-                            indexService = new LuceneIndexBatchInserterImpl(inserter);
-                        }
+//                        if((counter % limitForOptimizingIndexService) == 0){
+//                            indexService.optimize();
+//                        }
+//                        if((counter % limitForClosingBatchInserter) == 0){
+//                            indexService.shutdown();
+//                            inserter.shutdown();
+//                            // create the batch inserter again
+//                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+//                            // create the batch index service again
+//                            indexService = new LuceneIndexBatchInserterImpl(inserter);
+//                        }
                         
 
 
