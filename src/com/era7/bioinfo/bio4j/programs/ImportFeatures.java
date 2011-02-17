@@ -132,7 +132,6 @@ public class ImportFeatures implements Executable{
 
                 int contador = 1;
                 int limitForPrintingOut = 10000;
-                int limitForClosingBatchInserter = 50000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -311,16 +310,6 @@ public class ImportFeatures implements Executable{
                             logger.log(Level.INFO, (contador + " proteins updated with features!!"));
                         }
 
-                        if((contador % limitForClosingBatchInserter) == 0){
-                            indexService.optimize();
-                            indexService.shutdown();
-                            inserter.shutdown();
-                            // create the batch inserter
-                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
-                            // create the batch index service
-                            indexService = new LuceneIndexBatchInserterImpl(inserter);
-                        }
-
                     }
                 }
 
@@ -334,11 +323,22 @@ public class ImportFeatures implements Executable{
                 }
             }
             finally{
-                //closing logger file handler
-                fh.close();
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
+
+                try{
+                    //closing logger file handler
+                    fh.close();
+                    // shutdown, makes sure all changes are written to disk
+                    indexService.shutdown();
+                    inserter.shutdown();
+                    
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    StackTraceElement[] trace = e.getStackTrace();
+                    for (StackTraceElement stackTraceElement : trace) {
+                        logger.log(Level.SEVERE, stackTraceElement.toString());
+                    }
+                }
+                
             }
         }
 

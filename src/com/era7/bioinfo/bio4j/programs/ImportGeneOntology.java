@@ -205,7 +205,7 @@ public class ImportGeneOntology implements Executable {
 
                 logger.log(Level.INFO, "Done! :)");
 
-                
+
 
 
 
@@ -215,13 +215,24 @@ public class ImportGeneOntology implements Executable {
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
-            } finally{
-                //closing logger file handler
-                fh.close();
-                logger.log(Level.INFO, "Closing up inserter and index service....");
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
+            } finally {
+
+                try {
+                    //closing logger file handler
+                    fh.close();
+                    logger.log(Level.INFO, "Closing up inserter and index service....");
+                    // shutdown, makes sure all changes are written to disk
+                    indexService.shutdown();
+                    inserter.shutdown();
+
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    StackTraceElement[] trace = e.getStackTrace();
+                    for (StackTraceElement stackTraceElement : trace) {
+                        logger.log(Level.SEVERE, stackTraceElement.toString());
+                    }
+                }
+
             }
         }
     }

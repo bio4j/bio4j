@@ -97,13 +97,26 @@ public class ImportUniref implements Executable {
 
 
             } catch (Exception ex) {
-                Logger.getLogger(ImportUniref.class.getName()).log(Level.SEVERE, null, ex);
+                logger.log(Level.SEVERE, ex.getMessage());
+                StackTraceElement[] trace = ex.getStackTrace();
+                for (StackTraceElement stackTraceElement : trace) {
+                    logger.log(Level.SEVERE, stackTraceElement.toString());
+                }
             } finally {
-                //closing logger file handler
-                fh.close();
-                //closing no4j managers
-                indexService.shutdown();
-                inserter.shutdown();
+                try {
+                    //closing logger file handler
+                    fh.close();
+                    //closing no4j managers
+                    indexService.shutdown();
+                    inserter.shutdown();
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    StackTraceElement[] trace = e.getStackTrace();
+                    for (StackTraceElement stackTraceElement : trace) {
+                        logger.log(Level.SEVERE, stackTraceElement.toString());
+                    }
+                }
+
             }
 
             System.out.println("Program finished!! :D");

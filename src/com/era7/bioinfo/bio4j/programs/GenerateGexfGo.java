@@ -53,14 +53,12 @@ public class GenerateGexfGo {
     public static VizColorXML cellColor;
     public static Transaction txn = null;
     public static Neo4jManager manager = null;
-
     public static int MAX_NODE_SIZE = 50;
     public static int MIN_NODE_SIZE = 5;
-
     public static int Y_LEVEL_FACTOR = 100;
     public static int X_LEVEL_FACTOR = 10;
-
     public static String DEFAULT_END = "2011-01-31";
+    public static String DEFAULT_START = "2011-01-01";
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -91,7 +89,7 @@ public class GenerateGexfGo {
 
                 outBuff.write("<?xml version=\"1.0\" encoding=\"UTF8\"?>" + "\n");
                 outBuff.write("<" + GexfXML.TAG_NAME + ">\n");
-                outBuff.write("<" + GraphXML.TAG_NAME + " defaultedgetype=\"directed\">\n");
+                outBuff.write("<" + GraphXML.TAG_NAME + " defaultedgetype=\"directed\" mode=\"dynamic\" timeformat=\"date\">\n");
 
                 //GexfXML gexfXML = new GexfXML();
 
@@ -143,7 +141,10 @@ public class GenerateGexfGo {
                     while (iterator.hasNext()) {
                         GoTermNode mainGoTermNode = new GoTermNode(iterator.next().getEndNode());
                         System.out.println("getting ontology for " + mainGoTermNode.getName());
-                        getGoDescendants(mainGoTermNode, nodesXMLStBuilder, edgesXMLStBuilder, 1,0);
+                        if (mainGoTermNode.getName().equals("cellular_component")) {
+                            getGoDescendants(mainGoTermNode, nodesXMLStBuilder, edgesXMLStBuilder, 1, 0);
+                        }
+
                     }
 
                     txn.success();
@@ -175,7 +176,7 @@ public class GenerateGexfGo {
         }
     }
 
-    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes, 
+    private static void getGoDescendants(GoTermNode parent, StringBuilder nodes,
             StringBuilder edges, int currentLevel, int xLevelFactor) throws XMLElementException {
 
         //System.out.println("ddd");
@@ -184,7 +185,7 @@ public class GenerateGexfGo {
 
         NodeXML nodeXML = new NodeXML();
         nodeXML.setId(parent.getId());
-        nodeXML.setLabel(parent.getName());
+        nodeXML.setLabel(parent.getName().substring(nodesCounter));
 
         if (parent.getNamespace().equals(GoTermNode.BIOLOGICAL_PROCESS_NAMESPACE)) {
             nodeXML.setColor(new VizColorXML((Element) bioColor.getRoot().clone()));
@@ -213,7 +214,7 @@ public class GenerateGexfGo {
         aspectAttValue.setValue(parent.getNamespace());
         attValuesXML.addAttValue(aspectAttValue);
 
-        nodeXML.setAttvalues(attValuesXML);        
+        nodeXML.setAttvalues(attValuesXML);
 
         if (nodesCounter % termsPerTxn == 0) {
             txn.success();
@@ -234,13 +235,19 @@ public class GenerateGexfGo {
             GoTermNode childGo = new GoTermNode(goParentRel.getStartNode());
             edge.setSource(childGo.getId());
             edge.setType(EdgeXML.DIRECTED_TYPE);
+            edge.setEnd(DEFAULT_END);
+            String tempSt = String.valueOf(currentLevel);
+            if (currentLevel < 10) {
+                tempSt = "0" + tempSt;
+            }
+            edge.setStart("2011-01-" + tempSt);
             //edges.addEdge(edge);
 
             edges.append((edge.toString() + "\n"));
 
             if (!alreadyVisitedNodes.contains(childGo.getId())) {
                 //System.out.println("bbb");
-                getGoDescendants(childGo, nodes, edges, currentLevel + 1,xPosition * X_LEVEL_FACTOR);
+                getGoDescendants(childGo, nodes, edges, currentLevel + 1, xPosition * X_LEVEL_FACTOR);
             }
 
             subNodesCounter++;
@@ -249,9 +256,15 @@ public class GenerateGexfGo {
         }
 
         //setting node size proportional to number of children
+//        VizSizeXML goSize = new VizSizeXML();
+//        goSize.setValue(subNodesCounter);
+//        if (subNodesCounter > MAX_NODE_SIZE) {
+//            goSize.setValue(MAX_NODE_SIZE);
+//        }
+        //setting node size proportional to label length
         VizSizeXML goSize = new VizSizeXML();
-        goSize.setValue(subNodesCounter);
-        if(subNodesCounter > MAX_NODE_SIZE){
+        goSize.setValue(nodeXML.getLabel().length());
+        if (subNodesCounter > MAX_NODE_SIZE) {
             goSize.setValue(MAX_NODE_SIZE);
         }
 //        if(currentLevel < MIN_NODE_SIZE){
@@ -268,19 +281,29 @@ public class GenerateGexfGo {
 //        nodeXML.setPosition(goPosition);
 
 
-        SpellsXML spells = new SpellsXML();
-        SpellXML spell = new SpellXML();
-        spell.setEnd(DEFAULT_END);
+//        SpellsXML spells = new SpellsXML();
+//        SpellXML spell = new SpellXML();
+//        spell.setEnd(DEFAULT_END);
+//        String tempSt = String.valueOf(currentLevel);
+//        if (currentLevel < 10) {
+//            tempSt = "0" + tempSt;
+//        }
+//        spell.setStart("2011-01-" + tempSt);
+//        spells.addSpell(spell);
+//        nodeXML.setSpells(spells);
+
+        nodeXML.setEnd(DEFAULT_END);
         String tempSt = String.valueOf(currentLevel);
-        if(currentLevel < 10){
+        if (currentLevel < 10) {
             tempSt = "0" + tempSt;
         }
-        spell.setStart("2011-01-" + tempSt);
-        spells.addSpell(spell);
-        nodeXML.setSpells(spells);
+        nodeXML.setStart("2011-01-" + tempSt);
 
         //nodes.addNode(nodeXML);
         nodes.append((nodeXML.toString() + "\n"));
 
     }
+//    private static String getNextDay(String currentDay){
+//        currentDay
+//    }
 }

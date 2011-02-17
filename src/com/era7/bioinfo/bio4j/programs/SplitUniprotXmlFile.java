@@ -49,6 +49,7 @@ public class SplitUniprotXmlFile {
                             System.out.println("Closing file...");
                             currentFile++;
                             outBuff = new BufferedWriter(new FileWriter(new File(prefixOutFile + currentFile + ".xml")));
+                            outBuff.write("<entries>\n");
                         }
 
                         outBuff.write((line + "\n"));
@@ -57,6 +58,8 @@ public class SplitUniprotXmlFile {
                             line = reader.readLine();
                             outBuff.write((line + "\n"));
                         }
+
+                        outBuff.flush();
 
                         currentEntry++;
 

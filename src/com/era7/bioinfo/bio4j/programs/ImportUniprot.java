@@ -10,6 +10,8 @@ import com.era7.bioinfo.bio4jmodel.relationships.*;
 import com.era7.bioinfo.bio4jmodel.relationships.comment.*;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
 
+import com.era7.bioinfo.bio4jmodel.relationships.features.*;
+
 import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4jmodel.nodes.citation.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.thesis.*;
@@ -76,6 +78,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
     public static Map<String, Object> commentTypeProperties = new HashMap<String, Object>();
     public static Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
+    public static Map<String, Object> featureTypeProperties = new HashMap<String, Object>();
     //---------------------------------------------------------------------
     //-------------------relationships properties maps--------------------------
     public static Map<String, Object> proteinGoProperties = new HashMap<String, Object>();
@@ -88,6 +91,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> biophysicochemicalCommentProperties = new HashMap<String, Object>();
     public static Map<String, Object> rnaEditingCommentProperties = new HashMap<String, Object>();
     public static Map<String, Object> massSpectrometryCommentProperties = new HashMap<String, Object>();
+    public static Map<String, Object> featureProperties = new HashMap<String, Object>();
     //----------------------------------------------------------------------------
     //--------------------------------relationships------------------------------------------
     public static ProteinGoRel proteinGoRel = new ProteinGoRel(null);
@@ -168,6 +172,47 @@ public class ImportUniprot implements Executable {
     public static ErroneousTranslationRel erroneousTranslationRel = new ErroneousTranslationRel(null);
     public static FrameshiftRel frameshiftRel = new FrameshiftRel(null);
     public static MiscellaneousDiscrepancyRel miscellaneousDiscrepancyRel = new MiscellaneousDiscrepancyRel(null);
+    //features relationships------------------------------------------
+    public static ActiveSiteFeatureRel activeSiteFeatureRel = new ActiveSiteFeatureRel(null);
+    public static BindingSiteFeatureRel bindingSiteFeatureRel = new BindingSiteFeatureRel(null);
+    public static CalciumBindingRegionFeatureRel calciumBindingRegionFeatureRel = new CalciumBindingRegionFeatureRel(null);
+    public static ChainFeatureRel chainFeatureRel = new ChainFeatureRel(null);
+    public static CoiledCoilRegionFeatureRel coiledCoilRegionFeatureRel = new CoiledCoilRegionFeatureRel(null);
+    public static CompositionallyBiasedRegionFeatureRel compositionallyBiasedRegionFeatureRel = new CompositionallyBiasedRegionFeatureRel(null);
+    public static CrossLinkFeatureRel crossLinkFeatureRel = new CrossLinkFeatureRel(null);
+    public static DisulfideBondFeatureRel disulfideBondFeatureRel = new DisulfideBondFeatureRel(null);
+    public static DnaBindingRegionFeatureRel dnaBindingRegionFeatureRel = new DnaBindingRegionFeatureRel(null);
+    public static DomainFeatureRel domainFeatureRel = new DomainFeatureRel(null);
+    public static GlycosylationSiteFeatureRel glycosylationSiteFeatureRel = new GlycosylationSiteFeatureRel(null);
+    public static HelixFeatureRel helixFeatureRel = new HelixFeatureRel(null);
+    public static InitiatorMethionineFeatureRel initiatorMethionineFeatureRel = new InitiatorMethionineFeatureRel(null);
+    public static IntramembraneRegionFeatureRel intramembraneRegionFeatureRel = new IntramembraneRegionFeatureRel(null);
+    public static LipidMoietyBindingRegionFeatureRel lipidMoietyBindingRegionFeatureRel = new LipidMoietyBindingRegionFeatureRel(null);
+    public static MetalIonBindingSiteFeatureRel metalIonBindingSiteFeatureRel = new MetalIonBindingSiteFeatureRel(null);
+    public static ModifiedResidueFeatureRel modifiedResidueFeatureRel = new ModifiedResidueFeatureRel(null);
+    public static MutagenesisSiteFeatureRel mutagenesisSiteFeatureRel = new MutagenesisSiteFeatureRel(null);
+    public static NonConsecutiveResiduesFeatureRel nonConsecutiveResiduesFeatureRel = new NonConsecutiveResiduesFeatureRel(null);
+    public static NonStandardAminoAcidFeatureRel nonStandardAminoAcidFeatureRel = new NonStandardAminoAcidFeatureRel(null);
+    public static NonTerminalResidueFeatureRel nonTerminalResidueFeatureRel = new NonTerminalResidueFeatureRel(null);
+    public static NucleotidePhosphateBindingRegionFeatureRel nucleotidePhosphateBindingRegionFeatureRel = new NucleotidePhosphateBindingRegionFeatureRel(null);
+    public static PeptideFeatureRel peptideFeatureRel = new PeptideFeatureRel(null);
+    public static PropeptideFeatureRel propeptideFeatureRel = new PropeptideFeatureRel(null);
+    public static RegionOfInterestFeatureRel regionOfInterestFeatureRel = new RegionOfInterestFeatureRel(null);
+    public static RepeatFeatureRel repeatFeatureRel = new RepeatFeatureRel(null);
+    public static SequenceConflictFeatureRel sequenceConflictFeatureRel = new SequenceConflictFeatureRel(null);
+    public static SequenceVariantFeatureRel sequenceVariantFeatureRel = new SequenceVariantFeatureRel(null);
+    public static ShortSequenceMotifFeatureRel shortSequenceMotifFeatureRel = new ShortSequenceMotifFeatureRel(null);
+    public static SignalPeptideFeatureRel signalPeptideFeatureRel = new SignalPeptideFeatureRel(null);
+    public static SiteFeatureRel siteFeatureRel = new SiteFeatureRel(null);
+    public static SpliceVariantFeatureRel spliceVariantFeatureRel = new SpliceVariantFeatureRel(null);
+    public static StrandFeatureRel strandFeatureRel = new StrandFeatureRel(null);
+    public static TopologicalDomainFeatureRel topologicalDomainFeatureRel = new TopologicalDomainFeatureRel(null);
+    public static TransitPeptideFeatureRel transitPeptideFeatureRel = new TransitPeptideFeatureRel(null);
+    public static TransmembraneRegionFeatureRel transmembraneRegionFeatureRel = new TransmembraneRegionFeatureRel(null);
+    public static TurnFeatureRel turnFeatureRel = new TurnFeatureRel(null);
+    public static UnsureResidueFeatureRel unsureResidueFeatureRel = new UnsureResidueFeatureRel(null);
+    public static ZincFingerRegionFeatureRel zincFingerRegionFeatureRel = new ZincFingerRegionFeatureRel(null);
+    //------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------
     //-----other things....------
     public static long alternativeProductInitiationId;
@@ -181,7 +226,6 @@ public class ImportUniprot implements Executable {
     public static long seqCautionMiscellaneousDiscrepancyId;
     public static long seqCautionErroneousGeneModelPredictionId;
     //---------------------------------
-
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -333,7 +377,11 @@ public class ImportUniprot implements Executable {
                         long currentProteinId = inserter.createNode(proteinProperties);
                         indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
 
+                        //-----comments import---
                         importProteinComments(entryXMLElem, inserter, indexService, currentProteinId);
+
+                        //-----features import----
+                        importProteinFeatures(entryXMLElem, inserter, indexService, currentProteinId);
 
                         //--------------------------------datasets--------------------------------------------------
                         String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(CommonData.ENTRY_DATASET_ATTRIBUTE);
@@ -531,7 +579,7 @@ public class ImportUniprot implements Executable {
 //                            // create the batch index service again
 //                            indexService = new LuceneIndexBatchInserterImpl(inserter);
 //                        }
-                        
+
 
 
 
@@ -545,14 +593,176 @@ public class ImportUniprot implements Executable {
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
-            } finally{
+            } finally {
                 // closing logger file handler
                 fh.close();
                 // shutdown, makes sure all changes are written to disk
                 indexService.shutdown();
                 inserter.shutdown();
-                
+
             }
+        }
+
+    }
+
+    private static void importProteinFeatures(XMLElement entryXMLElem,
+            BatchInserter inserter,
+            LuceneIndexBatchInserter indexService,
+            long currentProteinId) {
+
+        String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
+
+        //--------------------------------features----------------------------------------------------
+        List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(CommonData.FEATURE_TAG_NAME);
+        for (Element featureElem : featuresList) {
+            String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
+            long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+            if (featureTypeNodeId < 0) {
+                featureTypeProperties.put(FeatureTypeNode.NAME_PROPERTY, featureTypeSt);
+                featureTypeNodeId = inserter.createNode(featureTypeProperties);
+                indexService.index(featureTypeNodeId, FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+            }
+
+            String featureDescSt = featureElem.getAttributeValue(CommonData.FEATURE_DESCRIPTION_ATTRIBUTE);
+            if (featureDescSt == null) {
+                featureDescSt = "";
+            }
+            String featureIdSt = featureElem.getAttributeValue(CommonData.FEATURE_ID_ATTRIBUTE);
+            if (featureIdSt == null) {
+                featureIdSt = "";
+            }
+            String featureStatusSt = featureElem.getAttributeValue(CommonData.STATUS_ATTRIBUTE);
+            if (featureStatusSt == null) {
+                featureStatusSt = "";
+            }
+            String featureEvidenceSt = featureElem.getAttributeValue(CommonData.EVIDENCE_ATTRIBUTE);
+            if (featureEvidenceSt == null) {
+                featureEvidenceSt = "";
+            }
+
+            Element locationElem = featureElem.getChild(CommonData.FEATURE_LOCATION_TAG_NAME);
+            Element positionElem = locationElem.getChild(CommonData.FEATURE_POSITION_TAG_NAME);
+            String beginFeatureSt = "";
+            String endFeatureSt = "";
+            if (positionElem != null) {
+                beginFeatureSt = positionElem.getAttributeValue(CommonData.FEATURE_POSITION_POSITION_ATTRIBUTE);
+                endFeatureSt = beginFeatureSt;
+            } else {
+                beginFeatureSt = locationElem.getChild(CommonData.FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(CommonData.FEATURE_LOCATION_POSITION_ATTRIBUTE);
+                endFeatureSt = locationElem.getChild(CommonData.FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(CommonData.FEATURE_LOCATION_POSITION_ATTRIBUTE);
+            }
+
+            if (beginFeatureSt == null) {
+                beginFeatureSt = "";
+            }
+            if (endFeatureSt == null) {
+                endFeatureSt = "";
+            }
+
+            String originalSt = featureElem.getChildText(CommonData.FEATURE_ORIGINAL_TAG_NAME);
+            String variationSt = featureElem.getChildText(CommonData.FEATURE_VARIATION_TAG_NAME);
+            if (originalSt == null) {
+                originalSt = "";
+            }
+            if (variationSt == null) {
+                variationSt = "";
+            }
+            String featureRefSt = featureElem.getAttributeValue(CommonData.FEATURE_REF_ATTRIBUTE);
+            if (featureRefSt == null) {
+                featureRefSt = "";
+            }
+
+            featureProperties.put(BasicFeatureRel.DESCRIPTION_PROPERTY, featureDescSt);
+            featureProperties.put(BasicFeatureRel.ID_PROPERTY, featureIdSt);
+            featureProperties.put(BasicFeatureRel.EVIDENCE_PROPERTY, featureEvidenceSt);
+            featureProperties.put(BasicFeatureRel.STATUS_PROPERTY, featureStatusSt);
+            featureProperties.put(BasicFeatureRel.BEGIN_PROPERTY, beginFeatureSt);
+            featureProperties.put(BasicFeatureRel.END_PROPERTY, endFeatureSt);
+            featureProperties.put(BasicFeatureRel.ORIGINAL_PROPERTY, originalSt);
+            featureProperties.put(BasicFeatureRel.VARIATION_PROPERTY, variationSt);
+            featureProperties.put(BasicFeatureRel.REF_PROPERTY, featureRefSt);
+
+
+            if (featureTypeSt.equals(ActiveSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, activeSiteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(BindingSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, bindingSiteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(CrossLinkFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, crossLinkFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(GlycosylationSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, glycosylationSiteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(InitiatorMethionineFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, initiatorMethionineFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(LipidMoietyBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, lipidMoietyBindingRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(MetalIonBindingSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, metalIonBindingSiteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(ModifiedResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, modifiedResidueFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(NonStandardAminoAcidFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, nonStandardAminoAcidFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(NonTerminalResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, nonTerminalResidueFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(PeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, peptideFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(UnsureResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, unsureResidueFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(MutagenesisSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, mutagenesisSiteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(SequenceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, sequenceVariantFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(CalciumBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, calciumBindingRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(ChainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, chainFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(CoiledCoilRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, coiledCoilRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(CompositionallyBiasedRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, compositionallyBiasedRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(DisulfideBondFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, disulfideBondFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(DnaBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, dnaBindingRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(DomainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, domainFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(HelixFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, helixFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(IntramembraneRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, intramembraneRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(NonConsecutiveResiduesFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, nonConsecutiveResiduesFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(NucleotidePhosphateBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, nucleotidePhosphateBindingRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(PropeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, propeptideFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(RegionOfInterestFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, regionOfInterestFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(RepeatFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, repeatFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(ShortSequenceMotifFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, shortSequenceMotifFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(SignalPeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, signalPeptideFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(SpliceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, spliceVariantFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(StrandFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, strandFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(TopologicalDomainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, topologicalDomainFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(TransitPeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, transitPeptideFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(TransmembraneRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, transmembraneRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(ZincFingerRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, zincFingerRegionFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(SiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, siteFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, turnFeatureRel, featureProperties);
+            }
+
+            inserter.createRelationship(currentProteinId, featureTypeNodeId, sequenceConflictFeatureRel, featureProperties);
+
         }
 
     }
@@ -1461,6 +1671,4 @@ public class ImportUniprot implements Executable {
 
 
     }
-
-
 }
