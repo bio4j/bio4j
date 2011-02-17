@@ -31,8 +31,11 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
- *
- * @author ppareja
+ * Imports protein interactions:
+ * - protein <--> protein
+ * - protein <--> isoform
+ * - isoform <--> isoform
+ * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportProteinInteractions implements Executable {
 

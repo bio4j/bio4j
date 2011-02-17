@@ -44,8 +44,12 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
+ * This class deals with the main part of Bio4j importing process.
+ * ImportGeneOntology importation must have been performed prior to this step.
+ * Features, comments, GeneOntology annotations and all information directly related
+ * to entries are imported in this step, (except protein interactions and isoform sequences).
  *
- * @author ppareja
+ * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportUniprot implements Executable {
 

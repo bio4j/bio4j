@@ -12,8 +12,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +20,8 @@ import org.neo4j.graphdb.Transaction;
 import org.neo4j.index.IndexService;
 
 /**
- *
- * @author ppareja
+ * Imports the sequence of every existent protein isoform
+ * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportIsoformSequences implements Executable {
 
