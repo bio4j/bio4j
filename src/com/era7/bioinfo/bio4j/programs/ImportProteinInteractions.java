@@ -20,6 +20,8 @@ import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
+import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
+import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionsRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -82,11 +84,11 @@ public class ImportProteinInteractions implements Executable {
 
             //writer for the file with the entries accessions that supposably have interactions
             //with themselves
-            BufferedWriter outbBuff = null;
+            //BufferedWriter outbBuff = null;
 
             try {
 
-                outbBuff = new BufferedWriter(new FileWriter(new File("conflictEntries.txt")));
+                //outbBuff = new BufferedWriter(new FileWriter(new File("conflictEntries.txt")));
 
                 // This block configure the logger with handler and formatter
                 fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
@@ -107,12 +109,23 @@ public class ImportProteinInteractions implements Executable {
                 //-------------------relationships properties maps--------------------------
                 Map<String, Object> proteinProteinInteractionProperties = new HashMap<String, Object>();
                 Map<String, Object> proteinIsoformInteractionProperties = new HashMap<String, Object>();
+                Map<String, Object> proteinSelfInteractionProperties = new HashMap<String, Object>();
                 //----------------------------------------------------------------------------
 
                 //--------------------------------relationships------------------------------------------
                 ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(null);
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
+                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
+                ProteinSelfInteractionsRel proteinSelfInteractionsRel = new ProteinSelfInteractionsRel(null);
                 //------------------------------------------------------------------------------------------------
+
+
+                //First we create the node and relationship that will lead to 
+                //protein self interactions (in case it does not exist yet)
+                long proteinSelfInteractionsNodeId = inserter.createNode(null);
+                inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
+                        proteinSelfInteractionsRel, null);
+                //----------------------------------------------------------
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -179,12 +192,11 @@ public class ImportProteinInteractions implements Executable {
                                 if (interactant2AccessionSt != null) {
                                     protein2Id = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
                                 } else {
-//                                    System.out.println("intactId1St = " + intactId1St);
-//                                    System.out.println("intactId2St = " + intactId2St);
-                                    //this is the case where one protein interacts with itself
+
+
                                     if (intactId1St.equals(intactId2St)) {
                                         interactionWithItself = true;
-                                        outbBuff.write(accessionSt + "\n");
+                                        //outbBuff.write(accessionSt + "\n");
                                     }
 //                                    System.out.println("protein2Id = " + protein2Id);
 //                                    System.out.println("currentProteinId = " + currentProteinId);
@@ -214,6 +226,15 @@ public class ImportProteinInteractions implements Executable {
                                         inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
 
                                     }
+                                } else {
+                                    //this is the case where one protein interacts with itself
+
+                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
+                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
+                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
+                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
+
+                                    inserter.createRelationship(currentProteinId, proteinSelfInteractionsNodeId, proteinSelfInteractionRel, proteinSelfInteractionProperties);
                                 }
 
 
@@ -247,14 +268,27 @@ public class ImportProteinInteractions implements Executable {
                 }
 
             } finally {
-                outbBuff.close();
+                //outbBuff.close();
 
-                //closing logger file handler
-                fh.close();
+                try {
 
-                // shutdown, makes sure all changes are written to disk
-                inserter.shutdown();
-                indexService.shutdown();
+                    // shutdown, makes sure all changes are written to disk
+                    inserter.shutdown();
+                    indexService.shutdown();
+
+                    //closing logger file handler
+                    fh.close();
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, ("Exception retrieving protein " + accessionSt));
+                    logger.log(Level.SEVERE, e.getMessage());
+                    StackTraceElement[] trace = e.getStackTrace();
+                    for (StackTraceElement stackTraceElement : trace) {
+                        logger.log(Level.SEVERE, stackTraceElement.toString());
+                    }
+                    //closing logger file handler
+                    fh.close();
+                }
+
 
             }
         }

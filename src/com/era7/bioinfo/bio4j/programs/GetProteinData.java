@@ -37,6 +37,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -50,9 +54,18 @@ import org.neo4j.kernel.EmbeddedGraphDatabase;
  */
 public class GetProteinData {
 
+    private static final Logger logger = Logger.getLogger("GetProteinData");
+    private static FileHandler fh;
+
     public static void main(String[] args) throws IOException {
         String name = args[0];
 
+        // This block configures the logger with handler and formatter
+        fh = new FileHandler("GetProteinData" + args[0].split("\\.")[0] + ".log", false);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
+        logger.addHandler(fh);
+        logger.setLevel(Level.ALL);
 
         System.out.println("name = " + name);
         System.out.println("creating manager...");
@@ -73,8 +86,8 @@ public class GetProteinData {
         Node node = null;
         try {
 
-            BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
-
+//            BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
+//
 //            System.out.println("Getting proteins with Interpro motif ID:  IPR000847...");
 //            int interproCounter = 0;
 //            InterproNode interproNode = new InterproNode(indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, "IPR000847"));
@@ -191,12 +204,24 @@ public class GetProteinData {
             txn.success();
 
         } catch (Exception e) {
-            e.printStackTrace();
-            txn.failure();
+            logger.log(Level.SEVERE, e.getMessage());
+            StackTraceElement[] trace = e.getStackTrace();
+            for (StackTraceElement stackTraceElement : trace) {
+                logger.log(Level.SEVERE, stackTraceElement.toString());
+            }
         } finally {
-            txn.finish();
-            indexService.shutdown();
-            manager.shutDown();
+            try {
+                indexService.shutdown();
+                manager.shutDown();
+                txn.finish();
+            } catch (Exception e) {
+                logger.log(Level.SEVERE, e.getMessage());
+                StackTraceElement[] trace = e.getStackTrace();
+                for (StackTraceElement stackTraceElement : trace) {
+                    logger.log(Level.SEVERE, stackTraceElement.toString());
+                }
+            }
+
         }
 
 

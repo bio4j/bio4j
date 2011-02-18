@@ -1006,7 +1006,10 @@ public class ImportUniprot implements Executable {
                     }
                     isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
                     isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-                    long isoformId = createIsoformNode(isoformProperties, inserter, indexService);
+                    long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+                    if(isoformId < 0){
+                        isoformId = createIsoformNode(isoformProperties, inserter, indexService);
+                    }
 
                     for (Element eventElem : eventList) {
 
