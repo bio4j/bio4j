@@ -115,17 +115,8 @@ public class ImportProteinInteractions implements Executable {
                 //--------------------------------relationships------------------------------------------
                 ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(null);
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
-                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
-                ProteinSelfInteractionsRel proteinSelfInteractionsRel = new ProteinSelfInteractionsRel(null);
+                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);                
                 //------------------------------------------------------------------------------------------------
-
-
-                //First we create the node and relationship that will lead to 
-                //protein self interactions (in case it does not exist yet)
-                long proteinSelfInteractionsNodeId = inserter.createNode(null);
-                inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
-                        proteinSelfInteractionsRel, null);
-                //----------------------------------------------------------
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));

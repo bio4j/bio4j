@@ -17,7 +17,6 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
-import com.era7.bioinfo.bio4jmodel.relationships.sc.*;
 import com.era7.bioinfo.bio4jmodel.relationships.*;
 import com.era7.bioinfo.bio4jmodel.relationships.comment.*;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
@@ -91,9 +90,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> onlineJournalProperties = new HashMap<String, Object>();
     public static Map<String, Object> countryProperties = new HashMap<String, Object>();
     public static Map<String, Object> isoformProperties = new HashMap<String, Object>();
-    public static Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
     public static Map<String, Object> commentTypeProperties = new HashMap<String, Object>();
-    public static Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
     public static Map<String, Object> featureTypeProperties = new HashMap<String, Object>();
     //---------------------------------------------------------------------
     //-------------------relationships properties maps--------------------------
@@ -108,6 +105,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> rnaEditingCommentProperties = new HashMap<String, Object>();
     public static Map<String, Object> massSpectrometryCommentProperties = new HashMap<String, Object>();
     public static Map<String, Object> featureProperties = new HashMap<String, Object>();
+    public static Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
     //----------------------------------------------------------------------------
     //--------------------------------relationships------------------------------------------
     public static ProteinGoRel proteinGoRel = new ProteinGoRel(null);
@@ -144,11 +142,7 @@ public class ImportUniprot implements Executable {
     public static UnpublishedObservationAuthorRel unpublishedObservationAuthorRel = new UnpublishedObservationAuthorRel(null);
     public static UnpublishedObservationProteinCitationRel unpublishedObservationProteinCitationRel = new UnpublishedObservationProteinCitationRel(null);
     public static InstituteCountryRel instituteCountryRel = new InstituteCountryRel(null);
-    public static IsoformEventGeneratorRel isoformEventGeneratorRel = new IsoformEventGeneratorRel(null);
-    public static AlternativeProductInitiationRel alternativeProductInitiationRel = new AlternativeProductInitiationRel(null);
-    public static AlternativeProductPromoterRel alternativeProductPromoterRel = new AlternativeProductPromoterRel(null);
-    public static AlternativeProductSplicingRel alternativeProductSplicingRel = new AlternativeProductSplicingRel(null);
-    public static AlternativeProductRibosomalFrameshiftingRel alternativeProductRibosomalFrameshiftingRel = new AlternativeProductRibosomalFrameshiftingRel(null);
+    public static IsoformEventGeneratorRel isoformEventGeneratorRel = new IsoformEventGeneratorRel(null);    
     public static ProteinIsoformRel proteinIsoformRel = new ProteinIsoformRel(null);
     public static ProteinErroneousGeneModelPredictionRel proteinErroneousGeneModelPredictionRel = new ProteinErroneousGeneModelPredictionRel(null);
     public static ProteinErroneousInitiationRel proteinErroneousInitiationRel = new ProteinErroneousInitiationRel(null);
@@ -181,13 +175,7 @@ public class ImportUniprot implements Executable {
     public static SimilarityCommentRel similarityCommentRel = new SimilarityCommentRel(null);
     public static SubunitCommentRel subunitCommentRel = new SubunitCommentRel(null);
     public static TissueSpecificityCommentRel tissueSpecificityCommentRel = new TissueSpecificityCommentRel(null);
-    public static ToxicDoseCommentRel toxicDoseCommentRel = new ToxicDoseCommentRel(null);
-    public static ErroneousGeneModelPredictionRel erroneousGeneModelPredictionRel = new ErroneousGeneModelPredictionRel(null);
-    public static ErroneousInitiationRel erroneousInitiationRel = new ErroneousInitiationRel(null);
-    public static ErroneousTerminationRel erroneousTerminationRel = new ErroneousTerminationRel(null);
-    public static ErroneousTranslationRel erroneousTranslationRel = new ErroneousTranslationRel(null);
-    public static FrameshiftRel frameshiftRel = new FrameshiftRel(null);
-    public static MiscellaneousDiscrepancyRel miscellaneousDiscrepancyRel = new MiscellaneousDiscrepancyRel(null);
+    public static ToxicDoseCommentRel toxicDoseCommentRel = new ToxicDoseCommentRel(null);    
     //features relationships------------------------------------------
     public static ActiveSiteFeatureRel activeSiteFeatureRel = new ActiveSiteFeatureRel(null);
     public static BindingSiteFeatureRel bindingSiteFeatureRel = new BindingSiteFeatureRel(null);
@@ -280,54 +268,6 @@ public class ImportUniprot implements Executable {
 
                 // create the batch index service
                 indexService = new LuceneIndexBatchInserterImpl(inserter);
-
-
-                //----------------------------------------------------------------------------------------------------------------
-                //Before starting reading the file there are a few relationships/nodes which
-                //must be initialized first
-                //------------------ALTERNATIVE PRODUCTS--------------------
-                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
-
-                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductPromoterId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductPromoterId, alternativeProductPromoterRel, null);
-
-                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductSplicingId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductSplicingId, alternativeProductSplicingRel, null);
-
-                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
-
-                //---------------------SEQUENCE CAUTION------------------------
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
-
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionErroneousTranslationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTranslationId, erroneousTranslationRel, null);
-
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionFrameshiftId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionFrameshiftId, frameshiftRel, null);
-
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionErroneousTerminationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTerminationId, proteinErroneousTerminationRel, null);
-
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionMiscellaneousDiscrepancyId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, null);
-
-                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                seqCautionErroneousGeneModelPredictionId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, null);
-                //---------------------------------------------------------------------------------------------------------------
-
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
