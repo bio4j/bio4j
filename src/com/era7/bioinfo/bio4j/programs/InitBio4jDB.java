@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.AlternativeProductNode;
 import com.era7.bioinfo.bio4jmodel.nodes.SequenceCautionNode;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
@@ -26,9 +27,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import org.neo4j.index.lucene.LuceneIndexBatchInserter;
+import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
+import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
  *
@@ -48,7 +53,6 @@ public class InitBio4jDB implements Executable {
     public static AlternativeProductPromoterRel alternativeProductPromoterRel = new AlternativeProductPromoterRel(null);
     public static AlternativeProductSplicingRel alternativeProductSplicingRel = new AlternativeProductSplicingRel(null);
     public static AlternativeProductRibosomalFrameshiftingRel alternativeProductRibosomalFrameshiftingRel = new AlternativeProductRibosomalFrameshiftingRel(null);
-
     public static ProteinSelfInteractionsRel proteinSelfInteractionsRel = new ProteinSelfInteractionsRel(null);
 
     @Override
@@ -82,58 +86,105 @@ public class InitBio4jDB implements Executable {
             long seqCautionMiscellaneousDiscrepancyId;
             long seqCautionErroneousGeneModelPredictionId;
 
-            //----------------------------------------------------------------------------------------------------------------
-            //A few relationships/nodes which
-            //must be initialized first
-            //------------------ALTERNATIVE PRODUCTS--------------------
-            alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
+            try {
 
-            alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            alternativeProductPromoterId = inserter.createNode(alternativeProductProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), alternativeProductPromoterId, alternativeProductPromoterRel, null);
+                // This block configure the logger with handler and formatter
+                fh = new FileHandler("InitBio4jDB.log", false);
+                SimpleFormatter formatter = new SimpleFormatter();
+                fh.setFormatter(formatter);
+                logger.addHandler(fh);
+                logger.setLevel(Level.ALL);
 
-            alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            alternativeProductSplicingId = inserter.createNode(alternativeProductProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), alternativeProductSplicingId, alternativeProductSplicingRel, null);
+                
+                // create the batch inserter
+                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
-            alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
+                // create the batch index service
+                indexService = new LuceneIndexBatchInserterImpl(inserter);
 
-            //---------------------SEQUENCE CAUTION------------------------
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
+                //----------------------------------------------------------------------------------------------------------------
+                //A few relationships/nodes which
+                //must be initialized first
+                //------------------ALTERNATIVE PRODUCTS--------------------
+                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
 
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionErroneousTranslationId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTranslationId, erroneousTranslationRel, null);
+                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                alternativeProductPromoterId = inserter.createNode(alternativeProductProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductPromoterId, alternativeProductPromoterRel, null);
 
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionFrameshiftId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionFrameshiftId, frameshiftRel, null);
+                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                alternativeProductSplicingId = inserter.createNode(alternativeProductProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductSplicingId, alternativeProductSplicingRel, null);
 
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionErroneousTerminationId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTerminationId, erroneousTerminationRel, null);
+                alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
 
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionMiscellaneousDiscrepancyId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionMiscellaneousDiscrepancyId, miscellaneousDiscrepancyRel, null);
+                //---------------------SEQUENCE CAUTION------------------------
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
 
-            sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-            seqCautionErroneousGeneModelPredictionId = inserter.createNode(sequenceCautionProperties);
-            inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
-            //---------------------------------------------------------------------------------------------------------------
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionErroneousTranslationId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTranslationId, erroneousTranslationRel, null);
 
-            //Node and relationship that will lead to
-            //protein self interactions (in case it does not exist yet)
-            long proteinSelfInteractionsNodeId = inserter.createNode(null);
-            inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
-                    proteinSelfInteractionsRel, null);
-            //----------------------------------------------------------
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionFrameshiftId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionFrameshiftId, frameshiftRel, null);
+
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionErroneousTerminationId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTerminationId, erroneousTerminationRel, null);
+
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionMiscellaneousDiscrepancyId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionMiscellaneousDiscrepancyId, miscellaneousDiscrepancyRel, null);
+
+                sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+                seqCautionErroneousGeneModelPredictionId = inserter.createNode(sequenceCautionProperties);
+                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
+                //---------------------------------------------------------------------------------------------------------------
+
+                //Node and relationship that will lead to
+                //protein self interactions (in case it does not exist yet)
+                long proteinSelfInteractionsNodeId = inserter.createNode(null);
+                inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
+                        proteinSelfInteractionsRel, null);
+                //----------------------------------------------------------
+            } catch (Exception e) {
+                
+                logger.log(Level.SEVERE, e.getMessage());
+                StackTraceElement[] trace = e.getStackTrace();
+                for (StackTraceElement stackTraceElement : trace) {
+                    logger.log(Level.SEVERE, stackTraceElement.toString());
+                }
+            }finally {
+
+                try {
+
+                    // shutdown, makes sure all changes are written to disk
+                    inserter.shutdown();
+                    indexService.shutdown();
+
+                    //closing logger file handler
+                    fh.close();
+                } catch (Exception e) {
+                    logger.log(Level.SEVERE, e.getMessage());
+                    StackTraceElement[] trace = e.getStackTrace();
+                    for (StackTraceElement stackTraceElement : trace) {
+                        logger.log(Level.SEVERE, stackTraceElement.toString());
+                    }
+                    //closing logger file handler
+                    fh.close();
+                }
+
+
+            }
+
+
         }
 
     }

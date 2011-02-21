@@ -22,6 +22,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteracti
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionsRel;
+import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -39,6 +40,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
+import org.neo4j.graphdb.Direction;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.index.lucene.LuceneIndexBatchInserter;
 import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
@@ -97,6 +101,18 @@ public class ImportProteinInteractions implements Executable {
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
+                //First of all we need the protein self-interactions node-id
+                logger.log(Level.SEVERE,"creating manager...");
+                Neo4jManager manager = Neo4jManager.getNeo4JManager(CommonData.DATABASE_FOLDER);
+                logger.log(Level.SEVERE,"getting protein self interactions node id....");
+                Transaction txn = manager.beginTransaction();
+                Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null),Direction.OUTGOING);
+                long proteinSelfInteractionsNodeId = iterable.iterator().next().getEndNode().getId();
+                txn.success();
+                txn.finish();
+                logger.log(Level.SEVERE,"done!");
+                //---------------------------------
+
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
@@ -115,7 +131,7 @@ public class ImportProteinInteractions implements Executable {
                 //--------------------------------relationships------------------------------------------
                 ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(null);
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
-                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);                
+                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
                 //------------------------------------------------------------------------------------------------
 
 
