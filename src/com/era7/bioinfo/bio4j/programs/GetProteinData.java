@@ -45,6 +45,7 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.index.IndexHits;
 import org.neo4j.index.IndexService;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
@@ -79,6 +80,8 @@ public class GetProteinData {
 
         System.out.println("creating index manager...");
         IndexService indexService = manager.getIndexService();
+        IndexService fullTextIndexService = manager.getFullTextIndexService();
+        IndexService fullTextQueryIndexService = manager.getFullTextQueryIndexService();
         System.out.println("getting node...");
         Transaction txn = manager.beginTransaction();
 
@@ -106,6 +109,14 @@ public class GetProteinData {
 //            }
 //            interproBuffer.close();
 
+            System.out.println("Query entered: " + args[1]);
+            System.out.println("With full text index service");
+            IndexHits<Node> hits = fullTextIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
+            System.out.println("results: " + hits.size());
+            System.out.println("With full text QUERY index service");
+            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
+            System.out.println("results: " + hits.size());
+
             node = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, name);
 
             if (node != null) {
@@ -113,6 +124,15 @@ public class GetProteinData {
                 ProteinNode protein = new ProteinNode(node);
 
                 System.out.println("protein: " + protein);
+
+                System.out.println("gene names:");
+                for (String string : protein.getGeneNames()) {
+                    System.out.println(string);
+                }
+                System.out.println("EMBL references:");
+                for (String string : protein.getEMBLreferences()) {
+                    System.out.println(string);
+                }
 
                 System.out.println("Getting keywords...");
                 Iterator<Relationship> relIt = protein.getNode().getRelationships(new ProteinKeywordRel(null), Direction.OUTGOING).iterator();

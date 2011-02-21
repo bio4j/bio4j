@@ -49,6 +49,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
+import org.neo4j.index.lucene.LuceneFulltextIndexBatchInserter;
 import org.neo4j.index.lucene.LuceneIndexBatchInserter;
 import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
@@ -252,6 +253,7 @@ public class ImportUniprot implements Executable {
 
             BatchInserter inserter = null;
             LuceneIndexBatchInserter indexService = null;
+            LuceneFulltextIndexBatchInserter fullTextIndexService = null;
 
             try {
 
@@ -268,6 +270,7 @@ public class ImportUniprot implements Executable {
 
                 // create the batch index service
                 indexService = new LuceneIndexBatchInserterImpl(inserter);
+                fullTextIndexService = new LuceneFulltextIndexBatchInserter(inserter);
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
@@ -300,6 +303,31 @@ public class ImportUniprot implements Executable {
 
                         currentAccessionId = accessionSt;
 
+                        //-----db references-------------
+                        String pirIdSt = "";
+                        String keggIdSt = "";
+                        String ensemblIdSt = "";
+                        String uniGeneIdSt = "";
+                        String arrayExpressIdSt = "";
+
+                        List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
+                        ArrayList<String> emblCrossReferences = new ArrayList<String>();
+                        for (Element dbReferenceElem : dbReferenceList) {
+                            String refId = dbReferenceElem.getAttributeValue("id");
+                            if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")){
+                                ensemblIdSt = refId;
+                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIR")){
+                                pirIdSt = refId;
+                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UniGene")){
+                                uniGeneIdSt = refId;
+                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("KEGG")){
+                                keggIdSt = refId;
+                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EMBL")){
+                                emblCrossReferences.add(refId);
+                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")){
+                                arrayExpressIdSt = refId;
+                            }
+                        }
 
                         Element sequenceElem = entryXMLElem.asJDomElement().getChild(CommonData.ENTRY_SEQUENCE_TAG_NAME);
                         String sequenceSt = sequenceElem.getText();
@@ -315,23 +343,29 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.SEQUENCE_PROPERTY, sequenceSt);
                         proteinProperties.put(ProteinNode.LENGTH_PROPERTY, seqLength);
                         proteinProperties.put(ProteinNode.MASS_PROPERTY, seqMass);
+                        proteinProperties.put(ProteinNode.ARRAY_EXPRESS_ID_PROPERTY, arrayExpressIdSt);
+                        proteinProperties.put(ProteinNode.PIR_ID_PROPERTY, pirIdSt);
+                        proteinProperties.put(ProteinNode.KEGG_ID_PROPERTY, keggIdSt);
+                        proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY,convertToStringArray(emblCrossReferences));
+                        proteinProperties.put(ProteinNode.ENSEMBL_ID_PROPERTY, ensemblIdSt);
+                        proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY,uniGeneIdSt);
 
                         //---------------gene-names-------------------
                         Element geneElement = entryXMLElem.asJDomElement().getChild(CommonData.GENE_TAG_NAME);
+                        ArrayList<String> geneNames = new ArrayList<String>();
                         if (geneElement != null) {
-                            String geneNamesSt = "";
                             List<Element> genesList = geneElement.getChildren(CommonData.GENE_NAME_TAG_NAME);
                             for (Element geneNameElem : genesList) {
-                                geneNamesSt += geneNameElem.getText() + ProteinNode.GENE_NAMES_SEPARATOR;
-                            }
-                            proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, geneNamesSt.substring(0, geneNamesSt.length() - 1));
-                        } else {
-                            proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, "");
-                        }
+                                geneNames.add(geneNameElem.getText());
+                            }                            
+                        } 
+                        proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, convertToStringArray(geneNames));
                         //-----------------------------------------
 
                         long currentProteinId = inserter.createNode(proteinProperties);
                         indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+                        //indexing protein by full name
+                        fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
 
                         //-----comments import---
                         importProteinComments(entryXMLElem, inserter, indexService, currentProteinId);
@@ -377,9 +411,10 @@ public class ImportUniprot implements Executable {
                         }
                         //---------------------------------------------------------------------------------------
 
-                        //-------------------------------interpro------------------------------------------------------
-                        List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
+                                              
                         for (Element dbReferenceElem : dbReferenceList) {
+
+                            //-------------------------------interpro------------------------------------------------------  
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.INTERPRO_DB_REFERENCE_TYPE)) {
 
                                 String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
@@ -402,7 +437,9 @@ public class ImportUniprot implements Executable {
                                 }
 
                                 inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.GO_DB_REFERENCE_TYPE)) {
+                            }
+                            //-------------------GO -----------------------------
+                            else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.GO_DB_REFERENCE_TYPE)) {
 
                                 String goId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
                                 String evidenceSt = "";
@@ -554,7 +591,9 @@ public class ImportUniprot implements Executable {
                 fh.close();
                 // shutdown, makes sure all changes are written to disk
                 indexService.shutdown();
+                fullTextIndexService.shutdown();
                 inserter.shutdown();
+
 
             }
         }
@@ -1629,5 +1668,14 @@ public class ImportUniprot implements Executable {
         }
 
 
+    }
+
+
+    private static String[] convertToStringArray(List<String> list){
+        String[] result = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
 }
