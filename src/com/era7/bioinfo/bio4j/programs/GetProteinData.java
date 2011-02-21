@@ -116,6 +116,14 @@ public class GetProteinData {
             System.out.println("With full text QUERY index service");
             hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
             System.out.println("results: " + hits.size());
+            System.out.println("With full text QUERY index service (gene names)");
+            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, args[1]);
+            System.out.println("results: " + hits.size());
+
+            for (Node node1 : hits) {
+                ProteinNode tempProt = new ProteinNode(node1);
+                System.out.println(tempProt.getAccession());
+            }
 
             node = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, name);
 

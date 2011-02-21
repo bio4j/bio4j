@@ -303,6 +303,14 @@ public class ImportUniprot implements Executable {
 
                         currentAccessionId = accessionSt;
 
+                        //-----------alternative accessions-------------
+                        ArrayList<String> alternativeAccessions = new ArrayList<String>();
+                        List<Element> altAccessionsList = entryXMLElem.asJDomElement().getChildren(CommonData.ENTRY_ACCESSION_TAG_NAME);
+                        for (int i = 1; i < altAccessionsList.size(); i++) {
+                            alternativeAccessions.add(altAccessionsList.get(i).getText());
+                        }
+                        proteinProperties.put(ProteinNode.ALTERNATIVE_ACCESSIONS_PROPERTY, convertToStringArray(alternativeAccessions));
+
                         //-----db references-------------
                         String pirIdSt = "";
                         String keggIdSt = "";
@@ -364,8 +372,20 @@ public class ImportUniprot implements Executable {
 
                         long currentProteinId = inserter.createNode(proteinProperties);
                         indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+                        //indexing protein by alternative accessions
+                        for (String altAccessionSt : alternativeAccessions) {
+                            indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt);
+                        }
                         //indexing protein by full name
                         fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
+                        //indexing protein by gene names
+                        String geneNamesStToBeIndexed = "";
+                        for (String geneNameSt : geneNames) {
+                            geneNamesStToBeIndexed += geneNameSt + " ";
+                        }     
+                        fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
+                        
+                        
 
                         //-----comments import---
                         importProteinComments(entryXMLElem, inserter, indexService, currentProteinId);
@@ -605,7 +625,7 @@ public class ImportUniprot implements Executable {
             LuceneIndexBatchInserter indexService,
             long currentProteinId) {
 
-        String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
+        //String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
 
         //--------------------------------features----------------------------------------------------
         List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(CommonData.FEATURE_TAG_NAME);
