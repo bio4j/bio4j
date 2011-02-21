@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4j.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
@@ -103,7 +104,7 @@ public class ImportProteinInteractions implements Executable {
 
                 //First of all we need the protein self-interactions node-id
                 logger.log(Level.SEVERE,"creating manager...");
-                Neo4jManager manager = Neo4jManager.getNeo4JManager(CommonData.DATABASE_FOLDER);
+                Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
                 logger.log(Level.SEVERE,"getting protein self interactions node id....");
                 Transaction txn = manager.beginTransaction();
                 Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null),Direction.OUTGOING);

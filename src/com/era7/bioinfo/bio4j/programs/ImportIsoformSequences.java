@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4j.Bio4jManager;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
 import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;
@@ -60,7 +61,7 @@ public class ImportIsoformSequences implements Executable {
 
             String isoformIdSt = null;
             Transaction txn = null;
-            Neo4jManager manager = null;
+            Bio4jManager manager = null;
 
             try {
 
@@ -72,7 +73,7 @@ public class ImportIsoformSequences implements Executable {
                 logger.setLevel(Level.ALL);
 
                 logger.log(Level.INFO, "creating manager...");
-                manager = Neo4jManager.getNeo4JManager(CommonData.DATABASE_FOLDER);
+                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
                 logger.log(Level.INFO, "creating index manager...");
                 IndexService indexService = manager.getIndexService();
                 txn = manager.beginTransaction();

@@ -63,6 +63,7 @@ public class CommonData {
     public static final String PROTEIN_TAG_NAME = "protein";
     public static final String PROTEIN_RECOMMENDED_NAME_TAG_NAME = "recommendedName";
     public static final String PROTEIN_FULL_NAME_TAG_NAME = "fullName";
+    public static final String PROTEIN_SHORT_NAME_TAG_NAME = "shortName";
     public static final String GENE_TAG_NAME = "gene";
     public static final String GENE_NAME_TAG_NAME = "name";
     public static final String COMMENT_TAG_NAME = "comment";

@@ -300,6 +300,7 @@ public class ImportUniprot implements Executable {
                         String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
                         String nameSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_NAME_TAG_NAME);
                         String fullNameSt = getProteinFullName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
+                        String shortNameSt = getProteinShortName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
 
                         currentAccessionId = accessionSt;
 
@@ -348,6 +349,7 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.ACCESSION_PROPERTY, accessionSt);
                         proteinProperties.put(ProteinNode.NAME_PROPERTY, nameSt);
                         proteinProperties.put(ProteinNode.FULL_NAME_PROPERTY, fullNameSt);
+                        proteinProperties.put(ProteinNode.SHORT_NAME_PROPERTY, shortNameSt);
                         proteinProperties.put(ProteinNode.SEQUENCE_PROPERTY, sequenceSt);
                         proteinProperties.put(ProteinNode.LENGTH_PROPERTY, seqLength);
                         proteinProperties.put(ProteinNode.MASS_PROPERTY, seqMass);
@@ -1232,6 +1234,19 @@ public class ImportUniprot implements Executable {
                 return "";
             } else {
                 return recElem.getChildText(CommonData.PROTEIN_FULL_NAME_TAG_NAME);
+            }
+        }
+    }
+
+    private static String getProteinShortName(Element proteinElement) {
+        if (proteinElement == null) {
+            return "";
+        } else {
+            Element recElem = proteinElement.getChild(CommonData.PROTEIN_RECOMMENDED_NAME_TAG_NAME);
+            if (recElem == null) {
+                return "";
+            } else {
+                return recElem.getChildText(CommonData.PROTEIN_SHORT_NAME_TAG_NAME);
             }
         }
     }

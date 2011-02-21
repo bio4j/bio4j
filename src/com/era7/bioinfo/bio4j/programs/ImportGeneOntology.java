@@ -156,6 +156,13 @@ public class ImportGeneOntology implements Executable {
                                 goDefinition = defstrElem.getText();
                             }
                         }
+                        
+                        List<Element> altIdElems = termXMLElement.asJDomElement().getChildren("alt_id");
+                        String[] alternativeIds = new String[altIdElems.size()];
+                        for (int i = 0; i < altIdElems.size(); i++) {
+                            alternativeIds[i] = altIdElems.get(i).getText();
+                        }
+
 
                         //----term parents----
                         List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_TAG_NAME);
@@ -170,8 +177,13 @@ public class ImportGeneOntology implements Executable {
                         goProperties.put(GoTermNode.NAME_PROPERTY, goName);
                         goProperties.put(GoTermNode.DEFINITION_PROPERTY, goDefinition);
                         goProperties.put(GoTermNode.NAMESPACE_PROPERTY, goNamespace);
+                        goProperties.put(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
                         long currentGoTermId = inserter.createNode(goProperties);
+                        //--------indexing term by id (and alternative ids)----------
                         indexService.index(currentGoTermId, GoTermNode.GO_TERM_ID_INDEX, goId);
+                        for (int i = 0; i < alternativeIds.length; i++) {
+                            indexService.index(currentGoTermId, GoTermNode.GO_TERM_ID_INDEX, alternativeIds[i]);
+                        }
 
                         //----IS ROOT ? ----
                         Element isRootElem = termXMLElement.asJDomElement().getChild(IS_ROOT_TAG_NAME);

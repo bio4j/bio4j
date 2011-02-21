@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4j.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
 import com.era7.bioinfo.bio4jmodel.nodes.InterproNode;
 import com.era7.bioinfo.bio4jmodel.nodes.KeywordNode;
@@ -70,7 +71,7 @@ public class GetProteinData {
 
         System.out.println("name = " + name);
         System.out.println("creating manager...");
-        Neo4jManager manager = Neo4jManager.getNeo4JManager(CommonData.DATABASE_FOLDER);
+        Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
 
         long number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Node.class);
         System.out.println("nodes number = " + number);
