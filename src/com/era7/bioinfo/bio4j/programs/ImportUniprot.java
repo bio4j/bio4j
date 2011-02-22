@@ -1351,7 +1351,7 @@ public class ImportUniprot implements Executable {
                     thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
                     //---thesis node creation and indexing
                     long thesisId = inserter.createNode(thesisProperties);
-                    indexService.index(thesisId, ThesisNode.THESIS_TITLE_INDEX, titleSt);
+                    indexService.index(thesisId, ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
                     //---authors association-----
                     for (long personId : authorsPersonNodesIds) {
                         inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
@@ -1436,7 +1436,6 @@ public class ImportUniprot implements Executable {
 
                     //---submission node creation and indexing
                     long submissionId = inserter.createNode(submissionProperties);
-                    //indexService.index(submissionId, PatentNode.PATENT_NUMBER_INDEX, numberSt); --> There's no need for indexing in principle
                     //---authors association-----
                     for (long personId : authorsPersonNodesIds) {
                         inserter.createRelationship(submissionId, personId, submissionAuthorPersonRel, null);
@@ -1484,14 +1483,14 @@ public class ImportUniprot implements Executable {
                         volumeSt = "";
                     }
 
-                    long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_INDEX, nameSt);
+                    long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
 
                     if (bookId < 0) {
                         bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
                         bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
                         //---book node creation and indexing
                         bookId = inserter.createNode(bookProperties);
-                        indexService.index(bookId, BookNode.BOOK_NAME_INDEX, nameSt);
+                        indexService.index(bookId, BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
                         //---authors association-----
                         for (long personId : authorsPersonNodesIds) {
                             inserter.createRelationship(bookId, personId, bookAuthorRel, null);
@@ -1561,12 +1560,12 @@ public class ImportUniprot implements Executable {
                         locatorSt = "";
                     }
 
-                    long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_INDEX, titleSt);
+                    long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                     if (onlineArticleId < 0) {
                         onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
                         onlineArticleId = inserter.createNode(onlineArticleProperties);
                         if (!titleSt.equals("")) {
-                            indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_INDEX, titleSt);
+                            indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                         }
 
                         //---authors person association-----
@@ -1640,7 +1639,7 @@ public class ImportUniprot implements Executable {
                         }
                     }
 
-                    long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_INDEX, titleSt);
+                    long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                     if (articleId < 0) {
                         articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
                         articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
@@ -1648,7 +1647,7 @@ public class ImportUniprot implements Executable {
                         articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
                         articleId = inserter.createNode(articleProperties);
                         if (!titleSt.equals("")) {
-                            indexService.index(articleId, ArticleNode.ARTICLE_TITLE_INDEX, titleSt);
+                            indexService.index(articleId, ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                         }
 
                         //---authors person association-----
