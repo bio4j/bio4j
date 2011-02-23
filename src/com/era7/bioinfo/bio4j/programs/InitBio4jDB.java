@@ -30,8 +30,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -70,7 +68,7 @@ public class InitBio4jDB implements Executable {
             System.out.println("This program does not expect any parameter\n");
         } else {
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
+            //LuceneIndexBatchInserter indexService = null;
 
             Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
             Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
@@ -100,7 +98,7 @@ public class InitBio4jDB implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                //indexService = new LuceneIndexBatchInserterImpl(inserter);
 
                 //----------------------------------------------------------------------------------------------------------------
                 //A few relationships/nodes which
@@ -167,7 +165,7 @@ public class InitBio4jDB implements Executable {
 
                     // shutdown, makes sure all changes are written to disk
                     inserter.shutdown();
-                    indexService.shutdown();
+                    //indexService.shutdown();
 
                     //closing logger file handler
                     fh.close();

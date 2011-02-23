@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4j.Bio4jManager;
+import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
 import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;

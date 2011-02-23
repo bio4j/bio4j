@@ -23,7 +23,7 @@ package com.era7.bioinfo.bio4j;
  */
 public class CommonData {
     
-    public static final String DATABASE_FOLDER = "/mnt/bio4j_volume/bio4jdb";
+    public static final String DATABASE_FOLDER = "bio4jdb";
 
     public static final String PROPERTIES_FILE_NAME = "batchInserter.properties";
     public static final String ENTRY_TAG_NAME = "entry";

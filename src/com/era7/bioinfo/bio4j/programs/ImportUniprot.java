@@ -49,9 +49,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.index.lucene.LuceneFulltextIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -232,6 +233,14 @@ public class ImportUniprot implements Executable {
     public static long seqCautionErroneousGeneModelPredictionId;
     //---------------------------------
 
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
+
     @Override
     public void execute(ArrayList<String> array) {
         String[] args = new String[array.size()];
@@ -252,8 +261,7 @@ public class ImportUniprot implements Executable {
             String currentAccessionId = "";
 
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
-            LuceneFulltextIndexBatchInserter fullTextIndexService = null;
+            BatchInserterIndexProvider indexProvider = null;
 
             try {
 
@@ -269,8 +277,24 @@ public class ImportUniprot implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
-                fullTextIndexService = new LuceneFulltextIndexBatchInserter(inserter);
+                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
+
+                //-----------------create batch indexes----------------------------------
+                //----------------------------------------------------------------------
+                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_ACCESSION_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+                BatchInserterIndex proteinFullNameFullTextIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST) );
+                BatchInserterIndex proteinGeneNamesFullTextIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST) );
+                BatchInserterIndex datasetNameIndex = indexProvider.nodeIndex( DatasetNode.DATASET_NAME_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+                BatchInserterIndex keywordIdIndex = indexProvider.nodeIndex( KeywordNode.KEYWORD_ID_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+                BatchInserterIndex keywordNameIndex = indexProvider.nodeIndex( KeywordNode.KEYWORD_NAME_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+                //----------------------------------------------------------------------
+                //----------------------------------------------------------------------
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
@@ -373,31 +397,37 @@ public class ImportUniprot implements Executable {
                         //-----------------------------------------
 
                         long currentProteinId = inserter.createNode(proteinProperties);
-                        indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+                        proteinAccessionIndex.add(currentProteinId,MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX,accessionSt));
+                        //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
                         //indexing protein by alternative accessions
                         for (String altAccessionSt : alternativeAccessions) {
-                            indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt);
+                            proteinAccessionIndex.add(currentProteinId,MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX,altAccessionSt));
+                            //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt);
                         }
                         //indexing protein by full name
-                        fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
+                        proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase()));
+                        //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
+                        
                         //indexing protein by gene names
                         String geneNamesStToBeIndexed = "";
                         for (String geneNameSt : geneNames) {
                             geneNamesStToBeIndexed += geneNameSt + " ";
                         }     
-                        fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
+                        //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
+                        proteinGeneNamesFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed));
                         
                         
 
                         //-----comments import---
-                        importProteinComments(entryXMLElem, inserter, indexService, currentProteinId);
+                        importProteinComments(entryXMLElem, inserter, indexProvider, currentProteinId);
 
                         //-----features import----
-                        importProteinFeatures(entryXMLElem, inserter, indexService, currentProteinId);
+                        importProteinFeatures(entryXMLElem, inserter, indexProvider, currentProteinId);
 
                         //--------------------------------datasets--------------------------------------------------
                         String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(CommonData.ENTRY_DATASET_ATTRIBUTE);
-                        long datasetId = indexService.getSingleNode(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
+                        //long datasetId = indexService.getSingleNode(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
+                        long datasetId = datasetNameIndex.get(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt).getSingle();
                         if (datasetId < 0) {
                             datasetProperties.put(DatasetNode.NAME_PROPERTY, proteinDataSetSt);
                             datasetId = inserter.createNode(datasetProperties);
@@ -409,7 +439,7 @@ public class ImportUniprot implements Executable {
 
                         importProteinCitations(entryXMLElem,
                                 inserter,
-                                indexService,
+                                indexProvider,
                                 currentProteinId);
 
                         //-------------------------------keywords------------------------------------------------------
@@ -417,7 +447,8 @@ public class ImportUniprot implements Executable {
                         for (Element keywordElem : keywordsList) {
                             String keywordId = keywordElem.getAttributeValue(CommonData.KEYWORD_ID_ATTRIBUTE);
                             String keywordName = keywordElem.getText();
-                            long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
+                            //long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
+                            long keywordNodeId = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId).getSingle();
                             if (keywordNodeId < 0) {
 
                                 keywordProperties.put(KeywordNode.ID_PROPERTY, keywordId);
@@ -425,9 +456,10 @@ public class ImportUniprot implements Executable {
 
                                 keywordNodeId = inserter.createNode(keywordProperties);
 
-                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_ID_INDEX, keywordId);
-                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_NAME_INDEX, keywordName);
-                                //indexService.optimize();
+//                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_ID_INDEX, keywordId);
+//                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_NAME_INDEX, keywordName);
+                                keywordIdIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_ID_INDEX, keywordId));
+                                keywordNameIndex.add(datasetId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
                             }
                             inserter.createRelationship(currentProteinId, keywordNodeId, proteinKeywordRel, null);
                         }
@@ -624,7 +656,7 @@ public class ImportUniprot implements Executable {
 
     private static void importProteinFeatures(XMLElement entryXMLElem,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService,
+            BatchInserterIndexProvider indexProvider,
             long currentProteinId) {
 
         //String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
@@ -786,8 +818,17 @@ public class ImportUniprot implements Executable {
 
     private static void importProteinComments(XMLElement entryXMLElem,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService,
+            BatchInserterIndexProvider indexProvider,
             long currentProteinId) {
+
+        //---------------indexes declaration---------------------------
+        BatchInserterIndex commentTypeNameIndex = indexProvider.nodeIndex( CommentTypeNode.COMMENT_TYPE_NAME_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+        BatchInserterIndex subcellularLocationNameIndex = indexProvider.nodeIndex( SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+        BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex( IsoformNode.ISOFORM_ID_INDEX,
+                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+        //-----------------------------------------------------------
 
         List<Element> comments = entryXMLElem.asJDomElement().getChildren(CommonData.COMMENT_TAG_NAME);
 
@@ -816,11 +857,15 @@ public class ImportUniprot implements Executable {
             commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
 
             //-----------------COMMENT TYPE NODE RETRIEVING/CREATION---------------------- 
-            long commentTypeId = indexService.getSingleNode(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+            //long commentTypeId = indexService.getSingleNode(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+            long commentTypeId = commentTypeNameIndex.get(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt).getSingle();
             if (commentTypeId < 0) {
                 commentTypeProperties.put(CommentTypeNode.NAME_PROPERTY, commentTypeSt);
                 commentTypeId = inserter.createNode(commentTypeProperties);
-                indexService.index(commentTypeId, CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+                commentTypeNameIndex.add(commentTypeId, MapUtil.map(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt));
+                //indexService.index(commentTypeId, CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+                //----flushing the indexation----
+                commentTypeNameIndex.flush();
             }
 
             //-----toxic dose----------------
@@ -953,11 +998,13 @@ public class ImportUniprot implements Executable {
                 for (Element subcLocation : subcLocations) {
                     List<Element> locations = subcLocation.getChildren(CommonData.LOCATION_TAG_NAME);
                     Element firstLocation = locations.get(0);
-                    long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+                    //long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+                    long firstLocationId = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim()).getSingle();
                     long lastLocationId = firstLocationId;
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
                         lastLocationId = inserter.createNode(subcellularLocationProperties);
+                        subcellularLocationNameIndex.add(lastLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX,firstLocation.getTextTrim()));
                     }
                     for (int i = 1; i < locations.size(); i++) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
@@ -1007,9 +1054,10 @@ public class ImportUniprot implements Executable {
                     }
                     isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
                     isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-                    long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+                    //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+                    long isoformId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt).getSingle();
                     if(isoformId < 0){
-                        isoformId = createIsoformNode(isoformProperties, inserter, indexService);
+                        isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex);
                     }
 
                     for (Element eventElem : eventList) {
@@ -1253,55 +1301,61 @@ public class ImportUniprot implements Executable {
 
     private static long createIsoformNode(Map<String, Object> isoformProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long isoformId = inserter.createNode(isoformProperties);
-        indexService.index(isoformId, IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY));
+        index.add(isoformId, MapUtil.map(IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY)));
+        //indexService.index(isoformId, IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY));
         return isoformId;
     }
 
     private static long createPersonNode(Map<String, Object> personProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long personId = inserter.createNode(personProperties);
-        indexService.index(personId, PersonNode.PERSON_NAME_INDEX, personProperties.get(PersonNode.NAME_PROPERTY));
+        index.add(personId, MapUtil.map(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, personProperties.get(PersonNode.NAME_PROPERTY)));
+        //indexService.index(personId, PersonNode.PERSON_NAME_INDEX, personProperties.get(PersonNode.NAME_PROPERTY));
         return personId;
     }
 
     private static long createConsortiumNode(Map<String, Object> consortiumProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long consortiumId = inserter.createNode(consortiumProperties);
-        indexService.index(consortiumId, ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY));
+        index.add(consortiumId, MapUtil.map(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY)));
+        //indexService.index(consortiumId, ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY));
         return consortiumId;
     }
 
     private static long createInstituteNode(Map<String, Object> instituteProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long instituteId = inserter.createNode(instituteProperties);
-        indexService.index(instituteId, InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY));
+        //indexService.index(instituteId, InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY));
+        index.add(instituteId, MapUtil.map(InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY)));
         return instituteId;
     }
 
     private static long createCountryNode(Map<String, Object> countryProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long countryId = inserter.createNode(countryProperties);
-        indexService.index(countryId, CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY));
+        //indexService.index(countryId, CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY));
+        index.add(countryId, MapUtil.map(CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY)));
         return countryId;
     }
 
     private static long createCityNode(Map<String, Object> cityProperties,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService) {
+            BatchInserterIndex index) {
         long cityId = inserter.createNode(cityProperties);
-        indexService.index(cityId, CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY));
+        //indexService.index(cityId, CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY));
+        index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
         return cityId;
     }
 
     private static void importProteinCitations(XMLElement entryXMLElem,
             BatchInserter inserter,
-            LuceneIndexBatchInserter indexService,
+            BatchInserterIndexProvider indexProvider,
             long currentProteinId) {
 
         List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(CommonData.REFERENCE_TAG_NAME);

@@ -38,8 +38,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -83,7 +85,9 @@ public class ImportGeneOntology implements Executable {
 
 
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
+            BatchInserterIndexProvider indexProvider = null;
+            BatchInserterIndex goTermIdIndex = null;
+
 
             try {
 
@@ -96,9 +100,11 @@ public class ImportGeneOntology implements Executable {
 
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(PROPERTIES_FILE_NAME));
+                
 
                 // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
+                goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, MapUtil.stringMap( "type", "exact" ) );
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -180,9 +186,9 @@ public class ImportGeneOntology implements Executable {
                         goProperties.put(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
                         long currentGoTermId = inserter.createNode(goProperties);
                         //--------indexing term by id (and alternative ids)----------
-                        indexService.index(currentGoTermId, GoTermNode.GO_TERM_ID_INDEX, goId);
+                        goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,goId));
                         for (int i = 0; i < alternativeIds.length; i++) {
-                            indexService.index(currentGoTermId, GoTermNode.GO_TERM_ID_INDEX, alternativeIds[i]);
+                            goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,alternativeIds[i]));
                         }
 
                         //----IS ROOT ? ----
@@ -211,6 +217,9 @@ public class ImportGeneOntology implements Executable {
                 }
                 reader.close();
 
+                //flushing index
+                goTermIdIndex.flush();
+
                 //-----------------------------------------------------------------------
 
                 logger.log(Level.INFO, "Inserting relationships....");
@@ -218,10 +227,10 @@ public class ImportGeneOntology implements Executable {
                 //-------------------now I create the relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = indexService.getSingleNode(GoTermNode.GO_TERM_ID_INDEX, key);
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
                     ArrayList<String> tempArray = termParentsMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = indexService.getSingleNode(GoTermNode.GO_TERM_ID_INDEX, string);
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
                         inserter.createRelationship(currentNodeId, tempNodeId, goParentRel, null);
                     }
                 }
@@ -246,7 +255,8 @@ public class ImportGeneOntology implements Executable {
                     fh.close();
                     logger.log(Level.INFO, "Closing up inserter and index service....");
                     // shutdown, makes sure all changes are written to disk
-                    indexService.shutdown();
+                    //indexService.shutdown();
+                    indexProvider.shutdown();
                     inserter.shutdown();
 
                 } catch (Exception e) {
