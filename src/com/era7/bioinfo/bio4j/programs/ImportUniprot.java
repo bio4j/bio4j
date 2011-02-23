@@ -1409,6 +1409,22 @@ public class ImportUniprot implements Executable {
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         BatchInserterIndex bookNameIndex = indexProvider.nodeIndex(BookNode.BOOK_NAME_FULL_TEXT_INDEX,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        BatchInserterIndex publisherNameIndex = indexProvider.nodeIndex(PublisherNode.PUBLISHER_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex onlineArticleTitleIndex = indexProvider.nodeIndex(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        BatchInserterIndex onlineJournalNameIndex = indexProvider.nodeIndex(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex articleTitleIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        BatchInserterIndex articleDoiIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_DOI_ID_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex articlePubmedIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_PUBMED_ID_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex articleMedlineIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_MEDLINE_ID_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex journalNameIndex = indexProvider.nodeIndex(JournalNode.JOURNAL_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -1654,21 +1670,28 @@ public class ImportUniprot implements Executable {
 
                         //----publisher--
                         if (!publisherSt.equals("")) {
-                            long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+                            //long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+                            long publisherId = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt).getSingle();
                             if (publisherId < 0) {
                                 publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
                                 publisherId = inserter.createNode(publisherProperties);
-                                indexService.index(publisherId, PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+                                //indexService.index(publisherId, PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+                                publisherNameIndex.add(publisherId, MapUtil.map(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt));
+                                //--flushing publisher name index--
+                                publisherNameIndex.flush();
                             }
                             inserter.createRelationship(bookId, publisherId, bookPublisherRel, null);
                         }
 
                         //-----city-----
                         if (!citySt.equals("")) {
-                            long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
+                            //long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
+                            long cityId = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt).getSingle();
                             if (cityId < 0) {
                                 cityProperties.put(CityNode.NAME_PROPERTY, citySt);
-                                cityId = createCityNode(cityProperties, inserter, indexService);
+                                cityId = createCityNode(cityProperties, inserter, cityNameIndex);
+                                //-----flushing city name index---
+                                cityNameIndex.flush();
                             }
                             inserter.createRelationship(bookId, cityId, bookCityRel, null);
                         }
@@ -1700,12 +1723,16 @@ public class ImportUniprot implements Executable {
                         locatorSt = "";
                     }
 
-                    long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    //long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    long onlineArticleId = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
                     if (onlineArticleId < 0) {
                         onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
                         onlineArticleId = inserter.createNode(onlineArticleProperties);
                         if (!titleSt.equals("")) {
-                            indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                            //indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                            onlineArticleTitleIndex.add(onlineArticleId, MapUtil.map(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
+                            //-----flushing online article title index---
+                            onlineArticleTitleIndex.flush();
                         }
 
                         //---authors person association-----
@@ -1719,11 +1746,15 @@ public class ImportUniprot implements Executable {
 
                         //------journal-----------
                         if (!nameSt.equals("")) {
-                            long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            //long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            long onlineJournalId = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt).getSingle();
                             if (onlineJournalId < 0) {
                                 onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
                                 onlineJournalId = inserter.createNode(onlineJournalProperties);
-                                indexService.index(onlineJournalId, OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                                //indexService.index(onlineJournalId, OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                                onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
+                                //---flushing online journal name index---
+                                onlineJournalNameIndex.flush();
                             }
 
                             onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
@@ -1779,7 +1810,8 @@ public class ImportUniprot implements Executable {
                         }
                     }
 
-                    long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    //long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    long articleId = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
                     if (articleId < 0) {
                         articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
                         articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
@@ -1787,7 +1819,21 @@ public class ImportUniprot implements Executable {
                         articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
                         articleId = inserter.createNode(articleProperties);
                         if (!titleSt.equals("")) {
-                            indexService.index(articleId, ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                            //indexService.index(articleId, ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                            articleTitleIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
+                            //--flushing article title index---
+                            articleTitleIndex.flush();
+                        }
+
+                        //---indexing by medline, doi and pubmed--
+                        if(!doiSt.isEmpty()){
+                            articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
+                        }
+                        if(!medlineSt.isEmpty()){
+                            articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
+                        }
+                        if(!pubmedSt.isEmpty()){
+                            articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
                         }
 
                         //---authors person association-----
@@ -1801,11 +1847,15 @@ public class ImportUniprot implements Executable {
 
                         //------journal-----------
                         if (!journalNameSt.equals("")) {
-                            long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+                            //long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+                            long journalId = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt).getSingle();
                             if (journalId < 0) {
                                 journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
                                 journalId = inserter.createNode(journalProperties);
-                                indexService.index(journalId, JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+                                //indexService.index(journalId, JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+                                journalNameIndex.add(journalId, MapUtil.map(JournalNode.JOURNAL_NAME_INDEX, journalNameSt));
+                                //----flushing journal name index----
+                                journalNameIndex.flush();
                             }
 
                             articleJournalProperties.put(ArticleJournalRel.DATE_PROPERTY, dateSt);
