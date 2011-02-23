@@ -144,7 +144,7 @@ public class ImportUniprot implements Executable {
     public static UnpublishedObservationAuthorRel unpublishedObservationAuthorRel = new UnpublishedObservationAuthorRel(null);
     public static UnpublishedObservationProteinCitationRel unpublishedObservationProteinCitationRel = new UnpublishedObservationProteinCitationRel(null);
     public static InstituteCountryRel instituteCountryRel = new InstituteCountryRel(null);
-    public static IsoformEventGeneratorRel isoformEventGeneratorRel = new IsoformEventGeneratorRel(null);    
+    public static IsoformEventGeneratorRel isoformEventGeneratorRel = new IsoformEventGeneratorRel(null);
     public static ProteinIsoformRel proteinIsoformRel = new ProteinIsoformRel(null);
     public static ProteinErroneousGeneModelPredictionRel proteinErroneousGeneModelPredictionRel = new ProteinErroneousGeneModelPredictionRel(null);
     public static ProteinErroneousInitiationRel proteinErroneousInitiationRel = new ProteinErroneousInitiationRel(null);
@@ -177,7 +177,7 @@ public class ImportUniprot implements Executable {
     public static SimilarityCommentRel similarityCommentRel = new SimilarityCommentRel(null);
     public static SubunitCommentRel subunitCommentRel = new SubunitCommentRel(null);
     public static TissueSpecificityCommentRel tissueSpecificityCommentRel = new TissueSpecificityCommentRel(null);
-    public static ToxicDoseCommentRel toxicDoseCommentRel = new ToxicDoseCommentRel(null);    
+    public static ToxicDoseCommentRel toxicDoseCommentRel = new ToxicDoseCommentRel(null);
     //features relationships------------------------------------------
     public static ActiveSiteFeatureRel activeSiteFeatureRel = new ActiveSiteFeatureRel(null);
     public static BindingSiteFeatureRel bindingSiteFeatureRel = new BindingSiteFeatureRel(null);
@@ -232,7 +232,6 @@ public class ImportUniprot implements Executable {
     public static long seqCautionMiscellaneousDiscrepancyId;
     public static long seqCautionErroneousGeneModelPredictionId;
     //---------------------------------
-
     //--------indexing API constans-----
     private static String PROVIDER_ST = "provider";
     private static String EXACT_ST = "exact";
@@ -277,22 +276,32 @@ public class ImportUniprot implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
 
                 //-----------------create batch indexes----------------------------------
                 //----------------------------------------------------------------------
-                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_ACCESSION_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
-                BatchInserterIndex proteinFullNameFullTextIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST) );
-                BatchInserterIndex proteinGeneNamesFullTextIndex = indexProvider.nodeIndex( ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST) );
-                BatchInserterIndex datasetNameIndex = indexProvider.nodeIndex( DatasetNode.DATASET_NAME_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
-                BatchInserterIndex keywordIdIndex = indexProvider.nodeIndex( KeywordNode.KEYWORD_ID_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
-                BatchInserterIndex keywordNameIndex = indexProvider.nodeIndex( KeywordNode.KEYWORD_NAME_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex proteinFullNameFullTextIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+                BatchInserterIndex proteinGeneNamesFullTextIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+                BatchInserterIndex datasetNameIndex = indexProvider.nodeIndex(DatasetNode.DATASET_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex keywordIdIndex = indexProvider.nodeIndex(KeywordNode.KEYWORD_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex keywordNameIndex = indexProvider.nodeIndex(KeywordNode.KEYWORD_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex interproIdIndex = indexProvider.nodeIndex(InterproNode.INTERPRO_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex goTermIdIndex = indexProvider.nodeIndex(GoTermNode.GO_TERM_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex organismScientificNameIndex = indexProvider.nodeIndex(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex organismNcbiTaxonomyIdIndex = indexProvider.nodeIndex(OrganismNode.ORGANISM_NCBI_TAXONOMY_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex taxonNameIndex = indexProvider.nodeIndex(TaxonNode.TAXON_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
                 //----------------------------------------------------------------------
 
@@ -347,17 +356,17 @@ public class ImportUniprot implements Executable {
                         ArrayList<String> emblCrossReferences = new ArrayList<String>();
                         for (Element dbReferenceElem : dbReferenceList) {
                             String refId = dbReferenceElem.getAttributeValue("id");
-                            if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")){
+                            if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
                                 ensemblIdSt = refId;
-                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIR")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIR")) {
                                 pirIdSt = refId;
-                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UniGene")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UniGene")) {
                                 uniGeneIdSt = refId;
-                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("KEGG")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("KEGG")) {
                                 keggIdSt = refId;
-                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EMBL")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EMBL")) {
                                 emblCrossReferences.add(refId);
-                            }else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
                                 arrayExpressIdSt = refId;
                             }
                         }
@@ -380,9 +389,9 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.ARRAY_EXPRESS_ID_PROPERTY, arrayExpressIdSt);
                         proteinProperties.put(ProteinNode.PIR_ID_PROPERTY, pirIdSt);
                         proteinProperties.put(ProteinNode.KEGG_ID_PROPERTY, keggIdSt);
-                        proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY,convertToStringArray(emblCrossReferences));
+                        proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY, convertToStringArray(emblCrossReferences));
                         proteinProperties.put(ProteinNode.ENSEMBL_ID_PROPERTY, ensemblIdSt);
-                        proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY,uniGeneIdSt);
+                        proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY, uniGeneIdSt);
 
                         //---------------gene-names-------------------
                         Element geneElement = entryXMLElem.asJDomElement().getChild(CommonData.GENE_TAG_NAME);
@@ -391,32 +400,35 @@ public class ImportUniprot implements Executable {
                             List<Element> genesList = geneElement.getChildren(CommonData.GENE_NAME_TAG_NAME);
                             for (Element geneNameElem : genesList) {
                                 geneNames.add(geneNameElem.getText());
-                            }                            
-                        } 
+                            }
+                        }
                         proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, convertToStringArray(geneNames));
                         //-----------------------------------------
 
                         long currentProteinId = inserter.createNode(proteinProperties);
-                        proteinAccessionIndex.add(currentProteinId,MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX,accessionSt));
+                        proteinAccessionIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt));
                         //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
                         //indexing protein by alternative accessions
                         for (String altAccessionSt : alternativeAccessions) {
-                            proteinAccessionIndex.add(currentProteinId,MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX,altAccessionSt));
+                            proteinAccessionIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt));
                             //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt);
                         }
+                        //---flushing protein accession index----
+                        proteinAccessionIndex.flush();
+
                         //indexing protein by full name
                         proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase()));
                         //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
-                        
+
                         //indexing protein by gene names
                         String geneNamesStToBeIndexed = "";
                         for (String geneNameSt : geneNames) {
                             geneNamesStToBeIndexed += geneNameSt + " ";
-                        }     
+                        }
                         //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
                         proteinGeneNamesFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed));
-                        
-                        
+
+
 
                         //-----comments import---
                         importProteinComments(entryXMLElem, inserter, indexProvider, currentProteinId);
@@ -460,19 +472,24 @@ public class ImportUniprot implements Executable {
 //                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_NAME_INDEX, keywordName);
                                 keywordIdIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_ID_INDEX, keywordId));
                                 keywordNameIndex.add(datasetId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
+
+                                //---flushing keyword id index----
+                                keywordIdIndex.flush();
                             }
                             inserter.createRelationship(currentProteinId, keywordNodeId, proteinKeywordRel, null);
                         }
+
                         //---------------------------------------------------------------------------------------
 
-                                              
+
                         for (Element dbReferenceElem : dbReferenceList) {
 
                             //-------------------------------interpro------------------------------------------------------  
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.INTERPRO_DB_REFERENCE_TYPE)) {
 
                                 String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
-                                long interproNodeId = indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, interproId);
+                                //long interproNodeId = indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, interproId);
+                                long interproNodeId = interproIdIndex.get(InterproNode.INTERPRO_ID_INDEX, interproId).getSingle();
 
                                 if (interproNodeId < 0) {
                                     String interproEntryNameSt = "";
@@ -487,12 +504,15 @@ public class ImportUniprot implements Executable {
                                     interproProperties.put(InterproNode.ID_PROPERTY, interproId);
                                     interproProperties.put(InterproNode.NAME_PROPERTY, interproEntryNameSt);
                                     interproNodeId = inserter.createNode(interproProperties);
-                                    indexService.index(interproNodeId, InterproNode.INTERPRO_ID_INDEX, interproId);
+                                    //indexService.index(interproNodeId, InterproNode.INTERPRO_ID_INDEX, interproId);
+                                    interproIdIndex.add(interproNodeId, MapUtil.map(InterproNode.INTERPRO_ID_INDEX, interproId));
+
+                                    //flushing interpro id index
+                                    interproIdIndex.flush();
                                 }
 
                                 inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
-                            }
-                            //-------------------GO -----------------------------
+                            } //-------------------GO -----------------------------
                             else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.GO_DB_REFERENCE_TYPE)) {
 
                                 String goId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
@@ -504,7 +524,8 @@ public class ImportUniprot implements Executable {
                                         break;
                                     }
                                 }
-                                long goTermNodeId = indexService.getSingleNode(GoTermNode.GO_TERM_ID_INDEX, goId);
+                                //long goTermNodeId = indexService.getSingleNode(GoTermNode.GO_TERM_ID_INDEX, goId);
+                                long goTermNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, goId).getSingle();
                                 proteinGoProperties.put(ProteinGoRel.EVIDENCE_PROPERTY, evidenceSt);
                                 inserter.createRelationship(currentProteinId, goTermNodeId, proteinGoRel, proteinGoProperties);
                             }
@@ -534,7 +555,8 @@ public class ImportUniprot implements Executable {
                             }
                         }
 
-                        long organismNodeId = indexService.getSingleNode(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
+                        //long organismNodeId = indexService.getSingleNode(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
+                        long organismNodeId = organismScientificNameIndex.get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName).getSingle();
                         if (organismNodeId < 0) {
 
                             organismProperties.put(OrganismNode.COMMON_NAME_PROPERTY, commName);
@@ -559,48 +581,53 @@ public class ImportUniprot implements Executable {
                             }
                             organismNodeId = inserter.createNode(organismProperties);
 
-                            indexService.index(organismNodeId, OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-                            indexService.index(organismNodeId, OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY));
+//                            indexService.index(organismNodeId, OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
+//                            indexService.index(organismNodeId, OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY));
+                            organismScientificNameIndex.add(organismNodeId, MapUtil.map(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName));
+                            organismNcbiTaxonomyIdIndex.add(organismNodeId, MapUtil.map(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY)));
+
+                            //flushing organism scientifica name index
+                            organismScientificNameIndex.flush();
 
                             Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
                             List<Element> taxons = lineage.getChildren("taxon");
 
                             Element firstTaxonElem = taxons.get(0);
 
-                            long firstTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
+                            //long firstTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
+                            long firstTaxonId = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText()).getSingle();
 
                             if (firstTaxonId < 0) {
 
                                 String firstTaxonName = firstTaxonElem.getText();
-                                taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonElem.getText());
-                                firstTaxonId = inserter.createNode(taxonProperties);
-                                indexService.index(firstTaxonId, TaxonNode.TAXON_NAME_INDEX, firstTaxonName);
+                                taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonName);
+                                firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
+                                //flushing taxon name index--
+                                taxonNameIndex.flush();
                                 inserter.createRelationship(inserter.getReferenceNode(), firstTaxonId, mainTaxonRel, null);
 
-                            } else {
                             }
 
                             long lastTaxonId = firstTaxonId;
                             for (int i = 1; i < taxons.size(); i++) {
                                 String taxonName = taxons.get(i).getText();
-                                long currentTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, taxonName);
+                                //long currentTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, taxonName);
+                                long currentTaxonId = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName).getSingle();
                                 if (currentTaxonId < 0) {
 
                                     taxonProperties.put(TaxonNode.NAME_PROPERTY, taxonName);
-                                    currentTaxonId = inserter.createNode(taxonProperties);
-                                    indexService.index(currentTaxonId, TaxonNode.TAXON_NAME_INDEX, taxonName);
-                                    //indexService.optimize();
+                                    currentTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
+                                    //flushing taxon name index--
+                                    taxonNameIndex.flush();
                                     inserter.createRelationship(lastTaxonId, currentTaxonId, taxonParentRel, null);
 
 
-                                } else {
                                 }
                                 lastTaxonId = currentTaxonId;
                             }
 
                             inserter.createRelationship(lastTaxonId, organismNodeId, taxonParentRel, null);
 
-                        } else {
                         }
 
 
@@ -612,23 +639,8 @@ public class ImportUniprot implements Executable {
                         counter++;
                         if ((counter % limitForPrintingOut) == 0) {
                             String countProteinsSt = counter + " proteins inserted!!";
-                            //System.out.println(countProteinsSt);
                             logger.log(Level.INFO, countProteinsSt);
                         }
-//                        if((counter % limitForOptimizingIndexService) == 0){
-//                            indexService.optimize();
-//                        }
-//                        if((counter % limitForClosingBatchInserter) == 0){
-//                            indexService.shutdown();
-//                            inserter.shutdown();
-//                            // create the batch inserter again
-//                            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
-//                            // create the batch index service again
-//                            indexService = new LuceneIndexBatchInserterImpl(inserter);
-//                        }
-
-
-
 
                     }
                 }
@@ -644,10 +656,8 @@ public class ImportUniprot implements Executable {
                 // closing logger file handler
                 fh.close();
                 // shutdown, makes sure all changes are written to disk
-                indexService.shutdown();
-                fullTextIndexService.shutdown();
+                indexProvider.shutdown();
                 inserter.shutdown();
-
 
             }
         }
@@ -659,17 +669,32 @@ public class ImportUniprot implements Executable {
             BatchInserterIndexProvider indexProvider,
             long currentProteinId) {
 
-        //String accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
+        //-----------------create batch indexes----------------------------------
+        //----------------------------------------------------------------------
+        BatchInserterIndex featureTypeNameIndex = indexProvider.nodeIndex(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+
+        //------------------------------------------------------------------------
+
 
         //--------------------------------features----------------------------------------------------
         List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(CommonData.FEATURE_TAG_NAME);
+
         for (Element featureElem : featuresList) {
+
             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
-            long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+            //long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+            long featureTypeNodeId = featureTypeNameIndex.get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt).getSingle();
+
             if (featureTypeNodeId < 0) {
+
                 featureTypeProperties.put(FeatureTypeNode.NAME_PROPERTY, featureTypeSt);
                 featureTypeNodeId = inserter.createNode(featureTypeProperties);
-                indexService.index(featureTypeNodeId, FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                //indexService.index(featureTypeNodeId, FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                featureTypeNameIndex.add(featureTypeNodeId, MapUtil.map(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt));
+                //---flushing feature type name index----
+                featureTypeNameIndex.flush();
+
             }
 
             String featureDescSt = featureElem.getAttributeValue(CommonData.FEATURE_DESCRIPTION_ATTRIBUTE);
@@ -822,12 +847,12 @@ public class ImportUniprot implements Executable {
             long currentProteinId) {
 
         //---------------indexes declaration---------------------------
-        BatchInserterIndex commentTypeNameIndex = indexProvider.nodeIndex( CommentTypeNode.COMMENT_TYPE_NAME_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
-        BatchInserterIndex subcellularLocationNameIndex = indexProvider.nodeIndex( SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
-        BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex( IsoformNode.ISOFORM_ID_INDEX,
-                                        MapUtil.stringMap( PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST) );
+        BatchInserterIndex commentTypeNameIndex = indexProvider.nodeIndex(CommentTypeNode.COMMENT_TYPE_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex subcellularLocationNameIndex = indexProvider.nodeIndex(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //-----------------------------------------------------------
 
         List<Element> comments = entryXMLElem.asJDomElement().getChildren(CommonData.COMMENT_TAG_NAME);
@@ -1004,7 +1029,7 @@ public class ImportUniprot implements Executable {
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
                         lastLocationId = inserter.createNode(subcellularLocationProperties);
-                        subcellularLocationNameIndex.add(lastLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX,firstLocation.getTextTrim()));
+                        subcellularLocationNameIndex.add(lastLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim()));
                     }
                     for (int i = 1; i < locations.size(); i++) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
@@ -1056,7 +1081,7 @@ public class ImportUniprot implements Executable {
                     isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
                     //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
                     long isoformId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt).getSingle();
-                    if(isoformId < 0){
+                    if (isoformId < 0) {
                         isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex);
                     }
 
@@ -1308,6 +1333,14 @@ public class ImportUniprot implements Executable {
         return isoformId;
     }
 
+    private static long createTaxonNode(Map<String, Object> taxonProperties,
+            BatchInserter inserter,
+            BatchInserterIndex index) {
+        long taxonId = inserter.createNode(taxonProperties);
+        index.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.TAXON_NAME_INDEX)));
+        return taxonId;
+    }
+
     private static long createPersonNode(Map<String, Object> personProperties,
             BatchInserter inserter,
             BatchInserterIndex index) {
@@ -1358,7 +1391,20 @@ public class ImportUniprot implements Executable {
             BatchInserterIndexProvider indexProvider,
             long currentProteinId) {
 
+        //-----------------create batch indexes----------------------------------
+        //----------------------------------------------------------------------
+        BatchInserterIndex personNameIndex = indexProvider.nodeIndex(PersonNode.PERSON_NAME_FULL_TEXT_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        BatchInserterIndex consortiumNameIndex = indexProvider.nodeIndex(ConsortiumNode.CONSORTIUM_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex thesisTitleIndex = indexProvider.nodeIndex(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        //----------------------------------------------------------------------
+        //----------------------------------------------------------------------
+
+
         List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(CommonData.REFERENCE_TAG_NAME);
+
         for (Element reference : referenceList) {
             List<Element> citationsList = reference.getChildren(CommonData.CITATION_TAG_NAME);
             for (Element citation : citationsList) {
@@ -1372,19 +1418,21 @@ public class ImportUniprot implements Executable {
                 List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
 
                 for (Element person : authorPersonElems) {
-                    long personId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
+                    //long personId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
+                    long personId = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name")).getSingle();
                     if (personId < 0) {
                         personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-                        personId = createPersonNode(personProperties, inserter, indexService);
+                        personId = createPersonNode(personProperties, inserter, personNameIndex);
                     }
                     authorsPersonNodesIds.add(personId);
                 }
 
                 for (Element consortium : authorConsortiumElems) {
-                    long consortiumId = indexService.getSingleNode(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
+                    //long consortiumId = indexService.getSingleNode(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
+                    long consortiumId = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name")).getSingle();
                     if (consortiumId < 0) {
                         consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
-                        consortiumId = createConsortiumNode(consortiumProperties, inserter, indexService);
+                        consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex);
                     }
                     authorsConsortiumNodesIds.add(consortiumId);
                 }
@@ -1401,34 +1449,39 @@ public class ImportUniprot implements Executable {
                     if (titleSt == null) {
                         titleSt = "";
                     }
-                    thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
-                    thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
-                    //---thesis node creation and indexing
-                    long thesisId = inserter.createNode(thesisProperties);
-                    indexService.index(thesisId, ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
-                    //---authors association-----
-                    for (long personId : authorsPersonNodesIds) {
-                        inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
-                    }
 
-                    //-----------institute-----------------------------
-                    String instituteSt = citation.getAttributeValue("institute");
-                    String countrySt = citation.getAttributeValue("country");
-                    if (instituteSt != null) {
-                        long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
-                        if (instituteId < 0) {
-                            instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
-                            instituteId = createInstituteNode(instituteProperties, inserter, indexService);
+                    long thesisId = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
+                    if (thesisId < 0) {
+                        thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
+                        thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
+                        //---thesis node creation and indexing
+                        thesisId = inserter.createNode(thesisProperties);
+                        //indexService.index(thesisId, ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
+                        thesisTitleIndex.add(thesisId, MapUtil.map(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt));
+                        //---authors association-----
+                        for (long personId : authorsPersonNodesIds) {
+                            inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
                         }
-                        if (countrySt != null) {
-                            long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-                            if (countryId < 0) {
-                                countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
-                                countryId = createCountryNode(countryProperties, inserter, indexService);
+
+                        //-----------institute-----------------------------
+                        String instituteSt = citation.getAttributeValue("institute");
+                        String countrySt = citation.getAttributeValue("country");
+                        if (instituteSt != null) {
+                            long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
+                            if (instituteId < 0) {
+                                instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
+                                instituteId = createInstituteNode(instituteProperties, inserter, indexService);
                             }
-                            inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
+                            if (countrySt != null) {
+                                long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+                                if (countryId < 0) {
+                                    countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
+                                    countryId = createCountryNode(countryProperties, inserter, indexService);
+                                }
+                                inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
+                            }
+                            inserter.createRelationship(thesisId, instituteId, thesisInstituteRel, null);
                         }
-                        inserter.createRelationship(thesisId, instituteId, thesisInstituteRel, null);
                     }
 
                     //--protein citation relationship
@@ -1758,8 +1811,7 @@ public class ImportUniprot implements Executable {
 
     }
 
-
-    private static String[] convertToStringArray(List<String> list){
+    private static String[] convertToStringArray(List<String> list) {
         String[] result = new String[list.size()];
         for (int i = 0; i < list.size(); i++) {
             result[i] = list.get(i);
