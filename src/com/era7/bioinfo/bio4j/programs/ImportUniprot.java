@@ -1399,6 +1399,16 @@ public class ImportUniprot implements Executable {
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         BatchInserterIndex thesisTitleIndex = indexProvider.nodeIndex(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+        BatchInserterIndex instituteNameIndex = indexProvider.nodeIndex(InstituteNode.INSTITUTE_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex countryNameIndex = indexProvider.nodeIndex(CountryNode.COUNTRY_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex cityNameIndex = indexProvider.nodeIndex(CityNode.CITY_NAME_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex patentNumberIndex = indexProvider.nodeIndex(PatentNode.PATENT_NUMBER_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex bookNameIndex = indexProvider.nodeIndex(BookNode.BOOK_NAME_FULL_TEXT_INDEX,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -1423,6 +1433,8 @@ public class ImportUniprot implements Executable {
                     if (personId < 0) {
                         personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
                         personId = createPersonNode(personProperties, inserter, personNameIndex);
+                        //flushing person name index
+                        personNameIndex.flush();
                     }
                     authorsPersonNodesIds.add(personId);
                 }
@@ -1433,6 +1445,8 @@ public class ImportUniprot implements Executable {
                     if (consortiumId < 0) {
                         consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
                         consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex);
+                        //---flushing consortium name index--
+                        consortiumNameIndex.flush();
                     }
                     authorsConsortiumNodesIds.add(consortiumId);
                 }
@@ -1458,6 +1472,8 @@ public class ImportUniprot implements Executable {
                         thesisId = inserter.createNode(thesisProperties);
                         //indexService.index(thesisId, ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
                         thesisTitleIndex.add(thesisId, MapUtil.map(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt));
+                        //flushing thesis title index
+                        thesisTitleIndex.flush();
                         //---authors association-----
                         for (long personId : authorsPersonNodesIds) {
                             inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
@@ -1467,16 +1483,22 @@ public class ImportUniprot implements Executable {
                         String instituteSt = citation.getAttributeValue("institute");
                         String countrySt = citation.getAttributeValue("country");
                         if (instituteSt != null) {
-                            long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
+                            //long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
+                            long instituteId = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt).getSingle();
                             if (instituteId < 0) {
                                 instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
-                                instituteId = createInstituteNode(instituteProperties, inserter, indexService);
+                                instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex);
+                                //flushing institute name index
+                                instituteNameIndex.flush();
                             }
                             if (countrySt != null) {
-                                long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+                                //long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+                                long countryId = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt).getSingle();
                                 if (countryId < 0) {
                                     countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
-                                    countryId = createCountryNode(countryProperties, inserter, indexService);
+                                    countryId = createCountryNode(countryProperties, inserter, countryNameIndex);
+                                    //flushing country name index
+                                    countryNameIndex.flush();
                                 }
                                 inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
                             }
@@ -1506,7 +1528,8 @@ public class ImportUniprot implements Executable {
                     }
 
                     if (!numberSt.equals("")) {
-                        long patentId = indexService.getSingleNode(PatentNode.PATENT_NUMBER_INDEX, numberSt);
+                        //long patentId = indexService.getSingleNode(PatentNode.PATENT_NUMBER_INDEX, numberSt);
+                        long patentId = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt).getSingle();
 
                         if (patentId < 0) {
                             patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
@@ -1514,7 +1537,10 @@ public class ImportUniprot implements Executable {
                             patentProperties.put(PatentNode.TITLE_PROPERTY, titleSt);
                             //---patent node creation and indexing
                             patentId = inserter.createNode(patentProperties);
-                            indexService.index(patentId, PatentNode.PATENT_NUMBER_INDEX, numberSt);
+                            //indexService.index(patentId, PatentNode.PATENT_NUMBER_INDEX, numberSt);
+                            patentNumberIndex.add(patentId, MapUtil.map(PatentNode.PATENT_NUMBER_INDEX, numberSt));
+                            //---flushing patent number index---
+                            patentNumberIndex.flush();
                             //---authors association-----
                             for (long personId : authorsPersonNodesIds) {
                                 inserter.createRelationship(patentId, personId, patentAuthorRel, null);
@@ -1590,14 +1616,18 @@ public class ImportUniprot implements Executable {
                         volumeSt = "";
                     }
 
-                    long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+                    //long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+                    long bookId = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt).getSingle();
 
                     if (bookId < 0) {
                         bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
                         bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
                         //---book node creation and indexing
                         bookId = inserter.createNode(bookProperties);
-                        indexService.index(bookId, BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+                        //indexService.index(bookId, BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+                        bookNameIndex.add(bookId, MapUtil.map(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt));
+                        //--flushing book name index---
+                        bookNameIndex.flush();
                         //---authors association-----
                         for (long personId : authorsPersonNodesIds) {
                             inserter.createRelationship(bookId, personId, bookAuthorRel, null);
@@ -1608,11 +1638,14 @@ public class ImportUniprot implements Executable {
                         if (editorListElem != null) {
                             List<Element> editorsElems = editorListElem.getChildren("person");
                             for (Element person : editorsElems) {
-                                long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
+                                //long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
+                                long editorId = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name")).getSingle();
                                 if (editorId < 0) {
                                     personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-                                    editorId = createPersonNode(personProperties, inserter, indexService);
+                                    editorId = createPersonNode(personProperties, inserter, personNameIndex);
                                 }
+                                //---flushing person name index---
+                                personNameIndex.flush();
                                 //editor association
                                 inserter.createRelationship(bookId, editorId, bookEditorRel, null);
                             }
