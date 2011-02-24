@@ -105,6 +105,7 @@ public class ImportGeneOntology implements Executable {
                 // create the batch index service
                 indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
                 goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, MapUtil.stringMap( "provider", "lucene", "type", "exact" ) );
+                //goTermIdIndex.
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
