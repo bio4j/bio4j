@@ -1081,6 +1081,8 @@ public class ImportUniprot implements Executable {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
                         lastLocationId = inserter.createNode(subcellularLocationProperties);
                         subcellularLocationNameIndex.add(lastLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim()));
+                        //---flushing subcellular location name index---
+                        subcellularLocationNameIndex.flush();
                     }
                     for (int i = 1; i < locations.size(); i++) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
