@@ -35,8 +35,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -48,6 +49,14 @@ public class ImportUniref implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportUniref");
     private static FileHandler fh;
+
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -77,8 +86,7 @@ public class ImportUniref implements Executable {
             UniRef90MemberRel uniRef90MemberRel = new UniRef90MemberRel(null);
 
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
-
+            BatchInserterIndexProvider indexProvider = null;
 
 
             try {
@@ -93,18 +101,22 @@ public class ImportUniref implements Executable {
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
-                // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                //------------------indexes creation----------------------------------
+                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                //--------------------------------------------------------------------
 
                 //------------------- UNIREF 100----------------------------
                 System.out.println("Reading Uniref 100 file...");
-                importUnirefFile(inserter, indexService, uniref100File, uniRef100MemberRel);
+                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref100File, uniRef100MemberRel);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 90 file...");
-                importUnirefFile(inserter, indexService, uniref90File, uniRef90MemberRel);
+                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref90File, uniRef90MemberRel);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 50 file...");
-                importUnirefFile(inserter, indexService, uniref50File, uniRef50MemberRel);
+                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref50File, uniRef50MemberRel);
                 System.out.println("Done! :)");
 
 
@@ -119,7 +131,7 @@ public class ImportUniref implements Executable {
                     //closing logger file handler
                     fh.close();
                     //closing no4j managers
-                    indexService.shutdown();
+                    indexProvider.shutdown();
                     inserter.shutdown();
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());
@@ -150,7 +162,8 @@ public class ImportUniref implements Executable {
     }
 
     private static void importUnirefFile(BatchInserter inserter,
-            LuceneIndexBatchInserter indexService,
+            BatchInserterIndex proteinAccessionIndex,
+            BatchInserterIndex isoformIdIndex,
             File unirefFile,
             BasicRelationship relationship) throws Exception {
 
@@ -193,18 +206,18 @@ public class ImportUniref implements Executable {
 
                 //---The representant is an isoform----
                 if (representantAccession.contains("-")) {
-                    representantId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, representantAccession);
+                    representantId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession).getSingle();
                 } //---The representant is a protein
                 else {
-                    representantId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
+                    representantId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession).getSingle();
                 }
 
                 for (String memberAccession : membersAccessionList) {
                     long memberId = -1;
                     if (memberAccession.contains("-")) {
-                        memberId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, memberAccession);
+                        memberId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, memberAccession).getSingle();
                     } else {
-                        memberId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
+                        memberId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession).getSingle();
                     }
                     inserter.createRelationship(representantId, memberId, relationship, null);
                 }

@@ -20,6 +20,7 @@ import com.era7.bioinfo.bio4jmodel.nodes.FeatureTypeNode;
 import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
 import com.era7.bioinfo.bio4jmodel.relationships.features.*;
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -34,8 +35,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -43,10 +46,17 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ImportFeatures implements Executable{
+public class ImportFeatures implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportFeatures");
     private static FileHandler fh;
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -68,7 +78,7 @@ public class ImportFeatures implements Executable{
             //boolean transactionDone = true;
 
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
+            BatchInserterIndexProvider indexProvider = null;
             String accessionSt = "";
 
             try {
@@ -83,8 +93,12 @@ public class ImportFeatures implements Executable{
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
-                // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                //------------------indexes creation----------------------------------
+                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex featureTypeNameIndex = indexProvider.nodeIndex(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                //--------------------------------------------------------------------
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> featureTypeProperties = new HashMap<String, Object>();
@@ -160,17 +174,29 @@ public class ImportFeatures implements Executable{
 
                         accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
 
-                        long currentProteinId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+                        long currentProteinId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt).getSingle();
 
                         //--------------------------------features----------------------------------------------------
                         List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(CommonData.FEATURE_TAG_NAME);
                         for (Element featureElem : featuresList) {
                             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
-                            long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                            //long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+
+                            long featureTypeNodeId = -1;
+                            IndexHits<Long> featureTypeNameIndexHits = featureTypeNameIndex.get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                            if (featureTypeNameIndexHits.hasNext()) {
+                                featureTypeNodeId = featureTypeNameIndexHits.getSingle();
+                            }
+
                             if (featureTypeNodeId < 0) {
+
                                 featureTypeProperties.put(FeatureTypeNode.NAME_PROPERTY, featureTypeSt);
                                 featureTypeNodeId = inserter.createNode(featureTypeProperties);
-                                indexService.index(featureTypeNodeId, FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                                //indexService.index(featureTypeNodeId, FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+                                featureTypeNameIndex.add(featureTypeNodeId, MapUtil.map(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt));
+                                //---flushing feature type name index----
+                                featureTypeNameIndex.flush();
+
                             }
 
                             String featureDescSt = featureElem.getAttributeValue(CommonData.FEATURE_DESCRIPTION_ATTRIBUTE);
@@ -189,7 +215,7 @@ public class ImportFeatures implements Executable{
                             if (featureEvidenceSt == null) {
                                 featureEvidenceSt = "";
                             }
-                            
+
                             Element locationElem = featureElem.getChild(CommonData.FEATURE_LOCATION_TAG_NAME);
                             Element positionElem = locationElem.getChild(CommonData.FEATURE_POSITION_TAG_NAME);
                             String beginFeatureSt = "";
@@ -197,15 +223,15 @@ public class ImportFeatures implements Executable{
                             if (positionElem != null) {
                                 beginFeatureSt = positionElem.getAttributeValue(CommonData.FEATURE_POSITION_POSITION_ATTRIBUTE);
                                 endFeatureSt = beginFeatureSt;
-                            }else{
+                            } else {
                                 beginFeatureSt = locationElem.getChild(CommonData.FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(CommonData.FEATURE_LOCATION_POSITION_ATTRIBUTE);
                                 endFeatureSt = locationElem.getChild(CommonData.FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(CommonData.FEATURE_LOCATION_POSITION_ATTRIBUTE);
                             }
 
-                            if(beginFeatureSt == null){
+                            if (beginFeatureSt == null) {
                                 beginFeatureSt = "";
                             }
-                            if(endFeatureSt == null){
+                            if (endFeatureSt == null) {
                                 endFeatureSt = "";
                             }
 
@@ -257,11 +283,11 @@ public class ImportFeatures implements Executable{
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, peptideFeatureRel, featureProperties);
                             } else if (featureTypeSt.equals(UnsureResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, unsureResidueFeatureRel, featureProperties);
-                            }else if (featureTypeSt.equals(MutagenesisSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                            } else if (featureTypeSt.equals(MutagenesisSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, mutagenesisSiteFeatureRel, featureProperties);
-                            }else if (featureTypeSt.equals(SequenceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                            } else if (featureTypeSt.equals(SequenceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, sequenceVariantFeatureRel, featureProperties);
-                            }else if (featureTypeSt.equals(CalciumBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                            } else if (featureTypeSt.equals(CalciumBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, calciumBindingRegionFeatureRel, featureProperties);
                             } else if (featureTypeSt.equals(ChainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, chainFeatureRel, featureProperties);
@@ -307,7 +333,7 @@ public class ImportFeatures implements Executable{
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, zincFingerRegionFeatureRel, featureProperties);
                             } else if (featureTypeSt.equals(SiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, siteFeatureRel, featureProperties);
-                            } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)){
+                            } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                                 inserter.createRelationship(currentProteinId, featureTypeNodeId, turnFeatureRel, featureProperties);
                             }
 
@@ -333,24 +359,28 @@ public class ImportFeatures implements Executable{
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
-            }
-            finally{
+            } finally {
 
-                try{
+                try {
+                    
+                    // shutdown, makes sure all changes are written to disk
+                    indexProvider.shutdown();
+                    inserter.shutdown();
+
                     //closing logger file handler
                     fh.close();
-                    // shutdown, makes sure all changes are written to disk
-                    indexService.shutdown();
-                    inserter.shutdown();
-                    
+
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());
                     StackTraceElement[] trace = e.getStackTrace();
                     for (StackTraceElement stackTraceElement : trace) {
                         logger.log(Level.SEVERE, stackTraceElement.toString());
                     }
+
+                    //closing logger file handler
+                    fh.close();
                 }
-                
+
             }
         }
 

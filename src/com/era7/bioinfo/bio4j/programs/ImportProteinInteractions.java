@@ -23,14 +23,11 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteracti
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionsRel;
-import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +41,11 @@ import org.jdom.Element;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.index.lucene.LuceneIndexBatchInserter;
-import org.neo4j.index.lucene.LuceneIndexBatchInserterImpl;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -60,6 +60,14 @@ public class ImportProteinInteractions implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
     private static FileHandler fh;
+
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -84,7 +92,7 @@ public class ImportProteinInteractions implements Executable {
             File inFile = new File(args[0]);
 
             BatchInserter inserter = null;
-            LuceneIndexBatchInserter indexService = null;
+            BatchInserterIndexProvider indexProvider = null;
             String accessionSt = "";
 
             //writer for the file with the entries accessions that supposably have interactions
@@ -118,7 +126,7 @@ public class ImportProteinInteractions implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexService = new LuceneIndexBatchInserterImpl(inserter);
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
 
                 //------------------nodes properties maps-----------------------------------
                 //---------------------------------------------------------------------
@@ -143,7 +151,6 @@ public class ImportProteinInteractions implements Executable {
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
-                int limitForClosingBatchInserter = 100000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -160,7 +167,15 @@ public class ImportProteinInteractions implements Executable {
 
                         accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
 
-                        long currentProteinId = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+
+                        //------------------indexes creation----------------------------------
+                        BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
+                                            MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                        BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
+                                            MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                        //--------------------------------------------------------------------
+
+                        long currentProteinId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt).getSingle();
 
                         List<Element> comments = entryXMLElem.asJDomElement().getChildren(CommonData.COMMENT_TAG_NAME);
 
@@ -198,7 +213,10 @@ public class ImportProteinInteractions implements Executable {
                                 String interactant2AccessionSt = interactant2.getChildText("id");
                                 long protein2Id = -1;
                                 if (interactant2AccessionSt != null) {
-                                    protein2Id = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
+                                    IndexHits<Long> protein2IdIndexHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
+                                    if(protein2IdIndexHits.hasNext()){
+                                        protein2Id = protein2IdIndexHits.getSingle();
+                                    }
                                 } else {
 
 
@@ -213,7 +231,11 @@ public class ImportProteinInteractions implements Executable {
                                 if (!interactionWithItself) {
                                     if (protein2Id < 0) {
                                         //Since we did not find the protein we try to find a isoform instead
-                                        long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
+                                        long isoformId = -1;
+                                        IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
+                                        if(isoformIdIndexHits.hasNext()){
+                                            isoformId = isoformIdIndexHits.getSingle();
+                                        }
                                         if (isoformId >= 0) {
 
                                             proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
@@ -253,14 +275,6 @@ public class ImportProteinInteractions implements Executable {
                             if ((counter % limitForPrintingOut) == 0) {
                                 logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
                             }
-                            if ((counter % limitForClosingBatchInserter) == 0) {
-                                inserter.shutdown();
-                                indexService.shutdown();
-                                // create the batch inserter again
-                                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
-                                // create the batch index service again
-                                indexService = new LuceneIndexBatchInserterImpl(inserter);
-                            }
 
                         }
                     }
@@ -281,8 +295,9 @@ public class ImportProteinInteractions implements Executable {
                 try {
 
                     // shutdown, makes sure all changes are written to disk
+                    indexProvider.shutdown();
                     inserter.shutdown();
-                    indexService.shutdown();
+                    
 
                     //closing logger file handler
                     fh.close();

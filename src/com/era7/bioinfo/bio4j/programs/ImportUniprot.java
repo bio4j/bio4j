@@ -51,6 +51,7 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
@@ -335,6 +336,13 @@ public class ImportUniprot implements Executable {
                         String fullNameSt = getProteinFullName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
                         String shortNameSt = getProteinShortName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
 
+                        if(shortNameSt == null){
+                            shortNameSt = "";
+                        }
+                        if(fullNameSt == null){
+                            fullNameSt = "";
+                        }
+
                         currentAccessionId = accessionSt;
 
                         //-----------alternative accessions-------------
@@ -405,6 +413,11 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, convertToStringArray(geneNames));
                         //-----------------------------------------
 
+//                        for (String tempKey : proteinProperties.keySet()) {
+//                            System.out.println("tempKey = " + tempKey + " value: " + proteinProperties.get(tempKey));
+//                        }
+
+
                         long currentProteinId = inserter.createNode(proteinProperties);
                         proteinAccessionIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt));
                         //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
@@ -439,7 +452,11 @@ public class ImportUniprot implements Executable {
                         //--------------------------------datasets--------------------------------------------------
                         String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(CommonData.ENTRY_DATASET_ATTRIBUTE);
                         //long datasetId = indexService.getSingleNode(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
-                        long datasetId = datasetNameIndex.get(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt).getSingle();
+                        long datasetId = -1;
+                        IndexHits<Long> datasetNameIndexHits = datasetNameIndex.get(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
+                        if(datasetNameIndexHits.hasNext()){
+                            datasetId = datasetNameIndexHits.getSingle();
+                        }
                         if (datasetId < 0) {
                             datasetProperties.put(DatasetNode.NAME_PROPERTY, proteinDataSetSt);
                             datasetId = inserter.createNode(datasetProperties);
@@ -460,7 +477,11 @@ public class ImportUniprot implements Executable {
                             String keywordId = keywordElem.getAttributeValue(CommonData.KEYWORD_ID_ATTRIBUTE);
                             String keywordName = keywordElem.getText();
                             //long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
-                            long keywordNodeId = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId).getSingle();
+                            long keywordNodeId = -1;
+                            IndexHits<Long> keyworIdIndexHits = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId);
+                            if(keyworIdIndexHits.hasNext()){
+                                keywordNodeId = keyworIdIndexHits.getSingle();
+                            }
                             if (keywordNodeId < 0) {
 
                                 keywordProperties.put(KeywordNode.ID_PROPERTY, keywordId);
@@ -489,7 +510,11 @@ public class ImportUniprot implements Executable {
 
                                 String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
                                 //long interproNodeId = indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, interproId);
-                                long interproNodeId = interproIdIndex.get(InterproNode.INTERPRO_ID_INDEX, interproId).getSingle();
+                                long interproNodeId = -1;
+                                IndexHits<Long> interproIdIndexHits = interproIdIndex.get(InterproNode.INTERPRO_ID_INDEX, interproId);
+                                if(interproIdIndexHits.hasNext()){
+                                    interproNodeId = interproIdIndexHits.getSingle();
+                                }
 
                                 if (interproNodeId < 0) {
                                     String interproEntryNameSt = "";
@@ -556,7 +581,11 @@ public class ImportUniprot implements Executable {
                         }
 
                         //long organismNodeId = indexService.getSingleNode(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-                        long organismNodeId = organismScientificNameIndex.get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName).getSingle();
+                        long organismNodeId = -1;
+                        IndexHits<Long> organismScientifiNameIndexHits = organismScientificNameIndex.get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
+                        if(organismScientifiNameIndexHits.hasNext()){
+                            organismNodeId = organismScientifiNameIndexHits.getSingle();
+                        }
                         if (organismNodeId < 0) {
 
                             organismProperties.put(OrganismNode.COMMON_NAME_PROPERTY, commName);
@@ -595,11 +624,15 @@ public class ImportUniprot implements Executable {
                             Element firstTaxonElem = taxons.get(0);
 
                             //long firstTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
-                            long firstTaxonId = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText()).getSingle();
+                            long firstTaxonId = -1;
+                            IndexHits<Long> firstTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
+                            if(firstTaxonIndexHits.hasNext()){
+                                firstTaxonId = firstTaxonIndexHits.getSingle();
+                            }
 
                             if (firstTaxonId < 0) {
 
-                                String firstTaxonName = firstTaxonElem.getText();
+                                String firstTaxonName = firstTaxonElem.getText();                                
                                 taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonName);
                                 firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
                                 //flushing taxon name index--
@@ -612,7 +645,11 @@ public class ImportUniprot implements Executable {
                             for (int i = 1; i < taxons.size(); i++) {
                                 String taxonName = taxons.get(i).getText();
                                 //long currentTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, taxonName);
-                                long currentTaxonId = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName).getSingle();
+                                long currentTaxonId = -1;
+                                IndexHits<Long> currentTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName);
+                                if(currentTaxonIndexHits.hasNext()){
+                                    currentTaxonId = currentTaxonIndexHits.getSingle();
+                                }
                                 if (currentTaxonId < 0) {
 
                                     taxonProperties.put(TaxonNode.NAME_PROPERTY, taxonName);
@@ -653,11 +690,13 @@ public class ImportUniprot implements Executable {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
             } finally {
-                // closing logger file handler
-                fh.close();
+                
                 // shutdown, makes sure all changes are written to disk
                 indexProvider.shutdown();
                 inserter.shutdown();
+
+                // closing logger file handler
+                fh.close();
 
             }
         }
@@ -684,7 +723,11 @@ public class ImportUniprot implements Executable {
 
             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
             //long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
-            long featureTypeNodeId = featureTypeNameIndex.get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt).getSingle();
+            long featureTypeNodeId = -1;
+            IndexHits<Long> featureTypeNameIndexHits = featureTypeNameIndex.get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
+            if(featureTypeNameIndexHits.hasNext()){
+                featureTypeNodeId = featureTypeNameIndexHits.getSingle();
+            }
 
             if (featureTypeNodeId < 0) {
 
@@ -883,7 +926,11 @@ public class ImportUniprot implements Executable {
 
             //-----------------COMMENT TYPE NODE RETRIEVING/CREATION---------------------- 
             //long commentTypeId = indexService.getSingleNode(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
-            long commentTypeId = commentTypeNameIndex.get(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt).getSingle();
+            IndexHits<Long> commentTypeNameIndexHits = commentTypeNameIndex.get(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+            long commentTypeId = -1;
+            if(commentTypeNameIndexHits.hasNext()){
+                commentTypeId = commentTypeNameIndexHits.getSingle();
+            }
             if (commentTypeId < 0) {
                 commentTypeProperties.put(CommentTypeNode.NAME_PROPERTY, commentTypeSt);
                 commentTypeId = inserter.createNode(commentTypeProperties);
@@ -1024,7 +1071,11 @@ public class ImportUniprot implements Executable {
                     List<Element> locations = subcLocation.getChildren(CommonData.LOCATION_TAG_NAME);
                     Element firstLocation = locations.get(0);
                     //long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-                    long firstLocationId = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim()).getSingle();
+                    long firstLocationId = -1;
+                    IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+                    if(firstLocationIndexHits.hasNext()){
+                        firstLocationId = firstLocationIndexHits.getSingle();
+                    }
                     long lastLocationId = firstLocationId;
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
@@ -1080,7 +1131,11 @@ public class ImportUniprot implements Executable {
                     isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
                     isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
                     //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-                    long isoformId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt).getSingle();
+                    long isoformId = -1;
+                    IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+                    if(isoformIdIndexHits.hasNext()){
+                        isoformId = isoformIdIndexHits.getSingle();
+                    }
                     if (isoformId < 0) {
                         isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex);
                     }
@@ -1337,7 +1392,7 @@ public class ImportUniprot implements Executable {
             BatchInserter inserter,
             BatchInserterIndex index) {
         long taxonId = inserter.createNode(taxonProperties);
-        index.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.TAXON_NAME_INDEX)));
+        index.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.NAME_PROPERTY)));
         return taxonId;
     }
 
@@ -1445,7 +1500,11 @@ public class ImportUniprot implements Executable {
 
                 for (Element person : authorPersonElems) {
                     //long personId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-                    long personId = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name")).getSingle();
+                    long personId = -1;
+                    IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
+                    if(personNameIndexHits.hasNext()){
+                        personId = personNameIndexHits.getSingle();
+                    }
                     if (personId < 0) {
                         personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
                         personId = createPersonNode(personProperties, inserter, personNameIndex);
@@ -1457,7 +1516,11 @@ public class ImportUniprot implements Executable {
 
                 for (Element consortium : authorConsortiumElems) {
                     //long consortiumId = indexService.getSingleNode(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
-                    long consortiumId = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name")).getSingle();
+                    long consortiumId = -1;
+                    IndexHits<Long> consortiumIdIndexHits = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
+                    if(consortiumIdIndexHits.hasNext()){
+                        consortiumId = consortiumIdIndexHits.getSingle();
+                    }
                     if (consortiumId < 0) {
                         consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
                         consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex);
@@ -1480,7 +1543,11 @@ public class ImportUniprot implements Executable {
                         titleSt = "";
                     }
 
-                    long thesisId = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
+                    long thesisId = -1;
+                    IndexHits<Long> thesisTitleIndexHits = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
+                    if(thesisTitleIndexHits.hasNext()){
+                        thesisId = thesisTitleIndexHits.getSingle();
+                    }
                     if (thesisId < 0) {
                         thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
                         thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
@@ -1500,7 +1567,11 @@ public class ImportUniprot implements Executable {
                         String countrySt = citation.getAttributeValue("country");
                         if (instituteSt != null) {
                             //long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
-                            long instituteId = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt).getSingle();
+                            long instituteId = -1;
+                            IndexHits<Long> instituteNameIndexHits = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
+                            if(instituteNameIndexHits.hasNext()){
+                                instituteId = instituteNameIndexHits.getSingle();
+                            }
                             if (instituteId < 0) {
                                 instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
                                 instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex);
@@ -1509,7 +1580,11 @@ public class ImportUniprot implements Executable {
                             }
                             if (countrySt != null) {
                                 //long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-                                long countryId = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt).getSingle();
+                                long countryId = -1;
+                                IndexHits<Long> countryNameIndexHits = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+                                if(countryNameIndexHits.hasNext()){
+                                    countryId = countryNameIndexHits.getSingle();
+                                }
                                 if (countryId < 0) {
                                     countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
                                     countryId = createCountryNode(countryProperties, inserter, countryNameIndex);
@@ -1545,7 +1620,11 @@ public class ImportUniprot implements Executable {
 
                     if (!numberSt.equals("")) {
                         //long patentId = indexService.getSingleNode(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-                        long patentId = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt).getSingle();
+                        long patentId = -1;
+                        IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
+                        if(patentNumberIndexHits.hasNext()){
+                            patentId = patentNumberIndexHits.getSingle();
+                        }
 
                         if (patentId < 0) {
                             patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
@@ -1633,7 +1712,11 @@ public class ImportUniprot implements Executable {
                     }
 
                     //long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-                    long bookId = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt).getSingle();
+                    long bookId = -1;
+                    IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+                    if(bookNameIndexHits.hasNext()){
+                        bookId = bookNameIndexHits.getSingle();
+                    }
 
                     if (bookId < 0) {
                         bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
@@ -1655,7 +1738,11 @@ public class ImportUniprot implements Executable {
                             List<Element> editorsElems = editorListElem.getChildren("person");
                             for (Element person : editorsElems) {
                                 //long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-                                long editorId = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name")).getSingle();
+                                long editorId = -1;
+                                IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
+                                if(personNameIndexHits.hasNext()){
+                                    editorId = personNameIndexHits.getSingle();
+                                }
                                 if (editorId < 0) {
                                     personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
                                     editorId = createPersonNode(personProperties, inserter, personNameIndex);
@@ -1671,7 +1758,11 @@ public class ImportUniprot implements Executable {
                         //----publisher--
                         if (!publisherSt.equals("")) {
                             //long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-                            long publisherId = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt).getSingle();
+                            long publisherId = -1;
+                            IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+                            if(publisherNameIndexHits.hasNext()){
+                                publisherId = publisherNameIndexHits.getSingle();
+                            }
                             if (publisherId < 0) {
                                 publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
                                 publisherId = inserter.createNode(publisherProperties);
@@ -1686,7 +1777,11 @@ public class ImportUniprot implements Executable {
                         //-----city-----
                         if (!citySt.equals("")) {
                             //long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
-                            long cityId = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt).getSingle();
+                            long cityId = -1;
+                            IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
+                            if(cityNameIndexHits.hasNext()){
+                                cityId = cityNameIndexHits.getSingle();
+                            }
                             if (cityId < 0) {
                                 cityProperties.put(CityNode.NAME_PROPERTY, citySt);
                                 cityId = createCityNode(cityProperties, inserter, cityNameIndex);
@@ -1724,7 +1819,11 @@ public class ImportUniprot implements Executable {
                     }
 
                     //long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                    long onlineArticleId = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
+                    long onlineArticleId = -1;
+                    IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    if(onlineArticleTitleIndexHits.hasNext()){
+                        onlineArticleId = onlineArticleTitleIndexHits.getSingle();
+                    }
                     if (onlineArticleId < 0) {
                         onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
                         onlineArticleId = inserter.createNode(onlineArticleProperties);
@@ -1747,7 +1846,11 @@ public class ImportUniprot implements Executable {
                         //------journal-----------
                         if (!nameSt.equals("")) {
                             //long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-                            long onlineJournalId = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt).getSingle();
+                            long onlineJournalId = -1;
+                            IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            if(onlineJournalNameIndexHits.hasNext()){
+                                onlineJournalId = onlineJournalNameIndexHits.getSingle();
+                            }
                             if (onlineJournalId < 0) {
                                 onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
                                 onlineJournalId = inserter.createNode(onlineJournalProperties);
@@ -1811,7 +1914,11 @@ public class ImportUniprot implements Executable {
                     }
 
                     //long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                    long articleId = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt).getSingle();
+                    long articleId = -1;
+                    IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+                    if(articleTitleIndexHits.hasNext()){
+                        articleId = articleTitleIndexHits.getSingle();
+                    }
                     if (articleId < 0) {
                         articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
                         articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
@@ -1848,7 +1955,11 @@ public class ImportUniprot implements Executable {
                         //------journal-----------
                         if (!journalNameSt.equals("")) {
                             //long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-                            long journalId = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt).getSingle();
+                            long journalId = -1;
+                            IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+                            if(journalNameIndexHits.hasNext()){
+                                journalId = journalNameIndexHits.getSingle();
+                            }
                             if (journalId < 0) {
                                 journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
                                 journalId = inserter.createNode(journalProperties);

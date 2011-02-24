@@ -27,14 +27,11 @@ import com.era7.bioinfo.bio4jmodel.relationships.TaxonParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinInterproRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinKeywordRel;
-import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.features.RepeatFeatureRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,8 +43,6 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.index.IndexHits;
-import org.neo4j.index.IndexService;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
@@ -80,9 +75,6 @@ public class GetProteinData {
         System.out.println("relationships number = " + number);
 
         System.out.println("creating index manager...");
-        IndexService indexService = manager.getIndexService();
-        IndexService fullTextIndexService = manager.getFullTextIndexService();
-        IndexService fullTextQueryIndexService = manager.getFullTextQueryIndexService();
         System.out.println("getting node...");
         Transaction txn = manager.beginTransaction();
 
@@ -110,23 +102,23 @@ public class GetProteinData {
 //            }
 //            interproBuffer.close();
 
-            System.out.println("Query entered: " + args[1]);
-            System.out.println("With full text index service");
-            IndexHits<Node> hits = fullTextIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
-            System.out.println("results: " + hits.size());
-            System.out.println("With full text QUERY index service");
-            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
-            System.out.println("results: " + hits.size());
-            System.out.println("With full text QUERY index service (gene names)");
-            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, args[1]);
-            System.out.println("results: " + hits.size());
+//            System.out.println("Query entered: " + args[1]);
+//            System.out.println("With full text index service");
+//            IndexHits<Node> hits = fullTextIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
+//            System.out.println("results: " + hits.size());
+//            System.out.println("With full text QUERY index service");
+//            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, args[1].toUpperCase());
+//            System.out.println("results: " + hits.size());
+//            System.out.println("With full text QUERY index service (gene names)");
+//            hits = fullTextQueryIndexService.getNodes(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, args[1]);
+//            System.out.println("results: " + hits.size());
+//
+//            for (Node node1 : hits) {
+//                ProteinNode tempProt = new ProteinNode(node1);
+//                System.out.println(tempProt.getAccession());
+//            }
 
-            for (Node node1 : hits) {
-                ProteinNode tempProt = new ProteinNode(node1);
-                System.out.println(tempProt.getAccession());
-            }
-
-            node = indexService.getSingleNode(ProteinNode.PROTEIN_ACCESSION_INDEX, name);
+            node = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name).getSingle();
 
             if (node != null) {
 
@@ -162,7 +154,7 @@ public class GetProteinData {
                 relIt = protein.getNode().getRelationships(new ProteinSubcellularLocationRel(null), Direction.OUTGOING).iterator();
                 while (relIt.hasNext()) {
                     ProteinSubcellularLocationRel proteinSubcellularLocationRel = new ProteinSubcellularLocationRel(relIt.next());
-                    SubcellularLocationNode sub = new SubcellularLocationNode(proteinSubcellularLocationRel.getEndNode());
+                    SubcellularLocationNode sub = new SubcellularLocationNode(proteinSubcellularLocationRel.getRelationship().getEndNode());
                     System.out.println(proteinSubcellularLocationRel);
                     ArrayList<String> subcelArray = new ArrayList<String>();
                     subcelArray.add(sub.getName());
@@ -199,7 +191,7 @@ public class GetProteinData {
                 while (relIt.hasNext()) {
                     ProteinGoRel goRel = new ProteinGoRel(relIt.next());
                     String evidence = goRel.getEvidence();
-                    GoTermNode term = new GoTermNode(goRel.getEndNode());
+                    GoTermNode term = new GoTermNode(goRel.getRelationship().getEndNode());
                     System.out.println(term);
                     System.out.println("evidence = " + evidence);
                 }
@@ -240,9 +232,8 @@ public class GetProteinData {
             }
         } finally {
             try {
-                indexService.shutdown();
-                manager.shutDown();
                 txn.finish();
+                manager.shutDown();                
             } catch (Exception e) {
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();

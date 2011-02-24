@@ -19,7 +19,6 @@ package com.era7.bioinfo.bio4j.programs;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
-import com.era7.bioinfo.bioinfoneo4j.Neo4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +29,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.index.IndexService;
 
 /**
  *
@@ -75,7 +73,6 @@ public class ImportIsoformSequences implements Executable {
                 logger.log(Level.INFO, "creating manager...");
                 manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
                 logger.log(Level.INFO, "creating index manager...");
-                IndexService indexService = manager.getIndexService();
                 txn = manager.beginTransaction();
 
                 int counter = 1;
@@ -109,7 +106,7 @@ public class ImportIsoformSequences implements Executable {
                         String sequence = seqStBuilder.toString();
                         seqStBuilder.delete(0, seqStBuilder.length());
 
-                        IsoformNode node = new IsoformNode(indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt));
+                        IsoformNode node = new IsoformNode(manager.getIsoformIdIndex().get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt).getSingle());
                         node.setSequence(sequence);
                         node.setName(isoformNameSt);
                     }
