@@ -17,11 +17,7 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
-import com.era7.bioinfo.bio4jmodel.relationships.GoParentRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.BiologicalProcessRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.CellularComponentRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.MainGoRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.MolecularFunctionRel;
+import com.era7.bioinfo.bio4jmodel.relationships.go.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
@@ -87,6 +83,7 @@ public class ImportGeneOntology implements Executable {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
             BatchInserterIndex goTermIdIndex = null;
+            BatchInserterIndex goParentRelIndex = null;
 
 
             try {
@@ -104,8 +101,10 @@ public class ImportGeneOntology implements Executable {
 
                 // create the batch index service
                 indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
-                goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, MapUtil.stringMap( "provider", "lucene", "type", "exact" ) );
-                //goTermIdIndex.
+                Map<String,String> indexProps = MapUtil.stringMap( "provider", "lucene", "type", "exact" );
+                
+                goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, indexProps);
+                goParentRelIndex = indexProvider.relationshipIndex(GoParentRel.GO_PARENT_REL_INDEX, indexProps);
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -232,7 +231,9 @@ public class ImportGeneOntology implements Executable {
                     ArrayList<String> tempArray = termParentsMap.get(key);
                     for (String string : tempArray) {
                         long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, goParentRel, null);
+                        long goParentRelId = inserter.createRelationship(currentNodeId, tempNodeId, goParentRel, null);
+                        goParentRelIndex.add(goParentRelId, goProperties);
+
                     }
                 }
                 //------------------------------------------------------------------

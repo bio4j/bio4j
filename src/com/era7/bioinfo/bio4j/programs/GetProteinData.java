@@ -43,6 +43,7 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
@@ -179,11 +180,21 @@ public class GetProteinData {
                 }
 
 
-                System.out.println("Getting repeat features....");
-                relIt = protein.getNode().getRelationships(new RepeatFeatureRel(null), Direction.OUTGOING).iterator();
-                while (relIt.hasNext()) {
-                    RepeatFeatureRel featureRel = new RepeatFeatureRel(relIt.next());
-                    System.out.println(featureRel);
+//                System.out.println("Getting repeat features....");
+//                relIt = protein.getNode().getRelationships(new RepeatFeatureRel(null), Direction.OUTGOING).iterator();
+//                while (relIt.hasNext()) {
+//                    RepeatFeatureRel featureRel = new RepeatFeatureRel(relIt.next());
+//                    System.out.println(featureRel);
+//                }
+
+
+                System.out.println("Getting some gos");
+                IndexHits<Node> goHits = manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0005634");
+                if(goHits.hasNext()){
+                    System.out.println("found!");
+                    System.out.println("goHits = " + new GoTermNode(goHits.getSingle()));
+                }else{
+                    System.out.println("no hits found....");
                 }
 
                 System.out.println("Getting go ontology...");
