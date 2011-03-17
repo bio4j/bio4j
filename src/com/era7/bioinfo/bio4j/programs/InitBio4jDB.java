@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.AlternativeProductNode;
+import com.era7.bioinfo.bio4jmodel.nodes.ProteinSelfInteractionsNode;
 import com.era7.bioinfo.bio4jmodel.nodes.SequenceCautionNode;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
@@ -72,6 +73,7 @@ public class InitBio4jDB implements Executable {
 
             Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
             Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
+            Map<String, Object> proteinSelfInteractionsProperties = new HashMap<String, Object>();
 
             long alternativeProductInitiationId;
             long alternativeProductPromoterId;
@@ -104,6 +106,8 @@ public class InitBio4jDB implements Executable {
                 //A few relationships/nodes which
                 //must be initialized first
                 //------------------ALTERNATIVE PRODUCTS--------------------
+                alternativeProductProperties.put(AlternativeProductNode.NODE_TYPE_PROPERTY, AlternativeProductNode.NODE_TYPE);
+
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
@@ -121,6 +125,8 @@ public class InitBio4jDB implements Executable {
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
 
                 //---------------------SEQUENCE CAUTION------------------------
+                sequenceCautionProperties.put(SequenceCautionNode.NODE_TYPE_PROPERTY, SequenceCautionNode.NODE_TYPE);
+
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
@@ -148,7 +154,9 @@ public class InitBio4jDB implements Executable {
 
                 //Node and relationship that will lead to
                 //protein self interactions (in case it does not exist yet)
-                long proteinSelfInteractionsNodeId = inserter.createNode(null);
+
+                proteinSelfInteractionsProperties.put(ProteinSelfInteractionsNode.NODE_TYPE_PROPERTY, ProteinSelfInteractionsNode.NODE_TYPE);
+                long proteinSelfInteractionsNodeId = inserter.createNode(proteinSelfInteractionsProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
                         proteinSelfInteractionsRel, null);
                 //----------------------------------------------------------

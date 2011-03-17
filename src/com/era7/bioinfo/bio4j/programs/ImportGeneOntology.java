@@ -108,6 +108,7 @@ public class ImportGeneOntology implements Executable {
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
+                goProperties.put(GoTermNode.NODE_TYPE_PROPERTY, GoTermNode.NODE_TYPE);
                 //--------------------------------------------------------------------------
 
                 //--------------------------------relationships------------------------------------------
@@ -232,8 +233,9 @@ public class ImportGeneOntology implements Executable {
                     for (String string : tempArray) {
                         long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
                         long goParentRelId = inserter.createRelationship(currentNodeId, tempNodeId, goParentRel, null);
-                        goParentRelIndex.add(goParentRelId, goProperties);
-
+                        //System.out.println("key = " + key);
+                        goParentRelIndex.add(goParentRelId, MapUtil.map(GoParentRel.GO_PARENT_REL_INDEX,String.valueOf(currentNodeId)));
+                        //System.out.println("indexing key = " + key);
                     }
                 }
                 //------------------------------------------------------------------

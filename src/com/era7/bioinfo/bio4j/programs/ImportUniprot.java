@@ -316,6 +316,36 @@ public class ImportUniprot implements Executable {
                 //int limitForClosingBatchInserter = 100000;
                 //int limitForOptimizingIndexService = 100000;
 
+                //----------------------------------------------------------------------------------
+                //---------------------initializing node type properties----------------------------
+                organismProperties.put(OrganismNode.NODE_TYPE_PROPERTY, OrganismNode.NODE_TYPE);
+                proteinProperties.put(ProteinNode.NODE_TYPE_PROPERTY, ProteinNode.NODE_TYPE);
+                keywordProperties.put(KeywordNode.NODE_TYPE_PROPERTY, KeywordNode.NODE_TYPE);
+                subcellularLocationProperties.put(SubcellularLocationNode.NODE_TYPE_PROPERTY, SubcellularLocationNode.NODE_TYPE);
+                interproProperties.put(InterproNode.NODE_TYPE_PROPERTY, InterproNode.NODE_TYPE);
+                taxonProperties.put(TaxonNode.NODE_TYPE_PROPERTY, TaxonNode.NODE_TYPE);
+                datasetProperties.put(DatasetNode.NODE_TYPE_PROPERTY, DatasetNode.NODE_TYPE);
+                personProperties.put(PersonNode.NODE_TYPE_PROPERTY, PersonNode.NODE_TYPE);
+                consortiumProperties.put(ConsortiumNode.NODE_TYPE_PROPERTY, ConsortiumNode.NODE_TYPE);
+                instituteProperties.put(InstituteNode.NODE_TYPE_PROPERTY, InstituteNode.NODE_TYPE);
+                thesisProperties.put(ThesisNode.NODE_TYPE_PROPERTY, ThesisNode.NODE_TYPE);
+                bookProperties.put(BookNode.NODE_TYPE_PROPERTY, BookNode.NODE_TYPE);
+                patentProperties.put(PatentNode.NODE_TYPE_PROPERTY, PatentNode.NODE_TYPE);
+                articleProperties.put(ArticleNode.NODE_TYPE_PROPERTY, ArticleNode.NODE_TYPE);
+                submissionProperties.put(SubmissionNode.NODE_TYPE_PROPERTY, SubmissionNode.NODE_TYPE);
+                onlineArticleProperties.put(OnlineArticleNode.NODE_TYPE_PROPERTY, OnlineArticleNode.NODE_TYPE);
+                unpublishedObservationProperties.put(UnpublishedObservationNode.NODE_TYPE_PROPERTY, UnpublishedObservationNode.NODE_TYPE);
+                publisherProperties.put(PublisherNode.NODE_TYPE_PROPERTY, PublisherNode.NODE_TYPE);
+                cityProperties.put(CityNode.NODE_TYPE_PROPERTY, CityNode.NODE_TYPE);
+                journalProperties.put(JournalNode.NODE_TYPE_PROPERTY, JournalNode.NODE_TYPE);
+                onlineJournalProperties.put(OnlineJournalNode.NODE_TYPE_PROPERTY, OnlineJournalNode.NODE_TYPE);
+                countryProperties.put(CountryNode.NODE_TYPE_PROPERTY, CountryNode.NODE_TYPE);
+                isoformProperties.put(IsoformNode.NODE_TYPE_PROPERTY, IsoformNode.NODE_TYPE);
+                commentTypeProperties.put(CommentTypeNode.NODE_TYPE_PROPERTY, CommentTypeNode.NODE_TYPE);
+                featureTypeProperties.put(FeatureTypeNode.NODE_TYPE_PROPERTY, FeatureTypeNode.NODE_TYPE);
+                //-----------------------------------------------------------------------------------------
+                //-----------------------------------------------------------------------------------------
+
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
 
@@ -538,7 +568,7 @@ public class ImportUniprot implements Executable {
 
                                 inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
                             } //-------------------GO -----------------------------
-                            else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.GO_DB_REFERENCE_TYPE)) {
+                            else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(CommonData.GO_DB_REFERENCE_TYPE)) {
 
                                 String goId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
                                 String evidenceSt = "";
@@ -546,13 +576,18 @@ public class ImportUniprot implements Executable {
                                 for (Element element : props) {
                                     if (element.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.EVIDENCE_TYPE_ATTRIBUTE)) {
                                         evidenceSt = element.getAttributeValue("value");
+                                        if(evidenceSt == null){
+                                            evidenceSt = "";
+                                        }
                                         break;
                                     }
                                 }
                                 //long goTermNodeId = indexService.getSingleNode(GoTermNode.GO_TERM_ID_INDEX, goId);
                                 long goTermNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, goId).getSingle();
+                                //logger.log(Level.INFO,("goTermNodeId = " + goTermNodeId));
                                 proteinGoProperties.put(ProteinGoRel.EVIDENCE_PROPERTY, evidenceSt);
                                 inserter.createRelationship(currentProteinId, goTermNodeId, proteinGoRel, proteinGoProperties);
+                                //logger.log(Level.INFO,("relId = " + relId));
                             }
 
                         }

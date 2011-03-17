@@ -31,6 +31,8 @@ import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.features.RepeatFeatureRel;
+import com.era7.bioinfo.bio4jmodel.relationships.go.GoParentRel;
+import com.era7.bioinfo.bio4jmodel.relationships.go.MainGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +45,9 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
+import org.neo4j.graphdb.index.RelationshipIndex;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
@@ -54,6 +58,8 @@ public class GetProteinData {
 
     private static final Logger logger = Logger.getLogger("GetProteinData");
     private static FileHandler fh;
+
+    private static Bio4jManager manager = null;
 
     public static void main(String[] args) throws IOException {
         String name = args[0];
@@ -67,23 +73,22 @@ public class GetProteinData {
 
         System.out.println("name = " + name);
         System.out.println("creating manager...");
-        Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+        manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
 
         long number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Node.class);
         System.out.println("nodes number = " + number);
 
         number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Relationship.class);
         System.out.println("relationships number = " + number);
-
-        System.out.println("creating index manager...");
-        System.out.println("getting node...");
-        Transaction txn = manager.beginTransaction();
+              
+        //Transaction txn = manager.beginTransaction();
 
 
         Node node = null;
+        
         try {
 
-//            BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
+            //            BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
 //
 //            System.out.println("Getting proteins with Interpro motif ID:  IPR000847...");
 //            int interproCounter = 0;
@@ -118,6 +123,27 @@ public class GetProteinData {
 //                ProteinNode tempProt = new ProteinNode(node1);
 //                System.out.println(tempProt.getAccession());
 //            }
+
+//            System.out.println("going through all biological process nodes...");
+//            GoTermNode goNode = new GoTermNode(manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0003735").getSingle());
+//            //System.out.println(bioProcNode.getNode().getRelationships(new GoParentRel(null)).iterator().hasNext());
+//            //System.out.println("bioProcNodeNumber = " + (getChildrenNumber(bioProcNode) + 1));
+//            System.out.println("goNode.getId() = " + goNode.getId());
+//
+//            RelationshipIndex indexRel = manager.getGoParentRelIndex();
+//            IndexHits<Relationship> hits = indexRel.get(GoParentRel.GO_PARENT_REL_INDEX, String.valueOf(goNode.getNode().getId()),null,null);
+//
+//            System.out.println("hits.size() = " + hits.size());
+//
+//            while(hits.hasNext() ){
+//                System.out.println("hits.size() = " + hits.size());
+//                GoTermNode goParentNode = new GoTermNode(hits.getSingle().getEndNode());
+//                System.out.println("goParentNode.getId() = " + goParentNode.getId());
+//                goNode = goParentNode;
+//
+//                hits = indexRel.get(GoParentRel.GO_PARENT_REL_INDEX, goNode.getId());
+//            }
+//            System.out.println("done!");
 
             node = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name).getSingle();
 
@@ -233,7 +259,7 @@ public class GetProteinData {
             }
 
 
-            txn.success();
+            //txn.success();
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
@@ -243,8 +269,8 @@ public class GetProteinData {
             }
         } finally {
             try {
-                txn.finish();
-                manager.shutDown();                
+                //txn.finish();
+                manager.shutDown();
             } catch (Exception e) {
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();
@@ -255,10 +281,21 @@ public class GetProteinData {
 
         }
 
+    }
 
+    private static int getChildrenNumber(GoTermNode node){
+        int counter = 0;
 
+        IndexHits<Relationship> hits = manager.getGoParentRelIndex().get(GoParentRel.GO_PARENT_REL_INDEX, node.getId());
 
+        System.out.println("hits.size() = " + hits.size());
 
+        while(hits.hasNext()){
+            GoTermNode child = new GoTermNode(hits.next().getEndNode());
+            counter++;
+            counter += getChildrenNumber(child);
+        }
 
+        return counter;
     }
 }

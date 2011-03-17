@@ -40,7 +40,6 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.graphdb.index.IndexHits;
@@ -111,15 +110,17 @@ public class ImportProteinInteractions implements Executable {
                 logger.setLevel(Level.ALL);
 
                 //First of all we need the protein self-interactions node-id
-                logger.log(Level.SEVERE,"creating manager...");
+                logger.log(Level.INFO,"creating manager...");
                 Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
-                logger.log(Level.SEVERE,"getting protein self interactions node id....");
-                Transaction txn = manager.beginTransaction();
+                logger.log(Level.INFO,"getting protein self interactions node id....");
+                //Transaction txn = manager.beginTransaction();
                 Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null),Direction.OUTGOING);
+                logger.log(Level.INFO,"getRelationships() done....");
+                logger.log(Level.INFO,"getting node....");
                 long proteinSelfInteractionsNodeId = iterable.iterator().next().getEndNode().getId();
-                txn.success();
-                txn.finish();
-                logger.log(Level.SEVERE,"done!");
+                //txn.success();
+                //txn.finish();
+                logger.log(Level.INFO,"done!");
                 //---------------------------------
 
                 // create the batch inserter
