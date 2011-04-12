@@ -31,7 +31,6 @@ import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.features.RepeatFeatureRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.GoParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.go.MainGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
 import java.io.IOException;

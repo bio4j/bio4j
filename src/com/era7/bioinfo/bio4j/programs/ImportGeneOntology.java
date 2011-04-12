@@ -53,9 +53,11 @@ public class ImportGeneOntology implements Executable {
     public static final String NAME_TAG_NAME = "name";
     public static final String DEF_TAG_NAME = "def";
     public static final String DEFSTR_TAG_NAME = "defstr";
-    public static final String IS_A_TAG_NAME = "is_a";
     public static final String IS_ROOT_TAG_NAME = "is_root";
+    public static final String IS_OBSOLETE_TAG_NAME = "is_obsolete";
+    public static final String COMMENT_TAG_NAME = "comment";
     public static final String NAMESPACE_TAG_NAME = "namespace";
+    public static final String RELATIONSHIP_TAG_NAME = "relationship";
     public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
     public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
     public static final String CELLULAR_COMPONENT_GO_ID = "GO:0005575";
@@ -83,7 +85,7 @@ public class ImportGeneOntology implements Executable {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
             BatchInserterIndex goTermIdIndex = null;
-            BatchInserterIndex goParentRelIndex = null;
+            BatchInserterIndex isAGoRelIndex = null;
 
 
             try {
@@ -104,7 +106,7 @@ public class ImportGeneOntology implements Executable {
                 Map<String,String> indexProps = MapUtil.stringMap( "provider", "lucene", "type", "exact" );
                 
                 goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, indexProps);
-                goParentRelIndex = indexProvider.relationshipIndex(GoParentRel.GO_PARENT_REL_INDEX, indexProps);
+                isAGoRelIndex = indexProvider.relationshipIndex(IsAGoRel.IS_A_REL_INDEX, indexProps);
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -112,7 +114,12 @@ public class ImportGeneOntology implements Executable {
                 //--------------------------------------------------------------------------
 
                 //--------------------------------relationships------------------------------------------
-                GoParentRel goParentRel = new GoParentRel(null);
+                IsAGoRel isAGoRel = new IsAGoRel(null);
+                RegulatesGoRel regulatesGoRel = new RegulatesGoRel(null);
+                NegativelyRegulatesGoRel negativelyRegulatesGoRel = new NegativelyRegulatesGoRel(null);
+                PositivelyRegulatesGoRel positivelyRegulatesGoRel = new PositivelyRegulatesGoRel(null);
+                PartOfGoRel partOfGoRel = new PartOfGoRel(null);
+                HasPartGoRel hasPartGoRel = new HasPartGoRel(null);
                 MainGoRel mainGoRel = new MainGoRel(null);
                 CellularComponentRel cellularComponentRel = new CellularComponentRel(null);
                 BiologicalProcessRel biologicalProcessRel = new BiologicalProcessRel(null);
@@ -120,6 +127,11 @@ public class ImportGeneOntology implements Executable {
                 //--------------------------------------------------------------------------
 
                 Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> regulatesMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> negativelyRegulatesMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> partOfMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> hasPartMap = new HashMap<String, ArrayList<String>>();
 
                 int counter = 1;
                 int limitForPrintingOut = 10000;
@@ -127,7 +139,6 @@ public class ImportGeneOntology implements Executable {
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
                 StringBuilder termStBuilder = new StringBuilder();
-
 
                 logger.log(Level.INFO, "inserting nodes....");
 
@@ -163,6 +174,21 @@ public class ImportGeneOntology implements Executable {
                                 goDefinition = defstrElem.getText();
                             }
                         }
+                        String goComment = termXMLElement.asJDomElement().getChildText(COMMENT_TAG_NAME);
+                        if(goComment == null){
+                            goComment = "";
+                        }
+                        String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
+                        if(goIsObsolete == null){
+                            goIsObsolete = "";
+                        }else{
+                            if(goIsObsolete.equals("1")){
+                                goIsObsolete = "true";
+                            }else{
+                                goIsObsolete = "false";
+                            }
+                        }
+
                         
                         List<Element> altIdElems = termXMLElement.asJDomElement().getChildren("alt_id");
                         String[] alternativeIds = new String[altIdElems.size()];
@@ -172,7 +198,7 @@ public class ImportGeneOntology implements Executable {
 
 
                         //----term parents----
-                        List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_TAG_NAME);
+                        List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IsAGoRel.OBOXML_RELATIONSHIP_NAME);
                         ArrayList<String> array = new ArrayList<String>();
                         for (Element elem : termParentTerms) {
                             array.add(elem.getText().trim());
@@ -180,11 +206,70 @@ public class ImportGeneOntology implements Executable {
                         termParentsMap.put(goId, array);
                         //---------------------
 
+                        //-------relationship tags-----------
+                        List<Element> relationshipTags = termXMLElement.asJDomElement().getChildren(RELATIONSHIP_TAG_NAME);
+
+                        for (Element relationshipTag : relationshipTags) {
+
+                            String relType = relationshipTag.getChildText("type");
+                            String toSt = relationshipTag.getChildText("to");
+
+                            if(relType.equals(RegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                                ArrayList<String> tempArray = regulatesMap.get(goId);
+                                if(tempArray == null){
+                                    tempArray = new ArrayList<String>();
+                                    regulatesMap.put(goId, tempArray);
+                                }
+                                tempArray.add(toSt);
+                                
+                            }else if(relType.equals(PositivelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                                ArrayList<String> tempArray = positivelyRegulatesMap.get(goId);
+                                if(tempArray == null){
+                                    tempArray = new ArrayList<String>();
+                                    positivelyRegulatesMap.put(goId, tempArray);
+                                }
+                                tempArray.add(toSt);
+                                
+                            }else if(relType.equals(NegativelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                                ArrayList<String> tempArray = negativelyRegulatesMap.get(goId);
+                                if(tempArray == null){
+                                    tempArray = new ArrayList<String>();
+                                    negativelyRegulatesMap.put(goId, tempArray);
+                                }
+                                tempArray.add(toSt);
+
+                            }else if(relType.equals(PartOfGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                                ArrayList<String> tempArray = partOfMap.get(goId);
+                                if(tempArray == null){
+                                    tempArray = new ArrayList<String>();
+                                    partOfMap.put(goId, tempArray);
+                                }
+                                tempArray.add(toSt);
+
+                            }else if(relType.equals(HasPartGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                                ArrayList<String> tempArray = hasPartMap.get(goId);
+                                if(tempArray == null){
+                                    tempArray = new ArrayList<String>();
+                                    hasPartMap.put(goId, tempArray);
+                                }
+                                tempArray.add(toSt);
+                                
+                            }
+                        }
+                        //-------------------------------------
+
                         goProperties.put(GoTermNode.ID_PROPERTY, goId);
                         goProperties.put(GoTermNode.NAME_PROPERTY, goName);
                         goProperties.put(GoTermNode.DEFINITION_PROPERTY, goDefinition);
                         goProperties.put(GoTermNode.NAMESPACE_PROPERTY, goNamespace);
                         goProperties.put(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
+                        goProperties.put(GoTermNode.OBSOLETE_PROPERTY, goIsObsolete);
+                        goProperties.put(GoTermNode.COMMENT_PROPERTY, goComment);
                         long currentGoTermId = inserter.createNode(goProperties);
                         //--------indexing term by id (and alternative ids)----------
                         goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,goId));
@@ -225,20 +310,81 @@ public class ImportGeneOntology implements Executable {
 
                 logger.log(Level.INFO, "Inserting relationships....");
 
-                //-------------------now I create the relationships-----------------
+                logger.log(Level.INFO, "'is_a' relationships....");
+
+                //-------------------'is_a' relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
                 for (String key : keys) {
                     long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
                     ArrayList<String> tempArray = termParentsMap.get(key);
                     for (String string : tempArray) {
                         long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        long goParentRelId = inserter.createRelationship(currentNodeId, tempNodeId, goParentRel, null);
+                        long isAGorelId = inserter.createRelationship(currentNodeId, tempNodeId, isAGoRel, null);
                         //System.out.println("key = " + key);
-                        goParentRelIndex.add(goParentRelId, MapUtil.map(GoParentRel.GO_PARENT_REL_INDEX,String.valueOf(currentNodeId)));
+                        isAGoRelIndex.add(isAGorelId, MapUtil.map(IsAGoRel.IS_A_REL_INDEX,String.valueOf(currentNodeId)));
                         //System.out.println("indexing key = " + key);
                     }
                 }
-                //------------------------------------------------------------------
+
+                logger.log(Level.INFO, "'regulates' relationships....");
+                //-------------------'regulates' relationships----------------------
+                keys = regulatesMap.keySet();
+                for (String key : keys) {
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    ArrayList<String> tempArray = regulatesMap.get(key);
+                    for (String string : tempArray) {
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        inserter.createRelationship(currentNodeId, tempNodeId, regulatesGoRel, null);
+                    }
+                }
+
+                logger.log(Level.INFO, "'negatively_regulates' relationships....");
+                //-------------------'regulates' relationships----------------------
+                keys = negativelyRegulatesMap.keySet();
+                for (String key : keys) {
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
+                    for (String string : tempArray) {
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        inserter.createRelationship(currentNodeId, tempNodeId, negativelyRegulatesGoRel, null);
+                    }
+                }
+
+                logger.log(Level.INFO, "'positively_regulates' relationships....");
+                //-------------------'regulates' relationships----------------------
+                keys = positivelyRegulatesMap.keySet();
+                for (String key : keys) {
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
+                    for (String string : tempArray) {
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        inserter.createRelationship(currentNodeId, tempNodeId, positivelyRegulatesGoRel, null);
+                    }
+                }
+
+                logger.log(Level.INFO, "'part_of' relationships....");
+                //-------------------'regulates' relationships----------------------
+                keys = partOfMap.keySet();
+                for (String key : keys) {
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    ArrayList<String> tempArray = partOfMap.get(key);
+                    for (String string : tempArray) {
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        inserter.createRelationship(currentNodeId, tempNodeId, partOfGoRel, null);
+                    }
+                }
+
+                logger.log(Level.INFO, "'has_part' relationships....");
+                //-------------------'regulates' relationships----------------------
+                keys = hasPartMap.keySet();
+                for (String key : keys) {
+                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    ArrayList<String> tempArray = hasPartMap.get(key);
+                    for (String string : tempArray) {
+                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        inserter.createRelationship(currentNodeId, tempNodeId, hasPartGoRel, null);
+                    }
+                }
 
                 logger.log(Level.INFO, "Done! :)");
 
