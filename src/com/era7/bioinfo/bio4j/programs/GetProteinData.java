@@ -30,8 +30,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinKeywordRel;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
-import com.era7.bioinfo.bio4jmodel.relationships.features.RepeatFeatureRel;
-import com.era7.bioinfo.bio4jmodel.relationships.go.MainGoRel;
+import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,8 +42,6 @@ import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.Transaction;
-import org.neo4j.graphdb.index.Index;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.graphdb.index.RelationshipIndex;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
@@ -123,26 +120,26 @@ public class GetProteinData {
 //                System.out.println(tempProt.getAccession());
 //            }
 
-//            System.out.println("going through all biological process nodes...");
-//            GoTermNode goNode = new GoTermNode(manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0003735").getSingle());
-//            //System.out.println(bioProcNode.getNode().getRelationships(new GoParentRel(null)).iterator().hasNext());
-//            //System.out.println("bioProcNodeNumber = " + (getChildrenNumber(bioProcNode) + 1));
-//            System.out.println("goNode.getId() = " + goNode.getId());
-//
-//            RelationshipIndex indexRel = manager.getGoParentRelIndex();
-//            IndexHits<Relationship> hits = indexRel.get(GoParentRel.GO_PARENT_REL_INDEX, String.valueOf(goNode.getNode().getId()),null,null);
-//
-//            System.out.println("hits.size() = " + hits.size());
-//
-//            while(hits.hasNext() ){
-//                System.out.println("hits.size() = " + hits.size());
-//                GoTermNode goParentNode = new GoTermNode(hits.getSingle().getEndNode());
-//                System.out.println("goParentNode.getId() = " + goParentNode.getId());
-//                goNode = goParentNode;
-//
-//                hits = indexRel.get(GoParentRel.GO_PARENT_REL_INDEX, goNode.getId());
-//            }
-//            System.out.println("done!");
+            System.out.println("going through all biological process nodes...");
+            GoTermNode goNode = new GoTermNode(manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0003735").getSingle());
+            //System.out.println(bioProcNode.getNode().getRelationships(new GoParentRel(null)).iterator().hasNext());
+            //System.out.println("bioProcNodeNumber = " + (getChildrenNumber(bioProcNode) + 1));
+            System.out.println("goNode.getId() = " + goNode.getId());
+
+            RelationshipIndex indexRel = manager.getIsAGoRelIndex();
+            IndexHits<Relationship> hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, String.valueOf(goNode.getNode().getId()),null,null);
+
+            System.out.println("hits.size() = " + hits.size());
+
+            while(hits.hasNext() ){
+                System.out.println("hits.size() = " + hits.size());
+                GoTermNode goParentNode = new GoTermNode(hits.getSingle().getEndNode());
+                System.out.println("goParentNode.getId() = " + goParentNode.getId());
+                goNode = goParentNode;
+
+                hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, goNode.getId());
+            }
+            System.out.println("done!");
 
             node = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name).getSingle();
 
@@ -285,7 +282,7 @@ public class GetProteinData {
     private static int getChildrenNumber(GoTermNode node){
         int counter = 0;
 
-        IndexHits<Relationship> hits = manager.getGoParentRelIndex().get(GoParentRel.GO_PARENT_REL_INDEX, node.getId());
+        IndexHits<Relationship> hits = manager.getIsAGoRelIndex().get(IsAGoRel.IS_A_REL_INDEX, node.getId());
 
         System.out.println("hits.size() = " + hits.size());
 

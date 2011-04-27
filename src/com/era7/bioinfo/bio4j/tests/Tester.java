@@ -19,13 +19,11 @@ package com.era7.bioinfo.bio4j.tests;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
-import com.era7.bioinfo.bio4jmodel.relationships.go.GoParentRel;
+import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Transaction;
@@ -65,7 +63,7 @@ public class Tester {
         indexProvider = new LuceneBatchInserterIndexProvider(inserter);
         Map<String, String> indexProps = MapUtil.stringMap("provider", "lucene", "type", "exact");
         goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, indexProps);
-        goParentRelIndex = indexProvider.relationshipIndex(GoParentRel.GO_PARENT_REL_INDEX, indexProps);
+        goParentRelIndex = indexProvider.relationshipIndex(IsAGoRel.IS_A_REL_INDEX, indexProps);
 
         long node0Id = inserter.createNode(MapUtil.map("id","GO:0"));
         goTermIdIndex.add(node0Id, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX, "GO:0"));
@@ -73,8 +71,8 @@ public class Tester {
         long node1Id = inserter.createNode(MapUtil.map("id","GO:1"));
         goTermIdIndex.add(node1Id, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX, "GO:1"));
 
-        long relId = inserter.createRelationship(node1Id, node0Id, new GoParentRel(null), null);
-        goParentRelIndex.add(relId, MapUtil.map(GoParentRel.GO_PARENT_REL_INDEX, String.valueOf(node1Id)));
+        long relId = inserter.createRelationship(node1Id, node0Id, new IsAGoRel(null), null);
+        goParentRelIndex.add(relId, MapUtil.map(IsAGoRel.IS_A_REL_INDEX, String.valueOf(node1Id)));
         
         indexProvider.shutdown();
         inserter.shutdown();
@@ -99,7 +97,7 @@ public class Tester {
 
             System.out.println(node1.getProperty("id"));
 
-            IndexHits<Relationship> hits = manager.getGoParentRelIndex().get(GoParentRel.GO_PARENT_REL_INDEX, String.valueOf(node1.getId()), null, null);
+            IndexHits<Relationship> hits = manager.getIsAGoRelIndex().get(IsAGoRel.IS_A_REL_INDEX, String.valueOf(node1.getId()), null, null);
             System.out.println("hits.size() = " + hits.size());
 
             txn.success();
