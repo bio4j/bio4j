@@ -119,7 +119,7 @@ public class ImportGeneOntology implements Executable {
                 NegativelyRegulatesGoRel negativelyRegulatesGoRel = new NegativelyRegulatesGoRel(null);
                 PositivelyRegulatesGoRel positivelyRegulatesGoRel = new PositivelyRegulatesGoRel(null);
                 PartOfGoRel partOfGoRel = new PartOfGoRel(null);
-                HasPartGoRel hasPartGoRel = new HasPartGoRel(null);
+                HasPartOfGoRel hasPartGoRel = new HasPartOfGoRel(null);
                 MainGoRel mainGoRel = new MainGoRel(null);
                 CellularComponentRel cellularComponentRel = new CellularComponentRel(null);
                 BiologicalProcessRel biologicalProcessRel = new BiologicalProcessRel(null);
@@ -250,7 +250,7 @@ public class ImportGeneOntology implements Executable {
                                 }
                                 tempArray.add(toSt);
 
-                            }else if(relType.equals(HasPartGoRel.OBOXML_RELATIONSHIP_NAME)){
+                            }else if(relType.equals(HasPartOfGoRel.OBOXML_RELATIONSHIP_NAME)){
 
                                 ArrayList<String> tempArray = hasPartMap.get(goId);
                                 if(tempArray == null){
@@ -314,7 +314,7 @@ public class ImportGeneOntology implements Executable {
 
                 //-------------------'is_a' relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
-                for (String key : keys) {
+                for (String key : keys) {                    
                     long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
                     ArrayList<String> tempArray = termParentsMap.get(key);
                     for (String string : tempArray) {
