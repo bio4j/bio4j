@@ -35,6 +35,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
 
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -277,7 +278,8 @@ public class ImportUniprot implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);               
+                
 
                 //-----------------create batch indexes----------------------------------
                 //----------------------------------------------------------------------
@@ -1101,8 +1103,11 @@ public class ImportUniprot implements Executable {
                 inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
             } //----- subcellular location---------
             else if (commentTypeSt.equals(ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
+                
                 List<Element> subcLocations = commentElem.getChildren(CommonData.SUBCELLULAR_LOCATION_TAG_NAME);
+                
                 for (Element subcLocation : subcLocations) {
+                    
                     List<Element> locations = subcLocation.getChildren(CommonData.LOCATION_TAG_NAME);
                     Element firstLocation = locations.get(0);
                     //long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
@@ -1112,16 +1117,26 @@ public class ImportUniprot implements Executable {
                         firstLocationId = firstLocationIndexHits.getSingle();
                     }
                     long lastLocationId = firstLocationId;
+                    
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-                        lastLocationId = inserter.createNode(subcellularLocationProperties);
-                        subcellularLocationNameIndex.add(lastLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim()));
+                        lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
                         //---flushing subcellular location name index---
                         subcellularLocationNameIndex.flush();
                     }
+                    
                     for (int i = 1; i < locations.size(); i++) {
-                        subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-                        long tempLocationId = inserter.createNode(subcellularLocationProperties);
+                        
+                        long tempLocationId = -1;
+                        IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
+                        if(tempLocationIndexHits.hasNext()){
+                            tempLocationId = tempLocationIndexHits.getSingle();
+                        }else{
+                            subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
+                            tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
+                            subcellularLocationNameIndex.flush();
+                        }                         
+                                
                         inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
                         lastLocationId = tempLocationId;
                     }
@@ -1476,6 +1491,13 @@ public class ImportUniprot implements Executable {
         //indexService.index(cityId, CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY));
         index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
         return cityId;
+    }
+    private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
+            BatchInserter inserter,
+            BatchInserterIndex index) {
+        long subcellularLocationId = inserter.createNode(subcellularLocationProperties);
+        index.add(subcellularLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, subcellularLocationProperties.get(SubcellularLocationNode.NAME_PROPERTY)));
+        return subcellularLocationId;
     }
 
     private static void importProteinCitations(XMLElement entryXMLElem,
