@@ -120,26 +120,26 @@ public class GetProteinData {
 //                System.out.println(tempProt.getAccession());
 //            }
 
-            System.out.println("going through all biological process nodes...");
-            GoTermNode goNode = new GoTermNode(manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0003735").getSingle());
-            //System.out.println(bioProcNode.getNode().getRelationships(new GoParentRel(null)).iterator().hasNext());
-            //System.out.println("bioProcNodeNumber = " + (getChildrenNumber(bioProcNode) + 1));
-            System.out.println("goNode.getId() = " + goNode.getId());
-
-            RelationshipIndex indexRel = manager.getIsAGoRelIndex();
-            IndexHits<Relationship> hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, String.valueOf(goNode.getNode().getId()),null,null);
-
-            System.out.println("hits.size() = " + hits.size());
-
-            while(hits.hasNext() ){
-                System.out.println("hits.size() = " + hits.size());
-                GoTermNode goParentNode = new GoTermNode(hits.getSingle().getEndNode());
-                System.out.println("goParentNode.getId() = " + goParentNode.getId());
-                goNode = goParentNode;
-
-                hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, goNode.getId());
-            }
-            System.out.println("done!");
+//            System.out.println("going through all biological process nodes...");
+//            GoTermNode goNode = new GoTermNode(manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0003735").getSingle());
+//            //System.out.println(bioProcNode.getNode().getRelationships(new GoParentRel(null)).iterator().hasNext());
+//            //System.out.println("bioProcNodeNumber = " + (getChildrenNumber(bioProcNode) + 1));
+//            System.out.println("goNode.getId() = " + goNode.getId());
+//
+//            RelationshipIndex indexRel = manager.getIsAGoRelIndex();
+//            IndexHits<Relationship> hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, String.valueOf(goNode.getNode().getId()),null,null);
+//
+//            System.out.println("hits.size() = " + hits.size());
+//
+//            while(hits.hasNext() ){
+//                System.out.println("hits.size() = " + hits.size());
+//                GoTermNode goParentNode = new GoTermNode(hits.getSingle().getEndNode());
+//                System.out.println("goParentNode.getId() = " + goParentNode.getId());
+//                goNode = goParentNode;
+//
+//                hits = indexRel.get(IsAGoRel.IS_A_REL_INDEX, goNode.getId());
+//            }
+//            System.out.println("done!");
 
             node = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name).getSingle();
 
@@ -148,6 +148,7 @@ public class GetProteinData {
                 ProteinNode protein = new ProteinNode(node);
 
                 System.out.println("protein: " + protein);
+                                
 
                 System.out.println("gene names:");
                 for (String string : protein.getGeneNames()) {
@@ -173,33 +174,33 @@ public class GetProteinData {
                     System.out.println(interpro);
                 }
 
-                System.out.println("Getting subcellular locations...");
-                relIt = protein.getNode().getRelationships(new ProteinSubcellularLocationRel(null), Direction.OUTGOING).iterator();
-                while (relIt.hasNext()) {
-                    ProteinSubcellularLocationRel proteinSubcellularLocationRel = new ProteinSubcellularLocationRel(relIt.next());
-                    SubcellularLocationNode sub = new SubcellularLocationNode(proteinSubcellularLocationRel.getRelationship().getEndNode());
-                    System.out.println(proteinSubcellularLocationRel);
-                    ArrayList<String> subcelArray = new ArrayList<String>();
-                    subcelArray.add(sub.getName());
-                    //System.out.println(sub);
-                    Node lastNode = sub.getNode();
-                    while (lastNode != null) {
-                        Relationship parentRel = lastNode.getSingleRelationship(new SubcellularLocationParentRel(null), Direction.OUTGOING);
-                        if (parentRel != null) {
-                            sub = new SubcellularLocationNode(parentRel.getEndNode());
-                            subcelArray.add(sub.getName());
-                            lastNode = sub.getNode();
-                        } else {
-                            lastNode = null;
-                        }
-                    }
-
-                    for (int i = subcelArray.size() - 1; i >= 0; i--) {
-                        System.out.print(subcelArray.get(i) + " --> ");
-                    }
-                    System.out.println("");
-
-                }
+//                System.out.println("Getting subcellular locations...");
+//                relIt = protein.getNode().getRelationships(new ProteinSubcellularLocationRel(null), Direction.OUTGOING).iterator();
+//                while (relIt.hasNext()) {
+//                    ProteinSubcellularLocationRel proteinSubcellularLocationRel = new ProteinSubcellularLocationRel(relIt.next());
+//                    SubcellularLocationNode sub = new SubcellularLocationNode(proteinSubcellularLocationRel.getRelationship().getEndNode());
+//                    System.out.println(proteinSubcellularLocationRel);
+//                    ArrayList<String> subcelArray = new ArrayList<String>();
+//                    subcelArray.add(sub.getName());
+//                    //System.out.println(sub);
+//                    Node lastNode = sub.getNode();
+//                    while (lastNode != null) {
+//                        Relationship parentRel = lastNode.getSingleRelationship(new SubcellularLocationParentRel(null), Direction.OUTGOING);
+//                        if (parentRel != null) {
+//                            sub = new SubcellularLocationNode(parentRel.getEndNode());
+//                            subcelArray.add(sub.getName());
+//                            lastNode = sub.getNode();
+//                        } else {
+//                            lastNode = null;
+//                        }
+//                    }
+//
+//                    for (int i = subcelArray.size() - 1; i >= 0; i--) {
+//                        System.out.print(subcelArray.get(i) + " --> ");
+//                    }
+//                    System.out.println("");
+//
+//                }
 
 
 //                System.out.println("Getting repeat features....");
@@ -210,16 +211,16 @@ public class GetProteinData {
 //                }
 
 
-                System.out.println("Getting some gos");
-                IndexHits<Node> goHits = manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0005634");
-                if(goHits.hasNext()){
-                    System.out.println("found!");
-                    System.out.println("goHits = " + new GoTermNode(goHits.getSingle()));
-                }else{
-                    System.out.println("no hits found....");
-                }
+//                System.out.println("Getting some gos");
+//                IndexHits<Node> goHits = manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, "GO:0005634");
+//                if(goHits.hasNext()){
+//                    System.out.println("found!");
+//                    System.out.println("goHits = " + new GoTermNode(goHits.getSingle()));
+//                }else{
+//                    System.out.println("no hits found....");
+//                }
 
-                System.out.println("Getting go ontology...");
+                System.out.println("Getting go annotations...");
                 relIt = protein.getNode().getRelationships(new ProteinGoRel(null), Direction.OUTGOING).iterator();
                 while (relIt.hasNext()) {
                     ProteinGoRel goRel = new ProteinGoRel(relIt.next());

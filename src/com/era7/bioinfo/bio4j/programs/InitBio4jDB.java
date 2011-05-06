@@ -152,14 +152,14 @@ public class InitBio4jDB implements Executable {
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
                 //---------------------------------------------------------------------------------------------------------------
 
-                //Node and relationship that will lead to
-                //protein self interactions (in case it does not exist yet)
+                //Node and relationship that will lead to protein self interactions 
 
                 proteinSelfInteractionsProperties.put(ProteinSelfInteractionsNode.NODE_TYPE_PROPERTY, ProteinSelfInteractionsNode.NODE_TYPE);
                 long proteinSelfInteractionsNodeId = inserter.createNode(proteinSelfInteractionsProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
                         proteinSelfInteractionsRel, null);
                 //----------------------------------------------------------
+                
             } catch (Exception e) {
                 
                 logger.log(Level.SEVERE, e.getMessage());
