@@ -35,7 +35,6 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
 
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -394,6 +393,7 @@ public class ImportUniprot implements Executable {
 
                         List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
                         ArrayList<String> emblCrossReferences = new ArrayList<String>();
+                        ArrayList<String> refseqReferences = new ArrayList<String>();
                         for (Element dbReferenceElem : dbReferenceList) {
                             String refId = dbReferenceElem.getAttributeValue("id");
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
@@ -408,6 +408,8 @@ public class ImportUniprot implements Executable {
                                 emblCrossReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
                                 arrayExpressIdSt = refId;
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Refseq")){
+                                refseqReferences.add(refId);
                             }
                         }
 
@@ -430,6 +432,7 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.PIR_ID_PROPERTY, pirIdSt);
                         proteinProperties.put(ProteinNode.KEGG_ID_PROPERTY, keggIdSt);
                         proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY, convertToStringArray(emblCrossReferences));
+                        proteinProperties.put(ProteinNode.REFSEQ_REFERENCES_PROPERTY, convertToStringArray(refseqReferences));
                         proteinProperties.put(ProteinNode.ENSEMBL_ID_PROPERTY, ensemblIdSt);
                         proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY, uniGeneIdSt);
 

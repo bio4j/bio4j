@@ -29,6 +29,8 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinInterproRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinKeywordRel;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
+import com.era7.bioinfo.bio4jmodel.nodes.citation.ArticleNode;
+import com.era7.bioinfo.bio4jmodel.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
@@ -249,6 +251,20 @@ public class GetProteinData {
                     currentNode = taxon.getNode();
                     iterator = currentNode.getRelationships(new TaxonParentRel(null), Direction.INCOMING).iterator();
                 }
+                
+                System.out.println("Getting citations...");
+                
+                System.out.println("Article citations:");
+                for (ArticleNode article : protein.getArticleCitations()) {
+                    System.out.println(article);
+                }
+                System.out.println("Submission citations:");
+                for (SubmissionNode submission : protein.getSubmissionCitations()) {
+                    System.out.println(submission);
+                }
+                
+                System.out.println("DONE!! :)");
+                 
 
 
             } else {

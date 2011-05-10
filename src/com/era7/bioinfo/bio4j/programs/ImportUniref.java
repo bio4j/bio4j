@@ -37,7 +37,9 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -101,6 +103,9 @@ public class ImportUniref implements Executable {
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
+                // create the batch index service
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+                
                 //------------------indexes creation----------------------------------
                 BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
@@ -209,7 +214,13 @@ public class ImportUniref implements Executable {
                     representantId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession).getSingle();
                 } //---The representant is a protein
                 else {
-                    representantId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession).getSingle();
+                    
+                    IndexHits<Long> hits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
+                    if(hits.size() > 1){
+                        System.out.println("representantAccession = " + representantAccession);
+                    }
+                    
+                    representantId = hits.getSingle();
                 }
 
                 for (String memberAccession : membersAccessionList) {

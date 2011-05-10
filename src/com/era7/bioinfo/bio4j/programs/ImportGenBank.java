@@ -5,14 +5,25 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
+import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPFileFilters;
@@ -24,8 +35,9 @@ import org.apache.commons.net.ftp.FTPFileFilters;
 public class ImportGenBank implements Executable {
 
     public static final String BASE_FOLDER = "refseq/release/complete/";
-    //public static final String BACTERIA_FOLDER_NAME = "Bacteria";
-    //public static final String EUKARYOTES_FOLDER_NAME = "Eukaryotes";
+        
+    private static final Logger logger = Logger.getLogger("ImportGenBank");
+    private static FileHandler fh;
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -38,6 +50,46 @@ public class ImportGenBank implements Executable {
 
     public static void main(String[] args) {
 
+        
+        File currentFolder = new File(".");
+        
+        File[] files = currentFolder.listFiles();
+        
+        for (File file : files) {
+            if(file.getName().endsWith(".")){
+                
+                try{
+                    
+                    BufferedReader reader = new BufferedReader(new FileReader(file));
+                    String line = null;
+                    
+                    while((line = reader.readLine()) != null){
+                        
+                        StringBuilder stBuilder = new StringBuilder();
+                        //Now I get all the lines till I reach the string '//'
+                        do{
+                            stBuilder.append((line + "\n"));
+                            line = reader.readLine();
+                            
+                        }while(line != null && !line.startsWith(GBCommon.LAST_LINE_STR));
+                        
+                        
+                        
+                    }
+                   
+                    
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                
+                
+            }
+        }
+
+
+    }
+    
+    private static void ftpStuff(){
         try {
 
             FTPClient ftp = new FTPClient();
@@ -45,40 +97,45 @@ public class ImportGenBank implements Executable {
 
             System.out.println(ftp.getReplyString());
 
-            ftp.login("anonymous", "asdfjkaljsdf@gmail.com");
+            ftp.login("anonymous", "asdfjkjd83djsdf@gmail.com");
 
+            System.out.println("before list files...");
+
+            //ftp.li
 
             FTPFile[] files = ftp.listFiles(BASE_FOLDER);
-            
+
             System.out.println(files.length);
 
-//            for (FTPFile file : files) {
-//
-//                if (file.getName().endsWith(".gbff.gz")) {
-////                    
-////                    System.out.println(file.getRawListing());
-////                    System.exit(-1);
-//                    GZIPInputStream inputStream = new GZIPInputStream(ftp.retrieveFileStream(BASE_FOLDER + "/" + file.getName()));
-//                    //BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-//                    byte[] buf = new byte[65536];
-//                    int len;
-//                    while ((len = inputStream.read(buf)) > 0) {
-//                        byte[] tempBuf = new byte[len];
-//                        for (int i = 0; i < len; i++) {
-//                            tempBuf[i] = buf[i];
-//                        }
-//                        System.out.println(new String(buf));
-//                    }
-//                    //System.out.println(br.readLine());
-//                }
-//            }
+            for (FTPFile file : files) {
+
+                if (file.getName().endsWith(".gbff.gz")) {
+
+                    StringWriter writer = null;
+                    String charset = "ASCII";
+
+                    GZIPInputStream inputStream = new GZIPInputStream(ftp.retrieveFileStream(BASE_FOLDER + "/" + file.getName()));
+
+                    System.out.println("ftp.getControlEncoding() = " + ftp.getControlEncoding());
+
+                    Reader decoder = new InputStreamReader(inputStream, charset);
+                    BufferedReader buffered = new BufferedReader(decoder);
+
+                    String line = null;
+
+                    while ((line = buffered.readLine()) != null) {
+                        System.out.println("line = " + line);
+                    }
+
+                    System.exit(0);
+                }
+            }
 
 
 
         } catch (Exception ex) {
             Logger.getLogger(ImportGenBank.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
+    
 }
