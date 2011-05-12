@@ -150,7 +150,9 @@ public class GetProteinData {
                 ProteinNode protein = new ProteinNode(node);
 
                 System.out.println("protein: " + protein);
-                                
+                
+                System.out.println("protein.getNode().getId() = " + protein.getNode().getId());
+                                                
 
                 System.out.println("gene names:");
                 for (String string : protein.getGeneNames()) {

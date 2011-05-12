@@ -121,6 +121,7 @@ public class ImportProteinInteractions implements Executable {
                 //txn.success();
                 //txn.finish();
                 logger.log(Level.INFO,"done!");
+                System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
                 //---------------------------------
 
                 // create the batch inserter
