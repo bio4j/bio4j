@@ -4,8 +4,13 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.CDSNode;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.GeneNode;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.rna.*;
+import com.era7.bioinfo.bio4jmodel.relationships.refseq.*;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import com.era7.lib.bioinfo.bioinfoutil.Pair;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
 import java.io.File;
@@ -15,12 +20,20 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.util.zip.GZIPInputStream;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
+import org.neo4j.kernel.impl.batchinsert.BatchInserter;
+import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
  *
@@ -28,9 +41,39 @@ import org.apache.commons.net.ftp.FTPFile;
  */
 public class ImportGenBank implements Executable {
 
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
     public static final String BASE_FOLDER = "refseq/release/complete/";
     private static final Logger logger = Logger.getLogger("ImportGenBank");
     private static FileHandler fh;
+    
+    //------------------nodes properties maps-----------------------------------
+    public static Map<String, Object> genomeElementProperties = new HashMap<String, Object>();
+    public static Map<String, Object> geneProperties = new HashMap<String, Object>();
+    public static Map<String, Object> cdsProperties = new HashMap<String, Object>();
+    public static Map<String, Object> miscRnaProperties = new HashMap<String, Object>();
+    public static Map<String, Object> mRnaProperties = new HashMap<String, Object>();
+    public static Map<String, Object> ncRnaProperties = new HashMap<String, Object>();
+    public static Map<String, Object> rRnaProperties = new HashMap<String, Object>();
+    public static Map<String, Object> tmRnaProperties = new HashMap<String, Object>(); 
+    public static Map<String, Object> tRnaProperties = new HashMap<String, Object>();  
+    //----------------------------------------------------------------------------------
+    
+    //--------------------------------relationships------------------------------------------
+    public static GenomeElementGeneRel genomeElementGeneRel = new GenomeElementGeneRel(null);
+    public static GenomeElementCDSRel genomeElementCDSRel = new GenomeElementCDSRel(null);
+    public static GenomeElementMiscRnaRel genomeElementMiscRnaRel = new GenomeElementMiscRnaRel(null);
+    public static GenomeElementMRnaRel genomeElementMRnaRel = new GenomeElementMRnaRel(null);
+    public static GenomeElementNcRnaRel genomeElementNcRnaRel = new GenomeElementNcRnaRel(null);
+    public static GenomeElementRRnaRel genomeElementRRnaRel = new GenomeElementRRnaRel(null);
+    public static GenomeElementTmRnaRel genomeElementTmRnaRel = new GenomeElementTmRnaRel(null);
+    public static GenomeElementTRnaRel genomeElementTRnaRel = new GenomeElementTRnaRel(null);
+    //----------------------------------------------------------------------------------
 
     @Override
     public void execute(ArrayList<String> array) {
@@ -48,10 +91,49 @@ public class ImportGenBank implements Executable {
 
         File[] files = currentFolder.listFiles();
 
-        for (File file : files) {
-            if (file.getName().endsWith(".gbff")) {
+        BatchInserter inserter = null;
+        BatchInserterIndexProvider indexProvider = null;
 
-                try {
+
+        //----------------------------------------------------------------------------------
+        //---------------------initializing node type properties----------------------------
+        genomeElementProperties.put(GenomeElementNode.NODE_TYPE_PROPERTY, GenomeElementNode.NODE_TYPE);
+        geneProperties.put(GeneNode.NODE_TYPE_PROPERTY, GeneNode.NODE_TYPE);
+        cdsProperties.put(CDSNode.NODE_TYPE_PROPERTY, CDSNode.NODE_TYPE);
+        miscRnaProperties.put(MiscRNANode.NODE_TYPE_PROPERTY, MiscRNANode.NODE_TYPE);
+        mRnaProperties.put(MRNANode.NODE_TYPE_PROPERTY, MRNANode.NODE_TYPE);
+        ncRnaProperties.put(NcRNANode.NODE_TYPE_PROPERTY, NcRNANode.NODE_TYPE);
+        rRnaProperties.put(RRNANode.NODE_TYPE_PROPERTY, RRNANode.NODE_TYPE);
+        tmRnaProperties.put(TmRNANode.NODE_TYPE_PROPERTY, TmRNANode.NODE_TYPE);
+        tRnaProperties.put(TRNANode.NODE_TYPE_PROPERTY, TRNANode.NODE_TYPE);
+        //----------------------------------------------------------------------------------
+        //----------------------------------------------------------------------------------
+        
+
+        try {
+            // This block configures the logger with handler and formatter
+            fh = new FileHandler("ImportGenbank.log", false);
+
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+            logger.addHandler(fh);
+            logger.setLevel(Level.ALL);
+
+            // create the batch inserter
+            inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+
+            // create the batch index service
+            indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+
+
+            //-----------------create batch indexes----------------------------------
+            //----------------------------------------------------------------------
+            BatchInserterIndex genomeElementVersionIndex = indexProvider.nodeIndex(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX,
+                    MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+
+            for (File file : files) {
+                if (file.getName().endsWith(".gbff")) {
+
 
                     BufferedReader reader = new BufferedReader(new FileReader(file));
                     String line = null;
@@ -145,7 +227,7 @@ public class ImportGenBank implements Executable {
 
                                         geneList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.MISC_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.MISC_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.MISC_RNA_STR)[1].trim();
@@ -159,7 +241,7 @@ public class ImportGenBank implements Executable {
 
                                         miscRnaList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.TM_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.TM_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.TM_RNA_STR)[1].trim();
@@ -173,7 +255,7 @@ public class ImportGenBank implements Executable {
 
                                         tmRnaList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.R_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.R_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.R_RNA_STR)[1].trim();
@@ -187,7 +269,7 @@ public class ImportGenBank implements Executable {
 
                                         rRnaList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.M_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.M_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.M_RNA_STR)[1].trim();
@@ -201,7 +283,7 @@ public class ImportGenBank implements Executable {
 
                                         mRnaList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.NC_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.NC_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.NC_RNA_STR)[1].trim();
@@ -215,7 +297,7 @@ public class ImportGenBank implements Executable {
 
                                         ncRnaList.add(positionsSt);
 
-                                    }else if (line.trim().startsWith(GBCommon.T_RNA_STR)) {
+                                    } else if (line.trim().startsWith(GBCommon.T_RNA_STR)) {
 
                                         String positionsSt = "";
                                         positionsSt += line.trim().split(GBCommon.T_RNA_STR)[1].trim();
@@ -279,20 +361,98 @@ public class ImportGenBank implements Executable {
                             System.out.println("rRnaList = " + rRnaList);
                             System.out.println("tmRnaList = " + tmRnaList);
                             System.out.println("tRnaList = " + tRnaList);
+
+
+                            //--------create genome element node--------------
+                            long genomeElementId = createGenomeElementNode(versionSt,
+                                    commentSt, definitionSt, inserter, genomeElementVersionIndex);
+
+                            //-----------genes-----------------
+                            for (String genePositionsSt : geneList) {                                
+                                geneProperties.put(GeneNode.POSITIONS_PROPERTY, genePositionsSt);
+                                long geneId = inserter.createNode(geneProperties);                                
+                                inserter.createRelationship(genomeElementId, geneId, genomeElementGeneRel, null);                                
+                            }
                             
+                            //-----------CDS-----------------
+                            for (String cdsPositionsSt : cdsList) {                                
+                                cdsProperties.put(CDSNode.POSITIONS_PROPERTY, cdsPositionsSt);
+                                long cdsID = inserter.createNode(cdsProperties);                                
+                                inserter.createRelationship(genomeElementId, cdsID, genomeElementCDSRel, null);                                
+                            }
+                            
+                            //-----------misc rna-----------------
+                            for (String miscRnaPositionsSt : miscRnaList) {                                
+                                miscRnaProperties.put(MiscRNANode.POSITIONS_PROPERTY, miscRnaPositionsSt);
+                                long miscRnaID = inserter.createNode(miscRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, miscRnaID, genomeElementMiscRnaRel, null);                                
+                            }
+                            
+                            //-----------m rna-----------------
+                            for (String mRnaPositionsSt : mRnaList) {                                
+                                mRnaProperties.put(MRNANode.POSITIONS_PROPERTY, mRnaPositionsSt);
+                                long mRnaID = inserter.createNode(mRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, mRnaID, genomeElementMRnaRel, null);                                
+                            }
+                            
+                            //-----------nc rna-----------------
+                            for (String ncRnaPositionsSt : ncRnaList) {                                
+                                ncRnaProperties.put(NcRNANode.POSITIONS_PROPERTY, ncRnaPositionsSt);
+                                long ncRnaID = inserter.createNode(ncRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, ncRnaID, genomeElementNcRnaRel, null);                                
+                            }
+                            
+                            //-----------r rna-----------------
+                            for (String rRnaPositionsSt : rRnaList) {                                
+                                rRnaProperties.put(RRNANode.POSITIONS_PROPERTY, rRnaPositionsSt);
+                                long rRnaID = inserter.createNode(rRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, rRnaID, genomeElementRRnaRel, null);                                
+                            }
+                            
+                            //-----------tm rna-----------------
+                            for (String tmRnaPositionsSt : tmRnaList) {                                
+                                tmRnaProperties.put(TmRNANode.POSITIONS_PROPERTY, tmRnaPositionsSt);
+                                long tmRnaID = inserter.createNode(tmRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, tmRnaID, genomeElementTmRnaRel, null);                                
+                            }
+                            
+                            //-----------t rna-----------------
+                            for (String tRnaPositionsSt : tRnaList) {                                
+                                tRnaProperties.put(TRNANode.POSITIONS_PROPERTY, tRnaPositionsSt);
+                                long tRnaID = inserter.createNode(tRnaProperties);                                
+                                inserter.createRelationship(genomeElementId, tRnaID, genomeElementTRnaRel, null);                                
+                            }
+
 
                         }
 
                     }
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+
+
                 }
-
-
             }
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            StackTraceElement[] trace = e.getStackTrace();
+            for (StackTraceElement stackTraceElement : trace) {
+                logger.log(Level.SEVERE, stackTraceElement.toString());
+            }
+        } finally {
+
+            // shutdown, makes sure all changes are written to disk
+            indexProvider.shutdown();
+            inserter.shutdown();
+
+            // closing logger file handler
+            fh.close();
+
         }
+
+
 
 
     }
@@ -344,5 +504,21 @@ public class ImportGenBank implements Executable {
         } catch (Exception ex) {
             Logger.getLogger(ImportGenBank.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private static long createGenomeElementNode(String version,
+            String comment,
+            String definition,
+            BatchInserter inserter,
+            BatchInserterIndex index) {
+
+        genomeElementProperties.put(GenomeElementNode.VERSION_PROPERTY, version);
+        genomeElementProperties.put(GenomeElementNode.COMMENT_PROPERTY, comment);
+        genomeElementProperties.put(GenomeElementNode.DEFINITION_PROPERTY, definition);
+
+        long genomeElementId = inserter.createNode(genomeElementProperties);
+        index.add(genomeElementId, MapUtil.map(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX, version));
+        return genomeElementId;
+
     }
 }
