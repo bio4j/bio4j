@@ -31,9 +31,11 @@ import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.nodes.citation.ArticleNode;
 import com.era7.bioinfo.bio4jmodel.nodes.citation.SubmissionNode;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
+import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -81,6 +83,20 @@ public class GetProteinData {
               
         //Transaction txn = manager.beginTransaction();
 
+        
+        NodeRetriever nodeRetriever = new NodeRetriever(manager);
+        GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion("NC_005781.1");
+        System.out.println("\ngenomeElementNode = " + genomeElementNode);
+        
+        System.out.println("Number of CDS: " + genomeElementNode.getCDS().size());
+        System.out.println("Number of genes: " + genomeElementNode.getGenes().size());
+        System.out.println("Number of Mrnas: " + genomeElementNode.getMRnas().size());
+        System.out.println("Number of misc rnas: " + genomeElementNode.getMiscRnas().size());
+        System.out.println("Number of nc rnas: " + genomeElementNode.getNcRnas().size());
+        System.out.println("Number of Rrnas: " + genomeElementNode.getRRnas().size());
+        System.out.println("Number of Trnas: " + genomeElementNode.getTRnas().size());
+        System.out.println("Number of Tm rnas: " + genomeElementNode.getTmRnas().size());
+                
 
         Node node = null;
         

@@ -31,6 +31,10 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
@@ -39,6 +43,13 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class InitBio4jDB implements Executable {
+    
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
 
     private static final Logger logger = Logger.getLogger("InitBio4jDB");
     private static FileHandler fh;
@@ -69,7 +80,7 @@ public class InitBio4jDB implements Executable {
             System.out.println("This program does not expect any parameter\n");
         } else {
             BatchInserter inserter = null;
-            //LuceneIndexBatchInserter indexService = null;
+            BatchInserterIndexProvider indexProvider = null;
 
             Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
             Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
@@ -98,6 +109,9 @@ public class InitBio4jDB implements Executable {
                 
                 // create the batch inserter
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                
+                // create the batch index service
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
 
                 // create the batch index service
                 //indexService = new LuceneIndexBatchInserterImpl(inserter);
@@ -157,8 +171,11 @@ public class InitBio4jDB implements Executable {
                 
                 proteinSelfInteractionsProperties.put(ProteinSelfInteractionsNode.NODE_TYPE_PROPERTY, ProteinSelfInteractionsNode.NODE_TYPE);
                 long proteinSelfInteractionsNodeId = inserter.createNode(proteinSelfInteractionsProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), proteinSelfInteractionsNodeId,
-                        proteinSelfInteractionsRel, null);
+                BatchInserterIndex index = indexProvider.nodeIndex(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME,
+                                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                index.add(proteinSelfInteractionsNodeId, MapUtil.map(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE));
+                
+                
                 
                 
                 //----------------------------------------------------------
@@ -175,8 +192,9 @@ public class InitBio4jDB implements Executable {
                 try {
 
                     // shutdown, makes sure all changes are written to disk
+                    indexProvider.shutdown();
                     inserter.shutdown();
-                    //indexService.shutdown();
+                    
 
                     //closing logger file handler
                     fh.close();

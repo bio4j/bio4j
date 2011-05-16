@@ -89,5 +89,11 @@ public class CommonData {
     public static final String FEATURE_LOCATION_POSITION_ATTRIBUTE = "position";
     public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
     
+    
+    
+    public static final String REFSEQ_BUCKET_NAME = "refseq-bucket";
+    
+    public static final String PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME = "self_relationships_node_index";
+    public static final String PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE = "protein_self_relationships";
 
 }
