@@ -4,21 +4,6 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.AccessControlList;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.Grantee;
-import com.amazonaws.services.s3.model.GroupGrantee;
-import com.amazonaws.services.s3.model.ListObjectsRequest;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.Owner;
-import com.amazonaws.services.s3.model.Permission;
-import com.amazonaws.services.s3.model.PutObjectResult;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.refseq.CDSNode;
 import com.era7.bioinfo.bio4jmodel.nodes.refseq.GeneNode;
@@ -28,16 +13,13 @@ import com.era7.bioinfo.bio4jmodel.relationships.refseq.*;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -106,7 +88,7 @@ public class ImportRefSeq implements Executable {
             System.out.println("This program expects one parameter: \n"
                     + "1. Folder name with all the .gbk files \n");
         } else {
-            
+
             File currentFolder = new File(args[0]);
 
             File[] files = currentFolder.listFiles();
@@ -153,23 +135,15 @@ public class ImportRefSeq implements Executable {
 
 
                 //--------creating amazon s3 client--------------
-                AmazonS3Client amazonS3Client = new AmazonS3Client(new PropertiesCredentials(new File("AwsCredentials.properties")));
-                Owner bucketOwner = amazonS3Client.getBucketAcl(CommonData.REFSEQ_BUCKET_NAME).getOwner();
+                //AmazonS3Client amazonS3Client = new AmazonS3Client(new PropertiesCredentials(new File("AwsCredentials.properties")));
+                //Owner bucketOwner = amazonS3Client.getBucketAcl(CommonData.REFSEQ_BUCKET_NAME).getOwner();
                 //--------------------------------
-                
-                
-                ListObjectsRequest listObjectsRequest = new ListObjectsRequest();
-                listObjectsRequest.setBucketName(CommonData.REFSEQ_BUCKET_NAME);
-                listObjectsRequest.setMaxKeys(10000000);
-                ObjectListing objectListing = amazonS3Client.listObjects(listObjectsRequest);
-                List<S3ObjectSummary> list = objectListing.getObjectSummaries();
-                System.out.println("number of files in refseq bucket: " + list.size());
-                
-                files = null;
+
 
                 for (File file : files) {
                     if (file.getName().endsWith(".gbff")) {
 
+                        logger.log(Level.INFO, ("file: " + file.getName()));
 
                         BufferedReader reader = new BufferedReader(new FileReader(file));
                         String line = null;
@@ -236,7 +210,9 @@ public class ImportRefSeq implements Executable {
                                     do {
                                         line = reader.readLine();
 
-                                        if (line.trim().startsWith(GBCommon.CDS_STR)) {
+                                        String lineSubstr5 = line.substring(5);
+
+                                        if (lineSubstr5.startsWith(GBCommon.CDS_STR)) {
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.CDS_STR)[1].trim();
 
@@ -249,7 +225,7 @@ public class ImportRefSeq implements Executable {
 
                                             cdsList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.GENE_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.GENE_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.GENE_STR)[1].trim();
@@ -263,7 +239,7 @@ public class ImportRefSeq implements Executable {
 
                                             geneList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.MISC_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.MISC_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.MISC_RNA_STR)[1].trim();
@@ -277,7 +253,7 @@ public class ImportRefSeq implements Executable {
 
                                             miscRnaList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.TM_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.TM_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.TM_RNA_STR)[1].trim();
@@ -291,7 +267,7 @@ public class ImportRefSeq implements Executable {
 
                                             tmRnaList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.R_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.R_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.R_RNA_STR)[1].trim();
@@ -305,7 +281,7 @@ public class ImportRefSeq implements Executable {
 
                                             rRnaList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.M_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.M_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.M_RNA_STR)[1].trim();
@@ -319,7 +295,7 @@ public class ImportRefSeq implements Executable {
 
                                             mRnaList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.NC_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.NC_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.NC_RNA_STR)[1].trim();
@@ -333,7 +309,7 @@ public class ImportRefSeq implements Executable {
 
                                             ncRnaList.add(positionsSt);
 
-                                        } else if (line.trim().startsWith(GBCommon.T_RNA_STR)) {
+                                        } else if (lineSubstr5.startsWith(GBCommon.T_RNA_STR)) {
 
                                             String positionsSt = "";
                                             positionsSt += line.trim().split(GBCommon.T_RNA_STR)[1].trim();
@@ -379,8 +355,8 @@ public class ImportRefSeq implements Executable {
 
 
 
-                            //-----we only save the data when the sequence is found------------
-                            if (originFound) {
+                            //-----we save the data in all cases------------
+//                            if (originFound) {
 
 
 //                                System.out.println("accessionSt = " + accessionSt);
@@ -399,84 +375,70 @@ public class ImportRefSeq implements Executable {
 //                                System.out.println("tRnaList = " + tRnaList);
 
 
-                                //--------create genome element node--------------
-                                long genomeElementId = createGenomeElementNode(versionSt,
-                                        commentSt, definitionSt, inserter, genomeElementVersionIndex);
+                            //--------create genome element node--------------
+                            long genomeElementId = createGenomeElementNode(versionSt,
+                                    commentSt, definitionSt, inserter, genomeElementVersionIndex);
 
-                                //-----------genes-----------------
-                                for (String genePositionsSt : geneList) {
-                                    geneProperties.put(GeneNode.POSITIONS_PROPERTY, genePositionsSt);
-                                    long geneId = inserter.createNode(geneProperties);
-                                    inserter.createRelationship(genomeElementId, geneId, genomeElementGeneRel, null);
-                                }
-
-                                //-----------CDS-----------------
-                                for (String cdsPositionsSt : cdsList) {
-                                    cdsProperties.put(CDSNode.POSITIONS_PROPERTY, cdsPositionsSt);
-                                    long cdsID = inserter.createNode(cdsProperties);
-                                    inserter.createRelationship(genomeElementId, cdsID, genomeElementCDSRel, null);
-                                }
-
-                                //-----------misc rna-----------------
-                                for (String miscRnaPositionsSt : miscRnaList) {
-                                    miscRnaProperties.put(MiscRNANode.POSITIONS_PROPERTY, miscRnaPositionsSt);
-                                    long miscRnaID = inserter.createNode(miscRnaProperties);
-                                    inserter.createRelationship(genomeElementId, miscRnaID, genomeElementMiscRnaRel, null);
-                                }
-
-                                //-----------m rna-----------------
-                                for (String mRnaPositionsSt : mRnaList) {
-                                    mRnaProperties.put(MRNANode.POSITIONS_PROPERTY, mRnaPositionsSt);
-                                    long mRnaID = inserter.createNode(mRnaProperties);
-                                    inserter.createRelationship(genomeElementId, mRnaID, genomeElementMRnaRel, null);
-                                }
-
-                                //-----------nc rna-----------------
-                                for (String ncRnaPositionsSt : ncRnaList) {
-                                    ncRnaProperties.put(NcRNANode.POSITIONS_PROPERTY, ncRnaPositionsSt);
-                                    long ncRnaID = inserter.createNode(ncRnaProperties);
-                                    inserter.createRelationship(genomeElementId, ncRnaID, genomeElementNcRnaRel, null);
-                                }
-
-                                //-----------r rna-----------------
-                                for (String rRnaPositionsSt : rRnaList) {
-                                    rRnaProperties.put(RRNANode.POSITIONS_PROPERTY, rRnaPositionsSt);
-                                    long rRnaID = inserter.createNode(rRnaProperties);
-                                    inserter.createRelationship(genomeElementId, rRnaID, genomeElementRRnaRel, null);
-                                }
-
-                                //-----------tm rna-----------------
-                                for (String tmRnaPositionsSt : tmRnaList) {
-                                    tmRnaProperties.put(TmRNANode.POSITIONS_PROPERTY, tmRnaPositionsSt);
-                                    long tmRnaID = inserter.createNode(tmRnaProperties);
-                                    inserter.createRelationship(genomeElementId, tmRnaID, genomeElementTmRnaRel, null);
-                                }
-
-                                //-----------t rna-----------------
-                                for (String tRnaPositionsSt : tRnaList) {
-                                    tRnaProperties.put(TRNANode.POSITIONS_PROPERTY, tRnaPositionsSt);
-                                    long tRnaID = inserter.createNode(tRnaProperties);
-                                    inserter.createRelationship(genomeElementId, tRnaID, genomeElementTRnaRel, null);
-                                }
-
-
-
-                                //-----saving sequence in S3------------
-                                byte[] byteArray = seqStBuilder.toString().getBytes();
-                                ByteArrayInputStream bs = new ByteArrayInputStream(byteArray);
-                                ObjectMetadata objectMetadata = new ObjectMetadata();
-                                objectMetadata.setContentLength(byteArray.length);
-                                logger.log(Level.INFO, ("uploading sequence of genome element: " + versionSt + " ..."));
-                                amazonS3Client.putObject(CommonData.REFSEQ_BUCKET_NAME, versionSt + ".txt", bs, objectMetadata);
-                                AccessControlList accessControlList = new AccessControlList();
-                                accessControlList.grantPermission(GroupGrantee.AllUsers, Permission.Read);
-                                accessControlList.setOwner(bucketOwner);
-                                amazonS3Client.setObjectAcl(CommonData.REFSEQ_BUCKET_NAME, versionSt + ".txt", accessControlList);
-                                logger.log(Level.INFO, ("done!"));
-                                //--------------------------------------
-
-
+                            //-----------genes-----------------
+                            for (String genePositionsSt : geneList) {
+                                geneProperties.put(GeneNode.POSITIONS_PROPERTY, genePositionsSt);
+                                long geneId = inserter.createNode(geneProperties);
+                                inserter.createRelationship(genomeElementId, geneId, genomeElementGeneRel, null);
                             }
+
+                            //-----------CDS-----------------
+                            for (String cdsPositionsSt : cdsList) {
+                                cdsProperties.put(CDSNode.POSITIONS_PROPERTY, cdsPositionsSt);
+                                long cdsID = inserter.createNode(cdsProperties);
+                                inserter.createRelationship(genomeElementId, cdsID, genomeElementCDSRel, null);
+                            }
+
+                            //-----------misc rna-----------------
+                            for (String miscRnaPositionsSt : miscRnaList) {
+                                miscRnaProperties.put(MiscRNANode.POSITIONS_PROPERTY, miscRnaPositionsSt);
+                                long miscRnaID = inserter.createNode(miscRnaProperties);
+                                inserter.createRelationship(genomeElementId, miscRnaID, genomeElementMiscRnaRel, null);
+                            }
+
+                            //-----------m rna-----------------
+                            for (String mRnaPositionsSt : mRnaList) {
+                                mRnaProperties.put(MRNANode.POSITIONS_PROPERTY, mRnaPositionsSt);
+                                long mRnaID = inserter.createNode(mRnaProperties);
+                                inserter.createRelationship(genomeElementId, mRnaID, genomeElementMRnaRel, null);
+                            }
+
+                            //-----------nc rna-----------------
+                            for (String ncRnaPositionsSt : ncRnaList) {
+                                ncRnaProperties.put(NcRNANode.POSITIONS_PROPERTY, ncRnaPositionsSt);
+                                long ncRnaID = inserter.createNode(ncRnaProperties);
+                                inserter.createRelationship(genomeElementId, ncRnaID, genomeElementNcRnaRel, null);
+                            }
+
+                            //-----------r rna-----------------
+                            for (String rRnaPositionsSt : rRnaList) {
+                                rRnaProperties.put(RRNANode.POSITIONS_PROPERTY, rRnaPositionsSt);
+                                long rRnaID = inserter.createNode(rRnaProperties);
+                                inserter.createRelationship(genomeElementId, rRnaID, genomeElementRRnaRel, null);
+                            }
+
+                            //-----------tm rna-----------------
+                            for (String tmRnaPositionsSt : tmRnaList) {
+                                tmRnaProperties.put(TmRNANode.POSITIONS_PROPERTY, tmRnaPositionsSt);
+                                long tmRnaID = inserter.createNode(tmRnaProperties);
+                                inserter.createRelationship(genomeElementId, tmRnaID, genomeElementTmRnaRel, null);
+                            }
+
+                            //-----------t rna-----------------
+                            for (String tRnaPositionsSt : tRnaList) {
+                                tRnaProperties.put(TRNANode.POSITIONS_PROPERTY, tRnaPositionsSt);
+                                long tRnaID = inserter.createNode(tRnaProperties);
+                                inserter.createRelationship(genomeElementId, tRnaID, genomeElementTRnaRel, null);
+                            }
+
+
+                            logger.log(Level.INFO, (versionSt + " saved!"));
+
+//                            }
 
                         }
 

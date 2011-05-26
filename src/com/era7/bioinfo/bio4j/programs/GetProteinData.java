@@ -84,18 +84,18 @@ public class GetProteinData {
         //Transaction txn = manager.beginTransaction();
 
         
-        NodeRetriever nodeRetriever = new NodeRetriever(manager);
-        GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion("NC_005781.1");
-        System.out.println("\ngenomeElementNode = " + genomeElementNode);
-        
-        System.out.println("Number of CDS: " + genomeElementNode.getCDS().size());
-        System.out.println("Number of genes: " + genomeElementNode.getGenes().size());
-        System.out.println("Number of Mrnas: " + genomeElementNode.getMRnas().size());
-        System.out.println("Number of misc rnas: " + genomeElementNode.getMiscRnas().size());
-        System.out.println("Number of nc rnas: " + genomeElementNode.getNcRnas().size());
-        System.out.println("Number of Rrnas: " + genomeElementNode.getRRnas().size());
-        System.out.println("Number of Trnas: " + genomeElementNode.getTRnas().size());
-        System.out.println("Number of Tm rnas: " + genomeElementNode.getTmRnas().size());
+//        NodeRetriever nodeRetriever = new NodeRetriever(manager);
+//        GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion(name);
+//        System.out.println("\ngenomeElementNode = " + genomeElementNode);
+//        
+//        System.out.println("Number of CDS: " + genomeElementNode.getCDS().size());
+//        System.out.println("Number of genes: " + genomeElementNode.getGenes().size());
+//        System.out.println("Number of Mrnas: " + genomeElementNode.getMRnas().size());
+//        System.out.println("Number of misc rnas: " + genomeElementNode.getMiscRnas().size());
+//        System.out.println("Number of nc rnas: " + genomeElementNode.getNcRnas().size());
+//        System.out.println("Number of Rrnas: " + genomeElementNode.getRRnas().size());
+//        System.out.println("Number of Trnas: " + genomeElementNode.getTRnas().size());
+//        System.out.println("Number of Tm rnas: " + genomeElementNode.getTmRnas().size());
                 
 
         Node node = null;
@@ -159,13 +159,21 @@ public class GetProteinData {
 //            }
 //            System.out.println("done!");
 
-            node = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name).getSingle();
+            
+            IndexHits<Node> indexHits = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name);
+            
+            System.out.println("indexHits.size() = " + indexHits.size());
+            while(indexHits.hasNext()){
+                node = indexHits.next();
+                System.out.println("node = " + new ProteinNode(node));
+            }            
+            
 
             if (node != null) {
 
                 ProteinNode protein = new ProteinNode(node);
 
-                System.out.println("protein: " + protein);
+                //System.out.println("protein: " + protein);
                 
                 System.out.println("protein.getNode().getId() = " + protein.getNode().getId());
                                                 
@@ -174,10 +182,22 @@ public class GetProteinData {
                 for (String string : protein.getGeneNames()) {
                     System.out.println(string);
                 }
-                System.out.println("EMBL references:");
-                for (String string : protein.getEMBLreferences()) {
-                    System.out.println(string);
-                }
+//                System.out.println("EMBL references:");
+//                for (String string : protein.getEMBLreferences()) {
+//                    System.out.println(string);
+//                }
+                
+                System.out.println("Getting genome element...");
+                //GenomeElementNode genomeElementNode = protein.getGenomeElement();
+//                System.out.println(genomeElementNode);
+//                System.out.println("Number of CDS: " + genomeElementNode.getCDS().size());
+//                System.out.println("Number of genes: " + genomeElementNode.getGenes().size());
+//                System.out.println("Number of Mrnas: " + genomeElementNode.getMRnas().size());
+//                System.out.println("Number of misc rnas: " + genomeElementNode.getMiscRnas().size());
+//                System.out.println("Number of nc rnas: " + genomeElementNode.getNcRnas().size());
+//                System.out.println("Number of Rrnas: " + genomeElementNode.getRRnas().size());
+//                System.out.println("Number of Trnas: " + genomeElementNode.getTRnas().size());
+//                System.out.println("Number of Tm rnas: " + genomeElementNode.getTmRnas().size());
 
                 System.out.println("Getting keywords...");
                 Iterator<Relationship> relIt = protein.getNode().getRelationships(new ProteinKeywordRel(null), Direction.OUTGOING).iterator();

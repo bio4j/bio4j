@@ -35,6 +35,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
 
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -153,6 +154,7 @@ public class ImportUniprot implements Executable {
     public static ProteinErroneousTranslationRel proteinErroneousTranslationRel = new ProteinErroneousTranslationRel(null);
     public static ProteinFrameshiftRel proteinFrameshiftRel = new ProteinFrameshiftRel(null);
     public static ProteinMiscellaneousDiscrepancyRel proteinMiscellaneousDiscrepancyRel = new ProteinMiscellaneousDiscrepancyRel(null);
+    public static ProteinGenomeElementRel proteinGenomeElementRel = new ProteinGenomeElementRel(null);
     //----comment relationships-----
     public static AllergenCommentRel allergenCommentRel = new AllergenCommentRel(null);
     public static BioPhysicoChemicalPropertiesCommentRel bioPhysicoChemicalPropertiesCommentRel = new BioPhysicoChemicalPropertiesCommentRel(null);
@@ -304,6 +306,8 @@ public class ImportUniprot implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex taxonNameIndex = indexProvider.nodeIndex(TaxonNode.TAXON_NAME_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex genomeElementVersionIndex = indexProvider.nodeIndex(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
                 //----------------------------------------------------------------------
 
@@ -408,8 +412,15 @@ public class ImportUniprot implements Executable {
                                 emblCrossReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
                                 arrayExpressIdSt = refId;
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Refseq")){
-                                refseqReferences.add(refId);
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")){
+                                //refseqReferences.add(refId);
+                                List<Element> children = dbReferenceElem.getChildren("property");
+                                for (Element propertyElem : children) {
+                                    if(propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")){
+                                        refseqReferences.add(propertyElem.getAttributeValue("value"));
+                                    }
+                                }
+                                
                             }
                         }
 
@@ -432,7 +443,7 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.PIR_ID_PROPERTY, pirIdSt);
                         proteinProperties.put(ProteinNode.KEGG_ID_PROPERTY, keggIdSt);
                         proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY, convertToStringArray(emblCrossReferences));
-                        proteinProperties.put(ProteinNode.REFSEQ_REFERENCES_PROPERTY, convertToStringArray(refseqReferences));
+                        //proteinProperties.put(ProteinNode.REFSEQ_REFERENCES_PROPERTY, convertToStringArray(refseqReferences));
                         proteinProperties.put(ProteinNode.ENSEMBL_ID_PROPERTY, ensemblIdSt);
                         proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY, uniGeneIdSt);
 
@@ -476,6 +487,18 @@ public class ImportUniprot implements Executable {
                         //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
                         proteinGeneNamesFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed));
 
+                        
+                        //--------------refseq associations----------------
+                        for (String refseqReferenceSt : refseqReferences) {
+                            //System.out.println("refseqReferenceSt = " + refseqReferenceSt);
+                            IndexHits<Long> hits = genomeElementVersionIndex.get(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX, refseqReferenceSt);
+                            if(hits.hasNext()){
+                                inserter.createRelationship(currentProteinId, hits.getSingle(), proteinGenomeElementRel, null);
+                            }else{
+                                logger.log(Level.INFO, ("GenomeElem not found for: " + currentAccessionId + " , " + refseqReferenceSt));
+                            }
+                                                         
+                        }
 
 
                         //-----comments import---

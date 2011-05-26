@@ -16,13 +16,11 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionsRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -38,8 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.graphdb.index.IndexHits;
@@ -59,7 +55,6 @@ public class ImportProteinInteractions implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
     private static FileHandler fh;
-
     //--------indexing API constans-----
     private static String PROVIDER_ST = "provider";
     private static String EXACT_ST = "exact";
@@ -110,18 +105,18 @@ public class ImportProteinInteractions implements Executable {
                 logger.setLevel(Level.ALL);
 
                 //First of all we need the protein self-interactions node-id
-                logger.log(Level.INFO,"creating manager...");
-                Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
-                logger.log(Level.INFO,"getting protein self interactions node id....");
+//                logger.log(Level.INFO, "creating manager...");
+//                Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+//                logger.log(Level.INFO, "getting protein self interactions node id....");
                 //Transaction txn = manager.beginTransaction();
-                Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null),Direction.OUTGOING);
-                logger.log(Level.INFO,"getRelationships() done....");
-                logger.log(Level.INFO,"getting node....");
-                long proteinSelfInteractionsNodeId = iterable.iterator().next().getEndNode().getId();
+//                Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null), Direction.OUTGOING);
+//                logger.log(Level.INFO, "getRelationships() done....");
+//                logger.log(Level.INFO, "getting node....");
+//                long proteinSelfInteractionsNodeId = iterable.iterator().next().getEndNode().getId();
                 //txn.success();
                 //txn.finish();
-                logger.log(Level.INFO,"done!");
-                System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
+//                logger.log(Level.INFO, "done!");
+                
                 //---------------------------------
 
                 // create the batch inserter
@@ -144,6 +139,19 @@ public class ImportProteinInteractions implements Executable {
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
                 ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
                 //------------------------------------------------------------------------------------------------
+
+                //------------------indexes creation----------------------------------
+                BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex proteinSelfRelationshipsNodeIndex = indexProvider.nodeIndex(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                //--------------------------------------------------------------------
+
+                
+                long proteinSelfInteractionsNodeId = proteinSelfRelationshipsNodeIndex.get(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE).getSingle();
+                System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -169,13 +177,6 @@ public class ImportProteinInteractions implements Executable {
 
                         accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
 
-
-                        //------------------indexes creation----------------------------------
-                        BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
-                                            MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                        BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
-                                            MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                        //--------------------------------------------------------------------
 
                         long currentProteinId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt).getSingle();
 
@@ -216,8 +217,10 @@ public class ImportProteinInteractions implements Executable {
                                 long protein2Id = -1;
                                 if (interactant2AccessionSt != null) {
                                     IndexHits<Long> protein2IdIndexHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
-                                    if(protein2IdIndexHits.hasNext()){
-                                        protein2Id = protein2IdIndexHits.getSingle();
+                                    if (protein2IdIndexHits.hasNext()) {
+                                        if(protein2IdIndexHits.size() == 1){
+                                            protein2Id = protein2IdIndexHits.getSingle();
+                                        }                                        
                                     }
                                 } else {
 
@@ -235,7 +238,7 @@ public class ImportProteinInteractions implements Executable {
                                         //Since we did not find the protein we try to find a isoform instead
                                         long isoformId = -1;
                                         IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
-                                        if(isoformIdIndexHits.hasNext()){
+                                        if (isoformIdIndexHits.hasNext()) {
                                             isoformId = isoformIdIndexHits.getSingle();
                                         }
                                         if (isoformId >= 0) {
@@ -299,7 +302,7 @@ public class ImportProteinInteractions implements Executable {
                     // shutdown, makes sure all changes are written to disk
                     indexProvider.shutdown();
                     inserter.shutdown();
-                    
+
 
                     //closing logger file handler
                     fh.close();
