@@ -116,7 +116,7 @@ public class ImportProteinInteractions implements Executable {
                 //txn.success();
                 //txn.finish();
 //                logger.log(Level.INFO, "done!");
-                
+
                 //---------------------------------
 
                 // create the batch inserter
@@ -149,7 +149,7 @@ public class ImportProteinInteractions implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //--------------------------------------------------------------------
 
-                
+
                 long proteinSelfInteractionsNodeId = proteinSelfRelationshipsNodeIndex.get(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE).getSingle();
                 System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
 
@@ -218,9 +218,9 @@ public class ImportProteinInteractions implements Executable {
                                 if (interactant2AccessionSt != null) {
                                     IndexHits<Long> protein2IdIndexHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
                                     if (protein2IdIndexHits.hasNext()) {
-                                        if(protein2IdIndexHits.size() == 1){
+                                        if (protein2IdIndexHits.size() == 1) {
                                             protein2Id = protein2IdIndexHits.getSingle();
-                                        }                                        
+                                        }
                                     }
                                 } else {
 
@@ -239,7 +239,9 @@ public class ImportProteinInteractions implements Executable {
                                         long isoformId = -1;
                                         IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
                                         if (isoformIdIndexHits.hasNext()) {
-                                            isoformId = isoformIdIndexHits.getSingle();
+                                            if (isoformIdIndexHits.size() == 1) {
+                                                isoformId = isoformIdIndexHits.getSingle();
+                                            }
                                         }
                                         if (isoformId >= 0) {
 
@@ -276,12 +278,13 @@ public class ImportProteinInteractions implements Executable {
 
                             }
 
-                            counter++;
-                            if ((counter % limitForPrintingOut) == 0) {
-                                logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
-                            }
-
                         }
+
+                        counter++;
+                        if ((counter % limitForPrintingOut) == 0) {
+                            logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
+                        }
+
                     }
                 }
 

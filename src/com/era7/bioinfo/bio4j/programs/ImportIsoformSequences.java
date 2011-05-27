@@ -28,7 +28,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.index.IndexHits;
 
 /**
  *
@@ -72,19 +74,15 @@ public class ImportIsoformSequences implements Executable {
 
                 logger.log(Level.INFO, "creating manager...");
                 manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
-                logger.log(Level.INFO, "creating index manager...");
-                txn = manager.beginTransaction();
-
-                int counter = 1;
-                int limitForTransaction = 100;
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
                 StringBuilder seqStBuilder = new StringBuilder();
 
 
+                txn = manager.beginTransaction();
 
-                logger.log(Level.INFO, "updating isoform data....");
+                logger.log(Level.INFO, "updating isoforms data....");
 
                 //-----first I create all the elements whitout their relationships-------------
 
@@ -101,26 +99,27 @@ public class ImportIsoformSequences implements Executable {
                         while (!line.trim().startsWith(">")) {
                             seqStBuilder.append(line);
                             line = reader.readLine();
+                            if(line == null){
+                                break;
+                            }
                         }
 
                         String sequence = seqStBuilder.toString();
                         seqStBuilder.delete(0, seqStBuilder.length());
 
-                        IsoformNode node = new IsoformNode(manager.getIsoformIdIndex().get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt).getSingle());
-                        node.setSequence(sequence);
-                        node.setName(isoformNameSt);
+                        IndexHits<Node> isoformHits = manager.getIsoformIdIndex().get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+                        if (isoformHits.size() == 1) {
+                            IsoformNode node = new IsoformNode(isoformHits.getSingle());
+                            node.setSequence(sequence);
+                            node.setName(isoformNameSt);
+                        }
+
+                    }
+                    
+                    if(line == null){
+                        break;
                     }
 
-                    counter++;
-                    if ((counter % limitForTransaction) == 0) {
-                        txn.success();
-                        txn.finish();
-                    }
-                }
-
-                if(counter % limitForTransaction != 0){
-                    txn.success();
-                    txn.finish();
                 }
 
                 reader.close();
@@ -128,15 +127,16 @@ public class ImportIsoformSequences implements Executable {
                 logger.log(Level.INFO, "Done! :)");
 
             } catch (Exception e) {
-                txn.failure();
-                txn.finish();
                 logger.log(Level.INFO, ("Exception retrieving isoform " + isoformIdSt));
                 logger.log(Level.SEVERE, e.getMessage());
                 StackTraceElement[] trace = e.getStackTrace();
                 for (StackTraceElement stackTraceElement : trace) {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
-            }finally{
+            } finally {
+
+                txn.finish();
+
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");

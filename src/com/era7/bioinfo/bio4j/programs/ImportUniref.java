@@ -51,7 +51,6 @@ public class ImportUniref implements Executable {
 
     private static final Logger logger = Logger.getLogger("ImportUniref");
     private static FileHandler fh;
-
     //--------indexing API constans-----
     private static String PROVIDER_ST = "provider";
     private static String EXACT_ST = "exact";
@@ -105,7 +104,7 @@ public class ImportUniref implements Executable {
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
-                
+
                 //------------------indexes creation----------------------------------
                 BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
@@ -211,27 +210,48 @@ public class ImportUniref implements Executable {
 
                 //---The representant is an isoform----
                 if (representantAccession.contains("-")) {
-                    representantId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession).getSingle();
+
+                    IndexHits<Long> repIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession);
+                    if (repIndexHits.size() == 1) {
+                        representantId = repIndexHits.getSingle();
+                    }
+
                 } //---The representant is a protein
                 else {
-                    
+
                     IndexHits<Long> hits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
-                    if(hits.size() > 1){
-                        System.out.println("representantAccession = " + representantAccession);
+                    if (hits.size() == 1) {
+                        //System.out.println("representantAccession = " + representantAccession);
+                        representantId = hits.getSingle();
                     }
-                    
-                    representantId = hits.getSingle();
+
                 }
 
-                for (String memberAccession : membersAccessionList) {
-                    long memberId = -1;
-                    if (memberAccession.contains("-")) {
-                        memberId = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, memberAccession).getSingle();
-                    } else {
-                        memberId = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession).getSingle();
+                //----we only create the relationships in the case where we found
+                // a valid representant id-----
+                if (representantId >= 0) {
+                    
+                    for (String memberAccession : membersAccessionList) {
+                        long memberId = -1;
+                        if (memberAccession.contains("-")) {
+                            IndexHits<Long> isoHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, memberAccession);
+                            if(isoHits.size() == 1){
+                                memberId = isoHits.getSingle();
+                            }                            
+                        } else {
+                            IndexHits<Long> protHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
+                            if(protHits.size() == 1){
+                                memberId = protHits.getSingle();
+                            }                            
+                        }
+                        
+                        if(memberId >= 0){
+                            inserter.createRelationship(representantId, memberId, relationship, null);
+                        }
+                        
                     }
-                    inserter.createRelationship(representantId, memberId, relationship, null);
                 }
+
             }
         }
         reader.close();
