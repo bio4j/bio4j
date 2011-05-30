@@ -162,6 +162,7 @@ public class ImportUniref implements Executable {
                 result = prop.getAttributeValue("value");
             }
         }
+
         return result;
     }
 
@@ -175,6 +176,9 @@ public class ImportUniref implements Executable {
 
         BufferedReader reader = new BufferedReader(new FileReader(unirefFile));
         String line = null;
+
+        int counter = 1;
+        int limitForPrintingOut = 10000;
 
         while ((line = reader.readLine()) != null) {
             //----we reached a entry line-----
@@ -206,53 +210,65 @@ public class ImportUniref implements Executable {
                     }
                 }
 
-                long representantId = -1;
-
-                //---The representant is an isoform----
-                if (representantAccession.contains("-")) {
-
-                    IndexHits<Long> repIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession);
-                    if (repIndexHits.size() == 1) {
-                        representantId = repIndexHits.getSingle();
-                    }
-
-                } //---The representant is a protein
-                else {
-
-                    IndexHits<Long> hits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
-                    if (hits.size() == 1) {
-                        //System.out.println("representantAccession = " + representantAccession);
-                        representantId = hits.getSingle();
-                    }
-
-                }
-
-                //----we only create the relationships in the case where we found
-                // a valid representant id-----
-                if (representantId >= 0) {
+                if (representantAccession != null) {
                     
-                    for (String memberAccession : membersAccessionList) {
-                        long memberId = -1;
-                        if (memberAccession.contains("-")) {
-                            IndexHits<Long> isoHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, memberAccession);
-                            if(isoHits.size() == 1){
-                                memberId = isoHits.getSingle();
-                            }                            
-                        } else {
-                            IndexHits<Long> protHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
-                            if(protHits.size() == 1){
-                                memberId = protHits.getSingle();
-                            }                            
+                    long representantId = -1;
+
+                    //---The representant is an isoform----
+                    if (representantAccession.contains("-")) {
+
+                        IndexHits<Long> repIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, representantAccession);
+                        if (repIndexHits.size() == 1) {
+                            representantId = repIndexHits.getSingle();
                         }
-                        
-                        if(memberId >= 0){
-                            inserter.createRelationship(representantId, memberId, relationship, null);
+
+                    } //---The representant is a protein
+                    else {
+
+                        IndexHits<Long> hits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, representantAccession);
+                        if (hits.size() == 1) {
+                            //System.out.println("representantAccession = " + representantAccession);
+                            representantId = hits.getSingle();
                         }
-                        
+
                     }
+
+                    //----we only create the relationships in the case where we found
+                    // a valid representant id-----
+                    if (representantId >= 0) {
+
+                        for (String memberAccession : membersAccessionList) {
+                            long memberId = -1;
+                            if (memberAccession.contains("-")) {
+                                IndexHits<Long> isoHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, memberAccession);
+                                if (isoHits.size() == 1) {
+                                    memberId = isoHits.getSingle();
+                                }
+                            } else {
+                                IndexHits<Long> protHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
+                                if (protHits.size() == 1) {
+                                    memberId = protHits.getSingle();
+                                }
+                            }
+
+                            if (memberId >= 0) {
+                                inserter.createRelationship(representantId, memberId, relationship, null);
+                            }
+
+                        }
+                    }
+                }else{
+                    logger.log(Level.SEVERE, ("null representan accession for entry: " + entryXMLElem));
                 }
+
 
             }
+
+            counter++;
+            if ((counter % limitForPrintingOut) == 0) {
+                logger.log(Level.INFO, (counter + " entries parsed!!"));
+            }
+
         }
         reader.close();
 
