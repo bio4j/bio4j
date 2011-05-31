@@ -35,6 +35,8 @@ import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
+import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef100MemberRel;
+import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef90MemberRel;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -187,7 +189,20 @@ public class GetProteinData {
 //                    System.out.println(string);
 //                }
                 
-                System.out.println("Getting genome element...");
+                System.out.println("Getting Uniref 90 information...");
+                Iterator<Relationship> uniref90Iterator = protein.getNode().getRelationships(new UniRef90MemberRel(null), Direction.INCOMING).iterator();
+                if(uniref90Iterator.hasNext()){
+                    System.out.println("The protein is representant of a Uniref 90 cluster");
+                    System.out.println("the members of this cluster are:");
+                    while(uniref90Iterator.hasNext()){
+                        ProteinNode tempProt = new ProteinNode(uniref90Iterator.next().getEndNode());
+                        System.out.println(tempProt.getAccession());
+                    }
+                }
+                
+                
+                
+                //System.out.println("Getting genome element...");
                 //GenomeElementNode genomeElementNode = protein.getGenomeElement();
 //                System.out.println(genomeElementNode);
 //                System.out.println("Number of CDS: " + genomeElementNode.getCDS().size());
