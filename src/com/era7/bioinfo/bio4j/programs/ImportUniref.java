@@ -209,6 +209,8 @@ public class ImportUniref implements Executable {
                         }
                     }
                 }
+                
+                //System.out.println("membersAccessionList = " + membersAccessionList);
 
                 if (representantAccession != null) {
                     

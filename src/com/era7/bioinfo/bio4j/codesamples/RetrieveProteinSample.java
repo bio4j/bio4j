@@ -27,32 +27,47 @@ import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class RetrieveProteinSample {  
+public class RetrieveProteinSample {
+
     /**
      * @param args Just one argument (protein accession)
      */
-    public static void main(String[] args){
-        if(args.length != 1){
-            System.out.println("The program expects one parameter: \n" +
-                                "1. Protein accesion\n");
-        }else{
-            
+    public static void main(String[] args) {
+        if (args.length != 1) {
+            System.out.println("The program expects one parameter: \n"
+                    + "1. Protein accesion\n");
+        } else {
+
             String accessionSt = args[0];
             
-            //--creating manager and node retriever----
-            Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
-            NodeRetriever nodeRetriever = new NodeRetriever(manager);
-            
-            //---retrieving protein node----
-            ProteinNode protein = nodeRetriever.getProteinNodeByAccession(accessionSt);
-            
-            //---checking there's a protein with the accession provided----
-            if(protein == null){
-                System.out.println("Error: there's no protein with the accession " + accessionSt);
-            }else{                
-                System.out.println("Protein data: \n" + protein);                
+            Bio4jManager manager = null;
+
+            try {
+                
+                //--creating manager and node retriever----
+                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+                NodeRetriever nodeRetriever = new NodeRetriever(manager);
+
+                //---retrieving protein node----
+                ProteinNode protein = nodeRetriever.getProteinNodeByAccession(accessionSt);
+
+                //---checking there's a protein with the accession provided----
+                if (protein == null) {
+                    System.out.println("Error: there's no protein with the accession " + accessionSt);
+                } else {
+                    System.out.println("Protein data: \n" + protein);
+                }
+                
+            }catch(Exception e){
+                //deal somehow with the exception
+                
+            }finally{
+                
+                //---closing the manager----
+                manager.shutDown();
+                
             }
+            
         }
     }
-    
 }

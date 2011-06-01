@@ -60,7 +60,6 @@ public class GetProteinData {
 
     private static final Logger logger = Logger.getLogger("GetProteinData");
     private static FileHandler fh;
-
     private static Bio4jManager manager = null;
 
     public static void main(String[] args) throws IOException {
@@ -82,10 +81,10 @@ public class GetProteinData {
 
         number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Relationship.class);
         System.out.println("relationships number = " + number);
-              
+
         //Transaction txn = manager.beginTransaction();
 
-        
+
 //        NodeRetriever nodeRetriever = new NodeRetriever(manager);
 //        GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion(name);
 //        System.out.println("\ngenomeElementNode = " + genomeElementNode);
@@ -98,10 +97,10 @@ public class GetProteinData {
 //        System.out.println("Number of Rrnas: " + genomeElementNode.getRRnas().size());
 //        System.out.println("Number of Trnas: " + genomeElementNode.getTRnas().size());
 //        System.out.println("Number of Tm rnas: " + genomeElementNode.getTmRnas().size());
-                
+
 
         Node node = null;
-        
+
         try {
 
             //            BufferedWriter interproBuffer = new BufferedWriter(new FileWriter("interproIPR000847.txt"));
@@ -161,24 +160,24 @@ public class GetProteinData {
 //            }
 //            System.out.println("done!");
 
-            
+
             IndexHits<Node> indexHits = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, name);
-            
+
             System.out.println("indexHits.size() = " + indexHits.size());
-            while(indexHits.hasNext()){
+            while (indexHits.hasNext()) {
                 node = indexHits.next();
                 System.out.println("node = " + new ProteinNode(node));
-            }            
-            
+            }
+
 
             if (node != null) {
 
                 ProteinNode protein = new ProteinNode(node);
 
                 //System.out.println("protein: " + protein);
-                
+
                 System.out.println("protein.getNode().getId() = " + protein.getNode().getId());
-                                                
+
 
                 System.out.println("gene names:");
                 for (String string : protein.getGeneNames()) {
@@ -188,20 +187,27 @@ public class GetProteinData {
 //                for (String string : protein.getEMBLreferences()) {
 //                    System.out.println(string);
 //                }
-                
+
                 System.out.println("Getting Uniref 90 information...");
-                Iterator<Relationship> uniref90Iterator = protein.getNode().getRelationships(new UniRef90MemberRel(null), Direction.INCOMING).iterator();
-                if(uniref90Iterator.hasNext()){
+                Iterator<Relationship> uniref90RepresentantIterator = protein.getNode().getRelationships(new UniRef90MemberRel(null), Direction.OUTGOING).iterator();
+                if (uniref90RepresentantIterator.hasNext()) {
                     System.out.println("The protein is representant of a Uniref 90 cluster");
                     System.out.println("the members of this cluster are:");
-                    while(uniref90Iterator.hasNext()){
-                        ProteinNode tempProt = new ProteinNode(uniref90Iterator.next().getEndNode());
+                    while (uniref90RepresentantIterator.hasNext()) {
+                        ProteinNode tempProt = new ProteinNode(uniref90RepresentantIterator.next().getEndNode());
+                        System.out.println(tempProt.getAccession());
+                    }
+                } else {
+                    Iterator<Relationship> uniref90memberIterator = protein.getNode().getRelationships(new UniRef90MemberRel(null), Direction.INCOMING).iterator();
+                    if (uniref90memberIterator.hasNext()) {
+                        System.out.println("The protein is member of the cluster: ");
+                        ProteinNode tempProt = new ProteinNode(uniref90memberIterator.next().getStartNode());                        
                         System.out.println(tempProt.getAccession());
                     }
                 }
-                
-                
-                
+
+
+
                 //System.out.println("Getting genome element...");
                 //GenomeElementNode genomeElementNode = protein.getGenomeElement();
 //                System.out.println(genomeElementNode);
@@ -304,9 +310,9 @@ public class GetProteinData {
                     currentNode = taxon.getNode();
                     iterator = currentNode.getRelationships(new TaxonParentRel(null), Direction.INCOMING).iterator();
                 }
-                
+
                 System.out.println("Getting citations...");
-                
+
                 System.out.println("Article citations:");
                 for (ArticleNode article : protein.getArticleCitations()) {
                     System.out.println(article);
@@ -315,9 +321,9 @@ public class GetProteinData {
                 for (SubmissionNode submission : protein.getSubmissionCitations()) {
                     System.out.println(submission);
                 }
-                
+
                 System.out.println("DONE!! :)");
-                 
+
 
 
             } else {
@@ -349,14 +355,14 @@ public class GetProteinData {
 
     }
 
-    private static int getChildrenNumber(GoTermNode node){
+    private static int getChildrenNumber(GoTermNode node) {
         int counter = 0;
 
         IndexHits<Relationship> hits = manager.getIsAGoRelIndex().get(IsAGoRel.IS_A_REL_INDEX, node.getId());
 
         System.out.println("hits.size() = " + hits.size());
 
-        while(hits.hasNext()){
+        while (hits.hasNext()) {
             GoTermNode child = new GoTermNode(hits.next().getEndNode());
             counter++;
             counter += getChildrenNumber(child);
