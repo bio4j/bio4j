@@ -119,38 +119,22 @@
             </manifest>
         </jar>
     </target>-->
-<!--    <target name="-post-jar">
-        <jar jarfile="SplitUniprotXmlFile.jar">
-            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
-            <manifest>
-                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.SplitUniprotXmlFile"/>
-            </manifest>
-        </jar>
-    </target>-->
-<!--    <target name="-post-jar">
-        <jar jarfile="ExtractCitationsCommentsSamples.jar">
+    <target name="-post-jar">
+        <jar jarfile="jars/RealUseCase1.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
             <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
             <zipfileset src="lib/BioinfoUtil-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
-            <manifest>
-                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.ExtractCitationsCommentsSamples"/>
-            </manifest>
-        </jar>
-    </target>-->
-<!--    <target name="-post-jar">
-        <jar jarfile="ExtractFeaturesSamples.jar">
-            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
-            <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
+            <zipfileset src="lib/BioinfoNeo4j-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
-            <zipfileset src="lib/BioinfoUtil-1.0-jar-with-dependencies.jar"
+            <zipfileset src="lib/Bio4jModel-1.0.jar"
                         excludes="META-INF/*" />
             <manifest>
-                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.ExtractFeaturesSamples"/>
+                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.codesamples.RealUseCase1"/>
             </manifest>
         </jar>
-    </target>-->
+    </target>
 <!--    <target name="-post-jar">
         <jar jarfile="ImportProteinInteractions.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
@@ -168,22 +152,6 @@
         </jar>
     </target>-->
 <!--    <target name="-post-jar">
-        <jar jarfile="ImportFeatures.jar">
-            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
-            <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
-                        excludes="META-INF/*" />
-            <zipfileset src="lib/BioinfoUtil-1.0-jar-with-dependencies.jar"
-                        excludes="META-INF/*" />
-            <zipfileset src="lib/Bio4jModel-1.0.jar"
-                        excludes="META-INF/*" />
-            <zipfileset src="lib/BioinfoNeo4j-1.0-jar-with-dependencies.jar"
-                        excludes="META-INF/*" />
-            <manifest>
-                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.ImportFeatures"/>
-            </manifest>
-        </jar>
-    </target>-->
-    <target name="-post-jar">
         <jar jarfile="jars/CreateWholeBio4j.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
             <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
@@ -200,7 +168,7 @@
                 <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.CreateWholeBio4j"/>
             </manifest>
         </jar>
-    </target>
+    </target>-->
 <!--    <target name="-post-jar">
         <jar jarfile="UploadRefSeqSequencesToS3.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
