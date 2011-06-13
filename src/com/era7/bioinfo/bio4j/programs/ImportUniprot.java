@@ -279,9 +279,8 @@ public class ImportUniprot implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexProvider = new LuceneBatchInserterIndexProvider(inserter);               
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);     
                 
-
                 //-----------------create batch indexes----------------------------------
                 //----------------------------------------------------------------------
                 BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
@@ -476,8 +475,14 @@ public class ImportUniprot implements Executable {
                         proteinAccessionIndex.flush();
 
                         //indexing protein by full name
-                        proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase()));
-                        //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt.toUpperCase());
+                        if(!fullNameSt.isEmpty()){
+                            proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt));                            
+                            
+                            System.out.println(fullNameSt.toUpperCase() + " , " + currentProteinId); 
+                        }
+                        
+                        
+                        
 
                         //indexing protein by gene names
                         String geneNamesStToBeIndexed = "";

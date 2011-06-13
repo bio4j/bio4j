@@ -56,10 +56,14 @@ public class RealUseCase1 {
 
             //First we get the taxon node we're interested in
             TaxonNode taxonNode = nodeRetriever.getTaxonByName("Enterobacteriaceae");
+            
+            System.out.println("taxonNode = " + taxonNode);
 
             //In this list we're gonna store the organism nodes
             ArrayList<OrganismNode> organisms = new ArrayList<OrganismNode>();
 
+            System.out.println("Getting organisms...");
+            
             //Now we get the organisms
             getAllSubOrganisms(taxonNode,organisms);
             
@@ -71,8 +75,12 @@ public class RealUseCase1 {
             ProteinOrganismRel proteinOrganismRel = new ProteinOrganismRel(null);
             ProteinInterproRel proteinInterproRel = new ProteinInterproRel(null);
             
+            System.out.println("looping through organisms...");
+            
             //----------looping through organisms checking every associated protein----
             for (OrganismNode organismNode : organisms) {
+                
+                System.out.println("organismNode = " + organismNode);
                 
                 Iterator<Relationship> iterator = organismNode.getNode().getRelationships(proteinOrganismRel, Direction.INCOMING).iterator();
                 while(iterator.hasNext()){                    
@@ -94,6 +102,8 @@ public class RealUseCase1 {
                 }
             }
             
+            System.out.println("looping through proteins...");
+            
             //At this point we should already have the proteins we want
             //now it's time to retrieve their CDS sequences
             for (ProteinNode proteinNode : proteins) {
@@ -112,6 +122,8 @@ public class RealUseCase1 {
                     }
                 }
             }
+            
+            System.out.println("Done! :)");
             
 
 
@@ -133,6 +145,7 @@ public class RealUseCase1 {
     private static void getAllSubOrganisms(TaxonNode taxonNode,
             ArrayList<OrganismNode> organisms) {
 
+        System.out.println(taxonNode);
 
         organisms.addAll(taxonNode.getOrganisms());
         List<TaxonNode> children = taxonNode.getChildren();

@@ -20,6 +20,7 @@ import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
+import java.util.List;
 
 /**
  *
@@ -38,36 +39,77 @@ public class RetrieveProteinSample {
                     + "1. Protein accesion\n");
         } else {
 
-            String accessionSt = args[0];
-            
+            String inputSt = args[0];
+
             Bio4jManager manager = null;
 
             try {
-                
+
                 //--creating manager and node retriever----
                 manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
-
-                //---retrieving protein node----
-                ProteinNode protein = nodeRetriever.getProteinNodeByAccession(accessionSt);
-
-                //---checking there's a protein with the accession provided----
+                
+                //--------------------------------------------------------------
+                //-----retrieving protein node by its Uniprot accession---------
+                
+                ProteinNode protein = nodeRetriever.getProteinNodeByAccession(inputSt);
+                
+                //checking there's a protein with the accession provided...
                 if (protein == null) {
-                    System.out.println("Error: there's no protein with the accession " + accessionSt);
+                    System.out.println("There's no protein with the accession " + inputSt);
                 } else {
                     System.out.println("Protein data: \n" + protein);
                 }
+                //--------------------------------------------------------------
                 
-            }catch(Exception e){
+                //--------------------------------------------------------------
+                //---retrieving proteins by their fullname (full-text index)----
+                
+                List<ProteinNode> proteinList = nodeRetriever.getProteinsByFullName(inputSt);
+                
+                if(proteinList.size() > 0){
+                    System.out.println("There were " + proteinList.size()
+                            + " hits found for proteins with fullname like: " + inputSt);
+                    for (ProteinNode proteinNode : proteinList) {
+                        System.out.println("Accession: " + proteinNode.getAccession() + 
+                                            "\nFullname: " + proteinNode.getFullName());
+                    }                    
+                }else{
+                    System.out.println("There were no proteins found with fullname like: " + inputSt);
+                }                
+                //--------------------------------------------------------------
+                
+                //--------------------------------------------------------------
+                //---retrieving proteins by their gene names (full-text index)----
+                proteinList = nodeRetriever.getProteinsByGeneNames(inputSt);
+                                                       
+                if(proteinList.size() > 0){
+                    System.out.println("There were " + proteinList.size()
+                            + " hits found for proteins with gene names like: " + inputSt);
+                    for (ProteinNode proteinNode : proteinList) {
+                        System.out.println("Accession: " + proteinNode.getAccession());
+                        System.out.println("Gene names:");
+                        
+                        for (String geneName : proteinNode.getGeneNames()) {
+                            System.out.println(geneName);
+                        }
+                         
+                    }                    
+                }else{
+                    System.out.println("There were no proteins found with gene names like: " + inputSt);
+                }                   
+                //--------------------------------------------------------------
+            
+
+            } catch (Exception e) {
                 //deal somehow with the exception
-                
-            }finally{
-                
+            } finally {
+
                 //---closing the manager----
                 manager.shutDown();
-                
+
             }
-            
+
         }
     }
 }
