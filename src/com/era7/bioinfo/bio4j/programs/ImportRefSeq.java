@@ -15,9 +15,9 @@ import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
+//import java.io.InputStreamReader;
+//import java.io.Reader;
+//import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +25,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import java.util.zip.GZIPInputStream;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
+//import java.util.zip.GZIPInputStream;
+//import org.apache.commons.net.ftp.FTPClient;
+//import org.apache.commons.net.ftp.FTPFile;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.helpers.collection.MapUtil;
@@ -470,54 +470,54 @@ public class ImportRefSeq implements Executable {
 
     }
 
-    private static void ftpStuff() {
-        try {
-
-            FTPClient ftp = new FTPClient();
-            ftp.connect("ftp.ncbi.nih.gov");
-
-            System.out.println(ftp.getReplyString());
-
-            ftp.login("anonymous", "asdfjkjd83djsdf@gmail.com");
-
-            System.out.println("before list files...");
-
-            //ftp.li
-
-            FTPFile[] files = ftp.listFiles(BASE_FOLDER);
-
-            System.out.println(files.length);
-
-            for (FTPFile file : files) {
-
-                if (file.getName().endsWith(".gbff.gz")) {
-
-                    StringWriter writer = null;
-                    String charset = "ASCII";
-
-                    GZIPInputStream inputStream = new GZIPInputStream(ftp.retrieveFileStream(BASE_FOLDER + "/" + file.getName()));
-
-                    System.out.println("ftp.getControlEncoding() = " + ftp.getControlEncoding());
-
-                    Reader decoder = new InputStreamReader(inputStream, charset);
-                    BufferedReader buffered = new BufferedReader(decoder);
-
-                    String line = null;
-
-                    while ((line = buffered.readLine()) != null) {
-                        System.out.println("line = " + line);
-                    }
-
-                    System.exit(0);
-                }
-            }
-
-
-
-        } catch (Exception ex) {
-            Logger.getLogger(ImportRefSeq.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+//    private static void ftpStuff() {
+//        try {
+//
+//            FTPClient ftp = new FTPClient();
+//            ftp.connect("ftp.ncbi.nih.gov");
+//
+//            System.out.println(ftp.getReplyString());
+//
+//            ftp.login("anonymous", "asdfjkjd83djsdf@gmail.com");
+//
+//            System.out.println("before list files...");
+//
+//            //ftp.li
+//
+//            FTPFile[] files = ftp.listFiles(BASE_FOLDER);
+//
+//            System.out.println(files.length);
+//
+//            for (FTPFile file : files) {
+//
+//                if (file.getName().endsWith(".gbff.gz")) {
+//
+//                    StringWriter writer = null;
+//                    String charset = "ASCII";
+//
+//                    GZIPInputStream inputStream = new GZIPInputStream(ftp.retrieveFileStream(BASE_FOLDER + "/" + file.getName()));
+//
+//                    System.out.println("ftp.getControlEncoding() = " + ftp.getControlEncoding());
+//
+//                    Reader decoder = new InputStreamReader(inputStream, charset);
+//                    BufferedReader buffered = new BufferedReader(decoder);
+//
+//                    String line = null;
+//
+//                    while ((line = buffered.readLine()) != null) {
+//                        System.out.println("line = " + line);
+//                    }
+//
+//                    System.exit(0);
+//                }
+//            }
+//
+//
+//
+//        } catch (Exception ex) {
+//            Logger.getLogger(ImportRefSeq.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 
     private static long createGenomeElementNode(String version,
             String comment,
