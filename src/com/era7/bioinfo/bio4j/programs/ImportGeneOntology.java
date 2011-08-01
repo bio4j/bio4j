@@ -47,7 +47,6 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class ImportGeneOntology implements Executable {
 
-    public static final String PROPERTIES_FILE_NAME = "batchInserter.properties";
     public static final String TERM_TAG_NAME = "term";
     public static final String ID_TAG_NAME = "id";
     public static final String NAME_TAG_NAME = "name";
@@ -98,7 +97,7 @@ public class ImportGeneOntology implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                 
 
                 // create the batch index service
