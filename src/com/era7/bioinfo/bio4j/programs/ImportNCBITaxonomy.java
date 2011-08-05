@@ -28,7 +28,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class ImportNCBITaxonomy implements Executable {
 
-    private static final Logger logger = Logger.getLogger("ImportIsoformSequences");
+    private static final Logger logger = Logger.getLogger("ImportNCBITaxonomy");
     private static FileHandler fh;
 
     @Override
@@ -42,7 +42,7 @@ public class ImportNCBITaxonomy implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
+        if (args.length != 2) {
             System.out.println("This program expects two parameters: \n"
                     + "1. Nodes DMP filename \n"
                     + "2. Names DMP filename \n");
