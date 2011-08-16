@@ -21,6 +21,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.neo4j.graphdb.Transaction;
 
 /**
  *
@@ -47,8 +48,11 @@ public class ImportNCBITaxonomy implements Executable {
                     + "1. Nodes DMP filename \n"
                     + "2. Names DMP filename \n");
         } else {
-            
+
             Bio4jManager manager = null;
+            Transaction txn = null;
+            int txnCounter = 0;
+            int txnLimitForCommit = 10000;
 
             try {
 
@@ -73,6 +77,8 @@ public class ImportNCBITaxonomy implements Executable {
 
                 HashMap<String, String> nodeParentMap = new HashMap<String, String>();
 
+                txn = manager.beginTransaction();
+
                 logger.log(Level.INFO, "reading nodes file...");
 
                 while ((line = reader.readLine()) != null) {
@@ -93,9 +99,23 @@ public class ImportNCBITaxonomy implements Executable {
                         //saving the parent of the node for later
                         nodeParentMap.put(node.getTaxId(), columns[1].trim());
 
+                        txnCounter++;
+
+                        if (txnCounter % txnLimitForCommit == 0) {
+                            txn.success();
+                            txn.finish();
+                            txn = manager.beginTransaction();
+                        }
+
                     }
 
                 }
+
+                //commiting and 'restarting' transaction
+                txn.success();
+                txn.finish();
+                txn = manager.beginTransaction();
+                txnCounter = 0;
 
                 reader.close();
                 logger.log(Level.INFO, "done!");
@@ -108,47 +128,77 @@ public class ImportNCBITaxonomy implements Executable {
                     String[] columns = line.split("\\|");
 
                     if (columns[columns.length - 1].trim().equals("scientific name")) {
-                        
+
                         String taxId = columns[0].trim();
                         String nameSt = columns[1].trim();
-                        
+
                         NCBITaxonNode node = nodeRetriever.getNCBITaxonByTaxId(taxId);
                         node.setScientificName(nameSt);
+
+                        txnCounter++;
+                        if (txnCounter % txnLimitForCommit == 0) {
+                            //commiting and 'restarting' transaction
+                            txn.success();
+                            txn.finish();
+                            txn = manager.beginTransaction();
+                        }
                     }
 
                 }
                 reader.close();
                 logger.log(Level.INFO, "done!");
-                
+
                 logger.log(Level.INFO, "storing relationships...");
-                
+
+                //commiting and 'restarting' transaction
+                txn.success();
+                txn.finish();
+                txn = manager.beginTransaction();
+                txnCounter = 0;
+
                 Set<String> nodesSet = nodeParentMap.keySet();
                 for (String nodeTaxId : nodesSet) {
-                    
+
                     String parentTaxId = nodeParentMap.get(nodeTaxId);
-                    
+
                     NCBITaxonNode currentNode = nodeRetriever.getNCBITaxonByTaxId(nodeTaxId);
-                    
-                    if(! nodeTaxId.equals(parentTaxId)){
-                        
-                        NCBITaxonNode parentNode = nodeRetriever.getNCBITaxonByTaxId(parentTaxId);            
+
+                    if (!nodeTaxId.equals(parentTaxId)) {
+
+                        NCBITaxonNode parentNode = nodeRetriever.getNCBITaxonByTaxId(parentTaxId);
                         parentNode.getNode().createRelationshipTo(currentNode.getNode(), new NCBITaxonParentRel(null));
-                        
-                    }else{
-                        
-                        manager.getReferenceNode().createRelationshipTo(currentNode.getNode(), new NCBIMainTaxonRel(null));                        
-                        
+
+                    } else {
+
+                        manager.getReferenceNode().createRelationshipTo(currentNode.getNode(), new NCBIMainTaxonRel(null));
+
                     }
-                }
+
+                    txnCounter++;
+                    if (txnCounter % txnLimitForCommit == 0) {
+                        //commiting and 'restarting' transaction
+                        txn.success();
+                        txn.finish();
+                        txn = manager.beginTransaction();
+                    }
+
+                }                
                 
+
                 logger.log(Level.INFO, "Done!");
 
+                txn.success();
 
             } catch (Exception ex) {
                 Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
                 
-            }finally{
+                txn.failure();
 
+            } finally {
+
+                //commiting transaction
+                txn.finish();
+                
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
