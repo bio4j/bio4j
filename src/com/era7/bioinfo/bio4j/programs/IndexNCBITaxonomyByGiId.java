@@ -10,14 +10,17 @@ import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.graphdb.index.Index;
 
 /**
@@ -40,12 +43,17 @@ public class IndexNCBITaxonomyByGiId implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Tax-id <--> Gi-id table file \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Tax-id <--> Gi-id table file \n"
+                    + "2. Bio4j DB folder");
         } else {
 
             Bio4jManager manager = null;
+            Transaction txn = null;
+           
+            //-------writer for storing incorrect gene identifiers-taxon id pairs----
+            BufferedWriter outBufferedWriter = null;
 
             try {
 
@@ -57,10 +65,14 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                 logger.setLevel(Level.ALL);
 
                 File file = new File(args[0]);
-
+                
+                outBufferedWriter = new BufferedWriter(new FileWriter(new File("incorrectGiTaxIdPairs.txt")));
+                
                 logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+                manager = new Bio4jManager(args[1]);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
+                
+                txn = manager.beginTransaction();
                 
                 Index<Node> ncbiTaxonGiIdIndex = manager.getNCBITaxonGiIdIndex();
                 
@@ -72,23 +84,45 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     String[] columns = line.split("\t");
 
                     int giId = Integer.parseInt(columns[0]);
-                    int taxId = Integer.parseInt(columns[1]);
-
+                    int taxId = Integer.parseInt(columns[1]);                  
+                    
                     NCBITaxonNode nCBITaxonNode = nodeRetriever.getNCBITaxonByTaxId(String.valueOf(taxId));
-                    ncbiTaxonGiIdIndex.add(nCBITaxonNode.getNode(), NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId);
+                    
+                    if(nCBITaxonNode != null){
+                        ncbiTaxonGiIdIndex.add(nCBITaxonNode.getNode(), NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId);                        
+                    }else{
+//                        System.out.println("NCBI taxon node is null ... :(");
+//                        System.out.println("giId = " + giId);
+//                        System.out.println("taxId = " + taxId);
+                        
+                        outBufferedWriter.write(giId + "\t" + taxId + "\n");
+                    } 
 
                     lineCounter++;
+                    
                     if (lineCounter % 100000 == 0) {
+                        txn.success();
+                        txn.finish();
                         System.out.println("lineCounter = " + lineCounter);
+                        
+                        outBufferedWriter.flush();
+                        
+                        txn = manager.beginTransaction();
                     }
                 }
-                reader.close();
-              
+                reader.close();             
 
+                txn.success();
+                
+                outBufferedWriter.close();
 
             } catch (Exception e) {
                 Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, e);
+                txn.failure();
             } finally {
+                
+                //finishing las transaction
+                txn.finish();
 
                 //closing logger file handler
                 fh.close();
