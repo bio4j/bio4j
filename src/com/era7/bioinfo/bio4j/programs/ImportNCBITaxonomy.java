@@ -4,7 +4,6 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBIMainTaxonRel;
 import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBITaxonParentRel;
@@ -43,10 +42,11 @@ public class ImportNCBITaxonomy implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 2) {
-            System.out.println("This program expects two parameters: \n"
+        if (args.length != 3) {
+            System.out.println("This program expects three parameters: \n"
                     + "1. Nodes DMP filename \n"
-                    + "2. Names DMP filename \n");
+                    + "2. Names DMP filename \n"
+                    + "3. Bio4j DB folder");
         } else {
 
             Bio4jManager manager = null;
@@ -67,7 +67,7 @@ public class ImportNCBITaxonomy implements Executable {
                 File namesDumpFile = new File(args[1]);
 
                 logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+                manager = new Bio4jManager(args[2]);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
 
@@ -88,6 +88,8 @@ public class ImportNCBITaxonomy implements Executable {
                         String[] columns = line.split("\\|");
 
                         NCBITaxonNode node = new NCBITaxonNode(manager.createNode());
+                        //setting node_type property
+                        node.setNodeType(NCBITaxonNode.NODE_TYPE);
 
                         node.setTaxId(columns[0].trim());
                         node.setRank(columns[2].trim());

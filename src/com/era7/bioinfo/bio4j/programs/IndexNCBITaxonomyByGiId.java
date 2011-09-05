@@ -4,7 +4,6 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
@@ -15,13 +14,20 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.graphdb.index.BatchInserterIndex;
+import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
+import org.neo4j.kernel.impl.batchinsert.BatchInserter;
+import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
  *
@@ -43,14 +49,17 @@ public class IndexNCBITaxonomyByGiId implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 2) {
-            System.out.println("This program expects two parameters: \n"
+        if (args.length != 3) {
+            System.out.println("This program expects three parameters: \n"
                     + "1. Tax-id <--> Gi-id table file \n"
-                    + "2. Bio4j DB folder");
+                    + "2. Bio4j DB folder \n"
+                    + "3. Properties file name");
         } else {
 
-            Bio4jManager manager = null;
-            Transaction txn = null;
+            BatchInserter inserter = null;
+            BatchInserterIndexProvider indexProvider = null;
+            BatchInserterIndex giIndex = null;
+            BatchInserterIndex taxonIndex = null;
            
             //-------writer for storing incorrect gene identifiers-taxon id pairs----
             BufferedWriter outBufferedWriter = null;
@@ -68,13 +77,16 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                 
                 outBufferedWriter = new BufferedWriter(new FileWriter(new File("incorrectGiTaxIdPairs.txt")));
                 
-                logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(args[1]);
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
+                // create the batch inserter
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(args[2]));
                 
-                txn = manager.beginTransaction();
+
+                // create the batch index service
+                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
+                Map<String,String> indexProps = MapUtil.stringMap( "provider", "lucene", "type", "exact" );
                 
-                Index<Node> ncbiTaxonGiIdIndex = manager.getNCBITaxonGiIdIndex();
+                giIndex = indexProvider.nodeIndex( NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, indexProps);
+                taxonIndex = indexProvider.nodeIndex( NCBITaxonNode.NCBI_TAXON_ID_INDEX, indexProps);
                 
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line = null;
@@ -86,10 +98,10 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     int giId = Integer.parseInt(columns[0]);
                     int taxId = Integer.parseInt(columns[1]);                  
                     
-                    NCBITaxonNode nCBITaxonNode = nodeRetriever.getNCBITaxonByTaxId(String.valueOf(taxId));
+                    Long nCBITaxonNodeId = taxonIndex.get(NCBITaxonNode.NCBI_TAXON_ID_INDEX,String.valueOf(taxId)).getSingle();
                     
-                    if(nCBITaxonNode != null){
-                        ncbiTaxonGiIdIndex.add(nCBITaxonNode.getNode(), NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId);                        
+                    if(nCBITaxonNodeId != null){
+                        giIndex.add(nCBITaxonNodeId, MapUtil.map(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId));                        
                     }else{
 //                        System.out.println("NCBI taxon node is null ... :(");
 //                        System.out.println("giId = " + giId);
@@ -101,34 +113,24 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     lineCounter++;
                     
                     if (lineCounter % 100000 == 0) {
-                        txn.success();
-                        txn.finish();
-                        System.out.println("lineCounter = " + lineCounter);
-                        
+                        System.out.println("lineCounter = " + lineCounter);                        
                         outBufferedWriter.flush();
-                        
-                        txn = manager.beginTransaction();
                     }
                 }
-                reader.close();             
-
-                txn.success();
+                reader.close();          
                 
                 outBufferedWriter.close();
 
             } catch (Exception e) {
                 Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, e);
-                txn.failure();
             } finally {
                 
-                //finishing las transaction
-                txn.finish();
-
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
-                manager.shutDown();
+                indexProvider.shutdown();
+                inserter.shutdown();
             }
 
 
