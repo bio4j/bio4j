@@ -18,7 +18,6 @@ package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.AlternativeProductNode;
-import com.era7.bioinfo.bio4jmodel.nodes.ProteinSelfInteractionsNode;
 import com.era7.bioinfo.bio4jmodel.nodes.SequenceCautionNode;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
@@ -63,8 +62,7 @@ public class InitBio4jDB implements Executable {
     public static AlternativeProductPromoterRel alternativeProductPromoterRel = new AlternativeProductPromoterRel(null);
     public static AlternativeProductSplicingRel alternativeProductSplicingRel = new AlternativeProductSplicingRel(null);
     public static AlternativeProductRibosomalFrameshiftingRel alternativeProductRibosomalFrameshiftingRel = new AlternativeProductRibosomalFrameshiftingRel(null);
-    public static ProteinSelfInteractionsRel proteinSelfInteractionsRel = new ProteinSelfInteractionsRel(null);
-
+    
     @Override
     public void execute(ArrayList<String> array) {
         String[] args = new String[array.size()];
@@ -166,20 +164,6 @@ public class InitBio4jDB implements Executable {
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
                 //---------------------------------------------------------------------------------------------------------------
 
-                //Node and relationship that will lead to protein self interactions 
-                
-                
-                proteinSelfInteractionsProperties.put(ProteinSelfInteractionsNode.NODE_TYPE_PROPERTY, ProteinSelfInteractionsNode.NODE_TYPE);
-                long proteinSelfInteractionsNodeId = inserter.createNode(proteinSelfInteractionsProperties);
-                BatchInserterIndex index = indexProvider.nodeIndex(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME,
-                                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                index.add(proteinSelfInteractionsNodeId, MapUtil.map(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE));
-                
-                
-                
-                
-                //----------------------------------------------------------
-                
             } catch (Exception e) {
                 
                 logger.log(Level.SEVERE, e.getMessage());
