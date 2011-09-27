@@ -20,7 +20,6 @@ import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -137,7 +136,6 @@ public class ImportProteinInteractions implements Executable {
                 //--------------------------------relationships------------------------------------------
                 ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(null);
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
-                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
                 //------------------------------------------------------------------------------------------------
 
                 //------------------indexes creation----------------------------------
@@ -145,13 +143,7 @@ public class ImportProteinInteractions implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                BatchInserterIndex proteinSelfRelationshipsNodeIndex = indexProvider.nodeIndex(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME,
-                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //--------------------------------------------------------------------
-
-
-                long proteinSelfInteractionsNodeId = proteinSelfRelationshipsNodeIndex.get(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE).getSingle();
-                System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -233,47 +225,35 @@ public class ImportProteinInteractions implements Executable {
 //                                    System.out.println("currentProteinId = " + currentProteinId);
                                 }
 
-                                if (!interactionWithItself) {
-                                    if (protein2Id < 0) {
-                                        //Since we did not find the protein we try to find a isoform instead
-                                        long isoformId = -1;
-                                        IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
-                                        if (isoformIdIndexHits.hasNext()) {
-                                            if (isoformIdIndexHits.size() == 1) {
-                                                isoformId = isoformIdIndexHits.getSingle();
-                                            }
+                                if (protein2Id < 0) {
+                                    //Since we did not find the protein we try to find a isoform instead
+                                    long isoformId = -1;
+                                    IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
+                                    if (isoformIdIndexHits.hasNext()) {
+                                        if (isoformIdIndexHits.size() == 1) {
+                                            isoformId = isoformIdIndexHits.getSingle();
                                         }
-                                        if (isoformId >= 0) {
+                                    }
+                                    if (isoformId >= 0) {
 
-                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
+                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
+                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
+                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
+                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
 
-                                            inserter.createRelationship(currentProteinId, isoformId, proteinIsoformInteractionRel, proteinIsoformInteractionProperties);
-
-                                        }
-                                    } else {
-
-                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
-
-                                        inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
+                                        inserter.createRelationship(currentProteinId, isoformId, proteinIsoformInteractionRel, proteinIsoformInteractionProperties);
 
                                     }
                                 } else {
-                                    //this is the case where one protein interacts with itself
 
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
+                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
+                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
+                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
+                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
 
-                                    inserter.createRelationship(currentProteinId, proteinSelfInteractionsNodeId, proteinSelfInteractionRel, proteinSelfInteractionProperties);
+                                    inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
+
                                 }
-
 
 
                             }

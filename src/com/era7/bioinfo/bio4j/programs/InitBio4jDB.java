@@ -30,9 +30,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
-import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
@@ -82,7 +80,6 @@ public class InitBio4jDB implements Executable {
 
             Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
             Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
-            Map<String, Object> proteinSelfInteractionsProperties = new HashMap<String, Object>();
 
             long alternativeProductInitiationId;
             long alternativeProductPromoterId;
