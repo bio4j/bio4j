@@ -127,20 +127,17 @@ public class ImportUniprot implements Executable {
     public static ThesisProteinCitationRel thesisProteinCitationRel = new ThesisProteinCitationRel(null);
     public static PatentAuthorRel patentAuthorRel = new PatentAuthorRel(null);
     public static PatentProteinCitationRel patentProteinCitationRel = new PatentProteinCitationRel(null);
-    public static SubmissionAuthorPersonRel submissionAuthorPersonRel = new SubmissionAuthorPersonRel(null);
-    public static SubmissionAuthorConsortiumRel submissionAuthorConsortiumRel = new SubmissionAuthorConsortiumRel(null);
+    public static SubmissionAuthorRel submissionAuthorRel = new SubmissionAuthorRel(null);
     public static SubmissionProteinCitationRel submissionProteinCitationRel = new SubmissionProteinCitationRel(null);
     public static BookAuthorRel bookAuthorRel = new BookAuthorRel(null);
     public static BookProteinCitationRel bookProteinCitationRel = new BookProteinCitationRel(null);
     public static BookEditorRel bookEditorRel = new BookEditorRel(null);
     public static BookCityRel bookCityRel = new BookCityRel(null);
     public static BookPublisherRel bookPublisherRel = new BookPublisherRel(null);
-    public static ArticleAuthorPersonRel articleAuthorPersonRel = new ArticleAuthorPersonRel(null);
-    public static ArticleAuthorConsortiumRel articleAuthorConsortiumRel = new ArticleAuthorConsortiumRel(null);
+    public static ArticleAuthorRel articleAuthorRel = new ArticleAuthorRel(null);
     public static ArticleJournalRel articleJournalRel = new ArticleJournalRel(null);
     public static ArticleProteinCitationRel articleProteinCitationRel = new ArticleProteinCitationRel(null);
-    public static OnlineArticleAuthorPersonRel onlineArticleAuthorPersonRel = new OnlineArticleAuthorPersonRel(null);
-    public static OnlineArticleAuthorConsortiumRel onlineArticleAuthorConsortiumRel = new OnlineArticleAuthorConsortiumRel(null);
+    public static OnlineArticleAuthorRel onlineArticleAuthorRel = new OnlineArticleAuthorRel(null);
     public static OnlineArticleJournalRel onlineArticleJournalRel = new OnlineArticleJournalRel(null);
     public static OnlineArticleProteinCitationRel onlineArticleProteinCitationRel = new OnlineArticleProteinCitationRel(null);
     public static UnpublishedObservationAuthorRel unpublishedObservationAuthorRel = new UnpublishedObservationAuthorRel(null);
@@ -279,8 +276,8 @@ public class ImportUniprot implements Executable {
                 inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
-                indexProvider = new LuceneBatchInserterIndexProvider(inserter);     
-                
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+
                 //-----------------create batch indexes----------------------------------
                 //----------------------------------------------------------------------
                 BatchInserterIndex proteinAccessionIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ACCESSION_INDEX,
@@ -370,10 +367,10 @@ public class ImportUniprot implements Executable {
                         String fullNameSt = getProteinFullName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
                         String shortNameSt = getProteinShortName(entryXMLElem.asJDomElement().getChild(CommonData.PROTEIN_TAG_NAME));
 
-                        if(shortNameSt == null){
+                        if (shortNameSt == null) {
                             shortNameSt = "";
                         }
-                        if(fullNameSt == null){
+                        if (fullNameSt == null) {
                             fullNameSt = "";
                         }
 
@@ -411,15 +408,15 @@ public class ImportUniprot implements Executable {
                                 emblCrossReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
                                 arrayExpressIdSt = refId;
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")){
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")) {
                                 //refseqReferences.add(refId);
                                 List<Element> children = dbReferenceElem.getChildren("property");
                                 for (Element propertyElem : children) {
-                                    if(propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")){
+                                    if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
                                         refseqReferences.add(propertyElem.getAttributeValue("value"));
                                     }
                                 }
-                                
+
                             }
                         }
 
@@ -475,14 +472,14 @@ public class ImportUniprot implements Executable {
                         proteinAccessionIndex.flush();
 
                         //indexing protein by full name
-                        if(!fullNameSt.isEmpty()){
-                            proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt));                            
-                            
-                            System.out.println(fullNameSt.toUpperCase() + " , " + currentProteinId); 
+                        if (!fullNameSt.isEmpty()) {
+                            proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt));
+
+                            System.out.println(fullNameSt.toUpperCase() + " , " + currentProteinId);
                         }
-                        
-                        
-                        
+
+
+
 
                         //indexing protein by gene names
                         String geneNamesStToBeIndexed = "";
@@ -492,17 +489,17 @@ public class ImportUniprot implements Executable {
                         //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
                         proteinGeneNamesFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed));
 
-                        
+
                         //--------------refseq associations----------------
                         for (String refseqReferenceSt : refseqReferences) {
                             //System.out.println("refseqReferenceSt = " + refseqReferenceSt);
                             IndexHits<Long> hits = genomeElementVersionIndex.get(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX, refseqReferenceSt);
-                            if(hits.hasNext()){
+                            if (hits.hasNext()) {
                                 inserter.createRelationship(currentProteinId, hits.getSingle(), proteinGenomeElementRel, null);
-                            }else{
+                            } else {
                                 logger.log(Level.INFO, ("GenomeElem not found for: " + currentAccessionId + " , " + refseqReferenceSt));
                             }
-                                                         
+
                         }
 
 
@@ -517,7 +514,7 @@ public class ImportUniprot implements Executable {
                         //long datasetId = indexService.getSingleNode(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
                         long datasetId = -1;
                         IndexHits<Long> datasetNameIndexHits = datasetNameIndex.get(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
-                        if(datasetNameIndexHits.hasNext()){
+                        if (datasetNameIndexHits.hasNext()) {
                             datasetId = datasetNameIndexHits.getSingle();
                         }
                         if (datasetId < 0) {
@@ -542,7 +539,7 @@ public class ImportUniprot implements Executable {
                             //long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
                             long keywordNodeId = -1;
                             IndexHits<Long> keyworIdIndexHits = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId);
-                            if(keyworIdIndexHits.hasNext()){
+                            if (keyworIdIndexHits.hasNext()) {
                                 keywordNodeId = keyworIdIndexHits.getSingle();
                             }
                             if (keywordNodeId < 0) {
@@ -575,7 +572,7 @@ public class ImportUniprot implements Executable {
                                 //long interproNodeId = indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, interproId);
                                 long interproNodeId = -1;
                                 IndexHits<Long> interproIdIndexHits = interproIdIndex.get(InterproNode.INTERPRO_ID_INDEX, interproId);
-                                if(interproIdIndexHits.hasNext()){
+                                if (interproIdIndexHits.hasNext()) {
                                     interproNodeId = interproIdIndexHits.getSingle();
                                 }
 
@@ -609,7 +606,7 @@ public class ImportUniprot implements Executable {
                                 for (Element element : props) {
                                     if (element.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.EVIDENCE_TYPE_ATTRIBUTE)) {
                                         evidenceSt = element.getAttributeValue("value");
-                                        if(evidenceSt == null){
+                                        if (evidenceSt == null) {
                                             evidenceSt = "";
                                         }
                                         break;
@@ -651,7 +648,7 @@ public class ImportUniprot implements Executable {
                         //long organismNodeId = indexService.getSingleNode(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
                         long organismNodeId = -1;
                         IndexHits<Long> organismScientifiNameIndexHits = organismScientificNameIndex.get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-                        if(organismScientifiNameIndexHits.hasNext()){
+                        if (organismScientifiNameIndexHits.hasNext()) {
                             organismNodeId = organismScientifiNameIndexHits.getSingle();
                         }
                         if (organismNodeId < 0) {
@@ -694,13 +691,13 @@ public class ImportUniprot implements Executable {
                             //long firstTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
                             long firstTaxonId = -1;
                             IndexHits<Long> firstTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
-                            if(firstTaxonIndexHits.hasNext()){
+                            if (firstTaxonIndexHits.hasNext()) {
                                 firstTaxonId = firstTaxonIndexHits.getSingle();
                             }
 
                             if (firstTaxonId < 0) {
 
-                                String firstTaxonName = firstTaxonElem.getText();                                
+                                String firstTaxonName = firstTaxonElem.getText();
                                 taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonName);
                                 firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
                                 //flushing taxon name index--
@@ -715,7 +712,7 @@ public class ImportUniprot implements Executable {
                                 //long currentTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, taxonName);
                                 long currentTaxonId = -1;
                                 IndexHits<Long> currentTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName);
-                                if(currentTaxonIndexHits.hasNext()){
+                                if (currentTaxonIndexHits.hasNext()) {
                                     currentTaxonId = currentTaxonIndexHits.getSingle();
                                 }
                                 if (currentTaxonId < 0) {
@@ -758,7 +755,7 @@ public class ImportUniprot implements Executable {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
             } finally {
-                
+
                 // shutdown, makes sure all changes are written to disk
                 indexProvider.shutdown();
                 inserter.shutdown();
@@ -793,7 +790,7 @@ public class ImportUniprot implements Executable {
             //long featureTypeNodeId = indexService.getSingleNode(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
             long featureTypeNodeId = -1;
             IndexHits<Long> featureTypeNameIndexHits = featureTypeNameIndex.get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt);
-            if(featureTypeNameIndexHits.hasNext()){
+            if (featureTypeNameIndexHits.hasNext()) {
                 featureTypeNodeId = featureTypeNameIndexHits.getSingle();
             }
 
@@ -996,7 +993,7 @@ public class ImportUniprot implements Executable {
             //long commentTypeId = indexService.getSingleNode(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
             IndexHits<Long> commentTypeNameIndexHits = commentTypeNameIndex.get(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
             long commentTypeId = -1;
-            if(commentTypeNameIndexHits.hasNext()){
+            if (commentTypeNameIndexHits.hasNext()) {
                 commentTypeId = commentTypeNameIndexHits.getSingle();
             }
             if (commentTypeId < 0) {
@@ -1134,40 +1131,40 @@ public class ImportUniprot implements Executable {
                 inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
             } //----- subcellular location---------
             else if (commentTypeSt.equals(ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                
+
                 List<Element> subcLocations = commentElem.getChildren(CommonData.SUBCELLULAR_LOCATION_TAG_NAME);
-                
+
                 for (Element subcLocation : subcLocations) {
-                    
+
                     List<Element> locations = subcLocation.getChildren(CommonData.LOCATION_TAG_NAME);
                     Element firstLocation = locations.get(0);
                     //long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
                     long firstLocationId = -1;
                     IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-                    if(firstLocationIndexHits.hasNext()){
+                    if (firstLocationIndexHits.hasNext()) {
                         firstLocationId = firstLocationIndexHits.getSingle();
                     }
                     long lastLocationId = firstLocationId;
-                    
+
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
                         lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
                         //---flushing subcellular location name index---
                         subcellularLocationNameIndex.flush();
                     }
-                    
+
                     for (int i = 1; i < locations.size(); i++) {
-                        
+
                         long tempLocationId = -1;
                         IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
-                        if(tempLocationIndexHits.hasNext()){
+                        if (tempLocationIndexHits.hasNext()) {
                             tempLocationId = tempLocationIndexHits.getSingle();
-                        }else{
+                        } else {
                             subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
                             tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
                             subcellularLocationNameIndex.flush();
-                        }                         
-                                
+                        }
+
                         inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
                         lastLocationId = tempLocationId;
                     }
@@ -1216,7 +1213,7 @@ public class ImportUniprot implements Executable {
                     //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
                     long isoformId = -1;
                     IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-                    if(isoformIdIndexHits.hasNext()){
+                    if (isoformIdIndexHits.hasNext()) {
                         isoformId = isoformIdIndexHits.getSingle();
                     }
                     if (isoformId < 0) {
@@ -1523,6 +1520,7 @@ public class ImportUniprot implements Executable {
         index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
         return cityId;
     }
+
     private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
             BatchInserter inserter,
             BatchInserterIndex index) {
@@ -1592,7 +1590,7 @@ public class ImportUniprot implements Executable {
                     //long personId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
                     long personId = -1;
                     IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-                    if(personNameIndexHits.hasNext()){
+                    if (personNameIndexHits.hasNext()) {
                         personId = personNameIndexHits.getSingle();
                     }
                     if (personId < 0) {
@@ -1608,7 +1606,7 @@ public class ImportUniprot implements Executable {
                     //long consortiumId = indexService.getSingleNode(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
                     long consortiumId = -1;
                     IndexHits<Long> consortiumIdIndexHits = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
-                    if(consortiumIdIndexHits.hasNext()){
+                    if (consortiumIdIndexHits.hasNext()) {
                         consortiumId = consortiumIdIndexHits.getSingle();
                     }
                     if (consortiumId < 0) {
@@ -1635,7 +1633,7 @@ public class ImportUniprot implements Executable {
 
                     long thesisId = -1;
                     IndexHits<Long> thesisTitleIndexHits = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
-                    if(thesisTitleIndexHits.hasNext()){
+                    if (thesisTitleIndexHits.hasNext()) {
                         thesisId = thesisTitleIndexHits.getSingle();
                     }
                     if (thesisId < 0) {
@@ -1659,7 +1657,7 @@ public class ImportUniprot implements Executable {
                             //long instituteId = indexService.getSingleNode(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
                             long instituteId = -1;
                             IndexHits<Long> instituteNameIndexHits = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
-                            if(instituteNameIndexHits.hasNext()){
+                            if (instituteNameIndexHits.hasNext()) {
                                 instituteId = instituteNameIndexHits.getSingle();
                             }
                             if (instituteId < 0) {
@@ -1672,7 +1670,7 @@ public class ImportUniprot implements Executable {
                                 //long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
                                 long countryId = -1;
                                 IndexHits<Long> countryNameIndexHits = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-                                if(countryNameIndexHits.hasNext()){
+                                if (countryNameIndexHits.hasNext()) {
                                     countryId = countryNameIndexHits.getSingle();
                                 }
                                 if (countryId < 0) {
@@ -1712,7 +1710,7 @@ public class ImportUniprot implements Executable {
                         //long patentId = indexService.getSingleNode(PatentNode.PATENT_NUMBER_INDEX, numberSt);
                         long patentId = -1;
                         IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-                        if(patentNumberIndexHits.hasNext()){
+                        if (patentNumberIndexHits.hasNext()) {
                             patentId = patentNumberIndexHits.getSingle();
                         }
 
@@ -1756,7 +1754,11 @@ public class ImportUniprot implements Executable {
                     long submissionId = inserter.createNode(submissionProperties);
                     //---authors association-----
                     for (long personId : authorsPersonNodesIds) {
-                        inserter.createRelationship(submissionId, personId, submissionAuthorPersonRel, null);
+                        inserter.createRelationship(submissionId, personId, submissionAuthorRel, null);
+                    }
+                    //---authors consortium association-----
+                    for (long consortiumId : authorsConsortiumNodesIds) {
+                        inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
                     }
 
                     //--protein citation relationship
@@ -1804,7 +1806,7 @@ public class ImportUniprot implements Executable {
                     //long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
                     long bookId = -1;
                     IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-                    if(bookNameIndexHits.hasNext()){
+                    if (bookNameIndexHits.hasNext()) {
                         bookId = bookNameIndexHits.getSingle();
                     }
 
@@ -1830,7 +1832,7 @@ public class ImportUniprot implements Executable {
                                 //long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
                                 long editorId = -1;
                                 IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-                                if(personNameIndexHits.hasNext()){
+                                if (personNameIndexHits.hasNext()) {
                                     editorId = personNameIndexHits.getSingle();
                                 }
                                 if (editorId < 0) {
@@ -1850,7 +1852,7 @@ public class ImportUniprot implements Executable {
                             //long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
                             long publisherId = -1;
                             IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-                            if(publisherNameIndexHits.hasNext()){
+                            if (publisherNameIndexHits.hasNext()) {
                                 publisherId = publisherNameIndexHits.getSingle();
                             }
                             if (publisherId < 0) {
@@ -1869,7 +1871,7 @@ public class ImportUniprot implements Executable {
                             //long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
                             long cityId = -1;
                             IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
-                            if(cityNameIndexHits.hasNext()){
+                            if (cityNameIndexHits.hasNext()) {
                                 cityId = cityNameIndexHits.getSingle();
                             }
                             if (cityId < 0) {
@@ -1911,7 +1913,7 @@ public class ImportUniprot implements Executable {
                     //long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                     long onlineArticleId = -1;
                     IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                    if(onlineArticleTitleIndexHits.hasNext()){
+                    if (onlineArticleTitleIndexHits.hasNext()) {
                         onlineArticleId = onlineArticleTitleIndexHits.getSingle();
                     }
                     if (onlineArticleId < 0) {
@@ -1926,11 +1928,11 @@ public class ImportUniprot implements Executable {
 
                         //---authors person association-----
                         for (long personId : authorsPersonNodesIds) {
-                            inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorPersonRel, null);
+                            inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorRel, null);
                         }
                         //---authors consortium association-----
                         for (long consortiumId : authorsConsortiumNodesIds) {
-                            inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorConsortiumRel, null);
+                            inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
                         }
 
                         //------journal-----------
@@ -1938,7 +1940,7 @@ public class ImportUniprot implements Executable {
                             //long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
                             long onlineJournalId = -1;
                             IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-                            if(onlineJournalNameIndexHits.hasNext()){
+                            if (onlineJournalNameIndexHits.hasNext()) {
                                 onlineJournalId = onlineJournalNameIndexHits.getSingle();
                             }
                             if (onlineJournalId < 0) {
@@ -2006,7 +2008,7 @@ public class ImportUniprot implements Executable {
                     //long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
                     long articleId = -1;
                     IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                    if(articleTitleIndexHits.hasNext()){
+                    if (articleTitleIndexHits.hasNext()) {
                         articleId = articleTitleIndexHits.getSingle();
                     }
                     if (articleId < 0) {
@@ -2023,23 +2025,23 @@ public class ImportUniprot implements Executable {
                         }
 
                         //---indexing by medline, doi and pubmed--
-                        if(!doiSt.isEmpty()){
+                        if (!doiSt.isEmpty()) {
                             articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
                         }
-                        if(!medlineSt.isEmpty()){
+                        if (!medlineSt.isEmpty()) {
                             articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
                         }
-                        if(!pubmedSt.isEmpty()){
+                        if (!pubmedSt.isEmpty()) {
                             articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
                         }
 
                         //---authors person association-----
                         for (long personId : authorsPersonNodesIds) {
-                            inserter.createRelationship(articleId, personId, articleAuthorPersonRel, null);
+                            inserter.createRelationship(articleId, personId, articleAuthorRel, null);
                         }
                         //---authors consortium association-----
                         for (long consortiumId : authorsConsortiumNodesIds) {
-                            inserter.createRelationship(articleId, consortiumId, articleAuthorConsortiumRel, null);
+                            inserter.createRelationship(articleId, consortiumId, articleAuthorRel, null);
                         }
 
                         //------journal-----------
@@ -2047,7 +2049,7 @@ public class ImportUniprot implements Executable {
                             //long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
                             long journalId = -1;
                             IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-                            if(journalNameIndexHits.hasNext()){
+                            if (journalNameIndexHits.hasNext()) {
                                 journalId = journalNameIndexHits.getSingle();
                             }
                             if (journalId < 0) {
