@@ -4,50 +4,57 @@
 		<arguments>
 		</arguments>
 	</execution>
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportRefSeq</class_full_name>
 		<arguments>
 			<argument>refseq_data</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportGeneOntology</class_full_name>
 		<arguments>
 			<argument>go.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>			
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
+		-->	
 	<!--
-	-->	
-	<!--
-	-->	
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportIsoformSequences</class_full_name>
 		<arguments>
 			<argument>isoform_sequences.fasta</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
 	<execution>
@@ -56,8 +63,10 @@
 			<argument>uniref100.xml</argument>
 			<argument>uniref90.xml</argument>
 			<argument>uniref50.xml</argument>
+			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>
+	-->	
 	<!--	
 	-->
 </scheduled_executions>

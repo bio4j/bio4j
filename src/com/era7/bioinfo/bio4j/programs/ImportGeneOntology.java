@@ -74,9 +74,11 @@ public class ImportGeneOntology implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Gene ontology xml filename \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Gene ontology xml filename \n"
+                    + "2. Bio4j DB folder");
+            
         } else {
             File inFile = new File(args[0]);
 
@@ -97,7 +99,7 @@ public class ImportGeneOntology implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                 
 
                 // create the batch index service

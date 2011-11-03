@@ -35,6 +35,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
 import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
 
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
@@ -96,6 +97,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> isoformProperties = new HashMap<String, Object>();
     public static Map<String, Object> commentTypeProperties = new HashMap<String, Object>();
     public static Map<String, Object> featureTypeProperties = new HashMap<String, Object>();
+    public static Map<String, Object> reactomeTermProperties = new HashMap<String, Object>();
     //---------------------------------------------------------------------
     //-------------------relationships properties maps--------------------------
     public static Map<String, Object> proteinGoProperties = new HashMap<String, Object>();
@@ -152,6 +154,7 @@ public class ImportUniprot implements Executable {
     public static ProteinFrameshiftRel proteinFrameshiftRel = new ProteinFrameshiftRel(null);
     public static ProteinMiscellaneousDiscrepancyRel proteinMiscellaneousDiscrepancyRel = new ProteinMiscellaneousDiscrepancyRel(null);
     public static ProteinGenomeElementRel proteinGenomeElementRel = new ProteinGenomeElementRel(null);
+    public static ProteinReactomeRel proteinReactomeRel = new ProteinReactomeRel(null);
     //----comment relationships-----
     public static AllergenCommentRel allergenCommentRel = new AllergenCommentRel(null);
     public static BioPhysicoChemicalPropertiesCommentRel bioPhysicoChemicalPropertiesCommentRel = new BioPhysicoChemicalPropertiesCommentRel(null);
@@ -251,9 +254,10 @@ public class ImportUniprot implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Uniprot xml filename \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Uniprot xml filename \n"
+                    + "2. Bio4j DB folder");
         } else {
             File inFile = new File(args[0]);
 
@@ -273,7 +277,7 @@ public class ImportUniprot implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
@@ -303,6 +307,8 @@ public class ImportUniprot implements Executable {
                 BatchInserterIndex taxonNameIndex = indexProvider.nodeIndex(TaxonNode.TAXON_NAME_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex genomeElementVersionIndex = indexProvider.nodeIndex(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex reactomeTermIdIndex = indexProvider.nodeIndex(ReactomeTermNode.REACTOME_TERM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
                 //----------------------------------------------------------------------
@@ -394,6 +400,8 @@ public class ImportUniprot implements Executable {
                         List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
                         ArrayList<String> emblCrossReferences = new ArrayList<String>();
                         ArrayList<String> refseqReferences = new ArrayList<String>();
+                        HashMap<String, String> reactomeReferences = new HashMap<String, String>();
+
                         for (Element dbReferenceElem : dbReferenceList) {
                             String refId = dbReferenceElem.getAttributeValue("id");
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
@@ -416,8 +424,15 @@ public class ImportUniprot implements Executable {
                                         refseqReferences.add(propertyElem.getAttributeValue("value"));
                                     }
                                 }
-
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Reactome")) {
+                                Element propertyElem = dbReferenceElem.getChild("property");
+                                String pathwayName = "";
+                                if (propertyElem.getAttributeValue("type").equals("pathway name")) {
+                                    pathwayName = propertyElem.getAttributeValue("value");
+                                }
+                                reactomeReferences.put(refId, pathwayName);
                             }
+
                         }
 
                         Element sequenceElem = entryXMLElem.asJDomElement().getChild(CommonData.ENTRY_SEQUENCE_TAG_NAME);
@@ -501,6 +516,22 @@ public class ImportUniprot implements Executable {
                             }
 
                         }
+
+                        //--------------reactome associations----------------
+                        for (String reactomeId : reactomeReferences.keySet()) {
+                            long reactomeTermNodeId = -1;
+                            IndexHits<Long> reactomeTermIdIndexHits = reactomeTermIdIndex.get(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeId);
+                            if (reactomeTermIdIndexHits.hasNext()) {
+                                reactomeTermNodeId = reactomeTermIdIndexHits.getSingle();
+                            }
+                            if (reactomeTermNodeId < 0) {
+                                reactomeTermProperties.put(ReactomeTermNode.ID_PROPERTY,reactomeId);
+                                reactomeTermProperties.put(ReactomeTermNode.PATHWAY_NAME_PROPERTY, reactomeReferences.get(reactomeId));
+                                reactomeTermNodeId = inserter.createNode(reactomeTermProperties);
+                            }
+                            inserter.createRelationship(currentProteinId, reactomeTermNodeId, proteinReactomeRel, null);
+                        }
+                        //-------------------------------------------------------
 
 
                         //-----comments import---

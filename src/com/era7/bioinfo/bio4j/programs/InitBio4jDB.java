@@ -41,12 +41,6 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  */
 public class InitBio4jDB implements Executable {
     
-    //--------indexing API constans-----
-    private static String PROVIDER_ST = "provider";
-    private static String EXACT_ST = "exact";
-    private static String LUCENE_ST = "lucene";
-    private static String TYPE_ST = "type";
-    //-----------------------------------
 
     private static final Logger logger = Logger.getLogger("InitBio4jDB");
     private static FileHandler fh;
@@ -72,8 +66,9 @@ public class InitBio4jDB implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 0) {
-            System.out.println("This program does not expect any parameter\n");
+        if (args.length != 1) {
+            System.out.println("This program expects one parameter:\n"
+                    + "1. Bio4j DB folder");
         } else {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
@@ -103,7 +98,7 @@ public class InitBio4jDB implements Executable {
 
                 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[0], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);

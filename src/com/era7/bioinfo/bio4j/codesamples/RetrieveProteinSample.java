@@ -16,7 +16,6 @@
  */
 package com.era7.bioinfo.bio4j.codesamples;
 
-import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
@@ -34,19 +33,20 @@ public class RetrieveProteinSample {
      * @param args Just one argument (protein accession)
      */
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("The program expects one parameter: \n"
+        if (args.length != 2) {
+            System.out.println("The program expects two parameters: \n"
+                    + "2. Bio4j DB folder\n"
                     + "1. Protein accesion\n");
         } else {
 
-            String inputSt = args[0];
+            String inputSt = args[1];
 
             Bio4jManager manager = null;
 
             try {
 
                 //--creating manager and node retriever----
-                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+                manager = new Bio4jManager(args[0]);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
                 
                 //--------------------------------------------------------------

@@ -15,9 +15,6 @@ import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-//import java.io.InputStreamReader;
-//import java.io.Reader;
-//import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +22,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-//import java.util.zip.GZIPInputStream;
-//import org.apache.commons.net.ftp.FTPClient;
-//import org.apache.commons.net.ftp.FTPFile;
 import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.helpers.collection.MapUtil;
@@ -84,9 +78,10 @@ public class ImportRefSeq implements Executable {
     public static void main(String[] args) {
 
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Folder name with all the .gbk files \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Folder name with all the .gbk files \n"
+                    + "2. Bio4j DB folder");
         } else {
 
             File currentFolder = new File(args[0]);
@@ -122,7 +117,7 @@ public class ImportRefSeq implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);

@@ -70,11 +70,12 @@ public class ImportUniref implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 3) {
-            System.out.println("This program expects three parameters: \n"
+        if (args.length != 4) {
+            System.out.println("This program expects four parameters: \n"
                     + "1. Uniref 100 xml filename \n"
                     + "2. Uniref 90 xml filename \n"
-                    + "3. Uniref 50 xml filename \n");
+                    + "3. Uniref 50 xml filename \n"
+                    + "4. Bio4j DB folder");
         } else {
 
             File uniref100File = new File(args[0]);
@@ -100,7 +101,7 @@ public class ImportUniref implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[3], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
