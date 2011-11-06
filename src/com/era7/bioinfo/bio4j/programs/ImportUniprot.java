@@ -490,7 +490,7 @@ public class ImportUniprot implements Executable {
                         if (!fullNameSt.isEmpty()) {
                             proteinFullNameFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, fullNameSt));
 
-                            System.out.println(fullNameSt.toUpperCase() + " , " + currentProteinId);
+                            //System.out.println(fullNameSt.toUpperCase() + " , " + currentProteinId);
                         }
 
 
@@ -2109,7 +2109,7 @@ public class ImportUniprot implements Executable {
                 } else if (citationType.equals(UnpublishedObservationNode.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                     String dateSt = citation.getAttributeValue("date");
-                    if (dateSt != null) {
+                    if (dateSt == null) {
                         dateSt = "";
                     }
 
