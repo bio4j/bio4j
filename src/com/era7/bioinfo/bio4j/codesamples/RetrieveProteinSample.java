@@ -102,7 +102,7 @@ public class RetrieveProteinSample {
             
 
             } catch (Exception e) {
-                //deal somehow with the exception
+                e.printStackTrace();
             } finally {
 
                 //---closing the manager----

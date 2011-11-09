@@ -92,7 +92,7 @@ public class ImportProteinInteractions implements Executable {
 
             try {
 
-               
+
                 // This block configure the logger with handler and formatter
                 fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
                 SimpleFormatter formatter = new SimpleFormatter();
@@ -188,44 +188,45 @@ public class ImportProteinInteractions implements Executable {
                                 String interactant2AccessionSt = interactant2.getChildText("id");
                                 long protein2Id = -1;
                                 if (interactant2AccessionSt != null) {
+
                                     IndexHits<Long> protein2IdIndexHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
                                     if (protein2IdIndexHits.hasNext()) {
                                         if (protein2IdIndexHits.size() == 1) {
                                             protein2Id = protein2IdIndexHits.getSingle();
                                         }
                                     }
-                                } 
 
-                                if (protein2Id < 0) {
-                                    //Since we did not find the protein we try to find a isoform instead
-                                    long isoformId = -1;
-                                    IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
-                                    if (isoformIdIndexHits.hasNext()) {
-                                        if (isoformIdIndexHits.size() == 1) {
-                                            isoformId = isoformIdIndexHits.getSingle();
+                                    if (protein2Id < 0) {
+                                        //Since we did not find the protein we try to find a isoform instead
+                                        long isoformId = -1;
+                                        IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, interactant2AccessionSt);
+                                        if (isoformIdIndexHits.hasNext()) {
+                                            if (isoformIdIndexHits.size() == 1) {
+                                                isoformId = isoformIdIndexHits.getSingle();
+                                            }
                                         }
+                                        if (isoformId >= 0) {
+
+                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
+                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
+                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
+                                            proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
+
+                                            inserter.createRelationship(currentProteinId, isoformId, proteinIsoformInteractionRel, proteinIsoformInteractionProperties);
+
+                                        }
+                                    } else {
+
+                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
+                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
+                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
+                                        proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
+
+                                        inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
+
                                     }
-                                    if (isoformId >= 0) {
-
-                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                        proteinIsoformInteractionProperties.put(ProteinIsoformInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
-
-                                        inserter.createRelationship(currentProteinId, isoformId, proteinIsoformInteractionRel, proteinIsoformInteractionProperties);
-
-                                    }
-                                } else {
-
-                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                    proteinProteinInteractionProperties.put(ProteinProteinInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
-
-                                    inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
 
                                 }
-
 
                             }
 
