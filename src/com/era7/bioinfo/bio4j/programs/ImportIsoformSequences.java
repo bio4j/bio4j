@@ -112,6 +112,7 @@ public class ImportIsoformSequences implements Executable {
                             IsoformNode node = new IsoformNode(isoformHits.getSingle());
                             node.setSequence(sequence);
                             node.setName(isoformNameSt);
+                            System.out.println("Setting name for: " + node.getId());
                         }
 
                     }

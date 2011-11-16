@@ -45,7 +45,7 @@ public class IndexNCBITaxonomyByGiId implements Executable {
     public static void main(String[] args) {
 
         if (args.length != 3) {
-            System.out.println("This program expects four parameters: \n"
+            System.out.println("This program expects three parameters: \n"
                     + "1. Tax-id <--> Gi-id table file \n"
                     + "2. Bio4j DB folder \n"
                     + "3. Properties file name");

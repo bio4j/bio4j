@@ -535,7 +535,7 @@ public class ImportUniprot implements Executable {
 
 
                         //-----comments import---
-                        importProteinComments(entryXMLElem, inserter, indexProvider, currentProteinId);
+                        importProteinComments(entryXMLElem, inserter, indexProvider, currentProteinId, sequenceSt);
 
                         //-----features import----
                         importProteinFeatures(entryXMLElem, inserter, indexProvider, currentProteinId);
@@ -983,7 +983,8 @@ public class ImportUniprot implements Executable {
     private static void importProteinComments(XMLElement entryXMLElem,
             BatchInserter inserter,
             BatchInserterIndexProvider indexProvider,
-            long currentProteinId) {
+            long currentProteinId,
+            String proteinSequence) {
 
         //---------------indexes declaration---------------------------
         BatchInserterIndex commentTypeNameIndex = indexProvider.nodeIndex(CommentTypeNode.COMMENT_TYPE_NAME_INDEX,
@@ -1236,11 +1237,26 @@ public class ImportUniprot implements Executable {
                 for (Element isoformElem : isoformList) {
                     String isoformIdSt = isoformElem.getChildText("id");
                     String isoformNoteSt = isoformElem.getChildText("note");
+                    String isoformNameSt = isoformElem.getChildText("name");
+                    String isoformSeqSt = "";
+                    Element isoSeqElem = isoformElem.getChild("sequence");
+                    if(isoSeqElem != null){
+                        String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
+                        if(isoSeqTypeSt.equals("displayed")){
+                            isoformSeqSt = proteinSequence;
+                        }
+                    }
                     if (isoformNoteSt == null) {
                         isoformNoteSt = "";
                     }
+                    if (isoformNameSt == null) {
+                        isoformNameSt = "";
+                    }
                     isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
                     isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
+                    isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
+                    isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
+                    //--------------------------------------------------------
                     //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
                     long isoformId = -1;
                     IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
