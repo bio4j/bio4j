@@ -52,9 +52,7 @@
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
-	-->		
-	<!--
-	
+	-->			
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportIsoformSequences</class_full_name>
 		<arguments>
@@ -62,6 +60,7 @@
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniref</class_full_name>
 		<arguments>
@@ -70,8 +69,9 @@
 			<argument>uniref50.xml</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
-	</execution>
-	-->	
+	</execution>	
+-->	
+<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportNCBITaxonomy</class_full_name>
 		<arguments>
@@ -88,6 +88,6 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>	
-	<!--	
+		
 	-->
 </scheduled_executions>
