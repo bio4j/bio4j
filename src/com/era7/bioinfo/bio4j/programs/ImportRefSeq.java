@@ -132,12 +132,6 @@ public class ImportRefSeq implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
 
 
-                //--------creating amazon s3 client--------------
-                //AmazonS3Client amazonS3Client = new AmazonS3Client(new PropertiesCredentials(new File("AwsCredentials.properties")));
-                //Owner bucketOwner = amazonS3Client.getBucketAcl(CommonData.REFSEQ_BUCKET_NAME).getOwner();
-                //--------------------------------
-
-
                 for (File file : files) {
                     if (file.getName().endsWith(".gbff")) {
 
@@ -327,8 +321,7 @@ public class ImportRefSeq implements Executable {
                                     readLineFlag = false;
 
                                 } else if (line.startsWith(GBCommon.ORIGIN_STR)) {
-                                    //sequence
-
+                                    
                                     originFound = true;
 
                                     do {
@@ -349,29 +342,6 @@ public class ImportRefSeq implements Executable {
 
 
                             } while (line != null && !line.startsWith(GBCommon.LAST_LINE_STR));
-
-
-
-
-                            //-----we save the data in all cases------------
-//                            if (originFound) {
-
-
-//                                System.out.println("accessionSt = " + accessionSt);
-//                                System.out.println("versionSt = " + versionSt);
-//                                System.out.println("definitionSt = " + definitionSt);
-//                                System.out.println("commentSt = " + commentSt);
-//                                System.out.println("sequence.length = " + seqStBuilder.toString().length());
-//
-//                                System.out.println("geneList = " + geneList);
-//                                System.out.println("cdsList = " + cdsList);
-//                                System.out.println("miscRnaList = " + miscRnaList);
-//                                System.out.println("mRnaList = " + mRnaList);
-//                                System.out.println("ncRnaList = " + ncRnaList);
-//                                System.out.println("rRnaList = " + rRnaList);
-//                                System.out.println("tmRnaList = " + tmRnaList);
-//                                System.out.println("tRnaList = " + tRnaList);
-
 
                             //--------create genome element node--------------
                             long genomeElementId = createGenomeElementNode(versionSt,
@@ -457,10 +427,7 @@ public class ImportRefSeq implements Executable {
                                 nodeTypeIndex.add(tRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,TRNANode.NODE_TYPE));
                             }
 
-
                             logger.log(Level.INFO, (versionSt + " saved!"));
-
-//                            }
 
                         }
 
@@ -486,60 +453,8 @@ public class ImportRefSeq implements Executable {
         }
 
 
-
-
-
-
     }
 
-//    private static void ftpStuff() {
-//        try {
-//
-//            FTPClient ftp = new FTPClient();
-//            ftp.connect("ftp.ncbi.nih.gov");
-//
-//            System.out.println(ftp.getReplyString());
-//
-//            ftp.login("anonymous", "asdfjkjd83djsdf@gmail.com");
-//
-//            System.out.println("before list files...");
-//
-//            //ftp.li
-//
-//            FTPFile[] files = ftp.listFiles(BASE_FOLDER);
-//
-//            System.out.println(files.length);
-//
-//            for (FTPFile file : files) {
-//
-//                if (file.getName().endsWith(".gbff.gz")) {
-//
-//                    StringWriter writer = null;
-//                    String charset = "ASCII";
-//
-//                    GZIPInputStream inputStream = new GZIPInputStream(ftp.retrieveFileStream(BASE_FOLDER + "/" + file.getName()));
-//
-//                    System.out.println("ftp.getControlEncoding() = " + ftp.getControlEncoding());
-//
-//                    Reader decoder = new InputStreamReader(inputStream, charset);
-//                    BufferedReader buffered = new BufferedReader(decoder);
-//
-//                    String line = null;
-//
-//                    while ((line = buffered.readLine()) != null) {
-//                        System.out.println("line = " + line);
-//                    }
-//
-//                    System.exit(0);
-//                }
-//            }
-//
-//
-//
-//        } catch (Exception ex) {
-//            Logger.getLogger(ImportRefSeq.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 
     private static long createGenomeElementNode(String version,
             String comment,
