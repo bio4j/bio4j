@@ -37,6 +37,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -310,6 +311,8 @@ public class ImportUniprot implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex reactomeTermIdIndex = indexProvider.nodeIndex(ReactomeTermNode.REACTOME_TERM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
                 //----------------------------------------------------------------------
 
@@ -485,6 +488,9 @@ public class ImportUniprot implements Executable {
                         }
                         //---flushing protein accession index----
                         proteinAccessionIndex.flush();
+                        
+                        //---adding protein node to node_type index----
+                        nodeTypeIndex.add(currentProteinId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ProteinNode.NODE_TYPE));
 
                         //indexing protein by full name
                         if (!fullNameSt.isEmpty()) {
@@ -525,9 +531,12 @@ public class ImportUniprot implements Executable {
                                 reactomeTermNodeId = reactomeTermIdIndexHits.getSingle();
                             }
                             if (reactomeTermNodeId < 0) {
-                                reactomeTermProperties.put(ReactomeTermNode.ID_PROPERTY,reactomeId);
+                                reactomeTermProperties.put(ReactomeTermNode.ID_PROPERTY, reactomeId);
                                 reactomeTermProperties.put(ReactomeTermNode.PATHWAY_NAME_PROPERTY, reactomeReferences.get(reactomeId));
                                 reactomeTermNodeId = inserter.createNode(reactomeTermProperties);
+                                reactomeTermIdIndex.add(reactomeTermNodeId, MapUtil.map(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeId));
+                                //----flushing reactome index---
+                                reactomeTermIdIndex.flush();
                             }
                             inserter.createRelationship(currentProteinId, reactomeTermNodeId, proteinReactomeRel, null);
                         }
@@ -552,6 +561,11 @@ public class ImportUniprot implements Executable {
                             datasetProperties.put(DatasetNode.NAME_PROPERTY, proteinDataSetSt);
                             datasetId = inserter.createNode(datasetProperties);
                             inserter.createRelationship(inserter.getReferenceNode(), datasetId, mainDatasetRel, null);
+                            datasetNameIndex.add(datasetId, MapUtil.map(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt));
+                            //----flushing dataset name index---
+                            datasetNameIndex.flush();
+                            //---adding dataset node to node_type index----
+                            nodeTypeIndex.add(datasetId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, DatasetNode.NODE_TYPE));
                         }
                         inserter.createRelationship(currentProteinId, datasetId, proteinDatasetRel, null);
                         //---------------------------------------------------------------------------------------------
@@ -580,13 +594,14 @@ public class ImportUniprot implements Executable {
 
                                 keywordNodeId = inserter.createNode(keywordProperties);
 
-//                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_ID_INDEX, keywordId);
-//                                indexService.index(keywordNodeId, KeywordNode.KEYWORD_NAME_INDEX, keywordName);
                                 keywordIdIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_ID_INDEX, keywordId));
                                 keywordNameIndex.add(datasetId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
 
                                 //---flushing keyword id index----
                                 keywordIdIndex.flush();
+                                
+                                //---adding keyword node to node_type index----
+                                nodeTypeIndex.add(keywordNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, KeywordNode.NODE_TYPE));
                             }
                             inserter.createRelationship(currentProteinId, keywordNodeId, proteinKeywordRel, null);
                         }
@@ -620,11 +635,13 @@ public class ImportUniprot implements Executable {
                                     interproProperties.put(InterproNode.ID_PROPERTY, interproId);
                                     interproProperties.put(InterproNode.NAME_PROPERTY, interproEntryNameSt);
                                     interproNodeId = inserter.createNode(interproProperties);
-                                    //indexService.index(interproNodeId, InterproNode.INTERPRO_ID_INDEX, interproId);
+                                    
                                     interproIdIndex.add(interproNodeId, MapUtil.map(InterproNode.INTERPRO_ID_INDEX, interproId));
-
                                     //flushing interpro id index
                                     interproIdIndex.flush();
+                                    
+                                    //---adding interpro node to node_type index----
+                                    nodeTypeIndex.add(interproNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, InterproNode.NODE_TYPE));
                                 }
 
                                 inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
@@ -706,13 +723,14 @@ public class ImportUniprot implements Executable {
                             }
                             organismNodeId = inserter.createNode(organismProperties);
 
-//                            indexService.index(organismNodeId, OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-//                            indexService.index(organismNodeId, OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY));
                             organismScientificNameIndex.add(organismNodeId, MapUtil.map(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName));
                             organismNcbiTaxonomyIdIndex.add(organismNodeId, MapUtil.map(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY)));
 
                             //flushing organism scientifica name index
                             organismScientificNameIndex.flush();
+                            
+                            //---adding organism node to node_type index----
+                            nodeTypeIndex.add(organismNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OrganismNode.NODE_TYPE));
 
                             Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
                             List<Element> taxons = lineage.getChildren("taxon");
@@ -730,7 +748,7 @@ public class ImportUniprot implements Executable {
 
                                 String firstTaxonName = firstTaxonElem.getText();
                                 taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonName);
-                                firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
+                                firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex, nodeTypeIndex);
                                 //flushing taxon name index--
                                 taxonNameIndex.flush();
                                 inserter.createRelationship(inserter.getReferenceNode(), firstTaxonId, mainTaxonRel, null);
@@ -749,7 +767,7 @@ public class ImportUniprot implements Executable {
                                 if (currentTaxonId < 0) {
 
                                     taxonProperties.put(TaxonNode.NAME_PROPERTY, taxonName);
-                                    currentTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex);
+                                    currentTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex, nodeTypeIndex);
                                     //flushing taxon name index--
                                     taxonNameIndex.flush();
                                     inserter.createRelationship(lastTaxonId, currentTaxonId, taxonParentRel, null);
@@ -808,7 +826,8 @@ public class ImportUniprot implements Executable {
         //----------------------------------------------------------------------
         BatchInserterIndex featureTypeNameIndex = indexProvider.nodeIndex(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-
+        BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //------------------------------------------------------------------------
 
 
@@ -833,6 +852,9 @@ public class ImportUniprot implements Executable {
                 featureTypeNameIndex.add(featureTypeNodeId, MapUtil.map(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeSt));
                 //---flushing feature type name index----
                 featureTypeNameIndex.flush();
+                
+                //---adding feature type node to node_type index----
+                nodeTypeIndex.add(featureTypeNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, FeatureTypeNode.NODE_TYPE));
 
             }
 
@@ -993,6 +1015,8 @@ public class ImportUniprot implements Executable {
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //-----------------------------------------------------------
 
         List<Element> comments = entryXMLElem.asJDomElement().getChildren(CommonData.COMMENT_TAG_NAME);
@@ -1032,9 +1056,12 @@ public class ImportUniprot implements Executable {
                 commentTypeProperties.put(CommentTypeNode.NAME_PROPERTY, commentTypeSt);
                 commentTypeId = inserter.createNode(commentTypeProperties);
                 commentTypeNameIndex.add(commentTypeId, MapUtil.map(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt));
-                //indexService.index(commentTypeId, CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeSt);
+                
                 //----flushing the indexation----
                 commentTypeNameIndex.flush();
+                
+                //---adding comment type node to node_type index----
+                nodeTypeIndex.add(commentTypeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CommentTypeNode.NODE_TYPE));
             }
 
             //-----toxic dose----------------
@@ -1180,7 +1207,7 @@ public class ImportUniprot implements Executable {
 
                     if (firstLocationId < 0) {
                         subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-                        lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
+                        lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
                         //---flushing subcellular location name index---
                         subcellularLocationNameIndex.flush();
                     }
@@ -1193,7 +1220,7 @@ public class ImportUniprot implements Executable {
                             tempLocationId = tempLocationIndexHits.getSingle();
                         } else {
                             subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-                            tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex);
+                            tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
                             subcellularLocationNameIndex.flush();
                         }
 
@@ -1240,9 +1267,9 @@ public class ImportUniprot implements Executable {
                     String isoformNameSt = isoformElem.getChildText("name");
                     String isoformSeqSt = "";
                     Element isoSeqElem = isoformElem.getChild("sequence");
-                    if(isoSeqElem != null){
+                    if (isoSeqElem != null) {
                         String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-                        if(isoSeqTypeSt.equals("displayed")){
+                        if (isoSeqTypeSt.equals("displayed")) {
                             isoformSeqSt = proteinSequence;
                         }
                     }
@@ -1264,7 +1291,7 @@ public class ImportUniprot implements Executable {
                         isoformId = isoformIdIndexHits.getSingle();
                     }
                     if (isoformId < 0) {
-                        isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex);
+                        isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
                     }
 
                     for (Element eventElem : eventList) {
@@ -1508,71 +1535,105 @@ public class ImportUniprot implements Executable {
 
     private static long createIsoformNode(Map<String, Object> isoformProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex isoformIdIndex,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long isoformId = inserter.createNode(isoformProperties);
-        index.add(isoformId, MapUtil.map(IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY)));
-        //indexService.index(isoformId, IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY));
+        isoformIdIndex.add(isoformId, MapUtil.map(IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY)));
+        //---adding isoform node to node_type index----
+        nodeTypeIndex.add(isoformId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, IsoformNode.NODE_TYPE));
+        
         return isoformId;
     }
 
     private static long createTaxonNode(Map<String, Object> taxonProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex taxonNameIndex,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long taxonId = inserter.createNode(taxonProperties);
-        index.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.NAME_PROPERTY)));
+        taxonNameIndex.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.NAME_PROPERTY)));
+        //---adding taxon node to node_type index----
+        nodeTypeIndex.add(taxonId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, TaxonNode.NODE_TYPE));
+        
         return taxonId;
     }
 
     private static long createPersonNode(Map<String, Object> personProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long personId = inserter.createNode(personProperties);
         index.add(personId, MapUtil.map(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, personProperties.get(PersonNode.NAME_PROPERTY)));
-        //indexService.index(personId, PersonNode.PERSON_NAME_INDEX, personProperties.get(PersonNode.NAME_PROPERTY));
+        //---adding person node to node_type index----
+        nodeTypeIndex.add(personId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PersonNode.NODE_TYPE));
+        
         return personId;
     }
 
     private static long createConsortiumNode(Map<String, Object> consortiumProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long consortiumId = inserter.createNode(consortiumProperties);
         index.add(consortiumId, MapUtil.map(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY)));
-        //indexService.index(consortiumId, ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY));
+        //---adding consortium node to node_type index----
+        nodeTypeIndex.add(consortiumId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ConsortiumNode.NODE_TYPE));
+                
         return consortiumId;
     }
 
     private static long createInstituteNode(Map<String, Object> instituteProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
-        long instituteId = inserter.createNode(instituteProperties);
-        //indexService.index(instituteId, InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY));
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
+        long instituteId = inserter.createNode(instituteProperties);        
         index.add(instituteId, MapUtil.map(InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY)));
+        //---adding institute node to node_type index----
+        nodeTypeIndex.add(instituteId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, InstituteNode.NODE_TYPE));
+        
         return instituteId;
     }
 
     private static long createCountryNode(Map<String, Object> countryProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long countryId = inserter.createNode(countryProperties);
-        //indexService.index(countryId, CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY));
         index.add(countryId, MapUtil.map(CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY)));
+        //---adding country node to node_type index----
+        nodeTypeIndex.add(countryId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CountryNode.NODE_TYPE));
+        
         return countryId;
     }
 
     private static long createCityNode(Map<String, Object> cityProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long cityId = inserter.createNode(cityProperties);
-        //indexService.index(cityId, CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY));
         index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
+        //---adding city node to node_type index----
+        nodeTypeIndex.add(cityId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CityNode.NODE_TYPE));
+        
         return cityId;
     }
 
     private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
             BatchInserter inserter,
-            BatchInserterIndex index) {
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex) {
+        
         long subcellularLocationId = inserter.createNode(subcellularLocationProperties);
         index.add(subcellularLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, subcellularLocationProperties.get(SubcellularLocationNode.NAME_PROPERTY)));
+        //---adding subcellular location node to node_type index----
+        nodeTypeIndex.add(subcellularLocationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubcellularLocationNode.NODE_TYPE));
+        
         return subcellularLocationId;
     }
 
@@ -1615,6 +1676,8 @@ public class ImportUniprot implements Executable {
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         BatchInserterIndex journalNameIndex = indexProvider.nodeIndex(JournalNode.JOURNAL_NAME_INDEX,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
+                MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -1642,7 +1705,7 @@ public class ImportUniprot implements Executable {
                     }
                     if (personId < 0) {
                         personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-                        personId = createPersonNode(personProperties, inserter, personNameIndex);
+                        personId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
                         //flushing person name index
                         personNameIndex.flush();
                     }
@@ -1658,7 +1721,7 @@ public class ImportUniprot implements Executable {
                     }
                     if (consortiumId < 0) {
                         consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
-                        consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex);
+                        consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex, nodeTypeIndex);
                         //---flushing consortium name index--
                         consortiumNameIndex.flush();
                     }
@@ -1709,7 +1772,7 @@ public class ImportUniprot implements Executable {
                             }
                             if (instituteId < 0) {
                                 instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
-                                instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex);
+                                instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex, nodeTypeIndex);
                                 //flushing institute name index
                                 instituteNameIndex.flush();
                             }
@@ -1722,7 +1785,7 @@ public class ImportUniprot implements Executable {
                                 }
                                 if (countryId < 0) {
                                     countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
-                                    countryId = createCountryNode(countryProperties, inserter, countryNameIndex);
+                                    countryId = createCountryNode(countryProperties, inserter, countryNameIndex, nodeTypeIndex);
                                     //flushing country name index
                                     countryNameIndex.flush();
                                 }
@@ -1884,7 +1947,7 @@ public class ImportUniprot implements Executable {
                                 }
                                 if (editorId < 0) {
                                     personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-                                    editorId = createPersonNode(personProperties, inserter, personNameIndex);
+                                    editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
                                 }
                                 //---flushing person name index---
                                 personNameIndex.flush();
@@ -1923,7 +1986,7 @@ public class ImportUniprot implements Executable {
                             }
                             if (cityId < 0) {
                                 cityProperties.put(CityNode.NAME_PROPERTY, citySt);
-                                cityId = createCityNode(cityProperties, inserter, cityNameIndex);
+                                cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
                                 //-----flushing city name index---
                                 cityNameIndex.flush();
                             }

@@ -22,6 +22,7 @@ import com.era7.bioinfo.bio4jmodel.nodes.SequenceCautionNode;
 import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
 import com.era7.bioinfo.bio4jmodel.relationships.sc.*;
+import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.neo4j.graphdb.index.BatchInserterIndex;
 import org.neo4j.graphdb.index.BatchInserterIndexProvider;
+import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
 import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
@@ -40,6 +43,14 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class InitBio4jDB implements Executable {
+    
+    //--------indexing API constans-----
+    private static String PROVIDER_ST = "provider";
+    private static String EXACT_ST = "exact";
+    private static String FULL_TEXT_ST = "fulltext";
+    private static String LUCENE_ST = "lucene";
+    private static String TYPE_ST = "type";
+    //-----------------------------------
     
 
     private static final Logger logger = Logger.getLogger("InitBio4jDB");
@@ -103,8 +114,8 @@ public class InitBio4jDB implements Executable {
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
 
-                // create the batch index service
-                //indexService = new LuceneIndexBatchInserterImpl(inserter);
+                BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
+                                                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
 
                 //----------------------------------------------------------------------------------------------------------------
                 //A few relationships/nodes which
@@ -115,18 +126,22 @@ public class InitBio4jDB implements Executable {
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
+                nodeTypeIndex.add(alternativeProductInitiationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductPromoterId = inserter.createNode(alternativeProductProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductPromoterId, alternativeProductPromoterRel, null);
+                nodeTypeIndex.add(alternativeProductPromoterId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductSplicingId = inserter.createNode(alternativeProductProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductSplicingId, alternativeProductSplicingRel, null);
+                nodeTypeIndex.add(alternativeProductSplicingId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
+                nodeTypeIndex.add(alternativeProductRibosomalFrameshiftingId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
 
                 //---------------------SEQUENCE CAUTION------------------------
                 sequenceCautionProperties.put(SequenceCautionNode.NODE_TYPE_PROPERTY, SequenceCautionNode.NODE_TYPE);
@@ -134,26 +149,32 @@ public class InitBio4jDB implements Executable {
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
+                nodeTypeIndex.add(seqCautionErroneousInitiationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousTranslationId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTranslationId, erroneousTranslationRel, null);
+                nodeTypeIndex.add(seqCautionErroneousTranslationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionFrameshiftId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionFrameshiftId, frameshiftRel, null);
+                nodeTypeIndex.add(seqCautionFrameshiftId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousTerminationId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTerminationId, erroneousTerminationRel, null);
+                nodeTypeIndex.add(seqCautionErroneousTerminationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionMiscellaneousDiscrepancyId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionMiscellaneousDiscrepancyId, miscellaneousDiscrepancyRel, null);
+                nodeTypeIndex.add(seqCautionMiscellaneousDiscrepancyId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousGeneModelPredictionId = inserter.createNode(sequenceCautionProperties);
                 inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
+                nodeTypeIndex.add(seqCautionErroneousGeneModelPredictionId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
                 //---------------------------------------------------------------------------------------------------------------
 
             } catch (Exception e) {

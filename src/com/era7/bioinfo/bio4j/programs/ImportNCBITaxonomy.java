@@ -102,6 +102,9 @@ public class ImportNCBITaxonomy implements Executable {
 
                         //indexing the node..
                         manager.getNCBITaxonIdIndex().add(node.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, node.getTaxId());
+                        
+                        //indexing the node by its node_type
+                        manager.getNodeTypeIndex().add(node.getNode(), Bio4jManager.NODE_TYPE_INDEX_NAME, NCBITaxonNode.NODE_TYPE);
 
                         //saving the parent of the node for later
                         nodeParentMap.put(node.getTaxId(), columns[1].trim());
