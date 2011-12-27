@@ -63,7 +63,7 @@ public class ImportEnzymeReferences implements Executable {
             try {
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("ImporIsoformSeqsFile.log", true);
+                fh = new FileHandler("ImportEnzymeReferences.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
@@ -106,9 +106,13 @@ public class ImportEnzymeReferences implements Executable {
                                 
                                 ProteinNode proteinNode = nodeRetriever.getProteinNodeByAccession(accessionSt);
                                 EnzymeNode enzymeNode = nodeRetriever.getEnzymeById(refId);
-                                proteinNode.getNode().createRelationshipTo(enzymeNode.getNode(), proteinEnzymaticActivityRel);
+                                if(enzymeNode != null){
+                                    proteinNode.getNode().createRelationshipTo(enzymeNode.getNode(), proteinEnzymaticActivityRel);                                
+                                    relCounter++;
+                                }else{
+                                    System.out.println("Enzyme not found for id: " + refId);
+                                }
                                 
-                                relCounter++;
                                 if(relCounter % 1000 == 0){                                    
                                     txn.success();
                                     txn.finish();
