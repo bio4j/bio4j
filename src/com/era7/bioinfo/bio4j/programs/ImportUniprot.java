@@ -2045,9 +2045,9 @@ public class ImportUniprot implements Executable {
                             inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
                         }
 
-                        //------journal-----------
+                        //------online journal-----------
                         if (!nameSt.equals("")) {
-                            //long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            
                             long onlineJournalId = -1;
                             IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
                             if (onlineJournalNameIndexHits.hasNext()) {
