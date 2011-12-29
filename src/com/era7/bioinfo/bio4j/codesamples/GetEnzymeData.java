@@ -47,32 +47,35 @@ public class GetEnzymeData {
                 //--creating manager and node retriever----
                 manager = new Bio4jManager(args[0]);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
-                
+
                 //--------------------------------------------------------------
                 //-----retrieving enzyme node by its id---------
-                
+
                 EnzymeNode enzymeNode = nodeRetriever.getEnzymeById(inputSt);
-                
-                System.out.println("enzymeNode = " + enzymeNode);
-                System.out.println("Official name: " + enzymeNode.getOfficialName());
-                System.out.println("Catalytic activity: " + enzymeNode.getCatalyticActivity());
-                System.out.println("Alternate names:");
-                for (String altName : enzymeNode.getAlternateNames()) {
-                    System.out.println(altName);
+
+                if (enzymeNode != null) {
+                    System.out.println("enzymeNode = " + enzymeNode);
+                    System.out.println("Official name: " + enzymeNode.getOfficialName());
+                    System.out.println("Catalytic activity: " + enzymeNode.getCatalyticActivity());
+                    System.out.println("Alternate names:");
+                    for (String altName : enzymeNode.getAlternateNames()) {
+                        System.out.println(altName);
+                    }
+                    System.out.println("Comments:");
+                    System.out.println(enzymeNode.getComments());
+
+                    System.out.println("Prosite cross-references:");
+                    for (String prositeRef : enzymeNode.getPrositeCrossReferences()) {
+                        System.out.println(prositeRef);
+                    }
+                    System.out.println("Cofactors:");
+                    for (String cofactor : enzymeNode.getCofactors()) {
+                        System.out.println(cofactor);
+                    }
+                }else{
+                    System.out.println("Enzyme not found... :(");
                 }
-                System.out.println("Comments:");                
-                System.out.println(enzymeNode.getComments());
-                
-                System.out.println("Prosite cross-references:");
-                for (String prositeRef : enzymeNode.getPrositeCrossReferences()) {
-                    System.out.println(prositeRef);
-                }
-                System.out.println("Cofactors:");
-                for (String cofactor : enzymeNode.getCofactors()) {
-                    System.out.println(cofactor);
-                }
-                
-            
+
 
             } catch (Exception e) {
                 e.printStackTrace();

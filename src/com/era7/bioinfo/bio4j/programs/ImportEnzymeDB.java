@@ -116,6 +116,8 @@ public class ImportEnzymeDB implements Executable {
                 List<String> alternateNames = new LinkedList<String>();
                 List<String> cofactors = new LinkedList<String>();
                 List<String> prositeCrossRefs = new LinkedList<String>();
+                boolean deletedEntry = false;
+                boolean transferredEntry = false;
                 
                 System.out.println("Reading file....");
 
@@ -130,6 +132,12 @@ public class ImportEnzymeDB implements Executable {
                         if (line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
 
                             officialName += line.substring(5).trim();
+                            
+                            if(officialName.contains("Deleted entry.")){
+                                deletedEntry = true;
+                            }else if(officialName.contains("Transferred entry:")){
+                                transferredEntry = true;
+                            }
 
                         } else if (line.startsWith(ALTERNATE_NAME_LINE_CODE)) {
 
@@ -161,6 +169,15 @@ public class ImportEnzymeDB implements Executable {
 
                         } else if (line.startsWith(TERMINATION_LINE_CODE)) {
                             if (enzymeFound) {
+                                
+                                if(deletedEntry){
+                                    logger.log(Level.INFO, ("Entry with id " + enzymeId + " was deleted. It won't be stored..."));
+                                    deletedEntry = false;
+                                }else if(transferredEntry){
+                                    logger.log(Level.INFO, ("Entry with id " + enzymeId + " was transferred. It won't be stored..."));
+                                    transferredEntry = false;
+                                }
+                                
                                 enzymeProperties.put(EnzymeNode.ID_PROPERTY, enzymeId);
                                 enzymeProperties.put(EnzymeNode.OFFICIAL_NAME_PROPERTY, officialName);
                                 enzymeProperties.put(EnzymeNode.ALTERNATE_NAMES_PROPERTY, alternateNames.toArray(new String[0]));
@@ -178,8 +195,8 @@ public class ImportEnzymeDB implements Executable {
                                 counter++;
                                 if (counter % 100 == 0) {
                                     System.out.println(counter + " enzymes inserted...");
-                                }
-
+                                }   
+                                
                             }
                             enzymeFound = false;
                             officialName = "";
