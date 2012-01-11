@@ -20,7 +20,6 @@ import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSelfInteractionRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -79,9 +78,10 @@ public class ImportProteinInteractions implements Executable {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Uniprot xml filename \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Uniprot xml filename \n"
+                    + "2. Bio4j DB folder");
         } else {
             File inFile = new File(args[0]);
 
@@ -89,13 +89,9 @@ public class ImportProteinInteractions implements Executable {
             BatchInserterIndexProvider indexProvider = null;
             String accessionSt = "";
 
-            //writer for the file with the entries accessions that supposably have interactions
-            //with themselves
-            //BufferedWriter outbBuff = null;
 
             try {
 
-                //outbBuff = new BufferedWriter(new FileWriter(new File("conflictEntries.txt")));
 
                 // This block configure the logger with handler and formatter
                 fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
@@ -103,24 +99,10 @@ public class ImportProteinInteractions implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
-
-                //First of all we need the protein self-interactions node-id
-//                logger.log(Level.INFO, "creating manager...");
-//                Bio4jManager manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
-//                logger.log(Level.INFO, "getting protein self interactions node id....");
-                //Transaction txn = manager.beginTransaction();
-//                Iterable<Relationship> iterable = manager.getReferenceNode().getRelationships(new ProteinSelfInteractionsRel(null), Direction.OUTGOING);
-//                logger.log(Level.INFO, "getRelationships() done....");
-//                logger.log(Level.INFO, "getting node....");
-//                long proteinSelfInteractionsNodeId = iterable.iterator().next().getEndNode().getId();
-                //txn.success();
-                //txn.finish();
-//                logger.log(Level.INFO, "done!");
-
                 //---------------------------------
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
@@ -131,13 +113,11 @@ public class ImportProteinInteractions implements Executable {
                 //-------------------relationships properties maps--------------------------
                 Map<String, Object> proteinProteinInteractionProperties = new HashMap<String, Object>();
                 Map<String, Object> proteinIsoformInteractionProperties = new HashMap<String, Object>();
-                Map<String, Object> proteinSelfInteractionProperties = new HashMap<String, Object>();
                 //----------------------------------------------------------------------------
 
                 //--------------------------------relationships------------------------------------------
                 ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(null);
                 ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(null);
-                ProteinSelfInteractionRel proteinSelfInteractionRel = new ProteinSelfInteractionRel(null);
                 //------------------------------------------------------------------------------------------------
 
                 //------------------indexes creation----------------------------------
@@ -145,13 +125,7 @@ public class ImportProteinInteractions implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex isoformIdIndex = indexProvider.nodeIndex(IsoformNode.ISOFORM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                BatchInserterIndex proteinSelfRelationshipsNodeIndex = indexProvider.nodeIndex(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME,
-                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //--------------------------------------------------------------------
-
-
-                long proteinSelfInteractionsNodeId = proteinSelfRelationshipsNodeIndex.get(CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_NAME, CommonData.PROTEIN_SELF_RELATIONSHIPS_NODE_INDEX_VALUE).getSingle();
-                System.out.println("proteinSelfInteractionsNodeId = " + proteinSelfInteractionsNodeId);
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -210,30 +184,18 @@ public class ImportProteinInteractions implements Executable {
                                     experimentsSt = experiments.getText();
                                 }
 
-                                boolean interactionWithItself = false;
-
                                 //----now we try to retrieve the interactant 2 accession--
                                 String interactant2AccessionSt = interactant2.getChildText("id");
                                 long protein2Id = -1;
                                 if (interactant2AccessionSt != null) {
+
                                     IndexHits<Long> protein2IdIndexHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, interactant2AccessionSt);
                                     if (protein2IdIndexHits.hasNext()) {
                                         if (protein2IdIndexHits.size() == 1) {
                                             protein2Id = protein2IdIndexHits.getSingle();
                                         }
                                     }
-                                } else {
 
-
-                                    if (intactId1St.equals(intactId2St)) {
-                                        interactionWithItself = true;
-                                        //outbBuff.write(accessionSt + "\n");
-                                    }
-//                                    System.out.println("protein2Id = " + protein2Id);
-//                                    System.out.println("currentProteinId = " + currentProteinId);
-                                }
-
-                                if (!interactionWithItself) {
                                     if (protein2Id < 0) {
                                         //Since we did not find the protein we try to find a isoform instead
                                         long isoformId = -1;
@@ -263,18 +225,8 @@ public class ImportProteinInteractions implements Executable {
                                         inserter.createRelationship(currentProteinId, protein2Id, proteinProteinInteractionRel, proteinProteinInteractionProperties);
 
                                     }
-                                } else {
-                                    //this is the case where one protein interacts with itself
 
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.EXPERIMENTS_PROPERTY, experimentsSt);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.ORGANISMS_DIFFER_PROPERTY, organismsDifferSt);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_1_PROPERTY, intactId1St);
-                                    proteinSelfInteractionProperties.put(ProteinSelfInteractionRel.INTACT_ID_2_PROPERTY, intactId2St);
-
-                                    inserter.createRelationship(currentProteinId, proteinSelfInteractionsNodeId, proteinSelfInteractionRel, proteinSelfInteractionProperties);
                                 }
-
-
 
                             }
 

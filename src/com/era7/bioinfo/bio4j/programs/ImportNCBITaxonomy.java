@@ -4,9 +4,12 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
+import com.era7.bioinfo.bio4jmodel.nodes.OrganismNode;
+import com.era7.bioinfo.bio4jmodel.nodes.TaxonNode;
 import com.era7.bioinfo.bio4jmodel.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBIMainTaxonRel;
 import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBITaxonParentRel;
+import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
@@ -15,11 +18,13 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
 /**
@@ -97,6 +102,9 @@ public class ImportNCBITaxonomy implements Executable {
 
                         //indexing the node..
                         manager.getNCBITaxonIdIndex().add(node.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, node.getTaxId());
+                        
+                        //indexing the node by its node_type
+                        manager.getNodeTypeIndex().add(node.getNode(), Bio4jManager.NODE_TYPE_INDEX_NAME, NCBITaxonNode.NODE_TYPE);
 
                         //saving the parent of the node for later
                         nodeParentMap.put(node.getTaxId(), columns[1].trim());
@@ -184,9 +192,17 @@ public class ImportNCBITaxonomy implements Executable {
                         txn = manager.beginTransaction();
                     }
 
-                }                
-                
+                } 
 
+                txn.success();
+                txn.finish();
+                txn = manager.beginTransaction();
+                logger.log(Level.INFO, "Done!");
+                
+                logger.log(Level.INFO,"Associating uniprot taxonomy...");  
+                
+                associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));               
+                
                 logger.log(Level.INFO, "Done!");
 
                 txn.success();
@@ -209,5 +225,24 @@ public class ImportNCBITaxonomy implements Executable {
             }
 
         }
+    }
+    
+    private static void associateTaxonomy(TaxonNode taxonNode,
+                                        NodeRetriever nodeRetriever,
+                                        NCBITaxonRel nCBITaxonRel){
+        
+        List<OrganismNode> organisms = taxonNode.getOrganisms();
+        
+        if(!organisms.isEmpty()){
+            for (OrganismNode tempOrg : organisms) {
+                Node ncbiNode = nodeRetriever.getNCBITaxonByTaxId(tempOrg.getNcbiTaxonomyId()).getNode();
+                taxonNode.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
+            }
+        }else{
+            for (TaxonNode tempTaxon : taxonNode.getChildren()) {
+                associateTaxonomy(tempTaxon, nodeRetriever, nCBITaxonRel);
+            }
+        }
+        
     }
 }

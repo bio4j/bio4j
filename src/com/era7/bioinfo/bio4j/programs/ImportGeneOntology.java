@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.programs;
 import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
 import com.era7.bioinfo.bio4jmodel.relationships.go.*;
 import com.era7.bioinfo.bio4j.CommonData;
+import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
@@ -74,17 +75,21 @@ public class ImportGeneOntology implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Gene ontology xml filename \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Gene ontology xml filename \n"
+                    + "2. Bio4j DB folder");
+            
         } else {
             File inFile = new File(args[0]);
 
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
+            
             BatchInserterIndex goTermIdIndex = null;
             BatchInserterIndex isAGoRelIndex = null;
+            BatchInserterIndex nodeTypeIndex = null;
 
 
             try {
@@ -97,7 +102,7 @@ public class ImportGeneOntology implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(CommonData.DATABASE_FOLDER, BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
                 
 
                 // create the batch index service
@@ -106,6 +111,7 @@ public class ImportGeneOntology implements Executable {
                 
                 goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, indexProps);
                 isAGoRelIndex = indexProvider.relationshipIndex(IsAGoRel.IS_A_REL_INDEX, indexProps);
+                nodeTypeIndex = indexProvider.nodeIndex( Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -275,6 +281,8 @@ public class ImportGeneOntology implements Executable {
                         for (int i = 0; i < alternativeIds.length; i++) {
                             goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,alternativeIds[i]));
                         }
+                        //--------indexing node by node_type index----------
+                        nodeTypeIndex.add(currentGoTermId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,GoTermNode.NODE_TYPE));
 
                         //----IS ROOT ? ----
                         Element isRootElem = termXMLElement.asJDomElement().getChild(IS_ROOT_TAG_NAME);

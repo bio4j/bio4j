@@ -17,7 +17,6 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.BufferedReader;
@@ -53,9 +52,10 @@ public class ImportIsoformSequences implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter: \n"
-                    + "1. Fasta file including all isoforms \n");
+        if (args.length != 2) {
+            System.out.println("This program expects two parameters: \n"
+                    + "1. Fasta file including all isoforms \n"
+                    + "2. Bio4j DB folder");
         } else {
             File inFile = new File(args[0]);
 
@@ -73,7 +73,7 @@ public class ImportIsoformSequences implements Executable {
                 logger.setLevel(Level.ALL);
 
                 logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
+                manager = new Bio4jManager(args[1]);
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
@@ -112,6 +112,7 @@ public class ImportIsoformSequences implements Executable {
                             IsoformNode node = new IsoformNode(isoformHits.getSingle());
                             node.setSequence(sequence);
                             node.setName(isoformNameSt);
+                            System.out.println("Setting name for: " + node.getId());
                         }
 
                     }
