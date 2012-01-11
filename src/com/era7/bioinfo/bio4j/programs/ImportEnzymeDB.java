@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2012  "Bio4j"
  *
  * This file is part of Bio4j
  *

@@ -180,6 +180,22 @@
         </jar>
     </target>-->
 <!--    <target name="-post-jar">
+        <jar jarfile="jars/GetEnzymeData.jar">
+            <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+            <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
+                        excludes="META-INF/*" />
+            <zipfileset src="lib/BioinfoUtil-1.0-jar-with-dependencies.jar"
+                        excludes="META-INF/*" />
+            <zipfileset src="lib/BioinfoNeo4j-1.0-jar-with-dependencies.jar"
+                        excludes="META-INF/*" />
+            <zipfileset src="lib/Bio4jModel-1.0.jar"
+                        excludes="META-INF/*" />
+            <manifest>
+                <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.codesamples.GetEnzymeData"/>
+            </manifest>
+        </jar>
+    </target>-->
+<!--    <target name="-post-jar">
         <jar jarfile="jars/ImportProteinInteractions.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
             <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"

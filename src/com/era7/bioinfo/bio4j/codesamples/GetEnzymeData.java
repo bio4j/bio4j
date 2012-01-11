@@ -80,10 +80,8 @@ public class GetEnzymeData {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-
                 //---closing the manager----
                 manager.shutDown();
-
             }
 
         }

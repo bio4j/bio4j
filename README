@@ -1,15 +1,15 @@
 This is the README file of Bio4j project.
 
-Bio4j is a bioinformatics graph based DB including most data available in UniProt (SwissProt + Trembl) 
-plus Gene Ontology (GO) and UniRef (50,90,100). UPDATE: Bio4j also includes whole RefSeq information now.
+Bio4j is a bioinformatics graph based DB including most data available in UniProt (SwissProt + Trembl),
+Gene Ontology (GO), UniRef (50,90,100), RefSeq, NCBI Taxonomy, and Expasy Enzyme DB.
 
 For more information about this project please go to:
 
 Main website:
 http://www.bio4j.com
 
-Wiki site:
-http://wiki.bio4j.com/
+Wiki site (github project wiki):
+https://github.com/bio4j/Bio4j/wiki
 
 Blog:
 http://blog.bio4j.com/
