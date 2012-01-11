@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- *
+ * Uploads the sequences of the genome elements found in RefSeq complete release
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class UploadRefSeqSequencesToS3 implements Executable {

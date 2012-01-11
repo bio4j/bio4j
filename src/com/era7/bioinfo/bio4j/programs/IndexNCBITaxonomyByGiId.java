@@ -25,7 +25,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
- *
+ * Indexes NCBI taxonomy elements by GI (gene identifiers) as specified in the official mapping file
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class IndexNCBITaxonomyByGiId implements Executable {

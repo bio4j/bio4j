@@ -28,7 +28,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
 
 /**
- *
+ * Imports NCBI taxonomy into Bio4j
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportNCBITaxonomy implements Executable {

@@ -20,6 +20,8 @@ import com.era7.lib.bioinfo.bioinfoutil.ExecuteFromFile;
 
 /**
  *
+ * This program imports the whole Bio4j DB (as specified in the executions.xml file)
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class CreateWholeBio4j {
