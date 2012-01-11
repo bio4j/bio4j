@@ -1,20 +1,25 @@
 <scheduled_executions>	
-	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.InitBio4jDB</class_full_name>
 		<arguments>
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>
-	
+	<execution>
+		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportEnzymeDB</class_full_name>
+		<arguments>
+			<argument>enzyme.dat</argument>
+			<argument>bio4jdb</argument>
+		</arguments>
+	</execution>
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportRefSeq</class_full_name>
 		<arguments>
 			<argument>refseq_data</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
-	</execution>
-		
+	</execution>	
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportGeneOntology</class_full_name>
 		<arguments>
@@ -29,6 +34,7 @@
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
@@ -36,8 +42,6 @@
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
-	
-	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
@@ -52,15 +56,15 @@
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>	
-	-->			
+	<!-- -->	
+	<!-- -->
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportIsoformSequences</class_full_name>
 		<arguments>
 			<argument>isoform_sequences.fasta</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
-	</execution>	
-	<!--
+	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniref</class_full_name>
 		<arguments>
@@ -69,9 +73,8 @@
 			<argument>uniref50.xml</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
-	</execution>	
--->	
-<!--
+	</execution>		
+<!-- -->
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportNCBITaxonomy</class_full_name>
 		<arguments>
@@ -87,7 +90,5 @@
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
 		</arguments>
-	</execution>	
-		
-	-->
+	</execution>		
 </scheduled_executions>

@@ -41,8 +41,11 @@ import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -156,6 +159,7 @@ public class ImportUniprot implements Executable {
     public static ProteinMiscellaneousDiscrepancyRel proteinMiscellaneousDiscrepancyRel = new ProteinMiscellaneousDiscrepancyRel(null);
     public static ProteinGenomeElementRel proteinGenomeElementRel = new ProteinGenomeElementRel(null);
     public static ProteinReactomeRel proteinReactomeRel = new ProteinReactomeRel(null);
+    public static ProteinEnzymaticActivityRel proteinEnzymaticActivityRel = new ProteinEnzymaticActivityRel(null);
     //----comment relationships-----
     public static AllergenCommentRel allergenCommentRel = new AllergenCommentRel(null);
     public static BioPhysicoChemicalPropertiesCommentRel bioPhysicoChemicalPropertiesCommentRel = new BioPhysicoChemicalPropertiesCommentRel(null);
@@ -266,6 +270,8 @@ public class ImportUniprot implements Executable {
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
+            
+            BufferedWriter enzymeIdsNotFoundBuff = null;
 
             try {
 
@@ -276,6 +282,8 @@ public class ImportUniprot implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+                
+                enzymeIdsNotFoundBuff = new BufferedWriter(new FileWriter(new File("EnzymeIdsNotFound.log")));
 
                 // create the batch inserter
                 inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
@@ -310,6 +318,8 @@ public class ImportUniprot implements Executable {
                 BatchInserterIndex genomeElementVersionIndex = indexProvider.nodeIndex(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex reactomeTermIdIndex = indexProvider.nodeIndex(ReactomeTermNode.REACTOME_TERM_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex enzymeIdIndex = indexProvider.nodeIndex(EnzymeNode.ENZYME_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
@@ -403,6 +413,7 @@ public class ImportUniprot implements Executable {
                         List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
                         ArrayList<String> emblCrossReferences = new ArrayList<String>();
                         ArrayList<String> refseqReferences = new ArrayList<String>();
+                        ArrayList<String> enzymeDBReferences = new ArrayList<String>();
                         HashMap<String, String> reactomeReferences = new HashMap<String, String>();
 
                         for (Element dbReferenceElem : dbReferenceList) {
@@ -417,6 +428,8 @@ public class ImportUniprot implements Executable {
                                 keggIdSt = refId;
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EMBL")) {
                                 emblCrossReferences.add(refId);
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EC")) {
+                                enzymeDBReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
                                 arrayExpressIdSt = refId;
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")) {
@@ -542,6 +555,20 @@ public class ImportUniprot implements Executable {
                         }
                         //-------------------------------------------------------
 
+                        //---------------enzyme db associations----------------------
+                        for (String enzymeDBRef : enzymeDBReferences) {
+                            long enzymeNodeId = -1;
+                            IndexHits<Long> enzymeIdIndexHits = enzymeIdIndex.get(EnzymeNode.ENZYME_ID_INDEX, enzymeDBRef);                            
+                            if(enzymeIdIndexHits.hasNext()){
+                                enzymeNodeId = enzymeIdIndexHits.next();
+                                inserter.createRelationship(currentProteinId, enzymeNodeId, proteinEnzymaticActivityRel, null);
+                            }else{
+                                enzymeIdsNotFoundBuff.write("Enzyme term: " + enzymeDBRef + " not found.\t" + currentAccessionId);
+                            }                            
+                        }
+                        
+                        //------------------------------------------------------------
+                        
 
                         //-----comments import---
                         importProteinComments(entryXMLElem, inserter, indexProvider, currentProteinId, sequenceSt);
@@ -804,6 +831,12 @@ public class ImportUniprot implements Executable {
                     logger.log(Level.SEVERE, stackTraceElement.toString());
                 }
             } finally {
+
+                try {
+                    enzymeIdsNotFoundBuff.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 // shutdown, makes sure all changes are written to disk
                 indexProvider.shutdown();
@@ -2045,9 +2078,9 @@ public class ImportUniprot implements Executable {
                             inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
                         }
 
-                        //------journal-----------
+                        //------online journal-----------
                         if (!nameSt.equals("")) {
-                            //long onlineJournalId = indexService.getSingleNode(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+                            
                             long onlineJournalId = -1;
                             IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
                             if (onlineJournalNameIndexHits.hasNext()) {
