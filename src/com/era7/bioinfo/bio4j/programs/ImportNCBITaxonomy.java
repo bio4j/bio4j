@@ -72,7 +72,7 @@ public class ImportNCBITaxonomy implements Executable {
                 File namesDumpFile = new File(args[1]);
 
                 logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(args[2]);
+                manager = new Bio4jManager(args[2], true, false);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
 
