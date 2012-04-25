@@ -27,7 +27,7 @@ import org.neo4j.graphdb.Relationship;
 
 /**
  *
- * Retries proteins with the interpro motif provided
+ * Retrieves proteins with the interpro motif provided
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */

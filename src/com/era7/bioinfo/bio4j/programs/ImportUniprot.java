@@ -414,6 +414,7 @@ public class ImportUniprot implements Executable {
                         ArrayList<String> emblCrossReferences = new ArrayList<String>();
                         ArrayList<String> refseqReferences = new ArrayList<String>();
                         ArrayList<String> enzymeDBReferences = new ArrayList<String>();
+                        ArrayList<String> ensemblPlantsReferences = new ArrayList<String>();
                         HashMap<String, String> reactomeReferences = new HashMap<String, String>();
 
                         for (Element dbReferenceElem : dbReferenceList) {
@@ -447,6 +448,8 @@ public class ImportUniprot implements Executable {
                                     pathwayName = propertyElem.getAttributeValue("value");
                                 }
                                 reactomeReferences.put(refId, pathwayName);
+                            } else if(dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EnsemblPlants")){
+                                ensemblPlantsReferences.add(refId);
                             }
 
                         }
@@ -470,6 +473,7 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.PIR_ID_PROPERTY, pirIdSt);
                         proteinProperties.put(ProteinNode.KEGG_ID_PROPERTY, keggIdSt);
                         proteinProperties.put(ProteinNode.EMBL_REFERENCES_PROPERTY, convertToStringArray(emblCrossReferences));
+                        proteinProperties.put(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, convertToStringArray(ensemblPlantsReferences));
                         //proteinProperties.put(ProteinNode.REFSEQ_REFERENCES_PROPERTY, convertToStringArray(refseqReferences));
                         proteinProperties.put(ProteinNode.ENSEMBL_ID_PROPERTY, ensemblIdSt);
                         proteinProperties.put(ProteinNode.UNIGENE_ID_PROPERTY, uniGeneIdSt);
@@ -486,18 +490,13 @@ public class ImportUniprot implements Executable {
                         proteinProperties.put(ProteinNode.GENE_NAMES_PROPERTY, convertToStringArray(geneNames));
                         //-----------------------------------------
 
-//                        for (String tempKey : proteinProperties.keySet()) {
-//                            System.out.println("tempKey = " + tempKey + " value: " + proteinProperties.get(tempKey));
-//                        }
-
 
                         long currentProteinId = inserter.createNode(proteinProperties);
                         proteinAccessionIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt));
-                        //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, accessionSt);
+                        
                         //indexing protein by alternative accessions
                         for (String altAccessionSt : alternativeAccessions) {
                             proteinAccessionIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt));
-                            //indexService.index(currentProteinId, ProteinNode.PROTEIN_ACCESSION_INDEX, altAccessionSt);
                         }
                         //---flushing protein accession index----
                         proteinAccessionIndex.flush();
