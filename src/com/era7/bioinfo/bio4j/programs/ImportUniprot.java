@@ -81,6 +81,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> keywordProperties = new HashMap<String, Object>();
     public static Map<String, Object> subcellularLocationProperties = new HashMap<String, Object>();
     public static Map<String, Object> interproProperties = new HashMap<String, Object>();
+    public static Map<String, Object> pfamProperties = new HashMap<String, Object>();
     public static Map<String, Object> taxonProperties = new HashMap<String, Object>();
     public static Map<String, Object> datasetProperties = new HashMap<String, Object>();
     public static Map<String, Object> personProperties = new HashMap<String, Object>();
@@ -126,6 +127,7 @@ public class ImportUniprot implements Executable {
     public static MainDatasetRel mainDatasetRel = new MainDatasetRel(null);
     public static ProteinDatasetRel proteinDatasetRel = new ProteinDatasetRel(null);
     public static ProteinInterproRel proteinInterproRel = new ProteinInterproRel(null);
+    public static ProteinPfamRel proteinPfamRel = new ProteinPfamRel(null);
     public static ProteinSubcellularLocationRel proteinSubcellularLocationRel = new ProteinSubcellularLocationRel(null);
     public static SubcellularLocationParentRel subcellularLocationParentRel = new SubcellularLocationParentRel(null);
     public static ThesisAuthorRel thesisAuthorRel = new ThesisAuthorRel(null);
@@ -307,6 +309,8 @@ public class ImportUniprot implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex interproIdIndex = indexProvider.nodeIndex(InterproNode.INTERPRO_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex pfamIdIndex = indexProvider.nodeIndex(PfamNode.PFAM_ID_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex goTermIdIndex = indexProvider.nodeIndex(GoTermNode.GO_TERM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex organismScientificNameIndex = indexProvider.nodeIndex(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX,
@@ -343,6 +347,7 @@ public class ImportUniprot implements Executable {
                 keywordProperties.put(KeywordNode.NODE_TYPE_PROPERTY, KeywordNode.NODE_TYPE);
                 subcellularLocationProperties.put(SubcellularLocationNode.NODE_TYPE_PROPERTY, SubcellularLocationNode.NODE_TYPE);
                 interproProperties.put(InterproNode.NODE_TYPE_PROPERTY, InterproNode.NODE_TYPE);
+                pfamProperties.put(PfamNode.NODE_TYPE_PROPERTY, PfamNode.NODE_TYPE);
                 taxonProperties.put(TaxonNode.NODE_TYPE_PROPERTY, TaxonNode.NODE_TYPE);
                 datasetProperties.put(DatasetNode.NODE_TYPE_PROPERTY, DatasetNode.NODE_TYPE);
                 personProperties.put(PersonNode.NODE_TYPE_PROPERTY, PersonNode.NODE_TYPE);
@@ -637,7 +642,7 @@ public class ImportUniprot implements Executable {
 
                         for (Element dbReferenceElem : dbReferenceList) {
 
-                            //-------------------------------interpro------------------------------------------------------  
+                            //-------------------------------INTERPRO------------------------------------------------------  
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(CommonData.INTERPRO_DB_REFERENCE_TYPE)) {
 
                                 String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
@@ -671,7 +676,43 @@ public class ImportUniprot implements Executable {
                                 }
 
                                 inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
-                            } //-------------------GO -----------------------------
+                            } 
+                            //-------------------------------PFAM------------------------------------------------------  
+                            else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Pfam")) {
+
+                                String pfamId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
+                                long pfamNodeId = -1;
+                                IndexHits<Long> pfamIdIndexHits = pfamIdIndex.get(PfamNode.PFAM_ID_INDEX, pfamId);
+                                if (pfamIdIndexHits.hasNext()) {
+                                    pfamNodeId = pfamIdIndexHits.getSingle();
+                                }
+
+                                if (pfamNodeId < 0) {
+                                    String pfamEntryNameSt = "";
+                                    List<Element> properties = dbReferenceElem.getChildren(CommonData.DB_REFERENCE_PROPERTY_TAG_NAME);
+                                    for (Element prop : properties) {
+                                        if (prop.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
+                                            pfamEntryNameSt = prop.getAttributeValue(CommonData.DB_REFERENCE_VALUE_ATTRIBUTE);
+                                            break;
+                                        }
+                                    }
+
+                                    pfamProperties.put(PfamNode.ID_PROPERTY, pfamId);
+                                    pfamProperties.put(PfamNode.NAME_PROPERTY, pfamEntryNameSt);
+                                    pfamNodeId = inserter.createNode(pfamProperties);
+                                    
+                                    pfamIdIndex.add(pfamNodeId, MapUtil.map(PfamNode.PFAM_ID_INDEX, pfamId));
+                                    //flushing pfam id index
+                                    pfamIdIndex.flush();
+                                    
+                                    //---adding pfam node to node_type index----
+                                    nodeTypeIndex.add(pfamNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PfamNode.NODE_TYPE));
+                                }
+
+                                inserter.createRelationship(currentProteinId, pfamNodeId, proteinPfamRel, null);
+                            } 
+                            
+                            //-------------------GO -----------------------------
                             else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(CommonData.GO_DB_REFERENCE_TYPE)) {
 
                                 String goId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
