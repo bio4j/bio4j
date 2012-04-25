@@ -44,7 +44,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
- * Imports every uniref(100,90,50) cluster info into Bio4j
+ * Imports uniref(100,90,50) clusters info into Bio4j
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportUniref implements Executable {

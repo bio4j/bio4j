@@ -39,7 +39,7 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
- *
+ * Inits Bio4j DB and stores basic/general nodes and relationships
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class InitBio4jDB implements Executable {

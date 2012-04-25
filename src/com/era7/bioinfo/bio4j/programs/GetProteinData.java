@@ -28,18 +28,11 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinGoRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinInterproRel;
 import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinKeywordRel;
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bio4jmodel.nodes.citation.ArticleNode;
 import com.era7.bioinfo.bio4jmodel.nodes.citation.SubmissionNode;
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4jmodel.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinSubcellularLocationRel;
-import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef90MemberRel;
-import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -49,11 +42,10 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.IndexHits;
-import org.neo4j.graphdb.index.RelationshipIndex;
 import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
- * 
+ * Test program
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class GetProteinData {

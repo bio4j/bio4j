@@ -39,7 +39,8 @@ import org.neo4j.kernel.impl.batchinsert.BatchInserter;
 import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
 
 /**
- *
+ * Imports Expasy Enzyme DB into Bio4j (everything but Uniprot associations which are imported
+ * from Uniprot xml files.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportEnzymeDB implements Executable {
