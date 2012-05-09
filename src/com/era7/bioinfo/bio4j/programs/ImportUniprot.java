@@ -301,6 +301,8 @@ public class ImportUniprot implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
                 BatchInserterIndex proteinGeneNamesFullTextIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
+                BatchInserterIndex proteinEnsemblPlantsIndex = indexProvider.nodeIndex(ProteinNode.PROTEIN_ENSEMBL_PLANTS_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex datasetNameIndex = indexProvider.nodeIndex(DatasetNode.DATASET_NAME_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex keywordIdIndex = indexProvider.nodeIndex(KeywordNode.KEYWORD_ID_INDEX,
@@ -517,15 +519,18 @@ public class ImportUniprot implements Executable {
                         }
 
 
-
-
                         //indexing protein by gene names
                         String geneNamesStToBeIndexed = "";
                         for (String geneNameSt : geneNames) {
                             geneNamesStToBeIndexed += geneNameSt + " ";
                         }
-                        //fullTextIndexService.index(currentProteinId, ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed);
+                        
                         proteinGeneNamesFullTextIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, geneNamesStToBeIndexed));
+                        
+                        //indexing protein by Ensembl plants references
+                        for (String ensemblPlantRef : ensemblPlantsReferences) {
+                            proteinEnsemblPlantsIndex.add(currentProteinId, MapUtil.map(ProteinNode.PROTEIN_ENSEMBL_PLANTS_INDEX, ensemblPlantRef));
+                        }
 
 
                         //--------------refseq associations----------------
