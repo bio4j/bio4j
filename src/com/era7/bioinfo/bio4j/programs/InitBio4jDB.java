@@ -24,6 +24,7 @@ import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
 import com.era7.bioinfo.bio4jmodel.relationships.sc.*;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +32,13 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.neo4j.graphdb.index.BatchInserterIndex;
-import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
-import org.neo4j.kernel.impl.batchinsert.BatchInserter;
-import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.BatchInserters;
+import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 
 /**
  * Inits Bio4j DB and stores basic/general nodes and relationships
@@ -77,9 +79,10 @@ public class InitBio4jDB implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 1) {
-            System.out.println("This program expects one parameter:\n"
-                    + "1. Bio4j DB folder");
+        if (args.length != 2) {
+            System.out.println("This program expects the following parameters:\n"
+                    + "1. Bio4j DB folder \n"
+                    + "2. Batch inserter .properties file name");
         } else {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
@@ -109,7 +112,7 @@ public class InitBio4jDB implements Executable {
 
                 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(args[0], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = BatchInserters.inserter(args[0], MapUtil.load(new File(args[1])));
                 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);

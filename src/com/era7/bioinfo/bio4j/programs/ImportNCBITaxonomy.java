@@ -71,13 +71,12 @@ public class ImportNCBITaxonomy implements Executable {
                 File nodesDumpFile = new File(args[0]);
                 File namesDumpFile = new File(args[1]);
 
-                logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(args[2], true, false);
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
-
-
                 BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
                 String line = null;
+                
+                logger.log(Level.INFO, "creating manager...");
+                manager = new Bio4jManager(args[2], true, false);
+                NodeRetriever nodeRetriever = new NodeRetriever(manager);               
 
 
                 HashMap<String, String> nodeParentMap = new HashMap<String, String>();
@@ -236,7 +235,7 @@ public class ImportNCBITaxonomy implements Executable {
         if(!organisms.isEmpty()){
             for (OrganismNode tempOrg : organisms) {
                 Node ncbiNode = nodeRetriever.getNCBITaxonByTaxId(tempOrg.getNcbiTaxonomyId()).getNode();
-                taxonNode.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
+                tempOrg.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
             }
         }else{
             for (TaxonNode tempTaxon : taxonNode.getChildren()) {

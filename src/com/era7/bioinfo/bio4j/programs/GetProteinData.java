@@ -68,11 +68,11 @@ public class GetProteinData {
         System.out.println("creating manager...");
         manager = new Bio4jManager(CommonData.DATABASE_FOLDER);
 
-        long number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Node.class);
-        System.out.println("nodes number = " + number);
+        //long number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Node.class);
+        //System.out.println("nodes number = " + number);
 
-        number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Relationship.class);
-        System.out.println("relationships number = " + number);
+        //number = ((EmbeddedGraphDatabase) manager.getGraphService()).getConfig().getGraphDbModule().getNodeManager().getNumberOfIdsInUse(Relationship.class);
+        //.out.println("relationships number = " + number);
 
         //Transaction txn = manager.beginTransaction();
 

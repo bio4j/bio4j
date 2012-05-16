@@ -35,13 +35,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.graphdb.index.BatchInserterIndex;
-import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
-import org.neo4j.kernel.impl.batchinsert.BatchInserter;
-import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.BatchInserters;
+import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 
 /**
  * Imports uniref(100,90,50) clusters info into Bio4j
@@ -70,12 +71,13 @@ public class ImportUniref implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 4) {
-            System.out.println("This program expects four parameters: \n"
+        if (args.length != 5) {
+            System.out.println("This program expects the following parameters: \n"
                     + "1. Uniref 100 xml filename \n"
                     + "2. Uniref 90 xml filename \n"
                     + "3. Uniref 50 xml filename \n"
-                    + "4. Bio4j DB folder");
+                    + "4. Bio4j DB folder \n"
+                    + "5. batch inserter .properties file");
         } else {
 
             File uniref100File = new File(args[0]);
@@ -101,7 +103,7 @@ public class ImportUniref implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(args[3], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = BatchInserters.inserter(args[3], MapUtil.load(new File(args[4])));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);

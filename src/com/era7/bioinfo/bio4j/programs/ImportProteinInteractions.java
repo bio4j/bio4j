@@ -35,13 +35,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
-import org.neo4j.graphdb.index.BatchInserterIndex;
-import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
-import org.neo4j.kernel.impl.batchinsert.BatchInserter;
-import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.BatchInserters;
+import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 
 /**
  * Imports protein interactions:
@@ -78,10 +79,11 @@ public class ImportProteinInteractions implements Executable {
 
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 2) {
-            System.out.println("This program expects two parameters: \n"
+        if (args.length != 3) {
+            System.out.println("This program expects the following parameters: \n"
                     + "1. Uniprot xml filename \n"
-                    + "2. Bio4j DB folder");
+                    + "2. Bio4j DB folder\n"
+                    + "3. Batch inserter .properties file");
         } else {
             File inFile = new File(args[0]);
 
@@ -102,7 +104,7 @@ public class ImportProteinInteractions implements Executable {
                 //---------------------------------
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);

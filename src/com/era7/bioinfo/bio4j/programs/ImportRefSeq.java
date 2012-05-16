@@ -23,12 +23,13 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.neo4j.graphdb.index.BatchInserterIndex;
-import org.neo4j.graphdb.index.BatchInserterIndexProvider;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.index.impl.lucene.LuceneBatchInserterIndexProvider;
-import org.neo4j.kernel.impl.batchinsert.BatchInserter;
-import org.neo4j.kernel.impl.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserter;
+import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
+import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.BatchInserters;
+import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 
 /**
  * Imports RefSeq complete release into Bio4j
@@ -79,10 +80,11 @@ public class ImportRefSeq implements Executable {
     public static void main(String[] args) {
 
 
-        if (args.length != 2) {
-            System.out.println("This program expects two parameters: \n"
+        if (args.length != 3) {
+            System.out.println("This program expects the following parameters: \n"
                     + "1. Folder name with all the .gbk files \n"
-                    + "2. Bio4j DB folder");
+                    + "2. Bio4j DB folder \n"
+                    + "3. batch inserter .properties file");
         } else {
 
             File currentFolder = new File(args[0]);
@@ -118,7 +120,7 @@ public class ImportRefSeq implements Executable {
                 logger.setLevel(Level.ALL);
 
                 // create the batch inserter
-                inserter = new BatchInserterImpl(args[1], BatchInserterImpl.loadProperties(CommonData.PROPERTIES_FILE_NAME));
+                inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
 
                 // create the batch index service
                 indexProvider = new LuceneBatchInserterIndexProvider(inserter);
