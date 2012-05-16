@@ -214,7 +214,7 @@
     <target name="-post-jar">
         <jar jarfile="jars/CreateWholeBio4j.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
-            <zipfileset src="lib/Era7BioinfoXML-1.0-jar-with-dependencies.jar"
+            <zipfileset src="lib/BioinfoXML-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
             <zipfileset src="lib/BioinfoUtil-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
@@ -222,7 +222,7 @@
                         excludes="META-INF/*" />
             <zipfileset src="lib/BioinfoNeo4j-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
-            <zipfileset src="lib/aws-java-sdk-1.1.1.jar"
+            <zipfileset src="lib/BioinfoAWS-1.0-jar-with-dependencies.jar"
                         excludes="META-INF/*" />
             <manifest>
                 <attribute name="Main-Class" value="com.era7.bioinfo.bio4j.programs.CreateWholeBio4j"/>
