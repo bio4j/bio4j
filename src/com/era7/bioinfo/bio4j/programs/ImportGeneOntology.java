@@ -18,7 +18,6 @@ package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
 import com.era7.bioinfo.bio4jmodel.relationships.go.*;
-import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
@@ -37,7 +36,6 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterImpl;
 import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
 import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
 import org.neo4j.unsafe.batchinsert.BatchInserters;
