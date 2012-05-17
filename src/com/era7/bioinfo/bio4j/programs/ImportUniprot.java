@@ -103,6 +103,7 @@ public class ImportUniprot implements Executable {
     public static Map<String, Object> commentTypeProperties = new HashMap<String, Object>();
     public static Map<String, Object> featureTypeProperties = new HashMap<String, Object>();
     public static Map<String, Object> reactomeTermProperties = new HashMap<String, Object>();
+    public static Map<String, Object> dbProperties = new HashMap<String, Object>();
     //---------------------------------------------------------------------
     //-------------------relationships properties maps--------------------------
     public static Map<String, Object> proteinGoProperties = new HashMap<String, Object>();
@@ -137,6 +138,7 @@ public class ImportUniprot implements Executable {
     public static PatentProteinCitationRel patentProteinCitationRel = new PatentProteinCitationRel(null);
     public static SubmissionAuthorRel submissionAuthorRel = new SubmissionAuthorRel(null);
     public static SubmissionProteinCitationRel submissionProteinCitationRel = new SubmissionProteinCitationRel(null);
+    public static SubmissionDbRel submissionDbRel = new SubmissionDbRel(null);
     public static BookAuthorRel bookAuthorRel = new BookAuthorRel(null);
     public static BookProteinCitationRel bookProteinCitationRel = new BookProteinCitationRel(null);
     public static BookEditorRel bookEditorRel = new BookEditorRel(null);
@@ -327,7 +329,7 @@ public class ImportUniprot implements Executable {
                 BatchInserterIndex reactomeTermIdIndex = indexProvider.nodeIndex(ReactomeTermNode.REACTOME_TERM_ID_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex enzymeIdIndex = indexProvider.nodeIndex(EnzymeNode.ENZYME_ID_INDEX,
-                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));                
                 BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
@@ -1702,6 +1704,19 @@ public class ImportUniprot implements Executable {
         
         return cityId;
     }
+    
+    private static long createDbNode(Map<String, Object> dbProperties,
+            BatchInserter inserter,
+            BatchInserterIndex index,
+            BatchInserterIndex nodeTypeIndex){
+        
+        long dbId = inserter.createNode(dbProperties);
+        index.add(dbId, MapUtil.map(DBNode.DB_NAME_INDEX, dbProperties.get(DBNode.NAME_PROPERTY)));
+        //---adding db node to node_type index----
+        nodeTypeIndex.add(dbId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, DBNode.NODE_TYPE));
+        
+        return dbId;
+    }
 
     private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
             BatchInserter inserter,
@@ -1757,6 +1772,8 @@ public class ImportUniprot implements Executable {
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                 MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+        BatchInserterIndex dbNameIndex = indexProvider.nodeIndex(DBNode.DB_NAME_INDEX,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
         //----------------------------------------------------------------------
         //----------------------------------------------------------------------
 
@@ -1930,12 +1947,14 @@ public class ImportUniprot implements Executable {
 
                     String dateSt = citation.getAttributeValue("date");
                     String titleSt = citation.getChildText("title");
+                    String dbSt = citation.getAttributeValue("db");
                     if (dateSt == null) {
                         dateSt = "";
                     }
                     if (titleSt == null) {
                         titleSt = "";
                     }
+                    
                     submissionProperties.put(SubmissionNode.DATE_PROPERTY, dateSt);
                     submissionProperties.put(SubmissionNode.TITLE_PROPERTY, titleSt);
 
@@ -1948,6 +1967,22 @@ public class ImportUniprot implements Executable {
                     //---authors consortium association-----
                     for (long consortiumId : authorsConsortiumNodesIds) {
                         inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
+                    }
+                    
+                    if(dbSt != null){
+                        long dbId = -1;
+                        IndexHits<Long> dbNameIndexHits = dbNameIndex.get(DBNode.DB_NAME_INDEX,dbSt);
+                        if (dbNameIndexHits.hasNext()) {
+                            dbId = dbNameIndexHits.getSingle();
+                        }
+                        if(dbId < 0){
+                            dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
+                            dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
+                            createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
+                            dbNameIndex.flush();
+                        }
+                        //-----submission db relationship-----
+                        inserter.createRelationship(submissionId, dbId, submissionDbRel, null);
                     }
 
                     //--protein citation relationship
