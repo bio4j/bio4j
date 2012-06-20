@@ -29,6 +29,7 @@ import org.neo4j.graphdb.Transaction;
 
 /**
  * Imports NCBI taxonomy into Bio4j
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportNCBITaxonomy implements Executable {
@@ -47,11 +48,12 @@ public class ImportNCBITaxonomy implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("This program expects three parameters: \n"
                     + "1. Nodes DMP filename \n"
                     + "2. Names DMP filename \n"
-                    + "3. Bio4j DB folder");
+                    + "3. Merged DMP filename \n"
+                    + "4. Bio4j DB folder");
         } else {
 
             Bio4jManager manager = null;
@@ -70,13 +72,14 @@ public class ImportNCBITaxonomy implements Executable {
 
                 File nodesDumpFile = new File(args[0]);
                 File namesDumpFile = new File(args[1]);
+                File mergedDumpFile = new File(args[2]);
 
                 BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
                 String line = null;
-                
+
                 logger.log(Level.INFO, "creating manager...");
-                manager = new Bio4jManager(args[2], true, false);
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);               
+                manager = new Bio4jManager(args[3], true, false);
+                NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
 
                 HashMap<String, String> nodeParentMap = new HashMap<String, String>();
@@ -101,7 +104,7 @@ public class ImportNCBITaxonomy implements Executable {
 
                         //indexing the node..
                         manager.getNCBITaxonIdIndex().add(node.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, node.getTaxId());
-                        
+
                         //indexing the node by its node_type
                         manager.getNodeTypeIndex().add(node.getNode(), Bio4jManager.NODE_TYPE_INDEX_NAME, NCBITaxonNode.NODE_TYPE);
 
@@ -191,31 +194,58 @@ public class ImportNCBITaxonomy implements Executable {
                         txn = manager.beginTransaction();
                     }
 
-                } 
+                }
 
                 txn.success();
                 txn.finish();
                 txn = manager.beginTransaction();
                 logger.log(Level.INFO, "Done!");
-                
-                logger.log(Level.INFO,"Associating uniprot taxonomy...");  
-                
-                associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));               
-                
+
+                logger.log(Level.INFO, "Associating uniprot taxonomy...");
+
+                associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));
+
                 logger.log(Level.INFO, "Done!");
+
+                logger.log(Level.INFO, "reading merged file...");
+                //------------reading merged file-----------------
+                reader = new BufferedReader(new FileReader(mergedDumpFile));
+                while ((line = reader.readLine()) != null) {
+
+                    String[] columns = line.split("\\|");
+                    
+                    String oldId = columns[0].trim();
+                    String goodId = columns[1].trim();
+                    
+                    NCBITaxonNode goodNode = nodeRetriever.getNCBITaxonByTaxId(goodId);
+                    //indexing the node..
+                    manager.getNCBITaxonIdIndex().add(goodNode.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, oldId);                    
+
+                    txnCounter++;
+                    if (txnCounter % txnLimitForCommit == 0) {
+                        //commiting and 'restarting' transaction
+                        txn.success();
+                        txn.finish();
+                        txn = manager.beginTransaction();
+                    }
+
+
+                }
+                reader.close();
+                logger.log(Level.INFO, "done!");
 
                 txn.success();
 
             } catch (Exception ex) {
                 Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
-                
+
                 txn.failure();
 
             } finally {
 
                 //commiting transaction
                 txn.finish();
-                
+
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
@@ -225,23 +255,23 @@ public class ImportNCBITaxonomy implements Executable {
 
         }
     }
-    
+
     private static void associateTaxonomy(TaxonNode taxonNode,
-                                        NodeRetriever nodeRetriever,
-                                        NCBITaxonRel nCBITaxonRel){
-        
+            NodeRetriever nodeRetriever,
+            NCBITaxonRel nCBITaxonRel) {
+
         List<OrganismNode> organisms = taxonNode.getOrganisms();
-        
-        if(!organisms.isEmpty()){
+
+        if (!organisms.isEmpty()) {
             for (OrganismNode tempOrg : organisms) {
                 Node ncbiNode = nodeRetriever.getNCBITaxonByTaxId(tempOrg.getNcbiTaxonomyId()).getNode();
                 tempOrg.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
             }
-        }else{
+        } else {
             for (TaxonNode tempTaxon : taxonNode.getChildren()) {
                 associateTaxonomy(tempTaxon, nodeRetriever, nCBITaxonRel);
             }
         }
-        
+
     }
 }
