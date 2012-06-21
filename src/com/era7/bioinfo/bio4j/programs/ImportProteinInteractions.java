@@ -16,10 +16,11 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.nodes.*;
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinIsoformInteractionRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinProteinInteractionRel;
+import com.era7.bioinfo.bio4j.model.nodes.IsoformNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoformInteractionRel;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import java.io.BufferedReader;

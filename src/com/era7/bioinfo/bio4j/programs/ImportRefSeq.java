@@ -4,12 +4,12 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.CDSNode;
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.GeneNode;
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.rna.*;
-import com.era7.bioinfo.bio4jmodel.relationships.refseq.*;
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.CDSNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GeneNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.*;
+import com.era7.bioinfo.bio4j.model.relationships.refseq.*;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import java.io.BufferedReader;
@@ -23,11 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
-import org.neo4j.unsafe.batchinsert.BatchInserters;
-import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Imports RefSeq complete release into Bio4j

@@ -17,11 +17,11 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.nodes.IsoformNode;
-import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
-import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef100MemberRel;
-import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef50MemberRel;
-import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bio4j.model.nodes.IsoformNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.relationships.uniref.UniRef100MemberRel;
+import com.era7.bioinfo.bio4j.model.relationships.uniref.UniRef50MemberRel;
+import com.era7.bioinfo.bio4j.model.relationships.uniref.UniRef90MemberRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
@@ -37,11 +37,7 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
-import org.neo4j.unsafe.batchinsert.BatchInserters;
-import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Imports uniref(100,90,50) clusters info into Bio4j

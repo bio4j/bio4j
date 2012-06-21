@@ -4,14 +4,14 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.nodes.OrganismNode;
-import com.era7.bioinfo.bio4jmodel.nodes.TaxonNode;
-import com.era7.bioinfo.bio4jmodel.nodes.ncbi.NCBITaxonNode;
-import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBIMainTaxonRel;
-import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBITaxonParentRel;
-import com.era7.bioinfo.bio4jmodel.relationships.ncbi.NCBITaxonRel;
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
-import com.era7.bioinfo.bio4jmodel.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.model.nodes.OrganismNode;
+import com.era7.bioinfo.bio4j.model.nodes.TaxonNode;
+import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxonNode;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBIMainTaxonRel;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonParentRel;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonRel;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.BufferedReader;
 import java.io.File;

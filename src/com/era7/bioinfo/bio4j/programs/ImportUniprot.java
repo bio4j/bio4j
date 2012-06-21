@@ -16,36 +16,40 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
-import com.era7.bioinfo.bio4jmodel.relationships.*;
-import com.era7.bioinfo.bio4jmodel.relationships.comment.*;
-import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
-
-import com.era7.bioinfo.bio4jmodel.relationships.features.*;
-
-import com.era7.bioinfo.bio4jmodel.nodes.*;
-import com.era7.bioinfo.bio4jmodel.nodes.citation.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.thesis.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.book.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.article.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.onarticle.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.patent.PatentAuthorRel;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.patent.PatentProteinCitationRel;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.uo.*;
-import com.era7.bioinfo.bio4jmodel.relationships.citation.submission.*;
-
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.nodes.reactome.ReactomeTermNode;
-import com.era7.bioinfo.bio4jmodel.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.model.nodes.*;
+import com.era7.bioinfo.bio4j.model.nodes.citation.*;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTermNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.model.relationships.*;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductInitiationRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductPromoterRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.*;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.patent.PatentAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.patent.PatentProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionDbRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisInstituteRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.uo.UnpublishedObservationAuthorRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.uo.UnpublishedObservationProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.relationships.comment.*;
+import com.era7.bioinfo.bio4j.model.relationships.features.*;
+import com.era7.bioinfo.bio4j.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,11 +61,7 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
-import org.neo4j.unsafe.batchinsert.BatchInserters;
-import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * This class deals with the main part of Bio4j importing process.

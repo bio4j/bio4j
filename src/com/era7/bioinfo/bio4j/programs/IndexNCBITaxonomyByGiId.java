@@ -4,13 +4,9 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.nodes.ncbi.NCBITaxonNode;
+import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.FileHandler;
@@ -18,11 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
-import org.neo4j.unsafe.batchinsert.BatchInserters;
-import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Indexes NCBI taxonomy elements by GI (gene identifiers) as specified in the official mapping file

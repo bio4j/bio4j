@@ -16,22 +16,17 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
-import com.era7.bioinfo.bio4jmodel.nodes.GoTermNode;
-import com.era7.bioinfo.bio4jmodel.nodes.InterproNode;
-import com.era7.bioinfo.bio4jmodel.nodes.KeywordNode;
-import com.era7.bioinfo.bio4jmodel.nodes.OrganismNode;
-import com.era7.bioinfo.bio4jmodel.nodes.ProteinNode;
-import com.era7.bioinfo.bio4jmodel.nodes.TaxonNode;
-import com.era7.bioinfo.bio4jmodel.relationships.TaxonParentRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinGoRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinInterproRel;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.ProteinKeywordRel;
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4jmodel.nodes.citation.ArticleNode;
-import com.era7.bioinfo.bio4jmodel.nodes.citation.SubmissionNode;
-import com.era7.bioinfo.bio4jmodel.relationships.go.IsAGoRel;
-import com.era7.bioinfo.bio4jmodel.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bio4j.model.nodes.*;
+import com.era7.bioinfo.bio4j.model.nodes.citation.ArticleNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.SubmissionNode;
+import com.era7.bioinfo.bio4j.model.relationships.TaxonParentRel;
+import com.era7.bioinfo.bio4j.model.relationships.go.IsAGoRel;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinGoRel;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinInterproRel;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinKeywordRel;
+import com.era7.bioinfo.bio4j.model.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.logging.FileHandler;
@@ -42,7 +37,6 @@ import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.IndexHits;
-import org.neo4j.kernel.EmbeddedGraphDatabase;
 
 /**
  * Test program

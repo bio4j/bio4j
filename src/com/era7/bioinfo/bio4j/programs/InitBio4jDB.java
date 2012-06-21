@@ -16,12 +16,15 @@
  */
 package com.era7.bioinfo.bio4j.programs;
 
-import com.era7.bioinfo.bio4jmodel.nodes.AlternativeProductNode;
-import com.era7.bioinfo.bio4jmodel.nodes.SequenceCautionNode;
-import com.era7.bioinfo.bio4jmodel.relationships.aproducts.*;
-import com.era7.bioinfo.bio4jmodel.relationships.protein.*;
-import com.era7.bioinfo.bio4jmodel.relationships.sc.*;
-import com.era7.bioinfo.bio4jmodel.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.model.nodes.AlternativeProductNode;
+import com.era7.bioinfo.bio4j.model.nodes.SequenceCautionNode;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductInitiationRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductPromoterRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.model.relationships.sc.*;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.File;
 import java.util.ArrayList;
@@ -32,11 +35,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.helpers.collection.MapUtil;
-import org.neo4j.unsafe.batchinsert.BatchInserter;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndex;
-import org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider;
-import org.neo4j.unsafe.batchinsert.BatchInserters;
-import org.neo4j.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
+import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Inits Bio4j DB and stores basic/general nodes and relationships
