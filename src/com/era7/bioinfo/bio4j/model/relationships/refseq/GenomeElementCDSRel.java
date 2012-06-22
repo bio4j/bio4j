@@ -16,6 +16,8 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.refseq;
 
+import com.era7.bioinfo.bio4j.model.nodes.refseq.CDSNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -29,6 +31,14 @@ public class GenomeElementCDSRel extends BasicRelationship{
 
     public GenomeElementCDSRel(Relationship rel){
         super(rel);
+    }
+    
+    public GenomeElementNode getGenomeElement(){
+        return new GenomeElementNode(getStartNode());
+    }
+    
+    public CDSNode getCDS(){
+        return new CDSNode(getEndNode());
     }
 
     @Override

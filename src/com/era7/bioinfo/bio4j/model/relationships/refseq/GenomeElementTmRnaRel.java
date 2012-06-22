@@ -16,6 +16,8 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.refseq;
 
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TmRNANode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -29,6 +31,14 @@ public class GenomeElementTmRnaRel extends BasicRelationship{
 
     public GenomeElementTmRnaRel(Relationship rel){
         super(rel);
+    }
+    
+    public GenomeElementNode getGenomeElement(){
+        return new GenomeElementNode(getStartNode());
+    }
+    
+    public TmRNANode getTmRNA(){
+        return new TmRNANode(getEndNode());
     }
 
     @Override

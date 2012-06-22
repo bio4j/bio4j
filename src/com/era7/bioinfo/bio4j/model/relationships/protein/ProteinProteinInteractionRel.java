@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -48,6 +49,14 @@ public class ProteinProteinInteractionRel extends BasicRelationship{
     public void setIntactId2(String value){  this.relationship.setProperty(INTACT_ID_2_PROPERTY, value);}
     public void setIntactId1(String value){    this.relationship.setProperty(INTACT_ID_1_PROPERTY, value);}
 
+    public ProteinNode getProtein1(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public ProteinNode getProtein2(){
+        return new ProteinNode(getEndNode());
+    }
+    
     @Override
     public String name() {
         return NAME;

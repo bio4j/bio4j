@@ -16,6 +16,8 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -29,6 +31,14 @@ public class ProteinGenomeElementRel extends BasicRelationship{
 
     public ProteinGenomeElementRel(Relationship rel){
         super(rel);
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public GenomeElementNode getGenomeElement(){
+        return new GenomeElementNode(getEndNode());
     }
 
     @Override

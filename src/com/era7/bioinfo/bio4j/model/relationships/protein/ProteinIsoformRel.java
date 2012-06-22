@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.IsoformNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -32,6 +34,14 @@ public class ProteinIsoformRel extends BasicRelationship{
         super(rel);
     }
 
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public IsoformNode getIsoformNode(){
+        return new IsoformNode(getEndNode());
+    }
+    
     @Override
     public String name() {
         return NAME;

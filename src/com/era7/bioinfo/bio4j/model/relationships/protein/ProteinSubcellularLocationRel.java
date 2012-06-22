@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.nodes.SubcellularLocationNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -49,6 +51,15 @@ public class ProteinSubcellularLocationRel extends BasicRelationship{
     public void setTopology(String value){  this.relationship.setProperty(TOPOLOGY_PROPERTY, value);}
     public void setTopologyStatus(String value){    this.relationship.setProperty(TOPOLOGY_STATUS_PROPERTY, value);}
 
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public SubcellularLocationNode getSubcellularLocation(){
+        return new SubcellularLocationNode(getEndNode());
+    }
+    
     @Override
     public String name() {
         return NAME;

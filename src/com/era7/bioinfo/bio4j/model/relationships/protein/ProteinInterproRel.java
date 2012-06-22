@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.InterproNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class ProteinInterproRel extends BasicRelationship{
 
     public ProteinInterproRel(Relationship rel){
         super(rel);
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public InterproNode getInterpro(){
+        return new InterproNode(getEndNode());
     }
 
     @Override

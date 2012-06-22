@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.GoTermNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -38,6 +40,13 @@ public class ProteinGoRel extends BasicRelationship{
 
     public void setEvidence(String value){  this.relationship.setProperty(EVIDENCE_PROPERTY, value);}
 
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public GoTermNode getGoTerm(){
+        return new GoTermNode(getEndNode());
+    }
 
     @Override
     public String name() {

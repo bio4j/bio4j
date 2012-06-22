@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.PfamNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class ProteinPfamRel extends BasicRelationship{
 
     public ProteinPfamRel(Relationship rel){
         super(rel);
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public PfamNode getPfam(){
+        return new PfamNode(getEndNode());
     }
 
     @Override

@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.KeywordNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -32,6 +34,14 @@ public class ProteinKeywordRel extends BasicRelationship{
         super(rel);
     }
 
+    public ProteinNode getProtein(){
+        return new ProteinNode(getStartNode());
+    }
+    
+    public KeywordNode getKeyword(){
+        return new KeywordNode(getEndNode());
+    }
+    
     @Override
     public String name() {
         return NAME;
