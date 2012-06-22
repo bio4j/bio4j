@@ -16,6 +16,9 @@
  */
 package com.era7.bioinfo.bio4j.model.nodes.refseq.rna;
 
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.model.relationships.refseq.GenomeElementTmRnaRel;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 
 /**
@@ -28,6 +31,10 @@ public class TmRNANode extends RNANode{
     
     public TmRNANode(Node n){
         super(n);
+    }
+    
+    public GenomeElementNode getGenomeElement(){
+        return new GenomeElementNode(node.getRelationships(new GenomeElementTmRnaRel(null), Direction.INCOMING).iterator().next().getStartNode());
     }
     
     

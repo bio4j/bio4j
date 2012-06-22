@@ -41,8 +41,8 @@ public abstract class RNANode extends BasicEntity{
 
     public void setPositions(String value){ node.setProperty(POSITIONS_PROPERTY, value);}
     public void setNote(String value){ node.setProperty(NOTE_PROPERTY, value);}
-
-
+    
+    
     @Override
     public int hashCode(){
         return super.hashCode();

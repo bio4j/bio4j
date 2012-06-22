@@ -19,10 +19,14 @@ package com.era7.bioinfo.bio4j.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.model.nodes.InstituteNode;
 import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisAuthorRel;
 import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisInstituteRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisProteinCitationRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -80,6 +84,16 @@ public class ThesisNode extends BasicEntity{
         }else{
             return null;
         }
+    }
+    
+    
+    public List<ProteinNode> getProteinCitations(){
+        List<ProteinNode> list = new LinkedList<ProteinNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new ThesisProteinCitationRel(null), Direction.OUTGOING).iterator();
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next().getEndNode()));
+        }
+        return list;
     }
 
 
