@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.thesis;
 
+import com.era7.bioinfo.bio4j.model.nodes.InstituteNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.ThesisNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class ThesisInstituteRel extends BasicRelationship{
 
     public ThesisInstituteRel(Relationship rel){
         super(rel);
+    }
+    
+    public ThesisNode getThesis(){
+        return new ThesisNode(getStartNode());
+    }
+    
+    public InstituteNode getInstitute(){
+        return new InstituteNode(getEndNode());
     }
 
     @Override

@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.uo;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservationNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class UnpublishedObservationProteinCitationRel extends BasicRelationship{
 
     public UnpublishedObservationProteinCitationRel(Relationship rel){
         super(rel);
+    }
+    
+    public UnpublishedObservationNode getUnpublishedObservation(){
+        return new UnpublishedObservationNode(getStartNode());
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getEndNode());
     }
 
     @Override
