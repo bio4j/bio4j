@@ -17,7 +17,9 @@
 
 package com.era7.bioinfo.bio4j.model.nodes.refseq;
 
+import com.era7.bioinfo.bio4j.model.relationships.refseq.GenomeElementGeneRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
 
 /**
@@ -44,6 +46,9 @@ public class GeneNode extends BasicEntity{
     public void setPositions(String value){ node.setProperty(POSITIONS_PROPERTY, value);}
     public void setNote(String value){ node.setProperty(NOTE_PROPERTY, value);}
 
+    public GenomeElementNode getGenomeElement(){
+        return new GenomeElementNode(node.getRelationships(new GenomeElementGeneRel(null), Direction.INCOMING).iterator().next().getStartNode());
+    }    
 
     @Override
     public int hashCode(){

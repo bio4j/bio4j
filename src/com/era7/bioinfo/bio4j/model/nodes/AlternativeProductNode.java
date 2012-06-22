@@ -17,8 +17,14 @@
 
 package com.era7.bioinfo.bio4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.relationships.IsoformEventGeneratorRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 /**
  * Protein alternative products
@@ -43,6 +49,15 @@ public class AlternativeProductNode extends BasicEntity{
     public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
 
 
+    public List<IsoformNode> getIsoforms(){
+        List<IsoformNode> list = new LinkedList<IsoformNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new IsoformEventGeneratorRel(null), Direction.INCOMING).iterator();
+        while(iterator.hasNext()){
+            list.add(new IsoformNode(iterator.next().getStartNode()));
+        }
+        return list;
+    }
+    
     @Override
     public int hashCode(){
         return super.hashCode();

@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.article;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.ArticleNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.JournalNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -47,6 +49,14 @@ public class ArticleJournalRel extends BasicRelationship{
     public void setFirst(String value){  this.relationship.setProperty(FIRST_PROPERTY, value);}
     public void setLast(String value){  this.relationship.setProperty(LAST_PROPERTY, value);}
 
+    public ArticleNode getArticle(){
+        return new ArticleNode(getStartNode());
+    }
+    
+    public JournalNode getJournal(){
+        return new JournalNode(getEndNode());
+    }
+    
 
     @Override
     public String name() {

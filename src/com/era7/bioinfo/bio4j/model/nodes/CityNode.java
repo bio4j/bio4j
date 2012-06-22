@@ -17,8 +17,15 @@
 
 package com.era7.bioinfo.bio4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.BookNode;
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookCityRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 /**
  * Just nodes representing different cities of the world
@@ -41,6 +48,16 @@ public class CityNode extends BasicEntity{
 
 
     public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    
+    
+    public List<BookNode> getBooks(){
+        List<BookNode> list = new LinkedList<BookNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new BookCityRel(null), Direction.INCOMING).iterator();
+        while(iterator.hasNext()){
+            list.add(new BookNode(iterator.next().getStartNode()));
+        }
+        return list;
+    }
 
 
     @Override

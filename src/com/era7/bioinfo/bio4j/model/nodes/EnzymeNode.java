@@ -17,8 +17,14 @@
 
 package com.era7.bioinfo.bio4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinEnzymaticActivityRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 /**
  * Enzyme node
@@ -61,6 +67,16 @@ public class EnzymeNode extends BasicEntity{
     public void setComments(String value){    node.setProperty(COMMENTS_PROPERTY, value);}
     public void setPrositeCrossReferences(String[] value){    node.setProperty(PROSITE_CROSS_REFERENCES_PROPERTY, value);}
 
+    
+    public List<ProteinNode> getAssociatedProteins(){
+        List<ProteinNode> list = new LinkedList<ProteinNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new ProteinEnzymaticActivityRel(null), Direction.INCOMING).iterator();
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next().getStartNode()));
+        }
+        return list;
+    }
+    
 
     @Override
     public int hashCode(){

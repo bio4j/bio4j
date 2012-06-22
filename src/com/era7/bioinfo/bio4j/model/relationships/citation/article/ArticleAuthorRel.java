@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.article;
 
+import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.ArticleNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,13 @@ public class ArticleAuthorRel extends BasicRelationship{
 
     public ArticleAuthorRel(Relationship rel){
         super(rel);
+    }
+    
+    public ArticleNode getArticle(){
+        return new ArticleNode(getStartNode());
+    }
+    public PersonNode getAuthor(){
+        return new PersonNode(getEndNode());
     }
 
     @Override
