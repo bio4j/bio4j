@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.submission;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +31,10 @@ public class SubmissionAuthorRel extends BasicRelationship{
 
     public SubmissionAuthorRel(Relationship rel){
         super(rel);
+    }
+    
+    public SubmissionNode getSubmission(){
+        return new SubmissionNode(getStartNode());
     }
 
     @Override

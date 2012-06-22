@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.onarticle;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticleNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class OnlineArticleProteinCitationRel extends BasicRelationship{
 
     public OnlineArticleProteinCitationRel(Relationship rel){
         super(rel);
+    }
+    
+    public OnlineArticleNode getOnlineArticle(){
+        return new OnlineArticleNode(getStartNode());
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getEndNode());
     }
 
     @Override

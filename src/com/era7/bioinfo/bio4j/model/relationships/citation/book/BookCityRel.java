@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.book;
 
+import com.era7.bioinfo.bio4j.model.nodes.CityNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class BookCityRel extends BasicRelationship{
 
     public BookCityRel(Relationship rel){
         super(rel);
+    }
+    
+    public BookNode getBook(){
+        return new BookNode(getStartNode());
+    }
+    
+    public CityNode getCity(){
+        return new CityNode(getEndNode());
     }
 
     @Override

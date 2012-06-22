@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.book;
 
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -47,6 +49,13 @@ public class BookProteinCitationRel extends BasicRelationship{
     public void setFirst(String value){  this.relationship.setProperty(FIRST_PROPERTY, value);}
     public void setLast(String value){  this.relationship.setProperty(LAST_PROPERTY, value);}
 
+    public BookNode getBook(){
+        return new BookNode(getStartNode());
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getEndNode());
+    }
 
     @Override
     public String name() {

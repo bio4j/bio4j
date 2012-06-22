@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.onarticle;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticleNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournalNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -38,6 +40,14 @@ public class OnlineArticleJournalRel extends BasicRelationship{
     public String getLocator(){    return String.valueOf(this.relationship.getProperty(LOCATOR_PROPERTY));}
 
     public void setLocator(String value){  this.relationship.setProperty(LOCATOR_PROPERTY, value);}
+    
+    public OnlineArticleNode getOnlineArticle(){
+        return new OnlineArticleNode(getStartNode());
+    }
+    
+    public OnlineJournalNode getOnlineJournal(){
+        return new OnlineJournalNode(getEndNode());
+    }
 
     @Override
     public String name() {

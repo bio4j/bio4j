@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.book;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.BookNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.PublisherNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class BookPublisherRel extends BasicRelationship{
 
     public BookPublisherRel(Relationship rel){
         super(rel);
+    }
+    
+    public BookNode getBook(){
+        return new BookNode(getStartNode());
+    }
+    
+    public PublisherNode getPublisher(){
+        return new PublisherNode(getEndNode());
     }
 
     @Override

@@ -17,6 +17,8 @@
 
 package com.era7.bioinfo.bio4j.model.relationships.citation.patent;
 
+import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.model.nodes.citation.PatentNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import org.neo4j.graphdb.Relationship;
 
@@ -30,6 +32,14 @@ public class PatentAuthorRel extends BasicRelationship{
 
     public PatentAuthorRel(Relationship rel){
         super(rel);
+    }
+    
+    public PatentNode getPatent(){
+        return new PatentNode(getStartNode());
+    }
+    
+    public PersonNode getAuthor(){
+        return new PersonNode(getEndNode());
     }
 
     @Override
