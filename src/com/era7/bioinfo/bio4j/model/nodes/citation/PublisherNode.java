@@ -17,8 +17,14 @@
 
 package com.era7.bioinfo.bio4j.model.nodes.citation;
 
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookPublisherRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 /**
  * Publishers regarding to book protein citations
@@ -43,6 +49,15 @@ public class PublisherNode extends BasicEntity{
 
     public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
 
+    
+    public List<BookNode> getBooks(){
+        List<BookNode> list = new LinkedList<BookNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new BookPublisherRel(null), Direction.INCOMING).iterator();
+        while(iterator.hasNext()){
+            list.add(new BookNode(iterator.next().getStartNode()));
+        }
+        return list;
+    }
 
     @Override
     public int hashCode(){

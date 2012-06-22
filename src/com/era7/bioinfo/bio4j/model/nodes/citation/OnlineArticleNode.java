@@ -19,11 +19,14 @@ package com.era7.bioinfo.bio4j.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.model.nodes.ConsortiumNode;
 import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleAuthorRel;
 import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
@@ -98,6 +101,15 @@ public class OnlineArticleNode extends BasicEntity{
                 list.add(new PersonNode(currentNode));
             } 
         }         
+        return list;
+    }
+    
+    public List<ProteinNode> getProteinCitations(){
+        List<ProteinNode> list = new LinkedList<ProteinNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new OnlineArticleProteinCitationRel(null), Direction.OUTGOING).iterator();
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next().getEndNode()));
+        }
         return list;
     }
 

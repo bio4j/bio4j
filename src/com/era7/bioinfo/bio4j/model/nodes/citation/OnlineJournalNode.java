@@ -17,8 +17,14 @@
 
 package com.era7.bioinfo.bio4j.model.nodes.citation;
 
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleJournalRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Relationship;
 
 /**
  * Online journals where online article protein citations are published
@@ -43,6 +49,16 @@ public class OnlineJournalNode extends BasicEntity{
 
     public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
 
+    
+    public List<OnlineArticleNode> getOnlineArticles(){
+        List<OnlineArticleNode> list = new LinkedList<OnlineArticleNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new OnlineArticleJournalRel(null), Direction.INCOMING).iterator();
+        while(iterator.hasNext()){
+            list.add(new OnlineArticleNode(iterator.next().getStartNode()));
+        }
+        return list;
+    }
+    
 
     @Override
     public int hashCode(){

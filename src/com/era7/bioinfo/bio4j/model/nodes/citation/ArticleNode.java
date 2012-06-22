@@ -18,11 +18,14 @@ package com.era7.bioinfo.bio4j.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.model.nodes.ConsortiumNode;
 import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleAuthorRel;
 import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleProteinCitationRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
@@ -73,7 +76,16 @@ public class ArticleNode extends BasicEntity{
     public void setMedlineId(String value){  node.setProperty(MEDLINE_ID_PROPERTY, value);}
     public void setDoiId(String value){  node.setProperty(DOI_ID_PROPERTY, value);}
 
+
     
+    public List<ProteinNode> getProteinCitations(){
+        List<ProteinNode> list = new LinkedList<ProteinNode>();
+        Iterator<Relationship> iterator = this.node.getRelationships(new ArticleProteinCitationRel(null), Direction.OUTGOING).iterator();
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next().getEndNode()));
+        }
+        return list;
+    }
     /**
      * gets the article journal
      * @return 

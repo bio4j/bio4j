@@ -18,12 +18,12 @@ package com.era7.bioinfo.bio4j.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.model.nodes.CityNode;
 import com.era7.bioinfo.bio4j.model.nodes.PersonNode;
-import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookAuthorRel;
-import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookCityRel;
-import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookPublisherRel;
+import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.*;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
@@ -61,6 +61,15 @@ public class BookNode extends BasicEntity{
     public void setDate(String value){  node.setProperty(DATE_PROPERTY, value);}
     
     
+    public List<ProteinNode> getProteinCitations(){
+        List<ProteinNode> list = new LinkedList<ProteinNode>();
+        Iterator<Relationship> iterator = node.getRelationships(new BookProteinCitationRel(null), Direction.OUTGOING).iterator();
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next().getEndNode()));
+        }
+        return list;
+    }
+    
     /**
      * Gets the Book publisher
      * @return 
@@ -94,6 +103,18 @@ public class BookNode extends BasicEntity{
     public List<PersonNode> getAuthors(){
         List<PersonNode> list = new ArrayList<PersonNode>();
         Iterator<Relationship> iterator = this.node.getRelationships(new BookAuthorRel(null), Direction.OUTGOING).iterator();
+        while(iterator.hasNext()){
+            list.add(new PersonNode(iterator.next().getEndNode()));
+        }
+        return list;
+    }
+    /**
+     * gets the editors of the book
+     * @return 
+     */
+    public List<PersonNode> getEditors(){
+        List<PersonNode> list = new ArrayList<PersonNode>();
+        Iterator<Relationship> iterator = this.node.getRelationships(new BookEditorRel(null), Direction.OUTGOING).iterator();
         while(iterator.hasNext()){
             list.add(new PersonNode(iterator.next().getEndNode()));
         }
