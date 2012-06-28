@@ -30,13 +30,13 @@ import java.util.List;
 public class RetrieveProteinSample {
 
     /**
-     * @param args Just one argument (protein accession)
+     * @param args Just two arguments (DB folder & protein accession)
      */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("The program expects two parameters: \n"
-                    + "2. Bio4j DB folder\n"
-                    + "1. Protein accesion\n");
+                    + "1. Bio4j DB folder\n"
+                    + "2. Protein accesion\n");
         } else {
 
             String inputSt = args[1];

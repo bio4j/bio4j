@@ -4,7 +4,9 @@
  */
 package com.era7.bioinfo.bio4j.model.nodes.ncbi;
 
+import com.era7.bioinfo.bio4j.model.nodes.TaxonNode;
 import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonParentRel;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -87,6 +89,17 @@ public class NCBITaxonNode extends BasicEntity{
         }
         
         return list;
+    }
+    
+    public TaxonNode getTaxon(){
+        TaxonNode taxon = null;
+        
+        Iterator<Relationship> iterator = node.getRelationships(new NCBITaxonRel(null), Direction.INCOMING).iterator();
+        if(iterator.hasNext()){
+            taxon = new TaxonNode(iterator.next().getStartNode());
+        }
+        
+        return taxon;
     }
        
 
