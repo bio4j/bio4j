@@ -65,6 +65,7 @@ public class GetGOAnnotationsForOrganism {
                 for (ProteinNode proteinNode : organism.getAssociatedProteins()) {
                     ProteinXML proteinXML = new ProteinXML();
                     proteinXML.setId(proteinNode.getAccession());
+                    proteins.add(proteinXML);
                 }
 
                 System.out.println("Looking for GO annotations...");
