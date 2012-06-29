@@ -23,6 +23,7 @@ import com.era7.bioinfo.bio4j.model.util.GoUtil;
 import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
 import com.era7.lib.bioinfoxml.go.GoAnnotationXML;
 import com.era7.lib.bioinfoxml.uniprot.ProteinXML;
+import com.era7.lib.era7xmlapi.util.XMLUtil;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -71,7 +72,7 @@ public class GetGOAnnotationsForOrganism {
                 System.out.println("Looking for GO annotations...");
                 GoAnnotationXML goAnnotationXML = GoUtil.getGoAnnotation(proteins, manager);
 
-                writer.write(goAnnotationXML.toString());
+                writer.write(XMLUtil.prettyPrintXML(goAnnotationXML.toString(), 3));
 
                 writer.close();
                 
