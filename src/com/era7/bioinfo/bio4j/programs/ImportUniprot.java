@@ -1978,7 +1978,7 @@ public class ImportUniprot implements Executable {
                         if(dbId < 0){
                             dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
                             dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
-                            createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
+                            dbId = createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
                             dbNameIndex.flush();
                         }
                         //-----submission db relationship-----

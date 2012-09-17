@@ -48,18 +48,21 @@ public class ImportNCBITaxonomy implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 4) {
-            System.out.println("This program expects three parameters: \n"
+        if (args.length != 5) {
+            System.out.println("This program expects the following parameters: \n"
                     + "1. Nodes DMP filename \n"
                     + "2. Names DMP filename \n"
                     + "3. Merged DMP filename \n"
-                    + "4. Bio4j DB folder");
+                    + "4. Bio4j DB folder \n"
+                    + "5. Associate Uniprot taxonomy (true/false)");
         } else {
 
             Bio4jManager manager = null;
             Transaction txn = null;
             int txnCounter = 0;
             int txnLimitForCommit = 10000;
+
+            boolean associateUniprotTaxonomy = Boolean.parseBoolean(args[4]);
 
             try {
 
@@ -201,11 +204,13 @@ public class ImportNCBITaxonomy implements Executable {
                 txn = manager.beginTransaction();
                 logger.log(Level.INFO, "Done!");
 
-                logger.log(Level.INFO, "Associating uniprot taxonomy...");
+                if (associateUniprotTaxonomy) {
+                    
+                    logger.log(Level.INFO, "Associating uniprot taxonomy...");
+                    associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));
+                    logger.log(Level.INFO, "Done!");
+                }
 
-                associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));
-
-                logger.log(Level.INFO, "Done!");
 
                 logger.log(Level.INFO, "reading merged file...");
                 //------------reading merged file-----------------
@@ -213,13 +218,13 @@ public class ImportNCBITaxonomy implements Executable {
                 while ((line = reader.readLine()) != null) {
 
                     String[] columns = line.split("\\|");
-                    
+
                     String oldId = columns[0].trim();
                     String goodId = columns[1].trim();
-                    
+
                     NCBITaxonNode goodNode = nodeRetriever.getNCBITaxonByTaxId(goodId);
                     //indexing the node..
-                    manager.getNCBITaxonIdIndex().add(goodNode.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, oldId);                    
+                    manager.getNCBITaxonIdIndex().add(goodNode.getNode(), NCBITaxonNode.NCBI_TAXON_ID_INDEX, oldId);
 
                     txnCounter++;
                     if (txnCounter % txnLimitForCommit == 0) {

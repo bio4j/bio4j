@@ -76,7 +76,7 @@ public class ImportIsoformSequences implements Executable {
                 manager = new Bio4jManager(args[1]);
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
-                String line = null;
+                String line;
                 StringBuilder seqStBuilder = new StringBuilder();
 
 
