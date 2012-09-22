@@ -27,7 +27,7 @@ import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
 
 /**
- * Pfam term
+ * Pfam family
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class PfamNode extends BasicEntity{
@@ -35,9 +35,9 @@ public class PfamNode extends BasicEntity{
     public static final String PFAM_ID_INDEX = "pfam_id_index";
     public static final String NODE_TYPE = PfamNode.class.getCanonicalName();
 
-    /** Pfam term id **/
+    /** Pfam family id **/
     public static final String ID_PROPERTY = "id";
-    /** Pfam term name **/
+    /** Pfam family name **/
     public static final String NAME_PROPERTY = "name";
 
 
