@@ -1,6 +1,18 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2010-2013  "Bio4j
+ *
+ * This file is part of Bio4j
+ *
+ * Bio4j is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.era7.bioinfo.bio4j.programs;
 
@@ -17,7 +29,9 @@ import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.unsafe.batchinsert.*;
 
 /**
- * Indexes NCBI taxonomy elements by GI (gene identifiers) as specified in the official mapping file
+ * Indexes NCBI taxonomy elements by GI (gene identifiers) as specified in the
+ * official mapping file
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class IndexNCBITaxonomyByGiId implements Executable {
@@ -43,13 +57,20 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     + "3. Batch inserter .properties file name");
         } else {
 
+            long initTime = System.nanoTime();
+
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
-            BatchInserterIndex giIndex = null;
-            BatchInserterIndex taxonIndex = null;
-           
+            BatchInserterIndex giIndex;
+            BatchInserterIndex taxonIndex;
+
             //-------writer for storing incorrect gene identifiers-taxon id pairs----
-            BufferedWriter outBufferedWriter = null;
+            BufferedWriter outBufferedWriter;
+            BufferedWriter statsBuff = null;
+
+            int lineCounter = 0;
+
+            File inFile = new File(args[0]);
 
             try {
 
@@ -60,67 +81,84 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
-                File file = new File(args[0]);
-                
                 outBufferedWriter = new BufferedWriter(new FileWriter(new File("incorrectGiTaxIdPairs.txt")));
-                
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("IndexNCBITaxonomyByGIIdStats.txt")));
+
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
-                
+
 
                 // create the batch index service
-                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
-                Map<String,String> indexProps = MapUtil.stringMap( "provider", "lucene", "type", "exact" );
-                
-                giIndex = indexProvider.nodeIndex( NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, indexProps);
-                taxonIndex = indexProvider.nodeIndex( NCBITaxonNode.NCBI_TAXON_ID_INDEX, indexProps);
-                
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line = null;
-                int lineCounter = 0;
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+                Map<String, String> indexProps = MapUtil.stringMap("provider", "lucene", "type", "exact");
+
+                giIndex = indexProvider.nodeIndex(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, indexProps);
+                taxonIndex = indexProvider.nodeIndex(NCBITaxonNode.NCBI_TAXON_ID_INDEX, indexProps);
+
+                BufferedReader reader = new BufferedReader(new FileReader(inFile));
+                String line;
+
                 while ((line = reader.readLine()) != null) {
 
                     String[] columns = line.split("\t");
 
                     int giId = Integer.parseInt(columns[0]);
-                    int taxId = Integer.parseInt(columns[1]);                  
-                    
-                    Long nCBITaxonNodeId = taxonIndex.get(NCBITaxonNode.NCBI_TAXON_ID_INDEX,String.valueOf(taxId)).getSingle();
-                    
-                    if(nCBITaxonNodeId != null){
-                        giIndex.add(nCBITaxonNodeId, MapUtil.map(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId));                        
-                    }else{
+                    int taxId = Integer.parseInt(columns[1]);
+
+                    Long nCBITaxonNodeId = taxonIndex.get(NCBITaxonNode.NCBI_TAXON_ID_INDEX, String.valueOf(taxId)).getSingle();
+
+                    if (nCBITaxonNodeId != null) {
+                        giIndex.add(nCBITaxonNodeId, MapUtil.map(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId));
+                    } else {
 //                        System.out.println("NCBI taxon node is null ... :(");
 //                        System.out.println("giId = " + giId);
 //                        System.out.println("taxId = " + taxId);
-                        
+
                         outBufferedWriter.write(giId + "\t" + taxId + "\n");
-                    } 
+                    }
 
                     lineCounter++;
-                    
+
                     if (lineCounter % 100000 == 0) {
-                        System.out.println("lineCounter = " + lineCounter);                        
+                        System.out.println("lineCounter = " + lineCounter);
                         outBufferedWriter.flush();
                     }
                 }
-                reader.close();          
-                
+                reader.close();
+
                 outBufferedWriter.close();
 
             } catch (Exception e) {
                 Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, e);
             } finally {
-                
+
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 indexProvider.shutdown();
                 inserter.shutdown();
+
+                try {
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program IndexNCBITaxonomyByGiId:\nInput file: " + inFile.getName()
+                            + "\nThere were " + lineCounter + " taxonomic units indexed.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
-
-
 
         }
     }

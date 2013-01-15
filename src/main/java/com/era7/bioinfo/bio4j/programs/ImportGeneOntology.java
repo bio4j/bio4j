@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -21,9 +21,7 @@ import com.era7.bioinfo.bio4j.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -73,16 +71,22 @@ public class ImportGeneOntology implements Executable {
                     + "3. Batch inserter .properties file");
             
         } else {
+            
+            long initTime = System.nanoTime();
+            
             File inFile = new File(args[0]);
-
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
             
-            BatchInserterIndex goTermIdIndex = null;
-            BatchInserterIndex isAGoRelIndex = null;
-            BatchInserterIndex nodeTypeIndex = null;
+            BatchInserterIndex goTermIdIndex;
+            BatchInserterIndex isAGoRelIndex;
+            BatchInserterIndex nodeTypeIndex;
+            
+            BufferedWriter statsBuff = null;
 
+            int termCounter = 0;
+            int limitForPrintingOut = 10000;
 
             try {
 
@@ -92,10 +96,12 @@ public class ImportGeneOntology implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+                
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportGeneOntologyStats.txt")));
 
                 // create the batch inserter
-                inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
-                
+                inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));                
 
                 // create the batch index service
                 indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
@@ -129,12 +135,10 @@ public class ImportGeneOntology implements Executable {
                 Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> partOfMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> hasPartMap = new HashMap<String, ArrayList<String>>();
-
-                int counter = 1;
-                int limitForPrintingOut = 10000;
+             
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
-                String line = null;
+                String line;
                 StringBuilder termStBuilder = new StringBuilder();
 
                 logger.log(Level.INFO, "inserting nodes....");
@@ -295,9 +299,9 @@ public class ImportGeneOntology implements Executable {
                         //----------------------                        
 
                     }
-                    counter++;
-                    if ((counter % limitForPrintingOut) == 0) {
-                        logger.log(Level.INFO, (counter + " terms inserted!!"));
+                    termCounter++;
+                    if ((termCounter % limitForPrintingOut) == 0) {
+                        logger.log(Level.INFO, (termCounter + " terms inserted!!"));
                     }
                 }
                 reader.close();
@@ -404,9 +408,23 @@ public class ImportGeneOntology implements Executable {
                     fh.close();
                     logger.log(Level.INFO, "Closing up inserter and index service....");
                     // shutdown, makes sure all changes are written to disk
-                    //indexService.shutdown();
                     indexProvider.shutdown();
                     inserter.shutdown();
+                    
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds/3600;
+                    long minutes = (elapsedSeconds % 3600)/60;
+                    long seconds = (elapsedSeconds % 3600)%60;
+                            
+                    statsBuff.write("Statistics for program ImportGeneOntology:\nInput file: " + inFile.getName()
+                            + "\nThere were " + termCounter + " terms inserted.\n" +
+                            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                    
 
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());

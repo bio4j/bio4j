@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j
  *
  * This file is part of Bio4j
  *
@@ -25,9 +25,7 @@ import com.era7.bioinfo.bio4j.model.relationships.uniref.UniRef90MemberRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
@@ -41,6 +39,7 @@ import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Imports uniref(100,90,50) clusters info into Bio4j
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportUniref implements Executable {
@@ -75,6 +74,8 @@ public class ImportUniref implements Executable {
                     + "5. batch inserter .properties file");
         } else {
 
+            long initTime = System.nanoTime();
+
             File uniref100File = new File(args[0]);
             File uniref90File = new File(args[1]);
             File uniref50File = new File(args[2]);
@@ -87,6 +88,9 @@ public class ImportUniref implements Executable {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
 
+            BufferedWriter statsBuff = null;
+            
+            int uniref100EntryCounter =0, uniref90EntryCounter = 0, uniref50EntryCounter = 0;
 
             try {
 
@@ -96,6 +100,9 @@ public class ImportUniref implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUnirefStats.txt")));
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[3], MapUtil.load(new File(args[4])));
@@ -112,13 +119,13 @@ public class ImportUniref implements Executable {
 
                 //------------------- UNIREF 100----------------------------
                 System.out.println("Reading Uniref 100 file...");
-                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref100File, uniRef100MemberRel);
+                uniref100EntryCounter = importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref100File, uniRef100MemberRel);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 90 file...");
-                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref90File, uniRef90MemberRel);
+                uniref90EntryCounter = importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref90File, uniRef90MemberRel);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 50 file...");
-                importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref50File, uniRef50MemberRel);
+                uniref50EntryCounter = importUnirefFile(inserter, proteinAccessionIndex, isoformIdIndex, uniref50File, uniRef50MemberRel);
                 System.out.println("Done! :)");
 
 
@@ -135,6 +142,27 @@ public class ImportUniref implements Executable {
                     //closing no4j managers
                     indexProvider.shutdown();
                     inserter.shutdown();
+                    
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program ImportUniref:\nInput files: " + 
+                            "\nUniref 100 file: " + uniref100File.getName() +
+                            "\nUniref 90 file: " + uniref90File.getName() +
+                            "\nUniref 50 file: " + uniref50File.getName()
+                            + "\nThe following number of entries was parsed:\n"
+                            + "Uniref 100 --> " + uniref100EntryCounter + " entries\n"
+                            + "Uniref 90 --> " + uniref90EntryCounter + " entries\n"
+                            + "Uniref 50 --> " + uniref50EntryCounter + " entries\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                    
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());
                     StackTraceElement[] trace = e.getStackTrace();
@@ -164,7 +192,7 @@ public class ImportUniref implements Executable {
         return result;
     }
 
-    private static void importUnirefFile(BatchInserter inserter,
+    private static int importUnirefFile(BatchInserter inserter,
             BatchInserterIndex proteinAccessionIndex,
             BatchInserterIndex isoformIdIndex,
             File unirefFile,
@@ -173,9 +201,9 @@ public class ImportUniref implements Executable {
         StringBuilder entryStBuilder = new StringBuilder();
 
         BufferedReader reader = new BufferedReader(new FileReader(unirefFile));
-        String line = null;
+        String line;
 
-        int counter = 1;
+        int entryCounter = 0;
         int limitForPrintingOut = 10000;
 
         while ((line = reader.readLine()) != null) {
@@ -207,11 +235,11 @@ public class ImportUniref implements Executable {
                         }
                     }
                 }
-                
+
                 //System.out.println("membersAccessionList = " + membersAccessionList);
 
                 if (representantAccession != null) {
-                    
+
                     long representantId = -1;
 
                     //---The representant is an isoform----
@@ -257,20 +285,21 @@ public class ImportUniref implements Executable {
 
                         }
                     }
-                }else{
+                } else {
                     logger.log(Level.SEVERE, ("null representan accession for entry: " + entryXMLElem.asJDomElement().getAttributeValue("id")));
                 }
 
 
             }
 
-            counter++;
-            if ((counter % limitForPrintingOut) == 0) {
-                logger.log(Level.INFO, (counter + " entries parsed!!"));
+            entryCounter++;
+            if ((entryCounter % limitForPrintingOut) == 0) {
+                logger.log(Level.INFO, (entryCounter + " entries parsed!!"));
             }
 
         }
         reader.close();
-
+        
+        return entryCounter;
     }
 }

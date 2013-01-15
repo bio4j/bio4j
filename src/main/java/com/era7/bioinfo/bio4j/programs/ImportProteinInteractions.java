@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -23,10 +23,7 @@ import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoformInteract
 import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,10 +38,9 @@ import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.unsafe.batchinsert.*;
 
 /**
- * Imports protein interactions:
- * - protein <--> protein
- * - protein <--> isoform
- * - isoform <--> isoform
+ * Imports protein interactions: - protein <--> protein - protein <--> isoform -
+ * isoform <--> isoform
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportProteinInteractions implements Executable {
@@ -81,15 +77,21 @@ public class ImportProteinInteractions implements Executable {
                     + "2. Bio4j DB folder\n"
                     + "3. Batch inserter .properties file");
         } else {
+
+            long initTime = System.nanoTime();
+
             File inFile = new File(args[0]);
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
             String accessionSt = "";
 
+            BufferedWriter statsBuff = null;
+
+            int proteinCounter = 0;
+            int limitForPrintingOut = 10000;
 
             try {
-
 
                 // This block configure the logger with handler and formatter
                 fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
@@ -98,6 +100,9 @@ public class ImportProteinInteractions implements Executable {
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
                 //---------------------------------
+
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split(".")[0] + ".txt")));
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
@@ -127,12 +132,9 @@ public class ImportProteinInteractions implements Executable {
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
-                String line = null;
+                String line;
                 StringBuilder entryStBuilder = new StringBuilder();
 
-
-                int counter = 1;
-                int limitForPrintingOut = 10000;
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -230,9 +232,9 @@ public class ImportProteinInteractions implements Executable {
 
                         }
 
-                        counter++;
-                        if ((counter % limitForPrintingOut) == 0) {
-                            logger.log(Level.INFO, (counter + " proteins updated with interactions!!"));
+                        proteinCounter++;
+                        if ((proteinCounter % limitForPrintingOut) == 0) {
+                            logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
                         }
 
                     }
@@ -256,10 +258,25 @@ public class ImportProteinInteractions implements Executable {
                     indexProvider.shutdown();
                     inserter.shutdown();
 
-
                     //closing logger file handler
                     fh.close();
+
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
+                            + "\nThere were " + proteinCounter + " taxonomic units inserted.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+
                 } catch (Exception e) {
+
                     logger.log(Level.SEVERE, ("Exception retrieving protein " + accessionSt));
                     logger.log(Level.SEVERE, e.getMessage());
                     StackTraceElement[] trace = e.getStackTrace();

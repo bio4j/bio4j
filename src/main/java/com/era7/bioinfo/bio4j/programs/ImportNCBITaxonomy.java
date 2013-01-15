@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -25,9 +25,7 @@ import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,12 +67,22 @@ public class ImportNCBITaxonomy implements Executable {
                     + "5. Associate Uniprot taxonomy (true/false)");
         } else {
 
+            long initTime = System.nanoTime();
+
             Bio4jManager manager = null;
             Transaction txn = null;
+            int taxonCounter = 0;
             int txnCounter = 0;
             int txnLimitForCommit = 10000;
 
             boolean associateUniprotTaxonomy = Boolean.parseBoolean(args[4]);
+
+            BufferedWriter statsBuff = null;
+
+            File nodesDumpFile = new File(args[0]);
+            File namesDumpFile = new File(args[1]);
+            File mergedDumpFile = new File(args[2]);
+
 
             try {
 
@@ -85,12 +93,11 @@ public class ImportNCBITaxonomy implements Executable {
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
-                File nodesDumpFile = new File(args[0]);
-                File namesDumpFile = new File(args[1]);
-                File mergedDumpFile = new File(args[2]);
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportNCBITaxonomyStats.txt")));
 
                 BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
-                String line = null;
+                String line;
 
                 logger.log(Level.INFO, "creating manager...");
                 manager = new Bio4jManager(args[3], true, false);
@@ -125,6 +132,8 @@ public class ImportNCBITaxonomy implements Executable {
 
                         //saving the parent of the node for later
                         nodeParentMap.put(node.getTaxId(), columns[1].trim());
+
+                        taxonCounter++;
 
                         txnCounter++;
 
@@ -217,7 +226,7 @@ public class ImportNCBITaxonomy implements Executable {
                 logger.log(Level.INFO, "Done!");
 
                 if (associateUniprotTaxonomy) {
-                    
+
                     logger.log(Level.INFO, "Associating uniprot taxonomy...");
                     associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));
                     logger.log(Level.INFO, "Done!");
@@ -268,6 +277,26 @@ public class ImportNCBITaxonomy implements Executable {
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 manager.shutDown();
+
+                try {
+
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program ImportNCBITaxonomy:\nInput file: " + nodesDumpFile.getName()
+                            + "\nThere were " + taxonCounter + " taxonomic units inserted.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
         }

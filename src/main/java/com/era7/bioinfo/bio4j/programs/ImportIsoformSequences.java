@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -19,9 +19,7 @@ package com.era7.bioinfo.bio4j.programs;
 import com.era7.bioinfo.bio4j.model.nodes.IsoformNode;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -34,6 +32,7 @@ import org.neo4j.graphdb.index.IndexHits;
 /**
  *
  * Imports the sequence of every existent protein isoform
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportIsoformSequences implements Executable {
@@ -57,11 +56,18 @@ public class ImportIsoformSequences implements Executable {
                     + "1. Fasta file including all isoforms \n"
                     + "2. Bio4j DB folder");
         } else {
+
+            long initTime = System.nanoTime();
+
             File inFile = new File(args[0]);
 
             String isoformIdSt = null;
             Transaction txn = null;
             Bio4jManager manager = null;
+
+            BufferedWriter statsBuff = null;
+
+            int isoformCounter = 0;
 
             try {
 
@@ -71,6 +77,9 @@ public class ImportIsoformSequences implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportIsoformSequencesStats.txt")));
 
                 logger.log(Level.INFO, "creating manager...");
                 manager = new Bio4jManager(args[1]);
@@ -99,7 +108,7 @@ public class ImportIsoformSequences implements Executable {
                         while (!line.trim().startsWith(">")) {
                             seqStBuilder.append(line);
                             line = reader.readLine();
-                            if(line == null){
+                            if (line == null) {
                                 break;
                             }
                         }
@@ -113,11 +122,13 @@ public class ImportIsoformSequences implements Executable {
                             node.setSequence(sequence);
                             node.setName(isoformNameSt);
                             System.out.println("Setting name for: " + node.getId());
+
+                            isoformCounter++;
                         }
 
                     }
-                    
-                    if(line == null){
+
+                    if (line == null) {
                         break;
                     }
 
@@ -143,6 +154,27 @@ public class ImportIsoformSequences implements Executable {
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
                 manager.shutDown();
+
+                try {
+                    
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program ImportIsoformSequences:\nInput file: " + inFile.getName()
+                            + "\nThere were " + isoformCounter + " isoforms updated.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                    
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
             }
         }
     }

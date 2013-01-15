@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2012  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -18,9 +18,7 @@ package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.model.nodes.EnzymeNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -66,11 +64,19 @@ public class ImportEnzymeDB implements Executable {
                     + "3. Batch inserter .properties file");
 
         } else {
+            
+            long initTime = System.nanoTime();
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
 
-            BatchInserterIndex enzymeIdIndex = null;
+            BatchInserterIndex enzymeIdIndex;
+            
+            BufferedWriter statsBuff = null;
+            
+            File inFile = new File(args[0]);
+            
+            int enzymeCounter = 0;
 
             try {
 
@@ -80,7 +86,10 @@ public class ImportEnzymeDB implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
-
+                
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBStats.txt")));
+                
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
 
@@ -94,10 +103,9 @@ public class ImportEnzymeDB implements Executable {
                 Map<String, Object> enzymeProperties = new HashMap<String, Object>();
                 enzymeProperties.put(EnzymeNode.NODE_TYPE_PROPERTY, EnzymeNode.NODE_TYPE);
                 //--------------------------------------------------------------------------
+               
 
-                int counter = 0;
-
-                BufferedReader reader = new BufferedReader(new FileReader(new File(args[0])));
+                BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line = null;
 
                 boolean enzymeFound = false;
@@ -184,9 +192,9 @@ public class ImportEnzymeDB implements Executable {
                                 //indexing node
                                 enzymeIdIndex.add(enzymeNodeId, MapUtil.map(EnzymeNode.ENZYME_ID_INDEX,enzymeId));
 
-                                counter++;
-                                if (counter % 100 == 0) {
-                                    System.out.println(counter + " enzymes inserted...");
+                                enzymeCounter++;
+                                if (enzymeCounter % 100 == 0) {
+                                    System.out.println(enzymeCounter + " enzymes inserted...");
                                 }   
                                 
                             }
@@ -220,6 +228,20 @@ public class ImportEnzymeDB implements Executable {
                     // shutdown, makes sure all changes are written to disk
                     indexProvider.shutdown();
                     inserter.shutdown();
+                    
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds/3600;
+                    long minutes = (elapsedSeconds % 3600)/60;
+                    long seconds = (elapsedSeconds % 3600)%60;
+                            
+                    statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
+                            + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
+                            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
 
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());

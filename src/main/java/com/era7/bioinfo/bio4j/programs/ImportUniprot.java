@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -272,6 +272,9 @@ public class ImportUniprot implements Executable {
                     + "3. batch inserter .properties file \n"
                     + "4. Config XML file");
         } else {
+
+            long initTime = System.nanoTime();
+
             File inFile = new File(args[0]);
             File configFile = new File(args[3]);
 
@@ -281,6 +284,10 @@ public class ImportUniprot implements Executable {
             BatchInserterIndexProvider indexProvider = null;
 
             BufferedWriter enzymeIdsNotFoundBuff = null;
+            BufferedWriter statsBuff = null;
+
+            int proteinCounter = 0;
+            int limitForPrintingOut = 10000;
 
             try {
 
@@ -303,7 +310,11 @@ public class ImportUniprot implements Executable {
 
                 UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
+                //---creating writer for enzymes not found file-----
                 enzymeIdsNotFoundBuff = new BufferedWriter(new FileWriter(new File("EnzymeIdsNotFound.log")));
+
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotStats_" + inFile.getName().split(".")[0] + ".txt")));
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
@@ -353,11 +364,6 @@ public class ImportUniprot implements Executable {
                 reader = new BufferedReader(new FileReader(inFile));
                 StringBuilder entryStBuilder = new StringBuilder();
 
-
-                int counter = 1;
-                int limitForPrintingOut = 10000;
-                //int limitForClosingBatchInserter = 100000;
-                //int limitForOptimizingIndexService = 100000;
 
                 //----------------------------------------------------------------------------------
                 //---------------------initializing node type properties----------------------------
@@ -893,9 +899,9 @@ public class ImportUniprot implements Executable {
 
                         inserter.createRelationship(currentProteinId, organismNodeId, proteinOrganismRel, null);
 
-                        counter++;
-                        if ((counter % limitForPrintingOut) == 0) {
-                            String countProteinsSt = counter + " proteins inserted!!";
+                        proteinCounter++;
+                        if ((proteinCounter % limitForPrintingOut) == 0) {
+                            String countProteinsSt = proteinCounter + " proteins inserted!!";
                             logger.log(Level.INFO, countProteinsSt);
                         }
 
@@ -912,17 +918,34 @@ public class ImportUniprot implements Executable {
             } finally {
 
                 try {
+                    //------closing writers-------
                     enzymeIdsNotFoundBuff.close();
+
+                    // shutdown, makes sure all changes are written to disk
+                    indexProvider.shutdown();
+                    inserter.shutdown();
+
+                    // closing logger file handler
+                    fh.close();
+
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds/3600;
+                    long minutes = (elapsedSeconds % 3600)/60;
+                    long seconds = (elapsedSeconds % 3600)%60;
+                            
+                    statsBuff.write("Statistics for program ImportUniprot:\nInput file: " + inFile.getName()
+                            + "\nThere were " + proteinCounter + " proteins inserted.\n" +
+                            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+
+
                 } catch (IOException ex) {
                     Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
-                // shutdown, makes sure all changes are written to disk
-                indexProvider.shutdown();
-                inserter.shutdown();
-
-                // closing logger file handler
-                fh.close();
 
             }
         }
