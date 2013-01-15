@@ -1,5 +1,4 @@
 <scheduled_executions>	
-	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.InitBio4jDB</class_full_name>
 		<arguments>
@@ -7,8 +6,7 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>	
-	
-	
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportEnzymeDB</class_full_name>
 		<arguments>
@@ -16,7 +14,7 @@
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
 		</arguments>
-	</execution>	
+	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportGeneOntology</class_full_name>
 		<arguments>
@@ -34,22 +32,24 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>
-	-->	
-	<!--	
+	-->		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
+			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
+			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
 	<execution>
@@ -74,9 +74,7 @@
 			<argument>uniprot_sprot_varsplic.fasta</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
-	</execution>	
-	-->	
-	<!--
+	</execution>
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniref</class_full_name>
 		<arguments>
@@ -87,8 +85,7 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>
-	-->	
-	<!--
+		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportNCBITaxonomy</class_full_name>
 		<arguments>
@@ -99,6 +96,8 @@
 			<argument>true</argument>
 		</arguments>
 	</execution>
+	-->	
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.IndexNCBITaxonomyByGiId</class_full_name>
 		<arguments>
@@ -108,5 +107,4 @@
 		</arguments>
 	</execution>	
 	-->
-	
 </scheduled_executions>
