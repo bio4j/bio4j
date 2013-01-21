@@ -85,6 +85,7 @@ public class ImportEnzymeDBBP implements Executable {
             BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
                                    
             graph.createKeyIndex(EnzymeNode.ID_PROPERTY, Vertex.class);
+            graph.createKeyIndex(EnzymeNode.NODE_TYPE_PROPERTY, Vertex.class);
             
             int enzymeCounter = 0;
 
@@ -182,6 +183,8 @@ public class ImportEnzymeDBBP implements Executable {
                                 enzymeVertex.setProperty(EnzymeNode.PROSITE_CROSS_REFERENCES_PROPERTY, prositeCrossRefs.toArray(new String[0]));
                                 enzymeVertex.setProperty(EnzymeNode.CATALYTIC_ACTIVITY_PROPERTY, catalyticActivity);
                                 enzymeVertex.setProperty(EnzymeNode.COMMENTS_PROPERTY, commentsSt);
+                                //---adding node type----
+                                enzymeVertex.setProperty(EnzymeNode.NODE_TYPE_PROPERTY, EnzymeNode.NODE_TYPE);
 
                                 enzymeCounter++;
                                 if (enzymeCounter % 100 == 0) {

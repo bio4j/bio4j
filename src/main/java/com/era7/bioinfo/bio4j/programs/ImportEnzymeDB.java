@@ -17,6 +17,8 @@
 package com.era7.bioinfo.bio4j.programs;
 
 import com.era7.bioinfo.bio4j.model.nodes.EnzymeNode;
+import com.era7.bioinfo.bio4j.model.nodes.GoTermNode;
+import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.*;
 import java.util.*;
@@ -70,7 +72,7 @@ public class ImportEnzymeDB implements Executable {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
 
-            BatchInserterIndex enzymeIdIndex;
+            BatchInserterIndex enzymeIdIndex,nodeTypeIndex;
             
             BufferedWriter statsBuff = null;
             
@@ -98,6 +100,7 @@ public class ImportEnzymeDB implements Executable {
                 Map<String, String> indexProps = MapUtil.stringMap("provider", "lucene", "type", "exact");
 
                 enzymeIdIndex = indexProvider.nodeIndex(EnzymeNode.ENZYME_ID_INDEX, indexProps);
+                nodeTypeIndex = indexProvider.nodeIndex( Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
 
                 //------------------node properties maps-----------------------------------
                 Map<String, Object> enzymeProperties = new HashMap<String, Object>();
@@ -185,12 +188,15 @@ public class ImportEnzymeDB implements Executable {
                                 enzymeProperties.put(EnzymeNode.PROSITE_CROSS_REFERENCES_PROPERTY, prositeCrossRefs.toArray(new String[0]));
                                 enzymeProperties.put(EnzymeNode.CATALYTIC_ACTIVITY_PROPERTY, catalyticActivity);
                                 enzymeProperties.put(EnzymeNode.COMMENTS_PROPERTY, commentsSt);
+                                enzymeProperties.put(EnzymeNode.NODE_TYPE_PROPERTY, EnzymeNode.NODE_TYPE);
 
                                 //creating node
                                 long enzymeNodeId = inserter.createNode(enzymeProperties);
                                 
                                 //indexing node
                                 enzymeIdIndex.add(enzymeNodeId, MapUtil.map(EnzymeNode.ENZYME_ID_INDEX,enzymeId));
+                                //--------indexing node by node_type index----------
+                                nodeTypeIndex.add(enzymeNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, EnzymeNode.NODE_TYPE));
 
                                 enzymeCounter++;
                                 if (enzymeCounter % 100 == 0) {

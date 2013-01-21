@@ -21,18 +21,24 @@ import com.era7.bioinfo.bio4j.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
+import com.thinkaurelius.titan.core.TitanFactory;
+import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import org.apache.commons.configuration.BaseConfiguration;
+import org.apache.commons.configuration.Configuration;
 import org.jdom.Element;
 import org.neo4j.helpers.collection.MapUtil;
 import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Imports the Gene Ontology into Bio4j
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportGeneOntologyBP implements Executable {
@@ -69,20 +75,18 @@ public class ImportGeneOntologyBP implements Executable {
                     + "1. Gene ontology xml filename \n"
                     + "2. Bio4j DB folder \n"
                     + "3. Batch inserter .properties file");
-            
+
         } else {
-            
+
             long initTime = System.nanoTime();
-            
+
             File inFile = new File(args[0]);
 
-            BatchInserter inserter = null;
-            BatchInserterIndexProvider indexProvider = null;
-            
-            BatchInserterIndex goTermIdIndex;
-            BatchInserterIndex isAGoRelIndex;
-            BatchInserterIndex nodeTypeIndex;
-            
+            //----------DB configuration------------------
+            Configuration conf = new BaseConfiguration();
+            conf.setProperty("storage.directory", args[1]);
+            conf.setProperty("storage.backend", "local");
+
             BufferedWriter statsBuff = null;
 
             int termCounter = 0;
@@ -96,20 +100,21 @@ public class ImportGeneOntologyBP implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
-                
+
                 //---creating writer for stats file-----
                 statsBuff = new BufferedWriter(new FileWriter(new File("ImportGeneOntologyBPStats.txt")));
 
-                // create the batch inserter
-                inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));                
+                //-------creating graph handlers---------------------
+                TitanGraph graph = TitanFactory.open(conf);
+                BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
 
                 // create the batch index service
-                indexProvider =  new LuceneBatchInserterIndexProvider( inserter );
-                Map<String,String> indexProps = MapUtil.stringMap( "provider", "lucene", "type", "exact" );
-                
-                goTermIdIndex = indexProvider.nodeIndex( GoTermNode.GO_TERM_ID_INDEX, indexProps);
+                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
+                Map<String, String> indexProps = MapUtil.stringMap("provider", "lucene", "type", "exact");
+
+                goTermIdIndex = indexProvider.nodeIndex(GoTermNode.GO_TERM_ID_INDEX, indexProps);
                 isAGoRelIndex = indexProvider.relationshipIndex(IsAGoRel.IS_A_REL_INDEX, indexProps);
-                nodeTypeIndex = indexProvider.nodeIndex( Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
+                nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
 
                 //------------------nodes properties maps-----------------------------------
                 Map<String, Object> goProperties = new HashMap<String, Object>();
@@ -135,7 +140,7 @@ public class ImportGeneOntologyBP implements Executable {
                 Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> partOfMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> hasPartMap = new HashMap<String, ArrayList<String>>();
-             
+
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line;
@@ -176,21 +181,21 @@ public class ImportGeneOntologyBP implements Executable {
                             }
                         }
                         String goComment = termXMLElement.asJDomElement().getChildText(COMMENT_TAG_NAME);
-                        if(goComment == null){
+                        if (goComment == null) {
                             goComment = "";
                         }
                         String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
-                        if(goIsObsolete == null){
+                        if (goIsObsolete == null) {
                             goIsObsolete = "";
-                        }else{
-                            if(goIsObsolete.equals("1")){
+                        } else {
+                            if (goIsObsolete.equals("1")) {
                                 goIsObsolete = "true";
-                            }else{
+                            } else {
                                 goIsObsolete = "false";
                             }
                         }
 
-                        
+
                         List<Element> altIdElems = termXMLElement.asJDomElement().getChildren("alt_id");
                         String[] alternativeIds = new String[altIdElems.size()];
                         for (int i = 0; i < altIdElems.size(); i++) {
@@ -215,51 +220,51 @@ public class ImportGeneOntologyBP implements Executable {
                             String relType = relationshipTag.getChildText("type");
                             String toSt = relationshipTag.getChildText("to");
 
-                            if(relType.equals(RegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+                            if (relType.equals(RegulatesGoRel.OBOXML_RELATIONSHIP_NAME)) {
 
                                 ArrayList<String> tempArray = regulatesMap.get(goId);
-                                if(tempArray == null){
+                                if (tempArray == null) {
                                     tempArray = new ArrayList<String>();
                                     regulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
-                                
-                            }else if(relType.equals(PositivelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                            } else if (relType.equals(PositivelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)) {
 
                                 ArrayList<String> tempArray = positivelyRegulatesMap.get(goId);
-                                if(tempArray == null){
+                                if (tempArray == null) {
                                     tempArray = new ArrayList<String>();
                                     positivelyRegulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
-                                
-                            }else if(relType.equals(NegativelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)){
+
+                            } else if (relType.equals(NegativelyRegulatesGoRel.OBOXML_RELATIONSHIP_NAME)) {
 
                                 ArrayList<String> tempArray = negativelyRegulatesMap.get(goId);
-                                if(tempArray == null){
+                                if (tempArray == null) {
                                     tempArray = new ArrayList<String>();
                                     negativelyRegulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
 
-                            }else if(relType.equals(PartOfGoRel.OBOXML_RELATIONSHIP_NAME)){
+                            } else if (relType.equals(PartOfGoRel.OBOXML_RELATIONSHIP_NAME)) {
 
                                 ArrayList<String> tempArray = partOfMap.get(goId);
-                                if(tempArray == null){
+                                if (tempArray == null) {
                                     tempArray = new ArrayList<String>();
                                     partOfMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
 
-                            }else if(relType.equals(HasPartOfGoRel.OBOXML_RELATIONSHIP_NAME)){
+                            } else if (relType.equals(HasPartOfGoRel.OBOXML_RELATIONSHIP_NAME)) {
 
                                 ArrayList<String> tempArray = hasPartMap.get(goId);
-                                if(tempArray == null){
+                                if (tempArray == null) {
                                     tempArray = new ArrayList<String>();
                                     hasPartMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
-                                
+
                             }
                         }
                         //-------------------------------------
@@ -273,12 +278,12 @@ public class ImportGeneOntologyBP implements Executable {
                         goProperties.put(GoTermNode.COMMENT_PROPERTY, goComment);
                         long currentGoTermId = inserter.createNode(goProperties);
                         //--------indexing term by id (and alternative ids)----------
-                        goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,goId));
+                        goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX, goId));
                         for (int i = 0; i < alternativeIds.length; i++) {
-                            goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX,alternativeIds[i]));
+                            goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX, alternativeIds[i]));
                         }
                         //--------indexing node by node_type index----------
-                        nodeTypeIndex.add(currentGoTermId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,GoTermNode.NODE_TYPE));
+                        nodeTypeIndex.add(currentGoTermId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, GoTermNode.NODE_TYPE));
 
                         //----IS ROOT ? ----
                         Element isRootElem = termXMLElement.asJDomElement().getChild(IS_ROOT_TAG_NAME);
@@ -317,14 +322,14 @@ public class ImportGeneOntologyBP implements Executable {
 
                 //-------------------'is_a' relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
-                for (String key : keys) {                    
+                for (String key : keys) {
                     long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
                     ArrayList<String> tempArray = termParentsMap.get(key);
                     for (String string : tempArray) {
                         long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
                         long isAGorelId = inserter.createRelationship(currentNodeId, tempNodeId, isAGoRel, null);
                         //System.out.println("key = " + key);
-                        isAGoRelIndex.add(isAGorelId, MapUtil.map(IsAGoRel.IS_A_REL_INDEX,String.valueOf(currentNodeId)));
+                        isAGoRelIndex.add(isAGorelId, MapUtil.map(IsAGoRel.IS_A_REL_INDEX, String.valueOf(currentNodeId)));
                         //System.out.println("indexing key = " + key);
                     }
                 }
@@ -410,21 +415,21 @@ public class ImportGeneOntologyBP implements Executable {
                     // shutdown, makes sure all changes are written to disk
                     indexProvider.shutdown();
                     inserter.shutdown();
-                    
+
                     //-----------------writing stats file---------------------
                     long elapsedTime = System.nanoTime() - initTime;
                     long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-                    long hours = elapsedSeconds/3600;
-                    long minutes = (elapsedSeconds % 3600)/60;
-                    long seconds = (elapsedSeconds % 3600)%60;
-                            
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
                     statsBuff.write("Statistics for program ImportGeneOntology:\nInput file: " + inFile.getName()
-                            + "\nThere were " + termCounter + " terms inserted.\n" +
-                            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+                            + "\nThere were " + termCounter + " terms inserted.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
                     //---closing stats writer---
                     statsBuff.close();
-                    
+
 
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());
