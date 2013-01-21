@@ -314,7 +314,7 @@ public class ImportUniprot implements Executable {
                 enzymeIdsNotFoundBuff = new BufferedWriter(new FileWriter(new File("EnzymeIdsNotFound.log")));
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotStats_" + inFile.getName().split(".")[0] + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotStats_" + inFile.getName().split("\\.")[0] + ".txt")));
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));

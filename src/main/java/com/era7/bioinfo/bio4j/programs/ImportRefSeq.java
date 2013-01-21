@@ -12,9 +12,7 @@ import com.era7.bioinfo.bio4j.model.relationships.refseq.*;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +25,7 @@ import org.neo4j.unsafe.batchinsert.*;
 
 /**
  * Imports RefSeq complete release into Bio4j
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class ImportRefSeq implements Executable {
@@ -81,9 +80,11 @@ public class ImportRefSeq implements Executable {
                     + "3. batch inserter .properties file");
         } else {
 
-            File currentFolder = new File(args[0]);
+            long initTime = System.nanoTime();
 
-            File[] files = currentFolder.listFiles();
+            File inFolder = new File(args[0]);
+
+            File[] files = inFolder.listFiles();
 
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
@@ -104,6 +105,9 @@ public class ImportRefSeq implements Executable {
             //----------------------------------------------------------------------------------
 
 
+            BufferedWriter statsBuff = null;
+            int genomeElementCounter = 0;
+
             try {
                 // This block configures the logger with handler and formatter
                 fh = new FileHandler("ImportRefSeq.log", false);
@@ -112,6 +116,10 @@ public class ImportRefSeq implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportRefSeqStats.txt")));
+
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
@@ -124,7 +132,7 @@ public class ImportRefSeq implements Executable {
                 //----------------------------------------------------------------------
                 BatchInserterIndex genomeElementVersionIndex = indexProvider.nodeIndex(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-                BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex( Bio4jManager.NODE_TYPE_INDEX_NAME,
+                BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
 
 
@@ -134,7 +142,7 @@ public class ImportRefSeq implements Executable {
                         logger.log(Level.INFO, ("file: " + file.getName()));
 
                         BufferedReader reader = new BufferedReader(new FileReader(file));
-                        String line = null;
+                        String line;
 
                         while ((line = reader.readLine()) != null) {
 
@@ -317,7 +325,7 @@ public class ImportRefSeq implements Executable {
                                     readLineFlag = false;
 
                                 } else if (line.startsWith(GBCommon.ORIGIN_STR)) {
-                                    
+
                                     originFound = true;
 
                                     do {
@@ -348,9 +356,9 @@ public class ImportRefSeq implements Executable {
                                 geneProperties.put(GeneNode.POSITIONS_PROPERTY, genePositionsSt);
                                 long geneId = inserter.createNode(geneProperties);
                                 inserter.createRelationship(genomeElementId, geneId, genomeElementGeneRel, null);
-                                
+
                                 //indexing gene node by its node_type
-                                nodeTypeIndex.add(geneId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,GeneNode.NODE_TYPE));
+                                nodeTypeIndex.add(geneId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, GeneNode.NODE_TYPE));
                             }
 
                             //-----------CDS-----------------
@@ -358,9 +366,9 @@ public class ImportRefSeq implements Executable {
                                 cdsProperties.put(CDSNode.POSITIONS_PROPERTY, cdsPositionsSt);
                                 long cdsID = inserter.createNode(cdsProperties);
                                 inserter.createRelationship(genomeElementId, cdsID, genomeElementCDSRel, null);
-                                
+
                                 //indexing CDS node by its node_type
-                                nodeTypeIndex.add(cdsID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,CDSNode.NODE_TYPE));
+                                nodeTypeIndex.add(cdsID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CDSNode.NODE_TYPE));
                             }
 
                             //-----------misc rna-----------------
@@ -368,9 +376,9 @@ public class ImportRefSeq implements Executable {
                                 miscRnaProperties.put(MiscRNANode.POSITIONS_PROPERTY, miscRnaPositionsSt);
                                 long miscRnaID = inserter.createNode(miscRnaProperties);
                                 inserter.createRelationship(genomeElementId, miscRnaID, genomeElementMiscRnaRel, null);
-                                
+
                                 //indexing MiscRNA node by its node_type
-                                nodeTypeIndex.add(miscRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,MiscRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(miscRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, MiscRNANode.NODE_TYPE));
                             }
 
                             //-----------m rna-----------------
@@ -378,9 +386,9 @@ public class ImportRefSeq implements Executable {
                                 mRnaProperties.put(MRNANode.POSITIONS_PROPERTY, mRnaPositionsSt);
                                 long mRnaID = inserter.createNode(mRnaProperties);
                                 inserter.createRelationship(genomeElementId, mRnaID, genomeElementMRnaRel, null);
-                                
+
                                 //indexing MRNA node by its node_type
-                                nodeTypeIndex.add(mRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,MRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(mRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, MRNANode.NODE_TYPE));
                             }
 
                             //-----------nc rna-----------------
@@ -388,9 +396,9 @@ public class ImportRefSeq implements Executable {
                                 ncRnaProperties.put(NcRNANode.POSITIONS_PROPERTY, ncRnaPositionsSt);
                                 long ncRnaID = inserter.createNode(ncRnaProperties);
                                 inserter.createRelationship(genomeElementId, ncRnaID, genomeElementNcRnaRel, null);
-                                
+
                                 //indexing NCRNA node by its node_type
-                                nodeTypeIndex.add(ncRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,NcRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(ncRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, NcRNANode.NODE_TYPE));
                             }
 
                             //-----------r rna-----------------
@@ -398,9 +406,9 @@ public class ImportRefSeq implements Executable {
                                 rRnaProperties.put(RRNANode.POSITIONS_PROPERTY, rRnaPositionsSt);
                                 long rRnaID = inserter.createNode(rRnaProperties);
                                 inserter.createRelationship(genomeElementId, rRnaID, genomeElementRRnaRel, null);
-                                
+
                                 //indexing RRNA node by its node_type
-                                nodeTypeIndex.add(rRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,RRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(rRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, RRNANode.NODE_TYPE));
                             }
 
                             //-----------tm rna-----------------
@@ -408,9 +416,9 @@ public class ImportRefSeq implements Executable {
                                 tmRnaProperties.put(TmRNANode.POSITIONS_PROPERTY, tmRnaPositionsSt);
                                 long tmRnaID = inserter.createNode(tmRnaProperties);
                                 inserter.createRelationship(genomeElementId, tmRnaID, genomeElementTmRnaRel, null);
-                                
+
                                 //indexing TmRNA node by its node_type
-                                nodeTypeIndex.add(tmRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,TmRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(tmRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, TmRNANode.NODE_TYPE));
                             }
 
                             //-----------t rna-----------------
@@ -418,12 +426,14 @@ public class ImportRefSeq implements Executable {
                                 tRnaProperties.put(TRNANode.POSITIONS_PROPERTY, tRnaPositionsSt);
                                 long tRnaID = inserter.createNode(tRnaProperties);
                                 inserter.createRelationship(genomeElementId, tRnaID, genomeElementTRnaRel, null);
-                                
+
                                 //indexing TRNA node by its node_type
-                                nodeTypeIndex.add(tRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME,TRNANode.NODE_TYPE));
+                                nodeTypeIndex.add(tRnaID, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, TRNANode.NODE_TYPE));
                             }
 
                             logger.log(Level.INFO, (versionSt + " saved!"));
+
+                            genomeElementCounter++;
 
                         }
 
@@ -442,6 +452,24 @@ public class ImportRefSeq implements Executable {
                 indexProvider.shutdown();
                 inserter.shutdown();
 
+                try {
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds / 3600;
+                    long minutes = (elapsedSeconds % 3600) / 60;
+                    long seconds = (elapsedSeconds % 3600) % 60;
+
+                    statsBuff.write("Statistics for program ImportRefSeq:\nInput folder: " + inFolder.getName()
+                            + "\nThere were " + genomeElementCounter + " genome elements stored.\n"
+                            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 // closing logger file handler
                 fh.close();
 
@@ -450,7 +478,6 @@ public class ImportRefSeq implements Executable {
 
 
     }
-
 
     private static long createGenomeElementNode(String version,
             String comment,
@@ -466,7 +493,7 @@ public class ImportRefSeq implements Executable {
         long genomeElementId = inserter.createNode(genomeElementProperties);
         genomeElementVersionIndex.add(genomeElementId, MapUtil.map(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX, version));
         nodeTypeIndex.add(genomeElementId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, GenomeElementNode.NODE_TYPE));
-        
+
         return genomeElementId;
 
     }

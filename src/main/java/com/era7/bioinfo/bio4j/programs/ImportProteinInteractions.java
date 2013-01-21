@@ -102,7 +102,7 @@ public class ImportProteinInteractions implements Executable {
                 //---------------------------------
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split(".")[0] + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0] + ".txt")));
 
                 // create the batch inserter
                 inserter = BatchInserters.inserter(args[1], MapUtil.load(new File(args[2])));
@@ -269,7 +269,7 @@ public class ImportProteinInteractions implements Executable {
                     long seconds = (elapsedSeconds % 3600) % 60;
 
                     statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
-                            + "\nThere were " + proteinCounter + " taxonomic units inserted.\n"
+                            + "\nThere were " + proteinCounter + " proteins analyzed.\n"
                             + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
                     //---closing stats writer---

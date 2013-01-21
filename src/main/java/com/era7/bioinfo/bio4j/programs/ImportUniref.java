@@ -286,7 +286,7 @@ public class ImportUniref implements Executable {
                         }
                     }
                 } else {
-                    logger.log(Level.SEVERE, ("null representan accession for entry: " + entryXMLElem.asJDomElement().getAttributeValue("id")));
+                    logger.log(Level.SEVERE, ("null representant accession for entry: " + entryXMLElem.asJDomElement().getAttributeValue("id")));
                 }
 
 
