@@ -20,20 +20,18 @@ import com.era7.bioinfo.bio4j.model.nodes.EnzymeNode;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
-import com.tinkerpop.blueprints.Index;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.neo4j.helpers.collection.MapUtil;
 
 /**
  * Imports Expasy Enzyme DB into Bio4j using Blueprints (everything but Uniprot
@@ -72,6 +70,12 @@ public class ImportEnzymeDBBP implements Executable {
                     + "2. Bio4j DB folder \n");
 
         } else {
+            
+            long initTime = System.nanoTime();
+            
+            File inFile = new File(args[0]);
+            
+            BufferedWriter statsBuff = null;
 
             Configuration conf = new BaseConfiguration();
             conf.setProperty("storage.directory", args[1]);
@@ -79,8 +83,10 @@ public class ImportEnzymeDBBP implements Executable {
 
             TitanGraph graph = TitanFactory.open(conf);
             BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
+                                   
+            graph.createKeyIndex(EnzymeNode.ID_PROPERTY, Vertex.class);
             
-            //Index<Vertex> enzymeIdIndex = graph.createKeyIndex(EnzymeNode.ENZYME_ID_INDEX, Vertex.class);
+            int enzymeCounter = 0;
 
             try {
 
@@ -90,10 +96,11 @@ public class ImportEnzymeDBBP implements Executable {
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
+                
+                //---creating writer for stats file-----
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBBPStats.txt")));               
 
-                int counter = 0;
-
-                BufferedReader reader = new BufferedReader(new FileReader(new File(args[0])));
+                BufferedReader reader = new BufferedReader(new FileReader(inFile));
                 String line;
 
                 boolean enzymeFound = false;
@@ -176,14 +183,9 @@ public class ImportEnzymeDBBP implements Executable {
                                 enzymeVertex.setProperty(EnzymeNode.CATALYTIC_ACTIVITY_PROPERTY, catalyticActivity);
                                 enzymeVertex.setProperty(EnzymeNode.COMMENTS_PROPERTY, commentsSt);
 
-
-                                //bGraph.getBaseGraph().
-                                //indexing node
-                                //enzymeIdIndex.add(enzymeNodeId, MapUtil.map(EnzymeNode.ENZYME_ID_INDEX, enzymeId));
-
-                                counter++;
-                                if (counter % 100 == 0) {
-                                    System.out.println(counter + " enzymes inserted...");
+                                enzymeCounter++;
+                                if (enzymeCounter % 100 == 0) {
+                                    System.out.println(enzymeCounter + " enzymes inserted...");
                                 }
 
                             }
@@ -216,6 +218,21 @@ public class ImportEnzymeDBBP implements Executable {
                     logger.log(Level.INFO, "Closing up batch graph service....");
                     // shutdown, makes sure all changes are written to disk
                     bGraph.shutdown();
+                    
+                    //-----------------writing stats file---------------------
+                    long elapsedTime = System.nanoTime() - initTime;
+                    long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+                    long hours = elapsedSeconds/3600;
+                    long minutes = (elapsedSeconds % 3600)/60;
+                    long seconds = (elapsedSeconds % 3600)%60;
+                            
+                    statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
+                            + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
+                            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+                    //---closing stats writer---
+                    statsBuff.close();
+                    
 
                 } catch (Exception e) {
                     logger.log(Level.SEVERE, e.getMessage());
