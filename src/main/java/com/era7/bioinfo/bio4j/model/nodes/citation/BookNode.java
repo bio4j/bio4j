@@ -41,9 +41,9 @@ public class BookNode extends BasicEntity{
     public static final String NODE_TYPE = BookNode.class.getCanonicalName();
 
     /** Book name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "book_name";
     /** Year **/
-    public static final String DATE_PROPERTY = "date";
+    public static final String DATE_PROPERTY = "book_date";
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "book";
 

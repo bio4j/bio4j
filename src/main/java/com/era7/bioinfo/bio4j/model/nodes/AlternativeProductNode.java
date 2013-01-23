@@ -35,7 +35,7 @@ public class AlternativeProductNode extends BasicEntity{
     public static final String NODE_TYPE = AlternativeProductNode.class.getCanonicalName();
     public static final String ALTERNATIVE_PRODUCT_NAME_INDEX = "alternative_product_name_index";
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "alternative_product_name";
 
 
     public AlternativeProductNode(Node n){

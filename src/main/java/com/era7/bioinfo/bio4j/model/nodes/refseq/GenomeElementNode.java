@@ -39,9 +39,9 @@ public class GenomeElementNode extends BasicEntity{
     public static final String GENOME_ELEMENT_VERSION_INDEX = "genome_element_version_index";
     public static final String NODE_TYPE = GenomeElementNode.class.getCanonicalName();
 
-    public static final String VERSION_PROPERTY = "version";
-    public static final String COMMENT_PROPERTY = "comment";
-    public static final String DEFINITION_PROPERTY = "definition";
+    public static final String VERSION_PROPERTY = "genome_element_version";
+    public static final String COMMENT_PROPERTY = "genome_element_comment";
+    public static final String DEFINITION_PROPERTY = "genome_element_definition";
 
 
     public GenomeElementNode(Node n){

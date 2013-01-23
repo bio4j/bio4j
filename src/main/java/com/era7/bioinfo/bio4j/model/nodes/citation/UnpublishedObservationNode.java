@@ -35,7 +35,7 @@ import org.neo4j.graphdb.Relationship;
  */
 public class UnpublishedObservationNode extends BasicEntity{
 
-    public static final String DATE_PROPERTY = "date";
+    public static final String DATE_PROPERTY = "unpublished_observation_date";
 
     public static final String NODE_TYPE = UnpublishedObservationNode.class.getCanonicalName();
 

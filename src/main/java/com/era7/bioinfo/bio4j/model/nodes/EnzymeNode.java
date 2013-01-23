@@ -37,13 +37,13 @@ public class EnzymeNode extends BasicEntity{
     public static final String NODE_TYPE = EnzymeNode.class.getCanonicalName();
 
     /** Enzyme id (EZ number)**/
-    public static final String ID_PROPERTY = "id";
-    public static final String OFFICIAL_NAME_PROPERTY = "official_name";
-    public static final String ALTERNATE_NAMES_PROPERTY = "alternate_names";
-    public static final String CATALYTIC_ACTIVITY_PROPERTY = "catalytic_activity";
-    public static final String COFACTORS_PROPERTY = "cofactors";
-    public static final String COMMENTS_PROPERTY = "comments";
-    public static final String PROSITE_CROSS_REFERENCES_PROPERTY = "prosite_cross_references";
+    public static final String ID_PROPERTY = "enzyme_id";
+    public static final String OFFICIAL_NAME_PROPERTY = "enzyme_official_name";
+    public static final String ALTERNATE_NAMES_PROPERTY = "enzyme_alternate_names";
+    public static final String CATALYTIC_ACTIVITY_PROPERTY = "enzyme_catalytic_activity";
+    public static final String COFACTORS_PROPERTY = "enzyme_cofactors";
+    public static final String COMMENTS_PROPERTY = "enzyme_comments";
+    public static final String PROSITE_CROSS_REFERENCES_PROPERTY = "enzyme_prosite_cross_references";
 
 
     public EnzymeNode(Node n){

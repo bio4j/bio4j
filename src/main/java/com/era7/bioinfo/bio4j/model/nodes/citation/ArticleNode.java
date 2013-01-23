@@ -49,7 +49,7 @@ public class ArticleNode extends BasicEntity{
     public static final String ARTICLE_DOI_ID_INDEX = "article_doi_id_index";
 
     /** Article title */
-    public static final String TITLE_PROPERTY = "title";
+    public static final String TITLE_PROPERTY = "article_title";
     /** Article PubMed Id (if known)*/
     public static final String PUBMED_ID_PROPERTY = "pubmed_id";
     /** Article MedLine Id (if known)*/

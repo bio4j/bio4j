@@ -30,7 +30,7 @@ public class SubcellularLocationNode extends BasicEntity{
 
     public static final String NODE_TYPE = SubcellularLocationNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "subcellular_location_name";
 
 
     public SubcellularLocationNode(Node n){

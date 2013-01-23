@@ -30,7 +30,7 @@ public class InstituteNode extends BasicEntity{
     public static final String INSTITUTE_NAME_INDEX = "institute_name_index";
 
     /** Institute name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "institute_name";
 
 
     public InstituteNode(Node n){

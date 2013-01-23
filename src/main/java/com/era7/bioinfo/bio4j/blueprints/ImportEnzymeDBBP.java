@@ -84,6 +84,7 @@ public class ImportEnzymeDBBP implements Executable {
             TitanGraph graph = TitanFactory.open(conf);
             BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
                                    
+            //--------creating indices-------------
             graph.createKeyIndex(EnzymeNode.ID_PROPERTY, Vertex.class);
             graph.createKeyIndex(EnzymeNode.NODE_TYPE_PROPERTY, Vertex.class);
             

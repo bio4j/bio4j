@@ -38,23 +38,23 @@ public class GoTermNode extends BasicEntity{
     public static final String NODE_TYPE = GoTermNode.class.getCanonicalName();
 
     /** GO Term id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "go_term_id";
     /** Go Term name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "go_term_name";
     /** Go Term definition **/
-    public static final String DEFINITION_PROPERTY = "definition";
+    public static final String DEFINITION_PROPERTY = "go_term_definition";
     /** Go Term namespace.<br>
         One of these:<br>
         - Biological process<br>
         - Molecular function<br>
         - Cellular component<br>**/
-    public static final String NAMESPACE_PROPERTY = "namespace";
+    public static final String NAMESPACE_PROPERTY = "go_term_namespace";
     /**
      * Boolean value indicating whether the term is obsolete or not
      */
-    public static final String OBSOLETE_PROPERTY = "obsolete";
-    public static final String COMMENT_PROPERTY = "comment";
-    public static final String ALTERNATIVE_IDS_PROPERTY = "alternative_ids";
+    public static final String OBSOLETE_PROPERTY = "go_term_obsolete";
+    public static final String COMMENT_PROPERTY = "go_term_comment";
+    public static final String ALTERNATIVE_IDS_PROPERTY = "go_term_alternative_ids";
 
     public static final String BIOLOGICAL_PROCESS_NAMESPACE = "biological_process";
     public static final String MOLECULAR_FUNCTION_NAMESPACE = "molecular_function";

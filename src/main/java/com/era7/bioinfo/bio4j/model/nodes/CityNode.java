@@ -36,7 +36,7 @@ public class CityNode extends BasicEntity{
     public static final String NODE_TYPE = CityNode.class.getCanonicalName();
     public static final String CITY_NAME_INDEX = "city_name_index";
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "city_name";
 
 
     public CityNode(Node n){

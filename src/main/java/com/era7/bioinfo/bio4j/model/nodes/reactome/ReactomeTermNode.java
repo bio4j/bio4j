@@ -37,9 +37,9 @@ public class ReactomeTermNode extends BasicEntity{
     public static final String NODE_TYPE = ReactomeTermNode.class.getCanonicalName();
 
     /** Reactome Term id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "reactome_term_id";
     /** Reactome term pathway name **/
-    public static final String PATHWAY_NAME_PROPERTY = "pathway_name";
+    public static final String PATHWAY_NAME_PROPERTY = "reactome_term_pathway_name";
 
 
     public ReactomeTermNode(Node n){

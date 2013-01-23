@@ -40,9 +40,9 @@ public class PatentNode extends BasicEntity{
 
     public static final String NODE_TYPE = PatentNode.class.getCanonicalName();
 
-    public static final String NUMBER_PROPERTY = "number";
-    public static final String DATE_PROPERTY = "date";
-    public static final String TITLE_PROPERTY = "title";
+    public static final String NUMBER_PROPERTY = "patent_number";
+    public static final String DATE_PROPERTY = "patent_date";
+    public static final String TITLE_PROPERTY = "patent_title";
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "patent";
 

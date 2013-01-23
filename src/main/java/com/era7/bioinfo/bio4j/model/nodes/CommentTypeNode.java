@@ -56,7 +56,7 @@ public class CommentTypeNode extends BasicEntity{
     public static final String COMMENT_TYPE_NAME_INDEX = "comment_type_name_index";
     public static final String NODE_TYPE = CommentTypeNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name"; 
+    public static final String NAME_PROPERTY = "comment_type_name"; 
 
     public CommentTypeNode(Node n){
         super(n);

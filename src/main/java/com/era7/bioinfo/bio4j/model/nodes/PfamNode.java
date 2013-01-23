@@ -36,9 +36,9 @@ public class PfamNode extends BasicEntity{
     public static final String NODE_TYPE = PfamNode.class.getCanonicalName();
 
     /** Pfam family id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "pfam_id";
     /** Pfam family name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "pfam_name";
 
 
     public PfamNode(Node n){

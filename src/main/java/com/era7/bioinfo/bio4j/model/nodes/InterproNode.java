@@ -36,9 +36,9 @@ public class InterproNode extends BasicEntity{
     public static final String NODE_TYPE = InterproNode.class.getCanonicalName();
 
     /** Interpro term id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "interpro_id";
     /** Interpro term name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "interpro_name";
 
 
     public InterproNode(Node n){

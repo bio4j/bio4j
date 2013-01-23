@@ -30,13 +30,13 @@ public class IsoformNode extends BasicEntity{
     public static final String NODE_TYPE = IsoformNode.class.getCanonicalName();
 
     /** Isoform id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "isoform_id";
     /** Isoform name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "isoform_name";
     /** Isoform note **/
-    public static final String NOTE_PROPERTY = "note";
+    public static final String NOTE_PROPERTY = "isoform_note";
     /** Isoform sequence **/
-    public static final String SEQUENCE_PROPERTY = "sequence";
+    public static final String SEQUENCE_PROPERTY = "isoform_sequence";
 
 
     public IsoformNode(Node n){

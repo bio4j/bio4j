@@ -26,12 +26,12 @@ public class NCBITaxonNode extends BasicEntity{
 
     public static final String NODE_TYPE = NCBITaxonNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
-    public static final String TAX_ID_PROPERTY = "tax_id";
-    public static final String SCIENTIFIC_NAME_PROPERTY = "scientific_name";
-    public static final String RANK_PROPERTY = "rank";
-    public static final String EMBL_CODE_PROPERTY = "embl_code";
-    public static final String COMMENTS_PROPERTY = "comments";
+    public static final String NAME_PROPERTY = "ncbi_taxon_name";
+    public static final String TAX_ID_PROPERTY = "ncbi_taxon_tax_id";
+    public static final String SCIENTIFIC_NAME_PROPERTY = "ncbi_taxon_scientific_name";
+    public static final String RANK_PROPERTY = "ncbi_taxon_rank";
+    public static final String EMBL_CODE_PROPERTY = "ncbi_taxon_embl_code";
+    public static final String COMMENTS_PROPERTY = "ncbi_taxon_comments";
 
 
     public NCBITaxonNode(Node n){

@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints;
 
+import com.era7.bioinfo.bio4j.model.nodes.EnzymeNode;
 import com.era7.bioinfo.bio4j.model.nodes.GoTermNode;
 import com.era7.bioinfo.bio4j.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
@@ -23,6 +24,7 @@ import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.*;
@@ -108,31 +110,9 @@ public class ImportGeneOntologyBP implements Executable {
                 TitanGraph graph = TitanFactory.open(conf);
                 BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
 
-                // create the batch index service
-                indexProvider = new LuceneBatchInserterIndexProvider(inserter);
-                Map<String, String> indexProps = MapUtil.stringMap("provider", "lucene", "type", "exact");
-
-                goTermIdIndex = indexProvider.nodeIndex(GoTermNode.GO_TERM_ID_INDEX, indexProps);
-                isAGoRelIndex = indexProvider.relationshipIndex(IsAGoRel.IS_A_REL_INDEX, indexProps);
-                nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
-
-                //------------------nodes properties maps-----------------------------------
-                Map<String, Object> goProperties = new HashMap<String, Object>();
-                goProperties.put(GoTermNode.NODE_TYPE_PROPERTY, GoTermNode.NODE_TYPE);
-                //--------------------------------------------------------------------------
-
-                //--------------------------------relationships------------------------------------------
-                IsAGoRel isAGoRel = new IsAGoRel(null);
-                RegulatesGoRel regulatesGoRel = new RegulatesGoRel(null);
-                NegativelyRegulatesGoRel negativelyRegulatesGoRel = new NegativelyRegulatesGoRel(null);
-                PositivelyRegulatesGoRel positivelyRegulatesGoRel = new PositivelyRegulatesGoRel(null);
-                PartOfGoRel partOfGoRel = new PartOfGoRel(null);
-                HasPartOfGoRel hasPartGoRel = new HasPartOfGoRel(null);
-                MainGoRel mainGoRel = new MainGoRel(null);
-                CellularComponentRel cellularComponentRel = new CellularComponentRel(null);
-                BiologicalProcessRel biologicalProcessRel = new BiologicalProcessRel(null);
-                MolecularFunctionRel molecularFunctionRel = new MolecularFunctionRel(null);
-                //--------------------------------------------------------------------------
+                //--------creating indices-------------
+                graph.createKeyIndex(GoTermNode.ID_PROPERTY, Vertex.class);
+                graph.createKeyIndex(GoTermNode.NODE_TYPE_PROPERTY, Vertex.class);
 
                 Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> regulatesMap = new HashMap<String, ArrayList<String>>();
@@ -268,14 +248,16 @@ public class ImportGeneOntologyBP implements Executable {
                             }
                         }
                         //-------------------------------------
+                        
+                        Vertex goTermVertex = bGraph.addVertex(null);
 
-                        goProperties.put(GoTermNode.ID_PROPERTY, goId);
-                        goProperties.put(GoTermNode.NAME_PROPERTY, goName);
-                        goProperties.put(GoTermNode.DEFINITION_PROPERTY, goDefinition);
-                        goProperties.put(GoTermNode.NAMESPACE_PROPERTY, goNamespace);
-                        goProperties.put(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
-                        goProperties.put(GoTermNode.OBSOLETE_PROPERTY, goIsObsolete);
-                        goProperties.put(GoTermNode.COMMENT_PROPERTY, goComment);
+                        goTermVertex.setProperty(GoTermNode.ID_PROPERTY, goId);
+                        goTermVertex.setProperty(GoTermNode.NAME_PROPERTY, goName);
+                        goTermVertex.setProperty(GoTermNode.DEFINITION_PROPERTY, goDefinition);
+                        goTermVertex.setProperty(GoTermNode.NAMESPACE_PROPERTY, goNamespace);
+                        goTermVertex.setProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
+                        goTermVertex.setProperty(GoTermNode.OBSOLETE_PROPERTY, goIsObsolete);
+                        goTermVertex.setProperty(GoTermNode.COMMENT_PROPERTY, goComment);
                         long currentGoTermId = inserter.createNode(goProperties);
                         //--------indexing term by id (and alternative ids)----------
                         goTermIdIndex.add(currentGoTermId, MapUtil.map(GoTermNode.GO_TERM_ID_INDEX, goId));

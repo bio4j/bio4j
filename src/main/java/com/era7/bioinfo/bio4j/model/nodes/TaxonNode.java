@@ -36,7 +36,7 @@ public class TaxonNode extends BasicEntity{
 
     public static final String NODE_TYPE = TaxonNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "taxon_name";
 
 
     public TaxonNode(Node n){

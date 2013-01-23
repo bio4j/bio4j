@@ -35,7 +35,7 @@ public class JournalNode extends BasicEntity{
 
     public static final String NODE_TYPE = JournalNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "journal_name";
 
 
     public JournalNode(Node n){

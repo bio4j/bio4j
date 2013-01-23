@@ -29,7 +29,7 @@ public class ConsortiumNode extends BasicEntity{
     public static final String NODE_TYPE = ConsortiumNode.class.getCanonicalName();
 
     /** Consortium name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "consortium_name";
 
 
     public ConsortiumNode(Node n){

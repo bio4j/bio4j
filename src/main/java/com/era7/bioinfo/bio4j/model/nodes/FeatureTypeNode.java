@@ -96,7 +96,7 @@ public class FeatureTypeNode extends BasicEntity{
     public static final String NODE_TYPE = FeatureTypeNode.class.getCanonicalName();
 
     /** Feature type name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "feature_type_name";
 
 
     public FeatureTypeNode(Node n){

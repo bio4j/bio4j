@@ -30,7 +30,7 @@ public class CountryNode extends BasicEntity{
     public static final String NODE_TYPE = CountryNode.class.getCanonicalName();
 
     /** Country name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "country_name";
 
 
     public CountryNode(Node n){

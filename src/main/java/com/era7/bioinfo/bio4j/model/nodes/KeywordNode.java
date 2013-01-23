@@ -38,9 +38,9 @@ public class KeywordNode extends BasicEntity{
     public static final String NODE_TYPE = KeywordNode.class.getCanonicalName();
 
     /** Keyword id **/
-    public static final String ID_PROPERTY = "id";
+    public static final String ID_PROPERTY = "keyword_id";
     /** Keyword name **/
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "keyword_name";
 
 
     public KeywordNode(Node n){

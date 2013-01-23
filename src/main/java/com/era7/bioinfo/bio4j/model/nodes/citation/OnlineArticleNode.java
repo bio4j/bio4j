@@ -45,7 +45,7 @@ public class OnlineArticleNode extends BasicEntity{
 
 
     /** Online article title **/
-    public static final String TITLE_PROPERTY = "title";
+    public static final String TITLE_PROPERTY = "online_article_title";
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "online journal article";
 

@@ -60,24 +60,24 @@ public class ProteinNode extends BasicEntity {
 
     public static final String NODE_TYPE = ProteinNode.class.getCanonicalName();
     
-    public static final String NAME_PROPERTY = "name";
-    public static final String FULL_NAME_PROPERTY = "full_name";
-    public static final String SHORT_NAME_PROPERTY = "short_name";
-    public static final String ACCESSION_PROPERTY = "accession";
-    public static final String SEQUENCE_PROPERTY = "sequence";
-    public static final String MASS_PROPERTY = "mass";
-    public static final String LENGTH_PROPERTY = "length";
-    public static final String MODIFIED_DATE_PROPERTY = "modified_date";
-    public static final String GENE_NAMES_PROPERTY = "gene_names";
-    public static final String ENSEMBL_ID_PROPERTY = "ensembl_id";
-    public static final String PIR_ID_PROPERTY = "pir_id";
-    public static final String KEGG_ID_PROPERTY = "kegg_id";
-    public static final String EMBL_REFERENCES_PROPERTY = "embl_references";
-    public static final String REFSEQ_REFERENCES_PROPERTY = "refseq_references";
-    public static final String ARRAY_EXPRESS_ID_PROPERTY = "array_express_id";
-    public static final String UNIGENE_ID_PROPERTY = "unigene_id";
-    public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "alternative_accessions";
-    public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "ensembl_plants_references";
+    public static final String NAME_PROPERTY = "protein_name";
+    public static final String FULL_NAME_PROPERTY = "protein_full_name";
+    public static final String SHORT_NAME_PROPERTY = "protein_short_name";
+    public static final String ACCESSION_PROPERTY = "protein_accession";
+    public static final String SEQUENCE_PROPERTY = "protein_sequence";
+    public static final String MASS_PROPERTY = "protein_mass";
+    public static final String LENGTH_PROPERTY = "protein_length";
+    public static final String MODIFIED_DATE_PROPERTY = "protein_modified_date";
+    public static final String GENE_NAMES_PROPERTY = "protein_gene_names";
+    public static final String ENSEMBL_ID_PROPERTY = "protein_ensembl_id";
+    public static final String PIR_ID_PROPERTY = "protein_pir_id";
+    public static final String KEGG_ID_PROPERTY = "protein_kegg_id";
+    public static final String EMBL_REFERENCES_PROPERTY = "protein_embl_references";
+    public static final String REFSEQ_REFERENCES_PROPERTY = "protein_refseq_references";
+    public static final String ARRAY_EXPRESS_ID_PROPERTY = "protein_array_express_id";
+    public static final String UNIGENE_ID_PROPERTY = "protein_unigene_id";
+    public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "protein_alternative_accessions";
+    public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
 
     //public static final String GENE_NAMES_SEPARATOR = "\t";
 

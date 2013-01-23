@@ -41,8 +41,8 @@ public class ThesisNode extends BasicEntity{
 
     public static final String NODE_TYPE = ThesisNode.class.getCanonicalName();
 
-    public static final String TITLE_PROPERTY = "title";
-    public static final String DATE_PROPERTY = "date";
+    public static final String TITLE_PROPERTY = "thesis_title";
+    public static final String DATE_PROPERTY = "thesis_date";
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "thesis";
 

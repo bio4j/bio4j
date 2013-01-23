@@ -29,7 +29,7 @@ public class DatasetNode extends BasicEntity{
     public static final String DATASET_NAME_INDEX = "dataset_name_index";
     public static final String NODE_TYPE = DatasetNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "dataset_name";
 
 
     public DatasetNode(Node n){

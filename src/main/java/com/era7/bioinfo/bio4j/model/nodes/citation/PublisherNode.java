@@ -36,7 +36,7 @@ public class PublisherNode extends BasicEntity{
 
     public static final String NODE_TYPE = PublisherNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "publisher_name";
 
 
     public PublisherNode(Node n){

@@ -35,7 +35,7 @@ public class DBNode extends BasicEntity{
 
     public static final String NODE_TYPE = DBNode.class.getCanonicalName();
 
-    public static final String NAME_PROPERTY = "name";
+    public static final String NAME_PROPERTY = "db_name";
 
 
     public DBNode(Node n){
