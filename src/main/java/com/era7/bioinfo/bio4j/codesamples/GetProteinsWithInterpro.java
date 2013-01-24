@@ -16,11 +16,11 @@
  */
 package com.era7.bioinfo.bio4j.codesamples;
 
-import com.era7.bioinfo.bio4j.model.nodes.InterproNode;
-import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinInterproRel;
-import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.InterproNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinInterproRel;
+import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.neo4j.model.util.NodeRetriever;
 import java.util.Iterator;
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Relationship;

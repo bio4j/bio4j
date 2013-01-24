@@ -16,9 +16,9 @@
  */
 package com.era7.bioinfo.bio4j.codesamples;
 
-import com.era7.bioinfo.bio4j.model.nodes.EnzymeNode;
-import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.EnzymeNode;
+import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.neo4j.model.util.NodeRetriever;
 
 /**
  *

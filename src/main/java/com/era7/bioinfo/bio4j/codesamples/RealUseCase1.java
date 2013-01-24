@@ -17,16 +17,16 @@
 package com.era7.bioinfo.bio4j.codesamples;
 
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4j.model.nodes.InterproNode;
-import com.era7.bioinfo.bio4j.model.nodes.OrganismNode;
-import com.era7.bioinfo.bio4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.model.nodes.TaxonNode;
-import com.era7.bioinfo.bio4j.model.nodes.refseq.CDSNode;
-import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinInterproRel;
-import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinOrganismRel;
-import com.era7.bioinfo.bio4j.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.InterproNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.OrganismNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.TaxonNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.CDSNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinInterproRel;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinOrganismRel;
+import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.neo4j.model.util.NodeRetriever;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
