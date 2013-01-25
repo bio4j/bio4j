@@ -16,10 +16,10 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementMRnaRel;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementMRnaRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  *
@@ -29,28 +29,12 @@ public class MRNANode extends RNANode{
     
     public static final String NODE_TYPE = MRNANode.class.getCanonicalName();
     
-    public MRNANode(Node n){
-        super(n);
+    public MRNANode(Vertex v){
+        super(v);
     }
     
     public GenomeElementNode getGenomeElement(){
-        return new GenomeElementNode(node.getRelationships(new GenomeElementMRnaRel(null), Direction.INCOMING).iterator().next().getStartNode());
+        return new GenomeElementNode(vertex.getVertices(Direction.IN, GenomeElementMRnaRel.NAME).iterator().next());
     }
-    
-    
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof MRNANode){
-            MRNANode other = (MRNANode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-    
+        
 }

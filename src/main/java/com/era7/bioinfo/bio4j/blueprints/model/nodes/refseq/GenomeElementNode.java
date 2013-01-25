@@ -17,24 +17,22 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinGenomeElementRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGenomeElementRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Organisms genome elements
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GenomeElementNode extends BasicEntity{
+public class GenomeElementNode extends BasicNode{
 
-    public static final String GENOME_ELEMENT_VERSION_INDEX = "genome_element_version_index";
     public static final String NODE_TYPE = GenomeElementNode.class.getCanonicalName();
 
     public static final String VERSION_PROPERTY = "genome_element_version";
@@ -42,27 +40,27 @@ public class GenomeElementNode extends BasicEntity{
     public static final String DEFINITION_PROPERTY = "genome_element_definition";
 
 
-    public GenomeElementNode(Node n){
-        super(n);
+    public GenomeElementNode(Vertex v){
+        super(v);
     }
 
 
-    public String getVersion(){  return String.valueOf(node.getProperty(VERSION_PROPERTY));}
-    public String getComment(){    return String.valueOf(node.getProperty(COMMENT_PROPERTY));}
-    public String getDefinition(){  return String.valueOf(node.getProperty(DEFINITION_PROPERTY));}
+    public String getVersion(){  return String.valueOf(vertex.getProperty(VERSION_PROPERTY));}
+    public String getComment(){    return String.valueOf(vertex.getProperty(COMMENT_PROPERTY));}
+    public String getDefinition(){  return String.valueOf(vertex.getProperty(DEFINITION_PROPERTY));}
 
 
-    public void setVersion(String value){    node.setProperty(VERSION_PROPERTY, value);}
-    public void setComment(String value){  node.setProperty(COMMENT_PROPERTY, value);}
-    public void setDefinition(String value){  node.setProperty(DEFINITION_PROPERTY, value);}
+    public void setVersion(String value){    vertex.setProperty(VERSION_PROPERTY, value);}
+    public void setComment(String value){  vertex.setProperty(COMMENT_PROPERTY, value);}
+    public void setDefinition(String value){  vertex.setProperty(DEFINITION_PROPERTY, value);}
 
     
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new LinkedList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinGenomeElementRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinGenomeElementRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  

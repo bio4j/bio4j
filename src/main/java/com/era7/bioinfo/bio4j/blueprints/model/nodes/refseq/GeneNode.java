@@ -17,16 +17,16 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementGeneRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementCDSRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Gene
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GeneNode extends BasicEntity{
+public class GeneNode extends BasicNode{
 
     public static final String NODE_TYPE = GeneNode.class.getCanonicalName();
 
@@ -34,35 +34,20 @@ public class GeneNode extends BasicEntity{
     public static final String POSITIONS_PROPERTY = "positions";
 
 
-    public GeneNode(Node n){
-        super(n);
+    public GeneNode(Vertex v){
+        super(v);
     }
 
 
-    public String getPositions(){   return String.valueOf(node.getProperty(POSITIONS_PROPERTY));}
-    public String getNote(){   return String.valueOf(node.getProperty(NOTE_PROPERTY));}
+    public String getPositions(){   return String.valueOf(vertex.getProperty(POSITIONS_PROPERTY));}
+    public String getNote(){   return String.valueOf(vertex.getProperty(NOTE_PROPERTY));}
 
 
-    public void setPositions(String value){ node.setProperty(POSITIONS_PROPERTY, value);}
-    public void setNote(String value){ node.setProperty(NOTE_PROPERTY, value);}
+    public void setPositions(String value){ vertex.setProperty(POSITIONS_PROPERTY, value);}
+    public void setNote(String value){ vertex.setProperty(NOTE_PROPERTY, value);}
 
     public GenomeElementNode getGenomeElement(){
-        return new GenomeElementNode(node.getRelationships(new GenomeElementGeneRel(null), Direction.INCOMING).iterator().next().getStartNode());
-    }    
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof GeneNode){
-            GeneNode other = (GeneNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
+        return new GenomeElementNode(vertex.getVertices(Direction.IN, GenomeElementCDSRel.NAME).iterator().next());
+    }   
 
 }
