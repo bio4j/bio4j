@@ -18,6 +18,9 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookPublisherRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,47 +31,31 @@ import java.util.List;
  */
 public class PublisherNode extends BasicNode{
 
-    public static final String PUBLISHER_NAME_INDEX = "publisher_name_index";
-
     public static final String NODE_TYPE = PublisherNode.class.getCanonicalName();
 
     public static final String NAME_PROPERTY = "publisher_name";
 
 
-    public PublisherNode(Node n){
-        super(n);
+    public PublisherNode(Vertex v){
+        super(v);
     }
 
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
     public List<BookNode> getBooks(){
         List<BookNode> list = new LinkedList<BookNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new BookPublisherRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, BookPublisherRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new BookNode(iterator.next().getStartNode()));
+            list.add(new BookNode(iterator.next()));
         }
         return list;
     }
 
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof PublisherNode){
-            PublisherNode other = (PublisherNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public String toString(){

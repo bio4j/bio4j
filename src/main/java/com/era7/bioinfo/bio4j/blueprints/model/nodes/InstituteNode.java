@@ -14,54 +14,37 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
-import org.neo4j.graphdb.Node;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * This class just models a Research Institute.
+ *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InstituteNode extends BasicEntity{ 
+public class InstituteNode extends BasicNode {
 
     public static final String NODE_TYPE = InstituteNode.class.getCanonicalName();
-    public static final String INSTITUTE_NAME_INDEX = "institute_name_index";
-
-    /** Institute name **/
+    /**
+     * Institute name *
+     */
     public static final String NAME_PROPERTY = "institute_name";
 
-
-    public InstituteNode(Node n){
-        super(n);
+    public InstituteNode(Vertex v) {
+        super(v);
     }
 
+    public String getName() {
+        return String.valueOf(vertex.getProperty(NAME_PROPERTY));
+    }
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
-
-
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
-
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
+    public void setName(String value) {
+        vertex.setProperty(NAME_PROPERTY, value);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof InstituteNode){
-            InstituteNode other = (InstituteNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-
-    @Override
-    public String toString(){
+    public String toString() {
         return "name = " + getName();
     }
-
 }

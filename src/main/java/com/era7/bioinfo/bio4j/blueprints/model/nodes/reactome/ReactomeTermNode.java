@@ -17,23 +17,21 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinReactomeRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinReactomeRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ReactomeTermNode extends BasicEntity{
+public class ReactomeTermNode extends BasicNode{
 
-    public static final String REACTOME_TERM_ID_INDEX = "reactome_term_id_index";
     public static final String NODE_TYPE = ReactomeTermNode.class.getCanonicalName();
 
     /** Reactome Term id **/
@@ -42,46 +40,30 @@ public class ReactomeTermNode extends BasicEntity{
     public static final String PATHWAY_NAME_PROPERTY = "reactome_term_pathway_name";
 
 
-    public ReactomeTermNode(Node n){
-        super(n);
+    public ReactomeTermNode(Vertex v){
+        super(v);
     }
 
 
-    public String getId(){  return String.valueOf(node.getProperty(ID_PROPERTY));}
-    public String getPathwayName(){    return String.valueOf(node.getProperty(PATHWAY_NAME_PROPERTY));}
+    public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    public String getPathwayName(){    return String.valueOf(vertex.getProperty(PATHWAY_NAME_PROPERTY));}
 
 
-    public void setId(String value){    node.setProperty(ID_PROPERTY, value);}
-    public void setPathwayName(String value){  node.setProperty(PATHWAY_NAME_PROPERTY, value);}
+    public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    public void setPathwayName(String value){  vertex.setProperty(PATHWAY_NAME_PROPERTY, value);}
   
     
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new LinkedList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinReactomeRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinReactomeRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  
     }
-    
-    
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof ReactomeTermNode){
-            ReactomeTermNode other = (ReactomeTermNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-
+      
     @Override
     public String toString(){
         return "id = " + getId() +

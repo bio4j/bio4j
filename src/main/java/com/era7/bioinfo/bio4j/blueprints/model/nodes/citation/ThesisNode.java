@@ -18,6 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.InstituteNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisInstituteRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,8 +36,6 @@ import java.util.List;
  */
 public class ThesisNode extends BasicNode{
 
-    public static final String THESIS_TITLE_FULL_TEXT_INDEX = "thesis_title_full_text_index";
-
     public static final String NODE_TYPE = ThesisNode.class.getCanonicalName();
 
     public static final String TITLE_PROPERTY = "thesis_title";
@@ -38,17 +44,17 @@ public class ThesisNode extends BasicNode{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "thesis";
 
 
-    public ThesisNode(Node n){
-        super(n);
+    public ThesisNode(Vertex v){
+        super(v);
     }
 
 
-    public String getTitle(){    return String.valueOf(node.getProperty(TITLE_PROPERTY));}
-    public String getDate(){    return String.valueOf(node.getProperty(DATE_PROPERTY));}
+    public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
+    public String getDate(){    return String.valueOf(vertex.getProperty(DATE_PROPERTY));}
 
 
-    public void setTitle(String value){  node.setProperty(TITLE_PROPERTY, value);}
-    public void setDate(String value){  node.setProperty(DATE_PROPERTY, value);}
+    public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
+    public void setDate(String value){  vertex.setProperty(DATE_PROPERTY, value);}
     
     
     /**
@@ -56,9 +62,9 @@ public class ThesisNode extends BasicNode{
      * @return 
      */
     public InstituteNode getInstitute(){
-        Iterator<Relationship> iterator = this.node.getRelationships(new ThesisInstituteRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisInstituteRel.NAME).iterator();
         if(iterator.hasNext()){
-            return new InstituteNode(iterator.next().getEndNode());
+            return new InstituteNode(iterator.next());
         }else{
             return null;
         }
@@ -69,9 +75,9 @@ public class ThesisNode extends BasicNode{
      * @return 
      */
     public PersonNode getAuthor(){
-        Iterator<Relationship> iterator = this.node.getRelationships(new ThesisAuthorRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisAuthorRel.NAME).iterator();
         if(iterator.hasNext()){
-            return new PersonNode(iterator.next().getEndNode());
+            return new PersonNode(iterator.next());
         }else{
             return null;
         }
@@ -80,27 +86,11 @@ public class ThesisNode extends BasicNode{
     
     public List<ProteinNode> getProteinCitations(){
         List<ProteinNode> list = new LinkedList<ProteinNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new ThesisProteinCitationRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new ProteinNode(iterator.next().getEndNode()));
+            list.add(new ProteinNode(iterator.next()));
         }
         return list;
-    }
-
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof ThesisNode){
-            ThesisNode other = (ThesisNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
     }
 
     @Override

@@ -17,6 +17,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ConsortiumNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionDbRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionProteinCitationRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -27,8 +35,6 @@ import java.util.List;
  */
 public class SubmissionNode extends BasicNode{
 
-    public static final String SUBMISSION_TITLE_INDEX = "submission_title_index";
-
     public static final String NODE_TYPE = SubmissionNode.class.getCanonicalName();
 
     public static final String TITLE_PROPERTY = "submission_title";
@@ -37,17 +43,17 @@ public class SubmissionNode extends BasicNode{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "submission";
 
 
-    public SubmissionNode(Node n){
-        super(n);
+    public SubmissionNode(Vertex v){
+        super(v);
     }
 
 
-    public String getTitle(){    return String.valueOf(node.getProperty(TITLE_PROPERTY));}
-    public String getDate(){    return String.valueOf(node.getProperty(DATE_PROPERTY));}
+    public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
+    public String getDate(){    return String.valueOf(vertex.getProperty(DATE_PROPERTY));}
 
 
-    public void setTitle(String value){  node.setProperty(TITLE_PROPERTY, value);}
-    public void setDate(String value){  node.setProperty(DATE_PROPERTY, value);}
+    public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
+    public void setDate(String value){  vertex.setProperty(DATE_PROPERTY, value);}
     
     
     /**
@@ -55,9 +61,9 @@ public class SubmissionNode extends BasicNode{
      * @return 
      */
     public DBNode getDB(){
-        Iterator<Relationship> iterator = this.node.getRelationships(new SubmissionDbRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, SubmissionDbRel.NAME).iterator();
         if(iterator.hasNext()){
-            return new DBNode(iterator.next().getEndNode());
+            return new DBNode(iterator.next());
         }else{
             return null;
         }
@@ -69,10 +75,10 @@ public class SubmissionNode extends BasicNode{
      */
     public List<ConsortiumNode> getConsortiumAuthors(){
         List<ConsortiumNode> list = new ArrayList<ConsortiumNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new SubmissionAuthorRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, SubmissionAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
-            Node currentNode = iterator.next().getEndNode();
-            if(currentNode.getProperty(BasicEntity.NODE_TYPE_PROPERTY).equals(ConsortiumNode.NODE_TYPE)){
+            Vertex currentNode = iterator.next();
+            if(currentNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(ConsortiumNode.NODE_TYPE)){
                 list.add(new ConsortiumNode(currentNode));
             } 
         }
@@ -84,10 +90,10 @@ public class SubmissionNode extends BasicNode{
      */
     public List<PersonNode> getPersonAuthors(){
         List<PersonNode> list = new ArrayList<PersonNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new SubmissionAuthorRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, SubmissionAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
-            Node currentNode = iterator.next().getEndNode();
-            if(currentNode.getProperty(BasicEntity.NODE_TYPE_PROPERTY).equals(PersonNode.NODE_TYPE)){
+            Vertex currentNode = iterator.next();
+            if(currentNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(PersonNode.NODE_TYPE)){
                 list.add(new PersonNode(currentNode));
             } 
         }
@@ -96,28 +102,13 @@ public class SubmissionNode extends BasicNode{
     
     public List<ProteinNode> getProteinCitations(){
         List<ProteinNode> list = new LinkedList<ProteinNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new SubmissionProteinCitationRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, SubmissionProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new ProteinNode(iterator.next().getEndNode()));
+            list.add(new ProteinNode(iterator.next()));
         }
         return list;
     }
 
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof SubmissionNode){
-            SubmissionNode other = (SubmissionNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public String toString(){
