@@ -17,10 +17,12 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.ArticleNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ArticleNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Proteins one article references
@@ -30,20 +32,20 @@ public class ArticleProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "ARTICLE_PROTEIN_CITATION";
 
-    public ArticleProteinCitationRel(Relationship rel){
-        super(rel);
+    public ArticleProteinCitationRel(Edge e){
+        super(e);
     }
     
     public ArticleNode getArticle(){
-        return new ArticleNode(getStartNode());
+        return new ArticleNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

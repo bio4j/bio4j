@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -30,12 +30,12 @@ public class AlternativeProductPromoterRel extends BasicRelationship{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "alternative promoter";
 
-    public AlternativeProductPromoterRel(Relationship rel){
-        super(rel);
+    public AlternativeProductPromoterRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

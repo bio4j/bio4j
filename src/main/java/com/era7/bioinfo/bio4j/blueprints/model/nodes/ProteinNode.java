@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.SignalPeptideFeatureRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.SpliceVariantFeatureRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
@@ -310,7 +311,7 @@ public class ProteinNode extends BasicNode {
     public List<SpliceVariantFeatureRel> getSpliceVariantFeature(){
         List<SpliceVariantFeatureRel> list = new ArrayList<SpliceVariantFeatureRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new SpliceVariantFeatureRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SpliceVariantFeatureRel.NAME).iterator();
         while(iterator.hasNext()){
             SpliceVariantFeatureRel rel = new SpliceVariantFeatureRel(iterator.next());
             list.add(rel);                        

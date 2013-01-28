@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.ArticleNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.JournalNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ArticleNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.JournalNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Article journal
@@ -35,31 +36,31 @@ public class ArticleJournalRel extends BasicRelationship{
     public static final String FIRST_PROPERTY = "first";
     public static final String LAST_PROPERTY = "last";
 
-    public ArticleJournalRel(Relationship rel){
-        super(rel);
+    public ArticleJournalRel(Edge e){
+        super(e);
     }
 
-    public String getDate(){    return String.valueOf(this.relationship.getProperty(DATE_PROPERTY));}
-    public String getVolume(){    return String.valueOf(this.relationship.getProperty(VOLUME_PROPERTY));}
-    public String getFirst(){    return String.valueOf(this.relationship.getProperty(FIRST_PROPERTY));}
-    public String getLast(){    return String.valueOf(this.relationship.getProperty(LAST_PROPERTY));}
+    public String getDate(){    return String.valueOf(edge.getProperty(DATE_PROPERTY));}
+    public String getVolume(){    return String.valueOf(edge.getProperty(VOLUME_PROPERTY));}
+    public String getFirst(){    return String.valueOf(edge.getProperty(FIRST_PROPERTY));}
+    public String getLast(){    return String.valueOf(edge.getProperty(LAST_PROPERTY));}
 
-    public void setDate(String value){  this.relationship.setProperty(DATE_PROPERTY, value);}
-    public void setVolume(String value){  this.relationship.setProperty(VOLUME_PROPERTY, value);}
-    public void setFirst(String value){  this.relationship.setProperty(FIRST_PROPERTY, value);}
-    public void setLast(String value){  this.relationship.setProperty(LAST_PROPERTY, value);}
+    public void setDate(String value){  edge.setProperty(DATE_PROPERTY, value);}
+    public void setVolume(String value){  edge.setProperty(VOLUME_PROPERTY, value);}
+    public void setFirst(String value){  edge.setProperty(FIRST_PROPERTY, value);}
+    public void setLast(String value){  edge.setProperty(LAST_PROPERTY, value);}
 
     public ArticleNode getArticle(){
-        return new ArticleNode(getStartNode());
+        return new ArticleNode(getVertex(Direction.IN));
     }
     
     public JournalNode getJournal(){
-        return new JournalNode(getEndNode());
+        return new JournalNode(getVertex(Direction.OUT));
     }
     
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

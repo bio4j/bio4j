@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -30,12 +30,12 @@ public class AlternativeProductRibosomalFrameshiftingRel extends BasicRelationsh
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "ribosomal frameshifting";
 
-    public AlternativeProductRibosomalFrameshiftingRel(Relationship rel){
-        super(rel);
+    public AlternativeProductRibosomalFrameshiftingRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
