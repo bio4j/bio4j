@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.BookNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Proteins one book references
@@ -35,30 +36,30 @@ public class BookProteinCitationRel extends BasicRelationship{
     public static final String FIRST_PROPERTY = "first";
     public static final String LAST_PROPERTY = "last";
 
-    public BookProteinCitationRel(Relationship rel){
-        super(rel);
+    public BookProteinCitationRel(Edge e){
+        super(e);
     }
 
-    public String getTitle(){    return String.valueOf(this.relationship.getProperty(TITLE_PROPERTY));}
-    public String getVolume(){    return String.valueOf(this.relationship.getProperty(VOLUME_PROPERTY));}
-    public String getFirst(){    return String.valueOf(this.relationship.getProperty(FIRST_PROPERTY));}
-    public String getLast(){    return String.valueOf(this.relationship.getProperty(LAST_PROPERTY));}
+    public String getTitle(){    return String.valueOf(edge.getProperty(TITLE_PROPERTY));}
+    public String getVolume(){    return String.valueOf(edge.getProperty(VOLUME_PROPERTY));}
+    public String getFirst(){    return String.valueOf(edge.getProperty(FIRST_PROPERTY));}
+    public String getLast(){    return String.valueOf(edge.getProperty(LAST_PROPERTY));}
 
-    public void setTitle(String value){  this.relationship.setProperty(TITLE_PROPERTY, value);}
-    public void setVolume(String value){  this.relationship.setProperty(VOLUME_PROPERTY, value);}
-    public void setFirst(String value){  this.relationship.setProperty(FIRST_PROPERTY, value);}
-    public void setLast(String value){  this.relationship.setProperty(LAST_PROPERTY, value);}
+    public void setTitle(String value){  edge.setProperty(TITLE_PROPERTY, value);}
+    public void setVolume(String value){  edge.setProperty(VOLUME_PROPERTY, value);}
+    public void setFirst(String value){  edge.setProperty(FIRST_PROPERTY, value);}
+    public void setLast(String value){  edge.setProperty(LAST_PROPERTY, value);}
 
     public BookNode getBook(){
-        return new BookNode(getStartNode());
+        return new BookNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

@@ -17,9 +17,10 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.SubmissionNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Submission authors
@@ -29,16 +30,17 @@ public class SubmissionAuthorRel extends BasicRelationship{
 
     public static final String NAME = "SUBMISSION_AUTHOR";
 
-    public SubmissionAuthorRel(Relationship rel){
-        super(rel);
+    public SubmissionAuthorRel(Edge e){
+        super(e);
     }
     
     public SubmissionNode getSubmission(){
-        return new SubmissionNode(getStartNode());
+        return new SubmissionNode(getVertex(Direction.IN));
     }
+    
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

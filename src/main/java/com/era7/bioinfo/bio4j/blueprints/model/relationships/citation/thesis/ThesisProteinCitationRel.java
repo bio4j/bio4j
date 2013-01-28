@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.ThesisNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Proteins referenced by a Thesis
@@ -30,20 +31,20 @@ public class ThesisProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "THESIS_PROTEIN_CITATION";
 
-    public ThesisProteinCitationRel(Relationship rel){
-        super(rel);
+    public ThesisProteinCitationRel(Edge e){
+        super(e);
     }
     
     public ThesisNode getThesis(){
-        return new ThesisNode(getStartNode());
+        return new ThesisNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

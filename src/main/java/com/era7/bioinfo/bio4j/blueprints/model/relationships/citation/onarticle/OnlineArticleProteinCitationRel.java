@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.OnlineArticleNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineArticleNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Proteins that an online articles references
@@ -30,20 +31,20 @@ public class OnlineArticleProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "ONLINE_ARTICLE_PROTEIN_CITATION";
 
-    public OnlineArticleProteinCitationRel(Relationship rel){
-        super(rel);
+    public OnlineArticleProteinCitationRel(Edge e){
+        super(e);
     }
     
     public OnlineArticleNode getOnlineArticle(){
-        return new OnlineArticleNode(getStartNode());
+        return new OnlineArticleNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

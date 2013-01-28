@@ -17,9 +17,10 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.ThesisNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Thesis author
@@ -29,16 +30,16 @@ public class ThesisAuthorRel extends BasicRelationship{
 
     public static final String NAME = "THESIS_AUTHOR";
 
-    public ThesisAuthorRel(Relationship rel){
-        super(rel);
+    public ThesisAuthorRel(Edge e){
+        super(e);
     }
     
     public ThesisNode getThesis(){
-        return new ThesisNode(getStartNode());
+        return new ThesisNode(getVertex(Direction.IN));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

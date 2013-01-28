@@ -17,8 +17,10 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Proteins referenced by a submission
@@ -28,12 +30,16 @@ public class SubmissionProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "SUBMISSION_PROTEIN_CITATION";
 
-    public SubmissionProteinCitationRel(Relationship rel){
-        super(rel);
+    public SubmissionProteinCitationRel(Edge e){
+        super(e);
+    }
+    
+    public ProteinNode getProtein(){
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

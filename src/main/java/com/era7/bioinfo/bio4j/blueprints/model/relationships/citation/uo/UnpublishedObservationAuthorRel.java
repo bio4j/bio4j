@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.PersonNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.UnpublishedObservationNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.UnpublishedObservationNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Unpublished observation authors
@@ -30,20 +31,20 @@ public class UnpublishedObservationAuthorRel extends BasicRelationship{
 
     public static final String NAME = "UNPUBLISHED_OBSERVATION_AUTHOR";
 
-    public UnpublishedObservationAuthorRel(Relationship rel){
-        super(rel);
+    public UnpublishedObservationAuthorRel(Edge e){
+        super(e);
     }
     
     public UnpublishedObservationNode getUnpublishedObservation(){
-        return new UnpublishedObservationNode(getStartNode());
+        return new UnpublishedObservationNode(getVertex(Direction.IN));
     }
     
     public PersonNode getAuthor(){
-        return new PersonNode(getEndNode());
+        return new PersonNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

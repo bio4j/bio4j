@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.PersonNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.PatentNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.PatentNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Patent author
@@ -30,20 +31,20 @@ public class PatentAuthorRel extends BasicRelationship{
 
     public static final String NAME = "PATENT_AUTHOR";
 
-    public PatentAuthorRel(Relationship rel){
-        super(rel);
+    public PatentAuthorRel(Edge e){
+        super(e);
     }
     
     public PatentNode getPatent(){
-        return new PatentNode(getStartNode());
+        return new PatentNode(getVertex(Direction.IN));
     }
     
     public PersonNode getAuthor(){
-        return new PersonNode(getEndNode());
+        return new PersonNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

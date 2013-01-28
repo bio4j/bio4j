@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Submission database
@@ -30,16 +30,16 @@ public class SubmissionDbRel extends BasicRelationship{
 
     public static final String DATE_PROPERTY = "date";
 
-    public SubmissionDbRel(Relationship rel){
-        super(rel);
+    public SubmissionDbRel(Edge e){
+        super(e);
     }
 
-    public String getDate(){    return String.valueOf(this.relationship.getProperty(DATE_PROPERTY));}
+    public String getDate(){    return String.valueOf(edge.getProperty(DATE_PROPERTY));}
 
-    public void setDate(String value){  this.relationship.setProperty(DATE_PROPERTY, value);}
+    public void setDate(String value){  edge.setProperty(DATE_PROPERTY, value);}
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

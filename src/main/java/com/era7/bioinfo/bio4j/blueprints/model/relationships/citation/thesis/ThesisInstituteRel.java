@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.InstituteNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.ThesisNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.InstituteNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Thesis institute
@@ -30,20 +31,20 @@ public class ThesisInstituteRel extends BasicRelationship{
 
     public static final String NAME = "THESIS_INSTITUTE";
 
-    public ThesisInstituteRel(Relationship rel){
-        super(rel);
+    public ThesisInstituteRel(Edge e){
+        super(e);
     }
     
     public ThesisNode getThesis(){
-        return new ThesisNode(getStartNode());
+        return new ThesisNode(getVertex(Direction.IN));
     }
     
     public InstituteNode getInstitute(){
-        return new InstituteNode(getEndNode());
+        return new InstituteNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

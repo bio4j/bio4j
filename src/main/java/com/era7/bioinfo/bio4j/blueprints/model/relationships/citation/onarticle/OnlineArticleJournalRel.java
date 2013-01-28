@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.OnlineArticleNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.OnlineJournalNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineArticleNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineJournalNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Online journal where an online article is published
@@ -32,25 +33,25 @@ public class OnlineArticleJournalRel extends BasicRelationship{
 
     public static final String LOCATOR_PROPERTY = "locator";
 
-    public OnlineArticleJournalRel(Relationship rel){
-        super(rel);
+    public OnlineArticleJournalRel(Edge e){
+        super(e);
     }
 
 
-    public String getLocator(){    return String.valueOf(this.relationship.getProperty(LOCATOR_PROPERTY));}
+    public String getLocator(){    return String.valueOf(edge.getProperty(LOCATOR_PROPERTY));}
 
-    public void setLocator(String value){  this.relationship.setProperty(LOCATOR_PROPERTY, value);}
+    public void setLocator(String value){  edge.setProperty(LOCATOR_PROPERTY, value);}
     
     public OnlineArticleNode getOnlineArticle(){
-        return new OnlineArticleNode(getStartNode());
+        return new OnlineArticleNode(getVertex(Direction.IN));
     }
     
     public OnlineJournalNode getOnlineJournal(){
-        return new OnlineJournalNode(getEndNode());
+        return new OnlineJournalNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

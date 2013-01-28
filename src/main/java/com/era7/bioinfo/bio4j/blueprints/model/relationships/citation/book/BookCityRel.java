@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.CityNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.BookNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.CityNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * City where a book is published in
@@ -30,20 +31,20 @@ public class BookCityRel extends BasicRelationship{
 
     public static final String NAME = "BOOK_CITY_REL";
 
-    public BookCityRel(Relationship rel){
-        super(rel);
+    public BookCityRel(Edge e){
+        super(e);
     }
     
     public BookNode getBook(){
-        return new BookNode(getStartNode());
+        return new BookNode(getVertex(Direction.IN));
     }
     
     public CityNode getCity(){
-        return new CityNode(getEndNode());
+        return new CityNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
