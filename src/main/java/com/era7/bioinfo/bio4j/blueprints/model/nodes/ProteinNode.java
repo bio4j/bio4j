@@ -16,10 +16,15 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.SignalPeptideFeatureRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef90MemberRel;
 import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -150,12 +155,12 @@ public class ProteinNode extends BasicNode {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if(isUniref50Representant()){
             list.add(this);
-            Iterator<Relationship> relIterator = node.getRelationships(Direction.OUTGOING, new UniRef50MemberRel(null)).iterator();
+            Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef50MemberRel.NAME).iterator();
             while(relIterator.hasNext()){
-                list.add(new ProteinNode(relIterator.next().getEndNode()));
+                list.add(new ProteinNode(relIterator.next()));
             }
         }else{
-            ProteinNode representant = new ProteinNode(node.getRelationships(Direction.INCOMING, new UniRef50MemberRel(null)).iterator().next().getStartNode());
+            ProteinNode representant = new ProteinNode(vertex.getVertices(Direction.IN, UniRef50MemberRel.NAME).iterator().next());
             return representant.getUniref50ClusterThisProteinBelongsTo();
         }
         return list;
@@ -165,12 +170,12 @@ public class ProteinNode extends BasicNode {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if(isUniref90Representant()){
             list.add(this);
-            Iterator<Relationship> relIterator = node.getRelationships(Direction.OUTGOING, new UniRef90MemberRel(null)).iterator();
+            Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef90MemberRel.NAME).iterator();
             while(relIterator.hasNext()){
-                list.add(new ProteinNode(relIterator.next().getEndNode()));
+                list.add(new ProteinNode(relIterator.next()));
             }
         }else{
-            ProteinNode representant = new ProteinNode(node.getRelationships(Direction.INCOMING, new UniRef90MemberRel(null)).iterator().next().getStartNode());
+            ProteinNode representant = new ProteinNode(vertex.getVertices(Direction.IN, UniRef90MemberRel.NAME).iterator().next());
             return representant.getUniref90ClusterThisProteinBelongsTo();
         }
         return list;
@@ -180,12 +185,12 @@ public class ProteinNode extends BasicNode {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if(isUniref100Representant()){
             list.add(this);
-            Iterator<Relationship> relIterator = node.getRelationships(Direction.OUTGOING, new UniRef100MemberRel(null)).iterator();
+            Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef100MemberRel.NAME).iterator();
             while(relIterator.hasNext()){
-                list.add(new ProteinNode(relIterator.next().getEndNode()));
+                list.add(new ProteinNode(relIterator.next()));
             }
         }else{
-            ProteinNode representant = new ProteinNode(node.getRelationships(Direction.INCOMING, new UniRef100MemberRel(null)).iterator().next().getStartNode());
+            ProteinNode representant = new ProteinNode(vertex.getVertices(Direction.IN, UniRef100MemberRel.NAME).iterator().next());
             return representant.getUniref100ClusterThisProteinBelongsTo();
         }
         return list;
@@ -193,9 +198,9 @@ public class ProteinNode extends BasicNode {
     
     public OrganismNode getOrganism() {
         OrganismNode org = null;
-        Relationship rel = node.getSingleRelationship(new ProteinOrganismRel(null), Direction.OUTGOING);
-        if (rel != null) {
-            org = new OrganismNode(rel.getEndNode());
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinOrganismRel.NAME).iterator();
+        if(iterator.hasNext()){
+            org = new OrganismNode(iterator.next());
         }
         return org;
     }
@@ -203,18 +208,18 @@ public class ProteinNode extends BasicNode {
 
     public DatasetNode getDataset(){
         DatasetNode dataset = null;
-        Relationship rel = node.getSingleRelationship(new ProteinDatasetRel(null), Direction.OUTGOING);
-        if(rel != null){
-            dataset = new DatasetNode(rel.getEndNode());
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinDatasetRel.NAME).iterator();
+        if(iterator.hasNext()){
+            dataset = new DatasetNode(iterator.next());
         }
         return dataset;
     }
     
     public List<GenomeElementNode> getGenomeElements(){
         List<GenomeElementNode> list = new ArrayList<GenomeElementNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinGenomeElementRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinGenomeElementRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GenomeElementNode(iterator.next().getEndNode()));
+            list.add(new GenomeElementNode(iterator.next()));
         }
         return list;
     }
@@ -222,9 +227,9 @@ public class ProteinNode extends BasicNode {
     
     public List<SubcellularLocationNode> getSubcellularLocations(){
         List<SubcellularLocationNode> list = new ArrayList<SubcellularLocationNode>();        
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinSubcellularLocationRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinSubcellularLocationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new SubcellularLocationNode(iterator.next().getEndNode()));
+            list.add(new SubcellularLocationNode(iterator.next()));
         }
         return list;
     }
@@ -232,9 +237,9 @@ public class ProteinNode extends BasicNode {
     public List<InterproNode> getInterpro(){
         List<InterproNode> interpros = new ArrayList<InterproNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinInterproRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinInterproRel.NAME).iterator();
         while(iterator.hasNext()){
-            InterproNode interpro = new InterproNode(iterator.next().getEndNode());
+            InterproNode interpro = new InterproNode(iterator.next());
             interpros.add(interpro);                        
         }
         return interpros;  
@@ -243,9 +248,9 @@ public class ProteinNode extends BasicNode {
     public List<PfamNode> getPfamTerms(){
         List<PfamNode> pfamTerms = new ArrayList<PfamNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinPfamRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinPfamRel.NAME).iterator();
         while(iterator.hasNext()){
-            PfamNode interpro = new PfamNode(iterator.next().getEndNode());
+            PfamNode interpro = new PfamNode(iterator.next());
             pfamTerms.add(interpro);                        
         }
         return pfamTerms;  
@@ -253,9 +258,9 @@ public class ProteinNode extends BasicNode {
     
     public List<ReactomeTermNode> getReactomeTerms(){
         List<ReactomeTermNode> list = new LinkedList<ReactomeTermNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinReactomeRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinReactomeRel.NAME).iterator();
         while(iterator.hasNext()){
-            ReactomeTermNode reactomeTerm = new ReactomeTermNode(iterator.next().getEndNode());
+            ReactomeTermNode reactomeTerm = new ReactomeTermNode(iterator.next());
             list.add(reactomeTerm);
         }
         return list;
@@ -263,9 +268,9 @@ public class ProteinNode extends BasicNode {
     
     public List<EnzymeNode> getProteinEnzymaticActivity(){
         List<EnzymeNode> list = new LinkedList<EnzymeNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinEnzymaticActivityRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinEnzymaticActivityRel.NAME).iterator();
         while(iterator.hasNext()){
-            EnzymeNode enzyme = new EnzymeNode(iterator.next().getEndNode());
+            EnzymeNode enzyme = new EnzymeNode(iterator.next());
             list.add(enzyme);
         }
         return list;        
@@ -273,9 +278,9 @@ public class ProteinNode extends BasicNode {
     
     public List<GoTermNode> getGOAnnotations(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            GoTermNode goTerm = new GoTermNode(iterator.next().getEndNode());
+            GoTermNode goTerm = new GoTermNode(iterator.next());
             list.add(goTerm);                        
         }        
         return list;
@@ -284,9 +289,9 @@ public class ProteinNode extends BasicNode {
     public List<KeywordNode> getKeywords(){
         List<KeywordNode> keywords = new ArrayList<KeywordNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinKeywordRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinKeywordRel.NAME).iterator();
         while(iterator.hasNext()){
-            KeywordNode keyword = new KeywordNode(iterator.next().getEndNode());
+            KeywordNode keyword = new KeywordNode(iterator.next());
             keywords.add(keyword);                        
         }
         return keywords;  
@@ -295,7 +300,7 @@ public class ProteinNode extends BasicNode {
     public List<SignalPeptideFeatureRel> getSignalPeptideFeature(){
         List<SignalPeptideFeatureRel> list = new ArrayList<SignalPeptideFeatureRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new SignalPeptideFeatureRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SignalPeptideFeatureRel.NAME).iterator();
         while(iterator.hasNext()){
             SignalPeptideFeatureRel rel = new SignalPeptideFeatureRel(iterator.next());
             list.add(rel);                        
@@ -536,92 +541,77 @@ public class ProteinNode extends BasicNode {
     //---------------------------------------------------------------------------------------------
     
     public void setName(String value) {
-        node.setProperty(NAME_PROPERTY, value);
+        vertex.setProperty(NAME_PROPERTY, value);
     }
 
     public void setFullName(String value){
-        node.setProperty(FULL_NAME_PROPERTY, value);
+        vertex.setProperty(FULL_NAME_PROPERTY, value);
     }
 
     public void setShortName(String value){
-        node.setProperty(SHORT_NAME_PROPERTY, value);
+        vertex.setProperty(SHORT_NAME_PROPERTY, value);
     }
 
     public void setAccession(String value) {
-        node.setProperty(ACCESSION_PROPERTY, value);
+        vertex.setProperty(ACCESSION_PROPERTY, value);
     }
 
     public void setSequence(String value) {
-        node.setProperty(SEQUENCE_PROPERTY, value);
+        vertex.setProperty(SEQUENCE_PROPERTY, value);
     }
 
     public void setModifiedDate(String value){
-        node.setProperty(MODIFIED_DATE_PROPERTY, value);
+        vertex.setProperty(MODIFIED_DATE_PROPERTY, value);
     }
 
     public void setEnsemblId(String value){
-        node.setProperty(ENSEMBL_ID_PROPERTY, value);
+        vertex.setProperty(ENSEMBL_ID_PROPERTY, value);
     }
 
     public void setKeggId(String value){
-        node.setProperty(KEGG_ID_PROPERTY, value);
+        vertex.setProperty(KEGG_ID_PROPERTY, value);
     }
 
     public void setPIRId(String value){
-        node.setProperty(PIR_ID_PROPERTY, value);
+        vertex.setProperty(PIR_ID_PROPERTY, value);
     }
 
     public void setEMBLreferences(String[] value){
-        node.setProperty(EMBL_REFERENCES_PROPERTY, value);
+        vertex.setProperty(EMBL_REFERENCES_PROPERTY, value);
     }
     
     public void setEnsemblPlantsReferences(String[] value){
-        node.setProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY, value);
+        vertex.setProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY, value);
     }
 
     public void setRefseqReferences(String[] value){
-        node.setProperty(REFSEQ_REFERENCES_PROPERTY, value);
+        vertex.setProperty(REFSEQ_REFERENCES_PROPERTY, value);
     }
     
     public void setAlternativeAccessions(String[] value){
-        node.setProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, value);
+        vertex.setProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, value);
     }
 
     public void setArrayExpressId(String value){
-        node.setProperty(ARRAY_EXPRESS_ID_PROPERTY, value);
+        vertex.setProperty(ARRAY_EXPRESS_ID_PROPERTY, value);
     }
 
     public void setUniGeneId(String value){
-        node.setProperty(UNIGENE_ID_PROPERTY, value);
+        vertex.setProperty(UNIGENE_ID_PROPERTY, value);
     }
 
     public void setMass(float value) {
-        node.setProperty(MASS_PROPERTY, value);
+        vertex.setProperty(MASS_PROPERTY, value);
     }
 
     public void setLength(int value) {
-        node.setProperty(LENGTH_PROPERTY, value);
+        vertex.setProperty(LENGTH_PROPERTY, value);
     }
 
     public void setGeneNames(String[] value){
-        node.setProperty(GENE_NAMES_PROPERTY, value);
+        vertex.setProperty(GENE_NAMES_PROPERTY, value);
     }
     
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof ProteinNode) {
-            ProteinNode other = (ProteinNode) obj;
-            return this.node.equals(other.node);
-        } else {
-            return false;
-        }
-    }
 
     @Override
     public String toString() {

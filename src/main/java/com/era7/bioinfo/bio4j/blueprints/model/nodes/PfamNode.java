@@ -17,22 +17,19 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinPfamRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinPfamRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Pfam family
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PfamNode extends BasicEntity{
+public class PfamNode extends BasicNode{
 
-    public static final String PFAM_ID_INDEX = "pfam_id_index";
     public static final String NODE_TYPE = PfamNode.class.getCanonicalName();
 
     /** Pfam family id **/
@@ -41,40 +38,25 @@ public class PfamNode extends BasicEntity{
     public static final String NAME_PROPERTY = "pfam_name";
 
 
-    public PfamNode(Node n){
-        super(n);
+    public PfamNode(Vertex v){
+        super(v);
     }
 
 
-    public String getId(){  return String.valueOf(node.getProperty(ID_PROPERTY));}
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setId(String value){    node.setProperty(ID_PROPERTY, value);}
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof PfamNode){
-            PfamNode other = (PfamNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-    
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new ArrayList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinPfamRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinPfamRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  

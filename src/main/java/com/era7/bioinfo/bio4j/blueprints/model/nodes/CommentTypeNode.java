@@ -17,8 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
-import org.neo4j.graphdb.Node;
+import com.tinkerpop.blueprints.Vertex;
 
 /**
  * This class models comments that provide any useful information about the protein,
@@ -51,38 +50,22 @@ import org.neo4j.graphdb.Node;
  * - Caution: Warning about possible errors and/or grounds of confusion
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CommentTypeNode extends BasicEntity{
+public class CommentTypeNode extends BasicNode{
 
-    public static final String COMMENT_TYPE_NAME_INDEX = "comment_type_name_index";
     public static final String NODE_TYPE = CommentTypeNode.class.getCanonicalName();
 
     public static final String NAME_PROPERTY = "comment_type_name"; 
 
-    public CommentTypeNode(Node n){
-        super(n);
+    public CommentTypeNode(Vertex v){
+        super(v);
     }
 
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof CommentTypeNode){
-            CommentTypeNode other = (CommentTypeNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public String toString(){

@@ -17,23 +17,21 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinGoRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGoRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GoTermNode extends BasicEntity{
+public class GoTermNode extends BasicNode{
 
-    public static final String GO_TERM_ID_INDEX = "go_term_id_index";
     public static final String NODE_TYPE = GoTermNode.class.getCanonicalName();
 
     /** GO Term id **/
@@ -60,35 +58,35 @@ public class GoTermNode extends BasicEntity{
     public static final String CELLULAR_COMPONENT_NAMESPACE = "cellular_component";
 
 
-    public GoTermNode(Node n){
-        super(n);
+    public GoTermNode(Vertex v){
+        super(v);
     }
 
 
-    public String getId(){  return String.valueOf(node.getProperty(ID_PROPERTY));}
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
-    public String getDefinition(){  return String.valueOf(node.getProperty(DEFINITION_PROPERTY));}
-    public String getNamespace(){   return String.valueOf(node.getProperty(NAMESPACE_PROPERTY));}
-    public Boolean getObsolete(){    return Boolean.parseBoolean(String.valueOf(node.getProperty(OBSOLETE_PROPERTY)));}
-    public String getComment(){ return String.valueOf(node.getProperty(COMMENT_PROPERTY));}
-    public String[] getAlternativeIds(){    return (String[]) node.getProperty(ALTERNATIVE_IDS_PROPERTY);}
+    public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
+    public String getDefinition(){  return String.valueOf(vertex.getProperty(DEFINITION_PROPERTY));}
+    public String getNamespace(){   return String.valueOf(vertex.getProperty(NAMESPACE_PROPERTY));}
+    public Boolean getObsolete(){    return Boolean.parseBoolean(String.valueOf(vertex.getProperty(OBSOLETE_PROPERTY)));}
+    public String getComment(){ return String.valueOf(vertex.getProperty(COMMENT_PROPERTY));}
+    public String[] getAlternativeIds(){    return (String[]) vertex.getProperty(ALTERNATIVE_IDS_PROPERTY);}
 
 
-    public void setId(String value){    node.setProperty(ID_PROPERTY, value);}
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
-    public void setDefinition(String value){    node.setProperty(DEFINITION_PROPERTY, value);}
-    public void setNamespace(String value){ node.setProperty(NAMESPACE_PROPERTY, value);}
-    public void setObsolete(Boolean value){ node.setProperty(OBSOLETE_PROPERTY, String.valueOf(value));}
-    public void setComment(String value){   node.setProperty(COMMENT_PROPERTY, value);}
-    public void setAlternativeIds(String[] value){  node.setProperty(ALTERNATIVE_IDS_PROPERTY, value);}
+    public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
+    public void setDefinition(String value){    vertex.setProperty(DEFINITION_PROPERTY, value);}
+    public void setNamespace(String value){ vertex.setProperty(NAMESPACE_PROPERTY, value);}
+    public void setObsolete(Boolean value){ vertex.setProperty(OBSOLETE_PROPERTY, String.valueOf(value));}
+    public void setComment(String value){   vertex.setProperty(COMMENT_PROPERTY, value);}
+    public void setAlternativeIds(String[] value){  vertex.setProperty(ALTERNATIVE_IDS_PROPERTY, value);}
   
     
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new LinkedList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinGoRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  
@@ -100,9 +98,9 @@ public class GoTermNode extends BasicEntity{
      */
     public List<GoTermNode> getIsAGoNodes(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new IsAGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, IsAGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GoTermNode(iterator.next().getEndNode()));
+            list.add(new GoTermNode(iterator.next()));
         }
         return list;
     }    
@@ -112,9 +110,9 @@ public class GoTermNode extends BasicEntity{
      */
     public List<GoTermNode> getNegativelyRegulatesNodes(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new NegativelyRegulatesGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, NegativelyRegulatesGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GoTermNode(iterator.next().getEndNode()));
+            list.add(new GoTermNode(iterator.next()));
         }
         return list;
     }
@@ -124,9 +122,9 @@ public class GoTermNode extends BasicEntity{
      */
     public List<GoTermNode> getPositivelyRegulatesNodes(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new PositivelyRegulatesGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PositivelyRegulatesGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GoTermNode(iterator.next().getEndNode()));
+            list.add(new GoTermNode(iterator.next()));
         }
         return list;
     }
@@ -136,9 +134,9 @@ public class GoTermNode extends BasicEntity{
      */
     public List<GoTermNode> getPartOfNodes(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new PartOfGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PartOfGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GoTermNode(iterator.next().getEndNode()));
+            list.add(new GoTermNode(iterator.next()));
         }
         return list;
     }
@@ -148,29 +146,13 @@ public class GoTermNode extends BasicEntity{
      */
     public List<GoTermNode> getHasPartOfNodes(){
         List<GoTermNode> list = new ArrayList<GoTermNode>();
-        Iterator<Relationship> iterator = this.node.getRelationships(new HasPartOfGoRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, HasPartOfGoRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new GoTermNode(iterator.next().getEndNode()));
+            list.add(new GoTermNode(iterator.next()));
         }
         return list;
     }
     
-    
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof GoTermNode){
-            GoTermNode other = (GoTermNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-
     @Override
     public String toString(){
         return "id = " + getId() +

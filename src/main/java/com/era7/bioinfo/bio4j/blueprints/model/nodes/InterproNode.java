@@ -17,22 +17,19 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinInterproRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinInterproRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Interpro term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InterproNode extends BasicEntity{
+public class InterproNode extends BasicNode{
 
-    public static final String INTERPRO_ID_INDEX = "interpro_id_index";
     public static final String NODE_TYPE = InterproNode.class.getCanonicalName();
 
     /** Interpro term id **/
@@ -41,43 +38,29 @@ public class InterproNode extends BasicEntity{
     public static final String NAME_PROPERTY = "interpro_name";
 
 
-    public InterproNode(Node n){
-        super(n);
+    public InterproNode(Vertex v){
+        super(v);
     }
 
+    
+
+    public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
+
+
+    public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
+
+    
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new LinkedList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinInterproRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinInterproRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  
-    }
-    
-
-    public String getId(){  return String.valueOf(node.getProperty(ID_PROPERTY));}
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
-
-
-    public void setId(String value){    node.setProperty(ID_PROPERTY, value);}
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
-
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof InterproNode){
-            InterproNode other = (InterproNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
     }
 
     @Override

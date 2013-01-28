@@ -17,47 +17,31 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
-import org.neo4j.graphdb.Node;
+import com.tinkerpop.blueprints.Vertex;
+
 
 /**
  * It simply models a country of the world
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CountryNode extends BasicEntity{
+public class CountryNode extends BasicNode{
 
-    public static final String COUNTRY_NAME_INDEX = "country_name_index";
     public static final String NODE_TYPE = CountryNode.class.getCanonicalName();
 
     /** Country name **/
     public static final String NAME_PROPERTY = "country_name";
 
 
-    public CountryNode(Node n){
-        super(n);
+    public CountryNode(Vertex v){
+        super(v);
     }
 
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof CountryNode){
-            CountryNode other = (CountryNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public String toString(){

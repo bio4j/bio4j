@@ -17,61 +17,44 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.IsoformEventGeneratorRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.IsoformEventGeneratorRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Protein alternative products
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AlternativeProductNode extends BasicEntity{
+public class AlternativeProductNode extends BasicNode{
 
     public static final String NODE_TYPE = AlternativeProductNode.class.getCanonicalName();
-    public static final String ALTERNATIVE_PRODUCT_NAME_INDEX = "alternative_product_name_index";
 
     public static final String NAME_PROPERTY = "alternative_product_name";
 
 
-    public AlternativeProductNode(Node n){
-        super(n);
+    public AlternativeProductNode(Vertex v){
+        super(v);
     }
 
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 
     public List<IsoformNode> getIsoforms(){
         List<IsoformNode> list = new LinkedList<IsoformNode>();
-        Iterator<Relationship> iterator = node.getRelationships(new IsoformEventGeneratorRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, IsoformEventGeneratorRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new IsoformNode(iterator.next().getStartNode()));
+            list.add(new IsoformNode(iterator.next()));
         }
         return list;
     }
     
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof AlternativeProductNode){
-            AlternativeProductNode other = (AlternativeProductNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public String toString(){

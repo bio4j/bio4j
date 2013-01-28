@@ -17,23 +17,18 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinOrganismRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinOrganismRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Uniprot taxonomy organism
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OrganismNode extends BasicEntity{
-
-    public static final String ORGANISM_SCIENTIFIC_NAME_INDEX = "organism_scientific_name_index";
-    public static final String ORGANISM_NCBI_TAXONOMY_ID_INDEX = "organism_ncbi_taxonomy_id_index";
+public class OrganismNode extends BasicNode{
 
     public static final String NODE_TYPE = OrganismNode.class.getCanonicalName();
 
@@ -43,46 +38,31 @@ public class OrganismNode extends BasicEntity{
     public static final String NCBI_TAXONOMY_ID_PROPERTY = "organism_ncbi_taxonomy_id";
 
 
-    public OrganismNode(Node n){
-        super(n);
+    public OrganismNode(Vertex v){
+        super(v);
     }
 
 
-    public String getScientificName(){    return String.valueOf(node.getProperty(SCIENTIFIC_NAME_PROPERTY));}
-    public String getCommonName(){    return String.valueOf(node.getProperty(COMMON_NAME_PROPERTY));}
-    public String getSynonymName(){    return String.valueOf(node.getProperty(SYNONYM_NAME_PROPERTY));}
-    public String getNcbiTaxonomyId(){    return String.valueOf(node.getProperty(NCBI_TAXONOMY_ID_PROPERTY));}
+    public String getScientificName(){    return String.valueOf(vertex.getProperty(SCIENTIFIC_NAME_PROPERTY));}
+    public String getCommonName(){    return String.valueOf(vertex.getProperty(COMMON_NAME_PROPERTY));}
+    public String getSynonymName(){    return String.valueOf(vertex.getProperty(SYNONYM_NAME_PROPERTY));}
+    public String getNcbiTaxonomyId(){    return String.valueOf(vertex.getProperty(NCBI_TAXONOMY_ID_PROPERTY));}
 
-    public void setScientificName(String value){  node.setProperty(SCIENTIFIC_NAME_PROPERTY, value);}
-    public void setCommonName(String value){  node.setProperty(COMMON_NAME_PROPERTY, value);}
-    public void setSynonymName(String value){  node.setProperty(SYNONYM_NAME_PROPERTY, value);}
-    public void setNcbiTaxonomyId(String value){    node.setProperty(NCBI_TAXONOMY_ID_PROPERTY, value);}
+    public void setScientificName(String value){  vertex.setProperty(SCIENTIFIC_NAME_PROPERTY, value);}
+    public void setCommonName(String value){  vertex.setProperty(COMMON_NAME_PROPERTY, value);}
+    public void setSynonymName(String value){  vertex.setProperty(SYNONYM_NAME_PROPERTY, value);}
+    public void setNcbiTaxonomyId(String value){    vertex.setProperty(NCBI_TAXONOMY_ID_PROPERTY, value);}
     
     
     public List<ProteinNode> getAssociatedProteins(){
         List<ProteinNode> proteins = new LinkedList<ProteinNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinOrganismRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinOrganismRel.NAME).iterator();
         while(iterator.hasNext()){
-            ProteinNode protein = new ProteinNode(iterator.next().getStartNode());
+            ProteinNode protein = new ProteinNode(iterator.next());
             proteins.add(protein);                        
         }
         return proteins;  
     }
     
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof OrganismNode){
-            OrganismNode other = (OrganismNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-
 }
