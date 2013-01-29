@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Lethal, paralytic, effect dose or lethal concentration of a toxin
@@ -27,12 +27,12 @@ public class ToxicDoseCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_TOXIC_DOSE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "toxic dose";
 
-    public ToxicDoseCommentRel(Relationship rel){
-        super(rel);
+    public ToxicDoseCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

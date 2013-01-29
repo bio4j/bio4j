@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Nucleotide phosphate binding region
@@ -28,12 +28,12 @@ public class NucleotidePhosphateBindingRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_NUCLEOTIDE_PHOSPHATE_BINDING_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "nucleotide phosphate-binding region";
 
-    public NucleotidePhosphateBindingRegionFeatureRel(Relationship rel){
-        super(rel);
+    public NucleotidePhosphateBindingRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

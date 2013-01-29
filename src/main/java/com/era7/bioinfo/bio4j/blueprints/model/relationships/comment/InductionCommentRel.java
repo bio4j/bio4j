@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Effects of environmental factors on gene expression
@@ -28,12 +28,12 @@ public class InductionCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_INDUCTION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "induction";
 
-    public InductionCommentRel(Relationship rel){
-        super(rel);
+    public InductionCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

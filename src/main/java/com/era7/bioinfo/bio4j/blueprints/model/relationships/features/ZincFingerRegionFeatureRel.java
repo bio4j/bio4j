@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Position(s) and type(s) of zinc fingers within the protein
@@ -28,12 +28,12 @@ public class ZincFingerRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_ZINC_FINGER_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "zinc finger region";
 
-    public ZincFingerRegionFeatureRel(Relationship rel){
-        super(rel);
+    public ZincFingerRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

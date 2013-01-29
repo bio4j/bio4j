@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Warning about possible errors and/or grounds for confusion
@@ -28,12 +29,12 @@ public class CautionCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_CAUTION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "caution";
 
-    public CautionCommentRel(Relationship rel){
-        super(rel);
+    public CautionCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

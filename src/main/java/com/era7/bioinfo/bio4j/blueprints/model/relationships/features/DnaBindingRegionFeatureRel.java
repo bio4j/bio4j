@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Position and type of a DNA-binding domain
@@ -28,12 +28,12 @@ public class DnaBindingRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_DNA_BINDING_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "DNA-binding region";
 
-    public DnaBindingRegionFeatureRel(Relationship rel){
-        super(rel);
+    public DnaBindingRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

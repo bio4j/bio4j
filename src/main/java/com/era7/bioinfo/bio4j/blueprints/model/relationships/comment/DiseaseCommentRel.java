@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Disease(s) associated with protein defect(s)
@@ -28,12 +28,12 @@ public class DiseaseCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_DISEASE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "disease";
 
-    public DiseaseCommentRel(Relationship rel){
-        super(rel);
+    public DiseaseCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

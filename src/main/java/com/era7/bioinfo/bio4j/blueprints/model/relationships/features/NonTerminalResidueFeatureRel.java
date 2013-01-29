@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * The sequence is incomplete. Indicate that a residue is not the terminal residue of the complete protein
@@ -28,12 +28,12 @@ public class NonTerminalResidueFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_NON_TERMINAL_RESIDUE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "non-terminal residue";
 
-    public NonTerminalResidueFeatureRel(Relationship rel){
-        super(rel);
+    public NonTerminalResidueFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

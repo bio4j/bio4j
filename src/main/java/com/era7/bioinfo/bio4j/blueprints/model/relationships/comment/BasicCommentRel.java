@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -33,33 +33,33 @@ public class BasicCommentRel extends BasicRelationship{
     public static final String EVIDENCE_PROPERTY = "evidence";
 
 
-    public BasicCommentRel(Relationship rel){
-        super(rel);
+    public BasicCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
     public String getText(){
-        return String.valueOf(this.relationship.getProperty(TEXT_PROPERTY));
+        return String.valueOf(edge.getProperty(TEXT_PROPERTY));
     }
     public String getStatus(){
-        return String.valueOf(this.relationship.getProperty(STATUS_PROPERTY));
+        return String.valueOf(edge.getProperty(STATUS_PROPERTY));
     }
     public String getEvidence(){
-        return String.valueOf(this.relationship.getProperty(EVIDENCE_PROPERTY));
+        return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));
     }
 
     public void setText(String value){
-        relationship.setProperty(TEXT_PROPERTY, value);
+        edge.setProperty(TEXT_PROPERTY, value);
     }    
     public void setStatus(String value){
-        relationship.setProperty(STATUS_PROPERTY, value);
+        edge.setProperty(STATUS_PROPERTY, value);
     }
     public void setEvidence(String value){
-        relationship.setProperty(EVIDENCE_PROPERTY, value);
+        edge.setProperty(EVIDENCE_PROPERTY, value);
     }
 
     @Override

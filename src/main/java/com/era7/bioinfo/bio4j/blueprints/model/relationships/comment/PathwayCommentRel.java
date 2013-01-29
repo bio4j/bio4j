@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Associated metabolic pathways
@@ -28,12 +28,12 @@ public class PathwayCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_PATHWAY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "pathway";
 
-    public PathwayCommentRel(Relationship rel){
-        super(rel);
+    public PathwayCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Binding site for any chemical group (co-enzyme, prosthetic group, etc.)
@@ -28,12 +29,12 @@ public class BindingSiteFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_BINDING_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "binding site";
 
-    public BindingSiteFeatureRel(Relationship rel){
-        super(rel);
+    public BindingSiteFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

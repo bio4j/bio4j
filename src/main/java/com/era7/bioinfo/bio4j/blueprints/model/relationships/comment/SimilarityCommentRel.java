@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Description of the sequence similarities with other proteins and family attribution
@@ -28,12 +29,12 @@ public class SimilarityCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_SIMILARITY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "similarity";
 
-    public SimilarityCommentRel(Relationship rel){
-        super(rel);
+    public SimilarityCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

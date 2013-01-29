@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Description of a natural variant of the protein
@@ -27,12 +27,12 @@ public class SequenceVariantFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_SEQUENCE_VARIANT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "sequence variant";
 
-    public SequenceVariantFeatureRel(Relationship rel){
-        super(rel);
+    public SequenceVariantFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

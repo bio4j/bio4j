@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Any interesting single amino acid site on the sequence
@@ -28,12 +28,12 @@ public class SiteFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "site";
 
-    public SiteFeatureRel(Relationship rel){
-        super(rel);
+    public SiteFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

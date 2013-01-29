@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Residues participating in covalent linkage(s) between proteins
@@ -30,12 +30,12 @@ public class CrossLinkFeatureRel extends BasicFeatureRel{
 
     public static final String POSITION_PROPERTY = "position";
 
-    public CrossLinkFeatureRel(Relationship rel){
-        super(rel);
+    public CrossLinkFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

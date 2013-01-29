@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Extent of a polypeptide chain in the mature protein
@@ -29,12 +30,12 @@ public class ChainFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "chain";
 
 
-    public ChainFeatureRel(Relationship rel){
-        super(rel);
+    public ChainFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

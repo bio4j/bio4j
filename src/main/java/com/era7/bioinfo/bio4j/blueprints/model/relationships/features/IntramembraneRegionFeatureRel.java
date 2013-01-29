@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Extent of a region located in a membrane without crossing it
@@ -28,12 +28,12 @@ public class IntramembraneRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_INTRAMEMBRANE_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "intramembrane region";
 
-    public IntramembraneRegionFeatureRel(Relationship rel){
-        super(rel);
+    public IntramembraneRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

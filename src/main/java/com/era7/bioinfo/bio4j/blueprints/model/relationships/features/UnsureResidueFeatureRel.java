@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Regions of uncertainty in the sequence
@@ -29,12 +29,12 @@ public class UnsureResidueFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "unsure residue";
 
 
-    public UnsureResidueFeatureRel(Relationship rel){
-        super(rel);
+    public UnsureResidueFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

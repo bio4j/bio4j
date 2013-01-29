@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Any relevant information that doesn’t fit in any other defined sections
@@ -28,12 +28,12 @@ public class MiscellaneousCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_MISCELLANEOUS";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "miscellaneous";
 
-    public MiscellaneousCommentRel(Relationship rel){
-        super(rel);
+    public MiscellaneousCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

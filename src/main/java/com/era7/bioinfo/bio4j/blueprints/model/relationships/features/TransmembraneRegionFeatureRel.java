@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Extent of a membrane-spanning region
@@ -29,12 +29,12 @@ public class TransmembraneRegionFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "transmembrane region";
 
 
-    public TransmembraneRegionFeatureRel(Relationship rel){
-        super(rel);
+    public TransmembraneRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

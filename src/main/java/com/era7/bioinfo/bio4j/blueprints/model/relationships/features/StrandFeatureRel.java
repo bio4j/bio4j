@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.tinkerpop.blueprints.Edge;
 import org.neo4j.graphdb.Relationship;
 
 /**
@@ -28,12 +29,12 @@ public class StrandFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_STRAND";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "strand";
 
-    public StrandFeatureRel(Relationship rel){
-        super(rel);
+    public StrandFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

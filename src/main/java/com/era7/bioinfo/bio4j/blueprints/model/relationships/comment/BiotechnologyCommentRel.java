@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Use in a biotechnological process
@@ -28,12 +28,12 @@ public class BiotechnologyCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_BIOTECHNOLOGY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "biotechnology";
 
-    public BiotechnologyCommentRel(Relationship rel){
-        super(rel);
+    public BiotechnologyCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

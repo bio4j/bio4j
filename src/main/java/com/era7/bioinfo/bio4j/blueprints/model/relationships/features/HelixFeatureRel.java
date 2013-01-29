@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Helical regions within the experimentally determined protein structure
@@ -28,12 +28,12 @@ public class HelixFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_HELIX";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "helix";
 
-    public HelixFeatureRel(Relationship rel){
-        super(rel);
+    public HelixFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

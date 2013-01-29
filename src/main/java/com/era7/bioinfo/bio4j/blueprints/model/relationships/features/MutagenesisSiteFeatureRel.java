@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Site which has been experimentally altered by mutagenesis
@@ -29,12 +29,12 @@ public class MutagenesisSiteFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "mutagenesis site";
 
 
-    public MutagenesisSiteFeatureRel(Relationship rel){
-        super(rel);
+    public MutagenesisSiteFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

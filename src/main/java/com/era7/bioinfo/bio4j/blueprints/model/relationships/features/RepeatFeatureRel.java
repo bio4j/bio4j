@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Positions of repeated sequence motifs or repeated domains
@@ -29,12 +29,12 @@ public class RepeatFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "repeat";
 
 
-    public RepeatFeatureRel(Relationship rel){
-        super(rel);
+    public RepeatFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Interaction with other protein(s)
@@ -28,12 +28,12 @@ public class SubunitCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_SUBUNIT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "subunit";
 
-    public SubunitCommentRel(Relationship rel){
-        super(rel);
+    public SubunitCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

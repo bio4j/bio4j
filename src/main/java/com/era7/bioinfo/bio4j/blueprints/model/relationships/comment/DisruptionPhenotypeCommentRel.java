@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Description of the effects caused by the disruption of a protein-encoding gene
@@ -28,12 +29,12 @@ public class DisruptionPhenotypeCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_DISRUPTION_PHENOTYPE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "disruption phenotype";
 
-    public DisruptionPhenotypeCommentRel(Relationship rel){
-        super(rel);
+    public DisruptionPhenotypeCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

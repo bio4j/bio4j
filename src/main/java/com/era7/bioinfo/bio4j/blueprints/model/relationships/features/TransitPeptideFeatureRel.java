@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Extent of a transit peptide for organelle targeting
@@ -28,12 +28,12 @@ public class TransitPeptideFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_TRANSIT_PEPTIDE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "transit peptide";
 
-    public TransitPeptideFeatureRel(Relationship rel){
-        super(rel);
+    public TransitPeptideFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

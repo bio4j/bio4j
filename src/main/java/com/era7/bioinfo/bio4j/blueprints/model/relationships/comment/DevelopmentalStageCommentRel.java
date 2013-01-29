@@ -17,7 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Expression of the gene product according to the cell stage and/or tissue or organism development
@@ -28,12 +29,12 @@ public class DevelopmentalStageCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_DEVELOPMENTAL_STAGE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "developmental stage";
 
-    public DevelopmentalStageCommentRel(Relationship rel){
-        super(rel);
+    public DevelopmentalStageCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Post-translational modifications
@@ -28,12 +28,12 @@ public class PostTranslationalModificationCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_POST_TRANSLATIONAL_MODIFICATION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "PTM";
 
-    public PostTranslationalModificationCommentRel(Relationship rel){
-        super(rel);
+    public PostTranslationalModificationCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

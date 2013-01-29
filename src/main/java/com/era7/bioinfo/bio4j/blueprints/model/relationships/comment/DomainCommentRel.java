@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Relevant information on protein domain(s)
@@ -28,12 +28,12 @@ public class DomainCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_DOMAIN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "domain";
 
-    public DomainCommentRel(Relationship rel){
-        super(rel);
+    public DomainCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

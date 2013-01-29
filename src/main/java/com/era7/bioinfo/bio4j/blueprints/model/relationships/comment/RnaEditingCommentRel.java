@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Amino acid variation(s) due to RNA editing
@@ -31,19 +31,19 @@ public class RnaEditingCommentRel extends BasicCommentRel{
 
     public static final String POSITION_PROPERTY = "position";
 
-    public RnaEditingCommentRel(Relationship rel){
-        super(rel);
+    public RnaEditingCommentRel(Edge e){
+        super(e);
     }
 
     public String getPosition(){
-        return String.valueOf(this.relationship.getProperty(POSITION_PROPERTY));
+        return String.valueOf(edge.getProperty(POSITION_PROPERTY));
     }
     public void setPosition(String value){
-        this.relationship.setProperty(POSITION_PROPERTY, value);
+        edge.setProperty(POSITION_PROPERTY, value);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

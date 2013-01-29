@@ -17,9 +17,10 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.FeatureTypeNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.FeatureTypeNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Basic feature relationship
@@ -40,73 +41,73 @@ public abstract class BasicFeatureRel extends BasicRelationship{
     public static final String REF_PROPERTY = "ref";
     
 
-    public BasicFeatureRel(Relationship rel){
-        super(rel);
+    public BasicFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
     public String getDescription(){
-        return String.valueOf(this.relationship.getProperty(DESCRIPTION_PROPERTY));
+        return String.valueOf(edge.getProperty(DESCRIPTION_PROPERTY));
     }
     public String getStatus(){
-        return String.valueOf(this.relationship.getProperty(STATUS_PROPERTY));
+        return String.valueOf(edge.getProperty(STATUS_PROPERTY));
     }
     public String getEvidence(){
-        return String.valueOf(this.relationship.getProperty(EVIDENCE_PROPERTY));
+        return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));
     }
     public String getId(){
-        return String.valueOf(this.relationship.getProperty(ID_PROPERTY));
+        return String.valueOf(edge.getProperty(ID_PROPERTY));
     }
     public String getOriginal(){
-        return String.valueOf(this.relationship.getProperty(ORIGINAL_PROPERTY));
+        return String.valueOf(edge.getProperty(ORIGINAL_PROPERTY));
     }
     public String getVariation(){
-        return String.valueOf(this.relationship.getProperty(VARIATION_PROPERTY));
+        return String.valueOf(edge.getProperty(VARIATION_PROPERTY));
     }
     public String getRef(){
-        return String.valueOf(this.relationship.getProperty(REF_PROPERTY));
+        return String.valueOf(edge.getProperty(REF_PROPERTY));
     }
     public String getBegin(){
-        return String.valueOf(this.relationship.getProperty(BEGIN_PROPERTY));
+        return String.valueOf(edge.getProperty(BEGIN_PROPERTY));
     }
     public String getEnd(){
-        return String.valueOf(this.relationship.getProperty(END_PROPERTY));
+        return String.valueOf(edge.getProperty(END_PROPERTY));
     }    
 
     public FeatureTypeNode getFeatureType(){
-        return new FeatureTypeNode(relationship.getEndNode());
+        return new FeatureTypeNode(edge.getVertex(Direction.OUT));
     }
 
     public void setDescription(String value){
-        relationship.setProperty(DESCRIPTION_PROPERTY, value);
+        edge.setProperty(DESCRIPTION_PROPERTY, value);
     }
     public void setId(String value){
-        relationship.setProperty(ID_PROPERTY, value);
+        edge.setProperty(ID_PROPERTY, value);
     }
     public void setEvidence(String value){
-        relationship.setProperty(EVIDENCE_PROPERTY, value);
+        edge.setProperty(EVIDENCE_PROPERTY, value);
     }
     public void setStatus(String value){
-        relationship.setProperty(STATUS_PROPERTY, value);
+        edge.setProperty(STATUS_PROPERTY, value);
     }
     public void setRef(String value){
-        relationship.setProperty(REF_PROPERTY,value);
+        edge.setProperty(REF_PROPERTY,value);
     }
     public void setBegin(int value){
-        relationship.setProperty(BEGIN_PROPERTY, String.valueOf(value));
+        edge.setProperty(BEGIN_PROPERTY, String.valueOf(value));
     }
     public void setEnd(int value){
-        relationship.setProperty(END_PROPERTY, String.valueOf(value));
+        edge.setProperty(END_PROPERTY, String.valueOf(value));
     }
     public void setOriginal(String value){
-        this.relationship.setProperty(ORIGINAL_PROPERTY, value);
+        edge.setProperty(ORIGINAL_PROPERTY, value);
     }
     public void setVariation(String value){
-        this.relationship.setProperty(VARIATION_PROPERTY, value);
+        edge.setProperty(VARIATION_PROPERTY, value);
     }
 
     @Override

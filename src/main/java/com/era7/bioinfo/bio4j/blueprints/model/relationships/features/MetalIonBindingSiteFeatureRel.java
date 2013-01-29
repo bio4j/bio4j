@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.tinkerpop.blueprints.Edge;
 import org.neo4j.graphdb.Relationship;
 
 /**
@@ -29,12 +30,12 @@ public class MetalIonBindingSiteFeatureRel extends BasicFeatureRel{
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "metal ion-binding site";
 
 
-    public MetalIonBindingSiteFeatureRel(Relationship rel){
-        super(rel);
+    public MetalIonBindingSiteFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

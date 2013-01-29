@@ -17,10 +17,12 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.UnpublishedObservationNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.UnpublishedObservationNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  * Proteins referenced by unpublished observations
@@ -30,20 +32,20 @@ public class UnpublishedObservationProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "UNPUBLISHED_OBSERVATION_PROTEIN_CITATION";
 
-    public UnpublishedObservationProteinCitationRel(Relationship rel){
-        super(rel);
+    public UnpublishedObservationProteinCitationRel(Edge e){
+        super(e);
     }
     
     public UnpublishedObservationNode getUnpublishedObservation(){
-        return new UnpublishedObservationNode(getStartNode());
+        return new UnpublishedObservationNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

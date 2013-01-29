@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Positions of regions of coiled coil within the protein
@@ -28,12 +28,12 @@ public class CoiledCoilRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_COILED_COIL_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "coiled-coil region";
 
-    public CoiledCoilRegionFeatureRel(Relationship rel){
-        super(rel);
+    public CoiledCoilRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

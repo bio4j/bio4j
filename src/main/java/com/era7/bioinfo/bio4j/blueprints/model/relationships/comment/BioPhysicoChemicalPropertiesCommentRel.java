@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Biophysical and physicochemical properties
@@ -37,56 +37,56 @@ public class BioPhysicoChemicalPropertiesCommentRel extends BasicCommentRel{
     public static final String REDOX_POTENTIAL_PROPERTY = "redox_potential";
     public static final String REDOX_POTENTIAL_EVIDENCE_PROPERTY = "redox_potential_evidence";
 
-    public BioPhysicoChemicalPropertiesCommentRel(Relationship rel){
-        super(rel);
+    public BioPhysicoChemicalPropertiesCommentRel(Edge e){
+        super(e);
     }
 
     public String getPhDependence(){
-        return String.valueOf(this.relationship.getProperty(PH_DEPENDENCE_PROPERTY));
+        return String.valueOf(edge.getProperty(PH_DEPENDENCE_PROPERTY));
     }
     public String getTemperatureDependence(){
-        return String.valueOf(this.relationship.getProperty(TEMPERATURE_DEPENDENCE_PROPERTY));
+        return String.valueOf(edge.getProperty(TEMPERATURE_DEPENDENCE_PROPERTY));
     }
     public String getKineticsXmlProperty(){
-        return String.valueOf(this.relationship.getProperty(KINETICS_XML_PROPERTY));
+        return String.valueOf(edge.getProperty(KINETICS_XML_PROPERTY));
     }
     public String getAbsorptionMax(){
-        return String.valueOf(this.relationship.getProperty(ABSORPTION_MAX_PROPERTY));
+        return String.valueOf(edge.getProperty(ABSORPTION_MAX_PROPERTY));
     }
     public String getAbsorptionText(){
-        return String.valueOf(this.relationship.getProperty(ABSORPTION_TEXT_PROPERTY));
+        return String.valueOf(edge.getProperty(ABSORPTION_TEXT_PROPERTY));
     }
     public String getRedoxPotential(){
-        return String.valueOf(this.relationship.getProperty(REDOX_POTENTIAL_PROPERTY));
+        return String.valueOf(edge.getProperty(REDOX_POTENTIAL_PROPERTY));
     }
     public String getRedoxPotentialEvidence(){
-        return String.valueOf(this.relationship.getProperty(REDOX_POTENTIAL_EVIDENCE_PROPERTY));
+        return String.valueOf(edge.getProperty(REDOX_POTENTIAL_EVIDENCE_PROPERTY));
     }
 
     public void setPhDependence(String value){
-        this.relationship.setProperty(PH_DEPENDENCE_PROPERTY, value);
+        edge.setProperty(PH_DEPENDENCE_PROPERTY, value);
     }
     public void setTemperatureDependence(String value){
-        this.relationship.setProperty(TEMPERATURE_DEPENDENCE_PROPERTY, value);
+        edge.setProperty(TEMPERATURE_DEPENDENCE_PROPERTY, value);
     }
     public void setKineticsXml(String value){
-        this.relationship.setProperty(KINETICS_XML_PROPERTY, value);
+        edge.setProperty(KINETICS_XML_PROPERTY, value);
     }
     public void setAbsorptionMax(String value){
-        this.relationship.setProperty(ABSORPTION_MAX_PROPERTY, value);
+        edge.setProperty(ABSORPTION_MAX_PROPERTY, value);
     }
     public void setAbsorptionText(String value){
-        this.relationship.setProperty(ABSORPTION_TEXT_PROPERTY, value);
+        edge.setProperty(ABSORPTION_TEXT_PROPERTY, value);
     }
     public void setRedoxPotential(String value){
-        this.relationship.setProperty(REDOX_POTENTIAL_PROPERTY, value);
+        edge.setProperty(REDOX_POTENTIAL_PROPERTY, value);
     }
     public void setRedoxPotentialEvidence(String value){
-        this.relationship.setProperty(REDOX_POTENTIAL_EVIDENCE_PROPERTY, value);
+        edge.setProperty(REDOX_POTENTIAL_EVIDENCE_PROPERTY, value);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

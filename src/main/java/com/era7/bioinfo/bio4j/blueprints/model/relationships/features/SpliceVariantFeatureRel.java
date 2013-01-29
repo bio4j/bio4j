@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Amino acid change(s) producing alternate protein isoforms
@@ -28,12 +28,12 @@ public class SpliceVariantFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_SPLICE_VARIANT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "splice variant";
 
-    public SpliceVariantFeatureRel(Relationship rel){
-        super(rel);
+    public SpliceVariantFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

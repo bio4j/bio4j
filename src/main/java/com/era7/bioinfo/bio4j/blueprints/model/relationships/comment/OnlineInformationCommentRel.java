@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -32,27 +32,27 @@ public class OnlineInformationCommentRel extends BasicCommentRel{
     public static final String NAME_PROPERTY = "name";
     public static final String LINK_PROPERTY = "link";
 
-    public OnlineInformationCommentRel(Relationship rel){
-        super(rel);
+    public OnlineInformationCommentRel(Edge e){
+        super(e);
     }
 
     public String getName(){
-        return String.valueOf(this.relationship.getProperty(NAME_PROPERTY));
+        return String.valueOf(edge.getProperty(NAME_PROPERTY));
     }
     public String getLink(){
-        return String.valueOf(this.relationship.getProperty(LINK_PROPERTY));
+        return String.valueOf(edge.getProperty(LINK_PROPERTY));
     }
 
     public void setName(String value){
-        this.relationship.setProperty(NAME_PROPERTY, value);
+        edge.setProperty(NAME_PROPERTY, value);
     }
     public void setLink(String value){
-        this.relationship.setProperty(LINK_PROPERTY, value);
+        edge.setProperty(LINK_PROPERTY, value);
     }
 
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

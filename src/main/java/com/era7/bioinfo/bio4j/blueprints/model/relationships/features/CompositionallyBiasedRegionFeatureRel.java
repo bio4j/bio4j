@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Region of compositional bias in the protein
@@ -28,12 +28,12 @@ public class CompositionallyBiasedRegionFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_COMPOSITIONALLY_BIASED_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "compositionally biased region";
 
-    public CompositionallyBiasedRegionFeatureRel(Relationship rel){
-        super(rel);
+    public CompositionallyBiasedRegionFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Location of non-membrane regions of membrane-spanning proteins
@@ -28,12 +28,12 @@ public class TopologicalDomainFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_TOPOLOGICAL_DOMAIN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "topological domain";
 
-    public TopologicalDomainFeatureRel(Relationship rel){
-        super(rel);
+    public TopologicalDomainFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

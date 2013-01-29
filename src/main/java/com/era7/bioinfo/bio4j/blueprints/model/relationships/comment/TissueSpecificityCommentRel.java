@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Expression of the gene product in different tissues
@@ -28,12 +28,12 @@ public class TissueSpecificityCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_TISSUE_SPECIFICITY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "tissue specificity";
 
-    public TissueSpecificityCommentRel(Relationship rel){
-        super(rel);
+    public TissueSpecificityCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

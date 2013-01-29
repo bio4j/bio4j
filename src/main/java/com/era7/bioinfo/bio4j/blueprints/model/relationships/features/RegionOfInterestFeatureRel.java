@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Region of interest in the sequence
@@ -28,12 +28,12 @@ public class RegionOfInterestFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_REGION_OF_INTEREST";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "region of interest";
 
-    public RegionOfInterestFeatureRel(Relationship rel){
-        super(rel);
+    public RegionOfInterestFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Information relevant to allergenic proteins
@@ -28,12 +28,12 @@ public class AllergenCommentRel extends BasicCommentRel{
     public static final String RELATIONSHIP_NAME = "COMMENT_ALLERGEN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "allergen";
 
-    public AllergenCommentRel(Relationship rel){
-        super(rel);
+    public AllergenCommentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

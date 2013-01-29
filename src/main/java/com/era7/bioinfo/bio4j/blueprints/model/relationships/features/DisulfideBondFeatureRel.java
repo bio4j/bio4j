@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Cysteine residues participating in disulfide bonds
@@ -28,12 +28,12 @@ public class DisulfideBondFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_DISULFIDE_BOND";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "disulfide bond";
 
-    public DisulfideBondFeatureRel(Relationship rel){
-        super(rel);
+    public DisulfideBondFeatureRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 
