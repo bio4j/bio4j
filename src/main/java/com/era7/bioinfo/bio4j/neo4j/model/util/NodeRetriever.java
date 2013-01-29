@@ -4,6 +4,8 @@
  */
 package com.era7.bioinfo.bio4j.neo4j.model.util;
 
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.*;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainDatasetRel;
