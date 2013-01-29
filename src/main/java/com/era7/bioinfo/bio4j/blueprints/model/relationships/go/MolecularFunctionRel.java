@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.go;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Relationship for retrieving the molecular function sub-ontology
@@ -30,12 +30,12 @@ public class MolecularFunctionRel extends BasicRelationship{
 
     public static final String NAME = "MOLECULAR_FUNCTION";
 
-    public MolecularFunctionRel(Relationship rel){
-        super(rel);
+    public MolecularFunctionRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

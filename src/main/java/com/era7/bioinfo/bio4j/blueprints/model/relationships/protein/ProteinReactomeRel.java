@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.reactome.ReactomeTermNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -30,20 +31,20 @@ public class ProteinReactomeRel extends BasicRelationship{
 
     public static final String NAME = "PROTEIN_REACTOME";
 
-    public ProteinReactomeRel(Relationship rel){
-        super(rel);
+    public ProteinReactomeRel(Edge e){
+        super(e);
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public ReactomeTermNode getReactomeTerm(){
-        return new ReactomeTermNode(getEndNode());
+        return new ReactomeTermNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

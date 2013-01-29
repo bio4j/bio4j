@@ -4,8 +4,9 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.go;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
+
 
 /**
  *
@@ -18,12 +19,12 @@ public class PositivelyRegulatesGoRel extends BasicRelationship {
     public static final String NAME = "POSITIVELY_REGULATES_GO";
     public static final String OBOXML_RELATIONSHIP_NAME = "positively_regulates";
 
-    public PositivelyRegulatesGoRel(Relationship rel) {
-        super(rel);
+    public PositivelyRegulatesGoRel(Edge e) {
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 }

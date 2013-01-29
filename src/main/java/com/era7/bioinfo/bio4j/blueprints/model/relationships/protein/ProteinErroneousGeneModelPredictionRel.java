@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -28,12 +28,12 @@ public class ProteinErroneousGeneModelPredictionRel extends BasicProteinSequence
     public static final String RELATIONSHIP_NAME = "PROTEIN_ERRONEOUS_GENE_MODEL_PREDICTION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "erroneous gene model prediction";
 
-    public ProteinErroneousGeneModelPredictionRel(Relationship rel){
-        super(rel);
+    public ProteinErroneousGeneModelPredictionRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

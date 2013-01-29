@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.GoTermNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.GoTermNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -32,24 +33,24 @@ public class ProteinGoRel extends BasicRelationship{
 
     public static final String EVIDENCE_PROPERTY = "evidence";
 
-    public ProteinGoRel(Relationship rel){
-        super(rel);
+    public ProteinGoRel(Edge e){
+        super(e);
     }
 
-    public String getEvidence(){    return String.valueOf(this.relationship.getProperty(EVIDENCE_PROPERTY));}
+    public String getEvidence(){    return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));}
 
-    public void setEvidence(String value){  this.relationship.setProperty(EVIDENCE_PROPERTY, value);}
+    public void setEvidence(String value){  edge.setProperty(EVIDENCE_PROPERTY, value);}
 
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public GoTermNode getGoTerm(){
-        return new GoTermNode(getEndNode());
+        return new GoTermNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

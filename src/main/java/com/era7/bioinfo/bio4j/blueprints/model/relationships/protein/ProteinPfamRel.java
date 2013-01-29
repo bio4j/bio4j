@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.PfamNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.PfamNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -30,20 +31,20 @@ public class ProteinPfamRel extends BasicRelationship{
 
     public static final String NAME = "PROTEIN_PFAM";
 
-    public ProteinPfamRel(Relationship rel){
-        super(rel);
+    public ProteinPfamRel(Edge e){
+        super(e);
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public PfamNode getPfam(){
-        return new PfamNode(getEndNode());
+        return new PfamNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

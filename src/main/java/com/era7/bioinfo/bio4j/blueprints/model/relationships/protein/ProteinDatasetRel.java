@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.DatasetNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.DatasetNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Protein's dataset (Swiss-prot or trembl)
@@ -30,20 +31,20 @@ public class ProteinDatasetRel extends BasicRelationship{
 
     public static final String NAME = "PROTEIN_DATASET";
 
-    public ProteinDatasetRel(Relationship rel){
-        super(rel);
+    public ProteinDatasetRel(Edge e){
+        super(e);
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public DatasetNode getDataset(){
-        return new DatasetNode(getEndNode());
+        return new DatasetNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

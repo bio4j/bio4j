@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.SubcellularLocationNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.SubcellularLocationNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -37,31 +38,31 @@ public class ProteinSubcellularLocationRel extends BasicRelationship{
     public static final String TOPOLOGY_STATUS_PROPERTY = "topology_status";
     public static final String TOPOLOGY_PROPERTY = "topology";
 
-    public ProteinSubcellularLocationRel(Relationship rel){
-        super(rel);
+    public ProteinSubcellularLocationRel(Edge e){
+        super(e);
     }
 
-    public String getEvidence(){    return String.valueOf(this.relationship.getProperty(EVIDENCE_PROPERTY));}
-    public String getStatus(){  return String.valueOf(this.relationship.getProperty(STATUS_PROPERTY));}
-    public String getTopology(){    return String.valueOf(this.relationship.getProperty(TOPOLOGY_PROPERTY));}
-    public String getTopologyStatus(){  return String.valueOf(this.relationship.getProperty(TOPOLOGY_STATUS_PROPERTY));}
+    public String getEvidence(){    return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));}
+    public String getStatus(){  return String.valueOf(edge.getProperty(STATUS_PROPERTY));}
+    public String getTopology(){    return String.valueOf(edge.getProperty(TOPOLOGY_PROPERTY));}
+    public String getTopologyStatus(){  return String.valueOf(edge.getProperty(TOPOLOGY_STATUS_PROPERTY));}
 
-    public void setEvidence(String value){  this.relationship.setProperty(EVIDENCE_PROPERTY, value);}
-    public void setStatus(String value){    this.relationship.setProperty(STATUS_PROPERTY, value);}
-    public void setTopology(String value){  this.relationship.setProperty(TOPOLOGY_PROPERTY, value);}
-    public void setTopologyStatus(String value){    this.relationship.setProperty(TOPOLOGY_STATUS_PROPERTY, value);}
+    public void setEvidence(String value){  edge.setProperty(EVIDENCE_PROPERTY, value);}
+    public void setStatus(String value){    edge.setProperty(STATUS_PROPERTY, value);}
+    public void setTopology(String value){  edge.setProperty(TOPOLOGY_PROPERTY, value);}
+    public void setTopologyStatus(String value){    edge.setProperty(TOPOLOGY_STATUS_PROPERTY, value);}
 
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public SubcellularLocationNode getSubcellularLocation(){
-        return new SubcellularLocationNode(getEndNode());
+        return new SubcellularLocationNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

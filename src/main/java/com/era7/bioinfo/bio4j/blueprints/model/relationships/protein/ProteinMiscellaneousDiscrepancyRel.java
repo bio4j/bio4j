@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -28,12 +28,12 @@ public class ProteinMiscellaneousDiscrepancyRel extends BasicProteinSequenceCaut
     public static final String RELATIONSHIP_NAME = "PROTEIN_MISCELLANEOUS_DISCREPANCY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "miscellaneous discrepancy";
 
-    public ProteinMiscellaneousDiscrepancyRel(Relationship rel){
-        super(rel);
+    public ProteinMiscellaneousDiscrepancyRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return RELATIONSHIP_NAME;
     }
 

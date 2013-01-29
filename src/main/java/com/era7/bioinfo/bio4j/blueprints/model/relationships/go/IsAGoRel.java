@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.go;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -34,12 +34,12 @@ public class IsAGoRel extends BasicRelationship{
 
     public static final String IS_A_REL_INDEX = "is_a_rel_index";
 
-    public IsAGoRel(Relationship rel){
-        super(rel);
+    public IsAGoRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

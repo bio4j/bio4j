@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.EnzymeNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.EnzymeNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * Protein enzymatic activity (EC number connections)
@@ -30,20 +31,20 @@ public class ProteinEnzymaticActivityRel extends BasicRelationship{
 
     public static final String NAME = "PROTEIN_ENZYMATIC_ACTIVITY";
 
-    public ProteinEnzymaticActivityRel(Relationship rel){
-        super(rel);
+    public ProteinEnzymaticActivityRel(Edge e){
+        super(e);
     }
     
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public EnzymeNode getEnzyme(){
-        return new EnzymeNode(getEndNode());
+        return new EnzymeNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

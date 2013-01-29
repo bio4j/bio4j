@@ -16,9 +16,10 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -35,30 +36,30 @@ public class ProteinProteinInteractionRel extends BasicRelationship{
     public static final String INTACT_ID_1_PROPERTY = "intact_id_1";
     public static final String INTACT_ID_2_PROPERTY = "intact_id_2";
 
-    public ProteinProteinInteractionRel(Relationship rel){
-        super(rel);
+    public ProteinProteinInteractionRel(Edge e){
+        super(e);
     }
 
-    public String getOrganismsDiffer(){    return String.valueOf(this.relationship.getProperty(ORGANISMS_DIFFER_PROPERTY));}
-    public String getExperiments(){  return String.valueOf(this.relationship.getProperty(EXPERIMENTS_PROPERTY));}
-    public String getIntactId2(){    return String.valueOf(this.relationship.getProperty(INTACT_ID_2_PROPERTY));}
-    public String getIntactId1(){  return String.valueOf(this.relationship.getProperty(INTACT_ID_1_PROPERTY));}
+    public String getOrganismsDiffer(){    return String.valueOf(edge.getProperty(ORGANISMS_DIFFER_PROPERTY));}
+    public String getExperiments(){  return String.valueOf(edge.getProperty(EXPERIMENTS_PROPERTY));}
+    public String getIntactId2(){    return String.valueOf(edge.getProperty(INTACT_ID_2_PROPERTY));}
+    public String getIntactId1(){  return String.valueOf(edge.getProperty(INTACT_ID_1_PROPERTY));}
 
-    public void setOrganismsDiffer(String value){  this.relationship.setProperty(ORGANISMS_DIFFER_PROPERTY, value);}
-    public void setExperiments(String value){    this.relationship.setProperty(EXPERIMENTS_PROPERTY, value);}
-    public void setIntactId2(String value){  this.relationship.setProperty(INTACT_ID_2_PROPERTY, value);}
-    public void setIntactId1(String value){    this.relationship.setProperty(INTACT_ID_1_PROPERTY, value);}
+    public void setOrganismsDiffer(String value){  edge.setProperty(ORGANISMS_DIFFER_PROPERTY, value);}
+    public void setExperiments(String value){    edge.setProperty(EXPERIMENTS_PROPERTY, value);}
+    public void setIntactId2(String value){  edge.setProperty(INTACT_ID_2_PROPERTY, value);}
+    public void setIntactId1(String value){    edge.setProperty(INTACT_ID_1_PROPERTY, value);}
 
     public ProteinNode getProtein1(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public ProteinNode getProtein2(){
-        return new ProteinNode(getEndNode());
+        return new ProteinNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

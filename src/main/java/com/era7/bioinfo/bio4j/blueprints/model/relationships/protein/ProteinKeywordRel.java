@@ -17,10 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.KeywordNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.KeywordNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -30,20 +31,20 @@ public class ProteinKeywordRel extends BasicRelationship{
 
     public static final String NAME = "PROTEIN_KEYWORD";
 
-    public ProteinKeywordRel(Relationship rel){
-        super(rel);
+    public ProteinKeywordRel(Edge e){
+        super(e);
     }
 
     public ProteinNode getProtein(){
-        return new ProteinNode(getStartNode());
+        return new ProteinNode(getVertex(Direction.IN));
     }
     
     public KeywordNode getKeyword(){
-        return new KeywordNode(getEndNode());
+        return new KeywordNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
