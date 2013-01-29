@@ -16,10 +16,11 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GeneNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GeneNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -29,20 +30,20 @@ public class GenomeElementGeneRel extends BasicRelationship{
 
     public static final String NAME = "GENOME_ELEMENT_GENE";
 
-    public GenomeElementGeneRel(Relationship rel){
-        super(rel);
+    public GenomeElementGeneRel(Edge e){
+        super(e);
     }
     
     public GenomeElementNode getGenomeElement(){
-        return new GenomeElementNode(getStartNode());
+        return new GenomeElementNode(getVertex(Direction.IN));
     }
     
     public GeneNode getGene(){
-        return new GeneNode(getEndNode());
+        return new GeneNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

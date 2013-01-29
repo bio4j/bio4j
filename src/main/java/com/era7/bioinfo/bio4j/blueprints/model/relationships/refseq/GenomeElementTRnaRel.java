@@ -16,10 +16,11 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.TRNANode;
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.TRNANode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -29,20 +30,20 @@ public class GenomeElementTRnaRel extends BasicRelationship{
 
     public static final String NAME = "GENOME_ELEMENT_TRNA";
 
-    public GenomeElementTRnaRel(Relationship rel){
-        super(rel);
+    public GenomeElementTRnaRel(Edge e){
+        super(e);
     }
     
     public GenomeElementNode getGenomeElement(){
-        return new GenomeElementNode(getStartNode());
+        return new GenomeElementNode(getVertex(Direction.IN));
     }
     
     public TRNANode getTRNA(){
-        return new TRNANode(getEndNode());
+        return new TRNANode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

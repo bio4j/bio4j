@@ -17,8 +17,8 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  *
@@ -28,12 +28,12 @@ public class UniRef90MemberRel extends BasicRelationship{
 
     public static final String NAME = "UNIREF_90_MEMBER";
 
-    public UniRef90MemberRel(Relationship rel){
-        super(rel);
+    public UniRef90MemberRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

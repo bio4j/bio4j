@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.neo4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinGoRel;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;

@@ -17,8 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -26,16 +25,14 @@ import org.neo4j.graphdb.Relationship;
  */
 public class SubcellularLocationParentRel extends BasicRelationship{
 
-    public static final String SUBCELLULAR_LOCATION_PARENT_REL_INDEX = "subcellular_location_parent_rel_index";
-
     public static final String NAME = "SUBCELLULAR_LOCATION_PARENT";
 
-    public SubcellularLocationParentRel(Relationship rel){
-        super(rel);
+    public SubcellularLocationParentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

@@ -17,8 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -28,12 +27,12 @@ public class IsoformEventGeneratorRel extends BasicRelationship{
 
     public static final String NAME = "ISOFORM_EVENT_GENERATOR";
 
-    public IsoformEventGeneratorRel(Relationship rel){
-        super(rel);
+    public IsoformEventGeneratorRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 

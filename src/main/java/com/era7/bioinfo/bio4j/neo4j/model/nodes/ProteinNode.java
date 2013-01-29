@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.neo4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.article.ArticleProteinCitationRel;
@@ -33,6 +34,7 @@ import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.ActiveSiteFeatu
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.SignalPeptideFeatureRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.SpliceVariantFeatureRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.TransmembraneRegionFeatureRel;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.uniref.UniRef90MemberRel;

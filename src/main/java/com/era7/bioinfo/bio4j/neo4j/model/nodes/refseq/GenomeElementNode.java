@@ -18,7 +18,9 @@
 package com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq;
 
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.*;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinGenomeElementRel;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.*;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;

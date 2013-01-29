@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.neo4j.model.nodes.citation;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.CityNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.book.*;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import java.util.ArrayList;
 import java.util.Iterator;

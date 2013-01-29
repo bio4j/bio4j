@@ -17,8 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
-import com.era7.bioinfo.bioinfoneo4j.BasicRelationship;
-import org.neo4j.graphdb.Relationship;
+import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
@@ -28,12 +27,12 @@ public class TaxonParentRel extends BasicRelationship{
 
     public static final String NAME = "TAXON_PARENT";
 
-    public TaxonParentRel(Relationship rel){
-        super(rel);
+    public TaxonParentRel(Edge e){
+        super(e);
     }
 
     @Override
-    public String name() {
+    public String getLabel() {
         return NAME;
     }
 
