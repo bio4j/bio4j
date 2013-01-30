@@ -16,24 +16,14 @@
  */
 package com.era7.bioinfo.bio4j.neo4j.programs;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.ErroneousTranslationRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinErroneousGeneModelPredictionRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinMiscellaneousDiscrepancyRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.ErroneousTerminationRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinFrameshiftRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinErroneousInitiationRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.ErroneousInitiationRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.MiscellaneousDiscrepancyRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.ErroneousGeneModelPredictionRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.FrameshiftRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinErroneousTranslationRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinErroneousTerminationRel;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.AlternativeProductNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.SequenceCautionNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.aproducts.AlternativeProductInitiationRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.aproducts.AlternativeProductPromoterRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.sc.*;
 import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.File;

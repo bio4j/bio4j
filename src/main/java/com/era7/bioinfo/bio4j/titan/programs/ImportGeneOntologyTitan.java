@@ -14,16 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.titan;
+package com.era7.bioinfo.bio4j.titan.programs;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.PartOfGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.RegulatesGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.HasPartOfGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.NegativelyRegulatesGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.IsAGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.go.PositivelyRegulatesGoRel;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.GoTermNode;
-import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.GoTermNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanFactory;
@@ -112,10 +106,6 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------creating graph handlers---------------------
                 TitanGraph graph = TitanFactory.open(conf);
                 BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
-
-                //--------creating indices-------------
-                graph.createKeyIndex(GoTermNode.ID_PROPERTY, Vertex.class);
-                graph.createKeyIndex(GoTermNode.NODE_TYPE_PROPERTY, Vertex.class);
 
                 Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> regulatesMap = new HashMap<String, ArrayList<String>>();

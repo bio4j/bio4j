@@ -59,7 +59,6 @@ import com.era7.bioinfo.bio4j.neo4j.model.relationships.comment.CautionCommentRe
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.InstituteNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.comment.MiscellaneousCommentRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainTaxonRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.book.BookAuthorRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.book.BookProteinCitationRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.ChainFeatureRel;
@@ -242,7 +241,6 @@ public class ImportUniprot implements Executable {
     public static ProteinGoRel proteinGoRel = new ProteinGoRel(null);
     public static ProteinOrganismRel proteinOrganismRel = new ProteinOrganismRel(null);
     public static TaxonParentRel taxonParentRel = new TaxonParentRel(null);
-    public static MainTaxonRel mainTaxonRel = new MainTaxonRel(null);
     public static ProteinKeywordRel proteinKeywordRel = new ProteinKeywordRel(null);
     public static MainDatasetRel mainDatasetRel = new MainDatasetRel(null);
     public static ProteinDatasetRel proteinDatasetRel = new ProteinDatasetRel(null);
@@ -980,14 +978,12 @@ public class ImportUniprot implements Executable {
                                 firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex, nodeTypeIndex);
                                 //flushing taxon name index--
                                 taxonNameIndex.flush();
-                                inserter.createRelationship(inserter.getReferenceNode(), firstTaxonId, mainTaxonRel, null);
 
                             }
 
                             long lastTaxonId = firstTaxonId;
                             for (int i = 1; i < taxons.size(); i++) {
                                 String taxonName = taxons.get(i).getText();
-                                //long currentTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, taxonName);
                                 long currentTaxonId = -1;
                                 IndexHits<Long> currentTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName);
                                 if (currentTaxonIndexHits.hasNext()) {
