@@ -16,10 +16,24 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.DomainCommentRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.FunctionCommentRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.PathwayCommentRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.SimilarityCommentRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.ActiveSiteFeatureRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.SignalPeptideFeatureRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.SpliceVariantFeatureRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.TransmembraneRegionFeatureRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
@@ -321,7 +335,7 @@ public class ProteinNode extends BasicNode {
     public List<TransmembraneRegionFeatureRel> getTransmembraneRegionFeature(){
         List<TransmembraneRegionFeatureRel> list = new ArrayList<TransmembraneRegionFeatureRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new TransmembraneRegionFeatureRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, TransmembraneRegionFeatureRel.NAME).iterator();
         while(iterator.hasNext()){
             TransmembraneRegionFeatureRel rel = new TransmembraneRegionFeatureRel(iterator.next());
             list.add(rel);                        
@@ -331,7 +345,7 @@ public class ProteinNode extends BasicNode {
     public List<ActiveSiteFeatureRel> getActiveSiteFeature(){
         List<ActiveSiteFeatureRel> list = new ArrayList<ActiveSiteFeatureRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ActiveSiteFeatureRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ActiveSiteFeatureRel.NAME).iterator();
         while(iterator.hasNext()){
             ActiveSiteFeatureRel rel = new ActiveSiteFeatureRel(iterator.next());
             list.add(rel);                        
@@ -342,7 +356,7 @@ public class ProteinNode extends BasicNode {
     public List<FunctionCommentRel> getFunctionComment(){
         List<FunctionCommentRel> list = new ArrayList<FunctionCommentRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new FunctionCommentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, FunctionCommentRel.NAME).iterator();
         while(iterator.hasNext()){
             FunctionCommentRel rel = new FunctionCommentRel(iterator.next());
             list.add(rel);                        
@@ -353,7 +367,7 @@ public class ProteinNode extends BasicNode {
     public List<PathwayCommentRel> getPathwayComment(){
         List<PathwayCommentRel> list = new ArrayList<PathwayCommentRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new PathwayCommentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, PathwayCommentRel.NAME).iterator();
         while(iterator.hasNext()){
             PathwayCommentRel rel = new PathwayCommentRel(iterator.next());
             list.add(rel);                        
@@ -364,7 +378,7 @@ public class ProteinNode extends BasicNode {
     public List<DomainCommentRel> getDomainComment(){
         List<DomainCommentRel> list = new ArrayList<DomainCommentRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new DomainCommentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, DomainCommentRel.NAME).iterator();
         while(iterator.hasNext()){
             DomainCommentRel rel = new DomainCommentRel(iterator.next());
             list.add(rel);                        
@@ -375,7 +389,7 @@ public class ProteinNode extends BasicNode {
     public List<SimilarityCommentRel> getSimilarityComment(){
         List<SimilarityCommentRel> list = new ArrayList<SimilarityCommentRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new SimilarityCommentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SimilarityCommentRel.NAME).iterator();
         while(iterator.hasNext()){
             SimilarityCommentRel rel = new SimilarityCommentRel(iterator.next());
             list.add(rel);                        
@@ -390,7 +404,7 @@ public class ProteinNode extends BasicNode {
     public List<ProteinProteinInteractionRel> getProteinOutgoingInteractions(){
         List<ProteinProteinInteractionRel> list = new ArrayList<ProteinProteinInteractionRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinProteinInteractionRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ProteinProteinInteractionRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinProteinInteractionRel(iterator.next()));
         }
@@ -404,7 +418,7 @@ public class ProteinNode extends BasicNode {
     public List<ProteinProteinInteractionRel> getProteinIncomingInteractions(){
         List<ProteinProteinInteractionRel> list = new ArrayList<ProteinProteinInteractionRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinProteinInteractionRel(null), Direction.INCOMING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.IN, ProteinProteinInteractionRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinProteinInteractionRel(iterator.next()));
         }
@@ -419,7 +433,7 @@ public class ProteinNode extends BasicNode {
     public List<ProteinIsoformInteractionRel> getIsoformOutgoingInteractions(){
         List<ProteinIsoformInteractionRel> list = new ArrayList<ProteinIsoformInteractionRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinIsoformInteractionRel(null), Direction.OUTGOING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ProteinIsoformInteractionRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinIsoformInteractionRel(iterator.next()));
         }
@@ -434,7 +448,7 @@ public class ProteinNode extends BasicNode {
     public List<ProteinIsoformInteractionRel> getIsoformIncomingInteractions(){
         List<ProteinIsoformInteractionRel> list = new ArrayList<ProteinIsoformInteractionRel>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ProteinIsoformInteractionRel(null), Direction.INCOMING).iterator();
+        Iterator<Edge> iterator = vertex.getEdges(Direction.IN, ProteinIsoformInteractionRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinIsoformInteractionRel(iterator.next()));
         }
@@ -453,9 +467,9 @@ public class ProteinNode extends BasicNode {
     public List<ArticleNode> getArticleCitations(){
         List<ArticleNode> list = new ArrayList<ArticleNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ArticleProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ArticleProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new ArticleNode(iterator.next().getStartNode()));
+            list.add(new ArticleNode(iterator.next()));
         }
         return list;
     }
@@ -466,9 +480,9 @@ public class ProteinNode extends BasicNode {
     public List<SubmissionNode> getSubmissionCitations(){
         List<SubmissionNode> list = new ArrayList<SubmissionNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new SubmissionProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, SubmissionProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new SubmissionNode(iterator.next().getStartNode()));
+            list.add(new SubmissionNode(iterator.next()));
         }
         return list;
     }
@@ -479,9 +493,9 @@ public class ProteinNode extends BasicNode {
     public List<OnlineArticleNode> getOnlineArticleCitations(){
         List<OnlineArticleNode> list = new ArrayList<OnlineArticleNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new OnlineArticleProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, OnlineArticleProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new OnlineArticleNode(iterator.next().getStartNode()));
+            list.add(new OnlineArticleNode(iterator.next()));
         }
         return list;
     } 
@@ -492,9 +506,9 @@ public class ProteinNode extends BasicNode {
     public List<BookNode> getBookCitations(){
         List<BookNode> list = new ArrayList<BookNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new BookProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, BookProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new BookNode(iterator.next().getStartNode()));
+            list.add(new BookNode(iterator.next()));
         }
         return list;
     }
@@ -505,9 +519,9 @@ public class ProteinNode extends BasicNode {
     public List<PatentNode> getPatentCitations(){
         List<PatentNode> list = new ArrayList<PatentNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new PatentProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, PatentProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new PatentNode(iterator.next().getStartNode()));
+            list.add(new PatentNode(iterator.next()));
         }
         return list;
     }
@@ -518,9 +532,9 @@ public class ProteinNode extends BasicNode {
     public List<ThesisNode> getThesisCitations(){
         List<ThesisNode> list = new ArrayList<ThesisNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new ThesisProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ThesisProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new ThesisNode(iterator.next().getStartNode()));
+            list.add(new ThesisNode(iterator.next()));
         }
         return list;
     }
@@ -531,9 +545,9 @@ public class ProteinNode extends BasicNode {
     public List<UnpublishedObservationNode> getUnpublishedObservationsCitations(){
         List<UnpublishedObservationNode> list = new ArrayList<UnpublishedObservationNode>();
         
-        Iterator<Relationship> iterator = node.getRelationships(new UnpublishedObservationProteinCitationRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, UnpublishedObservationProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
-            list.add(new UnpublishedObservationNode(iterator.next().getStartNode()));
+            list.add(new UnpublishedObservationNode(iterator.next()));
         }
         return list;
     }

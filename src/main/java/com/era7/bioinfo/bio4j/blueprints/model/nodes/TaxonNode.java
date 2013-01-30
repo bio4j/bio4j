@@ -17,37 +17,33 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.TaxonParentRel;
-import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.TaxonParentRel;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Uniprot taxonomy taxon
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TaxonNode extends BasicEntity{
-
-    public static final String TAXON_NAME_INDEX = "taxon_name_index";
+public class TaxonNode extends BasicNode{
 
     public static final String NODE_TYPE = TaxonNode.class.getCanonicalName();
 
     public static final String NAME_PROPERTY = "taxon_name";
 
 
-    public TaxonNode(Node n){
-        super(n);
+    public TaxonNode(Vertex v){
+        super(v);
     }
 
 
-    public String getName(){    return String.valueOf(node.getProperty(NAME_PROPERTY));}
+    public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
-    public void setName(String value){  node.setProperty(NAME_PROPERTY, value);}
+    public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     /**
      * 
@@ -56,9 +52,9 @@ public class TaxonNode extends BasicEntity{
     public TaxonNode getParent(){
         TaxonNode parent = null;
         
-        Iterator<Relationship> iterator = this.getNode().getRelationships(new TaxonParentRel(null), Direction.INCOMING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, TaxonParentRel.NAME).iterator();
         if(iterator.hasNext()){
-            parent = new TaxonNode(iterator.next().getStartNode());
+            parent = new TaxonNode(iterator.next());
         }
         
         return parent;
@@ -71,11 +67,11 @@ public class TaxonNode extends BasicEntity{
     public List<TaxonNode> getChildren(){
         List<TaxonNode> list = new ArrayList<TaxonNode>();
         
-        Iterator<Relationship> iterator = this.getNode().getRelationships(new TaxonParentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, TaxonParentRel.NAME).iterator();
         
         while(iterator.hasNext()){
-            Node tempNode = iterator.next().getEndNode();
-            if(tempNode.getProperty(BasicEntity.NODE_TYPE_PROPERTY).equals(TaxonNode.NODE_TYPE)){
+            Vertex tempNode = iterator.next();
+            if(tempNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(TaxonNode.NODE_TYPE)){
                 list.add(new TaxonNode(tempNode));
             }           
         }
@@ -90,11 +86,11 @@ public class TaxonNode extends BasicEntity{
     public List<OrganismNode> getOrganisms(){
         List<OrganismNode> list = new ArrayList<OrganismNode>();
         
-        Iterator<Relationship> iterator = this.getNode().getRelationships(new TaxonParentRel(null), Direction.OUTGOING).iterator();
+        Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, TaxonParentRel.NAME).iterator();
         
         while(iterator.hasNext()){
-            Node tempNode = iterator.next().getEndNode();            
-            if(tempNode.getProperty(BasicEntity.NODE_TYPE_PROPERTY).equals(OrganismNode.NODE_TYPE)){
+            Vertex tempNode = iterator.next();            
+            if(tempNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(OrganismNode.NODE_TYPE)){
                 list.add(new OrganismNode(tempNode));
             }           
         }
@@ -102,22 +98,6 @@ public class TaxonNode extends BasicEntity{
         return list;
     }
     
-
-    @Override
-    public int hashCode(){
-        return super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if(obj instanceof TaxonNode){
-            TaxonNode other = (TaxonNode) obj;
-            return this.node.equals(other.node);
-        }else{
-            return false;
-        }
-    }
-
     @Override
     public String toString(){
         return "name = " + getName();
