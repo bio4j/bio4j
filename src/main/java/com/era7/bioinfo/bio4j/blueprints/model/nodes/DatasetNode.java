@@ -25,6 +25,9 @@ import com.tinkerpop.blueprints.Vertex;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class DatasetNode extends BasicNode{
+    
+    public static final String SWISS_PROT_DATASET_NAME = "Swiss-Prot";
+    public static final String TREMBL_DATASET_NAME = "TrEMBL";
 
     public static final String NODE_TYPE = DatasetNode.class.getCanonicalName();
 

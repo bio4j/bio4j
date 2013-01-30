@@ -25,6 +25,9 @@ import org.neo4j.graphdb.Node;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class DatasetNode extends BasicEntity{
+    
+    public static final String SWISS_PROT_DATASET_NAME = "Swiss-Prot";
+    public static final String TREMBL_DATASET_NAME = "TrEMBL";
 
     public static final String DATASET_NAME_INDEX = "dataset_name_index";
     public static final String NODE_TYPE = DatasetNode.class.getCanonicalName();

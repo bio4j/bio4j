@@ -16,11 +16,17 @@
  */
 package com.era7.bioinfo.bio4j.titan.model.util;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.DatasetNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.EnzymeNode;
+import com.tinkerpop.blueprints.Vertex;
+import java.util.Iterator;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NodeRetriever {
+public class NodeRetriever {   
+    
     
     protected Bio4jManager manager;
     
@@ -28,5 +34,43 @@ public class NodeRetriever {
         manager = bio4jManager;
     }
     
+    //-------------------------------------------------------------------
+    //--------------------------ENZYME-----------------------------------
     
+    public EnzymeNode getEnzymeById(String id){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(EnzymeNode.ID_PROPERTY, id).iterator(); 
+        if(iterator.hasNext()){
+            return new EnzymeNode(iterator.next());
+        }else{
+            return null;
+        }
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------------DATASETS-----------------------------------
+        
+    public DatasetNode getDatasetByName(String name){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, name).iterator();  
+        if(iterator.hasNext()){
+            return new DatasetNode(iterator.next());
+        }else{
+            return null;
+        }
+    }    
+    public DatasetNode getSwissProtDataset(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, DatasetNode.SWISS_PROT_DATASET_NAME).iterator();  
+        if(iterator.hasNext()){
+            return new DatasetNode(iterator.next());
+        }else{
+            return null;
+        }
+    }
+    public DatasetNode getTremblDataset(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, DatasetNode.TREMBL_DATASET_NAME).iterator();  
+        if(iterator.hasNext()){
+            return new DatasetNode(iterator.next());
+        }else{
+            return null;
+        }
+    }
 }

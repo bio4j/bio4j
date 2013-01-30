@@ -57,4 +57,7 @@ public class Bio4jManager{
         return vertex;
     }
     
+    public TitanGraph getGraph(){
+        return graph;
+    }
 }

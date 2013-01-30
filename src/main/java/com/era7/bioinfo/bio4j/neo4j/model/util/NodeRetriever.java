@@ -21,7 +21,6 @@ import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainDatasetRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainTaxonRel;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -58,26 +57,32 @@ public class NodeRetriever {
     }
     
     //-------------------------------------------------------------------
-    //--------------------------DATASETS-----------------------------------
-    
-    public List<DatasetNode> getMainDatasets(){
-        List<DatasetNode> list = new LinkedList<DatasetNode>();
-        Iterator<Relationship> relIt = manager.getReferenceNode().getRelationships(new MainDatasetRel(null), Direction.OUTGOING).iterator();
-        while(relIt.hasNext()){
-            list.add(new DatasetNode(relIt.next().getEndNode()));
-        }
-        return list;
-    }
-    
+    //--------------------------DATASETS-----------------------------------      
     public DatasetNode getDatasetByName(String name){
-        IndexHits<Node> hits = manager.getDatasetNameIndex().get(DatasetNode.DATASET_NAME_INDEX, name);
-        
+        IndexHits<Node> hits = manager.getDatasetNameIndex().get(DatasetNode.DATASET_NAME_INDEX, name);        
         if(hits.hasNext()){
             return new DatasetNode(hits.getSingle());
         }else{
             return null;
         }
     }
+    public DatasetNode getSwissProtDataset(){
+        IndexHits<Node> hits = manager.getDatasetNameIndex().get(DatasetNode.DATASET_NAME_INDEX, DatasetNode.SWISS_PROT_DATASET_NAME);        
+        if(hits.hasNext()){
+            return new DatasetNode(hits.getSingle());
+        }else{
+            return null;
+        }
+    }
+    public DatasetNode getTremblDataset(){
+        IndexHits<Node> hits = manager.getDatasetNameIndex().get(DatasetNode.DATASET_NAME_INDEX, DatasetNode.TREMBL_DATASET_NAME);        
+        if(hits.hasNext()){
+            return new DatasetNode(hits.getSingle());
+        }else{
+            return null;
+        }
+    }
+    
     
     //-------------------------------------------------------------------
     //--------------------------REFSEQ-----------------------------------
