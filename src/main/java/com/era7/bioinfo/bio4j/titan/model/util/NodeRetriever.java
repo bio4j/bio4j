@@ -17,6 +17,8 @@
 package com.era7.bioinfo.bio4j.titan.model.util;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -266,4 +268,281 @@ public class NodeRetriever {
             return null;
         }   
     }
+    /**
+     * 
+     * @param taxId
+     * @return NCBITaxonNode with the tax id provided
+     */
+    public NCBITaxonNode getNCBITaxonByTaxId(String taxId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(NCBITaxonNode.TAX_ID_PROPERTY, taxId).iterator();        
+        if(iterator.hasNext()){
+            return new NCBITaxonNode(iterator.next());
+        }else{
+            return null;
+        }   
+    }
+    /**
+     * 
+     * @param giId
+     * @return NCBITaxonNode with the tax id provided
+     */
+    public NCBITaxonNode getNCBITaxonByGiId(String giId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(NCBITaxonNode.GI_IDS_PROPERTY, giId).iterator();        
+        if(iterator.hasNext()){
+            return new NCBITaxonNode(iterator.next());
+        }else{
+            return null;
+        }   
+    }
+    //-------------------------------------------------------------------
+    //--------------------ISOFORMS--------------------------------
+    /**
+     * 
+     * @param isoformId
+     * @return IsoformNode with the id provided
+     */
+    public IsoformNode getIsoformById(String isoformId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(IsoformNode.ID_PROPERTY, isoformId).iterator();        
+        if(iterator.hasNext()){
+            return new IsoformNode(iterator.next());
+        }else{
+            return null;
+        }   
+    }
+    //-------------------------------------------------------------------
+    //--------------------PERSON--------------------------------
+    /**
+     * 
+     * @param personName
+     * @return PersonNode list with the name matching the value provided
+     */
+    public List<PersonNode> getPeopleByName(String personName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(PersonNode.NAME_PROPERTY, personName).iterator();        
+        List<PersonNode> list = new LinkedList<PersonNode>();        
+        while(iterator.hasNext()){
+            list.add(new PersonNode(iterator.next()));
+        }        
+        return list; 
+    }
+    //-------------------------------------------------------------------
+    //--------------------CONSORTIUMS--------------------------------
+    /**
+     * 
+     * @param consortiumName
+     * @return ConsortiumNode with the name provided
+     */
+    public ConsortiumNode getConsortiumByName(String consortiumName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ConsortiumNode.NAME_PROPERTY, consortiumName).iterator();        
+        if(iterator.hasNext()){
+            return new ConsortiumNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------INSTITUTES--------------------------------
+    /**
+     * 
+     * @param instituteName
+     * @return InstituteNode with the name provided
+     */
+    public InstituteNode getInstituteByName(String instituteName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(InstituteNode.NAME_PROPERTY, instituteName).iterator();        
+        if(iterator.hasNext()){
+            return new InstituteNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------COUNTRIES--------------------------------
+    /**
+     * 
+     * @param countryName
+     * @return CountryNode with the name provided
+     */
+    public CountryNode getCountryNodeByName(String countryName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(CountryNode.NAME_PROPERTY, countryName).iterator();        
+        if(iterator.hasNext()){
+            return new CountryNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------CITY--------------------------------
+    /**
+     * 
+     * @param cityName
+     * @return CityNode with the name provided
+     */
+    public CityNode getCityNodeByName(String cityName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(CityNode.NAME_PROPERTY, cityName).iterator();        
+        if(iterator.hasNext()){
+            return new CityNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------THESIS--------------------------------
+    /**
+     * 
+     * @param thesisName
+     * @return ThesisNode list with the name matching the value provided
+     */
+    public List<ThesisNode> getThesisByName(String thesisName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ThesisNode.TITLE_PROPERTY, thesisName).iterator();        
+        List<ThesisNode> list = new LinkedList<ThesisNode>();        
+        while(iterator.hasNext()){
+            list.add(new ThesisNode(iterator.next()));
+        }        
+        return list; 
+    }
+    //-------------------------------------------------------------------
+    //--------------------PATENTS--------------------------------
+    /**
+     * 
+     * @param patentNumber
+     * @return PatentNode with the number provided
+     */
+    public PatentNode getPatentByNumber(String patentNumber){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(PatentNode.NUMBER_PROPERTY, patentNumber).iterator();        
+        if(iterator.hasNext()){
+            return new PatentNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------BOOKS--------------------------------
+    /**
+     * 
+     * @param bookName
+     * @return BookNode list with the name matching the value provided
+     */
+    public List<BookNode> getBooksByName(String bookName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(BookNode.NAME_PROPERTY, bookName).iterator();        
+        List<BookNode> list = new LinkedList<BookNode>();        
+        while(iterator.hasNext()){
+            list.add(new BookNode(iterator.next()));
+        }        
+        return list; 
+    }
+    //-------------------------------------------------------------------
+    //--------------------PUBLISHER--------------------------------
+    /**
+     * 
+     * @param publisherName
+     * @return PublisherNode with the name provided
+     */
+    public PublisherNode getPublisherByName(String publisherName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(PublisherNode.NAME_PROPERTY, publisherName).iterator();        
+        if(iterator.hasNext()){
+            return new PublisherNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------ONLINE ARTICLES--------------------------------
+    /**
+     * 
+     * @param onlineArticleTitle
+     * @return OnlineArticleNode list with the title matching the value provided
+     */
+    public List<OnlineArticleNode> getOnlineArticlesByTitle(String onlineArticleTitle){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(OnlineArticleNode.TITLE_PROPERTY, onlineArticleTitle).iterator();        
+        List<OnlineArticleNode> list = new LinkedList<OnlineArticleNode>();        
+        while(iterator.hasNext()){
+            list.add(new OnlineArticleNode(iterator.next()));
+        }        
+        return list; 
+    }
+    //-------------------------------------------------------------------
+    //--------------------ONLINE JOURNAL--------------------------------
+    /**
+     * 
+     * @param onlineJournalName
+     * @return OnlineJournalNode with the name provided
+     */
+    public OnlineJournalNode getOnlineJournalByName(String onlineJournalName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(OnlineJournalNode.NAME_PROPERTY, onlineJournalName).iterator();        
+        if(iterator.hasNext()){
+            return new OnlineJournalNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------ARTICLES--------------------------------
+    /**
+     * 
+     * @param articleTitle
+     * @return ArticleNode list with the title matching the value provided
+     */
+    public List<ArticleNode> getArticlesByTitle(String articleTitle){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.TITLE_PROPERTY, articleTitle).iterator();        
+        List<ArticleNode> list = new LinkedList<ArticleNode>();        
+        while(iterator.hasNext()){
+            list.add(new ArticleNode(iterator.next()));
+        }        
+        return list; 
+    }
+    /**
+     * 
+     * @param articleMedlineId
+     * @return ArticleNode with the medline id provided
+     */
+    public ArticleNode getArticleByMedlineId(String articleMedlineId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.MEDLINE_ID_PROPERTY, articleMedlineId).iterator();        
+        if(iterator.hasNext()){
+            return new ArticleNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    /**
+     * 
+     * @param articleDoiId
+     * @return ArticleNode with the DOI id provided
+     */
+    public ArticleNode getArticleByDoiId(String articleDoiId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.DOI_ID_PROPERTY, articleDoiId).iterator();        
+        if(iterator.hasNext()){
+            return new ArticleNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+     /**
+     * 
+     * @param articlePubmedId
+     * @return ArticleNode with the Pubmed id provided
+     */
+    public ArticleNode getArticleByPubmedId(String articlePubmedId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.PUBMED_ID_PROPERTY, articlePubmedId).iterator();        
+        if(iterator.hasNext()){
+            return new ArticleNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------JOURNALS--------------------------------
+    /**
+     * 
+     * @param journalName
+     * @return JournalNode with the name provided
+     */
+    public JournalNode getJournalByName(String journalName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(JournalNode.NAME_PROPERTY, journalName).iterator();        
+        if(iterator.hasNext()){
+            return new JournalNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    
+    
 }
