@@ -22,8 +22,6 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import com.thinkaurelius.titan.core.TitanFactory;
-import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
@@ -35,7 +33,6 @@ import java.util.logging.SimpleFormatter;
 import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
 import org.jdom.Element;
-import org.neo4j.helpers.collection.MapUtil;
 
 /**
  * Imports the Gene Ontology into Bio4j
@@ -278,9 +275,7 @@ public class ImportGeneOntologyTitan implements Executable {
                                        
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(fh, null, null, line)
-                        long isAGorelId = inserter.createRelationship(currentNodeId, tempNodeId, isAGoRel, null);
-                        
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), IsAGoRel.NAME);                        
                     }
                 }
 
@@ -288,11 +283,11 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'regulates' relationships----------------------
                 keys = regulatesMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = regulatesMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, regulatesGoRel, null);
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), RegulatesGoRel.NAME); 
                     }
                 }
 
@@ -300,11 +295,11 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'regulates' relationships----------------------
                 keys = negativelyRegulatesMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, negativelyRegulatesGoRel, null);
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), NegativelyRegulatesGoRel.NAME); 
                     }
                 }
 
@@ -312,11 +307,11 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'regulates' relationships----------------------
                 keys = positivelyRegulatesMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, positivelyRegulatesGoRel, null);
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PositivelyRegulatesGoRel.NAME); 
                     }
                 }
 
@@ -324,11 +319,11 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'regulates' relationships----------------------
                 keys = partOfMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = partOfMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, partOfGoRel, null);
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PartOfGoRel.NAME); 
                     }
                 }
 
@@ -336,18 +331,15 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'regulates' relationships----------------------
                 keys = hasPartMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = hasPartMap.get(key);
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
-                        inserter.createRelationship(currentNodeId, tempNodeId, hasPartGoRel, null);
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), HasPartOfGoRel.NAME); 
                     }
                 }
 
                 logger.log(Level.INFO, "Done! :)");
-
-
-
 
 
             } catch (Exception e) {
@@ -363,8 +355,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     fh.close();
                     logger.log(Level.INFO, "Closing up inserter and index service....");
                     // shutdown, makes sure all changes are written to disk
-                    indexProvider.shutdown();
-                    inserter.shutdown();
+                    
 
                     //-----------------writing stats file---------------------
                     long elapsedTime = System.nanoTime() - initTime;
