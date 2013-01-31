@@ -16,13 +16,12 @@
  */
 package com.era7.bioinfo.bio4j.titan.model.util;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.DatasetNode;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.EnzymeNode;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.GoTermNode;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -129,14 +128,142 @@ public class NodeRetriever {
      * @param ensemblPlantsRef 
      * @return ProteinNode with the Ensembl Plants reference provided
      */
-    public ProteinNode getProteinNodeByEnsemblPlantsRef(String ensemblPlantsRef){
-        
-        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, ensemblPlantsRef).iterator();
-        
+    public ProteinNode getProteinNodeByEnsemblPlantsRef(String ensemblPlantsRef){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, ensemblPlantsRef).iterator();        
         if(iterator.hasNext()){
             return new ProteinNode(iterator.next());
         }else{
             return null;
         }        
+    }    
+    /**
+     * 
+     * @param proteinFullName
+     * @return List of proteins (if any) which match the full name provided
+     */
+    public List<ProteinNode> getProteinsByFullName(String proteinFullName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.FULL_NAME_PROPERTY, proteinFullName).iterator();        
+        List<ProteinNode> list = new LinkedList<ProteinNode>();        
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
+        }        
+        return list;        
+    }
+    /**
+     * 
+     * @param proteinGeneName
+     * @return List of proteins (if any) which match the gene name provided
+     */
+    public List<ProteinNode> getProteinsByGeneNames(String proteinGeneName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.GENE_NAMES_PROPERTY, proteinGeneName).iterator();        
+        List<ProteinNode> list = new LinkedList<ProteinNode>();        
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
+        }        
+        return list;        
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------KEYWORDS--------------------------------    
+    /**
+     * 
+     * @param keywordId 
+     * @return KeywordNode with the id provided
+     */
+    public KeywordNode getKeywordById(String keywordId){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(KeywordNode.ID_PROPERTY, keywordId).iterator();        
+        if(iterator.hasNext()){
+            return new KeywordNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }    
+    /**
+     * 
+     * @param keywordName 
+     * @return KeywordNode with the id provided
+     */
+    public KeywordNode getKeywordByName(String keywordName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(KeywordNode.NAME_PROPERTY, keywordName).iterator();        
+        if(iterator.hasNext()){
+            return new KeywordNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------INTERPRO--------------------------------
+    /**
+     * 
+     * @param interproId 
+     * @return InterproNode with the id provided
+     */
+    public InterproNode getInterproById(String interproId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(InterproNode.ID_PROPERTY, interproId).iterator();        
+        if(iterator.hasNext()){
+            return new InterproNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }
+    //-------------------------------------------------------------------
+    //--------------------PFAM--------------------------------
+    /**
+     * 
+     * @param pfamId 
+     * @return PfamNode with the id provided
+     */
+    public PfamNode getPfamById(String pfamId){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(PfamNode.ID_PROPERTY, pfamId).iterator();        
+        if(iterator.hasNext()){
+            return new PfamNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }
+    //-------------------------------------------------------------------
+    //--------------------ORGANISM--------------------------------
+    /**
+     * 
+     * @param scientificName 
+     * @return OrganismNode with the scientific name provided
+     */
+    public OrganismNode getOrganismByScientificName(String scientificName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(OrganismNode.SCIENTIFIC_NAME_PROPERTY, scientificName).iterator();        
+        if(iterator.hasNext()){
+            return new OrganismNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }
+    /**
+     * 
+     * @param ncbiTaxonomyId 
+     * @return OrganismNode with the scientific name provided
+     */
+    public OrganismNode getOrganismByNCBITaxonomyId(String ncbiTaxonomyId){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, ncbiTaxonomyId).iterator();        
+        if(iterator.hasNext()){
+            return new OrganismNode(iterator.next());
+        }else{
+            return null;
+        }        
+    }
+    //-------------------------------------------------------------------
+    //--------------------TAXON--------------------------------
+    
+    /**
+     * 
+     * @param taxonName
+     * @return TaxonNode with the name provided
+     */
+    public TaxonNode getTaxonByName(String taxonName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(TaxonNode.NAME_PROPERTY, taxonName).iterator();        
+        if(iterator.hasNext()){
+            return new TaxonNode(iterator.next());
+        }else{
+            return null;
+        }   
     }
 }

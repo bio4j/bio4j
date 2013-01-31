@@ -126,7 +126,6 @@ import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.ZincFingerRegio
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.ProteinErroneousInitiationRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.IsoformEventGeneratorRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.InitiatorMethionineFeatureRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainDatasetRel;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.protein.BasicProteinSequenceCautionRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.features.IntramembraneRegionFeatureRel;
@@ -242,7 +241,6 @@ public class ImportUniprot implements Executable {
     public static ProteinOrganismRel proteinOrganismRel = new ProteinOrganismRel(null);
     public static TaxonParentRel taxonParentRel = new TaxonParentRel(null);
     public static ProteinKeywordRel proteinKeywordRel = new ProteinKeywordRel(null);
-    public static MainDatasetRel mainDatasetRel = new MainDatasetRel(null);
     public static ProteinDatasetRel proteinDatasetRel = new ProteinDatasetRel(null);
     public static ProteinInterproRel proteinInterproRel = new ProteinInterproRel(null);
     public static ProteinPfamRel proteinPfamRel = new ProteinPfamRel(null);

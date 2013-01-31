@@ -20,14 +20,9 @@ import com.era7.bioinfo.bio4j.neo4j.model.nodes.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.MainDatasetRel;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.index.IndexHits;
 
 /**
