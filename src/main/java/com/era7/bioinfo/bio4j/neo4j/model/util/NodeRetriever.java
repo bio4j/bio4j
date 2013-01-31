@@ -113,7 +113,30 @@ public class NodeRetriever {
             return null;
         }        
     }
-    
+    public GoTermNode getMolecularFunctionGoTerm(){
+        IndexHits<Node> hits = manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, GoTermNode.MOLECULAR_FUNCTION_GO_ID);
+        if(hits.hasNext()){
+            return new GoTermNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    public GoTermNode getBiologicalProcessGoTerm(){
+        IndexHits<Node> hits = manager.getGoTermIdIndex().get(GoTermNode.ID_PROPERTY, GoTermNode.BIOLOGICAL_PROCESS_GO_ID);
+        if(hits.hasNext()){
+            return new GoTermNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    public GoTermNode getCellularComponentGoTerm(){
+        IndexHits<Node> hits = manager.getGoTermIdIndex().get(GoTermNode.ID_PROPERTY, GoTermNode.CELLULAR_COMPONENT_GO_ID);
+        if(hits.hasNext()){
+            return new GoTermNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
     
     //-------------------------------------------------------------------
     //--------------------PROTEINS--------------------------------

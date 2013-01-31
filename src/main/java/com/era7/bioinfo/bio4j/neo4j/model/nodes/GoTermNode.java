@@ -36,6 +36,10 @@ public class GoTermNode extends BasicEntity{
 
     public static final String GO_TERM_ID_INDEX = "go_term_id_index";
     public static final String NODE_TYPE = GoTermNode.class.getCanonicalName();
+    
+    public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
+    public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
+    public static final String CELLULAR_COMPONENT_GO_ID = "GO:0005575";
 
     /** GO Term id **/
     public static final String ID_PROPERTY = "go_term_id";

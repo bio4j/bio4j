@@ -31,6 +31,10 @@ import java.util.List;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class GoTermNode extends BasicNode{
+    
+    public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
+    public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
+    public static final String CELLULAR_COMPONENT_GO_ID = "GO:0005575";
 
     public static final String NODE_TYPE = GoTermNode.class.getCanonicalName();
 

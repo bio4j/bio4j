@@ -18,6 +18,8 @@ package com.era7.bioinfo.bio4j.titan.programs;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.GoTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
+import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanFactory;
@@ -52,9 +54,7 @@ public class ImportGeneOntologyTitan implements Executable {
     public static final String COMMENT_TAG_NAME = "comment";
     public static final String NAMESPACE_TAG_NAME = "namespace";
     public static final String RELATIONSHIP_TAG_NAME = "relationship";
-    public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
-    public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
-    public static final String CELLULAR_COMPONENT_GO_ID = "GO:0005575";
+    
     private static final Logger logger = Logger.getLogger("ImportGeneOntologyBP");
     private static FileHandler fh;
 
@@ -104,8 +104,9 @@ public class ImportGeneOntologyTitan implements Executable {
                 statsBuff = new BufferedWriter(new FileWriter(new File("ImportGeneOntologyBPStats.txt")));
 
                 //-------creating graph handlers---------------------
-                TitanGraph graph = TitanFactory.open(conf);
-                BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
+                Bio4jManager manager = new Bio4jManager(conf);
+                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+                NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
                 Map<String, ArrayList<String>> regulatesMap = new HashMap<String, ArrayList<String>>();
@@ -251,27 +252,7 @@ public class ImportGeneOntologyTitan implements Executable {
                         goTermVertex.setProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
                         goTermVertex.setProperty(GoTermNode.OBSOLETE_PROPERTY, goIsObsolete);
                         goTermVertex.setProperty(GoTermNode.COMMENT_PROPERTY, goComment);
-                        goTermVertex.setProperty(GoTermNode.NODE_TYPE_PROPERTY, GoTermNode.NODE_TYPE);
-                        
-                        //----IS ROOT ? ----
-                        Element isRootElem = termXMLElement.asJDomElement().getChild(IS_ROOT_TAG_NAME);
-                        if (isRootElem != null) {
-                            String temp = isRootElem.getTextTrim();
-                            if (temp.equals("1")) {
-                                
-                                
-                                
-                                inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, mainGoRel, null);
-                                if (goId.equals(MOLECULAR_FUNCTION_GO_ID)) {
-                                    inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, molecularFunctionRel, null);
-                                } else if (goId.equals(BIOLOGICAL_PROCESS_GO_ID)) {
-                                    inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, biologicalProcessRel, null);
-                                } else if (goId.equals(CELLULAR_COMPONENT_GO_ID)) {
-                                    inserter.createRelationship(inserter.getReferenceNode(), currentGoTermId, cellularComponentRel, null);
-                                }
-
-                            }
-                        }
+                        goTermVertex.setProperty(GoTermNode.NODE_TYPE_PROPERTY, GoTermNode.NODE_TYPE);                        
                         //----------------------                        
 
                     }
@@ -282,9 +263,6 @@ public class ImportGeneOntologyTitan implements Executable {
                 }
                 reader.close();
 
-                //flushing index
-                goTermIdIndex.flush();
-
                 //-----------------------------------------------------------------------
 
                 logger.log(Level.INFO, "Inserting relationships....");
@@ -294,14 +272,15 @@ public class ImportGeneOntologyTitan implements Executable {
                 //-------------------'is_a' relationships-----------------
                 Set<String> keys = termParentsMap.keySet();
                 for (String key : keys) {
-                    long currentNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, key).getSingle();
+                    
+                    GoTermNode tempGoTerm = nodeRetriever.getGoTermById(key);
                     ArrayList<String> tempArray = termParentsMap.get(key);
+                                       
                     for (String string : tempArray) {
-                        long tempNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, string).getSingle();
+                        GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
+                        bGraph.addEdge(fh, null, null, line)
                         long isAGorelId = inserter.createRelationship(currentNodeId, tempNodeId, isAGoRel, null);
-                        //System.out.println("key = " + key);
-                        isAGoRelIndex.add(isAGorelId, MapUtil.map(IsAGoRel.IS_A_REL_INDEX, String.valueOf(currentNodeId)));
-                        //System.out.println("indexing key = " + key);
+                        
                     }
                 }
 
