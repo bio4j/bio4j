@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.titan.model.util;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -567,6 +568,20 @@ public class NodeRetriever {
             return null;
         } 
     }
-    
+    //-------------------------------------------------------------------
+    //--------------------REACTOME--------------------------------
+    /**
+     * 
+     * @param reactomeTermId
+     * @return ReactomeTermNode with the id provided
+     */
+    public ReactomeTermNode getReactomeTermById(String reactomeTermId){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ReactomeTermNode.ID_PROPERTY, reactomeTermId).iterator();
+        if(iterator.hasNext()){
+            return new ReactomeTermNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
     
 }

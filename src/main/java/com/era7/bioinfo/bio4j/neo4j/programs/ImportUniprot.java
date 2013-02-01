@@ -667,7 +667,7 @@ public class ImportUniprot implements Executable {
                                     keywordNodeId = inserter.createNode(keywordProperties);
 
                                     keywordIdIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_ID_INDEX, keywordId));
-                                    keywordNameIndex.add(datasetId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
+                                    keywordNameIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
 
                                     //---flushing keyword id index----
                                     keywordIdIndex.flush();

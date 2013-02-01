@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.neo4j.model.util;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
 import java.util.ArrayList;
 import java.util.List;
@@ -632,6 +633,20 @@ public class NodeRetriever {
             return null;
         } 
     }
-    
+    //-------------------------------------------------------------------
+    //--------------------REACTOME--------------------------------
+    /**
+     * 
+     * @param reactomeTermId
+     * @return ReactomeTermNode with the id provided
+     */
+    public ReactomeTermNode getReactomeTermById(String reactomeTermId){
+        IndexHits<Node> hits = manager.getReactomeTermIdIndex().get(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeTermId);
+        if(hits.hasNext()){
+            return new ReactomeTermNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
     
 }

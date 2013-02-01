@@ -17,26 +17,28 @@
 package com.era7.bioinfo.bio4j.titan.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGenomeElementRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfoxml.bio4j.UniprotDataXML;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import com.thinkaurelius.titan.core.TitanFactory;
-import com.thinkaurelius.titan.core.TitanGraph;
-import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-import org.jdom.Element;
 import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
+import org.jdom.Element;
 
 /**
  * This class deals with the main part of Bio4j importing process.
@@ -116,6 +118,7 @@ public class ImportUniprotTitan implements Executable {
                 conf.setProperty("storage.backend", "local");
                 
                 Bio4jManager manager = new Bio4jManager(conf);                
+                NodeRetriever nodeRetriever = new NodeRetriever(manager);
                 BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
                 
 
@@ -251,10 +254,10 @@ public class ImportUniprotTitan implements Executable {
                         if (uniprotDataXML.getRefseq()) {
                             for (String refseqReferenceSt : refseqReferences) {
                                 
-                                Iterator<Vertex> iterator = manager.getGraph().getVertices(GenomeElementNode.VERSION_PROPERTY, refseqReferenceSt).iterator();
+                                GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion(refseqReferenceSt);
                                 
-                                if (iterator.hasNext()) {
-                                    bGraph.addEdge(null, currentProteinNode.getNode(), iterator.next(), ProteinGenomeElementRel.NAME);
+                                if (genomeElementNode != null) {
+                                    bGraph.addEdge(null, currentProteinNode.getNode(), genomeElementNode.getNode(), ProteinGenomeElementRel.NAME);
                                 } else {
                                     logger.log(Level.INFO, ("GenomeElem not found for: " + currentAccessionId + " , " + refseqReferenceSt));
                                 }
@@ -265,20 +268,16 @@ public class ImportUniprotTitan implements Executable {
                         //--------------reactome associations----------------
                         if (uniprotDataXML.getReactome()) {
                             for (String reactomeId : reactomeReferences.keySet()) {
-                                long reactomeTermNodeId = -1;
-                                IndexHits<Long> reactomeTermIdIndexHits = reactomeTermIdIndex.get(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeId);
-                                if (reactomeTermIdIndexHits.hasNext()) {
-                                    reactomeTermNodeId = reactomeTermIdIndexHits.getSingle();
+                                
+                                ReactomeTermNode reactomeTermNode = nodeRetriever.getReactomeTermById(reactomeId);
+                                
+                                if (reactomeTermNode == null) {
+                                    reactomeTermNode = new ReactomeTermNode(manager.createNode(ReactomeTermNode.NODE_TYPE));
+                                    reactomeTermNode.setId(reactomeId);
+                                    reactomeTermNode.setPathwayName(reactomeReferences.get(reactomeId));                                    
                                 }
-                                if (reactomeTermNodeId < 0) {
-                                    reactomeTermProperties.put(ReactomeTermNode.ID_PROPERTY, reactomeId);
-                                    reactomeTermProperties.put(ReactomeTermNode.PATHWAY_NAME_PROPERTY, reactomeReferences.get(reactomeId));
-                                    reactomeTermNodeId = inserter.createNode(reactomeTermProperties);
-                                    reactomeTermIdIndex.add(reactomeTermNodeId, MapUtil.map(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeId));
-                                    //----flushing reactome index---
-                                    reactomeTermIdIndex.flush();
-                                }
-                                inserter.createRelationship(currentProteinId, reactomeTermNodeId, proteinReactomeRel, null);
+                                
+                                bGraph.addEdge(null, currentProteinNode.getNode(), reactomeTermNode.getNode(), ProteinReactomeRel.NAME);
                             }
                         }
                         //-------------------------------------------------------
@@ -286,11 +285,11 @@ public class ImportUniprotTitan implements Executable {
                         //---------------enzyme db associations----------------------
                         if (uniprotDataXML.getEnzymeDb()) {
                             for (String enzymeDBRef : enzymeDBReferences) {
-                                long enzymeNodeId;
-                                IndexHits<Long> enzymeIdIndexHits = enzymeIdIndex.get(EnzymeNode.ENZYME_ID_INDEX, enzymeDBRef);
-                                if (enzymeIdIndexHits.hasNext()) {
-                                    enzymeNodeId = enzymeIdIndexHits.next();
-                                    inserter.createRelationship(currentProteinId, enzymeNodeId, proteinEnzymaticActivityRel, null);
+                                
+                                EnzymeNode enzymeNode = nodeRetriever.getEnzymeById(enzymeDBRef);
+                                
+                                if (enzymeNode != null) {
+                                    bGraph.addEdge(null, currentProteinNode.getNode(), enzymeNode.getNode(), ProteinEnzymaticActivityRel.NAME);
                                 } else {
                                     enzymeIdsNotFoundBuff.write("Enzyme term: " + enzymeDBRef + " not found.\t" + currentAccessionId);
                                 }
@@ -311,22 +310,14 @@ public class ImportUniprotTitan implements Executable {
 
                         //--------------------------------datasets--------------------------------------------------
                         String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(CommonData.ENTRY_DATASET_ATTRIBUTE);
-                        //long datasetId = indexService.getSingleNode(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
-                        long datasetId = -1;
-                        IndexHits<Long> datasetNameIndexHits = datasetNameIndex.get(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt);
-                        if (datasetNameIndexHits.hasNext()) {
-                            datasetId = datasetNameIndexHits.getSingle();
+                        
+                        DatasetNode datasetNode = nodeRetriever.getDatasetByName(proteinDataSetSt);
+                        
+                        if (datasetNode == null) {
+                            datasetNode = new DatasetNode(manager.createNode(DatasetNode.NODE_TYPE));
+                            datasetNode.setName(proteinDataSetSt);                            
                         }
-                        if (datasetId < 0) {
-                            datasetProperties.put(DatasetNode.NAME_PROPERTY, proteinDataSetSt);
-                            datasetId = inserter.createNode(datasetProperties);
-                            datasetNameIndex.add(datasetId, MapUtil.map(DatasetNode.DATASET_NAME_INDEX, proteinDataSetSt));
-                            //----flushing dataset name index---
-                            datasetNameIndex.flush();
-                            //---adding dataset node to node_type index----
-                            nodeTypeIndex.add(datasetId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, DatasetNode.NODE_TYPE));
-                        }
-                        inserter.createRelationship(currentProteinId, datasetId, proteinDatasetRel, null);
+                        bGraph.addEdge(null, currentProteinNode.getNode(), datasetNode.getNode(), ProteinDatasetRel.NAME);
                         //---------------------------------------------------------------------------------------------
 
 
@@ -344,30 +335,18 @@ public class ImportUniprotTitan implements Executable {
                             List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(CommonData.KEYWORD_TAG_NAME);
                             for (Element keywordElem : keywordsList) {
                                 String keywordId = keywordElem.getAttributeValue(CommonData.KEYWORD_ID_ATTRIBUTE);
-                                String keywordName = keywordElem.getText();
-                                //long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
-                                long keywordNodeId = -1;
-                                IndexHits<Long> keyworIdIndexHits = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId);
-                                if (keyworIdIndexHits.hasNext()) {
-                                    keywordNodeId = keyworIdIndexHits.getSingle();
+                                String keywordName = keywordElem.getText();                                
+                                
+                                KeywordNode keywordNode = nodeRetriever.getKeywordById(keywordId);
+                                
+                                if (keywordNode == null) {
+
+                                    keywordNode = new KeywordNode(manager.createNode(KeywordNode.NAME_PROPERTY));
+                                    keywordNode.setId(keywordId);
+                                    keywordNode.setName(keywordName);
+                                    
                                 }
-                                if (keywordNodeId < 0) {
-
-                                    keywordProperties.put(KeywordNode.ID_PROPERTY, keywordId);
-                                    keywordProperties.put(KeywordNode.NAME_PROPERTY, keywordName);
-
-                                    keywordNodeId = inserter.createNode(keywordProperties);
-
-                                    keywordIdIndex.add(keywordNodeId, MapUtil.map(KeywordNode.KEYWORD_ID_INDEX, keywordId));
-                                    keywordNameIndex.add(datasetId, MapUtil.map(KeywordNode.KEYWORD_NAME_INDEX, keywordName));
-
-                                    //---flushing keyword id index----
-                                    keywordIdIndex.flush();
-
-                                    //---adding keyword node to node_type index----
-                                    nodeTypeIndex.add(keywordNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, KeywordNode.NODE_TYPE));
-                                }
-                                inserter.createRelationship(currentProteinId, keywordNodeId, proteinKeywordRel, null);
+                                bGraph.addEdge(null, currentProteinNode.getNode(), currentProteinNode.getNode(), ProteinKeywordRel.NAME);
                             }
                         }
                         //---------------------------------------------------------------------------------------
@@ -380,14 +359,10 @@ public class ImportUniprotTitan implements Executable {
 
                                 if (uniprotDataXML.getInterpro()) {
                                     String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
-                                    //long interproNodeId = indexService.getSingleNode(InterproNode.INTERPRO_ID_INDEX, interproId);
-                                    long interproNodeId = -1;
-                                    IndexHits<Long> interproIdIndexHits = interproIdIndex.get(InterproNode.INTERPRO_ID_INDEX, interproId);
-                                    if (interproIdIndexHits.hasNext()) {
-                                        interproNodeId = interproIdIndexHits.getSingle();
-                                    }
-
-                                    if (interproNodeId < 0) {
+                                    
+                                    InterproNode interproNode = nodeRetriever.getInterproById(interproId);
+                                    
+                                    if (interproNode == null) {
                                         String interproEntryNameSt = "";
                                         List<Element> properties = dbReferenceElem.getChildren(CommonData.DB_REFERENCE_PROPERTY_TAG_NAME);
                                         for (Element prop : properties) {
@@ -396,20 +371,14 @@ public class ImportUniprotTitan implements Executable {
                                                 break;
                                             }
                                         }
+                                        
+                                        interproNode = new InterproNode(manager.createNode(InterproNode.NODE_TYPE));
+                                        interproNode.setId(interproId);
+                                        interproNode.setName(interproEntryNameSt);
 
-                                        interproProperties.put(InterproNode.ID_PROPERTY, interproId);
-                                        interproProperties.put(InterproNode.NAME_PROPERTY, interproEntryNameSt);
-                                        interproNodeId = inserter.createNode(interproProperties);
-
-                                        interproIdIndex.add(interproNodeId, MapUtil.map(InterproNode.INTERPRO_ID_INDEX, interproId));
-                                        //flushing interpro id index
-                                        interproIdIndex.flush();
-
-                                        //---adding interpro node to node_type index----
-                                        nodeTypeIndex.add(interproNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, InterproNode.NODE_TYPE));
                                     }
 
-                                    inserter.createRelationship(currentProteinId, interproNodeId, proteinInterproRel, null);
+                                    bGraph.addEdge(null, currentProteinNode.getNode(), interproNode.getNode(), ProteinInterproRel.NAME);
                                 }
 
                             } //-------------------------------PFAM------------------------------------------------------  
@@ -417,13 +386,10 @@ public class ImportUniprotTitan implements Executable {
 
                                 if (uniprotDataXML.getPfam()) {
                                     String pfamId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
-                                    long pfamNodeId = -1;
-                                    IndexHits<Long> pfamIdIndexHits = pfamIdIndex.get(PfamNode.PFAM_ID_INDEX, pfamId);
-                                    if (pfamIdIndexHits.hasNext()) {
-                                        pfamNodeId = pfamIdIndexHits.getSingle();
-                                    }
+                                    
+                                    PfamNode pfamNode = nodeRetriever.getPfamById(pfamId);
 
-                                    if (pfamNodeId < 0) {
+                                    if (pfamNode == null) {
                                         String pfamEntryNameSt = "";
                                         List<Element> properties = dbReferenceElem.getChildren(CommonData.DB_REFERENCE_PROPERTY_TAG_NAME);
                                         for (Element prop : properties) {
@@ -432,20 +398,12 @@ public class ImportUniprotTitan implements Executable {
                                                 break;
                                             }
                                         }
-
-                                        pfamProperties.put(PfamNode.ID_PROPERTY, pfamId);
-                                        pfamProperties.put(PfamNode.NAME_PROPERTY, pfamEntryNameSt);
-                                        pfamNodeId = inserter.createNode(pfamProperties);
-
-                                        pfamIdIndex.add(pfamNodeId, MapUtil.map(PfamNode.PFAM_ID_INDEX, pfamId));
-                                        //flushing pfam id index
-                                        pfamIdIndex.flush();
-
-                                        //---adding pfam node to node_type index----
-                                        nodeTypeIndex.add(pfamNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PfamNode.NODE_TYPE));
+                                        pfamNode = new PfamNode(manager.createNode(PfamNode.NODE_TYPE));
+                                        pfamNode.setId(pfamId);
+                                        pfamNode.setName(pfamEntryNameSt);
                                     }
-
-                                    inserter.createRelationship(currentProteinId, pfamNodeId, proteinPfamRel, null);
+                                    
+                                    bGraph.addEdge(null, currentProteinNode.getNode(), pfamNode.getNode(), ProteinPfamRel.NAME);
                                 }
 
 
@@ -465,9 +423,9 @@ public class ImportUniprotTitan implements Executable {
                                             break;
                                         }
                                     }
-                                    long goTermNodeId = goTermIdIndex.get(GoTermNode.GO_TERM_ID_INDEX, goId).getSingle();
-                                    proteinGoProperties.put(ProteinGoRel.EVIDENCE_PROPERTY, evidenceSt);
-                                    inserter.createRelationship(currentProteinId, goTermNodeId, proteinGoRel, proteinGoProperties);
+                                    GoTermNode goTermNode = nodeRetriever.getGoTermById(goId);
+                                    ProteinGoRel proteinGoRel = new ProteinGoRel(bGraph.addEdge(null, currentProteinNode.getNode(), goTermNode.getNode(), ProteinGoRel.NAME));
+                                    proteinGoRel.setEvidence(evidenceSt);
                                 }
 
                             }
