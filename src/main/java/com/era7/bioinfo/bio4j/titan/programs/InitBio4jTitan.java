@@ -62,7 +62,7 @@ import org.apache.commons.configuration.Configuration;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InitBio4jDBBP implements Executable {
+public class InitBio4jTitan implements Executable {
 
     @Override
     public void execute(ArrayList<String> array) {
