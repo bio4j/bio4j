@@ -20,6 +20,7 @@ import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.TaxonParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
@@ -85,6 +86,15 @@ public class ImportUniprotTitan implements Executable {
             int proteinCounter = 0;
             int limitForPrintingOut = 10000;
 
+            //------------------ init DB handlers------------------------
+            Configuration conf = new BaseConfiguration();
+            conf.setProperty("storage.directory", args[1]);
+            conf.setProperty("storage.backend", "local");
+
+            Bio4jManager manager = new Bio4jManager(conf);
+            NodeRetriever nodeRetriever = new NodeRetriever(manager);
+            BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+
             try {
 
                 // This block configures the logger with handler and formatter
@@ -112,18 +122,8 @@ public class ImportUniprotTitan implements Executable {
                 //---creating writer for stats file-----
                 statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotTitanStats_" + inFile.getName().split("\\.")[0] + ".txt")));
 
-                //------------------ init DB handlers------------------------
-                Configuration conf = new BaseConfiguration();
-                conf.setProperty("storage.directory", args[1]);
-                conf.setProperty("storage.backend", "local");
-                
-                Bio4jManager manager = new Bio4jManager(conf);                
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
-                
-
                 reader = new BufferedReader(new FileReader(inFile));
-                StringBuilder entryStBuilder = new StringBuilder();                
+                StringBuilder entryStBuilder = new StringBuilder();
 
                 while ((line = reader.readLine()) != null) {
                     if (line.trim().startsWith("<" + CommonData.ENTRY_TAG_NAME)) {
@@ -132,9 +132,9 @@ public class ImportUniprotTitan implements Executable {
                             entryStBuilder.append(line);
                             line = reader.readLine();
                         }
-                        
+
                         ProteinNode currentProteinNode = new ProteinNode(manager.createNode(ProteinNode.NODE_TYPE));
-                        
+
                         //linea final del organism
                         entryStBuilder.append(line);
                         //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
@@ -220,7 +220,7 @@ public class ImportUniprotTitan implements Executable {
                         String sequenceSt = sequenceElem.getText();
                         int seqLength = Integer.parseInt(sequenceElem.getAttributeValue(CommonData.SEQUENCE_LENGTH_ATTRIBUTE));
                         float seqMass = Float.parseFloat(sequenceElem.getAttributeValue(CommonData.SEQUENCE_MASS_ATTRIBUTE));
-                        
+
                         currentProteinNode.setModifiedDate(modifiedDateSt);
                         currentProteinNode.setAccession(accessionSt);
                         currentProteinNode.setName(nameSt);
@@ -253,9 +253,9 @@ public class ImportUniprotTitan implements Executable {
                         //--------------refseq associations----------------
                         if (uniprotDataXML.getRefseq()) {
                             for (String refseqReferenceSt : refseqReferences) {
-                                
+
                                 GenomeElementNode genomeElementNode = nodeRetriever.getGenomeElementByVersion(refseqReferenceSt);
-                                
+
                                 if (genomeElementNode != null) {
                                     bGraph.addEdge(null, currentProteinNode.getNode(), genomeElementNode.getNode(), ProteinGenomeElementRel.NAME);
                                 } else {
@@ -268,15 +268,15 @@ public class ImportUniprotTitan implements Executable {
                         //--------------reactome associations----------------
                         if (uniprotDataXML.getReactome()) {
                             for (String reactomeId : reactomeReferences.keySet()) {
-                                
+
                                 ReactomeTermNode reactomeTermNode = nodeRetriever.getReactomeTermById(reactomeId);
-                                
+
                                 if (reactomeTermNode == null) {
                                     reactomeTermNode = new ReactomeTermNode(manager.createNode(ReactomeTermNode.NODE_TYPE));
                                     reactomeTermNode.setId(reactomeId);
-                                    reactomeTermNode.setPathwayName(reactomeReferences.get(reactomeId));                                    
+                                    reactomeTermNode.setPathwayName(reactomeReferences.get(reactomeId));
                                 }
-                                
+
                                 bGraph.addEdge(null, currentProteinNode.getNode(), reactomeTermNode.getNode(), ProteinReactomeRel.NAME);
                             }
                         }
@@ -285,9 +285,9 @@ public class ImportUniprotTitan implements Executable {
                         //---------------enzyme db associations----------------------
                         if (uniprotDataXML.getEnzymeDb()) {
                             for (String enzymeDBRef : enzymeDBReferences) {
-                                
+
                                 EnzymeNode enzymeNode = nodeRetriever.getEnzymeById(enzymeDBRef);
-                                
+
                                 if (enzymeNode != null) {
                                     bGraph.addEdge(null, currentProteinNode.getNode(), enzymeNode.getNode(), ProteinEnzymaticActivityRel.NAME);
                                 } else {
@@ -310,12 +310,12 @@ public class ImportUniprotTitan implements Executable {
 
                         //--------------------------------datasets--------------------------------------------------
                         String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(CommonData.ENTRY_DATASET_ATTRIBUTE);
-                        
+
                         DatasetNode datasetNode = nodeRetriever.getDatasetByName(proteinDataSetSt);
-                        
+
                         if (datasetNode == null) {
                             datasetNode = new DatasetNode(manager.createNode(DatasetNode.NODE_TYPE));
-                            datasetNode.setName(proteinDataSetSt);                            
+                            datasetNode.setName(proteinDataSetSt);
                         }
                         bGraph.addEdge(null, currentProteinNode.getNode(), datasetNode.getNode(), ProteinDatasetRel.NAME);
                         //---------------------------------------------------------------------------------------------
@@ -335,16 +335,16 @@ public class ImportUniprotTitan implements Executable {
                             List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(CommonData.KEYWORD_TAG_NAME);
                             for (Element keywordElem : keywordsList) {
                                 String keywordId = keywordElem.getAttributeValue(CommonData.KEYWORD_ID_ATTRIBUTE);
-                                String keywordName = keywordElem.getText();                                
-                                
+                                String keywordName = keywordElem.getText();
+
                                 KeywordNode keywordNode = nodeRetriever.getKeywordById(keywordId);
-                                
+
                                 if (keywordNode == null) {
 
                                     keywordNode = new KeywordNode(manager.createNode(KeywordNode.NAME_PROPERTY));
                                     keywordNode.setId(keywordId);
                                     keywordNode.setName(keywordName);
-                                    
+
                                 }
                                 bGraph.addEdge(null, currentProteinNode.getNode(), currentProteinNode.getNode(), ProteinKeywordRel.NAME);
                             }
@@ -359,9 +359,9 @@ public class ImportUniprotTitan implements Executable {
 
                                 if (uniprotDataXML.getInterpro()) {
                                     String interproId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
-                                    
+
                                     InterproNode interproNode = nodeRetriever.getInterproById(interproId);
-                                    
+
                                     if (interproNode == null) {
                                         String interproEntryNameSt = "";
                                         List<Element> properties = dbReferenceElem.getChildren(CommonData.DB_REFERENCE_PROPERTY_TAG_NAME);
@@ -371,7 +371,7 @@ public class ImportUniprotTitan implements Executable {
                                                 break;
                                             }
                                         }
-                                        
+
                                         interproNode = new InterproNode(manager.createNode(InterproNode.NODE_TYPE));
                                         interproNode.setId(interproId);
                                         interproNode.setName(interproEntryNameSt);
@@ -386,7 +386,7 @@ public class ImportUniprotTitan implements Executable {
 
                                 if (uniprotDataXML.getPfam()) {
                                     String pfamId = dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_ID_ATTRIBUTE);
-                                    
+
                                     PfamNode pfamNode = nodeRetriever.getPfamById(pfamId);
 
                                     if (pfamNode == null) {
@@ -402,7 +402,7 @@ public class ImportUniprotTitan implements Executable {
                                         pfamNode.setId(pfamId);
                                         pfamNode.setName(pfamEntryNameSt);
                                     }
-                                    
+
                                     bGraph.addEdge(null, currentProteinNode.getNode(), pfamNode.getNode(), ProteinPfamRel.NAME);
                                 }
 
@@ -455,89 +455,61 @@ public class ImportUniprotTitan implements Executable {
                             }
                         }
 
-                        //long organismNodeId = indexService.getSingleNode(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-                        long organismNodeId = -1;
-                        IndexHits<Long> organismScientifiNameIndexHits = organismScientificNameIndex.get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName);
-                        if (organismScientifiNameIndexHits.hasNext()) {
-                            organismNodeId = organismScientifiNameIndexHits.getSingle();
-                        }
-                        if (organismNodeId < 0) {
+                        OrganismNode organismNode = nodeRetriever.getOrganismByScientificName(scName);
 
-                            organismProperties.put(OrganismNode.COMMON_NAME_PROPERTY, commName);
-                            organismProperties.put(OrganismNode.SCIENTIFIC_NAME_PROPERTY, scName);
-                            organismProperties.put(OrganismNode.SYNONYM_NAME_PROPERTY, synName);
+                        if (organismNode == null) {
 
+                            organismNode = new OrganismNode(manager.createNode(OrganismNode.NODE_TYPE));
+
+                            organismNode.setCommonName(commName);
+                            organismNode.setScientificName(scName);
+                            organismNode.setSynonymName(synName);
 
                             List<Element> organismDbRefElems = organismElem.getChildren(CommonData.DB_REFERENCE_TAG_NAME);
-                            boolean ncbiIdFound = false;
                             if (organismDbRefElems != null) {
                                 for (Element dbRefElem : organismDbRefElems) {
                                     String t = dbRefElem.getAttributeValue("type");
                                     if (t.equals("NCBI Taxonomy")) {
-                                        organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
-                                        ncbiIdFound = true;
+                                        organismNode.setNcbiTaxonomyId(dbRefElem.getAttributeValue("id"));
+                                        break;
                                     }
-                                    break;
                                 }
                             }
-                            if (!ncbiIdFound) {
-                                organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
-                            }
-                            organismNodeId = inserter.createNode(organismProperties);
-
-                            organismScientificNameIndex.add(organismNodeId, MapUtil.map(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scName));
-                            organismNcbiTaxonomyIdIndex.add(organismNodeId, MapUtil.map(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, organismProperties.get(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY)));
-
-                            //flushing organism scientifica name index
-                            organismScientificNameIndex.flush();
-
-                            //---adding organism node to node_type index----
-                            nodeTypeIndex.add(organismNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OrganismNode.NODE_TYPE));
 
                             Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
                             List<Element> taxons = lineage.getChildren("taxon");
 
                             Element firstTaxonElem = taxons.get(0);
 
-                            //long firstTaxonId = indexService.getSingleNode(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
-                            long firstTaxonId = -1;
-                            IndexHits<Long> firstTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, firstTaxonElem.getText());
-                            if (firstTaxonIndexHits.hasNext()) {
-                                firstTaxonId = firstTaxonIndexHits.getSingle();
-                            }
+                            TaxonNode firstTaxon = nodeRetriever.getTaxonByName(firstTaxonElem.getText());
 
-                            if (firstTaxonId < 0) {
+                            if (firstTaxon == null) {
 
                                 String firstTaxonName = firstTaxonElem.getText();
-                                taxonProperties.put(TaxonNode.NAME_PROPERTY, firstTaxonName);
-                                firstTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex, nodeTypeIndex);
-                                //flushing taxon name index--
-                                taxonNameIndex.flush();
+                                firstTaxon = new TaxonNode(manager.createNode(TaxonNode.NODE_TYPE));
+                                firstTaxon.setName(firstTaxonName);
 
                             }
 
-                            long lastTaxonId = firstTaxonId;
+                            TaxonNode lastTaxon = firstTaxon;
+
                             for (int i = 1; i < taxons.size(); i++) {
+
                                 String taxonName = taxons.get(i).getText();
-                                long currentTaxonId = -1;
-                                IndexHits<Long> currentTaxonIndexHits = taxonNameIndex.get(TaxonNode.TAXON_NAME_INDEX, taxonName);
-                                if (currentTaxonIndexHits.hasNext()) {
-                                    currentTaxonId = currentTaxonIndexHits.getSingle();
-                                }
-                                if (currentTaxonId < 0) {
+                                TaxonNode currentTaxon = nodeRetriever.getTaxonByName(taxonName);
 
-                                    taxonProperties.put(TaxonNode.NAME_PROPERTY, taxonName);
-                                    currentTaxonId = createTaxonNode(taxonProperties, inserter, taxonNameIndex, nodeTypeIndex);
-                                    //flushing taxon name index--
-                                    taxonNameIndex.flush();
-                                    inserter.createRelationship(lastTaxonId, currentTaxonId, taxonParentRel, null);
+                                if (currentTaxon == null) {
 
+                                    currentTaxon = new TaxonNode(manager.createNode(TaxonNode.NODE_TYPE));
+                                    currentTaxon.setName(taxonName);
+
+                                    bGraph.addEdge(null, lastTaxon.getNode(), currentTaxon.getNode(), TaxonParentRel.NAME);
 
                                 }
-                                lastTaxonId = currentTaxonId;
+                                lastTaxon = currentTaxon;
                             }
 
-                            inserter.createRelationship(lastTaxonId, organismNodeId, taxonParentRel, null);
+                            bGraph.addEdge(null, lastTaxon.getNode(), organismNode.getNode(), TaxonParentRel.NAME);
 
                         }
 
@@ -545,7 +517,7 @@ public class ImportUniprotTitan implements Executable {
                         //---------------------------------------------------------------------------------------
                         //---------------------------------------------------------------------------------------
 
-                        inserter.createRelationship(currentProteinId, organismNodeId, proteinOrganismRel, null);
+                        bGraph.addEdge(null, currentProteinNode.getNode(), organismNode.getNode(), ProteinOrganismRel.NAME);
 
                         proteinCounter++;
                         if ((proteinCounter % limitForPrintingOut) == 0) {
@@ -570,8 +542,7 @@ public class ImportUniprotTitan implements Executable {
                     enzymeIdsNotFoundBuff.close();
 
                     // shutdown, makes sure all changes are written to disk
-                    indexProvider.shutdown();
-                    inserter.shutdown();
+                    manager.shutDown();
 
                     // closing logger file handler
                     fh.close();
@@ -592,7 +563,7 @@ public class ImportUniprotTitan implements Executable {
 
 
                 } catch (IOException ex) {
-                    Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ImportUniprotTitan.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -1335,19 +1306,6 @@ public class ImportUniprotTitan implements Executable {
         nodeTypeIndex.add(isoformId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, IsoformNode.NODE_TYPE));
 
         return isoformId;
-    }
-
-    private static long createTaxonNode(Map<String, Object> taxonProperties,
-            BatchInserter inserter,
-            BatchInserterIndex taxonNameIndex,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long taxonId = inserter.createNode(taxonProperties);
-        taxonNameIndex.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.NAME_PROPERTY)));
-        //---adding taxon node to node_type index----
-        nodeTypeIndex.add(taxonId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, TaxonNode.NODE_TYPE));
-
-        return taxonId;
     }
 
     private static long createPersonNode(Map<String, Object> personProperties,

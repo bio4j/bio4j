@@ -826,8 +826,8 @@ public class ImportUniprot implements Executable {
                                     if (t.equals("NCBI Taxonomy")) {
                                         organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
                                         ncbiIdFound = true;
-                                    }
-                                    break;
+                                        break;
+                                    }                                    
                                 }
                             }
                             if (!ncbiIdFound) {

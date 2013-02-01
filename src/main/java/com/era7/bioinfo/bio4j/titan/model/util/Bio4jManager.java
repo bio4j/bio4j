@@ -60,4 +60,8 @@ public class Bio4jManager{
     public TitanGraph getGraph(){
         return graph;
     }
+    
+    public void shutDown(){
+        graph.shutdown();
+    }
 }
