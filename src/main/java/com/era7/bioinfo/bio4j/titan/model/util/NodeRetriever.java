@@ -413,11 +413,11 @@ public class NodeRetriever {
     //--------------------THESIS--------------------------------
     /**
      * 
-     * @param thesisName
+     * @param thesisTitle
      * @return ThesisNode list with the name matching the value provided
      */
-    public List<ThesisNode> getThesisByName(String thesisName){        
-        Iterator<Vertex> iterator = manager.getGraph().getVertices(ThesisNode.TITLE_PROPERTY, thesisName).iterator();        
+    public List<ThesisNode> getThesisByTitle(String thesisTitle){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ThesisNode.TITLE_PROPERTY, thesisTitle).iterator();        
         List<ThesisNode> list = new LinkedList<ThesisNode>();        
         while(iterator.hasNext()){
             list.add(new ThesisNode(iterator.next()));
@@ -579,6 +579,21 @@ public class NodeRetriever {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ReactomeTermNode.ID_PROPERTY, reactomeTermId).iterator();
         if(iterator.hasNext()){
             return new ReactomeTermNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------FEATURE TYPE--------------------------------
+    /**
+     * 
+     * @param featureTypeName
+     * @return 
+     */
+    public FeatureTypeNode getFeatureTypeByName(String featureTypeName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(FeatureTypeNode.NAME_PROPERTY, featureTypeName).iterator();
+        if(iterator.hasNext()){
+            return new FeatureTypeNode(iterator.next());
         }else{
             return null;
         } 

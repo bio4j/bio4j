@@ -1127,9 +1127,9 @@ public class ImportUniprot implements Executable {
                 inserter.createRelationship(currentProteinId, featureTypeNodeId, siteFeatureRel, featureProperties);
             } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 inserter.createRelationship(currentProteinId, featureTypeNodeId, turnFeatureRel, featureProperties);
-            }
-
-            inserter.createRelationship(currentProteinId, featureTypeNodeId, sequenceConflictFeatureRel, featureProperties);
+            } else if (featureTypeSt.equals(SequenceConflictFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)){
+                inserter.createRelationship(currentProteinId, featureTypeNodeId, sequenceConflictFeatureRel, featureProperties);
+            }           
 
         }
 

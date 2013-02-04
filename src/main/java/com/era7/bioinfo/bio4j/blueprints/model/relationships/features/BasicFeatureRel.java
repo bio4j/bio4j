@@ -97,10 +97,10 @@ public abstract class BasicFeatureRel extends BasicRelationship{
     public void setRef(String value){
         edge.setProperty(REF_PROPERTY,value);
     }
-    public void setBegin(int value){
+    public void setBegin(String value){
         edge.setProperty(BEGIN_PROPERTY, String.valueOf(value));
     }
-    public void setEnd(int value){
+    public void setEnd(String value){
         edge.setProperty(END_PROPERTY, String.valueOf(value));
     }
     public void setOriginal(String value){

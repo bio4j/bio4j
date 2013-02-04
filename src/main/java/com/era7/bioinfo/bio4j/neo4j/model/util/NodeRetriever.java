@@ -459,12 +459,12 @@ public class NodeRetriever {
     //--------------------THESIS--------------------------------
     /**
      * 
-     * @param thesisName
+     * @param thesisTitle
      * @return ThesisNode list with the name matching the value provided
      */
-    public List<ThesisNode> getThesisByName(String thesisName){
+    public List<ThesisNode> getThesisByTitle(String thesisTitle){
         
-        IndexHits<Node> hits = manager.getThesisFullTextIndex().get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, thesisName);
+        IndexHits<Node> hits = manager.getThesisFullTextIndex().get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, thesisTitle);
         
         List<ThesisNode> list = new ArrayList<ThesisNode>();
         
@@ -644,6 +644,21 @@ public class NodeRetriever {
         IndexHits<Node> hits = manager.getReactomeTermIdIndex().get(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeTermId);
         if(hits.hasNext()){
             return new ReactomeTermNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------FEATURE TYPE--------------------------------
+    /**
+     * 
+     * @param featureTypeName
+     * @return 
+     */
+    public FeatureTypeNode getFeatureTypeByName(String featureTypeName){
+        IndexHits<Node> hits = manager.getReactomeTermIdIndex().get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeName);
+        if(hits.hasNext()){
+            return new FeatureTypeNode(hits.getSingle());
         }else{
             return null;
         } 
