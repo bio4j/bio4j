@@ -656,9 +656,24 @@ public class NodeRetriever {
      * @return 
      */
     public FeatureTypeNode getFeatureTypeByName(String featureTypeName){
-        IndexHits<Node> hits = manager.getReactomeTermIdIndex().get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeName);
+        IndexHits<Node> hits = manager.getFeatureTypeNameIndex().get(FeatureTypeNode.FEATURE_TYPE_NAME_INDEX, featureTypeName);
         if(hits.hasNext()){
             return new FeatureTypeNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------COMMENT TYPE--------------------------------
+    /**
+     * 
+     * @param commentTypeName
+     * @return 
+     */
+    public CommentTypeNode getCommentTypeByName(String commentTypeName){
+        IndexHits<Node> hits = manager.getCommentTypeNameIndex().get(CommentTypeNode.COMMENT_TYPE_NAME_INDEX, commentTypeName);
+        if(hits.hasNext()){
+            return new CommentTypeNode(hits.getSingle());
         }else{
             return null;
         } 

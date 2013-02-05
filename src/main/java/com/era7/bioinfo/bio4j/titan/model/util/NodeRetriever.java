@@ -598,5 +598,20 @@ public class NodeRetriever {
             return null;
         } 
     }
+    //-------------------------------------------------------------------
+    //--------------------COMMENT TYPE--------------------------------
+    /**
+     * 
+     * @param commentTypeName
+     * @return 
+     */
+    public CommentTypeNode getCommentTypeByName(String commentTypeName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(CommentTypeNode.NAME_PROPERTY, commentTypeName).iterator();
+        if(iterator.hasNext()){
+            return new CommentTypeNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
     
 }
