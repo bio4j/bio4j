@@ -18,15 +18,34 @@ package com.era7.bioinfo.bio4j.titan.programs;
 
 import com.era7.bioinfo.bio4j.CommonData;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.PatentNode;
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.InstituteCountryRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.IsoformEventGeneratorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.SubcellularLocationParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.TaxonParentRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductInitiationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductPromoterRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleJournalRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.*;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleJournalRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionDbRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionProteinCitationRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisInstituteRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationAuthorRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationProteinCitationRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
@@ -40,7 +59,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -593,10 +611,10 @@ public class ImportUniprotTitan implements Executable {
         for (Element featureElem : featuresList) {
 
             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
-            
+
             FeatureTypeNode featureTypeNode = nodeRetriever.getFeatureTypeByName(featureTypeSt);
-            
-            if (featureTypeNode == null) {                
+
+            if (featureTypeNode == null) {
                 featureTypeNode = new FeatureTypeNode(manager.createNode(FeatureTypeNode.NODE_TYPE));
                 featureTypeNode.setName(featureTypeSt);
             }
@@ -649,7 +667,7 @@ public class ImportUniprotTitan implements Executable {
             if (featureRefSt == null) {
                 featureRefSt = "";
             }
-            
+
             BasicFeatureRel basicFeatureRel = null;
 
             if (featureTypeSt.equals(ActiveSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -659,47 +677,47 @@ public class ImportUniprotTitan implements Executable {
             } else if (featureTypeSt.equals(CrossLinkFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new CrossLinkFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CrossLinkFeatureRel.NAME));
             } else if (featureTypeSt.equals(GlycosylationSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new GlycosylationSiteFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), GlycosylationSiteFeatureRel.NAME));                
+                basicFeatureRel = new GlycosylationSiteFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), GlycosylationSiteFeatureRel.NAME));
             } else if (featureTypeSt.equals(InitiatorMethionineFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new InitiatorMethionineFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), InitiatorMethionineFeatureRel.NAME));
             } else if (featureTypeSt.equals(LipidMoietyBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new LipidMoietyBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), LipidMoietyBindingRegionFeatureRel.NAME));                
+                basicFeatureRel = new LipidMoietyBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), LipidMoietyBindingRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(MetalIonBindingSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new MetalIonBindingSiteFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), MetalIonBindingSiteFeatureRel.NAME));                
+                basicFeatureRel = new MetalIonBindingSiteFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), MetalIonBindingSiteFeatureRel.NAME));
             } else if (featureTypeSt.equals(ModifiedResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new ModifiedResidueFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), ModifiedResidueFeatureRel.NAME));
             } else if (featureTypeSt.equals(NonStandardAminoAcidFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new NonStandardAminoAcidFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NonStandardAminoAcidFeatureRel.NAME));                
+                basicFeatureRel = new NonStandardAminoAcidFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NonStandardAminoAcidFeatureRel.NAME));
             } else if (featureTypeSt.equals(NonTerminalResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new NonTerminalResidueFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NonTerminalResidueFeatureRel.NAME));
             } else if (featureTypeSt.equals(PeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new PeptideFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), PeptideFeatureRel.NAME));
             } else if (featureTypeSt.equals(UnsureResidueFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new UnsureResidueFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), UnsureResidueFeatureRel.NAME));                
+                basicFeatureRel = new UnsureResidueFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), UnsureResidueFeatureRel.NAME));
             } else if (featureTypeSt.equals(MutagenesisSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new MutagenesisSiteFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), MutagenesisSiteFeatureRel.NAME));
             } else if (featureTypeSt.equals(SequenceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new SequenceVariantFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SequenceVariantFeatureRel.NAME));                
+                basicFeatureRel = new SequenceVariantFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SequenceVariantFeatureRel.NAME));
             } else if (featureTypeSt.equals(CalciumBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new CalciumBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CalciumBindingRegionFeatureRel.NAME));                
+                basicFeatureRel = new CalciumBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CalciumBindingRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(ChainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new ChainFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), ChainFeatureRel.NAME));
             } else if (featureTypeSt.equals(CoiledCoilRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new CoiledCoilRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CoiledCoilRegionFeatureRel.NAME));                
+                basicFeatureRel = new CoiledCoilRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CoiledCoilRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(CompositionallyBiasedRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new CompositionallyBiasedRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CompositionallyBiasedRegionFeatureRel.NAME));                
+                basicFeatureRel = new CompositionallyBiasedRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), CompositionallyBiasedRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(DisulfideBondFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new DisulfideBondFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), DisulfideBondFeatureRel.NAME));
             } else if (featureTypeSt.equals(DnaBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new DnaBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), DnaBindingRegionFeatureRel.NAME));                
+                basicFeatureRel = new DnaBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), DnaBindingRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(DomainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new DomainFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), DomainFeatureRel.NAME));                
+                basicFeatureRel = new DomainFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), DomainFeatureRel.NAME));
             } else if (featureTypeSt.equals(HelixFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new HelixFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), HelixFeatureRel.NAME));                
+                basicFeatureRel = new HelixFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), HelixFeatureRel.NAME));
             } else if (featureTypeSt.equals(IntramembraneRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new IntramembraneRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), IntramembraneRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(NonConsecutiveResiduesFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new NonConsecutiveResiduesFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NonConsecutiveResiduesFeatureRel.NAME));                
+                basicFeatureRel = new NonConsecutiveResiduesFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NonConsecutiveResiduesFeatureRel.NAME));
             } else if (featureTypeSt.equals(NucleotidePhosphateBindingRegionFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new NucleotidePhosphateBindingRegionFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), NucleotidePhosphateBindingRegionFeatureRel.NAME));
             } else if (featureTypeSt.equals(PropeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -713,7 +731,7 @@ public class ImportUniprotTitan implements Executable {
             } else if (featureTypeSt.equals(SignalPeptideFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new SignalPeptideFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SignalPeptideFeatureRel.NAME));
             } else if (featureTypeSt.equals(SpliceVariantFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                basicFeatureRel = new SpliceVariantFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SpliceVariantFeatureRel.NAME));                
+                basicFeatureRel = new SpliceVariantFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SpliceVariantFeatureRel.NAME));
             } else if (featureTypeSt.equals(StrandFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new StrandFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), StrandFeatureRel.NAME));
             } else if (featureTypeSt.equals(TopologicalDomainFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -729,7 +747,7 @@ public class ImportUniprotTitan implements Executable {
             } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new TurnFeatureRel(bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), TurnFeatureRel.NAME));
             }
-            
+
             basicFeatureRel.setDescription(featureDescSt);
             basicFeatureRel.setId(featureIdSt);
             basicFeatureRel.setEvidence(featureEvidenceSt);
@@ -738,8 +756,8 @@ public class ImportUniprotTitan implements Executable {
             basicFeatureRel.setEnd(endFeatureSt);
             basicFeatureRel.setOriginal(originalSt);
             basicFeatureRel.setVariation(variationSt);
-            basicFeatureRel.setRef(featureRefSt);            
-            
+            basicFeatureRel.setRef(featureRefSt);
+
             bGraph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SequenceConflictFeatureRel.NAME);
 
         }
@@ -774,18 +792,18 @@ public class ImportUniprotTitan implements Executable {
                 if (commentEvidenceSt == null) {
                     commentEvidenceSt = "";
                 }
-            }            
+            }
 
             //-----------------COMMENT TYPE NODE RETRIEVING/CREATION---------------------- 
             CommentTypeNode commentTypeNode = nodeRetriever.getCommentTypeByName(commentTypeSt);
-            
+
             if (commentTypeNode == null) {
                 commentTypeNode = new CommentTypeNode(manager.createNode(CommentTypeNode.NODE_TYPE));
                 commentTypeNode.setName(commentTypeSt);
             }
-            
+
             BasicCommentRel basicCommentRel = null;
-            
+
             //-----toxic dose----------------
             if (commentTypeSt.equals(ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicCommentRel = new ToxicDoseCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), ToxicDoseCommentRel.NAME));
@@ -799,7 +817,7 @@ public class ImportUniprotTitan implements Executable {
             else if (commentTypeSt.equals(DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicCommentRel = new DiseaseCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), DiseaseCommentRel.NAME));
             } //-----online information---------
-            else if (commentTypeSt.equals(OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {                
+            else if (commentTypeSt.equals(OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 String nameSt = commentElem.getAttributeValue("name");
                 if (nameSt == null) {
                     nameSt = "";
@@ -812,12 +830,12 @@ public class ImportUniprotTitan implements Executable {
                         linkSt = uriSt;
                     }
                 }
-                
+
                 OnlineInformationCommentRel onlineInformationCommentRel = new OnlineInformationCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), OnlineInformationCommentRel.NAME));
                 onlineInformationCommentRel.setName(nameSt);
                 onlineInformationCommentRel.setLink(linkSt);
                 basicCommentRel = onlineInformationCommentRel;
-                
+
             } //-----tissue specificity---------
             else if (commentTypeSt.equals(TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicCommentRel = new TissueSpecificityCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), TissueSpecificityCommentRel.NAME));
@@ -847,7 +865,7 @@ public class ImportUniprotTitan implements Executable {
                 basicCommentRel = new DisruptionPhenotypeCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), DisruptionPhenotypeCommentRel.NAME));
             } //----------biophysicochemical properties----------------
             else if (commentTypeSt.equals(BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                
+
                 String phDependenceSt = commentElem.getChildText("phDependence");
                 String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
                 if (phDependenceSt == null) {
@@ -887,7 +905,7 @@ public class ImportUniprotTitan implements Executable {
                         redoxPotentialEvidenceSt = "";
                     }
                 }
-                
+
                 BioPhysicoChemicalPropertiesCommentRel bioPhysicoChemicalPropertiesCommentRel = new BioPhysicoChemicalPropertiesCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), BioPhysicoChemicalPropertiesCommentRel.NAME));
                 bioPhysicoChemicalPropertiesCommentRel.setTemperatureDependence(temperatureDependenceSt);
                 bioPhysicoChemicalPropertiesCommentRel.setPhDependence(phDependenceSt);
@@ -897,7 +915,7 @@ public class ImportUniprotTitan implements Executable {
                 bioPhysicoChemicalPropertiesCommentRel.setRedoxPotentialEvidence(redoxPotentialEvidenceSt);
                 bioPhysicoChemicalPropertiesCommentRel.setRedoxPotential(redoxPotentialSt);
                 basicCommentRel = bioPhysicoChemicalPropertiesCommentRel;
-                
+
             } //----------allergen----------------
             else if (commentTypeSt.equals(AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicCommentRel = new AllergenCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), AllergenCommentRel.NAME));
@@ -917,35 +935,26 @@ public class ImportUniprotTitan implements Executable {
 
                         List<Element> locations = subcLocation.getChildren(CommonData.LOCATION_TAG_NAME);
                         Element firstLocation = locations.get(0);
-                        //long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-                        long firstLocationId = -1;
-                        IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-                        if (firstLocationIndexHits.hasNext()) {
-                            firstLocationId = firstLocationIndexHits.getSingle();
-                        }
-                        long lastLocationId = firstLocationId;
 
-                        if (firstLocationId < 0) {
-                            subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-                            lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-                            //---flushing subcellular location name index---
-                            subcellularLocationNameIndex.flush();
+                        SubcellularLocationNode firstLocationNode = nodeRetriever.getSubcellularLocationByName(firstLocation.getTextTrim());
+
+                        SubcellularLocationNode lastLocationNode = firstLocationNode;
+
+                        if (lastLocationNode == null) {
+                            lastLocationNode = new SubcellularLocationNode(manager.createNode(SubcellularLocationNode.NODE_TYPE));
+                            lastLocationNode.setName(firstLocation.getTextTrim());
                         }
 
                         for (int i = 1; i < locations.size(); i++) {
 
-                            long tempLocationId;
-                            IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
-                            if (tempLocationIndexHits.hasNext()) {
-                                tempLocationId = tempLocationIndexHits.getSingle();
-                            } else {
-                                subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-                                tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-                                subcellularLocationNameIndex.flush();
+                            SubcellularLocationNode tempLocationNode = nodeRetriever.getSubcellularLocationByName(locations.get(i).getTextTrim());
+                            if (tempLocationNode == null) {
+                                tempLocationNode = new SubcellularLocationNode(manager.createNode(SubcellularLocationNode.NODE_TYPE));
+                                tempLocationNode.setName(locations.get(i).getTextTrim());
                             }
 
-                            inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
-                            lastLocationId = tempLocationId;
+                            bGraph.addEdge(null, tempLocationNode.getNode(), lastLocationNode.getNode(), SubcellularLocationParentRel.NAME);
+                            lastLocationNode = tempLocationNode;
                         }
                         Element lastLocation = locations.get(locations.size() - 1);
                         String evidenceSt = lastLocation.getAttributeValue(CommonData.EVIDENCE_ATTRIBUTE);
@@ -969,11 +978,11 @@ public class ImportUniprotTitan implements Executable {
                         if (statusSt == null) {
                             statusSt = "";
                         }
-                        proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
-                        proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
-                        proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
-                        proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
-                        inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
+                        ProteinSubcellularLocationRel proteinSubcellularLocationRel = new ProteinSubcellularLocationRel(bGraph.addEdge(null, currentProteinNode.getNode(), lastLocationNode.getNode(), ProteinSubcellularLocationRel.NAME));
+                        proteinSubcellularLocationRel.setEvidence(evidenceSt);
+                        proteinSubcellularLocationRel.setStatus(statusSt);
+                        proteinSubcellularLocationRel.setTopology(topologySt);
+                        proteinSubcellularLocationRel.setTopologyStatus(topologyStatusSt);
 
                     }
                 }
@@ -1003,47 +1012,39 @@ public class ImportUniprotTitan implements Executable {
                         if (isoformNameSt == null) {
                             isoformNameSt = "";
                         }
-                        isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
-                        isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-                        isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
-                        isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
+
                         //--------------------------------------------------------
-                        //long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-                        long isoformId = -1;
-                        IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-                        if (isoformIdIndexHits.hasNext()) {
-                            isoformId = isoformIdIndexHits.getSingle();
-                        }
-                        if (isoformId < 0) {
-                            isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
+                        IsoformNode isoformNode = nodeRetriever.getIsoformById(isoformIdSt);
+                        if (isoformNode == null) {
+                            isoformNode = new IsoformNode(manager.createNode(IsoformNode.NODE_TYPE));
+                            isoformNode.setId(isoformIdSt);
+                            isoformNode.setNote(isoformNoteSt);
+                            isoformNode.setName(isoformNameSt);
+                            isoformNode.setSequence(isoformSeqSt);
                         }
 
                         for (Element eventElem : eventList) {
 
                             String eventTypeSt = eventElem.getAttributeValue("type");
                             if (eventTypeSt.equals(AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                                inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
+                                bGraph.addEdge(null, isoformNode.getNode(), nodeRetriever.getAlternativeProductInitiationNode().getNode(), IsoformEventGeneratorRel.NAME);
                             } else if (eventTypeSt.equals(AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                                inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
+                                bGraph.addEdge(null, isoformNode.getNode(), nodeRetriever.getAlternativeProductPromoterNode().getNode(), IsoformEventGeneratorRel.NAME);
                             } else if (eventTypeSt.equals(AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                                inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
+                                bGraph.addEdge(null, isoformNode.getNode(), nodeRetriever.getAlternativeProductRibosomalFrameshiftingNode().getNode(), IsoformEventGeneratorRel.NAME);
                             } else if (eventTypeSt.equals(AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                                inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
+                                bGraph.addEdge(null, isoformNode.getNode(), nodeRetriever.getAlternativeProductSplicingNode().getNode(), IsoformEventGeneratorRel.NAME);
                             }
                         }
 
                         //protein isoform relationship
-                        inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+                        bGraph.addEdge(null, currentProteinNode.getNode(), isoformNode.getNode(), ProteinIsoformRel.NAME);
 
                     }
                 }
 
             } //----- sequence caution---------
             else if (commentTypeSt.equals(CommonData.COMMENT_SEQUENCE_CAUTION_TYPE)) {
-
-                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
-                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
 
                 Element conflictElem = commentElem.getChild("conflict");
                 if (conflictElem != null) {
@@ -1082,115 +1083,157 @@ public class ImportUniprotTitan implements Executable {
                         }
                     }
 
-                    sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
-                    sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
-                    sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
+
+                    BasicProteinSequenceCautionRel basicProteinSequenceCautionRel = null;
 
                     if (conflictTypeSt.equals(ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinErroneousGeneModelPredictionRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousGeneModelPredictionNode().getNode(), ProteinErroneousGeneModelPredictionRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinErroneousGeneModelPredictionRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousGeneModelPredictionNode().getNode(), ProteinErroneousGeneModelPredictionRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     } else if (conflictTypeSt.equals(ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinErroneousInitiationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousInitiationNode().getNode(), ProteinErroneousInitiationRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinErroneousInitiationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousInitiationNode().getNode(), ProteinErroneousInitiationRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     } else if (conflictTypeSt.equals(ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinErroneousTranslationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousTranslationNode().getNode(), ProteinErroneousTranslationRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinErroneousTranslationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousTranslationNode().getNode(), ProteinErroneousTranslationRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     } else if (conflictTypeSt.equals(ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinErroneousTerminationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousTerminationNode().getNode(), ProteinErroneousTerminationRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinErroneousTerminationRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionErroneousTerminationNode().getNode(), ProteinErroneousTerminationRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     } else if (conflictTypeSt.equals(ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinFrameshiftRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionFrameshiftNode().getNode(), ProteinFrameshiftRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinFrameshiftRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionFrameshiftNode().getNode(), ProteinFrameshiftRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     } else if (conflictTypeSt.equals(ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
                         if (positionsList.size() > 0) {
                             for (String tempPosition : positionsList) {
-                                sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-                                inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+                                basicProteinSequenceCautionRel = new ProteinMiscellaneousDiscrepancyRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionMiscellaneousDiscrepancyNode().getNode(), ProteinMiscellaneousDiscrepancyRel.NAME));
+                                basicProteinSequenceCautionRel.setPosition(tempPosition);
+                                basicProteinSequenceCautionRel.setResource(resourceSt);
+                                basicProteinSequenceCautionRel.setId(idSt);
+                                basicProteinSequenceCautionRel.setVersion(versionSt);
+                                basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                                basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                                basicProteinSequenceCautionRel.setText(commentTextSt);
                             }
                         } else {
-                            sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-                            inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+                            basicProteinSequenceCautionRel = new ProteinMiscellaneousDiscrepancyRel(bGraph.addEdge(null, currentProteinNode.getNode(), nodeRetriever.getSequenceCautionMiscellaneousDiscrepancyNode().getNode(), ProteinMiscellaneousDiscrepancyRel.NAME));
+                            basicProteinSequenceCautionRel.setPosition("");
                         }
 
                     }
+
+                    basicProteinSequenceCautionRel.setResource(resourceSt);
+                    basicProteinSequenceCautionRel.setId(idSt);
+                    basicProteinSequenceCautionRel.setVersion(versionSt);
+                    basicProteinSequenceCautionRel.setEvidence(commentEvidenceSt);
+                    basicProteinSequenceCautionRel.setStatus(commentStatusSt);
+                    basicProteinSequenceCautionRel.setText(commentTextSt);
+
                 }
 
 
             } //----------developmental stage----------------
             else if (commentTypeSt.equals(DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
+                basicCommentRel = new DevelopmentalStageCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), DevelopmentalStageCommentRel.NAME));
             } //----------miscellaneous----------------
             else if (commentTypeSt.equals(MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
+                basicCommentRel = new MiscellaneousCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), MiscellaneousCommentRel.NAME));
             } //----------similarity----------------
             else if (commentTypeSt.equals(SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
+                basicCommentRel = new SimilarityCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), SimilarityCommentRel.NAME));
             } //----------RNA editing----------------
             else if (commentTypeSt.equals(RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-
-                rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
-                rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-                rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
 
                 List<Element> locationsList = commentElem.getChildren("location");
                 for (Element tempLoc : locationsList) {
                     String positionSt = tempLoc.getChild("position").getAttributeValue("position");
-                    rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
-                    inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
+                    RnaEditingCommentRel rnaEditingCommentRel = new RnaEditingCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), RnaEditingCommentRel.NAME));
+                    rnaEditingCommentRel.setPosition(positionSt);
+                    rnaEditingCommentRel.setStatus(commentStatusSt);
+                    rnaEditingCommentRel.setEvidence(commentEvidenceSt);
+                    rnaEditingCommentRel.setText(commentTextSt);
                 }
 
             } //----------pharmaceutical----------------
             else if (commentTypeSt.equals(PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
+                basicCommentRel = new PharmaceuticalCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), PharmaceuticalCommentRel.NAME));
             } //----------enzyme regulation----------------
             else if (commentTypeSt.equals(EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
-                inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
+                basicCommentRel = new EnzymeRegulationCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), EnzymeRegulationCommentRel.NAME));
             } //----------mass spectrometry----------------
             else if (commentTypeSt.equals(MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
 
@@ -1216,21 +1259,17 @@ public class ImportUniprotTitan implements Executable {
                     }
                 }
 
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
-                massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
-
-                inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
-
+                MassSpectrometryCommentRel massSpectrometryCommentRel = new MassSpectrometryCommentRel(bGraph.addEdge(null, currentProteinNode.getNode(), commentTypeNode.getNode(), MassSpectrometryCommentRel.NAME));
+                massSpectrometryCommentRel.setMethod(methodSt);
+                massSpectrometryCommentRel.setMass(massSt);
+                massSpectrometryCommentRel.setBegin(beginSt);
+                massSpectrometryCommentRel.setEnd(endSt);
+                basicCommentRel = massSpectrometryCommentRel;
             }
-            
-            commentProperties.put(BasicCommentRel.TEXT_PROPERTY, commentTextSt);
-            commentProperties.put(BasicCommentRel.STATUS_PROPERTY, commentStatusSt);
-            commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+
+            basicCommentRel.setText(commentTextSt);
+            basicCommentRel.setStatus(commentStatusSt);
+            basicCommentRel.setEvidence(commentEvidenceSt);
 
         }
 
@@ -1261,71 +1300,6 @@ public class ImportUniprotTitan implements Executable {
                 return recElem.getChildText(CommonData.PROTEIN_SHORT_NAME_TAG_NAME);
             }
         }
-    }
-
-    private static long createIsoformNode(Map<String, Object> isoformProperties,
-            BatchInserter inserter,
-            BatchInserterIndex isoformIdIndex,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long isoformId = inserter.createNode(isoformProperties);
-        isoformIdIndex.add(isoformId, MapUtil.map(IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY)));
-        //---adding isoform node to node_type index----
-        nodeTypeIndex.add(isoformId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, IsoformNode.NODE_TYPE));
-
-        return isoformId;
-    }
-
-    private static long createPersonNode(Map<String, Object> personProperties,
-            BatchInserter inserter,
-            BatchInserterIndex index,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long personId = inserter.createNode(personProperties);
-        index.add(personId, MapUtil.map(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, personProperties.get(PersonNode.NAME_PROPERTY)));
-        //---adding person node to node_type index----
-        nodeTypeIndex.add(personId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PersonNode.NODE_TYPE));
-
-        return personId;
-    }
-
-    private static long createCityNode(Map<String, Object> cityProperties,
-            BatchInserter inserter,
-            BatchInserterIndex index,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long cityId = inserter.createNode(cityProperties);
-        index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
-        //---adding city node to node_type index----
-        nodeTypeIndex.add(cityId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CityNode.NODE_TYPE));
-
-        return cityId;
-    }
-
-    private static long createDbNode(Map<String, Object> dbProperties,
-            BatchInserter inserter,
-            BatchInserterIndex index,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long dbId = inserter.createNode(dbProperties);
-        index.add(dbId, MapUtil.map(DBNode.DB_NAME_INDEX, dbProperties.get(DBNode.NAME_PROPERTY)));
-        //---adding db node to node_type index----
-        nodeTypeIndex.add(dbId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, DBNode.NODE_TYPE));
-
-        return dbId;
-    }
-
-    private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
-            BatchInserter inserter,
-            BatchInserterIndex index,
-            BatchInserterIndex nodeTypeIndex) {
-
-        long subcellularLocationId = inserter.createNode(subcellularLocationProperties);
-        index.add(subcellularLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, subcellularLocationProperties.get(SubcellularLocationNode.NAME_PROPERTY)));
-        //---adding subcellular location node to node_type index----
-        nodeTypeIndex.add(subcellularLocationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubcellularLocationNode.NODE_TYPE));
-
-        return subcellularLocationId;
     }
 
     private static void importProteinCitations(XMLElement entryXMLElem,
@@ -1396,11 +1370,11 @@ public class ImportUniprotTitan implements Executable {
                         if (!thesisList.isEmpty()) {
                             thesisNode = thesisList.get(0);
                         } else {
-                            
+
                             thesisNode = new ThesisNode(manager.createNode(ThesisNode.NODE_TYPE));
                             thesisNode.setDate(dateSt);
                             thesisNode.setTitle(titleSt);
-                            
+
                             //---authors association-----
                             for (PersonNode personNode : authorsPersonNodes) {
                                 bGraph.addEdge(null, thesisNode.getNode(), personNode.getNode(), ThesisAuthorRel.NAME);
@@ -1409,19 +1383,19 @@ public class ImportUniprotTitan implements Executable {
                             //-----------institute & country-----------------------------
                             String instituteSt = citation.getAttributeValue("institute");
                             String countrySt = citation.getAttributeValue("country");
-                            
+
                             if (instituteSt != null) {
-                                
+
                                 InstituteNode instituteNode = nodeRetriever.getInstituteByName(instituteSt);
-                                
+
                                 if (instituteNode == null) {
                                     instituteNode = new InstituteNode(manager.createNode(InstituteNode.NODE_TYPE));
                                     instituteNode.setName(instituteSt);
                                 }
                                 if (countrySt != null) {
-                                    
+
                                     CountryNode countryNode = nodeRetriever.getCountryNodeByName(countrySt);
-                                    
+
                                     if (countryNode == null) {
                                         countryNode = new CountryNode(manager.createNode(CountryNode.NODE_TYPE));
                                         countryNode.setName(countrySt);
@@ -1456,31 +1430,24 @@ public class ImportUniprotTitan implements Executable {
                         }
 
                         if (!numberSt.equals("")) {
-                            //long patentId = indexService.getSingleNode(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-                            long patentId = -1;
-                            IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-                            if (patentNumberIndexHits.hasNext()) {
-                                patentId = patentNumberIndexHits.getSingle();
-                            }
 
-                            if (patentId < 0) {
-                                patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
-                                patentProperties.put(PatentNode.DATE_PROPERTY, dateSt);
-                                patentProperties.put(PatentNode.TITLE_PROPERTY, titleSt);
-                                //---patent node creation and indexing
-                                patentId = inserter.createNode(patentProperties);
-                                //indexService.index(patentId, PatentNode.PATENT_NUMBER_INDEX, numberSt);
-                                patentNumberIndex.add(patentId, MapUtil.map(PatentNode.PATENT_NUMBER_INDEX, numberSt));
-                                //---flushing patent number index---
-                                patentNumberIndex.flush();
+                            PatentNode patentNode = nodeRetriever.getPatentByNumber(numberSt);
+
+                            if (patentNode == null) {
+
+                                patentNode = new PatentNode(manager.createNode(PatentNode.NODE_TYPE));
+                                patentNode.setNumber(numberSt);
+                                patentNode.setDate(dateSt);
+                                patentNode.setTitle(titleSt);
+
                                 //---authors association-----
-                                for (long personId : authorsPersonNodes) {
-                                    inserter.createRelationship(patentId, personId, patentAuthorRel, null);
+                                for (PersonNode personNode : authorsPersonNodes) {
+                                    bGraph.addEdge(null, patentNode.getNode(), personNode.getNode(), PatentAuthorRel.NAME);
                                 }
                             }
 
                             //--protein citation relationship
-                            inserter.createRelationship(patentId, currentProteinId, patentProteinCitationRel, null);
+                            bGraph.addEdge(null, patentNode.getNode(), currentProteinNode.getNode(), PatentProteinCitationRel.NAME);
                         }
                     }
 
@@ -1499,38 +1466,36 @@ public class ImportUniprotTitan implements Executable {
                             titleSt = "";
                         }
 
-                        submissionProperties.put(SubmissionNode.DATE_PROPERTY, dateSt);
-                        submissionProperties.put(SubmissionNode.TITLE_PROPERTY, titleSt);
+                        SubmissionNode submissionNode = nodeRetriever.getSubmissionByTitle(titleSt);
 
-                        //---submission node creation and indexing
-                        long submissionId = inserter.createNode(submissionProperties);
+                        if (submissionNode == null || titleSt.equals("")) {
+                            submissionNode = new SubmissionNode(manager.createNode(SubmissionNode.NODE_TYPE));
+                            submissionNode.setDate(dateSt);
+                            submissionNode.setTitle(titleSt);
+                        }
+
                         //---authors association-----
-                        for (long personId : authorsPersonNodes) {
-                            inserter.createRelationship(submissionId, personId, submissionAuthorRel, null);
+                        for (PersonNode personNode : authorsPersonNodes) {
+                            bGraph.addEdge(null, submissionNode.getNode(), personNode.getNode(), SubmissionAuthorRel.NAME);
                         }
                         //---authors consortium association-----
-                        for (long consortiumId : authorsConsortiumNodes) {
-                            inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
+                        for (ConsortiumNode consortiumNode : authorsConsortiumNodes) {
+                            bGraph.addEdge(null, submissionNode.getNode(), consortiumNode.getNode(), SubmissionAuthorRel.NAME);
                         }
 
                         if (dbSt != null) {
-                            long dbId = -1;
-                            IndexHits<Long> dbNameIndexHits = dbNameIndex.get(DBNode.DB_NAME_INDEX, dbSt);
-                            if (dbNameIndexHits.hasNext()) {
-                                dbId = dbNameIndexHits.getSingle();
-                            }
-                            if (dbId < 0) {
-                                dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
-                                dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
-                                dbId = createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
-                                dbNameIndex.flush();
+                            DBNode dBNode = nodeRetriever.getDBByName(dbSt);
+
+                            if (dBNode == null) {
+                                dBNode = new DBNode(manager.createNode(DBNode.NODE_TYPE));
+                                dBNode.setName(dbSt);
                             }
                             //-----submission db relationship-----
-                            inserter.createRelationship(submissionId, dbId, submissionDbRel, null);
+                            bGraph.addEdge(null, submissionNode.getNode(), dBNode.getNode(), SubmissionDbRel.NAME);
                         }
 
                         //--protein citation relationship
-                        inserter.createRelationship(submissionId, currentProteinId, submissionProteinCitationRel, null);
+                        bGraph.addEdge(null, submissionNode.getNode(), currentProteinNode.getNode(), SubmissionProteinCitationRel.NAME);
 
                     }
 
@@ -1572,25 +1537,18 @@ public class ImportUniprotTitan implements Executable {
                             volumeSt = "";
                         }
 
-                        //long bookId = indexService.getSingleNode(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-                        long bookId = -1;
-                        IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-                        if (bookNameIndexHits.hasNext()) {
-                            bookId = bookNameIndexHits.getSingle();
-                        }
+                        List<BookNode> bookNodeList = nodeRetriever.getBooksByName(nameSt);
+                        BookNode bookNode = null;
 
-                        if (bookId < 0) {
-                            bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
-                            bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
-                            //---book node creation and indexing
-                            bookId = inserter.createNode(bookProperties);
-                            //indexService.index(bookId, BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-                            bookNameIndex.add(bookId, MapUtil.map(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt));
-                            //--flushing book name index---
-                            bookNameIndex.flush();
+                        if (bookNodeList.isEmpty()) {
+
+                            bookNode = new BookNode(manager.createNode(BookNode.NODE_TYPE));
+                            bookNode.setName(nameSt);
+                            bookNode.setDate(dateSt);
+
                             //---authors association-----
-                            for (long personId : authorsPersonNodes) {
-                                inserter.createRelationship(bookId, personId, bookAuthorRel, null);
+                            for (PersonNode personNode : authorsPersonNodes) {
+                                bGraph.addEdge(null, bookNode.getNode(), personNode.getNode(), BookAuthorRel.NAME);
                             }
 
                             //---editor association-----
@@ -1598,68 +1556,51 @@ public class ImportUniprotTitan implements Executable {
                             if (editorListElem != null) {
                                 List<Element> editorsElems = editorListElem.getChildren("person");
                                 for (Element person : editorsElems) {
-                                    //long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-                                    long editorId = -1;
-                                    IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-                                    if (personNameIndexHits.hasNext()) {
-                                        editorId = personNameIndexHits.getSingle();
+
+                                    List<PersonNode> editorNodes = nodeRetriever.getPeopleByName(person.getAttributeValue("name"));
+                                    PersonNode editorNode = null;
+                                    if (editorNodes.isEmpty()) {
+                                        editorNode = new PersonNode(manager.createNode(PersonNode.NODE_TYPE));
+                                        editorNode.setName(person.getAttributeValue("name"));
+                                    } else {
+                                        editorNode = editorNodes.get(0);
                                     }
-                                    if (editorId < 0) {
-                                        personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-                                        editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
-                                    }
-                                    //---flushing person name index---
-                                    personNameIndex.flush();
                                     //editor association
-                                    inserter.createRelationship(bookId, editorId, bookEditorRel, null);
+                                    bGraph.addEdge(null, bookNode.getNode(), editorNode.getNode(), BookEditorRel.NAME);
                                 }
                             }
 
 
                             //----publisher--
                             if (!publisherSt.equals("")) {
-                                //long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-                                long publisherId = -1;
-                                IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-                                if (publisherNameIndexHits.hasNext()) {
-                                    publisherId = publisherNameIndexHits.getSingle();
+
+                                PublisherNode publisherNode = nodeRetriever.getPublisherByName(publisherSt);
+
+                                if (publisherNode == null) {
+                                    publisherNode = new PublisherNode(manager.createNode(PublisherNode.NODE_TYPE));
+                                    publisherNode.setName(publisherSt);
                                 }
-                                if (publisherId < 0) {
-                                    publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
-                                    publisherId = inserter.createNode(publisherProperties);
-                                    //indexService.index(publisherId, PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-                                    publisherNameIndex.add(publisherId, MapUtil.map(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt));
-                                    //--flushing publisher name index--
-                                    publisherNameIndex.flush();
-                                }
-                                inserter.createRelationship(bookId, publisherId, bookPublisherRel, null);
+                                bGraph.addEdge(null, bookNode.getNode(), publisherNode.getNode(), BookPublisherRel.NAME);
                             }
 
                             //-----city-----
                             if (!citySt.equals("")) {
-                                //long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
-                                long cityId = -1;
-                                IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
-                                if (cityNameIndexHits.hasNext()) {
-                                    cityId = cityNameIndexHits.getSingle();
+                                CityNode cityNode = nodeRetriever.getCityNodeByName(citySt);
+                                if (cityNode == null) {
+                                    cityNode = new CityNode(manager.createNode(CityNode.NODE_TYPE));
+                                    cityNode.setName(citySt);
                                 }
-                                if (cityId < 0) {
-                                    cityProperties.put(CityNode.NAME_PROPERTY, citySt);
-                                    cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
-                                    //-----flushing city name index---
-                                    cityNameIndex.flush();
-                                }
-                                inserter.createRelationship(bookId, cityId, bookCityRel, null);
+                                bGraph.addEdge(null, bookNode.getNode(), cityNode.getNode(), BookCityRel.NAME);
                             }
+                        } else {
+                            bookNode = bookNodeList.get(0);
                         }
 
-                        bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
-                        bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
-                        bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
-                        bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
-                        //--protein citation relationship
-                        inserter.createRelationship(bookId, currentProteinId, bookProteinCitationRel, bookProteinCitationProperties);
-
+                        BookProteinCitationRel bookProteinCitationRel = new BookProteinCitationRel(bGraph.addEdge(null, bookNode.getNode(), currentProteinNode.getNode(), BookProteinCitationRel.NAME));
+                        bookProteinCitationRel.setFirst(firstSt);
+                        bookProteinCitationRel.setLast(lastSt);
+                        bookProteinCitationRel.setVolume(volumeSt);
+                        bookProteinCitationRel.setTitle(titleSt);
                     }
 
                     //----------------------------------------------------------------------------
@@ -1681,56 +1622,43 @@ public class ImportUniprotTitan implements Executable {
                             locatorSt = "";
                         }
 
-                        //long onlineArticleId = indexService.getSingleNode(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                        long onlineArticleId = -1;
-                        IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                        if (onlineArticleTitleIndexHits.hasNext()) {
-                            onlineArticleId = onlineArticleTitleIndexHits.getSingle();
-                        }
-                        if (onlineArticleId < 0) {
-                            onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
-                            onlineArticleId = inserter.createNode(onlineArticleProperties);
-                            if (!titleSt.equals("")) {
-                                //indexService.index(onlineArticleId, OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                                onlineArticleTitleIndex.add(onlineArticleId, MapUtil.map(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-                                //-----flushing online article title index---
-                                onlineArticleTitleIndex.flush();
-                            }
+                        List<OnlineArticleNode> onlineArticleNodeList = nodeRetriever.getOnlineArticlesByTitle(titleSt);
+                        OnlineArticleNode onlineArticleNode = null;
+                        
+                        if (onlineArticleNodeList.isEmpty() || titleSt.equals("")) {
 
+                            onlineArticleNode = new OnlineArticleNode(manager.createNode(OnlineArticleNode.NODE_TYPE));
+                            onlineArticleNode.setTitle(titleSt);
+                            
                             //---authors person association-----
-                            for (long personId : authorsPersonNodes) {
-                                inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorRel, null);
+                            for (PersonNode personNode : authorsPersonNodes) {
+                                bGraph.addEdge(null, onlineArticleNode.getNode(), personNode.getNode(), OnlineArticleAuthorRel.NAME);
                             }
                             //---authors consortium association-----
-                            for (long consortiumId : authorsConsortiumNodes) {
-                                inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
+                            for (ConsortiumNode consortiumNode : authorsConsortiumNodes) {
+                                bGraph.addEdge(null, onlineArticleNode.getNode(), consortiumNode.getNode(), OnlineArticleAuthorRel.NAME);
                             }
 
                             //------online journal-----------
                             if (!nameSt.equals("")) {
 
-                                long onlineJournalId = -1;
-                                IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-                                if (onlineJournalNameIndexHits.hasNext()) {
-                                    onlineJournalId = onlineJournalNameIndexHits.getSingle();
-                                }
-                                if (onlineJournalId < 0) {
-                                    onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
-                                    onlineJournalId = inserter.createNode(onlineJournalProperties);
-                                    //indexService.index(onlineJournalId, OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-                                    onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
-                                    //---flushing online journal name index---
-                                    onlineJournalNameIndex.flush();
+                                OnlineJournalNode onlineJournalNode = nodeRetriever.getOnlineJournalByName(nameSt);
+                                
+                                if (onlineJournalNode == null) {
+                                    onlineJournalNode = new OnlineJournalNode(manager.createNode(OnlineJournalNode.NODE_TYPE));
+                                    onlineJournalNode.setName(nameSt);
                                 }
 
-                                onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
-                                inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
+                                OnlineArticleJournalRel onlineArticleJournalRel = new OnlineArticleJournalRel(bGraph.addEdge(null, onlineArticleNode.getNode(), onlineJournalNode.getNode(), OnlineArticleJournalRel.NAME));
+                                onlineArticleJournalRel.setLocator(locatorSt);
                             }
                             //----------------------------
+                        } else {
+                            onlineArticleNode = onlineArticleNodeList.get(0);
                         }
+                        
                         //protein citation
-                        inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
-
+                        bGraph.addEdge(null, onlineArticleNode.getNode(), currentProteinNode.getNode(), OnlineArticleProteinCitationRel.NAME);
                     }
 
                     //----------------------------------------------------------------------------
@@ -1778,72 +1706,50 @@ public class ImportUniprotTitan implements Executable {
                             }
                         }
 
-                        //long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                        long articleId = -1;
-                        IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                        if (articleTitleIndexHits.hasNext()) {
-                            articleId = articleTitleIndexHits.getSingle();
-                        }
-                        if (articleId < 0) {
-                            articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
-                            articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
-                            articleProperties.put(ArticleNode.MEDLINE_ID_PROPERTY, medlineSt);
-                            articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
-                            articleId = inserter.createNode(articleProperties);
-                            if (!titleSt.equals("")) {
-                                //indexService.index(articleId, ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-                                articleTitleIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-                                //--flushing article title index---
-                                articleTitleIndex.flush();
-                            }
-
-                            //---indexing by medline, doi and pubmed--
-                            if (!doiSt.isEmpty()) {
-                                articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
-                            }
-                            if (!medlineSt.isEmpty()) {
-                                articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
-                            }
-                            if (!pubmedSt.isEmpty()) {
-                                articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
-                            }
-
+                        
+                        List<ArticleNode> articleNodeList = nodeRetriever.getArticlesByTitle(titleSt);
+                        ArticleNode articleNode = null;
+                                                
+                        if (articleNodeList.isEmpty() || titleSt.equals("")) {
+                            
+                            articleNode = new ArticleNode(manager.createNode(ArticleNode.NODE_TYPE));
+                            articleNode.setTitle(titleSt);
+                            articleNode.setDoiId(doiSt);
+                            articleNode.setMedlineId(medlineSt);
+                            articleNode.setPubmedId(pubmedSt);
+                            
                             //---authors person association-----
-                            for (long personId : authorsPersonNodes) {
-                                inserter.createRelationship(articleId, personId, articleAuthorRel, null);
+                            for (PersonNode personNode : authorsPersonNodes) {
+                                bGraph.addEdge(null, articleNode.getNode(), personNode.getNode(), ArticleAuthorRel.NAME);
                             }
                             //---authors consortium association-----
-                            for (long consortiumId : authorsConsortiumNodes) {
-                                inserter.createRelationship(articleId, consortiumId, articleAuthorRel, null);
+                            for (ConsortiumNode consortiumNode : authorsConsortiumNodes) {
+                                bGraph.addEdge(null, articleNode.getNode(), consortiumNode.getNode(), ArticleAuthorRel.NAME);
                             }
 
                             //------journal-----------
                             if (!journalNameSt.equals("")) {
-                                //long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-                                long journalId = -1;
-                                IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-                                if (journalNameIndexHits.hasNext()) {
-                                    journalId = journalNameIndexHits.getSingle();
-                                }
-                                if (journalId < 0) {
-                                    journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
-                                    journalId = inserter.createNode(journalProperties);
-                                    //indexService.index(journalId, JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-                                    journalNameIndex.add(journalId, MapUtil.map(JournalNode.JOURNAL_NAME_INDEX, journalNameSt));
-                                    //----flushing journal name index----
-                                    journalNameIndex.flush();
-                                }
 
-                                articleJournalProperties.put(ArticleJournalRel.DATE_PROPERTY, dateSt);
-                                articleJournalProperties.put(ArticleJournalRel.FIRST_PROPERTY, firstSt);
-                                articleJournalProperties.put(ArticleJournalRel.LAST_PROPERTY, lastSt);
-                                articleJournalProperties.put(ArticleJournalRel.VOLUME_PROPERTY, volumeSt);
-                                inserter.createRelationship(articleId, journalId, articleJournalRel, articleJournalProperties);
+                                JournalNode journalNode = nodeRetriever.getJournalByName(journalNameSt);
+                                
+                                if (journalNode == null) {
+                                    journalNode = new JournalNode(manager.createNode(JournalNode.NODE_TYPE));
+                                    journalNode.setName(journalNameSt);
+                                }
+                                
+                                ArticleJournalRel articleJournalRel = new ArticleJournalRel(bGraph.addEdge(null, articleNode.getNode(), journalNode.getNode(), ArticleJournalRel.NAME));
+
+                                articleJournalRel.setDate(dateSt);
+                                articleJournalRel.setFirst(firstSt);
+                                articleJournalRel.setLast(lastSt);
+                                articleJournalRel.setVolume(volumeSt);
                             }
                             //----------------------------
+                        }else{
+                            articleNode = articleNodeList.get(0);
                         }
                         //protein citation
-                        inserter.createRelationship(articleId, currentProteinId, articleProteinCitationRel, null);
+                        bGraph.addEdge(null, articleNode.getNode(), currentProteinNode.getNode(), ArticleProteinCitationRel.NAME);
 
                     }
 
@@ -1856,13 +1762,16 @@ public class ImportUniprotTitan implements Executable {
                         if (dateSt == null) {
                             dateSt = "";
                         }
+                        
+                        UnpublishedObservationNode unpublishedObservationNode = new UnpublishedObservationNode(manager.createNode(UnpublishedObservationNode.NODE_TYPE));
+                        unpublishedObservationNode.setDate(dateSt);
 
-                        unpublishedObservationProperties.put(UnpublishedObservationNode.DATE_PROPERTY, dateSt);
-                        long unpublishedObservationId = inserter.createNode(unpublishedObservationProperties);
                         //---authors person association-----
-                        for (long personId : authorsPersonNodes) {
-                            inserter.createRelationship(unpublishedObservationId, personId, unpublishedObservationAuthorRel, null);
+                        for (PersonNode personNode : authorsPersonNodes) {
+                            bGraph.addEdge(null, unpublishedObservationNode.getNode(), personNode.getNode(), UnpublishedObservationAuthorRel.NAME);
                         }
+                        
+                        bGraph.addEdge(null, unpublishedObservationNode.getNode(), currentProteinNode.getNode(), UnpublishedObservationProteinCitationRel.NAME);
                     }
 
                 }

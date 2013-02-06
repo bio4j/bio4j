@@ -31,10 +31,21 @@ public class Bio4jManager extends Neo4jManager {
     private static String FULL_TEXT_ST = "fulltext";
     private static String LUCENE_ST = "lucene";
     private static String TYPE_ST = "type";
+     
     
+    //----------------main indices names------------------------------
     public static final String NODE_TYPE_INDEX_NAME = "node_type_index";
+    public static final String MAIN_NODES_INDEX_NAME = "main_nodes_index";
+    
+    //----------------main nodes index values--------------------
+    public static final String ALTERNATIVE_PRODUCT_INITIATION = "alternative_product_initiation";
+    public static final String ALTERNATIVE_PRODUCT_PROMOTER = "alternative_product_promoter";
+    public static final String ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING = "alternative_product_ribosomal_frameshifting";
+    public static final String ALTERNATIVE_PRODUCT_SPLICING = "alternative_product_splicing";
+    //------------------------------------------------------------
     
     //-----------------node indexes-----------------------
+    private Index<Node> mainNodesIndex = null;
     private Index<Node> enzymeIdIndex = null;
     private Index<Node> nodeTypeIndex = null;
     private Index<Node> datasetNameIndex = null;
@@ -58,6 +69,7 @@ public class Bio4jManager extends Neo4jManager {
     private Index<Node> instituteNameIndex = null;
     private Index<Node> countryNameIndex = null;
     private Index<Node> cityNameIndex = null;
+    private Index<Node> submissionTitleIndex = null;
     private Index<Node> thesisTitleFullTextIndex = null;
     private Index<Node> patentNumberIndex = null;
     private Index<Node> bookNameFullTextIndex = null;
@@ -73,6 +85,7 @@ public class Bio4jManager extends Neo4jManager {
     private Index<Node> ncbiTaxonIdIndex = null;
     private Index<Node> ncbiTaxonGiIdIndex = null;
     private Index<Node> reactomeTermIdIndex = null;
+    private Index<Node> subcellularLocationNameIndex = null;
     //----special indexes----
     //private Index<Node> 
     //------------relationship indexes---------------
@@ -174,6 +187,7 @@ public class Bio4jManager extends Neo4jManager {
         countryNameIndex = graphService.index().forNodes(CountryNode.COUNTRY_NAME_INDEX, indexProps);
         cityNameIndex = graphService.index().forNodes(CityNode.CITY_NAME_INDEX, indexProps);
         thesisTitleFullTextIndex = graphService.index().forNodes(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, indexFullTextProps);
+        submissionTitleIndex = graphService.index().forNodes(SubmissionNode.SUBMISSION_TITLE_INDEX, indexProps);
         patentNumberIndex = graphService.index().forNodes(PatentNode.PATENT_NUMBER_INDEX, indexProps);
         bookNameFullTextIndex = graphService.index().forNodes(BookNode.BOOK_NAME_FULL_TEXT_INDEX, indexFullTextProps);
         publisherNameIndex = graphService.index().forNodes(PublisherNode.PUBLISHER_NAME_INDEX, indexProps);
@@ -188,6 +202,7 @@ public class Bio4jManager extends Neo4jManager {
         ncbiTaxonIdIndex = graphService.index().forNodes(NCBITaxonNode.NCBI_TAXON_ID_INDEX, indexProps);
         ncbiTaxonGiIdIndex = graphService.index().forNodes(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, indexProps);
         reactomeTermIdIndex = graphService.index().forNodes(ReactomeTermNode.REACTOME_TERM_ID_INDEX, indexProps);
+        mainNodesIndex = graphService.index().forNodes(MAIN_NODES_INDEX_NAME, indexProps);
 
         //----------relationship indexes-----
         isAGorelIndex = graphService.index().forRelationships(IsAGoRel.IS_A_REL_INDEX, indexProps);
@@ -303,6 +318,10 @@ public class Bio4jManager extends Neo4jManager {
         return thesisTitleFullTextIndex;
     }
 
+    public Index<Node> getSubmissionTitleIndex(){
+        return submissionTitleIndex;
+    }
+    
     public Index<Node> getPatentNumberIndex() {
         return patentNumberIndex;
     }
@@ -357,6 +376,14 @@ public class Bio4jManager extends Neo4jManager {
 
     public Index<Node> getReactomeTermIdIndex() {
         return reactomeTermIdIndex;
+    }
+    
+    public Index<Node> getSubcellularLocationNameIndex() {
+        return subcellularLocationNameIndex;
+    }
+    
+    public Index<Node> getMainNodesIndex(){
+        return mainNodesIndex;
     }
 
     public RelationshipIndex getIsAGoRelIndex() {

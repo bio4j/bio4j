@@ -27,7 +27,7 @@ import org.apache.commons.configuration.Configuration;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public class Bio4jManager{
-    
+        
     protected TitanGraph graph;
     
     /*

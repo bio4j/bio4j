@@ -2384,6 +2384,8 @@ public class ImportUniprot implements Executable {
                         for (long personId : authorsPersonNodesIds) {
                             inserter.createRelationship(unpublishedObservationId, personId, unpublishedObservationAuthorRel, null);
                         }
+                        
+                        inserter.createRelationship(unpublishedObservationId, currentProteinId, unpublishedObservationProteinCitationRel, null);
                     }
 
                 }

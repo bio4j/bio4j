@@ -475,6 +475,37 @@ public class NodeRetriever {
     }
     
     //-------------------------------------------------------------------
+    //--------------------SUBMISSION--------------------------------
+    /**
+     * 
+     * @param submissionTitle
+     * @return SubmissionNode with the title matching the value provided
+     */
+    public SubmissionNode getSubmissionByTitle(String submissionTitle){
+        IndexHits<Node> hits = manager.getSubmissionTitleIndex().get(SubmissionNode.SUBMISSION_TITLE_INDEX, submissionTitle);                
+        if(hits.hasNext()){
+            return new SubmissionNode(hits.next());
+        }else{
+            return null;
+        }
+    }
+    //-------------------------------------------------------------------
+    //--------------------DB--------------------------------
+    /**
+     * 
+     * @param dbName
+     * @return DBNode with the name matching the value provided
+     */
+    public DBNode getDBByName(String dbName){
+        IndexHits<Node> hits = manager.getSubmissionTitleIndex().get(DBNode.DB_NAME_INDEX, dbName);                
+        if(hits.hasNext()){
+            return new DBNode(hits.next());
+        }else{
+            return null;
+        }
+    }
+    
+    //-------------------------------------------------------------------
     //--------------------PATENTS--------------------------------
     /**
      * 
@@ -678,5 +709,58 @@ public class NodeRetriever {
             return null;
         } 
     }
+    //-------------------------------------------------------------------
+    //--------------------SUBCELLULAR LOCATION--------------------------------
+    /**
+     * 
+     * @param subcellularLocationName
+     * @return 
+     */
+    public SubcellularLocationNode getSubcellularLocationByName(String subcellularLocationName){
+        IndexHits<Node> hits = manager.getSubcellularLocationNameIndex().get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, subcellularLocationName);
+        if(hits.hasNext()){
+            return new SubcellularLocationNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
     
+    //-------------------------------------------------------------------
+    //--------------------ALTERNATIVE PRODUCTS--------------------------------
+    
+    public AlternativeProductNode getAlternativeProductInitiationNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_INITIATION);
+        if(hits.hasNext()){
+            return new AlternativeProductNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductPromoterNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_PROMOTER);
+        if(hits.hasNext()){
+            return new AlternativeProductNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductRibosomalFrameshiftingNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING);
+        if(hits.hasNext()){
+            return new AlternativeProductNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductSplicingNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_SPLICING);
+        if(hits.hasNext()){
+            return new AlternativeProductNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------SEQ-CAUTION --------------------------------
 }

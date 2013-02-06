@@ -21,6 +21,11 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductInitiationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductPromoterRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -612,6 +617,136 @@ public class NodeRetriever {
         }else{
             return null;
         } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------SUBCELLULAR LOCATION--------------------------------
+    /**
+     * 
+     * @param subcellularLocationName
+     * @return 
+     */
+    public SubcellularLocationNode getSubcellularLocationByName(String subcellularLocationName){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SubcellularLocationNode.NAME_PROPERTY, subcellularLocationName).iterator();
+        if(iterator.hasNext()){
+            return new SubcellularLocationNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------ALTERNATIVE PRODUCTS--------------------------------
+    
+    public AlternativeProductNode getAlternativeProductInitiationNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new AlternativeProductNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductPromoterNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new AlternativeProductNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductRibosomalFrameshiftingNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new AlternativeProductNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public AlternativeProductNode getAlternativeProductSplicingNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new AlternativeProductNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    
+    //-------------------------------------------------------------------
+    //--------------------SEQ-CAUTION--------------------------------
+    public SequenceCautionNode getSequenceCautionErroneousGeneModelPredictionNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public SequenceCautionNode getSequenceCautionErroneousInitiationNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public SequenceCautionNode getSequenceCautionErroneousTranslationNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public SequenceCautionNode getSequenceCautionErroneousTerminationNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public SequenceCautionNode getSequenceCautionFrameshiftNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    public SequenceCautionNode getSequenceCautionMiscellaneousDiscrepancyNode(){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
+        if(iterator.hasNext()){
+            return new SequenceCautionNode(iterator.next());
+        }else{
+            return null;
+        } 
+    }
+    //-------------------------------------------------------------------
+    //--------------------SUBMISSION--------------------------------
+    /**
+     * 
+     * @param submissionTitle
+     * @return 
+     */
+    public SubmissionNode getSubmissionByTitle(String submissionTitle){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(SubmissionNode.TITLE_PROPERTY, submissionTitle).iterator();        
+        SubmissionNode submissionNode = null;        
+        if(iterator.hasNext()){
+            submissionNode = new SubmissionNode(iterator.next());
+        }        
+        return submissionNode; 
+    }
+    //-------------------------------------------------------------------
+    //--------------------DB--------------------------------
+    /**
+     * 
+     */
+    public DBNode getDBByName(String dbName){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(DBNode.NAME_PROPERTY, dbName).iterator();        
+        DBNode dbNode = null;        
+        if(iterator.hasNext()){
+            dbNode = new DBNode(iterator.next());
+        }        
+        return dbNode; 
     }
     
 }
