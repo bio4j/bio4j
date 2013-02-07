@@ -1,26 +1,26 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2010-2013  "Bio4j"
+ *
+ * This file is part of Bio4j
+ *
+ * Bio4j is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.era7.bioinfo.bio4j.neo4j.programs;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.RRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.MiscRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.TmRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.TRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementGeneRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementRRnaRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementNcRnaRel;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.NcRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementTRnaRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementMiscRnaRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementCDSRel;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.MRNANode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementMRnaRel;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.GenomeElementTmRnaRel;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.CDSNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GeneNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.rna.*;
+import com.era7.bioinfo.bio4j.neo4j.model.relationships.refseq.*;
 import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;

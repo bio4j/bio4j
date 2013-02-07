@@ -139,7 +139,7 @@ public class ImportUniref implements Executable {
                 try {
                     //closing logger file handler
                     fh.close();
-                    //closing no4j managers
+                    //closing neo4j managers
                     indexProvider.shutdown();
                     inserter.shutdown();
                     
@@ -214,9 +214,9 @@ public class ImportUniref implements Executable {
                     entryStBuilder.append(line);
                     line = reader.readLine();
                 }
-                //linea final del organism
+                //organism last line
                 entryStBuilder.append(line);
-                //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
+                
                 XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
                 entryStBuilder.delete(0, entryStBuilder.length());
 
@@ -236,7 +236,6 @@ public class ImportUniref implements Executable {
                     }
                 }
 
-                //System.out.println("membersAccessionList = " + membersAccessionList);
 
                 if (representantAccession != null) {
 
