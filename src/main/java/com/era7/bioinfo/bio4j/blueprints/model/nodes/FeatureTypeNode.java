@@ -89,7 +89,7 @@ import com.tinkerpop.blueprints.Vertex;
  * </table>
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class FeatureTypeNode extends BasicNode{
+public class FeatureTypeNode extends BasicVertex{
 
     public static final String NODE_TYPE = FeatureTypeNode.class.getCanonicalName();
 

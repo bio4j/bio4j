@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ConsortiumNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
@@ -37,7 +37,7 @@ import java.util.List;
  * and are based on the existing ISO and ANSI standards.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ArticleNode extends BasicNode{
+public class ArticleNode extends BasicVertex{
 
     public static final String NODE_TYPE = ArticleNode.class.getCanonicalName();
 
@@ -101,7 +101,7 @@ public class ArticleNode extends BasicNode{
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();
-            if(currentNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(ConsortiumNode.NODE_TYPE)){
+            if(currentNode.getProperty(BasicVertex.NODE_TYPE_PROPERTY).equals(ConsortiumNode.NODE_TYPE)){
                 list.add(new ConsortiumNode(currentNode));
             } 
         }
@@ -116,7 +116,7 @@ public class ArticleNode extends BasicNode{
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();
-            if(currentNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(PersonNode.NODE_TYPE)){
+            if(currentNode.getProperty(BasicVertex.NODE_TYPE_PROPERTY).equals(PersonNode.NODE_TYPE)){
                 list.add(new PersonNode(currentNode));
             } 
         }

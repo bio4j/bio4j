@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentAuthorRel;
@@ -33,7 +33,7 @@ import java.util.List;
  * Patent protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PatentNode extends BasicNode{
+public class PatentNode extends BasicVertex{
 
     public static final String NODE_TYPE = PatentNode.class.getCanonicalName();
 

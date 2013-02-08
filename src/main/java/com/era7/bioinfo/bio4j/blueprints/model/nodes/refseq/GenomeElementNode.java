@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGenomeElementRel;
@@ -33,7 +33,7 @@ import java.util.List;
  * Organisms genome elements
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GenomeElementNode extends BasicNode{
+public class GenomeElementNode extends BasicVertex{
 
     public static final String NODE_TYPE = GenomeElementNode.class.getCanonicalName();
 

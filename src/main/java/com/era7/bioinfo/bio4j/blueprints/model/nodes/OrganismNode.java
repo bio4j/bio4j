@@ -28,7 +28,7 @@ import java.util.List;
  * Uniprot taxonomy organism
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OrganismNode extends BasicNode{
+public class OrganismNode extends BasicVertex{
 
     public static final String NODE_TYPE = OrganismNode.class.getCanonicalName();
 

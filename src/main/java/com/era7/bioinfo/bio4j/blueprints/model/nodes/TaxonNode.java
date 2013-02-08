@@ -28,7 +28,7 @@ import java.util.List;
  * Uniprot taxonomy taxon
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TaxonNode extends BasicNode{
+public class TaxonNode extends BasicVertex{
 
     public static final String NODE_TYPE = TaxonNode.class.getCanonicalName();
 
@@ -71,7 +71,7 @@ public class TaxonNode extends BasicNode{
         
         while(iterator.hasNext()){
             Vertex tempNode = iterator.next();
-            if(tempNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(TaxonNode.NODE_TYPE)){
+            if(tempNode.getProperty(BasicVertex.NODE_TYPE_PROPERTY).equals(TaxonNode.NODE_TYPE)){
                 list.add(new TaxonNode(tempNode));
             }           
         }
@@ -90,7 +90,7 @@ public class TaxonNode extends BasicNode{
         
         while(iterator.hasNext()){
             Vertex tempNode = iterator.next();            
-            if(tempNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(OrganismNode.NODE_TYPE)){
+            if(tempNode.getProperty(BasicVertex.NODE_TYPE_PROPERTY).equals(OrganismNode.NODE_TYPE)){
                 list.add(new OrganismNode(tempNode));
             }           
         }

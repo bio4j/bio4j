@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Protein subcellular locations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubcellularLocationNode extends BasicNode{
+public class SubcellularLocationNode extends BasicVertex{
 
     public static final String NODE_TYPE = SubcellularLocationNode.class.getCanonicalName();
 

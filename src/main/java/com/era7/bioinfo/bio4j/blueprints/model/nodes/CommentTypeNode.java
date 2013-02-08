@@ -50,7 +50,7 @@ import com.tinkerpop.blueprints.Vertex;
  * - Caution: Warning about possible errors and/or grounds of confusion
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CommentTypeNode extends BasicNode{
+public class CommentTypeNode extends BasicVertex{
 
     public static final String NODE_TYPE = CommentTypeNode.class.getCanonicalName();
 

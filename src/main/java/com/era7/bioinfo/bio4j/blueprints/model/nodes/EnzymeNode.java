@@ -28,7 +28,7 @@ import java.util.List;
  * Enzyme node
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class EnzymeNode extends BasicNode{
+public class EnzymeNode extends BasicVertex{
 
     public static final String NODE_TYPE = EnzymeNode.class.getCanonicalName();
 

@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.InstituteNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
@@ -34,7 +34,7 @@ import java.util.List;
  * Thesis protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ThesisNode extends BasicNode{
+public class ThesisNode extends BasicVertex{
 
     public static final String NODE_TYPE = ThesisNode.class.getCanonicalName();
 

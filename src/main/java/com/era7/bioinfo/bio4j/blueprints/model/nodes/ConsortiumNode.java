@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Models consortium entities that take part in publications.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ConsortiumNode extends BasicNode{
+public class ConsortiumNode extends BasicVertex{
 
     public static final String NODE_TYPE = ConsortiumNode.class.getCanonicalName();
 

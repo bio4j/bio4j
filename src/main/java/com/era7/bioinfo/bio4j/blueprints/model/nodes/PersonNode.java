@@ -24,7 +24,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Normally people involved on protein citations (authors, editors...)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PersonNode extends BasicNode{
+public class PersonNode extends BasicVertex{
 
     public static final String NAME_PROPERTY = "person_name";
     public static final String NODE_TYPE = PersonNode.class.getCanonicalName();

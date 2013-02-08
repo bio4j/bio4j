@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.titan.model.util;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
@@ -53,7 +53,7 @@ public class Bio4jManager{
      */
     public Vertex createNode(String nodeType){
         Vertex vertex = graph.addVertex(null);
-        vertex.setProperty(BasicNode.NODE_TYPE_PROPERTY, nodeType);
+        vertex.setProperty(BasicVertex.NODE_TYPE_PROPERTY, nodeType);
         return vertex;
     }
     

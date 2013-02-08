@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationAuthorRel;
@@ -32,7 +32,7 @@ import java.util.List;
  * Protein unpublished observation citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class UnpublishedObservationNode extends BasicNode{
+public class UnpublishedObservationNode extends BasicVertex{
 
     public static final String DATE_PROPERTY = "unpublished_observation_date";
 

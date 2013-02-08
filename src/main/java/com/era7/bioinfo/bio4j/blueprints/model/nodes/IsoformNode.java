@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Protein isoforms. Their information is retrieved from entries' binary interactions.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class IsoformNode extends BasicNode{
+public class IsoformNode extends BasicVertex{
 
     public static final String NODE_TYPE = IsoformNode.class.getCanonicalName();
 

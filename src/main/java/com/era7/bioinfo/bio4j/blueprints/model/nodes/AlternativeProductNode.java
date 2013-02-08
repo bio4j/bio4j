@@ -28,7 +28,7 @@ import java.util.List;
  * Protein alternative products
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AlternativeProductNode extends BasicNode{
+public class AlternativeProductNode extends BasicVertex{
 
     public static final String NODE_TYPE = AlternativeProductNode.class.getCanonicalName();
 

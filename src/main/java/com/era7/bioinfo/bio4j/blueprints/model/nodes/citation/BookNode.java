@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.CityNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
@@ -33,7 +33,7 @@ import java.util.List;
  * the book name, the volume number, the page range, the publisher, the city and the year.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BookNode extends BasicNode{
+public class BookNode extends BasicVertex{
 
     public static final String NODE_TYPE = BookNode.class.getCanonicalName();
 

@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Sequence caution
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SequenceCautionNode extends BasicNode{
+public class SequenceCautionNode extends BasicVertex{
 
     public static final String NODE_TYPE = SequenceCautionNode.class.getCanonicalName();
 

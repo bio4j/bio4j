@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Vertex;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InstituteNode extends BasicNode {
+public class InstituteNode extends BasicVertex {
 
     public static final String NODE_TYPE = InstituteNode.class.getCanonicalName();
     /**

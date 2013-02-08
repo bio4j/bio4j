@@ -28,7 +28,7 @@ import java.util.List;
  * Interpro term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InterproNode extends BasicNode{
+public class InterproNode extends BasicVertex{
 
     public static final String NODE_TYPE = InterproNode.class.getCanonicalName();
 

@@ -28,7 +28,7 @@ import java.util.List;
  * Pfam family
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PfamNode extends BasicNode{
+public class PfamNode extends BasicVertex{
 
     public static final String NODE_TYPE = PfamNode.class.getCanonicalName();
 

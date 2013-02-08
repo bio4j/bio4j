@@ -22,13 +22,13 @@ import com.tinkerpop.blueprints.Vertex;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BasicNode {
+public class BasicVertex {
     
     public static final String NODE_TYPE_PROPERTY = "nodeType";
     
     protected Vertex vertex;
     
-    public BasicNode(Vertex v){
+    public BasicVertex(Vertex v){
         vertex = v;
     }
     

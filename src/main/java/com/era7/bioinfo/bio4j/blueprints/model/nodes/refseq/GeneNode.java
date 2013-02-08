@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementCDSRel;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -26,7 +26,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Gene
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GeneNode extends BasicNode{
+public class GeneNode extends BasicVertex{
 
     public static final String NODE_TYPE = GeneNode.class.getCanonicalName();
 

@@ -24,7 +24,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Datasets proteins come from (either SwissProt or Trembl)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DatasetNode extends BasicNode{
+public class DatasetNode extends BasicVertex{
     
     public static final String SWISS_PROT_DATASET_NAME = "Swiss-Prot";
     public static final String TREMBL_DATASET_NAME = "TrEMBL";

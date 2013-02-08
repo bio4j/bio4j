@@ -24,7 +24,7 @@ import com.tinkerpop.blueprints.Vertex;
  * It simply models a country of the world
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CountryNode extends BasicNode{
+public class CountryNode extends BasicVertex{
 
     public static final String NODE_TYPE = CountryNode.class.getCanonicalName();
 

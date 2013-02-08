@@ -17,14 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Misc RNA
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public abstract class RNANode extends BasicNode{
+public abstract class RNANode extends BasicVertex{
 
     public static final String NOTE_PROPERTY = "note";
     public static final String POSITIONS_PROPERTY = "positions";

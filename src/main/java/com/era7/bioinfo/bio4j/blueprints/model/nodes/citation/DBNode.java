@@ -16,7 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionDbRel;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -27,7 +27,7 @@ import java.util.List;
  * Databases where submission protein citations are submitted to
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DBNode extends BasicNode{
+public class DBNode extends BasicVertex{
 
     public static final String NODE_TYPE = DBNode.class.getCanonicalName();
 

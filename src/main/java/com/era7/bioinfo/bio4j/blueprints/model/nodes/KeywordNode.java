@@ -28,7 +28,7 @@ import java.util.List;
  * Keyword
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class KeywordNode extends BasicNode{
+public class KeywordNode extends BasicVertex{
 
     public static final String NODE_TYPE = KeywordNode.class.getCanonicalName();
 

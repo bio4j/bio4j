@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinReactomeRel;
 import com.tinkerpop.blueprints.Direction;
@@ -30,7 +30,7 @@ import java.util.List;
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ReactomeTermNode extends BasicNode{
+public class ReactomeTermNode extends BasicVertex{
 
     public static final String NODE_TYPE = ReactomeTermNode.class.getCanonicalName();
 

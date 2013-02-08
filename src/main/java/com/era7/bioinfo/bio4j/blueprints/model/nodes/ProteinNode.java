@@ -50,7 +50,7 @@ import java.util.List;
  * Uniprot proteins
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinNode extends BasicNode {
+public class ProteinNode extends BasicVertex {
 
     public static final String NODE_TYPE = ProteinNode.class.getCanonicalName();
     

@@ -29,7 +29,7 @@ import java.util.List;
  * Just nodes representing different cities of the world
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CityNode extends BasicNode{
+public class CityNode extends BasicVertex{
 
     public static final String NODE_TYPE = CityNode.class.getCanonicalName();
 

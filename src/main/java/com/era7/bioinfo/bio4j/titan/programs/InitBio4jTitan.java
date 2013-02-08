@@ -16,15 +16,16 @@
  */
 package com.era7.bioinfo.bio4j.titan.programs;
 
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.*;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.citation.*;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.reactome.ReactomeTermNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.*;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.thinkaurelius.titan.core.TitanKey;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import org.apache.commons.configuration.BaseConfiguration;
@@ -175,7 +176,7 @@ public class InitBio4jTitan implements Executable {
 
         //---ORGANISM---
         graph.createKeyIndex(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, Vertex.class);
-        graph.createKeyIndex(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, Vertex.class);
+        graph.createKeyIndex(OrganismNode.SCIENTIFIC_NAME_PROPERTY, Vertex.class);
 
         //---PERSON---
         graph.createKeyIndex(PersonNode.NAME_PROPERTY, Vertex.class); //This index was fulltext with Neo4j
@@ -197,6 +198,13 @@ public class InitBio4jTitan implements Executable {
 
         //---TAXON---
         graph.createKeyIndex(TaxonNode.NAME_PROPERTY, Vertex.class);
+        
+        
+        //=======================================================================
+        //============MULTIPLE VALUE INDEXED PROPERTIES==========================
+        TitanKey giIdsKey = graph.makeType().name(NCBITaxonNode.GI_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        TitanKey oldTaxIdsKey = graph.makeType().name(NCBITaxonNode.OLD_TAX_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        
 
     }
 }

@@ -30,7 +30,7 @@ import java.util.List;
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GoTermNode extends BasicNode{
+public class GoTermNode extends BasicVertex{
     
     public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
     public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";

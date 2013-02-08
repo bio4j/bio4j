@@ -1,10 +1,22 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2010-2013  "Bio4j"
+ *
+ * This file is part of Bio4j
+ *
+ * Bio4j is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.TaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonRel;
@@ -18,7 +30,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NCBITaxonNode extends BasicNode{
+public class NCBITaxonNode extends BasicVertex{
 
     public static final String NODE_TYPE = NCBITaxonNode.class.getCanonicalName();
 
@@ -28,7 +40,8 @@ public class NCBITaxonNode extends BasicNode{
     public static final String RANK_PROPERTY = "ncbi_taxon_rank";
     public static final String EMBL_CODE_PROPERTY = "ncbi_taxon_embl_code";
     public static final String COMMENTS_PROPERTY = "ncbi_taxon_comments";
-    public static final String GI_IDS_PROPERTY = "ncbi_gi_ids";
+    public static final String GI_IDS_PROPERTY = "ncbi_taxon_gi_ids";
+    public static final String OLD_TAX_IDS_PROPERTY = "ncbi_taxon_old_tax_ids";
 
 
     public NCBITaxonNode(Vertex v){
@@ -50,6 +63,10 @@ public class NCBITaxonNode extends BasicNode{
     public void setComments(String value){  vertex.setProperty(COMMENTS_PROPERTY, value);}
     public void setScientificName(String value){  vertex.setProperty(SCIENTIFIC_NAME_PROPERTY, value);} 
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
+    
+    public void addOldTaxId(String value){  }
+    
+    
 
     /**
      * 
@@ -77,7 +94,7 @@ public class NCBITaxonNode extends BasicNode{
         
         while(iterator.hasNext()){
             Vertex tempNode = iterator.next();
-            if(tempNode.getProperty(BasicNode.NODE_TYPE_PROPERTY).equals(NCBITaxonNode.NODE_TYPE)){
+            if(tempNode.getProperty(BasicVertex.NODE_TYPE_PROPERTY).equals(NCBITaxonNode.NODE_TYPE)){
                 list.add(new NCBITaxonNode(tempNode));
             }           
         }

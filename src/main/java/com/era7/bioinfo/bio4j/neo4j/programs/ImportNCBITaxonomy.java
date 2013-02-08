@@ -17,9 +17,7 @@
 package com.era7.bioinfo.bio4j.neo4j.programs;
 
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.OrganismNode;
-import com.era7.bioinfo.bio4j.neo4j.model.nodes.TaxonNode;
 import com.era7.bioinfo.bio4j.neo4j.model.nodes.ncbi.NCBITaxonNode;
-import com.era7.bioinfo.bio4j.neo4j.model.relationships.ncbi.NCBIMainTaxonRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.ncbi.NCBITaxonParentRel;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bio4j.neo4j.model.util.Bio4jManager;
@@ -28,7 +26,7 @@ import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -204,11 +202,7 @@ public class ImportNCBITaxonomy implements Executable {
                         NCBITaxonNode parentNode = nodeRetriever.getNCBITaxonByTaxId(parentTaxId);
                         parentNode.getNode().createRelationshipTo(currentNode.getNode(), new NCBITaxonParentRel(null));
 
-                    } else {
-
-                        manager.getReferenceNode().createRelationshipTo(currentNode.getNode(), new NCBIMainTaxonRel(null));
-
-                    }
+                    } 
 
                     txnCounter++;
                     if (txnCounter % txnLimitForCommit == 0) {
@@ -228,7 +222,7 @@ public class ImportNCBITaxonomy implements Executable {
                 if (associateUniprotTaxonomy) {
 
                     logger.log(Level.INFO, "Associating uniprot taxonomy...");
-                    associateTaxonomy(nodeRetriever.getMainTaxon(), nodeRetriever, new NCBITaxonRel(null));
+                    associateTaxonomy(manager, nodeRetriever, new NCBITaxonRel(null));
                     logger.log(Level.INFO, "Done!");
                 }
 
@@ -302,22 +296,16 @@ public class ImportNCBITaxonomy implements Executable {
         }
     }
 
-    private static void associateTaxonomy(TaxonNode taxonNode,
+    private static void associateTaxonomy(Bio4jManager manager,
             NodeRetriever nodeRetriever,
             NCBITaxonRel nCBITaxonRel) {
 
-        List<OrganismNode> organisms = taxonNode.getOrganisms();
+        Iterator<Node> organismIterator = manager.getNodeTypeIndex().get(Bio4jManager.NODE_TYPE_INDEX_NAME, OrganismNode.NODE_TYPE).iterator();
 
-        if (!organisms.isEmpty()) {
-            for (OrganismNode tempOrg : organisms) {
-                Node ncbiNode = nodeRetriever.getNCBITaxonByTaxId(tempOrg.getNcbiTaxonomyId()).getNode();
-                tempOrg.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
-            }
-        } else {
-            for (TaxonNode tempTaxon : taxonNode.getChildren()) {
-                associateTaxonomy(tempTaxon, nodeRetriever, nCBITaxonRel);
-            }
+        while (organismIterator.hasNext()) {
+            OrganismNode organismNode = new OrganismNode(organismIterator.next());
+            Node ncbiNode = nodeRetriever.getNCBITaxonByTaxId(organismNode.getNcbiTaxonomyId()).getNode();
+            organismNode.getNode().createRelationshipTo(ncbiNode, nCBITaxonRel);
         }
-
     }
 }

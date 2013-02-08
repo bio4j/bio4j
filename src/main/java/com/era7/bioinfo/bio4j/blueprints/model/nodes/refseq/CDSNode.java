@@ -17,7 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
-import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementCDSRel;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Vertex;
  * CDS
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CDSNode extends BasicNode{
+public class CDSNode extends BasicVertex{
 
     public static final String NODE_TYPE = CDSNode.class.getCanonicalName();
     
