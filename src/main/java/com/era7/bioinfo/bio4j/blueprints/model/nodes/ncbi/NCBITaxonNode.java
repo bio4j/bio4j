@@ -65,6 +65,7 @@ public class NCBITaxonNode extends BasicVertex{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     public void addOldTaxId(String value){  }
+    public void addGiId(String value){}
     
     
 
