@@ -1,0 +1,15 @@
+<scheduled_executions>	
+
+	<execution>
+		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.InitBio4jTitan</class_full_name>
+		<arguments>
+			<argument>bio4jdb</argument>
+		</arguments>
+	</execution>	
+	<execution>
+		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportEnzymeDBTitan</class_full_name>
+		<arguments>
+			<argument>bio4jdb</argument>
+		</arguments>
+	</execution>
+</scheduled_executions>
