@@ -36,7 +36,7 @@ public class BasicEdge implements TitanEdge, TitanLabel{
     
     @Override
     public TitanLabel getTitanLabel() {
-        
+       throw new UnsupportedOperationException("Not supported yet."); 
     }
 
     @Override

@@ -42,7 +42,7 @@ public class BasicNode implements TitanVertex{
 
     @Override
     public TitanEdge addEdge(String string, TitanVertex tv) {
-        return 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
