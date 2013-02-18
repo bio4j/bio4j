@@ -80,6 +80,7 @@ public class ImportEnzymeDBTitan implements Executable {
             Configuration conf = new BaseConfiguration();
             conf.setProperty("storage.directory", args[1]);
             conf.setProperty("storage.backend", "local");
+            conf.setProperty("storage.batch-loading", "true");
 
             TitanGraph graph = TitanFactory.open(conf);
             BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);

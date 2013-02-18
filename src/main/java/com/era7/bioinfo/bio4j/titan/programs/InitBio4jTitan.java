@@ -60,6 +60,7 @@ public class InitBio4jTitan implements Executable {
             Configuration conf = new BaseConfiguration();
             conf.setProperty("storage.directory", folder);
             conf.setProperty("storage.backend", "local");
+            conf.setProperty("storage.batch-loading", "true");
 
             System.out.println("Creating DB...");
 
@@ -71,7 +72,10 @@ public class InitBio4jTitan implements Executable {
             
             System.out.println("Creating non functiontal keys...");
             createNonFunctionalKeys(graph);      
-
+            
+            System.out.println("Shutting down manager...");
+            graph.shutdown();
+            
             System.out.println("Done! :)");
 
         }
