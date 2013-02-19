@@ -22,8 +22,9 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
+import com.thinkaurelius.titan.core.TitanGraph;
+import com.thinkaurelius.titan.core.TitanVertex;
 import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
@@ -65,11 +66,10 @@ public class ImportGeneOntologyTitan implements Executable {
 
     public static void main(String[] args) {
 
-        if (args.length != 3) {
+        if (args.length != 2) {
             System.out.println("This program expects the following parameters: \n"
                     + "1. Gene ontology xml filename \n"
-                    + "2. Bio4j DB folder \n"
-                    + "3. Batch inserter .properties file");
+                    + "2. Bio4j DB folder \n");
 
         } else {
 
@@ -84,7 +84,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
             //-------creating graph handlers---------------------
             Bio4jManager manager = new Bio4jManager(conf);
-            BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+            TitanGraph graph = manager.getGraph();
             NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
             BufferedWriter statsBuff = null;
@@ -239,17 +239,19 @@ public class ImportGeneOntologyTitan implements Executable {
                         }
                         //-------------------------------------
 
-                        Vertex goTermVertex = bGraph.addVertex(null);
+                        Vertex goTermVertex = graph.addVertex(null);
 
                         goTermVertex.setProperty(GoTermNode.ID_PROPERTY, goId);
                         goTermVertex.setProperty(GoTermNode.NAME_PROPERTY, goName);
                         goTermVertex.setProperty(GoTermNode.DEFINITION_PROPERTY, goDefinition);
-                        goTermVertex.setProperty(GoTermNode.NAMESPACE_PROPERTY, goNamespace);
-                        goTermVertex.setProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
+                        goTermVertex.setProperty(GoTermNode.NAMESPACE_PROPERTY, goNamespace);                        
                         goTermVertex.setProperty(GoTermNode.OBSOLETE_PROPERTY, goIsObsolete);
                         goTermVertex.setProperty(GoTermNode.COMMENT_PROPERTY, goComment);
                         goTermVertex.setProperty(GoTermNode.NODE_TYPE_PROPERTY, GoTermNode.NODE_TYPE);
                         //----------------------                        
+                        
+                        //----alternative IDs----
+                        goTermVertex.setProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
 
                     }
                     termCounter++;
@@ -274,7 +276,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), IsAGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), IsAGoRel.NAME);
                     }
                 }
 
@@ -286,7 +288,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     ArrayList<String> tempArray = regulatesMap.get(key);
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), RegulatesGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), RegulatesGoRel.NAME);
                     }
                 }
 
@@ -298,7 +300,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), NegativelyRegulatesGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), NegativelyRegulatesGoRel.NAME);
                     }
                 }
 
@@ -310,7 +312,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PositivelyRegulatesGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PositivelyRegulatesGoRel.NAME);
                     }
                 }
 
@@ -322,7 +324,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     ArrayList<String> tempArray = partOfMap.get(key);
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PartOfGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), PartOfGoRel.NAME);
                     }
                 }
 
@@ -334,7 +336,7 @@ public class ImportGeneOntologyTitan implements Executable {
                     ArrayList<String> tempArray = hasPartMap.get(key);
                     for (String string : tempArray) {
                         GoTermNode tempGoTerm2 = nodeRetriever.getGoTermById(string);
-                        bGraph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), HasPartOfGoRel.NAME);
+                        graph.addEdge(null, tempGoTerm.getNode(), tempGoTerm2.getNode(), HasPartOfGoRel.NAME);
                     }
                 }
 

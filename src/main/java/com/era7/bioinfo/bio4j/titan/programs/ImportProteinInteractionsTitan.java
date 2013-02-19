@@ -24,12 +24,10 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
+import com.thinkaurelius.titan.core.TitanGraph;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -100,7 +98,7 @@ public class ImportProteinInteractionsTitan implements Executable {
 
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+                TitanGraph graph = manager.getGraph();
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 //---creating writer for stats file-----
@@ -171,7 +169,7 @@ public class ImportProteinInteractionsTitan implements Executable {
                                        
                                         if (isoformNode != null) {
 
-                                            ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(bGraph.addEdge(null, currentProteinNode.getNode(), isoformNode.getNode(), ProteinIsoformInteractionRel.NAME));
+                                            ProteinIsoformInteractionRel proteinIsoformInteractionRel = new ProteinIsoformInteractionRel(graph.addEdge(null, currentProteinNode.getNode(), isoformNode.getNode(), ProteinIsoformInteractionRel.NAME));
                                             proteinIsoformInteractionRel.setExperiments(experimentsSt);
                                             proteinIsoformInteractionRel.setOrganismsDiffer(organismsDifferSt);
                                             proteinIsoformInteractionRel.setIntactId1(intactId1St);
@@ -180,7 +178,7 @@ public class ImportProteinInteractionsTitan implements Executable {
                                         }
                                     } else {
                                         
-                                        ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(bGraph.addEdge(null, currentProteinNode.getNode(), protein2Node.getNode(), ProteinProteinInteractionRel.NAME));
+                                        ProteinProteinInteractionRel proteinProteinInteractionRel = new ProteinProteinInteractionRel(graph.addEdge(null, currentProteinNode.getNode(), protein2Node.getNode(), ProteinProteinInteractionRel.NAME));
                                         proteinProteinInteractionRel.setExperiments(experimentsSt);
                                         proteinProteinInteractionRel.setOrganismsDiffer(organismsDifferSt);
                                         proteinProteinInteractionRel.setIntactId1(intactId1St);

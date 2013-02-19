@@ -21,7 +21,6 @@ import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -82,8 +81,7 @@ public class ImportEnzymeDBTitan implements Executable {
             conf.setProperty("storage.backend", "local");
             conf.setProperty("storage.batch-loading", "true");
 
-            TitanGraph graph = TitanFactory.open(conf);
-            BatchGraph bGraph = new BatchGraph(graph, BatchGraph.IdType.STRING, 1000);
+            TitanGraph graph = TitanFactory.open(conf);            
                                                
             int enzymeCounter = 0;
 
@@ -172,7 +170,7 @@ public class ImportEnzymeDBTitan implements Executable {
                                     transferredEntry = false;
                                 }
 
-                                Vertex enzymeVertex = bGraph.addVertex(null);
+                                Vertex enzymeVertex = graph.addVertex(null);
                                                                 
                                 enzymeVertex.setProperty(EnzymeNode.ID_PROPERTY, enzymeId);
                                 enzymeVertex.setProperty(EnzymeNode.OFFICIAL_NAME_PROPERTY, officialName);
@@ -218,7 +216,7 @@ public class ImportEnzymeDBTitan implements Executable {
                     fh.close();
                     logger.log(Level.INFO, "Closing up batch graph service....");
                     // shutdown, makes sure all changes are written to disk
-                    bGraph.shutdown();
+                    graph.shutdown();
                     
                     //-----------------writing stats file---------------------
                     long elapsedTime = System.nanoTime() - initTime;

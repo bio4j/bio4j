@@ -26,8 +26,8 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
+import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,18 +99,18 @@ public class ImportUnirefTitan implements Executable {
 
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+                TitanGraph graph = manager.getGraph();
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 //------------------- UNIREF 100----------------------------
                 System.out.println("Reading Uniref 100 file...");
-                uniref100EntryCounter = importUnirefFile(bGraph, nodeRetriever, uniref100File, UniRef100MemberRel.NAME);
+                uniref100EntryCounter = importUnirefFile(graph, nodeRetriever, uniref100File, UniRef100MemberRel.NAME);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 90 file...");
-                uniref90EntryCounter = importUnirefFile(bGraph, nodeRetriever, uniref90File, UniRef90MemberRel.NAME);
+                uniref90EntryCounter = importUnirefFile(graph, nodeRetriever, uniref90File, UniRef90MemberRel.NAME);
                 System.out.println("Done! :)");
                 System.out.println("Reading Uniref 50 file...");
-                uniref50EntryCounter = importUnirefFile(bGraph, nodeRetriever, uniref50File, UniRef50MemberRel.NAME);
+                uniref50EntryCounter = importUnirefFile(graph, nodeRetriever, uniref50File, UniRef50MemberRel.NAME);
                 System.out.println("Done! :)");
 
 
@@ -176,7 +176,7 @@ public class ImportUnirefTitan implements Executable {
         return result;
     }
 
-    private static int importUnirefFile(BatchGraph bGraph,
+    private static int importUnirefFile(TitanGraph graph,
             NodeRetriever nodeRetriever,
             File unirefFile,
             String edgeName) throws Exception {
@@ -253,7 +253,7 @@ public class ImportUnirefTitan implements Executable {
                             }
 
                             if (memberVertex != null) {
-                                bGraph.addEdge(null, vertex, memberVertex, edgeName);
+                                graph.addEdge(null, vertex, memberVertex, edgeName);
                             }
 
                         }

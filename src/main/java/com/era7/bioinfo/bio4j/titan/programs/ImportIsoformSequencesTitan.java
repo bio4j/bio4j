@@ -20,7 +20,6 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.IsoformNode;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
@@ -89,7 +88,6 @@ public class ImportIsoformSequencesTitan implements Executable {
                 logger.log(Level.INFO, "creating manager...");
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));

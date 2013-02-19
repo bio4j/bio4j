@@ -23,6 +23,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
+import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
@@ -104,7 +105,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
 
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+                TitanGraph graph = manager.getGraph();
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 HashMap<String, String> nodeParentMap = new HashMap<String, String>();
@@ -166,7 +167,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
 
                     if (!nodeTaxId.equals(parentTaxId)) {
                         NCBITaxonNode parentNode = nodeRetriever.getNCBITaxonByTaxId(parentTaxId);
-                        bGraph.addEdge(null, parentNode.getNode(), currentNode.getNode(), NCBITaxonParentRel.NAME);
+                        graph.addEdge(null, parentNode.getNode(), currentNode.getNode(), NCBITaxonParentRel.NAME);
                     } 
 
                 }
@@ -176,7 +177,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
                 if (associateUniprotTaxonomy) {
 
                     logger.log(Level.INFO, "Associating uniprot taxonomy...");
-                    associateTaxonomy(manager, nodeRetriever, bGraph);
+                    associateTaxonomy(manager, nodeRetriever, graph);
                     logger.log(Level.INFO, "Done!");
                 }
 
@@ -236,7 +237,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
 
     private static void associateTaxonomy(Bio4jManager manager,
             NodeRetriever nodeRetriever,
-            BatchGraph bGraph) {
+            TitanGraph graph) {
 
         
         Iterator<Vertex> organismIterator = manager.getGraph().getVertices(OrganismNode.NODE_TYPE_PROPERTY, OrganismNode.NODE_TYPE).iterator();
@@ -244,7 +245,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
         while (organismIterator.hasNext()) {
             OrganismNode organismNode = new OrganismNode(organismIterator.next());
             Vertex ncbiNode = nodeRetriever.getNCBITaxonByTaxId(organismNode.getNcbiTaxonomyId()).getNode();
-            bGraph.addEdge(null, organismNode.getNode(), ncbiNode, NCBITaxonRel.NAME);
+            graph.addEdge(null, organismNode.getNode(), ncbiNode, NCBITaxonRel.NAME);
         }
     }
 }

@@ -25,7 +25,7 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
+import com.thinkaurelius.titan.core.TitanGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
@@ -93,7 +93,7 @@ public class ImportRefSeqTitan implements Executable {
 
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
-                BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+                TitanGraph graph = manager.getGraph();
                 NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 for (File file : files) {
@@ -316,56 +316,56 @@ public class ImportRefSeqTitan implements Executable {
                             for (String genePositionsSt : geneList) {
                                 GeneNode geneNode = new GeneNode(manager.createNode(GeneNode.NODE_TYPE));
                                 geneNode.setPositions(genePositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), geneNode.getNode(), GenomeElementGeneRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), geneNode.getNode(), GenomeElementGeneRel.NAME);
                             }
 
                             //-----------CDS-----------------
                             for (String cdsPositionsSt : cdsList) {
                                 CDSNode cDSNode = new CDSNode(manager.createNode(CDSNode.NODE_TYPE));
                                 cDSNode.setPositions(cdsPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), cDSNode.getNode(), GenomeElementCDSRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), cDSNode.getNode(), GenomeElementCDSRel.NAME);
                             }
 
                             //-----------misc rna-----------------
                             for (String miscRnaPositionsSt : miscRnaList) {
                                 MiscRNANode miscRNANode = new MiscRNANode(manager.createNode(MiscRNANode.NODE_TYPE));
                                 miscRNANode.setPositions(miscRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), miscRNANode.getNode(), GenomeElementMiscRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), miscRNANode.getNode(), GenomeElementMiscRnaRel.NAME);
                             }
 
                             //-----------m rna-----------------
                             for (String mRnaPositionsSt : mRnaList) {
                                 MRNANode mRNANode = new MRNANode(manager.createNode(MRNANode.NODE_TYPE));
                                 mRNANode.setPositions(mRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), mRNANode.getNode(), GenomeElementMRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), mRNANode.getNode(), GenomeElementMRnaRel.NAME);
                             }
 
                             //-----------nc rna-----------------
                             for (String ncRnaPositionsSt : ncRnaList) {
                                 NcRNANode ncRNANode = new NcRNANode(manager.createNode(NcRNANode.NODE_TYPE));
                                 ncRNANode.setPositions(ncRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), ncRNANode.getNode(), GenomeElementNcRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), ncRNANode.getNode(), GenomeElementNcRnaRel.NAME);
                             }
 
                             //-----------r rna-----------------
                             for (String rRnaPositionsSt : rRnaList) {
                                 RRNANode rRNANode = new RRNANode(manager.createNode(RRNANode.NODE_TYPE));
                                 rRNANode.setPositions(rRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), rRNANode.getNode(), GenomeElementRRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), rRNANode.getNode(), GenomeElementRRnaRel.NAME);
                             }
 
                             //-----------tm rna-----------------
                             for (String tmRnaPositionsSt : tmRnaList) {
                                 TmRNANode tmRNANode = new TmRNANode(manager.createNode(TmRNANode.NODE_TYPE));
                                 tmRNANode.setPositions(tmRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), tmRNANode.getNode(), GenomeElementTmRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), tmRNANode.getNode(), GenomeElementTmRnaRel.NAME);
                             }
 
                             //-----------t rna-----------------
                             for (String tRnaPositionsSt : tRnaList) {
                                 TRNANode tRNANode = new TRNANode(manager.createNode(TRNANode.NODE_TYPE));
                                 tRNANode.setPositions(tRnaPositionsSt);
-                                bGraph.addEdge(null, genomeElementNode.getNode(), tRNANode.getNode(), GenomeElementTRnaRel.NAME);
+                                graph.addEdge(null, genomeElementNode.getNode(), tRNANode.getNode(), GenomeElementTRnaRel.NAME);
                             }
 
                             logger.log(Level.INFO, (versionSt + " saved!"));
