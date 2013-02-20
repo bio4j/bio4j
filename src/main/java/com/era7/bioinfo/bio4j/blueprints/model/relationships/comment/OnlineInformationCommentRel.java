@@ -29,8 +29,8 @@ public class OnlineInformationCommentRel extends BasicCommentRel{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "online information";
 
-    public static final String NAME_PROPERTY = "name";
-    public static final String LINK_PROPERTY = "link";
+    public static final String NAME_PROPERTY = "online_information_comment_name";
+    public static final String LINK_PROPERTY = "online_information_comment_link";
 
     public OnlineInformationCommentRel(Edge e){
         super(e);

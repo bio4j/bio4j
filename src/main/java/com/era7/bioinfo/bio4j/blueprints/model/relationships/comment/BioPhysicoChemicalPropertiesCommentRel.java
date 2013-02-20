@@ -29,13 +29,13 @@ public class BioPhysicoChemicalPropertiesCommentRel extends BasicCommentRel{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "biophysicochemical properties";
 
-    public static final String PH_DEPENDENCE_PROPERTY = "ph_dependence";
-    public static final String TEMPERATURE_DEPENDENCE_PROPERTY = "temperature_dependence";
-    public static final String KINETICS_XML_PROPERTY = "kinetics_xml";
-    public static final String ABSORPTION_MAX_PROPERTY = "absortption_max";
-    public static final String ABSORPTION_TEXT_PROPERTY = "absorption_text";
-    public static final String REDOX_POTENTIAL_PROPERTY = "redox_potential";
-    public static final String REDOX_POTENTIAL_EVIDENCE_PROPERTY = "redox_potential_evidence";
+    public static final String PH_DEPENDENCE_PROPERTY = "biophysicochemicalproperties_comment_ph_dependence";
+    public static final String TEMPERATURE_DEPENDENCE_PROPERTY = "biophysicochemicalproperties_comment_temperature_dependence";
+    public static final String KINETICS_XML_PROPERTY = "biophysicochemicalproperties_comment_kinetics_xml";
+    public static final String ABSORPTION_MAX_PROPERTY = "biophysicochemicalproperties_comment_absortption_max";
+    public static final String ABSORPTION_TEXT_PROPERTY = "biophysicochemicalproperties_comment_absorption_text";
+    public static final String REDOX_POTENTIAL_PROPERTY = "biophysicochemicalproperties_comment_redox_potential";
+    public static final String REDOX_POTENTIAL_EVIDENCE_PROPERTY = "biophysicochemicalproperties_comment_redox_potential_evidence";
 
     public BioPhysicoChemicalPropertiesCommentRel(Edge e){
         super(e);

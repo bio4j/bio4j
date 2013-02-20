@@ -251,7 +251,10 @@ public class ImportGeneOntologyTitan implements Executable {
                         //----------------------                        
                         
                         //----alternative IDs----
-                        goTermVertex.setProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, alternativeIds);
+                        TitanVertex goTitanVertex = (TitanVertex) goTermVertex;
+                        for (String string : alternativeIds) {
+                            goTitanVertex.addProperty(GoTermNode.ALTERNATIVE_IDS_PROPERTY, string);
+                        }
 
                     }
                     termCounter++;
@@ -354,7 +357,7 @@ public class ImportGeneOntologyTitan implements Executable {
                 try {
                     //closing logger file handler
                     fh.close();
-                    logger.log(Level.INFO, "Closing up inserter and index service....");
+                    logger.log(Level.INFO, "Closing up manager....");
                     // shutdown, makes sure all changes are written to disk
                     manager.shutDown();
 

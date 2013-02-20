@@ -28,13 +28,13 @@ public class BasicProteinSequenceCautionRel extends BasicRelationship{
 
     public static final String NAME = "BASIC_PROTEIN_SEQUENCE_CAUTION";
 
-    public static final String TEXT_PROPERTY = "text";
-    public static final String STATUS_PROPERTY = "status";
-    public static final String EVIDENCE_PROPERTY = "evidence";
-    public static final String ID_PROPERTY = "id";
-    public static final String POSITION_PROPERTY = "position";
-    public static final String RESOURCE_PROPERTY = "resource";
-    public static final String VERSION_PROPERTY = "version";
+    public static final String TEXT_PROPERTY = "protein_sequence_caution_text";
+    public static final String STATUS_PROPERTY = "protein_sequence_caution_status";
+    public static final String EVIDENCE_PROPERTY = "protein_sequence_caution_evidence";
+    public static final String ID_PROPERTY = "protein_sequence_caution_id";
+    public static final String POSITION_PROPERTY = "protein_sequence_caution_position";
+    public static final String RESOURCE_PROPERTY = "protein_sequence_caution_resource";
+    public static final String VERSION_PROPERTY = "protein_sequence_caution_version";
 
 
     public BasicProteinSequenceCautionRel(Edge e){

@@ -33,10 +33,10 @@ public class ProteinSubcellularLocationRel extends BasicRelationship{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "subcellular location";
 
-    public static final String EVIDENCE_PROPERTY = "evidence";
-    public static final String STATUS_PROPERTY = "status";
-    public static final String TOPOLOGY_STATUS_PROPERTY = "topology_status";
-    public static final String TOPOLOGY_PROPERTY = "topology";
+    public static final String EVIDENCE_PROPERTY = "protein_subcellular_location_evidence";
+    public static final String STATUS_PROPERTY = "protein_subcellular_location_status";
+    public static final String TOPOLOGY_STATUS_PROPERTY = "protein_subcellular_location_topology_status";
+    public static final String TOPOLOGY_PROPERTY = "protein_subcellular_location_topology";
 
     public ProteinSubcellularLocationRel(Edge e){
         super(e);

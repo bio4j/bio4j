@@ -32,8 +32,6 @@ public class IsAGoRel extends BasicRelationship{
 
     public static final String OBOXML_RELATIONSHIP_NAME = "is_a";
 
-    public static final String IS_A_REL_INDEX = "is_a_rel_index";
-
     public IsAGoRel(Edge e){
         super(e);
     }

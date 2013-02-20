@@ -30,10 +30,10 @@ public class MassSpectrometryCommentRel extends BasicCommentRel{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "mass spectrometry";
 
-    public static final String BEGIN_PROPERTY = "begin";
-    public static final String END_PROPERTY = "end";
-    public static final String MASS_PROPERTY = "mass";
-    public static final String METHOD_PROPERTY = "method";
+    public static final String BEGIN_PROPERTY = "mass_spectrometry_comment_begin";
+    public static final String END_PROPERTY = "mass_spectrometry_comment_end";
+    public static final String MASS_PROPERTY = "mass_spectrometry_comment_mass";
+    public static final String METHOD_PROPERTY = "mass_spectrometry_comment_method";
 
     public MassSpectrometryCommentRel(Edge e){
         super(e);

@@ -28,9 +28,9 @@ public class BasicCommentRel extends BasicRelationship{
 
     public static final String NAME = "BASIC_COMMENT";
 
-    public static final String TEXT_PROPERTY = "text";
-    public static final String STATUS_PROPERTY = "status";
-    public static final String EVIDENCE_PROPERTY = "evidence";
+    public static final String TEXT_PROPERTY = "comment_text";
+    public static final String STATUS_PROPERTY = "comment_status";
+    public static final String EVIDENCE_PROPERTY = "comment_evidence";
 
 
     public BasicCommentRel(Edge e){

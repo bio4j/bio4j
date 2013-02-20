@@ -42,7 +42,6 @@ import org.apache.commons.configuration.Configuration;
  */
 public class ImportRefSeqTitan implements Executable {
 
-    public static final String BASE_FOLDER = "refseq/release/complete/";
     private static final Logger logger = Logger.getLogger("ImportRefSeqTitan");
     private static FileHandler fh;
 

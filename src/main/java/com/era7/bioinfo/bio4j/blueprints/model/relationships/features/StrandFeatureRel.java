@@ -18,7 +18,6 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
 import com.tinkerpop.blueprints.Edge;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Beta strand regions within the experimentally determined protein structure

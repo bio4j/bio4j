@@ -49,6 +49,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.Unpubli
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.titan.model.ProteinNode;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
@@ -58,6 +59,7 @@ import com.thinkaurelius.titan.core.TitanGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -160,7 +162,7 @@ public class ImportUniprotTitan implements Executable {
                         }
 
                         ProteinNode currentProteinNode = new ProteinNode(manager.createNode(ProteinNode.NODE_TYPE));
-
+                        
                         //linea final del organism
                         entryStBuilder.append(line);
                         //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
@@ -181,15 +183,16 @@ public class ImportUniprotTitan implements Executable {
                             fullNameSt = "";
                         }
 
-                        currentAccessionId = accessionSt;
-
+                        currentAccessionId = accessionSt;                      
+                        
+                        List<String> alternativeAccessions = new LinkedList<String>();
                         //-----------alternative accessions-------------
-                        ArrayList<String> alternativeAccessions = new ArrayList<String>();
                         List<Element> altAccessionsList = entryXMLElem.asJDomElement().getChildren(CommonData.ENTRY_ACCESSION_TAG_NAME);
                         for (int i = 1; i < altAccessionsList.size(); i++) {
                             alternativeAccessions.add(altAccessionsList.get(i).getText());
                         }
-                        currentProteinNode.setAlternativeAccessions(convertToStringArray(alternativeAccessions));
+                        
+                        currentProteinNode.setAlternativeAccessions(alternativeAccessions.toArray(new String[alternativeAccessions.size()]));
 
                         //-----db references-------------
                         String pirIdSt = "";

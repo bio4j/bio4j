@@ -30,15 +30,15 @@ public abstract class BasicFeatureRel extends BasicRelationship{
 
     public static final String NAME = "BASIC_FEATURE";
 
-    public static final String DESCRIPTION_PROPERTY = "description";
-    public static final String ID_PROPERTY = "id";
-    public static final String STATUS_PROPERTY = "status";
-    public static final String EVIDENCE_PROPERTY = "evidence";
-    public static final String BEGIN_PROPERTY = "begin";
-    public static final String END_PROPERTY = "end";
-    public static final String ORIGINAL_PROPERTY = "original";
-    public static final String VARIATION_PROPERTY = "variation";
-    public static final String REF_PROPERTY = "ref";
+    public static final String DESCRIPTION_PROPERTY = "feature_description";
+    public static final String ID_PROPERTY = "feature_id";
+    public static final String STATUS_PROPERTY = "feature_status";
+    public static final String EVIDENCE_PROPERTY = "feature_evidence";
+    public static final String BEGIN_PROPERTY = "feature_begin";
+    public static final String END_PROPERTY = "feature_end";
+    public static final String ORIGINAL_PROPERTY = "feature_original";
+    public static final String VARIATION_PROPERTY = "feature_variation";
+    public static final String REF_PROPERTY = "feature_ref";
     
 
     public BasicFeatureRel(Edge e){

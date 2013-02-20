@@ -31,10 +31,10 @@ public class BookProteinCitationRel extends BasicRelationship{
 
     public static final String NAME = "BOOK_PROTEIN_CITATION";
 
-    public static final String TITLE_PROPERTY = "title";
-    public static final String VOLUME_PROPERTY = "volume";
-    public static final String FIRST_PROPERTY = "first";
-    public static final String LAST_PROPERTY = "last";
+    public static final String TITLE_PROPERTY = "book_protein_citation_title";
+    public static final String VOLUME_PROPERTY = "book_protein_citation_volume";
+    public static final String FIRST_PROPERTY = "book_protein_citation_first";
+    public static final String LAST_PROPERTY = "book_protein_citation_last";
 
     public BookProteinCitationRel(Edge e){
         super(e);

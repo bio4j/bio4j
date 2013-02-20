@@ -28,7 +28,7 @@ public class SubmissionDbRel extends BasicRelationship{
 
     public static final String NAME = "SUBMISSION_DB";
 
-    public static final String DATE_PROPERTY = "date";
+    public static final String DATE_PROPERTY = "submission_db_date";
 
     public SubmissionDbRel(Edge e){
         super(e);

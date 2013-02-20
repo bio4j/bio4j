@@ -29,7 +29,7 @@ public class RnaEditingCommentRel extends BasicCommentRel{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "RNA editing";
 
-    public static final String POSITION_PROPERTY = "position";
+    public static final String POSITION_PROPERTY = "rna_editing_comment_position";
 
     public RnaEditingCommentRel(Edge e){
         super(e);

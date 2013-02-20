@@ -28,7 +28,7 @@ public class CrossLinkFeatureRel extends BasicFeatureRel{
     public static final String RELATIONSHIP_NAME = "FEATURE_CROSS_LINK";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "cross-link";
 
-    public static final String POSITION_PROPERTY = "position";
+    public static final String POSITION_PROPERTY = "cross_link_feature_position";
 
     public CrossLinkFeatureRel(Edge e){
         super(e);

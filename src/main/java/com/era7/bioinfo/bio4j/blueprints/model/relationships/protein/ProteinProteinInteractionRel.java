@@ -31,10 +31,10 @@ public class ProteinProteinInteractionRel extends BasicRelationship{
 
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "interaction";
 
-    public static final String ORGANISMS_DIFFER_PROPERTY = "organisms_differ";
-    public static final String EXPERIMENTS_PROPERTY = "experiments";
-    public static final String INTACT_ID_1_PROPERTY = "intact_id_1";
-    public static final String INTACT_ID_2_PROPERTY = "intact_id_2";
+    public static final String ORGANISMS_DIFFER_PROPERTY = "protein_protein_interaction_organisms_differ";
+    public static final String EXPERIMENTS_PROPERTY = "protein_protein_interaction_experiments";
+    public static final String INTACT_ID_1_PROPERTY = "protein_protein_interaction_intact_id_1";
+    public static final String INTACT_ID_2_PROPERTY = "protein_protein_interaction_intact_id_2";
 
     public ProteinProteinInteractionRel(Edge e){
         super(e);
