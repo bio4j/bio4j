@@ -63,6 +63,7 @@ public class ProteinNode extends BasicVertex {
     public static final String LENGTH_PROPERTY = "protein_length";
     public static final String MODIFIED_DATE_PROPERTY = "protein_modified_date";
     public static final String GENE_NAMES_PROPERTY = "protein_gene_names";
+    
     public static final String ENSEMBL_ID_PROPERTY = "protein_ensembl_id";
     public static final String PIR_ID_PROPERTY = "protein_pir_id";
     public static final String KEGG_ID_PROPERTY = "protein_kegg_id";
@@ -72,6 +73,27 @@ public class ProteinNode extends BasicVertex {
     public static final String UNIGENE_ID_PROPERTY = "protein_unigene_id";
     public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "protein_alternative_accessions";
     public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
+    public static final String DBASE_ECOLI_REFERENCES_PROPERTY = "protein_2dbase_ecoli_references";
+    public static final String AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY = "protein_aarhus_ghent_2dpage_references";
+    public static final String AGD_REFERENCES_PROPERTY = "protein_agd_references";
+    public static final String ALLERGOME_REFERENCES_PROPERTY = "protein_allergome_references";
+    public static final String ANU_2DPAGE_REFERENCES_PROPERTY = "protein_anu_2dpage_references";
+    public static final String ARACHNOSERVER_REFERENCES_PROPERTY = "protein_arachnoserver_references";
+    public static final String BGEE_REFERENCES_PROPERTY = "protein_bgee_references";
+    public static final String BINDING_DB_REFERENCES_PROPERTY = "protein_binding_db_references";
+    public static final String BIOCYC_REFERENCES_PROPERTY = "protein_biocyc_references";
+    public static final String BRENDA_REFERENCES_PROPERTY = "protein_brenda_references";
+    public static final String CAZY_REFERENCES_PROPERTY = "protein_cazy_references";
+    public static final String CGD_REFERENCES_PROPERTY = "protein_cgd_references";
+    public static final String CHEMBL_REFERENCES_PROPERTY = "protein_chembl_references";
+    public static final String CLEANEX_REFERENCES_PROPERTY = "protein_cleanex_references";
+    public static final String COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY = "protein_compluyeast_2dpage_references";
+    public static final String CONOSERVER_REFERENCES_PROPERTY = "protein_conoserver_references";
+    public static final String CORNEA_2DPAGE_REFERENCES_PROPERTY = "protein_cornea_2dpage_references";
+    public static final String CTD_REFERENCES_PROPERTY = "protein_ctd_references";
+    public static final String CYGD_REFERENCES_PROPERTY = "protein_cygd_references";
+    public static final String DBSNP_REFERENCES_PROPERTY = "protein_dbsnp_references";
+    public static final String DDBJ_REFERENCES_PROPERTY = "protein_ddbj_references";
 
     //public static final String GENE_NAMES_SEPARATOR = "\t";
 

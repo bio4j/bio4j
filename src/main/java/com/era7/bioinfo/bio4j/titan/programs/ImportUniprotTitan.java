@@ -56,6 +56,7 @@ import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfoxml.bio4j.UniprotDataXML;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -553,6 +554,8 @@ public class ImportUniprotTitan implements Executable {
                         if ((proteinCounter % limitForPrintingOut) == 0) {
                             String countProteinsSt = proteinCounter + " proteins inserted!!";
                             logger.log(Level.INFO, countProteinsSt);
+                            
+                            manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
                         }
 
                     }

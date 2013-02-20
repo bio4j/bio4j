@@ -37,95 +37,64 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     
     @Override
     public String[] getEMBLreferences(){
-        String[] result;
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        Iterator<TitanProperty> iterator = tempVertex.getProperties(EMBL_REFERENCES_PROPERTY).iterator();
-        List<String> tempList = new LinkedList<String>();
-        while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
-        }
-        result = tempList.toArray(new String[tempList.size()]);
-        return result;        
+        return getRefs(EMBL_REFERENCES_PROPERTY);        
     }
     
     @Override
     public String[] getEnsemblPlantsReferences(){
-        String[] result;
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        Iterator<TitanProperty> iterator = tempVertex.getProperties(ENSEMBL_PLANTS_REFERENCES_PROPERTY).iterator();
-        List<String> tempList = new LinkedList<String>();
-        while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
-        }
-        result = tempList.toArray(new String[tempList.size()]);
-        return result;
+        return getRefs(ENSEMBL_PLANTS_REFERENCES_PROPERTY);
     }
     
     @Override
     public String[] getRefseqReferences(){
-        String[] result;
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        Iterator<TitanProperty> iterator = tempVertex.getProperties(REFSEQ_REFERENCES_PROPERTY).iterator();
-        List<String> tempList = new LinkedList<String>();
-        while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
-        }
-        result = tempList.toArray(new String[tempList.size()]);
-        return result;
+        return getRefs(REFSEQ_REFERENCES_PROPERTY);
     }
 
     @Override
     public String[] getAlternativeAcessions(){
-        String[] result;
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        Iterator<TitanProperty> iterator = tempVertex.getProperties(ALTERNATIVE_ACCESSIONS_PROPERTY).iterator();
-        List<String> tempList = new LinkedList<String>();
-        while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
-        }
-        result = tempList.toArray(new String[tempList.size()]);
-        return result;
+        return getRefs(ALTERNATIVE_ACCESSIONS_PROPERTY);
     }
     
     
     @Override
     public void setEMBLreferences(String[] list){
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        //first we have to delete any previous properties
-        tempVertex.removeProperty(EMBL_REFERENCES_PROPERTY);
-        for (String string : list) {
-            tempVertex.addProperty(EMBL_REFERENCES_PROPERTY, string);
-        } 
+        setRefs(list, EMBL_REFERENCES_PROPERTY);        
     }
     
     @Override
     public void setEnsemblPlantsReferences(String[] list){
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        //first we have to delete any previous properties
-        tempVertex.removeProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY);
-        for (String string : list) {
-            tempVertex.addProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY, string);
-        } 
+        setRefs(list, ENSEMBL_PLANTS_REFERENCES_PROPERTY);
     }
 
     @Override
     public void setRefseqReferences(String[] list){
-        TitanVertex tempVertex = (TitanVertex) vertex;
-        //first we have to delete any previous properties
-        tempVertex.removeProperty(REFSEQ_REFERENCES_PROPERTY);
-        for (String string : list) {
-            tempVertex.addProperty(REFSEQ_REFERENCES_PROPERTY, string);
-        }  
+        setRefs(list, REFSEQ_REFERENCES_PROPERTY);
     }
     
     @Override
     public void setAlternativeAccessions(String[] list){
+        setRefs(list, ALTERNATIVE_ACCESSIONS_PROPERTY);
+    }
+    
+    private String[] getRefs(String propertyName){
+        String[] result;
+        TitanVertex tempVertex = (TitanVertex) vertex;
+        Iterator<TitanProperty> iterator = tempVertex.getProperties(propertyName).iterator();
+        List<String> tempList = new LinkedList<String>();
+        while(iterator.hasNext()){
+            tempList.add((String)iterator.next().getAttribute());
+        }
+        result = tempList.toArray(new String[tempList.size()]);
+        return result;
+    }
+    
+    private void setRefs(String[] list, String propertyName){
         TitanVertex tempVertex = (TitanVertex) vertex;
         //first we have to delete any previous properties
-        tempVertex.removeProperty(ALTERNATIVE_ACCESSIONS_PROPERTY);
+        tempVertex.removeProperty(propertyName);
         for (String string : list) {
-            tempVertex.addProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, string);
-        }        
+            tempVertex.addProperty(propertyName, string);
+        }  
     }
     
 }
