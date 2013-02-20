@@ -162,7 +162,7 @@ public class ImportUniprotTitan implements Executable {
                         }
 
                         ProteinNode currentProteinNode = new ProteinNode(manager.createNode(ProteinNode.NODE_TYPE));
-                        
+
                         //linea final del organism
                         entryStBuilder.append(line);
                         //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
@@ -183,15 +183,15 @@ public class ImportUniprotTitan implements Executable {
                             fullNameSt = "";
                         }
 
-                        currentAccessionId = accessionSt;                      
-                        
+                        currentAccessionId = accessionSt;
+
                         List<String> alternativeAccessions = new LinkedList<String>();
                         //-----------alternative accessions-------------
                         List<Element> altAccessionsList = entryXMLElem.asJDomElement().getChildren(CommonData.ENTRY_ACCESSION_TAG_NAME);
                         for (int i = 1; i < altAccessionsList.size(); i++) {
                             alternativeAccessions.add(altAccessionsList.get(i).getText());
                         }
-                        
+
                         currentProteinNode.setAlternativeAccessions(alternativeAccessions.toArray(new String[alternativeAccessions.size()]));
 
                         //-----db references-------------
@@ -806,6 +806,7 @@ public class ImportUniprotTitan implements Executable {
             }
 
             BasicCommentRel basicCommentRel = null;
+            boolean updateCommentProps = true;
 
             //-----toxic dose----------------
             if (commentTypeSt.equals(ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -990,6 +991,8 @@ public class ImportUniprotTitan implements Executable {
                     }
                 }
 
+                updateCommentProps = false;
+
             } //----- alternative products---------
             else if (commentTypeSt.equals(CommonData.COMMENT_ALTERNATIVE_PRODUCTS_TYPE)) {
 
@@ -1045,6 +1048,8 @@ public class ImportUniprotTitan implements Executable {
 
                     }
                 }
+
+                updateCommentProps = false;
 
             } //----- sequence caution---------
             else if (commentTypeSt.equals(CommonData.COMMENT_SEQUENCE_CAUTION_TYPE)) {
@@ -1208,6 +1213,7 @@ public class ImportUniprotTitan implements Executable {
 
                 }
 
+                updateCommentProps = false;
 
             } //----------developmental stage----------------
             else if (commentTypeSt.equals(DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -1230,6 +1236,8 @@ public class ImportUniprotTitan implements Executable {
                     rnaEditingCommentRel.setEvidence(commentEvidenceSt);
                     rnaEditingCommentRel.setText(commentTextSt);
                 }
+
+                updateCommentProps = false;
 
             } //----------pharmaceutical----------------
             else if (commentTypeSt.equals(PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -1270,9 +1278,11 @@ public class ImportUniprotTitan implements Executable {
                 basicCommentRel = massSpectrometryCommentRel;
             }
 
-            basicCommentRel.setText(commentTextSt);
-            basicCommentRel.setStatus(commentStatusSt);
-            basicCommentRel.setEvidence(commentEvidenceSt);
+            if (updateCommentProps) {
+                basicCommentRel.setText(commentTextSt);
+                basicCommentRel.setStatus(commentStatusSt);
+                basicCommentRel.setEvidence(commentEvidenceSt);
+            }
 
         }
 
@@ -1627,12 +1637,12 @@ public class ImportUniprotTitan implements Executable {
 
                         List<OnlineArticleNode> onlineArticleNodeList = nodeRetriever.getOnlineArticlesByTitle(titleSt);
                         OnlineArticleNode onlineArticleNode;
-                        
+
                         if (onlineArticleNodeList.isEmpty() || titleSt.equals("")) {
 
                             onlineArticleNode = new OnlineArticleNode(manager.createNode(OnlineArticleNode.NODE_TYPE));
                             onlineArticleNode.setTitle(titleSt);
-                            
+
                             //---authors person association-----
                             for (PersonNode personNode : authorsPersonNodes) {
                                 graph.addEdge(null, onlineArticleNode.getNode(), personNode.getNode(), OnlineArticleAuthorRel.NAME);
@@ -1646,7 +1656,7 @@ public class ImportUniprotTitan implements Executable {
                             if (!nameSt.equals("")) {
 
                                 OnlineJournalNode onlineJournalNode = nodeRetriever.getOnlineJournalByName(nameSt);
-                                
+
                                 if (onlineJournalNode == null) {
                                     onlineJournalNode = new OnlineJournalNode(manager.createNode(OnlineJournalNode.NODE_TYPE));
                                     onlineJournalNode.setName(nameSt);
@@ -1659,7 +1669,7 @@ public class ImportUniprotTitan implements Executable {
                         } else {
                             onlineArticleNode = onlineArticleNodeList.get(0);
                         }
-                        
+
                         //protein citation
                         graph.addEdge(null, onlineArticleNode.getNode(), currentProteinNode.getNode(), OnlineArticleProteinCitationRel.NAME);
                     }
@@ -1709,18 +1719,18 @@ public class ImportUniprotTitan implements Executable {
                             }
                         }
 
-                        
+
                         List<ArticleNode> articleNodeList = nodeRetriever.getArticlesByTitle(titleSt);
                         ArticleNode articleNode;
-                                                
+
                         if (articleNodeList.isEmpty() || titleSt.equals("")) {
-                            
+
                             articleNode = new ArticleNode(manager.createNode(ArticleNode.NODE_TYPE));
                             articleNode.setTitle(titleSt);
                             articleNode.setDoiId(doiSt);
                             articleNode.setMedlineId(medlineSt);
                             articleNode.setPubmedId(pubmedSt);
-                            
+
                             //---authors person association-----
                             for (PersonNode personNode : authorsPersonNodes) {
                                 graph.addEdge(null, articleNode.getNode(), personNode.getNode(), ArticleAuthorRel.NAME);
@@ -1734,12 +1744,12 @@ public class ImportUniprotTitan implements Executable {
                             if (!journalNameSt.equals("")) {
 
                                 JournalNode journalNode = nodeRetriever.getJournalByName(journalNameSt);
-                                
+
                                 if (journalNode == null) {
                                     journalNode = new JournalNode(manager.createNode(JournalNode.NODE_TYPE));
                                     journalNode.setName(journalNameSt);
                                 }
-                                
+
                                 ArticleJournalRel articleJournalRel = new ArticleJournalRel(graph.addEdge(null, articleNode.getNode(), journalNode.getNode(), ArticleJournalRel.NAME));
 
                                 articleJournalRel.setDate(dateSt);
@@ -1748,7 +1758,7 @@ public class ImportUniprotTitan implements Executable {
                                 articleJournalRel.setVolume(volumeSt);
                             }
                             //----------------------------
-                        }else{
+                        } else {
                             articleNode = articleNodeList.get(0);
                         }
                         //protein citation
@@ -1765,7 +1775,7 @@ public class ImportUniprotTitan implements Executable {
                         if (dateSt == null) {
                             dateSt = "";
                         }
-                        
+
                         UnpublishedObservationNode unpublishedObservationNode = new UnpublishedObservationNode(manager.createNode(UnpublishedObservationNode.NODE_TYPE));
                         unpublishedObservationNode.setDate(dateSt);
 
@@ -1773,7 +1783,7 @@ public class ImportUniprotTitan implements Executable {
                         for (PersonNode personNode : authorsPersonNodes) {
                             graph.addEdge(null, unpublishedObservationNode.getNode(), personNode.getNode(), UnpublishedObservationAuthorRel.NAME);
                         }
-                        
+
                         graph.addEdge(null, unpublishedObservationNode.getNode(), currentProteinNode.getNode(), UnpublishedObservationProteinCitationRel.NAME);
                     }
 
