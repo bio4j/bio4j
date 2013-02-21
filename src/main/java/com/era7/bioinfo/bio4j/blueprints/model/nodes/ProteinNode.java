@@ -64,14 +64,16 @@ public class ProteinNode extends BasicVertex {
     public static final String MODIFIED_DATE_PROPERTY = "protein_modified_date";
     public static final String GENE_NAMES_PROPERTY = "protein_gene_names";
     
-    public static final String ENSEMBL_ID_PROPERTY = "protein_ensembl_id";
-    public static final String PIR_ID_PROPERTY = "protein_pir_id";
-    public static final String KEGG_ID_PROPERTY = "protein_kegg_id";
+    public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "protein_alternative_accessions";
+    
+    //---------------------DB CROSS REFERENCES----------------------------------------
+    public static final String ENSEMBL_REFERENCES_PROPERTY = "protein_ensembl_references";
+    public static final String PIR_REFERENCES_PROPERTY = "protein_pir_references";
+    public static final String KEGG_REFERENCES_PROPERTY = "protein_kegg_references";
     public static final String EMBL_REFERENCES_PROPERTY = "protein_embl_references";
     public static final String REFSEQ_REFERENCES_PROPERTY = "protein_refseq_references";
-    public static final String ARRAY_EXPRESS_ID_PROPERTY = "protein_array_express_id";
-    public static final String UNIGENE_ID_PROPERTY = "protein_unigene_id";
-    public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "protein_alternative_accessions";
+    public static final String ARRAY_EXPRESS_REFERENCES_PROPERTY = "protein_array_express_references";
+    public static final String UNIGENE_REFERENCES_PROPERTY = "protein_unigene_references";    
     public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
     public static final String DBASE_ECOLI_REFERENCES_PROPERTY = "protein_2dbase_ecoli_references";
     public static final String AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY = "protein_aarhus_ghent_2dpage_references";
@@ -164,7 +166,52 @@ public class ProteinNode extends BasicVertex {
     public static final String PDBJ_REFERENCES_PROPERTY = "protein_pdbj_references";
     public static final String PDBSUM_REFERENCES_PROPERTY = "protein_pdbsum_references";
     public static final String PEPTIDE_ATLAS_REFERENCES_PROPERTY = "protein_peptide_atlas_references";
-
+    public static final String PHARMGKB_REFERENCES_PROPERTY = "protein_pharmgkb_references";
+    public static final String PHCI_2DPAGE_REFERENCES_PROPERTY = "protein_phci_2dpage_references";
+    public static final String PHOSPHOSITE_REFERENCES_PROPERTY = "protein_phosphosite_references";
+    public static final String PHOS_SITE_REFERENCES_PROPERTY = "protein_phos_site_references";
+    public static final String PHYLOME_DB_REFERENCES_PROPERTY = "protein_phylome_db_references";
+    public static final String PIRSF_REFERENCES_PROPERTY = "protein_pirsf_references";
+    public static final String PMAP_CUTDB_REFERENCES_PROPERTY = "protein_pmap_cutdb_references";
+    public static final String PMMA_2DPAGE_REFERENCES_PROPERTY = "protein_pmma_2dpage_references";
+    public static final String POMBASE_REFERENCES_PROPERTY = "protein_pombase_references";
+    public static final String PPTASEDB_REFERENCES_PROPERTY = "protein_pptasedb_references";
+    public static final String PRIDE_REFERENCES_PROPERTY = "protein_pride_references";
+    public static final String PRINTS_REFERENCES_PROPERTY = "protein_prints_references";
+    public static final String PRODOM_REFERENCES_PROPERTY = "protein_prodom_references";
+    public static final String PROMEX_REFERENCES_PROPERTY = "protein_promex_references";
+    public static final String PROSITE_REFERENCES_PROPERTY = "protein_prosite_references";
+    public static final String PROT_CLUST_DB_REFERENCES_PROPERTY = "protein_prot_clust_db_references";
+    public static final String PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY = "protein_model_portal_references";
+    public static final String PROTONET_REFERENCES_PROPERTY = "protein_protonet_references";
+    public static final String PSEUDO_CAP_REFERENCES_PROPERTY = "protein_pseudo_cap_references";
+    public static final String RAT_HEART_2DPAGE_REFERENCES_PROPERTY = "protein_rat_heart_2dpage_references";
+    public static final String RCSB_PDB_REFERENCES_PROPERTY = "protein_rcsb_pdb_references";
+    public static final String REBASE_REFERENCES_PROPERTY = "protein_rebase_references";
+    public static final String REPRODUCTION_2DPAGE_REFERENCES_PROPERTY = "protein_reproduction_2dpage_references";
+    public static final String RGD_REFERENCES_PROPERTY = "protein_rgd_references";
+    public static final String ROUGE_REFERENCES_PROPERTY = "protein_rouge_references";
+    public static final String SBKB_REFERENCES_PROPERTY = "protein_sbkb_references";
+    public static final String SGD_REFERENCES_PROPERTY = "protein_sgd_references";
+    public static final String SIENA_2DPAGE_REFERENCES_PROPERTY = "protein_siena_2dpage_references";
+    public static final String SMART_REFERENCES_PROPERTY = "protein_smart_references";
+    public static final String SMR_REFERENCES_PROPERTY = "protein_smr_references";
+    public static final String SOURCE_REFERENCES_PROPERTY = "protein_source_references";
+    public static final String STRING_REFERENCES_PROPERTY = "protein_string_references";
+    public static final String SUPFAM_REFERENCES_PROPERTY = "protein_supfam_references";
+    public static final String SWISS_2DPAGE_REFERENCES_PROPERTY = "protein_swiss_2dpage_references";
+    public static final String TAIR_REFERENCES_PROPERTY = "protein_tair_references";
+    public static final String TCDB_REFERENCES_PROPERTY = "protein_tcb_references";
+    public static final String TIGRFAMS_REFERENCES_PROPERTY = "protein_tigrfams_references";
+    public static final String TUBERCULIST_REFERENCES_PROPERTY = "protein_tuberculist_references";
+    public static final String UCD_2DPAGE_REFERENCES_PROPERTY = "protein_ucd_2dpage_references";
+    public static final String UCSC_REFERENCES_PROPERTY = "protein_ucsc_references";
+    public static final String VECTOR_BASE_REFERENCES_PROPERTY = "protein_vector_base_references";
+    public static final String WORLD_2DPAGE_REFERENCES_PROPERTY = "protein_world_2dpage_references";
+    public static final String WORM_BASE_REFERENCES_PROPERTY = "protein_worm_base_references";
+    public static final String XEN_BASE_REFERENCES_PROPERTY = "protein_xen_base_references";
+    public static final String ZFIN_REFERENCES_PROPERTY = "protein_zfin_references";
+    //-------------------------------------------------------------------------------------------------
     
     
     public ProteinNode(Vertex v) {
@@ -191,11 +238,11 @@ public class ProteinNode extends BasicVertex {
         return String.valueOf(vertex.getProperty(SEQUENCE_PROPERTY));
     }
 
-    public String getEnsemblId(){
-        return String.valueOf(vertex.getProperty(ENSEMBL_ID_PROPERTY));
+    public String getEnsemblReferences(){
+        return String.valueOf(vertex.getProperty(ENSEMBL_REFERENCES_PROPERTY));
     }
 
-    public String[] getEMBLreferences(){
+    public String[] getEMBLFeferences(){
         return (String[]) vertex.getProperty(EMBL_REFERENCES_PROPERTY);
     }
     
@@ -211,20 +258,20 @@ public class ProteinNode extends BasicVertex {
         return (String[]) vertex.getProperty(ALTERNATIVE_ACCESSIONS_PROPERTY);
     }
 
-    public String getPIRId(){
-        return String.valueOf(vertex.getProperty(PIR_ID_PROPERTY));
+    public String[] getPIRReferences(){
+        return (String[]) vertex.getProperty(PIR_REFERENCES_PROPERTY);
     }
 
-    public String getKeggId(){
-        return String.valueOf(vertex.getProperty(KEGG_ID_PROPERTY));
+    public String[] getKeggReferences(){
+        return (String[]) vertex.getProperty(KEGG_REFERENCES_PROPERTY);
     }
 
-    public String getArrayExpressId(){
-        return String.valueOf(vertex.getProperty(ARRAY_EXPRESS_ID_PROPERTY));
+    public String[] getArrayExpressReferences(){
+        return (String[]) vertex.getProperty(ARRAY_EXPRESS_REFERENCES_PROPERTY);
     }
 
-    public String getUniGeneId(){
-        return String.valueOf(vertex.getProperty(UNIGENE_ID_PROPERTY));
+    public String[] getUniGeneReferences(){
+        return (String[]) vertex.getProperty(UNIGENE_REFERENCES_PROPERTY);
     }
 
     public String getModifiedDate(){
@@ -242,10 +289,6 @@ public class ProteinNode extends BasicVertex {
     public String[] getGeneNames(){
         return (String[])vertex.getProperty(GENE_NAMES_PROPERTY);
     }
-
-//    public String[] getGeneNamesArray(){
-//        return String.valueOf(node.getProperty(GENE_NAMES_PROPERTY)).split(GENE_NAMES_SEPARATOR);
-//    }
 
     
     public boolean isUniref50Representant(){
@@ -671,16 +714,16 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(MODIFIED_DATE_PROPERTY, value);
     }
 
-    public void setEnsemblId(String value){
-        vertex.setProperty(ENSEMBL_ID_PROPERTY, value);
+    public void setEnsemblReferences(String[] value){
+        vertex.setProperty(ENSEMBL_REFERENCES_PROPERTY, value);
     }
 
-    public void setKeggId(String value){
-        vertex.setProperty(KEGG_ID_PROPERTY, value);
+    public void setKeggReferences(String[] value){
+        vertex.setProperty(KEGG_REFERENCES_PROPERTY, value);
     }
 
-    public void setPIRId(String value){
-        vertex.setProperty(PIR_ID_PROPERTY, value);
+    public void setPIRReferences(String[] value){
+        vertex.setProperty(PIRSF_REFERENCES_PROPERTY, value);
     }
 
     public void setEMBLreferences(String[] value){
@@ -699,12 +742,12 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, value);
     }
 
-    public void setArrayExpressId(String value){
-        vertex.setProperty(ARRAY_EXPRESS_ID_PROPERTY, value);
+    public void setArrayExpressReferences(String[] value){
+        vertex.setProperty(ARRAY_EXPRESS_REFERENCES_PROPERTY, value);
     }
 
-    public void setUniGeneId(String value){
-        vertex.setProperty(UNIGENE_ID_PROPERTY, value);
+    public void setUniGeneReferences(String[] value){
+        vertex.setProperty(UNIGENE_REFERENCES_PROPERTY, value);
     }
 
     public void setMass(float value) {
@@ -720,43 +763,4 @@ public class ProteinNode extends BasicVertex {
     }
     
 
-    @Override
-    public String toString() {
-        
-        String geneNamesSt = "";        
-        for (String geneName : getGeneNames()) {
-            geneNamesSt += geneName + ", ";
-        }
-        if(geneNamesSt.length() > 0){
-            geneNamesSt = geneNamesSt.substring(0,geneNamesSt.length() - 2);
-        }
-        
-        String emblReferencesSt = "";        
-        for (String emblReference : getEMBLreferences()) {
-            emblReferencesSt += emblReference + ", ";
-        }
-        if(emblReferencesSt.length() > 0){
-            emblReferencesSt = emblReferencesSt.substring(0,emblReferencesSt.length() - 2);
-        }
-        
-        
-        
-        String result = "\naccession = " + this.getAccession() +
-                "\nname = " + this.getName() +
-                "\nfull name = " + this.getFullName() +
-                "\nshort name = " + this.getShortName() + 
-                "\nmodified date = " + this.getModifiedDate() +
-                "\nmass = " + this.getMass() +
-                "\nlength = " + this.getLength() +
-                "\ngene names = " + geneNamesSt +
-                "\nEMBL references = " + emblReferencesSt +
-                "\nPIR id = " + this.getPIRId() +
-                "\nKegg id = " + this.getKeggId() +
-                "\nArrayExpress id = " + this.getArrayExpressId() +
-                "\nEnsembl id = " + this.getEnsemblId() +
-                "\nUniGene id = " + this.getUniGeneId() + 
-                "\nsequence = " + this.getSequence();
-
-        return result;
-    }
 }
