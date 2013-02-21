@@ -122,8 +122,51 @@ public class ProteinNode extends BasicVertex {
     public static final String GENEVESTIGATOR_REFERENCES_PROPERTY = "protein_genevestigator_references";
     public static final String GENOLIST_REFERENCES_PROPERTY = "protein_genolist_references";
     public static final String GENOME_REVIEWS_REFERENCES_PROPERTY = "protein_genome_reviews_references";
-    
+    public static final String GENOME_RNAI_REFERENCES_PROPERTY = "protein_genome_rnai_references";
+    public static final String GERMONLINE_REFERENCES_PROPERTY = "protein_germonline_references";
+    public static final String GLYCOSUITEDB_REFERENCES_PROPERTY = "protein_glycosuitedb_references";
+    public static final String GPCRDB_REFERENCES_PROPERTY = "protein_gpcrdb_references";
+    public static final String GRAMENE_REFERENCES_PROPERTY = "protein_gramene_references";
+    public static final String HINVDB_REFERENCES_PROPERTY = "protein_hinvdb_references";
+    public static final String HAMAP_REFERENCES_PROPERTY = "protein_hamap_references";
+    public static final String HGNC_REFERENCES_PROPERTY = "protein_hgnc_references";
+    public static final String HOGENOM_REFERENCES_PROPERTY = "protein_hogenom_references";
+    public static final String HOVERGEN_REFERENCES_PROPERTY = "protein_hovergen_references";
+    public static final String HPA_REFERENCES_PROPERTY = "protein_hpa_references";
+    public static final String HSSP_REFERENCES_PROPERTY = "protein_hssp_references";
+    public static final String HUGE_REFERENCES_PROPERTY = "protein_huge_references";
+    public static final String IMGT_REFERENCES_PROPERTY = "protein_imgt_references";
+    public static final String INPARANOID_REFERENCES_PROPERTY = "protein_inparanoid_references";
+    public static final String INTACT_REFERENCES_PROPERTY = "protein_intact_references";
+    public static final String IPI_REFERENCES_PROPERTY = "protein_ipi_references";
+    public static final String KO_REFERENCES_PROPERTY = "protein_ko_references";
+    public static final String LEGIO_LIST_REFERENCES_PROPERTY = "protein_legio_list_references";
+    public static final String LEPROMA_REFERENCES_PROPERTY = "protein_leproma_references";
+    public static final String MAIZE_GDB_REFERENCES_PROPERTY = "protein_maize_gdb_references";
+    public static final String MEROPS_REFERENCES_PROPERTY = "protein_merops_references";
+    public static final String MGI_REFERENCES_PROPERTY = "protein_mgi_references";
+    public static final String MICADO_REFERENCES_PROPERTY = "protein_micado_references";
+    public static final String MIM_REFERENCES_PROPERTY = "protein_mim_references";
+    public static final String MINT_REFERENCES_PROPERTY = "protein_mint_references";
+    public static final String MODBASE_REFERENCES_PROPERTY = "protein_modbase_references";
+    public static final String MYCOCLAP_REFERENCES_PROPERTY = "protein_mycoclap_references";
+    public static final String NEXTBIO_REFERENCES_PROPERTY = "protein_nextbio_references";
+    public static final String NEXTPROT_REFERENCES_PROPERTY = "protein_nextprot_references";
+    public static final String OGP_REFERENCES_PROPERTY = "protein_ogp_references";
+    public static final String OMA_REFERENCES_PROPERTY = "protein_oma_references";
+    public static final String ORPHANET_REFERENCES_PROPERTY = "protein_orphanet_references";
+    public static final String ORTHODB_REFERENCES_PROPERTY = "protein_orthodb_references";
+    public static final String PANTHER_REFERENCES_PROPERTY = "protein_panther_references";
+    public static final String PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY = "protein_pathway_interaction_db_references";
+    public static final String PATRIC_REFERENCES_PROPERTY = "protein_patric_references";
+    public static final String PAXDB_REFERENCES_PROPERTY = "protein_paxdb_references";
+    public static final String PDB_REFERENCES_PROPERTY = "protein_pdb_references";
+    public static final String PDBJ_REFERENCES_PROPERTY = "protein_pdbj_references";
+    public static final String PDBSUM_REFERENCES_PROPERTY = "protein_pdbsum_references";
+    public static final String PEPTIDE_ATLAS_REFERENCES_PROPERTY = "protein_peptide_atlas_references";
 
+    
+    
     public ProteinNode(Vertex v) {
         super(v);
     }
