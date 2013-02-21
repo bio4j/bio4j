@@ -59,7 +59,6 @@ public class InitBio4jTitan implements Executable {
             Configuration conf = new BaseConfiguration();
             conf.setProperty("storage.directory", folder);
             conf.setProperty("storage.backend", "local");
-            conf.setProperty("storage.batch-loading", "true");
 
             System.out.println("Creating DB...");
 
@@ -86,6 +85,31 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(GoTermNode.ALTERNATIVE_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         //---PROTEIN---
         graph.makeType().name(ProteinNode.ALTERNATIVE_ACCESSIONS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.EMBL_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.REFSEQ_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.GENE_NAMES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.DBASE_ECOLI_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.AGD_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.ALLERGOME_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.ANU_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.ARACHNOSERVER_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.BGEE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.BINDING_DB_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.BIOCYC_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.BRENDA_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CAZY_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CGD_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CHEMBL_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CLEANEX_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CONOSERVER_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CORNEA_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CTD_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.CYGD_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.DBSNP_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.DDBJ_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         //---NCBI TAXON---                
         graph.makeType().name(NCBITaxonNode.GI_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(NCBITaxonNode.OLD_TAX_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();

@@ -94,8 +94,35 @@ public class ProteinNode extends BasicVertex {
     public static final String CYGD_REFERENCES_PROPERTY = "protein_cygd_references";
     public static final String DBSNP_REFERENCES_PROPERTY = "protein_dbsnp_references";
     public static final String DDBJ_REFERENCES_PROPERTY = "protein_ddbj_references";
-
-    //public static final String GENE_NAMES_SEPARATOR = "\t";
+    public static final String DICTY_BASE_REFERENCES_PROPERTY = "protein_dicty_base_references";
+    public static final String DIP_REFERENCES_PROPERTY = "protein_dip_references";
+    public static final String DISPROT_REFERENCES_PROPERTY = "protein_disprot_references";
+    public static final String DMDM_REFERENCES_PROPERTY = "protein_dmdm_references";
+    public static final String DNASU_REFERENCES_PROPERTY = "protein_dnasu_references";
+    public static final String DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY = "protein_dosac_cobs_2dpage_references";
+    public static final String DRUGBANK_REFERENCES_PROPERTY = "protein_drugbank_references";
+    public static final String ECHOBASE_REFERENCES_PROPERTY = "protein_echobase_references";
+    public static final String ECOGENE_REFERENCES_PROPERTY = "protein_ecogene_references";
+    public static final String EGGNOG_REFERENCES_PROPERTY = "protein_eggnog_references";
+    public static final String ENSEMBL_BACTERIA_REFERENCES_PROPERTY = "protein_ensembl_bacteria_references";
+    public static final String ENSEMBL_FUNGI_REFERENCES_PROPERTY = "protein_ensembl_fungi_references";
+    public static final String ENSEMBL_METAZOA_REFERENCES_PROPERTY = "protein_ensembl_metazoa_references";
+    public static final String ENSEMBL_PROTISTS_REFERENCES_PROPERTY = "protein_ensembl_protists_references";
+    public static final String EUHCVDB_REFERENCES_PROPERTY = "protein_euhcvdb_references";
+    public static final String EUPATHDB_REFERENCES_PROPERTY = "protein_eupathdb_references";
+    public static final String EVOLUTIONARY_TRACE_REFERENCES_PROPERTY = "protein_evolutionary_trace_references";
+    public static final String FLYBASE_REFERENCES_PROPERTY = "protein_flybase_references";
+    public static final String GENATLAS_REFERENCES_PROPERTY = "protein_genatlas_references";
+    public static final String GENBANK_REFERENCES_PROPERTY = "protein_genbank_references";
+    public static final String GENE3D_REFERENCES_PROPERTY = "protein_gene3d_references";
+    public static final String GENECARDS_REFERENCES_PROPERTY = "protein_genecards_references";
+    public static final String GENEFARM_REFERENCES_PROPERTY = "protein_genefarm_references";
+    public static final String GENEID_REFERENCES_PROPERTY = "protein_geneid_references";
+    public static final String GENETREE_REFERENCES_PROPERTY = "protein_genetree_references";
+    public static final String GENEVESTIGATOR_REFERENCES_PROPERTY = "protein_genevestigator_references";
+    public static final String GENOLIST_REFERENCES_PROPERTY = "protein_genolist_references";
+    public static final String GENOME_REVIEWS_REFERENCES_PROPERTY = "protein_genome_reviews_references";
+    
 
     public ProteinNode(Vertex v) {
         super(v);
