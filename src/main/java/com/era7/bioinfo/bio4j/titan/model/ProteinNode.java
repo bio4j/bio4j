@@ -36,7 +36,7 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     
     
     @Override
-    public String[] getEMBLreferences(){
+    public String[] getEMBLReferences(){
         return getRefs(EMBL_REFERENCES_PROPERTY);        
     }
     

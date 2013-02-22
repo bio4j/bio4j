@@ -233,13 +233,29 @@ public class ProteinNode extends BasicVertex {
 
     public String getSequence() {
         return String.valueOf(vertex.getProperty(SEQUENCE_PROPERTY));
+    }    
+
+    public String getModifiedDate() {
+        return String.valueOf(vertex.getProperty(MODIFIED_DATE_PROPERTY));
     }
 
-    public String getEnsemblReferences() {
-        return String.valueOf(vertex.getProperty(ENSEMBL_REFERENCES_PROPERTY));
+    public float getMass() {
+        return Float.parseFloat(String.valueOf(vertex.getProperty(MASS_PROPERTY)));
     }
 
-    public String[] getEMBLFeferences() {
+    public int getLength() {
+        return Integer.parseInt(String.valueOf(vertex.getProperty(LENGTH_PROPERTY)));
+    }
+
+    public String[] getGeneNames() {
+        return (String[]) vertex.getProperty(GENE_NAMES_PROPERTY);
+    }
+    
+    public String[] getEnsemblReferences() {
+        return (String[]) vertex.getProperty(ENSEMBL_REFERENCES_PROPERTY);
+    }
+
+    public String[] getEMBLReferences() {
         return (String[]) vertex.getProperty(EMBL_REFERENCES_PROPERTY);
     }
 
@@ -270,23 +286,547 @@ public class ProteinNode extends BasicVertex {
     public String[] getUniGeneReferences() {
         return (String[]) vertex.getProperty(UNIGENE_REFERENCES_PROPERTY);
     }
-
-    public String getModifiedDate() {
-        return String.valueOf(vertex.getProperty(MODIFIED_DATE_PROPERTY));
+    
+    public String[] getDBaseEColiReferences() {
+        return (String[]) vertex.getProperty(DBASE_ECOLI_REFERENCES_PROPERTY);
     }
-
-    public float getMass() {
-        return Float.parseFloat(String.valueOf(vertex.getProperty(MASS_PROPERTY)));
+    
+    public String[] getAarhusGhent2DPageReferences() {
+        return (String[]) vertex.getProperty(AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY);
     }
-
-    public int getLength() {
-        return Integer.parseInt(String.valueOf(vertex.getProperty(LENGTH_PROPERTY)));
+    
+    public String[] getAGDPageReferences() {
+        return (String[]) vertex.getProperty(AGD_REFERENCES_PROPERTY);
     }
-
-    public String[] getGeneNames() {
-        return (String[]) vertex.getProperty(GENE_NAMES_PROPERTY);
+    
+    public String[] getAllergomeReferences() {
+        return (String[]) vertex.getProperty(ALLERGOME_REFERENCES_PROPERTY);
     }
-
+    
+    public String[] getANU2DPageReferences() {
+        return (String[]) vertex.getProperty(ANU_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getArachnoServerReferences() {
+        return (String[]) vertex.getProperty(ARACHNOSERVER_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getBGeeReferences() {
+        return (String[]) vertex.getProperty(BGEE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getBindingDBReferences() {
+        return (String[]) vertex.getProperty(BINDING_DB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getBioCycReferences() {
+        return (String[]) vertex.getProperty(BIOCYC_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getBrendaReferences() {
+        return (String[]) vertex.getProperty(BRENDA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCazyReferences() {
+        return (String[]) vertex.getProperty(CAZY_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCGDReferences() {
+        return (String[]) vertex.getProperty(CGD_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCHEMBLReferences() {
+        return (String[]) vertex.getProperty(CHEMBL_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCleanexReferences() {
+        return (String[]) vertex.getProperty(CLEANEX_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCompluyeast2DPageReferences() {
+        return (String[]) vertex.getProperty(COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getConoServerReferences() {
+        return (String[]) vertex.getProperty(CONOSERVER_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCornea2DPageReferences() {
+        return (String[]) vertex.getProperty(CORNEA_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCTDReferences() {
+        return (String[]) vertex.getProperty(CTD_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getCYGDReferences() {
+        return (String[]) vertex.getProperty(CYGD_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDBSNPReferences() {
+        return (String[]) vertex.getProperty(DBSNP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDDBJReferences() {
+        return (String[]) vertex.getProperty(DDBJ_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDictyBaseReferences() {
+        return (String[]) vertex.getProperty(DICTY_BASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDIPReferences() {
+        return (String[]) vertex.getProperty(DIP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDisprotReferences() {
+        return (String[]) vertex.getProperty(DISPROT_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDMDMReferences() {
+        return (String[]) vertex.getProperty(DMDM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDnasuReferences() {
+        return (String[]) vertex.getProperty(DNASU_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDosacCobs2DPageReferences() {
+        return (String[]) vertex.getProperty(DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getDrugBankReferences() {
+        return (String[]) vertex.getProperty(DRUGBANK_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEchoBaseReferences() {
+        return (String[]) vertex.getProperty(ECHOBASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEcoGeneReferences() {
+        return (String[]) vertex.getProperty(ECOGENE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEnsemblBacteriaReferences() {
+        return (String[]) vertex.getProperty(ENSEMBL_BACTERIA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEnsemblFungiReferences() {
+        return (String[]) vertex.getProperty(ENSEMBL_FUNGI_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEnsemblMetazoaReferences() {
+        return (String[]) vertex.getProperty(ENSEMBL_METAZOA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEnsemblProtistsReferences() {
+        return (String[]) vertex.getProperty(ENSEMBL_PROTISTS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEUHCVDBReferences() {
+        return (String[]) vertex.getProperty(EUHCVDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEUPathDBReferences() {
+        return (String[]) vertex.getProperty(EUPATHDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getEvolutionaryTraceReferences() {
+        return (String[]) vertex.getProperty(EVOLUTIONARY_TRACE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getFlybaseReferences() {
+        return (String[]) vertex.getProperty(FLYBASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenAtlasReferences() {
+        return (String[]) vertex.getProperty(GENATLAS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenbankReferences() {
+        return (String[]) vertex.getProperty(GENBANK_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGene3DReferences() {
+        return (String[]) vertex.getProperty(GENE3D_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenecardsReferences() {
+        return (String[]) vertex.getProperty(GENECARDS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenefarmReferences() {
+        return (String[]) vertex.getProperty(GENEFARM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGeneIDReferences() {
+        return (String[]) vertex.getProperty(GENEID_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGeneTreeReferences() {
+        return (String[]) vertex.getProperty(GENETREE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenevestigatorReferences() {
+        return (String[]) vertex.getProperty(GENEVESTIGATOR_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenolistReferences() {
+        return (String[]) vertex.getProperty(GENOLIST_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenomeReviewsReferences() {
+        return (String[]) vertex.getProperty(GENOME_REVIEWS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGenomeRNAIReferences() {
+        return (String[]) vertex.getProperty(GENOME_RNAI_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGermOnlineReferences() {
+        return (String[]) vertex.getProperty(GERMONLINE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGlycoSuiteReferences() {
+        return (String[]) vertex.getProperty(GLYCOSUITEDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGPCRDBReferences() {
+        return (String[]) vertex.getProperty(GPCRDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getGrameneReferences() {
+        return (String[]) vertex.getProperty(GRAMENE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHINVDBReferences() {
+        return (String[]) vertex.getProperty(HINVDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHamapReferences() {
+        return (String[]) vertex.getProperty(HAMAP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHGNCReferences() {
+        return (String[]) vertex.getProperty(HGNC_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHogenomReferences() {
+        return (String[]) vertex.getProperty(HOGENOM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHovergenReferences() {
+        return (String[]) vertex.getProperty(HOVERGEN_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHPAReferences() {
+        return (String[]) vertex.getProperty(HPA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHSSPReferences() {
+        return (String[]) vertex.getProperty(HSSP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getHugeReferences() {
+        return (String[]) vertex.getProperty(HUGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getIMGTReferences() {
+        return (String[]) vertex.getProperty(IMGT_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getInparanoidReferences() {
+        return (String[]) vertex.getProperty(INPARANOID_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getIntactReferences() {
+        return (String[]) vertex.getProperty(INTACT_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getIPIReferences() {
+        return (String[]) vertex.getProperty(IPI_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getKOReferences() {
+        return (String[]) vertex.getProperty(KO_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getLegioListReferences() {
+        return (String[]) vertex.getProperty(LEGIO_LIST_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getLepromaReferences() {
+        return (String[]) vertex.getProperty(LEPROMA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMaizeGDBReferences() {
+        return (String[]) vertex.getProperty(MAIZE_GDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMeropsReferences() {
+        return (String[]) vertex.getProperty(MEROPS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMGIReferences() {
+        return (String[]) vertex.getProperty(MGI_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMicadoReferences() {
+        return (String[]) vertex.getProperty(MICADO_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMIMReferences() {
+        return (String[]) vertex.getProperty(MIM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMintReferences() {
+        return (String[]) vertex.getProperty(MINT_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getModbaseReferences() {
+        return (String[]) vertex.getProperty(MODBASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getMycoClapReferences() {
+        return (String[]) vertex.getProperty(MYCOCLAP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getNextBioReferences() {
+        return (String[]) vertex.getProperty(NEXTBIO_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getNextProtReferences() {
+        return (String[]) vertex.getProperty(NEXTPROT_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getOGPReferences() {
+        return (String[]) vertex.getProperty(OGP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getOMAReferences() {
+        return (String[]) vertex.getProperty(OMA_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getOrphanetReferences() {
+        return (String[]) vertex.getProperty(ORPHANET_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getOrthoDBReferences() {
+        return (String[]) vertex.getProperty(ORTHODB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPantherReferences() {
+        return (String[]) vertex.getProperty(PANTHER_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPathwayInteractionDBReferences() {
+        return (String[]) vertex.getProperty(PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPatricReferences() {
+        return (String[]) vertex.getProperty(PATRIC_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPaxDBReferences() {
+        return (String[]) vertex.getProperty(PAXDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPDBReferences() {
+        return (String[]) vertex.getProperty(PDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPDBJReferences() {
+        return (String[]) vertex.getProperty(PDBJ_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPDBSumReferences() {
+        return (String[]) vertex.getProperty(PDBSUM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPeptideAtlasReferences() {
+        return (String[]) vertex.getProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPharmGKBReferences() {
+        return (String[]) vertex.getProperty(PHARMGKB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPhci2DPageReferences() {
+        return (String[]) vertex.getProperty(PHCI_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPhosphositeReferences() {
+        return (String[]) vertex.getProperty(PHOSPHOSITE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPhosSiteReferences() {
+        return (String[]) vertex.getProperty(PHOS_SITE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPhylomeDBReferences() {
+        return (String[]) vertex.getProperty(PHYLOME_DB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPIRSFReferences() {
+        return (String[]) vertex.getProperty(PIRSF_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPmapCutDBReferences() {
+        return (String[]) vertex.getProperty(PMAP_CUTDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPMMA2DPageReferences() {
+        return (String[]) vertex.getProperty(PMMA_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPombaseReferences() {
+        return (String[]) vertex.getProperty(POMBASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPptaseDBReferences() {
+        return (String[]) vertex.getProperty(PPTASEDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPrideReferences() {
+        return (String[]) vertex.getProperty(PRIDE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPrintsReferences() {
+        return (String[]) vertex.getProperty(PRINTS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getProdomReferences() {
+        return (String[]) vertex.getProperty(PRODOM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPromexReferences() {
+        return (String[]) vertex.getProperty(PROMEX_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPrositeReferences() {
+        return (String[]) vertex.getProperty(PROSITE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getProtClustDBReferences() {
+        return (String[]) vertex.getProperty(PROT_CLUST_DB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getProteinModelPortalReferences() {
+        return (String[]) vertex.getProperty(PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getProtonetReferences() {
+        return (String[]) vertex.getProperty(PROTONET_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getPseudoCapReferences() {
+        return (String[]) vertex.getProperty(PSEUDO_CAP_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getRatHeart2DPageReferences() {
+        return (String[]) vertex.getProperty(RAT_HEART_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getRCSBPDBReferences() {
+        return (String[]) vertex.getProperty(RCSB_PDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getRebaseReferences() {
+        return (String[]) vertex.getProperty(REBASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getReproduction2DPageReferences() {
+        return (String[]) vertex.getProperty(REPRODUCTION_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getRGDReferences() {
+        return (String[]) vertex.getProperty(RGD_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getRougeReferences() {
+        return (String[]) vertex.getProperty(ROUGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSBKBReferences() {
+        return (String[]) vertex.getProperty(SBKB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSGDReferences() {
+        return (String[]) vertex.getProperty(SGD_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSiena2DPageReferences() {
+        return (String[]) vertex.getProperty(SIENA_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSmartReferences() {
+        return (String[]) vertex.getProperty(SMART_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSMRReferences() {
+        return (String[]) vertex.getProperty(SMR_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSourceReferences() {
+        return (String[]) vertex.getProperty(SOURCE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getStringReferences() {
+        return (String[]) vertex.getProperty(STRING_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSupfamReferences() {
+        return (String[]) vertex.getProperty(SUPFAM_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getSwiss2DPageReferences() {
+        return (String[]) vertex.getProperty(SWISS_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getTairReferences() {
+        return (String[]) vertex.getProperty(TAIR_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getTCDBReferences() {
+        return (String[]) vertex.getProperty(TCDB_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getTIGRFAMSReferences() {
+        return (String[]) vertex.getProperty(TIGRFAMS_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getTuberculistReferences() {
+        return (String[]) vertex.getProperty(TUBERCULIST_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getUCD2DPageReferences() {
+        return (String[]) vertex.getProperty(UCD_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getUCSCPageReferences() {
+        return (String[]) vertex.getProperty(UCSC_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getVectorBaseReferences() {
+        return (String[]) vertex.getProperty(VECTOR_BASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getWorld2DPageReferences() {
+        return (String[]) vertex.getProperty(WORLD_2DPAGE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getWormBaseReferences() {
+        return (String[]) vertex.getProperty(WORM_BASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getXenBaseReferences() {
+        return (String[]) vertex.getProperty(XEN_BASE_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getZfinReferences() {
+        return (String[]) vertex.getProperty(ZFIN_REFERENCES_PROPERTY);
+    }
+    
     public boolean isUniref50Representant() {
         return !vertex.getEdges(Direction.IN, UniRef50MemberRel.NAME).iterator().hasNext();
     }
