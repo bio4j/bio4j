@@ -1066,70 +1066,261 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(MGI_REFERENCES_PROPERTY, value);
     }
     
+    public void setMicadoReferences(String[] value) {
+        vertex.setProperty(MICADO_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setMIMReferences(String[] value) {
+        vertex.setProperty(MIM_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setMINTReferences(String[] value) {
+        vertex.setProperty(MINT_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setModbaseReferences(String[] value) {
+        vertex.setProperty(MODBASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setMycoclapReferences(String[] value) {
+        vertex.setProperty(MYCOCLAP_REFERENCES_PROPERTY, value);
+    } 
+     
+    public void setNextbioReferences(String[] value) {
+        vertex.setProperty(NEXTBIO_REFERENCES_PROPERTY, value);
+    } 
+    
+    public void setNextprotoReferences(String[] value) {
+        vertex.setProperty(NEXTPROT_REFERENCES_PROPERTY, value);
+    } 
+    
+    public void setOGPReferences(String[] value) {
+        vertex.setProperty(OGP_REFERENCES_PROPERTY, value);
+    } 
+    
+    public void setOMAReferences(String[] value) {
+        vertex.setProperty(OMA_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setOrphanetReferences(String[] value) {
+        vertex.setProperty(ORPHANET_REFERENCES_PROPERTY, value);
+    } 
+    
+    public void setOrthoDBReferences(String[] value) {
+        vertex.setProperty(ORTHODB_REFERENCES_PROPERTY, value);
+    } 
+    
+    public void setPantherReferences(String[] value) {
+        vertex.setProperty(PANTHER_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPathwayInteractionDBReferences(String[] value) {
+        vertex.setProperty(PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPatricReferences(String[] value) {
+        vertex.setProperty(PATRIC_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPaxDBReferences(String[] value) {
+        vertex.setProperty(PAXDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPDBReferences(String[] value) {
+        vertex.setProperty(PDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPDBJReferences(String[] value) {
+        vertex.setProperty(PDBJ_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPDBSumReferences(String[] value) {
+        vertex.setProperty(PDBSUM_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPeptideAtlasReferences(String[] value) {
+        vertex.setProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPharmGKBReferences(String[] value) {
+        vertex.setProperty(PHARMGKB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPHCI_2DPageReferences(String[] value) {
+        vertex.setProperty(PHCI_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPhosphositeReferences(String[] value) {
+        vertex.setProperty(PHOSPHOSITE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPhosSiteReferences(String[] value) {
+        vertex.setProperty(PHOS_SITE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPhylomeReferences(String[] value) {
+        vertex.setProperty(PHYLOME_DB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPirsfReferences(String[] value) {
+        vertex.setProperty(PIRSF_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPmapReferences(String[] value) {
+        vertex.setProperty(PMAP_CUTDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPMMA2DPageReferences(String[] value) {
+        vertex.setProperty(PMMA_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPomBaseReferences(String[] value) {
+        vertex.setProperty(POMBASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPPTaseDBReferences(String[] value) {
+        vertex.setProperty(PPTASEDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPrideReferences(String[] value) {
+        vertex.setProperty(PRIDE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPrintsReferences(String[] value) {
+        vertex.setProperty(PRINTS_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setProdomReferences(String[] value) {
+        vertex.setProperty(PRODOM_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPromexReferences(String[] value) {
+        vertex.setProperty(PROMEX_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPrositeReferences(String[] value) {
+        vertex.setProperty(PROSITE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setProtClustDBReferences(String[] value) {
+        vertex.setProperty(PROT_CLUST_DB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setProteinModelPortalReferences(String[] value) {
+        vertex.setProperty(PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setProtonetReferences(String[] value) {
+        vertex.setProperty(PROTONET_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setPseudoCapReferences(String[] value) {
+        vertex.setProperty(PSEUDO_CAP_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setRatHeart2DPageReferences(String[] value) {
+        vertex.setProperty(RAT_HEART_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setRCSBPDBReferences(String[] value) {
+        vertex.setProperty(RCSB_PDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setRebaseReferences(String[] value) {
+        vertex.setProperty(REBASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setReproduction2DPageReferences(String[] value) {
+        vertex.setProperty(REPRODUCTION_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setRGDReferences(String[] value) {
+        vertex.setProperty(RGD_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setRougeReferences(String[] value) {
+        vertex.setProperty(ROUGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSBKBReferences(String[] value) {
+        vertex.setProperty(SBKB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSGDReferences(String[] value) {
+        vertex.setProperty(SGD_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSiena2DPageReferences(String[] value) {
+        vertex.setProperty(SIENA_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSmartReferences(String[] value) {
+        vertex.setProperty(SMART_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSMRReferences(String[] value) {
+        vertex.setProperty(SMR_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSourceReferences(String[] value) {
+        vertex.setProperty(SOURCE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setStringReferences(String[] value) {
+        vertex.setProperty(STRING_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSupfamReferences(String[] value) {
+        vertex.setProperty(SUPFAM_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setSwiss2DPageReferences(String[] value) {
+        vertex.setProperty(SWISS_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setTairReferences(String[] value) {
+        vertex.setProperty(TAIR_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setTCDBReferences(String[] value) {
+        vertex.setProperty(TCDB_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setTIGRFAMSReferences(String[] value) {
+        vertex.setProperty(TIGRFAMS_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setTuberculistReferences(String[] value) {
+        vertex.setProperty(TUBERCULIST_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setUCD2DPageReferences(String[] value) {
+        vertex.setProperty(UCD_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setUCSCReferences(String[] value) {
+        vertex.setProperty(UCSC_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setVectorBaseReferences(String[] value) {
+        vertex.setProperty(VECTOR_BASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setWorld2DPageReferences(String[] value) {
+        vertex.setProperty(WORLD_2DPAGE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setWormBaseReferences(String[] value) {
+        vertex.setProperty(WORM_BASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setXenBaseReferences(String[] value) {
+        vertex.setProperty(XEN_BASE_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setZFINReferences(String[] value) {
+        vertex.setProperty(ZFIN_REFERENCES_PROPERTY, value);
+    }
     
     
-    public static final String MICADO_REFERENCES_PROPERTY = "protein_micado_references";
-    public static final String MIM_REFERENCES_PROPERTY = "protein_mim_references";
-    public static final String MINT_REFERENCES_PROPERTY = "protein_mint_references";
-    public static final String MODBASE_REFERENCES_PROPERTY = "protein_modbase_references";
-    public static final String MYCOCLAP_REFERENCES_PROPERTY = "protein_mycoclap_references";
-    public static final String NEXTBIO_REFERENCES_PROPERTY = "protein_nextbio_references";
-    public static final String NEXTPROT_REFERENCES_PROPERTY = "protein_nextprot_references";
-    public static final String OGP_REFERENCES_PROPERTY = "protein_ogp_references";
-    public static final String OMA_REFERENCES_PROPERTY = "protein_oma_references";
-    public static final String ORPHANET_REFERENCES_PROPERTY = "protein_orphanet_references";
-    public static final String ORTHODB_REFERENCES_PROPERTY = "protein_orthodb_references";
-    public static final String PANTHER_REFERENCES_PROPERTY = "protein_panther_references";
-    public static final String PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY = "protein_pathway_interaction_db_references";
-    public static final String PATRIC_REFERENCES_PROPERTY = "protein_patric_references";
-    public static final String PAXDB_REFERENCES_PROPERTY = "protein_paxdb_references";
-    public static final String PDB_REFERENCES_PROPERTY = "protein_pdb_references";
-    public static final String PDBJ_REFERENCES_PROPERTY = "protein_pdbj_references";
-    public static final String PDBSUM_REFERENCES_PROPERTY = "protein_pdbsum_references";
-    public static final String PEPTIDE_ATLAS_REFERENCES_PROPERTY = "protein_peptide_atlas_references";
-    public static final String PHARMGKB_REFERENCES_PROPERTY = "protein_pharmgkb_references";
-    public static final String PHCI_2DPAGE_REFERENCES_PROPERTY = "protein_phci_2dpage_references";
-    public static final String PHOSPHOSITE_REFERENCES_PROPERTY = "protein_phosphosite_references";
-    public static final String PHOS_SITE_REFERENCES_PROPERTY = "protein_phos_site_references";
-    public static final String PHYLOME_DB_REFERENCES_PROPERTY = "protein_phylome_db_references";
-    public static final String PIRSF_REFERENCES_PROPERTY = "protein_pirsf_references";
-    public static final String PMAP_CUTDB_REFERENCES_PROPERTY = "protein_pmap_cutdb_references";
-    public static final String PMMA_2DPAGE_REFERENCES_PROPERTY = "protein_pmma_2dpage_references";
-    public static final String POMBASE_REFERENCES_PROPERTY = "protein_pombase_references";
-    public static final String PPTASEDB_REFERENCES_PROPERTY = "protein_pptasedb_references";
-    public static final String PRIDE_REFERENCES_PROPERTY = "protein_pride_references";
-    public static final String PRINTS_REFERENCES_PROPERTY = "protein_prints_references";
-    public static final String PRODOM_REFERENCES_PROPERTY = "protein_prodom_references";
-    public static final String PROMEX_REFERENCES_PROPERTY = "protein_promex_references";
-    public static final String PROSITE_REFERENCES_PROPERTY = "protein_prosite_references";
-    public static final String PROT_CLUST_DB_REFERENCES_PROPERTY = "protein_prot_clust_db_references";
-    public static final String PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY = "protein_model_portal_references";
-    public static final String PROTONET_REFERENCES_PROPERTY = "protein_protonet_references";
-    public static final String PSEUDO_CAP_REFERENCES_PROPERTY = "protein_pseudo_cap_references";
-    public static final String RAT_HEART_2DPAGE_REFERENCES_PROPERTY = "protein_rat_heart_2dpage_references";
-    public static final String RCSB_PDB_REFERENCES_PROPERTY = "protein_rcsb_pdb_references";
-    public static final String REBASE_REFERENCES_PROPERTY = "protein_rebase_references";
-    public static final String REPRODUCTION_2DPAGE_REFERENCES_PROPERTY = "protein_reproduction_2dpage_references";
-    public static final String RGD_REFERENCES_PROPERTY = "protein_rgd_references";
-    public static final String ROUGE_REFERENCES_PROPERTY = "protein_rouge_references";
-    public static final String SBKB_REFERENCES_PROPERTY = "protein_sbkb_references";
-    public static final String SGD_REFERENCES_PROPERTY = "protein_sgd_references";
-    public static final String SIENA_2DPAGE_REFERENCES_PROPERTY = "protein_siena_2dpage_references";
-    public static final String SMART_REFERENCES_PROPERTY = "protein_smart_references";
-    public static final String SMR_REFERENCES_PROPERTY = "protein_smr_references";
-    public static final String SOURCE_REFERENCES_PROPERTY = "protein_source_references";
-    public static final String STRING_REFERENCES_PROPERTY = "protein_string_references";
-    public static final String SUPFAM_REFERENCES_PROPERTY = "protein_supfam_references";
-    public static final String SWISS_2DPAGE_REFERENCES_PROPERTY = "protein_swiss_2dpage_references";
-    public static final String TAIR_REFERENCES_PROPERTY = "protein_tair_references";
-    public static final String TCDB_REFERENCES_PROPERTY = "protein_tcb_references";
-    public static final String TIGRFAMS_REFERENCES_PROPERTY = "protein_tigrfams_references";
-    public static final String TUBERCULIST_REFERENCES_PROPERTY = "protein_tuberculist_references";
-    public static final String UCD_2DPAGE_REFERENCES_PROPERTY = "protein_ucd_2dpage_references";
-    public static final String UCSC_REFERENCES_PROPERTY = "protein_ucsc_references";
-    public static final String VECTOR_BASE_REFERENCES_PROPERTY = "protein_vector_base_references";
-    public static final String WORLD_2DPAGE_REFERENCES_PROPERTY = "protein_world_2dpage_references";
-    public static final String WORM_BASE_REFERENCES_PROPERTY = "protein_worm_base_references";
-    public static final String XEN_BASE_REFERENCES_PROPERTY = "protein_xen_base_references";
-    public static final String ZFIN_REFERENCES_PROPERTY = "protein_zfin_references";
 }
