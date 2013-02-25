@@ -295,7 +295,7 @@ public class ProteinNode extends BasicVertex {
         return (String[]) vertex.getProperty(AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY);
     }
     
-    public String[] getAGDPageReferences() {
+    public String[] getAGDReferences() {
         return (String[]) vertex.getProperty(AGD_REFERENCES_PROPERTY);
     }
     
@@ -407,6 +407,10 @@ public class ProteinNode extends BasicVertex {
         return (String[]) vertex.getProperty(ECOGENE_REFERENCES_PROPERTY);
     }
     
+    public String[] getEggnogReferences() {
+        return (String[]) vertex.getProperty(EGGNOG_REFERENCES_PROPERTY);
+    }
+    
     public String[] getEnsemblBacteriaReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_BACTERIA_REFERENCES_PROPERTY);
     }
@@ -487,7 +491,7 @@ public class ProteinNode extends BasicVertex {
         return (String[]) vertex.getProperty(GERMONLINE_REFERENCES_PROPERTY);
     }
     
-    public String[] getGlycoSuiteReferences() {
+    public String[] getGlycoSuiteDBReferences() {
         return (String[]) vertex.getProperty(GLYCOSUITEDB_REFERENCES_PROPERTY);
     }
     
