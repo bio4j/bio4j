@@ -196,37 +196,35 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setAlternativeAccessions(alternativeAccessions.toArray(new String[alternativeAccessions.size()]));
 
                         //-----db references-------------
-                        String pirIdSt = "";
-                        String keggIdSt = "";
-                        String ensemblIdSt = "";
-                        String uniGeneIdSt = "";
-                        String arrayExpressIdSt = "";
-
                         List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(CommonData.DB_REFERENCE_TAG_NAME);
-                        ArrayList<String> emblCrossReferences = new ArrayList<String>();
-                        ArrayList<String> refseqReferences = new ArrayList<String>();
-                        ArrayList<String> enzymeDBReferences = new ArrayList<String>();
-                        ArrayList<String> ensemblPlantsReferences = new ArrayList<String>();
+                        LinkedList<String> emblReferences = new LinkedList<String>();
+                        LinkedList<String> refseqReferences = new LinkedList<String>();
+                        LinkedList<String> enzymeDBReferences = new LinkedList<String>();
+                        LinkedList<String> ensemblPlantsReferences = new LinkedList<String>();
+                        LinkedList<String> pirReferences = new LinkedList<String>();
+                        LinkedList<String> keggReferences = new LinkedList<String>();
+                        LinkedList<String> arrayExpressReferences = new LinkedList<String>();
+                        LinkedList<String> unigeneReferences = new LinkedList<String>();
+                        LinkedList<String> ensemblReferences = new LinkedList<String>();
                         HashMap<String, String> reactomeReferences = new HashMap<String, String>();
 
                         for (Element dbReferenceElem : dbReferenceList) {
                             String refId = dbReferenceElem.getAttributeValue("id");
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
-                                ensemblIdSt = refId;
+                                ensemblReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIR")) {
-                                pirIdSt = refId;
+                                pirReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UniGene")) {
-                                uniGeneIdSt = refId;
+                                unigeneReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("KEGG")) {
-                                keggIdSt = refId;
+                                keggReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EMBL")) {
-                                emblCrossReferences.add(refId);
+                                emblReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EC")) {
                                 enzymeDBReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArrayExpress")) {
-                                arrayExpressIdSt = refId;
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")) {
-                                //refseqReferences.add(refId);
+                                arrayExpressReferences.add(refId);
+                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RefSeq")) {                                
                                 List<Element> children = dbReferenceElem.getChildren("property");
                                 for (Element propertyElem : children) {
                                     if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
@@ -259,13 +257,13 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setSequence(sequenceSt);
                         currentProteinNode.setLength(seqLength);
                         currentProteinNode.setMass(seqMass);
-                        currentProteinNode.setArrayExpressId(arrayExpressIdSt);
-                        currentProteinNode.setPIRId(pirIdSt);
-                        currentProteinNode.setKeggId(keggIdSt);
-                        currentProteinNode.setEMBLreferences(convertToStringArray(emblCrossReferences));
+                        currentProteinNode.setArrayExpressReferences(convertToStringArray(arrayExpressReferences));
+                        currentProteinNode.setPIRReferences(convertToStringArray(pirReferences));
+                        currentProteinNode.setKeggReferences(convertToStringArray(keggReferences));
+                        currentProteinNode.setEMBLreferences(convertToStringArray(emblReferences));
                         currentProteinNode.setEnsemblPlantsReferences(convertToStringArray(ensemblPlantsReferences));
-                        currentProteinNode.setUniGeneId(uniGeneIdSt);
-                        currentProteinNode.setEnsemblId(ensemblIdSt);
+                        currentProteinNode.setUniGeneReferences(convertToStringArray(unigeneReferences));
+                        currentProteinNode.setEnsemblReferences(convertToStringArray(ensemblReferences));
 
                         //---------------gene-names-------------------
                         Element geneElement = entryXMLElem.asJDomElement().getChild(CommonData.GENE_TAG_NAME);

@@ -1342,7 +1342,7 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(ANU_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
-    public void setArachnoserverReferences(String[] value) {
+    public void setArachnoServerReferences(String[] value) {
         vertex.setProperty(ARACHNOSERVER_REFERENCES_PROPERTY, value);
     }
 
@@ -1378,11 +1378,11 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(CLEANEX_REFERENCES_PROPERTY, value);
     }
 
-    public void setCompluYeastReferences(String[] value) {
+    public void setCompluYeast2DPageReferences(String[] value) {
         vertex.setProperty(COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
-    public void setConserverReferences(String[] value) {
+    public void setConoServerReferences(String[] value) {
         vertex.setProperty(CONOSERVER_REFERENCES_PROPERTY, value);
     }
 
@@ -1634,7 +1634,7 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(NEXTBIO_REFERENCES_PROPERTY, value);
     }
 
-    public void setNextprotoReferences(String[] value) {
+    public void setNextprotReferences(String[] value) {
         vertex.setProperty(NEXTPROT_REFERENCES_PROPERTY, value);
     }
 
@@ -1690,7 +1690,7 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(PHARMGKB_REFERENCES_PROPERTY, value);
     }
 
-    public void setPHCI_2DPageReferences(String[] value) {
+    public void setPhci2DPageReferences(String[] value) {
         vertex.setProperty(PHCI_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
@@ -1702,15 +1702,15 @@ public class ProteinNode extends BasicVertex {
         vertex.setProperty(PHOS_SITE_REFERENCES_PROPERTY, value);
     }
 
-    public void setPhylomeReferences(String[] value) {
+    public void setPhylomeDBReferences(String[] value) {
         vertex.setProperty(PHYLOME_DB_REFERENCES_PROPERTY, value);
     }
 
-    public void setPirsfReferences(String[] value) {
+    public void setPIRSFReferences(String[] value) {
         vertex.setProperty(PIRSF_REFERENCES_PROPERTY, value);
     }
 
-    public void setPmapReferences(String[] value) {
+    public void setPmapCutDBReferences(String[] value) {
         vertex.setProperty(PMAP_CUTDB_REFERENCES_PROPERTY, value);
     }
 
