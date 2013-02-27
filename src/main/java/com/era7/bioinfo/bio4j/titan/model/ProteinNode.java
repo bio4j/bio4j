@@ -533,6 +533,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     }
     
     @Override
+    public String[] getPeroxibaseReferences(){
+        return getRefs(PEROXIBASE_REFERENCES_PROPERTY);
+    }
+    
+    @Override
     public String[] getPharmGKBReferences(){
         return getRefs(PHARMGKB_REFERENCES_PROPERTY);
     }
@@ -730,6 +735,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     @Override
     public String[] getUCSCPageReferences(){
         return getRefs(UCSC_REFERENCES_PROPERTY);
+    }
+    
+    @Override
+    public String[] getUnipathwayReferences(){
+        return getRefs(UNIPATHWAY_REFERENCES_PROPERTY);
     }
     
     @Override
@@ -1253,6 +1263,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     }
     
     @Override
+    public void setPeroxibaseReferences(String[] list){
+        setRefs(list, PEROXIBASE_REFERENCES_PROPERTY);
+    }
+    
+    @Override
     public void setPharmGKBReferences(String[] list){
         setRefs(list, PHARMGKB_REFERENCES_PROPERTY);
     }
@@ -1450,6 +1465,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     @Override
     public void setUCSCReferences(String[] list){
         setRefs(list, UCSC_REFERENCES_PROPERTY);
+    }
+    
+    @Override
+    public void setUnipathwayReferences(String[] list){
+        setRefs(list, UNIPATHWAY_REFERENCES_PROPERTY);
     }
     
     @Override

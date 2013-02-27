@@ -180,6 +180,7 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(ProteinNode.PDBJ_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PDBSUM_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PEPTIDE_ATLAS_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.PEROXIBASE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PHARMGKB_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PHCI_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PHOSPHOSITE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
@@ -220,6 +221,7 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(ProteinNode.TUBERCULIST_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.UCD_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.UCSC_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.UNIPATHWAY_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.VECTOR_BASE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.WORLD_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.WORM_BASE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();

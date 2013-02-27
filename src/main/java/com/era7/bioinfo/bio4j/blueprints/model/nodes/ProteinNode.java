@@ -164,6 +164,7 @@ public class ProteinNode extends BasicVertex {
     public static final String PDBJ_REFERENCES_PROPERTY = "protein_pdbj_references";
     public static final String PDBSUM_REFERENCES_PROPERTY = "protein_pdbsum_references";
     public static final String PEPTIDE_ATLAS_REFERENCES_PROPERTY = "protein_peptide_atlas_references";
+    public static final String PEROXIBASE_REFERENCES_PROPERTY = "protein_peroxibase_references";
     public static final String PHARMGKB_REFERENCES_PROPERTY = "protein_pharmgkb_references";
     public static final String PHCI_2DPAGE_REFERENCES_PROPERTY = "protein_phci_2dpage_references";
     public static final String PHOSPHOSITE_REFERENCES_PROPERTY = "protein_phosphosite_references";
@@ -204,6 +205,7 @@ public class ProteinNode extends BasicVertex {
     public static final String TUBERCULIST_REFERENCES_PROPERTY = "protein_tuberculist_references";
     public static final String UCD_2DPAGE_REFERENCES_PROPERTY = "protein_ucd_2dpage_references";
     public static final String UCSC_REFERENCES_PROPERTY = "protein_ucsc_references";
+    public static final String UNIPATHWAY_REFERENCES_PROPERTY = "protein_unipathway_references";
     public static final String VECTOR_BASE_REFERENCES_PROPERTY = "protein_vector_base_references";
     public static final String WORLD_2DPAGE_REFERENCES_PROPERTY = "protein_world_2dpage_references";
     public static final String WORM_BASE_REFERENCES_PROPERTY = "protein_worm_base_references";
@@ -651,6 +653,10 @@ public class ProteinNode extends BasicVertex {
         return (String[]) vertex.getProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY);
     }
     
+    public String[] getPeroxibaseReferences(){
+        return (String[]) vertex.getProperty(PEROXIBASE_REFERENCES_PROPERTY);
+    }
+    
     public String[] getPharmGKBReferences() {
         return (String[]) vertex.getProperty(PHARMGKB_REFERENCES_PROPERTY);
     }
@@ -809,6 +815,10 @@ public class ProteinNode extends BasicVertex {
     
     public String[] getUCSCPageReferences() {
         return (String[]) vertex.getProperty(UCSC_REFERENCES_PROPERTY);
+    }
+    
+    public String[] getUnipathwayReferences() {
+        return (String[]) vertex.getProperty(UNIPATHWAY_REFERENCES_PROPERTY);
     }
     
     public String[] getVectorBaseReferences() {
@@ -1685,6 +1695,10 @@ public class ProteinNode extends BasicVertex {
     public void setPeptideAtlasReferences(String[] value) {
         vertex.setProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY, value);
     }
+    
+    public void setPeroxibaseReferences(String[] value){
+        vertex.setProperty(PEROXIBASE_REFERENCES_PROPERTY, value);
+    }
 
     public void setPharmGKBReferences(String[] value) {
         vertex.setProperty(PHARMGKB_REFERENCES_PROPERTY, value);
@@ -1844,6 +1858,10 @@ public class ProteinNode extends BasicVertex {
 
     public void setUCSCReferences(String[] value) {
         vertex.setProperty(UCSC_REFERENCES_PROPERTY, value);
+    }
+    
+    public void setUnipathwayReferences(String[] value) {
+        vertex.setProperty(UNIPATHWAY_REFERENCES_PROPERTY, value);
     }
 
     public void setVectorBaseReferences(String[] value) {
