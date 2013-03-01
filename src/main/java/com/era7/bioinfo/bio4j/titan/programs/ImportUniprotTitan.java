@@ -166,7 +166,6 @@ public class ImportUniprotTitan implements Executable {
 
                         //linea final del organism
                         entryStBuilder.append(line);
-                        //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
                         XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
                         entryStBuilder.delete(0, entryStBuilder.length());
 
@@ -185,7 +184,7 @@ public class ImportUniprotTitan implements Executable {
                         }
 
                         currentAccessionId = accessionSt;
-
+                        
                         List<String> alternativeAccessions = new LinkedList<String>();
                         //-----------alternative accessions-------------
                         List<Element> altAccessionsList = entryXMLElem.asJDomElement().getChildren(CommonData.ENTRY_ACCESSION_TAG_NAME);
@@ -347,7 +346,7 @@ public class ImportUniprotTitan implements Executable {
                         
                         HashMap<String, String> reactomeReferences = new HashMap<String, String>();                        
                         
-                        for (Element dbReferenceElem : dbReferenceList) {
+                        for (Element dbReferenceElem : dbReferenceList) {                            
                             String refId = dbReferenceElem.getAttributeValue("id");
                             if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
                                 ensemblReferences.add(refId);
@@ -664,7 +663,7 @@ public class ImportUniprotTitan implements Executable {
                         String sequenceSt = sequenceElem.getText();
                         int seqLength = Integer.parseInt(sequenceElem.getAttributeValue(CommonData.SEQUENCE_LENGTH_ATTRIBUTE));
                         float seqMass = Float.parseFloat(sequenceElem.getAttributeValue(CommonData.SEQUENCE_MASS_ATTRIBUTE));
-
+                        
                         currentProteinNode.setModifiedDate(modifiedDateSt);
                         currentProteinNode.setAccession(accessionSt);
                         currentProteinNode.setName(nameSt);

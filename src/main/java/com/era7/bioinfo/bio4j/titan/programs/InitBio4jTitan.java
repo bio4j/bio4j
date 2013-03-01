@@ -186,6 +186,7 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(ProteinNode.PHOSPHOSITE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PHOS_SITE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PHYLOME_DB_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.PIR_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PIRSF_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PMAP_CUTDB_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.PMMA_2DPAGE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
