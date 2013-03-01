@@ -38,6 +38,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     //---------------------------------------------------------------------
     
     @Override
+    public String[] getGeneNames(){
+        return getRefs(GENE_NAMES_PROPERTY);        
+    }
+    
+    @Override
     public String[] getEMBLReferences(){
         return getRefs(EMBL_REFERENCES_PROPERTY);        
     }
@@ -771,6 +776,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     
     //----------------------------SETTERS-----------------------------------
     //---------------------------------------------------------------------
+    
+    @Override
+    public void setGeneNames(String[] list){
+        setRefs(list, GENE_NAMES_PROPERTY);        
+    }
     
     @Override
     public void setEMBLreferences(String[] list){
