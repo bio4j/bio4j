@@ -1169,6 +1169,8 @@ public class ImportUniprotTitan implements Executable {
         for (Element featureElem : featuresList) {
 
             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
+            
+            System.out.println("featureTypeSt = " + featureTypeSt);
 
             FeatureTypeNode featureTypeNode = nodeRetriever.getFeatureTypeByName(featureTypeSt);
 
@@ -1227,6 +1229,7 @@ public class ImportUniprotTitan implements Executable {
             }
 
             BasicFeatureRel basicFeatureRel = null;
+            
 
             if (featureTypeSt.equals(ActiveSiteFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new ActiveSiteFeatureRel(graph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), ActiveSiteFeatureRel.NAME));
@@ -1304,6 +1307,8 @@ public class ImportUniprotTitan implements Executable {
                 basicFeatureRel = new SiteFeatureRel(graph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SiteFeatureRel.NAME));
             } else if (featureTypeSt.equals(TurnFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
                 basicFeatureRel = new TurnFeatureRel(graph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), TurnFeatureRel.NAME));
+            } else if(featureTypeSt.equals(SequenceConflictFeatureRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)){
+                basicFeatureRel = new SequenceConflictFeatureRel(graph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SequenceConflictFeatureRel.NAME));
             }
 
             basicFeatureRel.setDescription(featureDescSt);
@@ -1315,8 +1320,6 @@ public class ImportUniprotTitan implements Executable {
             basicFeatureRel.setOriginal(originalSt);
             basicFeatureRel.setVariation(variationSt);
             basicFeatureRel.setRef(featureRefSt);
-
-            graph.addEdge(null, currentProteinNode.getNode(), featureTypeNode.getNode(), SequenceConflictFeatureRel.NAME);
 
         }
 
@@ -1362,6 +1365,8 @@ public class ImportUniprotTitan implements Executable {
 
             BasicCommentRel basicCommentRel = null;
             boolean updateCommentProps = true;
+            
+            //System.out.println("commentTypeS = " + commentTypeS);
 
             //-----toxic dose----------------
             if (commentTypeSt.equals(ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE)) {
@@ -1831,6 +1836,9 @@ public class ImportUniprotTitan implements Executable {
                 massSpectrometryCommentRel.setBegin(beginSt);
                 massSpectrometryCommentRel.setEnd(endSt);
                 basicCommentRel = massSpectrometryCommentRel;
+                
+            }else if (commentTypeSt.equals("interaction")) {
+                updateCommentProps = false;
             }
 
             if (updateCommentProps) {

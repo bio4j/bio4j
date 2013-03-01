@@ -85,6 +85,7 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(GoTermNode.ALTERNATIVE_IDS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         //---PROTEIN---
         graph.makeType().name(ProteinNode.ALTERNATIVE_ACCESSIONS_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.UNIGENE_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.EMBL_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.REFSEQ_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.GENE_NAMES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
