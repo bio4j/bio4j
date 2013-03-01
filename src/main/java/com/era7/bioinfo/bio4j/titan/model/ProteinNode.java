@@ -1248,6 +1248,11 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     }
     
     @Override
+    public void setPatricReferences(String[] list){
+        setRefs(list, PATRIC_REFERENCES_PROPERTY);
+    }
+    
+    @Override
     public void setPaxDBReferences(String[] list){
         setRefs(list, PAXDB_REFERENCES_PROPERTY);
     }
