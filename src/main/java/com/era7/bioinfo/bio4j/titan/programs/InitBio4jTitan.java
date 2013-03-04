@@ -85,6 +85,7 @@ public class InitBio4jTitan implements Executable {
             
             System.out.println("Creating utility nodes...");
             createAlternativeProductNodes(manager);
+            createSequenceCautionNodes(manager);
             
             System.out.println("Shutting down manager...");
             graph.shutdown();            
