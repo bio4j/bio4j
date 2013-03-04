@@ -21,6 +21,11 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.*;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductInitiationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductPromoterRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanFactory;
@@ -62,14 +67,18 @@ public class InitBio4jTitan implements Executable {
 
             System.out.println("Creating DB...");
 
-            TitanGraph graph = TitanFactory.open(conf);
+            Bio4jManager manager = new Bio4jManager(conf);
+            TitanGraph graph = manager.getGraph();
 
 
             System.out.println("Creating indices...");
             createIndices(graph);
             
             System.out.println("Creating non functiontal keys...");
-            createNonFunctionalKeys(graph);      
+            createNonFunctionalKeys(graph);    
+            
+            System.out.println("Creating utility nodes...");
+            createAlternativeProductNames(manager);
             
             System.out.println("Shutting down manager...");
             graph.shutdown();            
@@ -77,6 +86,25 @@ public class InitBio4jTitan implements Executable {
             System.out.println("Done! :)");
 
         }
+    }
+    
+    private static void createAlternativeProductNames(Bio4jManager manager){
+        
+        //--Alternative product INITIATION----
+        AlternativeProductNode initiationNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
+        initiationNode.setName(AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Alternative product PROMOTER----
+        AlternativeProductNode promoterNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
+        promoterNode.setName(AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Alternative product RIBOSOMAL FRAMESHIFTING----
+        AlternativeProductNode ribosomalFrameshiftingNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
+        ribosomalFrameshiftingNode.setName(AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Alternative product SPLICING----
+        AlternativeProductNode splicingNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
+        splicingNode.setName(AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
     }
     
     private static void createNonFunctionalKeys(TitanGraph graph){
