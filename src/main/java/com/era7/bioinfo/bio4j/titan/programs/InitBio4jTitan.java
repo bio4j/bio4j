@@ -34,7 +34,6 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinMisc
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
-import com.thinkaurelius.titan.core.TitanFactory;
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -220,6 +219,7 @@ public class InitBio4jTitan implements Executable {
         graph.makeType().name(ProteinNode.INTACT_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.IPI_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.KO_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
+        graph.makeType().name(ProteinNode.KEGG_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.LEGIO_LIST_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.LEPROMA_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
         graph.makeType().name(ProteinNode.MAIZE_GDB_REFERENCES_PROPERTY).dataType(String.class).indexed().makePropertyKey();
