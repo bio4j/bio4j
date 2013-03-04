@@ -25,6 +25,12 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.Alternati
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductPromoterRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductSplicingRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinErroneousGeneModelPredictionRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinErroneousInitiationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinErroneousTerminationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinErroneousTranslationRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinFrameshiftRel;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinMiscellaneousDiscrepancyRel;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bioinfoneo4j.BasicEntity;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
@@ -78,7 +84,7 @@ public class InitBio4jTitan implements Executable {
             createNonFunctionalKeys(graph);    
             
             System.out.println("Creating utility nodes...");
-            createAlternativeProductNames(manager);
+            createAlternativeProductNodes(manager);
             
             System.out.println("Shutting down manager...");
             graph.shutdown();            
@@ -88,7 +94,7 @@ public class InitBio4jTitan implements Executable {
         }
     }
     
-    private static void createAlternativeProductNames(Bio4jManager manager){
+    private static void createAlternativeProductNodes(Bio4jManager manager){
         
         //--Alternative product INITIATION----
         AlternativeProductNode initiationNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
@@ -105,6 +111,34 @@ public class InitBio4jTitan implements Executable {
         //--Alternative product SPLICING----
         AlternativeProductNode splicingNode = new AlternativeProductNode(manager.createNode(AlternativeProductNode.NODE_TYPE));
         splicingNode.setName(AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+    }
+    
+    private static void createSequenceCautionNodes(Bio4jManager manager){
+        
+        //--Sequence caution ERRONEOUS GENE MODEL PREDICTION----
+        SequenceCautionNode proteinErrGeneModelPredNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinErrGeneModelPredNode.setName(ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Sequence caution ERRONEOUS INITIATION----
+        SequenceCautionNode proteinErrInitiationNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinErrInitiationNode.setName(ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Sequence caution ERRONEOUS TRANSLATION----
+        SequenceCautionNode proteinErrTranslationNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinErrTranslationNode.setName(ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Sequence caution ERRONEOUS TERMINATION----
+        SequenceCautionNode proteinErrTerminationNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinErrTerminationNode.setName(ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Sequence caution FRAMESHIFT----
+        SequenceCautionNode proteinFrameshiftNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinFrameshiftNode.setName(ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
+        //--Sequence caution MISCELLANEOUS DISCREPANCY----
+        SequenceCautionNode proteinMiscDiscrepancyNode = new SequenceCautionNode(manager.createNode(SequenceCautionNode.NODE_TYPE));
+        proteinMiscDiscrepancyNode.setName(ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
+        
     }
     
     private static void createNonFunctionalKeys(TitanGraph graph){
