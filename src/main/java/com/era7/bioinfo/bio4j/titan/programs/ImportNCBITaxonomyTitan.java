@@ -24,8 +24,8 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +72,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
 
             Bio4jManager manager = null;
             int taxonCounter = 0;
+            int limitForTransaction = 1000;
 
             boolean associateUniprotTaxonomy = Boolean.parseBoolean(args[4]);
 
@@ -127,6 +128,10 @@ public class ImportNCBITaxonomyTitan implements Executable {
                         nodeParentMap.put(node.getTaxId(), columns[1].trim());
 
                         taxonCounter++;
+                        
+                        if((taxonCounter % limitForTransaction) == 0){
+                            manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
+                        }
 
                     }
 

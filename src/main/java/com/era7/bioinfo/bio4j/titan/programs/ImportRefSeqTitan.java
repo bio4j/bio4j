@@ -22,10 +22,10 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.*;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfo.bioinfoutil.genbank.GBCommon;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
@@ -72,6 +72,8 @@ public class ImportRefSeqTitan implements Executable {
             BufferedWriter statsBuff = null;
             Bio4jManager manager = null;
             int genomeElementCounter = 0;
+            int limitForPrintingOut = 1000;
+            int limitForTransaction = 100;
 
             try {
                 // This block configures the logger with handler and formatter
@@ -93,7 +95,6 @@ public class ImportRefSeqTitan implements Executable {
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
                 TitanGraph graph = manager.getGraph();
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
 
                 for (File file : files) {
                     if (file.getName().endsWith(".gbff")) {
@@ -367,9 +368,17 @@ public class ImportRefSeqTitan implements Executable {
                                 graph.addEdge(null, genomeElementNode.getNode(), tRNANode.getNode(), GenomeElementTRnaRel.NAME);
                             }
 
-                            logger.log(Level.INFO, (versionSt + " saved!"));
+                            //logger.log(Level.INFO, (versionSt + " saved!"));
 
                             genomeElementCounter++;
+                            
+                            
+                            if(genomeElementCounter % limitForTransaction == 0){
+                                manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
+                            }
+                            if((genomeElementCounter % limitForPrintingOut) == 0){                                
+                                logger.log(Level.INFO, (genomeElementCounter + " genome elements stored..."));
+                            }
 
                         }
 

@@ -79,7 +79,7 @@ public class ImportEnzymeDBTitan implements Executable {
             Configuration conf = new BaseConfiguration();
             conf.setProperty("storage.directory", args[1]);
             conf.setProperty("storage.backend", "local");
-            conf.setProperty("storage.batch-loading", "true");
+            conf.setProperty("storage.batch-loading", "false");
 
             TitanGraph graph = TitanFactory.open(conf);            
                                                
@@ -214,7 +214,7 @@ public class ImportEnzymeDBTitan implements Executable {
                 try {
                     //closing logger file handler
                     fh.close();
-                    logger.log(Level.INFO, "Closing up batch graph service....");
+                    logger.log(Level.INFO, "Closing up graph service....");
                     // shutdown, makes sure all changes are written to disk
                     graph.shutdown();
                     

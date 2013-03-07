@@ -113,7 +113,8 @@ public class ImportUniprotTitan implements Executable {
             BufferedWriter statsBuff = null;
 
             int proteinCounter = 0;
-            int limitForPrintingOut = 10000;
+            int limitForPrintingOut = 1000;
+            int limitForTransaction = 100;
 
             //------------------ init DB handlers------------------------
             Configuration conf = new BaseConfiguration();
@@ -1103,11 +1104,12 @@ public class ImportUniprotTitan implements Executable {
                         graph.addEdge(null, currentProteinNode.getNode(), organismNode.getNode(), ProteinOrganismRel.NAME);
 
                         proteinCounter++;
-                        if ((proteinCounter % limitForPrintingOut) == 0) {
+                        if ((proteinCounter % limitForTransaction) == 0) { 
+                            manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
+                        }
+                        if((proteinCounter % limitForPrintingOut) == 0){
                             String countProteinsSt = proteinCounter + " proteins inserted!!";
                             logger.log(Level.INFO, countProteinsSt);
-                            
-                            manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
                         }
 
                     }
@@ -1170,8 +1172,6 @@ public class ImportUniprotTitan implements Executable {
 
             String featureTypeSt = featureElem.getAttributeValue(CommonData.FEATURE_TYPE_ATTRIBUTE);
             
-            System.out.println("featureTypeSt = " + featureTypeSt);
-
             FeatureTypeNode featureTypeNode = nodeRetriever.getFeatureTypeByName(featureTypeSt);
 
             if (featureTypeNode == null) {

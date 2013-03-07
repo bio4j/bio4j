@@ -25,6 +25,7 @@ import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanGraph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,7 @@ public class ImportProteinInteractionsTitan implements Executable {
 
             int proteinCounter = 0;
             int limitForPrintingOut = 10000;
+            int limitForTransaction = 1000;
 
             try {
 
@@ -193,6 +195,11 @@ public class ImportProteinInteractionsTitan implements Executable {
                         }
 
                         proteinCounter++;
+                        
+                        if((proteinCounter % limitForTransaction) == 0){
+                            manager.getGraph().stopTransaction(TransactionalGraph.Conclusion.SUCCESS);
+                        }
+                        
                         if ((proteinCounter % limitForPrintingOut) == 0) {
                             logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
                         }
