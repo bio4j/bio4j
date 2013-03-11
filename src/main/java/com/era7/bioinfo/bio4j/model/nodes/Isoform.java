@@ -20,7 +20,7 @@ package com.era7.bioinfo.bio4j.model.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Isoform {
+public interface Isoform extends BasicNode{
     
     //----GETTERS---
     public String getId();

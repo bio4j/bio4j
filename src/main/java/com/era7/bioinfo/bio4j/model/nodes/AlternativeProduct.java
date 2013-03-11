@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface AlternativeProduct {
+public interface AlternativeProduct extends BasicNode{
     
     //----GETTERS---
     public String getName();

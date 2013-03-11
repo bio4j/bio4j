@@ -20,7 +20,7 @@ package com.era7.bioinfo.bio4j.model.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface FeatureType {
+public interface FeatureType extends BasicNode{
     
     //----GETTERS---
     public String getName();

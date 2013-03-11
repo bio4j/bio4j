@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Protein {
+public interface Protein extends BasicNode{
  
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------

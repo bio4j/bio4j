@@ -20,11 +20,13 @@ package com.era7.bioinfo.bio4j.model.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SequenceCaution {
+public interface SequenceCaution extends BasicNode{
     
     //----GETTERS---
     public String getName();
     
     //----SETTERS----
     public void setName(String value);    
+    
+    
 }

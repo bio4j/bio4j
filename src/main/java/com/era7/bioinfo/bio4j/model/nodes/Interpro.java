@@ -22,7 +22,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Interpro {
+public interface Interpro extends BasicNode{
     
     //----GETTERS---
     public String getId();

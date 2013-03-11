@@ -20,11 +20,12 @@ package com.era7.bioinfo.bio4j.model.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Consortium extends BasicNode{
+public interface SubcellularLocation extends BasicNode{
     
     //----GETTERS---
     public String getName();
-
+    
     //----SETTERS----
-    public void setName(String value); 
+    public void setName(String value);    
+    
 }
