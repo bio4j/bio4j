@@ -18,6 +18,12 @@ package com.era7.bioinfo.bio4j.model.nodes.refseq;
 
 import com.era7.bioinfo.bio4j.model.nodes.BasicNode;
 import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MiscRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.NcRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.RRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TmRNA;
 import java.util.List;
 
 /**
