@@ -34,13 +34,13 @@ import org.neo4j.graphdb.Relationship;
 public class GetProteinsWithInterpro {
 
     /**
-     * @param args Just one argument (protein accession)
+     * @param args Just two arguments (DB folder and interpro motif)
      */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("The program expects two parameters: \n"
-                    + "2. Bio4j DB folder\n"
-                    + "1. Interpro motif\n");
+                    + "1. Bio4j DB folder\n"
+                    + "2. Interpro motif\n");
         } else {
 
             String inputSt = args[1];

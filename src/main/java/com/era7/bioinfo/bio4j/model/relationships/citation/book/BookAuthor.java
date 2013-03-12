@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -14,15 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.model.nodes;
+
+package com.era7.bioinfo.bio4j.model.relationships.citation.book;
+
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicNode {
+public interface BookAuthor extends BasicRelationship{
     
-    public String getType();    
-    public void setType(String value);
+    //-------GETTERS-------
+    public Book getBook();
+    
+    //-------SETTERS-------
+    public Person getAuthor();
     
 }

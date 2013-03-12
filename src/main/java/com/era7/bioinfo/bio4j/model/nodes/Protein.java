@@ -16,6 +16,15 @@
  */
 package com.era7.bioinfo.bio4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
+import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservation;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
 import java.util.List;
 
 /**

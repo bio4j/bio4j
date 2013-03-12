@@ -14,15 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.model.nodes;
+package com.era7.bioinfo.bio4j.model.relationships.citation.article;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicNode {
+public interface ArticleAuthor {
     
-    public String getType();    
-    public void setType(String value);
+    public static final String NAME = "ARTICLE_AUTHOR";
     
 }
