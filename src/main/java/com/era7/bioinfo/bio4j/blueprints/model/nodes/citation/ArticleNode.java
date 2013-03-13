@@ -23,6 +23,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleJournalRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -37,7 +38,7 @@ import java.util.List;
  * and are based on the existing ISO and ANSI standards.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ArticleNode extends BasicVertex{
+public class ArticleNode extends BasicVertex implements Article{
 
     public static final String NODE_TYPE = ArticleNode.class.getCanonicalName();
 
@@ -58,15 +59,23 @@ public class ArticleNode extends BasicVertex{
     }
 
 
+    @Override
     public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
+    @Override
     public String getPubmedId(){    return String.valueOf(vertex.getProperty(PUBMED_ID_PROPERTY));}
+    @Override
     public String getMedlineId(){    return String.valueOf(vertex.getProperty(MEDLINE_ID_PROPERTY));}
+    @Override
     public String getDoiId(){    return String.valueOf(vertex.getProperty(DOI_ID_PROPERTY));}
 
 
+    @Override
     public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
+    @Override
     public void setPubmedId(String value){  vertex.setProperty(PUBMED_ID_PROPERTY, value);}
+    @Override
     public void setMedlineId(String value){  vertex.setProperty(MEDLINE_ID_PROPERTY, value);}
+    @Override
     public void setDoiId(String value){  vertex.setProperty(DOI_ID_PROPERTY, value);}
 
 

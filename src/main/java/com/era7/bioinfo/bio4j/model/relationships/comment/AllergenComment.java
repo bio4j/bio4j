@@ -14,37 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.blueprints.model.nodes;
-
-import com.era7.bioinfo.bio4j.model.nodes.BasicNode;
-import com.tinkerpop.blueprints.Vertex;
+package com.era7.bioinfo.bio4j.model.relationships.comment;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BasicVertex implements BasicNode{
-    
-    public static final String NODE_TYPE_PROPERTY = "nodeType";
-    
-    protected Vertex vertex;
-    
-    public BasicVertex(Vertex v){
-        vertex = v;
-    }
-    
-    public Vertex getNode(){
-        return vertex;
-    }
-    
-    @Override
-    public String getType(){
-        return String.valueOf(vertex.getProperty(NODE_TYPE_PROPERTY));
-    }
-    
-    @Override
-    public void setType(String value){
-        vertex.setProperty(NODE_TYPE_PROPERTY, value);
-    }
+public interface AllergenComment extends BasicComment{    
     
 }

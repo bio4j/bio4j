@@ -38,6 +38,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
@@ -51,7 +52,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinNode extends BasicVertex {
+public class ProteinNode extends BasicVertex implements Protein{
 
     public static final String NODE_TYPE = ProteinNode.class.getCanonicalName();
     public static final String NAME_PROPERTY = "protein_name";
@@ -217,638 +218,797 @@ public class ProteinNode extends BasicVertex {
         super(v);
     }
 
+    @Override
     public String getName() {
         return String.valueOf(vertex.getProperty(NAME_PROPERTY));
     }
 
+    @Override
     public String getFullName() {
         return String.valueOf(vertex.getProperty(FULL_NAME_PROPERTY));
     }
 
+    @Override
     public String getShortName() {
         return String.valueOf(vertex.getProperty(SHORT_NAME_PROPERTY));
     }
 
+    @Override
     public String getAccession() {
         return String.valueOf(vertex.getProperty(ACCESSION_PROPERTY));
     }
 
+    @Override
     public String getSequence() {
         return String.valueOf(vertex.getProperty(SEQUENCE_PROPERTY));
     }    
 
+    @Override
     public String getModifiedDate() {
         return String.valueOf(vertex.getProperty(MODIFIED_DATE_PROPERTY));
     }
 
+    @Override
     public float getMass() {
         return Float.parseFloat(String.valueOf(vertex.getProperty(MASS_PROPERTY)));
     }
 
+    @Override
     public int getLength() {
         return Integer.parseInt(String.valueOf(vertex.getProperty(LENGTH_PROPERTY)));
     }
 
+    @Override
     public String[] getGeneNames() {
         return (String[]) vertex.getProperty(GENE_NAMES_PROPERTY);
     }
     
+    @Override
     public String[] getEnsemblReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getEMBLReferences() {
         return (String[]) vertex.getProperty(EMBL_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getEnsemblPlantsReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getRefseqReferences() {
         return (String[]) vertex.getProperty(REFSEQ_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getAlternativeAcessions() {
         return (String[]) vertex.getProperty(ALTERNATIVE_ACCESSIONS_PROPERTY);
     }
 
+    @Override
     public String[] getPIRReferences() {
         return (String[]) vertex.getProperty(PIR_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getKeggReferences() {
         return (String[]) vertex.getProperty(KEGG_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getArrayExpressReferences() {
         return (String[]) vertex.getProperty(ARRAY_EXPRESS_REFERENCES_PROPERTY);
     }
 
+    @Override
     public String[] getUniGeneReferences() {
         return (String[]) vertex.getProperty(UNIGENE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDBaseEColiReferences() {
         return (String[]) vertex.getProperty(DBASE_ECOLI_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getAarhusGhent2DPageReferences() {
         return (String[]) vertex.getProperty(AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getAGDReferences() {
         return (String[]) vertex.getProperty(AGD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getAllergomeReferences() {
         return (String[]) vertex.getProperty(ALLERGOME_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getANU2DPageReferences() {
         return (String[]) vertex.getProperty(ANU_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getArachnoServerReferences() {
         return (String[]) vertex.getProperty(ARACHNOSERVER_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getBGeeReferences() {
         return (String[]) vertex.getProperty(BGEE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getBindingDBReferences() {
         return (String[]) vertex.getProperty(BINDING_DB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getBioCycReferences() {
         return (String[]) vertex.getProperty(BIOCYC_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getBrendaReferences() {
         return (String[]) vertex.getProperty(BRENDA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCazyReferences() {
         return (String[]) vertex.getProperty(CAZY_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCGDReferences() {
         return (String[]) vertex.getProperty(CGD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCHEMBLReferences() {
         return (String[]) vertex.getProperty(CHEMBL_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCleanexReferences() {
         return (String[]) vertex.getProperty(CLEANEX_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCompluyeast2DPageReferences() {
         return (String[]) vertex.getProperty(COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getConoServerReferences() {
         return (String[]) vertex.getProperty(CONOSERVER_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCornea2DPageReferences() {
         return (String[]) vertex.getProperty(CORNEA_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCTDReferences() {
         return (String[]) vertex.getProperty(CTD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getCYGDReferences() {
         return (String[]) vertex.getProperty(CYGD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDBSNPReferences() {
         return (String[]) vertex.getProperty(DBSNP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDDBJReferences() {
         return (String[]) vertex.getProperty(DDBJ_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDictyBaseReferences() {
         return (String[]) vertex.getProperty(DICTY_BASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDIPReferences() {
         return (String[]) vertex.getProperty(DIP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDisprotReferences() {
         return (String[]) vertex.getProperty(DISPROT_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDMDMReferences() {
         return (String[]) vertex.getProperty(DMDM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDnasuReferences() {
         return (String[]) vertex.getProperty(DNASU_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDosacCobs2DPageReferences() {
         return (String[]) vertex.getProperty(DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getDrugBankReferences() {
         return (String[]) vertex.getProperty(DRUGBANK_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEchoBaseReferences() {
         return (String[]) vertex.getProperty(ECHOBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEcoGeneReferences() {
         return (String[]) vertex.getProperty(ECOGENE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEggnogReferences() {
         return (String[]) vertex.getProperty(EGGNOG_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEnsemblBacteriaReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_BACTERIA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEnsemblFungiReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_FUNGI_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEnsemblMetazoaReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_METAZOA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEnsemblProtistsReferences() {
         return (String[]) vertex.getProperty(ENSEMBL_PROTISTS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEUHCVDBReferences() {
         return (String[]) vertex.getProperty(EUHCVDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEUPathDBReferences() {
         return (String[]) vertex.getProperty(EUPATHDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getEvolutionaryTraceReferences() {
         return (String[]) vertex.getProperty(EVOLUTIONARY_TRACE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getFlybaseReferences() {
         return (String[]) vertex.getProperty(FLYBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenAtlasReferences() {
         return (String[]) vertex.getProperty(GENATLAS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenbankReferences() {
         return (String[]) vertex.getProperty(GENBANK_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGene3DReferences() {
         return (String[]) vertex.getProperty(GENE3D_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenecardsReferences() {
         return (String[]) vertex.getProperty(GENECARDS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenefarmReferences() {
         return (String[]) vertex.getProperty(GENEFARM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGeneIDReferences() {
         return (String[]) vertex.getProperty(GENEID_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGeneTreeReferences() {
         return (String[]) vertex.getProperty(GENETREE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenevestigatorReferences() {
         return (String[]) vertex.getProperty(GENEVESTIGATOR_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenolistReferences() {
         return (String[]) vertex.getProperty(GENOLIST_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenomeReviewsReferences() {
         return (String[]) vertex.getProperty(GENOME_REVIEWS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGenomeRNAIReferences() {
         return (String[]) vertex.getProperty(GENOME_RNAI_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGermOnlineReferences() {
         return (String[]) vertex.getProperty(GERMONLINE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGlycoSuiteDBReferences() {
         return (String[]) vertex.getProperty(GLYCOSUITEDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGPCRDBReferences() {
         return (String[]) vertex.getProperty(GPCRDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getGrameneReferences() {
         return (String[]) vertex.getProperty(GRAMENE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHINVDBReferences() {
         return (String[]) vertex.getProperty(HINVDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHamapReferences() {
         return (String[]) vertex.getProperty(HAMAP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHGNCReferences() {
         return (String[]) vertex.getProperty(HGNC_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHogenomReferences() {
         return (String[]) vertex.getProperty(HOGENOM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHovergenReferences() {
         return (String[]) vertex.getProperty(HOVERGEN_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHPAReferences() {
         return (String[]) vertex.getProperty(HPA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHSSPReferences() {
         return (String[]) vertex.getProperty(HSSP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getHugeReferences() {
         return (String[]) vertex.getProperty(HUGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getIMGTReferences() {
         return (String[]) vertex.getProperty(IMGT_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getInparanoidReferences() {
         return (String[]) vertex.getProperty(INPARANOID_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getIntactReferences() {
         return (String[]) vertex.getProperty(INTACT_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getIPIReferences() {
         return (String[]) vertex.getProperty(IPI_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getKOReferences() {
         return (String[]) vertex.getProperty(KO_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getLegioListReferences() {
         return (String[]) vertex.getProperty(LEGIO_LIST_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getLepromaReferences() {
         return (String[]) vertex.getProperty(LEPROMA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMaizeGDBReferences() {
         return (String[]) vertex.getProperty(MAIZE_GDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMeropsReferences() {
         return (String[]) vertex.getProperty(MEROPS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMGIReferences() {
         return (String[]) vertex.getProperty(MGI_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMicadoReferences() {
         return (String[]) vertex.getProperty(MICADO_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMIMReferences() {
         return (String[]) vertex.getProperty(MIM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMintReferences() {
         return (String[]) vertex.getProperty(MINT_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getModbaseReferences() {
         return (String[]) vertex.getProperty(MODBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getMycoClapReferences() {
         return (String[]) vertex.getProperty(MYCOCLAP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getNextBioReferences() {
         return (String[]) vertex.getProperty(NEXTBIO_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getNextProtReferences() {
         return (String[]) vertex.getProperty(NEXTPROT_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getOGPReferences() {
         return (String[]) vertex.getProperty(OGP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getOMAReferences() {
         return (String[]) vertex.getProperty(OMA_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getOrphanetReferences() {
         return (String[]) vertex.getProperty(ORPHANET_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getOrthoDBReferences() {
         return (String[]) vertex.getProperty(ORTHODB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPantherReferences() {
         return (String[]) vertex.getProperty(PANTHER_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPathwayInteractionDBReferences() {
         return (String[]) vertex.getProperty(PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPatricReferences() {
         return (String[]) vertex.getProperty(PATRIC_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPaxDBReferences() {
         return (String[]) vertex.getProperty(PAXDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPDBReferences() {
         return (String[]) vertex.getProperty(PDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPDBJReferences() {
         return (String[]) vertex.getProperty(PDBJ_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPDBSumReferences() {
         return (String[]) vertex.getProperty(PDBSUM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPeptideAtlasReferences() {
         return (String[]) vertex.getProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPeroxibaseReferences(){
         return (String[]) vertex.getProperty(PEROXIBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPharmGKBReferences() {
         return (String[]) vertex.getProperty(PHARMGKB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPhci2DPageReferences() {
         return (String[]) vertex.getProperty(PHCI_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPhosphositeReferences() {
         return (String[]) vertex.getProperty(PHOSPHOSITE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPhosSiteReferences() {
         return (String[]) vertex.getProperty(PHOS_SITE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPhylomeDBReferences() {
         return (String[]) vertex.getProperty(PHYLOME_DB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPIRSFReferences() {
         return (String[]) vertex.getProperty(PIRSF_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPmapCutDBReferences() {
         return (String[]) vertex.getProperty(PMAP_CUTDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPMMA2DPageReferences() {
         return (String[]) vertex.getProperty(PMMA_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPombaseReferences() {
         return (String[]) vertex.getProperty(POMBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPptaseDBReferences() {
         return (String[]) vertex.getProperty(PPTASEDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPrideReferences() {
         return (String[]) vertex.getProperty(PRIDE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPrintsReferences() {
         return (String[]) vertex.getProperty(PRINTS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getProdomReferences() {
         return (String[]) vertex.getProperty(PRODOM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPromexReferences() {
         return (String[]) vertex.getProperty(PROMEX_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPrositeReferences() {
         return (String[]) vertex.getProperty(PROSITE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getProtClustDBReferences() {
         return (String[]) vertex.getProperty(PROT_CLUST_DB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getProteinModelPortalReferences() {
         return (String[]) vertex.getProperty(PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getProtonetReferences() {
         return (String[]) vertex.getProperty(PROTONET_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getPseudoCapReferences() {
         return (String[]) vertex.getProperty(PSEUDO_CAP_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getRatHeart2DPageReferences() {
         return (String[]) vertex.getProperty(RAT_HEART_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getRCSBPDBReferences() {
         return (String[]) vertex.getProperty(RCSB_PDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getRebaseReferences() {
         return (String[]) vertex.getProperty(REBASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getReproduction2DPageReferences() {
         return (String[]) vertex.getProperty(REPRODUCTION_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getRGDReferences() {
         return (String[]) vertex.getProperty(RGD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getRougeReferences() {
         return (String[]) vertex.getProperty(ROUGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSBKBReferences() {
         return (String[]) vertex.getProperty(SBKB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSGDReferences() {
         return (String[]) vertex.getProperty(SGD_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSiena2DPageReferences() {
         return (String[]) vertex.getProperty(SIENA_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSmartReferences() {
         return (String[]) vertex.getProperty(SMART_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSMRReferences() {
         return (String[]) vertex.getProperty(SMR_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSourceReferences() {
         return (String[]) vertex.getProperty(SOURCE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getStringReferences() {
         return (String[]) vertex.getProperty(STRING_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSupfamReferences() {
         return (String[]) vertex.getProperty(SUPFAM_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getSwiss2DPageReferences() {
         return (String[]) vertex.getProperty(SWISS_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getTairReferences() {
         return (String[]) vertex.getProperty(TAIR_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getTCDBReferences() {
         return (String[]) vertex.getProperty(TCDB_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getTIGRFAMSReferences() {
         return (String[]) vertex.getProperty(TIGRFAMS_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getTuberculistReferences() {
         return (String[]) vertex.getProperty(TUBERCULIST_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getUCD2DPageReferences() {
         return (String[]) vertex.getProperty(UCD_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getUCSCPageReferences() {
         return (String[]) vertex.getProperty(UCSC_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getUnipathwayReferences() {
         return (String[]) vertex.getProperty(UNIPATHWAY_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getVectorBaseReferences() {
         return (String[]) vertex.getProperty(VECTOR_BASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getWorld2DPageReferences() {
         return (String[]) vertex.getProperty(WORLD_2DPAGE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getWormBaseReferences() {
         return (String[]) vertex.getProperty(WORM_BASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getXenBaseReferences() {
         return (String[]) vertex.getProperty(XEN_BASE_REFERENCES_PROPERTY);
     }
     
+    @Override
     public String[] getZfinReferences() {
         return (String[]) vertex.getProperty(ZFIN_REFERENCES_PROPERTY);
     }
     
+    @Override
     public boolean isUniref50Representant() {
         return !vertex.getEdges(Direction.IN, UniRef50MemberRel.NAME).iterator().hasNext();
     }
 
+    @Override
     public boolean isUniref90Representant() {
         return !vertex.getEdges(Direction.IN, UniRef90MemberRel.NAME).iterator().hasNext();
     }
 
+    @Override
     public boolean isUniref100Representant() {
         return !vertex.getEdges(Direction.IN, UniRef100MemberRel.NAME).iterator().hasNext();
     }
@@ -1260,626 +1420,782 @@ public class ProteinNode extends BasicVertex {
     //---------------------------------------------------------------------------------------------
     //---------------------------------------------------------------------------------------------
 
+    @Override
     public void setName(String value) {
         vertex.setProperty(NAME_PROPERTY, value);
     }
 
+    @Override
     public void setFullName(String value) {
         vertex.setProperty(FULL_NAME_PROPERTY, value);
     }
 
+    @Override
     public void setShortName(String value) {
         vertex.setProperty(SHORT_NAME_PROPERTY, value);
     }
 
+    @Override
     public void setAccession(String value) {
         vertex.setProperty(ACCESSION_PROPERTY, value);
     }
 
+    @Override
     public void setSequence(String value) {
         vertex.setProperty(SEQUENCE_PROPERTY, value);
     }
 
+    @Override
     public void setModifiedDate(String value) {
         vertex.setProperty(MODIFIED_DATE_PROPERTY, value);
     }
 
+    @Override
     public void setMass(float value) {
         vertex.setProperty(MASS_PROPERTY, value);
     }
 
+    @Override
     public void setLength(int value) {
         vertex.setProperty(LENGTH_PROPERTY, value);
     }
 
+    @Override
     public void setGeneNames(String[] value) {
         vertex.setProperty(GENE_NAMES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblReferences(String[] value) {
         vertex.setProperty(ENSEMBL_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setKeggReferences(String[] value) {
         vertex.setProperty(KEGG_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPIRReferences(String[] value) {
         vertex.setProperty(PIR_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEMBLreferences(String[] value) {
         vertex.setProperty(EMBL_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblPlantsReferences(String[] value) {
         vertex.setProperty(ENSEMBL_PLANTS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRefseqReferences(String[] value) {
         vertex.setProperty(REFSEQ_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setAlternativeAccessions(String[] value) {
         vertex.setProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, value);
     }
 
+    @Override
     public void setArrayExpressReferences(String[] value) {
         vertex.setProperty(ARRAY_EXPRESS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setUniGeneReferences(String[] value) {
         vertex.setProperty(UNIGENE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDBaseEcoliReferences(String[] value) {
         vertex.setProperty(DBASE_ECOLI_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setAarhusGhent2DPageReferences(String[] value) {
         vertex.setProperty(AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setAGDReferences(String[] value) {
         vertex.setProperty(AGD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setAllergomeReferences(String[] value) {
         vertex.setProperty(ALLERGOME_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setAnu2DPageReferences(String[] value) {
         vertex.setProperty(ANU_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setArachnoServerReferences(String[] value) {
         vertex.setProperty(ARACHNOSERVER_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setBGeeReferences(String[] value) {
         vertex.setProperty(BGEE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setBindingDBReferences(String[] value) {
         vertex.setProperty(BINDING_DB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setBiocycReferences(String[] value) {
         vertex.setProperty(BIOCYC_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setBrendaReferences(String[] value) {
         vertex.setProperty(BRENDA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCazyReferences(String[] value) {
         vertex.setProperty(CAZY_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCGDReferences(String[] value) {
         vertex.setProperty(CGD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCHEmblReferences(String[] value) {
         vertex.setProperty(CHEMBL_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCleanexReferences(String[] value) {
         vertex.setProperty(CLEANEX_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCompluYeast2DPageReferences(String[] value) {
         vertex.setProperty(COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setConoServerReferences(String[] value) {
         vertex.setProperty(CONOSERVER_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCornea2DPageReferences(String[] value) {
         vertex.setProperty(CORNEA_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCTDReferences(String[] value) {
         vertex.setProperty(CTD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setCYGDReferences(String[] value) {
         vertex.setProperty(CYGD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDBSNPReferences(String[] value) {
         vertex.setProperty(DBSNP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDDBJReferences(String[] value) {
         vertex.setProperty(DDBJ_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDictyBaseReferences(String[] value) {
         vertex.setProperty(DICTY_BASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDIPReferences(String[] value) {
         vertex.setProperty(DIP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDisprotReferences(String[] value) {
         vertex.setProperty(DISPROT_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDMDMReferences(String[] value) {
         vertex.setProperty(DMDM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDnasuReferences(String[] value) {
         vertex.setProperty(DNASU_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDosacCobs2DPageReferences(String[] value) {
         vertex.setProperty(DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setDrugbankReferences(String[] value) {
         vertex.setProperty(DRUGBANK_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEchoBaseReferences(String[] value) {
         vertex.setProperty(ECHOBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEcogeneReferences(String[] value) {
         vertex.setProperty(ECOGENE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEggnogReferences(String[] value) {
         vertex.setProperty(EGGNOG_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblBacteriaReferences(String[] value) {
         vertex.setProperty(ENSEMBL_BACTERIA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblFungiReferences(String[] value) {
         vertex.setProperty(ENSEMBL_FUNGI_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblMetazoaReferences(String[] value) {
         vertex.setProperty(ENSEMBL_METAZOA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEnsemblProtistsReferences(String[] value) {
         vertex.setProperty(ENSEMBL_PROTISTS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEuhcvDBReferences(String[] value) {
         vertex.setProperty(EUHCVDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEupathDBReferences(String[] value) {
         vertex.setProperty(EUPATHDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setEvolutionaryTraceReferences(String[] value) {
         vertex.setProperty(EVOLUTIONARY_TRACE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setFlyBaseReferences(String[] value) {
         vertex.setProperty(FLYBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenAtlasReferences(String[] value) {
         vertex.setProperty(GENATLAS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenBankReferences(String[] value) {
         vertex.setProperty(GENBANK_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGene3DReferences(String[] value) {
         vertex.setProperty(GENE3D_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGeneCardsReferences(String[] value) {
         vertex.setProperty(GENECARDS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGeneFarmReferences(String[] value) {
         vertex.setProperty(GENEFARM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGeneIDReferences(String[] value) {
         vertex.setProperty(GENEID_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGeneTreeReferences(String[] value) {
         vertex.setProperty(GENETREE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenevestigatorReferences(String[] value) {
         vertex.setProperty(GENEVESTIGATOR_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenolistReferences(String[] value) {
         vertex.setProperty(GENOLIST_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenomeReviewsReferences(String[] value) {
         vertex.setProperty(GENOME_REVIEWS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGenomeRNAIReferences(String[] value) {
         vertex.setProperty(GENOME_RNAI_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGermOnlineReferences(String[] value) {
         vertex.setProperty(GERMONLINE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGlycoSuiteDBReferences(String[] value) {
         vertex.setProperty(GLYCOSUITEDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGPCRDBReferences(String[] value) {
         vertex.setProperty(GPCRDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setGrameneReferences(String[] value) {
         vertex.setProperty(GRAMENE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHINVDBReferences(String[] value) {
         vertex.setProperty(HINVDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHamapReferences(String[] value) {
         vertex.setProperty(HAMAP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHGNCReferences(String[] value) {
         vertex.setProperty(HGNC_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHogenomReferences(String[] value) {
         vertex.setProperty(HOGENOM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHovergenReferences(String[] value) {
         vertex.setProperty(HOVERGEN_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHpaReferences(String[] value) {
         vertex.setProperty(HPA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHsspReferences(String[] value) {
         vertex.setProperty(HSSP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setHugeReferences(String[] value) {
         vertex.setProperty(HUGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setIMGTReferences(String[] value) {
         vertex.setProperty(IMGT_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setINPARANOIDReferences(String[] value) {
         vertex.setProperty(INPARANOID_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setIntactReferences(String[] value) {
         vertex.setProperty(INTACT_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setIPIReferences(String[] value) {
         vertex.setProperty(IPI_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setKOReferences(String[] value) {
         vertex.setProperty(KO_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setLegioListReferences(String[] value) {
         vertex.setProperty(LEGIO_LIST_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setLepromaReferences(String[] value) {
         vertex.setProperty(LEPROMA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMaizeGDBReferences(String[] value) {
         vertex.setProperty(MAIZE_GDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMeropsReferences(String[] value) {
         vertex.setProperty(MEROPS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMGIReferences(String[] value) {
         vertex.setProperty(MGI_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMicadoReferences(String[] value) {
         vertex.setProperty(MICADO_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMIMReferences(String[] value) {
         vertex.setProperty(MIM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMINTReferences(String[] value) {
         vertex.setProperty(MINT_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setModbaseReferences(String[] value) {
         vertex.setProperty(MODBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setMycoclapReferences(String[] value) {
         vertex.setProperty(MYCOCLAP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setNextbioReferences(String[] value) {
         vertex.setProperty(NEXTBIO_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setNextprotReferences(String[] value) {
         vertex.setProperty(NEXTPROT_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setOGPReferences(String[] value) {
         vertex.setProperty(OGP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setOMAReferences(String[] value) {
         vertex.setProperty(OMA_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setOrphanetReferences(String[] value) {
         vertex.setProperty(ORPHANET_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setOrthoDBReferences(String[] value) {
         vertex.setProperty(ORTHODB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPantherReferences(String[] value) {
         vertex.setProperty(PANTHER_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPathwayInteractionDBReferences(String[] value) {
         vertex.setProperty(PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPatricReferences(String[] value) {
         vertex.setProperty(PATRIC_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPaxDBReferences(String[] value) {
         vertex.setProperty(PAXDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPDBReferences(String[] value) {
         vertex.setProperty(PDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPDBJReferences(String[] value) {
         vertex.setProperty(PDBJ_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPDBSumReferences(String[] value) {
         vertex.setProperty(PDBSUM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPeptideAtlasReferences(String[] value) {
         vertex.setProperty(PEPTIDE_ATLAS_REFERENCES_PROPERTY, value);
     }
     
+    @Override
     public void setPeroxibaseReferences(String[] value){
         vertex.setProperty(PEROXIBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPharmGKBReferences(String[] value) {
         vertex.setProperty(PHARMGKB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPhci2DPageReferences(String[] value) {
         vertex.setProperty(PHCI_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPhosphositeReferences(String[] value) {
         vertex.setProperty(PHOSPHOSITE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPhosSiteReferences(String[] value) {
         vertex.setProperty(PHOS_SITE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPhylomeDBReferences(String[] value) {
         vertex.setProperty(PHYLOME_DB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPIRSFReferences(String[] value) {
         vertex.setProperty(PIRSF_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPmapCutDBReferences(String[] value) {
         vertex.setProperty(PMAP_CUTDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPMMA2DPageReferences(String[] value) {
         vertex.setProperty(PMMA_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPomBaseReferences(String[] value) {
         vertex.setProperty(POMBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPPTaseDBReferences(String[] value) {
         vertex.setProperty(PPTASEDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPrideReferences(String[] value) {
         vertex.setProperty(PRIDE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPrintsReferences(String[] value) {
         vertex.setProperty(PRINTS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setProdomReferences(String[] value) {
         vertex.setProperty(PRODOM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPromexReferences(String[] value) {
         vertex.setProperty(PROMEX_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPrositeReferences(String[] value) {
         vertex.setProperty(PROSITE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setProtClustDBReferences(String[] value) {
         vertex.setProperty(PROT_CLUST_DB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setProteinModelPortalReferences(String[] value) {
         vertex.setProperty(PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setProtonetReferences(String[] value) {
         vertex.setProperty(PROTONET_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setPseudoCapReferences(String[] value) {
         vertex.setProperty(PSEUDO_CAP_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRatHeart2DPageReferences(String[] value) {
         vertex.setProperty(RAT_HEART_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRCSBPDBReferences(String[] value) {
         vertex.setProperty(RCSB_PDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRebaseReferences(String[] value) {
         vertex.setProperty(REBASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setReproduction2DPageReferences(String[] value) {
         vertex.setProperty(REPRODUCTION_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRGDReferences(String[] value) {
         vertex.setProperty(RGD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setRougeReferences(String[] value) {
         vertex.setProperty(ROUGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSBKBReferences(String[] value) {
         vertex.setProperty(SBKB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSGDReferences(String[] value) {
         vertex.setProperty(SGD_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSiena2DPageReferences(String[] value) {
         vertex.setProperty(SIENA_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSmartReferences(String[] value) {
         vertex.setProperty(SMART_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSMRReferences(String[] value) {
         vertex.setProperty(SMR_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSourceReferences(String[] value) {
         vertex.setProperty(SOURCE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setStringReferences(String[] value) {
         vertex.setProperty(STRING_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSupfamReferences(String[] value) {
         vertex.setProperty(SUPFAM_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setSwiss2DPageReferences(String[] value) {
         vertex.setProperty(SWISS_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setTairReferences(String[] value) {
         vertex.setProperty(TAIR_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setTCDBReferences(String[] value) {
         vertex.setProperty(TCDB_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setTIGRFAMSReferences(String[] value) {
         vertex.setProperty(TIGRFAMS_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setTuberculistReferences(String[] value) {
         vertex.setProperty(TUBERCULIST_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setUCD2DPageReferences(String[] value) {
         vertex.setProperty(UCD_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setUCSCReferences(String[] value) {
         vertex.setProperty(UCSC_REFERENCES_PROPERTY, value);
     }
     
+    @Override
     public void setUnipathwayReferences(String[] value) {
         vertex.setProperty(UNIPATHWAY_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setVectorBaseReferences(String[] value) {
         vertex.setProperty(VECTOR_BASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setWorld2DPageReferences(String[] value) {
         vertex.setProperty(WORLD_2DPAGE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setWormBaseReferences(String[] value) {
         vertex.setProperty(WORM_BASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setXenBaseReferences(String[] value) {
         vertex.setProperty(XEN_BASE_REFERENCES_PROPERTY, value);
     }
 
+    @Override
     public void setZFINReferences(String[] value) {
         vertex.setProperty(ZFIN_REFERENCES_PROPERTY, value);
     }

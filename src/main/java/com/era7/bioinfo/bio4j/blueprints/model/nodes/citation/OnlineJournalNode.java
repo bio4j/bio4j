@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournal;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.onarticle.OnlineArticleJournalRel;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -29,7 +30,7 @@ import java.util.List;
  * Online journals where online article protein citations are published
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OnlineJournalNode extends BasicVertex{
+public class OnlineJournalNode extends BasicVertex implements OnlineJournal{
 
     public static final String NODE_TYPE = OnlineJournalNode.class.getCanonicalName();
 
@@ -41,9 +42,11 @@ public class OnlineJournalNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     

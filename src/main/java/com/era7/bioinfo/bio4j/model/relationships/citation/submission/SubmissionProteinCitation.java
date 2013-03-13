@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013  "Bio4j"
+ * Copyright (C) 2010-2011  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -14,37 +14,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.blueprints.model.nodes;
+package com.era7.bioinfo.bio4j.model.relationships.citation.submission;
 
-import com.era7.bioinfo.bio4j.model.nodes.BasicNode;
-import com.tinkerpop.blueprints.Vertex;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BasicVertex implements BasicNode{
+public interface SubmissionProteinCitation extends BasicRelationship{
     
-    public static final String NODE_TYPE_PROPERTY = "nodeType";
-    
-    protected Vertex vertex;
-    
-    public BasicVertex(Vertex v){
-        vertex = v;
-    }
-    
-    public Vertex getNode(){
-        return vertex;
-    }
-    
-    @Override
-    public String getType(){
-        return String.valueOf(vertex.getProperty(NODE_TYPE_PROPERTY));
-    }
-    
-    @Override
-    public void setType(String value){
-        vertex.setProperty(NODE_TYPE_PROPERTY, value);
-    }
+    //----------GETTERS----------------
+    public Protein getProtein();
+    public Submission getSubmission();
+
     
 }

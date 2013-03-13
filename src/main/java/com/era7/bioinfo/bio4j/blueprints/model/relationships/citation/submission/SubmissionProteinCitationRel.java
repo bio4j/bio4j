@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
@@ -36,6 +37,10 @@ public class SubmissionProteinCitationRel extends BasicRelationship{
     
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
+    }
+    
+    public SubmissionNode getSubmission(){
+        return new SubmissionNode(getVertex(Direction.IN));
     }
 
     @Override

@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.Person;
 import com.tinkerpop.blueprints.Vertex;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Normally people involved on protein citations (authors, editors...)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PersonNode extends BasicVertex{
+public class PersonNode extends BasicVertex implements Person{
 
     public static final String NAME_PROPERTY = "person_name";
     public static final String NODE_TYPE = PersonNode.class.getCanonicalName();
@@ -35,9 +36,11 @@ public class PersonNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

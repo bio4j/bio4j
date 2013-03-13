@@ -22,6 +22,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
  * Patent protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PatentNode extends BasicVertex{
+public class PatentNode extends BasicVertex implements Patent{
 
     public static final String NODE_TYPE = PatentNode.class.getCanonicalName();
 
@@ -49,13 +50,19 @@ public class PatentNode extends BasicVertex{
     }
 
 
+    @Override
     public String getNumber(){    return String.valueOf(vertex.getProperty(NUMBER_PROPERTY));}
+    @Override
     public String getDate(){    return String.valueOf(vertex.getProperty(DATE_PROPERTY));}
+    @Override
     public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
 
 
+    @Override
     public void setNumber(String value){  vertex.setProperty(NUMBER_PROPERTY, value);}
+    @Override
     public void setDate(String value){  vertex.setProperty(DATE_PROPERTY, value);}
+    @Override
     public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
 
 

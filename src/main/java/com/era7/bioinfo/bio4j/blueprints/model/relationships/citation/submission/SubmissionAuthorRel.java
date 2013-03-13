@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -36,7 +36,8 @@ public class SubmissionAuthorRel extends BasicRelationship{
     
     public SubmissionNode getSubmission(){
         return new SubmissionNode(getVertex(Direction.IN));
-    }
+    }    
+    
     
 
     @Override

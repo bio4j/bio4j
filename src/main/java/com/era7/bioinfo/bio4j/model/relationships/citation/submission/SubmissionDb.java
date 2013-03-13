@@ -14,37 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.blueprints.model.nodes;
+package com.era7.bioinfo.bio4j.model.relationships.citation.submission;
 
-import com.era7.bioinfo.bio4j.model.nodes.BasicNode;
-import com.tinkerpop.blueprints.Vertex;
+import com.era7.bioinfo.bio4j.model.nodes.citation.DB;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BasicVertex implements BasicNode{
-    
-    public static final String NODE_TYPE_PROPERTY = "nodeType";
-    
-    protected Vertex vertex;
-    
-    public BasicVertex(Vertex v){
-        vertex = v;
-    }
-    
-    public Vertex getNode(){
-        return vertex;
-    }
-    
-    @Override
-    public String getType(){
-        return String.valueOf(vertex.getProperty(NODE_TYPE_PROPERTY));
-    }
-    
-    @Override
-    public void setType(String value){
-        vertex.setProperty(NODE_TYPE_PROPERTY, value);
-    }
-    
+public interface SubmissionDb extends BasicRelationship{
+        
+    //----------GETTERS----------------
+    public String getDate();
+    public DB getDB();    
+    public Submission getSubmission();
+
+    //----------SETTERS----------------
+    public void setDate(String value);
 }

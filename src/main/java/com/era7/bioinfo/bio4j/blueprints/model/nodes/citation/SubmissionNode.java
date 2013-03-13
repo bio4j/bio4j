@@ -23,6 +23,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionDbRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
  * Submission protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubmissionNode extends BasicVertex{
+public class SubmissionNode extends BasicVertex implements Submission{
 
     public static final String NODE_TYPE = SubmissionNode.class.getCanonicalName();
 
@@ -48,11 +49,15 @@ public class SubmissionNode extends BasicVertex{
     }
 
 
+    @Override
     public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
+    @Override
     public String getDate(){    return String.valueOf(vertex.getProperty(DATE_PROPERTY));}
 
 
+    @Override
     public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
+    @Override
     public void setDate(String value){  vertex.setProperty(DATE_PROPERTY, value);}
     
     
@@ -60,6 +65,7 @@ public class SubmissionNode extends BasicVertex{
      * Gets the submission DB
      * @return 
      */
+    @Override
     public DBNode getDB(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, SubmissionDbRel.NAME).iterator();
         if(iterator.hasNext()){

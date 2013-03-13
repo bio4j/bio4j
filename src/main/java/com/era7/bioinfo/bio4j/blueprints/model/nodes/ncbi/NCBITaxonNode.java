@@ -20,6 +20,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.TaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonRel;
+import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxon;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NCBITaxonNode extends BasicVertex{
+public class NCBITaxonNode extends BasicVertex implements NCBITaxon{
 
     public static final String NODE_TYPE = NCBITaxonNode.class.getCanonicalName();
 
@@ -49,19 +50,31 @@ public class NCBITaxonNode extends BasicVertex{
     }
 
     //----------------GETTERS---------------------
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
+    @Override
     public String getTaxId( ){  return String.valueOf(vertex.getProperty(TAX_ID_PROPERTY));}
+    @Override
     public String getRank(){    return String.valueOf(vertex.getProperty(RANK_PROPERTY));}
+    @Override
     public String getEmblCode(){    return String.valueOf(vertex.getProperty(EMBL_CODE_PROPERTY));}
+    @Override
     public String getComments(){    return String.valueOf(vertex.getProperty(COMMENTS_PROPERTY));}
+    @Override
     public String getScientificName(){    return String.valueOf(vertex.getProperty(SCIENTIFIC_NAME_PROPERTY));}
     
     //----------------SETTERS-------------------
+    @Override
     public void setTaxId(String value){  vertex.setProperty(TAX_ID_PROPERTY, String.valueOf(value));}
+    @Override
     public void setRank(String value){  vertex.setProperty(RANK_PROPERTY, value);}
+    @Override
     public void setEmblCode(String value){  vertex.setProperty(EMBL_CODE_PROPERTY, value);}
+    @Override
     public void setComments(String value){  vertex.setProperty(COMMENTS_PROPERTY, value);}
+    @Override
     public void setScientificName(String value){  vertex.setProperty(SCIENTIFIC_NAME_PROPERTY, value);} 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     public void addOldTaxId(String value){  }
@@ -73,6 +86,7 @@ public class NCBITaxonNode extends BasicVertex{
      * 
      * @return 
      */
+    @Override
     public NCBITaxonNode getParent(){
         NCBITaxonNode parent = null;
         

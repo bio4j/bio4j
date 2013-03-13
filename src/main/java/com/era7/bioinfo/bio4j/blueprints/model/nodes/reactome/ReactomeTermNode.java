@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinReactomeRel;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -30,7 +31,7 @@ import java.util.List;
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ReactomeTermNode extends BasicVertex{
+public class ReactomeTermNode extends BasicVertex implements ReactomeTerm{
 
     public static final String NODE_TYPE = ReactomeTermNode.class.getCanonicalName();
 
@@ -45,11 +46,15 @@ public class ReactomeTermNode extends BasicVertex{
     }
 
 
+    @Override
     public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    @Override
     public String getPathwayName(){    return String.valueOf(vertex.getProperty(PATHWAY_NAME_PROPERTY));}
 
 
+    @Override
     public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    @Override
     public void setPathwayName(String value){  vertex.setProperty(PATHWAY_NAME_PROPERTY, value);}
   
     

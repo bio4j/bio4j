@@ -24,6 +24,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisInstituteRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -34,7 +35,7 @@ import java.util.List;
  * Thesis protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ThesisNode extends BasicVertex{
+public class ThesisNode extends BasicVertex implements Thesis{
 
     public static final String NODE_TYPE = ThesisNode.class.getCanonicalName();
 
@@ -49,11 +50,15 @@ public class ThesisNode extends BasicVertex{
     }
 
 
+    @Override
     public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
+    @Override
     public String getDate(){    return String.valueOf(vertex.getProperty(DATE_PROPERTY));}
 
 
+    @Override
     public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
+    @Override
     public void setDate(String value){  vertex.setProperty(DATE_PROPERTY, value);}
     
     

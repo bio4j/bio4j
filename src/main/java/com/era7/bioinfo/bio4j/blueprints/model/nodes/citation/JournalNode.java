@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Journal;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ import java.util.List;
  * Journals where article citations are published
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class JournalNode extends BasicVertex{
+public class JournalNode extends BasicVertex implements Journal{
 
     public static final String NODE_TYPE = JournalNode.class.getCanonicalName();
 
@@ -40,9 +41,11 @@ public class JournalNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     

@@ -24,6 +24,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleJournalRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ import java.util.List;
  * the locator and the title, (plus author list information).
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OnlineArticleNode extends BasicVertex{
+public class OnlineArticleNode extends BasicVertex implements OnlineArticle{
 
     public static final String NODE_TYPE = OnlineArticleNode.class.getCanonicalName();
 
@@ -52,8 +53,10 @@ public class OnlineArticleNode extends BasicVertex{
     }
 
 
+    @Override
     public String getTitle(){    return String.valueOf(vertex.getProperty(TITLE_PROPERTY));}
 
+    @Override
     public void setTitle(String value){  vertex.setProperty(TITLE_PROPERTY, value);}
     
     

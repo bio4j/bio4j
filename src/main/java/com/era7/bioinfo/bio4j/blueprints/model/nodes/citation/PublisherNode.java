@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookPublisherRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Publisher;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ import java.util.List;
  * Publishers regarding to book protein citations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PublisherNode extends BasicVertex{
+public class PublisherNode extends BasicVertex implements Publisher{
 
     public static final String NODE_TYPE = PublisherNode.class.getCanonicalName();
 
@@ -41,9 +42,11 @@ public class PublisherNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
