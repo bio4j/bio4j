@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.CommentType;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
@@ -50,7 +51,7 @@ import com.tinkerpop.blueprints.Vertex;
  * - Caution: Warning about possible errors and/or grounds of confusion
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CommentTypeNode extends BasicVertex{
+public class CommentTypeNode extends BasicVertex implements CommentType{
 
     public static final String NODE_TYPE = CommentTypeNode.class.getCanonicalName();
 
@@ -61,9 +62,11 @@ public class CommentTypeNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

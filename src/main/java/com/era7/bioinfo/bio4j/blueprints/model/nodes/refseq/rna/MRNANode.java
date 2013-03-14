@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementMRnaRel;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MRNA;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 
@@ -25,7 +26,7 @@ import com.tinkerpop.blueprints.Vertex;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MRNANode extends RNANode{
+public class MRNANode extends RNANode implements MRNA{
     
     public static final String NODE_TYPE = MRNANode.class.getCanonicalName();
     

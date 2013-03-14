@@ -18,13 +18,14 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementMRnaRel;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TRNA;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TRNANode extends RNANode{
+public class TRNANode extends RNANode implements TRNA{
     
     public static final String NODE_TYPE = TRNANode.class.getCanonicalName();
     

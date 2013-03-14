@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinOrganismRel;
+import com.era7.bioinfo.bio4j.model.nodes.Organism;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ import java.util.List;
  * Uniprot taxonomy organism
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OrganismNode extends BasicVertex{
+public class OrganismNode extends BasicVertex implements Organism{
 
     public static final String NODE_TYPE = OrganismNode.class.getCanonicalName();
 
@@ -43,14 +44,22 @@ public class OrganismNode extends BasicVertex{
     }
 
 
+    @Override
     public String getScientificName(){    return String.valueOf(vertex.getProperty(SCIENTIFIC_NAME_PROPERTY));}
+    @Override
     public String getCommonName(){    return String.valueOf(vertex.getProperty(COMMON_NAME_PROPERTY));}
+    @Override
     public String getSynonymName(){    return String.valueOf(vertex.getProperty(SYNONYM_NAME_PROPERTY));}
+    @Override
     public String getNcbiTaxonomyId(){    return String.valueOf(vertex.getProperty(NCBI_TAXONOMY_ID_PROPERTY));}
 
+    @Override
     public void setScientificName(String value){  vertex.setProperty(SCIENTIFIC_NAME_PROPERTY, value);}
+    @Override
     public void setCommonName(String value){  vertex.setProperty(COMMON_NAME_PROPERTY, value);}
+    @Override
     public void setSynonymName(String value){  vertex.setProperty(SYNONYM_NAME_PROPERTY, value);}
+    @Override
     public void setNcbiTaxonomyId(String value){    vertex.setProperty(NCBI_TAXONOMY_ID_PROPERTY, value);}
     
     

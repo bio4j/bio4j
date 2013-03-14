@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.IsoformEventGeneratorRel;
+import com.era7.bioinfo.bio4j.model.nodes.AlternativeProduct;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ import java.util.List;
  * Protein alternative products
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AlternativeProductNode extends BasicVertex{
+public class AlternativeProductNode extends BasicVertex implements AlternativeProduct{
 
     public static final String NODE_TYPE = AlternativeProductNode.class.getCanonicalName();
 
@@ -40,9 +41,11 @@ public class AlternativeProductNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

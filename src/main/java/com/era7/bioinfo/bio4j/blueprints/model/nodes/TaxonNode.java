@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.TaxonParentRel;
+import com.era7.bioinfo.bio4j.model.nodes.Taxon;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
  * Uniprot taxonomy taxon
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TaxonNode extends BasicVertex{
+public class TaxonNode extends BasicVertex implements Taxon{
 
     public static final String NODE_TYPE = TaxonNode.class.getCanonicalName();
 
@@ -40,9 +41,10 @@ public class TaxonNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
-
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     /**

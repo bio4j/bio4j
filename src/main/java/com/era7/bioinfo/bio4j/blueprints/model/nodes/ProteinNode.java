@@ -1013,6 +1013,7 @@ public class ProteinNode extends BasicVertex implements Protein{
         return !vertex.getEdges(Direction.IN, UniRef100MemberRel.NAME).iterator().hasNext();
     }
 
+    @Override
     public List<ProteinNode> getUniref50ClusterThisProteinBelongsTo() {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if (isUniref50Representant()) {
@@ -1028,6 +1029,7 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
+    @Override
     public List<ProteinNode> getUniref90ClusterThisProteinBelongsTo() {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if (isUniref90Representant()) {
@@ -1043,6 +1045,7 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
+    @Override
     public List<ProteinNode> getUniref100ClusterThisProteinBelongsTo() {
         List<ProteinNode> list = new LinkedList<ProteinNode>();
         if (isUniref100Representant()) {
@@ -1058,6 +1061,7 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
+    @Override
     public OrganismNode getOrganism() {
         OrganismNode org = null;
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinOrganismRel.NAME).iterator();
@@ -1067,6 +1071,7 @@ public class ProteinNode extends BasicVertex implements Protein{
         return org;
     }
 
+    @Override
     public DatasetNode getDataset() {
         DatasetNode dataset = null;
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinDatasetRel.NAME).iterator();

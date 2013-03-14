@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.Isoform;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Protein isoforms. Their information is retrieved from entries' binary interactions.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class IsoformNode extends BasicVertex{
+public class IsoformNode extends BasicVertex implements Isoform{
 
     public static final String NODE_TYPE = IsoformNode.class.getCanonicalName();
 
@@ -42,15 +43,23 @@ public class IsoformNode extends BasicVertex{
     }
 
 
+    @Override
     public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    @Override
     public String getNote(){    return String.valueOf(vertex.getProperty(NOTE_PROPERTY));}
+    @Override
     public String getName() {        return String.valueOf(vertex.getProperty(NAME_PROPERTY)); }
+    @Override
     public String getSequence() {        return String.valueOf(vertex.getProperty(SEQUENCE_PROPERTY));    }
 
 
+    @Override
     public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    @Override
     public void setNote(String value){  vertex.setProperty(NOTE_PROPERTY, value);}
+    @Override
     public void setName(String value) {        vertex.setProperty(NAME_PROPERTY, value);    }
+    @Override
     public void setSequence(String value) {      vertex.setProperty(SEQUENCE_PROPERTY, value);   }
 
 

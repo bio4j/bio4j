@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.FeatureType;
 import com.tinkerpop.blueprints.Vertex;
 
 
@@ -89,7 +90,7 @@ import com.tinkerpop.blueprints.Vertex;
  * </table>
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class FeatureTypeNode extends BasicVertex{
+public class FeatureTypeNode extends BasicVertex implements FeatureType{
 
     public static final String NODE_TYPE = FeatureTypeNode.class.getCanonicalName();
 
@@ -102,9 +103,11 @@ public class FeatureTypeNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

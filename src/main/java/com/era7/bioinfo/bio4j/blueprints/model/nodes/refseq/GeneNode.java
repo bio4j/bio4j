@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementCDSRel;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.Gene;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 
@@ -26,7 +27,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Gene
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GeneNode extends BasicVertex{
+public class GeneNode extends BasicVertex implements Gene{
 
     public static final String NODE_TYPE = GeneNode.class.getCanonicalName();
 
@@ -39,11 +40,15 @@ public class GeneNode extends BasicVertex{
     }
 
 
+    @Override
     public String getPositions(){   return String.valueOf(vertex.getProperty(POSITIONS_PROPERTY));}
+    @Override
     public String getNote(){   return String.valueOf(vertex.getProperty(NOTE_PROPERTY));}
 
 
+    @Override
     public void setPositions(String value){ vertex.setProperty(POSITIONS_PROPERTY, value);}
+    @Override
     public void setNote(String value){ vertex.setProperty(NOTE_PROPERTY, value);}
 
     public GenomeElementNode getGenomeElement(){

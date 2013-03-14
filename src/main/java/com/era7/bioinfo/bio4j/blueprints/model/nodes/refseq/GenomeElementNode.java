@@ -22,6 +22,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGenomeElementRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.*;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
  * Organisms genome elements
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GenomeElementNode extends BasicVertex{
+public class GenomeElementNode extends BasicVertex implements GenomeElement{
 
     public static final String NODE_TYPE = GenomeElementNode.class.getCanonicalName();
 
@@ -47,13 +48,19 @@ public class GenomeElementNode extends BasicVertex{
     }
 
 
+    @Override
     public String getVersion(){  return String.valueOf(vertex.getProperty(VERSION_PROPERTY));}
+    @Override
     public String getComment(){    return String.valueOf(vertex.getProperty(COMMENT_PROPERTY));}
+    @Override
     public String getDefinition(){  return String.valueOf(vertex.getProperty(DEFINITION_PROPERTY));}
 
 
+    @Override
     public void setVersion(String value){    vertex.setProperty(VERSION_PROPERTY, value);}
+    @Override
     public void setComment(String value){  vertex.setProperty(COMMENT_PROPERTY, value);}
+    @Override
     public void setDefinition(String value){  vertex.setProperty(DEFINITION_PROPERTY, value);}
 
     

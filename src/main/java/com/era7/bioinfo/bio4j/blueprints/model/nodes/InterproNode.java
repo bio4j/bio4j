@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinInterproRel;
+import com.era7.bioinfo.bio4j.model.nodes.Interpro;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ import java.util.List;
  * Interpro term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InterproNode extends BasicVertex{
+public class InterproNode extends BasicVertex implements Interpro{
 
     public static final String NODE_TYPE = InterproNode.class.getCanonicalName();
 
@@ -44,11 +45,15 @@ public class InterproNode extends BasicVertex{
 
     
 
+    @Override
     public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     

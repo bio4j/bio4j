@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinEnzymaticActivityRel;
+import com.era7.bioinfo.bio4j.model.nodes.Enzyme;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -28,7 +29,7 @@ import java.util.List;
  * Enzyme node
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class EnzymeNode extends BasicVertex{
+public class EnzymeNode extends BasicVertex implements Enzyme{
 
     public static final String NODE_TYPE = EnzymeNode.class.getCanonicalName();
 
@@ -47,20 +48,34 @@ public class EnzymeNode extends BasicVertex{
     }
 
 
+    @Override
     public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    @Override
     public String getOfficialName(){  return String.valueOf(vertex.getProperty(OFFICIAL_NAME_PROPERTY));}
+    @Override
     public String[] getAlternateNames(){  return (String[])vertex.getProperty(ALTERNATE_NAMES_PROPERTY);}
+    @Override
     public String getCatalyticActivity(){   return String.valueOf(vertex.getProperty(CATALYTIC_ACTIVITY_PROPERTY));}
+    @Override
     public String[] getCofactors(){   return (String[])vertex.getProperty(COFACTORS_PROPERTY);}
+    @Override
     public String getComments(){   return String.valueOf(vertex.getProperty(COMMENTS_PROPERTY));}
+    @Override
     public String[] getPrositeCrossReferences(){   return (String[])vertex.getProperty(PROSITE_CROSS_REFERENCES_PROPERTY);}
 
+    @Override
     public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    @Override
     public void setOfficialName(String value){    vertex.setProperty(OFFICIAL_NAME_PROPERTY, value);}
+    @Override
     public void setAlternateNames(String[] value){    vertex.setProperty(ALTERNATE_NAMES_PROPERTY, value);}
+    @Override
     public void setCatalyticActivity(String value){ vertex.setProperty(CATALYTIC_ACTIVITY_PROPERTY, value);}
+    @Override
     public void setCofactors(String[] value){    vertex.setProperty(COFACTORS_PROPERTY, value);}
+    @Override
     public void setComments(String value){    vertex.setProperty(COMMENTS_PROPERTY, value);}
+    @Override
     public void setPrositeCrossReferences(String[] value){    vertex.setProperty(PROSITE_CROSS_REFERENCES_PROPERTY, value);}
 
     

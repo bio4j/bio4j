@@ -76,6 +76,7 @@ public class BookNode extends BasicVertex implements Book{
      * Gets the Book publisher
      * @return 
      */
+    @Override
     public PublisherNode getPublisher(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, BookPublisherRel.NAME).iterator();
         if(iterator.hasNext()){
@@ -89,6 +90,7 @@ public class BookNode extends BasicVertex implements Book{
      * Gets the city where the book was published
      * @return 
      */
+    @Override
     public CityNode getCity(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, BookCityRel.NAME).iterator();
         if(iterator.hasNext()){

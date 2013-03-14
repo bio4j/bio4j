@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGoRel;
+import com.era7.bioinfo.bio4j.model.nodes.GoTerm;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.List;
  * Gene ontology term
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GoTermNode extends BasicVertex{
+public class GoTermNode extends BasicVertex implements GoTerm{
     
     public static final String MOLECULAR_FUNCTION_GO_ID = "GO:0003674";
     public static final String BIOLOGICAL_PROCESS_GO_ID = "GO:0008150";
@@ -67,21 +68,35 @@ public class GoTermNode extends BasicVertex{
     }
 
 
+    @Override
     public String getId(){  return String.valueOf(vertex.getProperty(ID_PROPERTY));}
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
+    @Override
     public String getDefinition(){  return String.valueOf(vertex.getProperty(DEFINITION_PROPERTY));}
+    @Override
     public String getNamespace(){   return String.valueOf(vertex.getProperty(NAMESPACE_PROPERTY));}
+    @Override
     public Boolean getObsolete(){    return Boolean.parseBoolean(String.valueOf(vertex.getProperty(OBSOLETE_PROPERTY)));}
+    @Override
     public String getComment(){ return String.valueOf(vertex.getProperty(COMMENT_PROPERTY));}
+    @Override
     public String[] getAlternativeIds(){    return (String[]) vertex.getProperty(ALTERNATIVE_IDS_PROPERTY);}
 
 
+    @Override
     public void setId(String value){    vertex.setProperty(ID_PROPERTY, value);}
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
+    @Override
     public void setDefinition(String value){    vertex.setProperty(DEFINITION_PROPERTY, value);}
+    @Override
     public void setNamespace(String value){ vertex.setProperty(NAMESPACE_PROPERTY, value);}
+    @Override
     public void setObsolete(Boolean value){ vertex.setProperty(OBSOLETE_PROPERTY, String.valueOf(value));}
+    @Override
     public void setComment(String value){   vertex.setProperty(COMMENT_PROPERTY, value);}
+    @Override
     public void setAlternativeIds(String[] value){  vertex.setProperty(ALTERNATIVE_IDS_PROPERTY, value);}
   
     

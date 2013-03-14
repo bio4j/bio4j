@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.Consortium;
 import com.tinkerpop.blueprints.Vertex;
 
 
@@ -23,7 +24,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Models consortium entities that take part in publications.
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ConsortiumNode extends BasicVertex{
+public class ConsortiumNode extends BasicVertex implements Consortium{
 
     public static final String NODE_TYPE = ConsortiumNode.class.getCanonicalName();
 
@@ -36,9 +37,11 @@ public class ConsortiumNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

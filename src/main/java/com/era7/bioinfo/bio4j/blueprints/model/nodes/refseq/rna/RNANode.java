@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.RNA;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Misc RNA
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public abstract class RNANode extends BasicVertex{
+public abstract class RNANode extends BasicVertex implements RNA{
 
     public static final String NOTE_PROPERTY = "note";
     public static final String POSITIONS_PROPERTY = "positions";
@@ -35,11 +36,15 @@ public abstract class RNANode extends BasicVertex{
     }
 
 
+    @Override
     public String getPositions(){   return String.valueOf(vertex.getProperty(POSITIONS_PROPERTY));}
+    @Override
     public String getNote(){   return String.valueOf(vertex.getProperty(NOTE_PROPERTY));}
 
 
+    @Override
     public void setPositions(String value){ vertex.setProperty(POSITIONS_PROPERTY, value);}
+    @Override
     public void setNote(String value){ vertex.setProperty(NOTE_PROPERTY, value);}
     
     

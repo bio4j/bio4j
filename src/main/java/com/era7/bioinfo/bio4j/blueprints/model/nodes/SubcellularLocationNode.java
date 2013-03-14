@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.SubcellularLocation;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Protein subcellular locations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubcellularLocationNode extends BasicVertex{
+public class SubcellularLocationNode extends BasicVertex implements SubcellularLocation{
 
     public static final String NODE_TYPE = SubcellularLocationNode.class.getCanonicalName();
 
@@ -34,9 +35,10 @@ public class SubcellularLocationNode extends BasicVertex{
         super(v);
     }
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
-
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

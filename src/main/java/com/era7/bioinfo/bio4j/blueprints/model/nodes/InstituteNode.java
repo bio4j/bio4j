@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.Institute;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
@@ -23,7 +24,7 @@ import com.tinkerpop.blueprints.Vertex;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InstituteNode extends BasicVertex {
+public class InstituteNode extends BasicVertex implements Institute{
 
     public static final String NODE_TYPE = InstituteNode.class.getCanonicalName();
     /**
@@ -35,10 +36,12 @@ public class InstituteNode extends BasicVertex {
         super(v);
     }
 
+    @Override
     public String getName() {
         return String.valueOf(vertex.getProperty(NAME_PROPERTY));
     }
 
+    @Override
     public void setName(String value) {
         vertex.setProperty(NAME_PROPERTY, value);
     }

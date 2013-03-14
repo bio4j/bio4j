@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.SequenceCaution;
 import com.tinkerpop.blueprints.Vertex;
 
 /**
  * Sequence caution
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SequenceCautionNode extends BasicVertex{
+public class SequenceCautionNode extends BasicVertex implements SequenceCaution{
 
     public static final String NODE_TYPE = SequenceCautionNode.class.getCanonicalName();
 
@@ -34,8 +35,10 @@ public class SequenceCautionNode extends BasicVertex{
         super(v);
     }
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 

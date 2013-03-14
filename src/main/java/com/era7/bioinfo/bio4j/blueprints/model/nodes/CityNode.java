@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookCityRel;
+import com.era7.bioinfo.bio4j.model.nodes.City;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -29,7 +30,7 @@ import java.util.List;
  * Just nodes representing different cities of the world
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CityNode extends BasicVertex{
+public class CityNode extends BasicVertex implements City{
 
     public static final String NODE_TYPE = CityNode.class.getCanonicalName();
 
@@ -41,9 +42,11 @@ public class CityNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     

@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.Dataset;
 import com.tinkerpop.blueprints.Vertex;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Vertex;
  * Datasets proteins come from (either SwissProt or Trembl)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DatasetNode extends BasicVertex{
+public class DatasetNode extends BasicVertex implements Dataset{
     
     public static final String SWISS_PROT_DATASET_NAME = "Swiss-Prot";
     public static final String TREMBL_DATASET_NAME = "TrEMBL";
@@ -39,9 +40,11 @@ public class DatasetNode extends BasicVertex{
     }
 
 
+    @Override
     public String getName(){    return String.valueOf(vertex.getProperty(NAME_PROPERTY));}
 
 
+    @Override
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 }
