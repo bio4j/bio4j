@@ -17,14 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.MetalIonBindingSiteFeature;
 import com.tinkerpop.blueprints.Edge;
-import org.neo4j.graphdb.Relationship;
 
 /**
  * Binding site for a metal ion
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MetalIonBindingSiteFeatureRel extends BasicFeatureRel{
+public class MetalIonBindingSiteFeatureRel extends BasicFeatureRel implements MetalIonBindingSiteFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_METAL_ION_BINDING_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "metal ion-binding site";
@@ -35,7 +35,7 @@ public class MetalIonBindingSiteFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

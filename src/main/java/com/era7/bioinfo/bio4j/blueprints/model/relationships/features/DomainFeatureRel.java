@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.DomainFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Position and type of each modular protein domain
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DomainFeatureRel extends BasicFeatureRel{
+public class DomainFeatureRel extends BasicFeatureRel implements DomainFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_DOMAIN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "domain";
@@ -33,7 +34,7 @@ public class DomainFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

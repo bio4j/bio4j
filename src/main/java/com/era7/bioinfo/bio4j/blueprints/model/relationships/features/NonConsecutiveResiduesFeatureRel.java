@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.NonConsecutiveResiduesFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Indicates that two residues in a sequence are not consecutive
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NonConsecutiveResiduesFeatureRel extends BasicFeatureRel{
+public class NonConsecutiveResiduesFeatureRel extends BasicFeatureRel implements NonConsecutiveResiduesFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_NON_CONSECUTIVE_RESIDUES";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "non-consecutive residues";
@@ -33,7 +34,7 @@ public class NonConsecutiveResiduesFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

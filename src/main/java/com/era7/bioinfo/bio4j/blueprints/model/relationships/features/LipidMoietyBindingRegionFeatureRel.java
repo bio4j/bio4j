@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.LipidMoietyBindingRegionFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Covalently attached lipid group(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class LipidMoietyBindingRegionFeatureRel extends BasicFeatureRel{
+public class LipidMoietyBindingRegionFeatureRel extends BasicFeatureRel implements LipidMoietyBindingRegionFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_LIPID_MOIETY_BINDING_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "lipid moiety-binding region";
@@ -33,7 +34,7 @@ public class LipidMoietyBindingRegionFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

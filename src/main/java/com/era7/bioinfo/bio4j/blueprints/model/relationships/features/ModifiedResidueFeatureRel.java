@@ -16,13 +16,14 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.ModifiedResidueFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Modified residues excluding lipids, glycans and protein cross-links
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ModifiedResidueFeatureRel extends BasicFeatureRel{
+public class ModifiedResidueFeatureRel extends BasicFeatureRel implements ModifiedResidueFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_MODIFIED_RESIDUE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "modified residue";
@@ -32,7 +33,7 @@ public class ModifiedResidueFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

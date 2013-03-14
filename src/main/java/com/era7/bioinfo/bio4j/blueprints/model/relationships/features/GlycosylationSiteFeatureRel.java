@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.GlycosylationSiteFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Covalently attached glycan group(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GlycosylationSiteFeatureRel extends BasicFeatureRel{
+public class GlycosylationSiteFeatureRel extends BasicFeatureRel implements GlycosylationSiteFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_GLYCOSYLATION_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "glycosylation site";
@@ -34,7 +35,7 @@ public class GlycosylationSiteFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

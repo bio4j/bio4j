@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.InitiatorMethionineFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Cleavage of the initiator methionine
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InitiatorMethionineFeatureRel extends BasicFeatureRel{
+public class InitiatorMethionineFeatureRel extends BasicFeatureRel implements InitiatorMethionineFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_INITIATOR_METHIONINE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "initiator methionine";
@@ -33,7 +34,7 @@ public class InitiatorMethionineFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

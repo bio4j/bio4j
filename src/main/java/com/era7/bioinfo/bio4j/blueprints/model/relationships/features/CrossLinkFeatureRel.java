@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.CrossLinkFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Residues participating in covalent linkage(s) between proteins
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CrossLinkFeatureRel extends BasicFeatureRel{
+public class CrossLinkFeatureRel extends BasicFeatureRel implements CrossLinkFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_CROSS_LINK";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "cross-link";
@@ -35,7 +36,7 @@ public class CrossLinkFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

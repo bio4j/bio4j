@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.HelixFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Helical regions within the experimentally determined protein structure
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class HelixFeatureRel extends BasicFeatureRel{
+public class HelixFeatureRel extends BasicFeatureRel implements HelixFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_HELIX";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "helix";
@@ -33,7 +34,7 @@ public class HelixFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

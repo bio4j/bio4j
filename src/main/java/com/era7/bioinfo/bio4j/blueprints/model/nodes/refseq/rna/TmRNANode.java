@@ -33,6 +33,7 @@ public class TmRNANode extends RNANode implements TmRNA{
         super(v);
     }
     
+    @Override
     public GenomeElementNode getGenomeElement(){
         return new GenomeElementNode(vertex.getVertices(com.tinkerpop.blueprints.Direction.IN, GenomeElementMRnaRel.NAME).iterator().next());
     }
