@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.UnpublishedObservationNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Unpublished observation authors
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class UnpublishedObservationAuthorRel extends BasicRelationship{
+public class UnpublishedObservationAuthorRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "UNPUBLISHED_OBSERVATION_AUTHOR";
 

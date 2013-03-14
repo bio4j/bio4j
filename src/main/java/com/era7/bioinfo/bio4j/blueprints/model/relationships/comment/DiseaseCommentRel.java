@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.DiseaseComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Disease(s) associated with protein defect(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DiseaseCommentRel extends BasicCommentRel{
+public class DiseaseCommentRel extends BasicCommentRel implements DiseaseComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_DISEASE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "disease";
@@ -33,7 +34,7 @@ public class DiseaseCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

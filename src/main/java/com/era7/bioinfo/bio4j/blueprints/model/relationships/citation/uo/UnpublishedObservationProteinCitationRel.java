@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.UnpublishedObservationNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -28,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins referenced by unpublished observations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class UnpublishedObservationProteinCitationRel extends BasicRelationship{
+public class UnpublishedObservationProteinCitationRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "UNPUBLISHED_OBSERVATION_PROTEIN_CITATION";
 

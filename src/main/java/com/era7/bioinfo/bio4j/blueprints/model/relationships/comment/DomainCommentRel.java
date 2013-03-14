@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.DomainComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Relevant information on protein domain(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DomainCommentRel extends BasicCommentRel{
+public class DomainCommentRel extends BasicCommentRel implements DomainComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_DOMAIN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "domain";
@@ -33,7 +34,7 @@ public class DomainCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

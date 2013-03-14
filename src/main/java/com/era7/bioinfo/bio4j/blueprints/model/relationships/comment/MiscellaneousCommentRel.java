@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.MiscellaneousComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Any relevant information that doesn’t fit in any other defined sections
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MiscellaneousCommentRel extends BasicCommentRel{
+public class MiscellaneousCommentRel extends BasicCommentRel implements MiscellaneousComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_MISCELLANEOUS";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "miscellaneous";
@@ -33,7 +34,7 @@ public class MiscellaneousCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

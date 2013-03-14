@@ -18,7 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.TRNANode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +26,7 @@ import com.tinkerpop.blueprints.Edge;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GenomeElementTRnaRel extends BasicRelationship{
+public class GenomeElementTRnaRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "GENOME_ELEMENT_TRNA";
 

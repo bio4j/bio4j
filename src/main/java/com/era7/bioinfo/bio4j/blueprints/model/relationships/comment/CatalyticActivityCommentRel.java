@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.CatalyticActivityComment;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  * Reaction(s) catalyzed by an enzyme
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CatalyticActivityCommentRel extends BasicCommentRel{
+public class CatalyticActivityCommentRel extends BasicCommentRel implements CatalyticActivityComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_CATALYTIC_ACTIVITY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "catalytic activity";
@@ -33,8 +34,12 @@ public class CatalyticActivityCommentRel extends BasicCommentRel{
         super(e);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

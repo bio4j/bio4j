@@ -18,7 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.FeatureTypeNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +26,7 @@ import com.tinkerpop.blueprints.Edge;
  * Basic feature relationship
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public abstract class BasicFeatureRel extends BasicRelationship{
+public abstract class BasicFeatureRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "BASIC_FEATURE";
 

@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.DisruptionPhenotypeComment;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  * Description of the effects caused by the disruption of a protein-encoding gene
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class DisruptionPhenotypeCommentRel extends BasicCommentRel{
+public class DisruptionPhenotypeCommentRel extends BasicCommentRel implements DisruptionPhenotypeComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_DISRUPTION_PHENOTYPE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "disruption phenotype";
@@ -34,7 +35,7 @@ public class DisruptionPhenotypeCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

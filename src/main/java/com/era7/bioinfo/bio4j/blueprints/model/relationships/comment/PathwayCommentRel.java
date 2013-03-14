@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.PathwayComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Associated metabolic pathways
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PathwayCommentRel extends BasicCommentRel{
+public class PathwayCommentRel extends BasicCommentRel implements PathwayComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_PATHWAY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "pathway";
@@ -33,7 +34,7 @@ public class PathwayCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

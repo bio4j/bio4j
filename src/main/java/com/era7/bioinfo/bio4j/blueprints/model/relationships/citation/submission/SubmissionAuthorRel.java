@@ -18,7 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +26,7 @@ import com.tinkerpop.blueprints.Edge;
  * Submission authors
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubmissionAuthorRel extends BasicRelationship{
+public class SubmissionAuthorRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "SUBMISSION_AUTHOR";
 

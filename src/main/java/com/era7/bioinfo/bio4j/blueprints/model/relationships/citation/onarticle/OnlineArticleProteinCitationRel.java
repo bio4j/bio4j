@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineArticleNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins that an online articles references
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OnlineArticleProteinCitationRel extends BasicRelationship{
+public class OnlineArticleProteinCitationRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "ONLINE_ARTICLE_PROTEIN_CITATION";
 

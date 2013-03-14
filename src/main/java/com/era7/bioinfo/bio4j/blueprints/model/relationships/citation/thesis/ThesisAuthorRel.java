@@ -18,7 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +26,7 @@ import com.tinkerpop.blueprints.Edge;
  * Thesis author
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ThesisAuthorRel extends BasicRelationship{
+public class ThesisAuthorRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "THESIS_AUTHOR";
 

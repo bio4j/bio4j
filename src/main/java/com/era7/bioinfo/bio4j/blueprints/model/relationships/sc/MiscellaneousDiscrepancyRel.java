@@ -17,14 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MiscellaneousDiscrepancyRel extends BasicRelationship{
+public class MiscellaneousDiscrepancyRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "MISCELLANEOUS_DISCREPANCY";
 

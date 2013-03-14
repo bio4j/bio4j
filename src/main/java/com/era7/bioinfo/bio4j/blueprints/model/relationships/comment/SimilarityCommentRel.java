@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.SimilarityComment;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  * Description of the sequence similarities with other proteins and family attribution
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SimilarityCommentRel extends BasicCommentRel{
+public class SimilarityCommentRel extends BasicCommentRel implements SimilarityComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_SIMILARITY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "similarity";
@@ -34,7 +35,7 @@ public class SimilarityCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

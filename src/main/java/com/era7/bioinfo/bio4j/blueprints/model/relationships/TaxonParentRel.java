@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TaxonParentRel extends BasicRelationship{
+public class TaxonParentRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "TAXON_PARENT";
 

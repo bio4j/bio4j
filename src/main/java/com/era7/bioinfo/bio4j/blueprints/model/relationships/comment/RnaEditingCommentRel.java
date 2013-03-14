@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.RnaEditingComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Amino acid variation(s) due to RNA editing
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class RnaEditingCommentRel extends BasicCommentRel{
+public class RnaEditingCommentRel extends BasicCommentRel implements RnaEditingComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_RNA_EDITING";
 
@@ -35,9 +36,11 @@ public class RnaEditingCommentRel extends BasicCommentRel{
         super(e);
     }
 
+    @Override
     public String getPosition(){
         return String.valueOf(edge.getProperty(POSITION_PROPERTY));
     }
+    @Override
     public void setPosition(String value){
         edge.setProperty(POSITION_PROPERTY, value);
     }

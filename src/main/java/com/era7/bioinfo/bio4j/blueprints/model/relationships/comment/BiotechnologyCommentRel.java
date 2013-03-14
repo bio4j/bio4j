@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.BiotechnologyComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Use in a biotechnological process
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BiotechnologyCommentRel extends BasicCommentRel{
+public class BiotechnologyCommentRel extends BasicCommentRel implements BiotechnologyComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_BIOTECHNOLOGY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "biotechnology";
@@ -32,8 +33,12 @@ public class BiotechnologyCommentRel extends BasicCommentRel{
         super(e);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

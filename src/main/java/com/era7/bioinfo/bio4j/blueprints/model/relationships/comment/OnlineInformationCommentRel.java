@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.OnlineInformationComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  *
  * @author ppareja
  */
-public class OnlineInformationCommentRel extends BasicCommentRel{
+public class OnlineInformationCommentRel extends BasicCommentRel implements OnlineInformationComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_ONLINE_INFORMATION";
 
@@ -36,23 +37,27 @@ public class OnlineInformationCommentRel extends BasicCommentRel{
         super(e);
     }
 
+    @Override
     public String getName(){
         return String.valueOf(edge.getProperty(NAME_PROPERTY));
     }
+    @Override
     public String getLink(){
         return String.valueOf(edge.getProperty(LINK_PROPERTY));
     }
 
+    @Override
     public void setName(String value){
         edge.setProperty(NAME_PROPERTY, value);
     }
+    @Override
     public void setLink(String value){
         edge.setProperty(LINK_PROPERTY, value);
     }
 
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

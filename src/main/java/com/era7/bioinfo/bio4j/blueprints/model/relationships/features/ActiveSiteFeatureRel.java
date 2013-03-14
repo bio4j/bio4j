@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.ActiveSiteFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Amino acid(s) directly involved in the activity of an enzyme
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ActiveSiteFeatureRel extends BasicFeatureRel{
+public class ActiveSiteFeatureRel extends BasicFeatureRel implements ActiveSiteFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_ACTIVE_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "active site";
@@ -34,7 +35,7 @@ public class ActiveSiteFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

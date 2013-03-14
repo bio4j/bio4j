@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.SubunitComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Interaction with other protein(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubunitCommentRel extends BasicCommentRel{
+public class SubunitCommentRel extends BasicCommentRel implements SubunitComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_SUBUNIT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "subunit";
@@ -33,7 +34,7 @@ public class SubunitCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

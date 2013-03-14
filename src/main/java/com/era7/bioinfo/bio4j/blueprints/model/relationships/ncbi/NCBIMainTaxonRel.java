@@ -17,14 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi;
 
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Entry point for the root taxon of NCBI taxonomy (Relationship coming from reference node)
  * @author ppareja
  */
-public class NCBIMainTaxonRel extends BasicRelationship{
+public class NCBIMainTaxonRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "MAIN_TAXON_NCBI";
 

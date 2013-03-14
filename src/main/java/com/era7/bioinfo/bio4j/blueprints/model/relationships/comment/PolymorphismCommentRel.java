@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.PolymorphismComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Description of polymorphism(s)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PolymorphismCommentRel extends BasicCommentRel{
+public class PolymorphismCommentRel extends BasicCommentRel implements PolymorphismComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_POLYMORPHISM";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "polymorphism";
@@ -33,7 +34,7 @@ public class PolymorphismCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

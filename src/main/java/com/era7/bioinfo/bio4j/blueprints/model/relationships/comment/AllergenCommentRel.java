@@ -17,29 +17,31 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.AllergenComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Information relevant to allergenic proteins
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AllergenCommentRel extends BasicCommentRel{
+public class AllergenCommentRel extends BasicCommentRel implements AllergenComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_ALLERGEN";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "allergen";
 
     public AllergenCommentRel(Edge e){
         super(e);
-    }
+    }    
 
     @Override
-    public String getLabel() {
-        return RELATIONSHIP_NAME;
+    public String getType() {
+        return RELATIONSHIP_NAME;    
     }
-
+    
     @Override
     public String toString(){
         return super.toString();
     }
+
 
 }

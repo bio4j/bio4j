@@ -21,6 +21,6 @@ package com.era7.bioinfo.bio4j.model.relationships.comment;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface CatalyticActivity extends BasicComment{
+public interface CatalyticActivityComment extends BasicComment{
     
 }

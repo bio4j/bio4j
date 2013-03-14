@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.EnzymeRegulationComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Enzyme regulatory mechanism
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class EnzymeRegulationCommentRel extends BasicCommentRel{
+public class EnzymeRegulationCommentRel extends BasicCommentRel implements EnzymeRegulationComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_ENZYME_REGULATION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "enzyme regulation";
@@ -33,7 +34,7 @@ public class EnzymeRegulationCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

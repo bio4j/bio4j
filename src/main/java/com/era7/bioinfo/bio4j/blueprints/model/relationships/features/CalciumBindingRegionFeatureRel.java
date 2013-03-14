@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.CalciumBindingRegionFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Position(s) of calcium binding region(s) within the protein
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CalciumBindingRegionFeatureRel extends BasicFeatureRel{
+public class CalciumBindingRegionFeatureRel extends BasicFeatureRel implements CalciumBindingRegionFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_CALCIUM_BINDING_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "calcium-binding region";
@@ -33,7 +34,7 @@ public class CalciumBindingRegionFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

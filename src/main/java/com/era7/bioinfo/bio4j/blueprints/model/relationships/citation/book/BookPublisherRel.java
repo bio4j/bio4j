@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.PublisherNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -28,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Book publisher
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BookPublisherRel extends BasicRelationship{
+public class BookPublisherRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "BOOK_PUBLISHER";
 

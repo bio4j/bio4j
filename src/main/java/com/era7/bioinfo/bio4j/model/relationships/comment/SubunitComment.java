@@ -20,6 +20,6 @@ package com.era7.bioinfo.bio4j.model.relationships.comment;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface DevelopmentalStage extends BasicComment{
+public interface SubunitComment extends BasicComment{
     
 }

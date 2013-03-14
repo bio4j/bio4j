@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.CofactorComment;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  * Non-protein substance required for enzyme activity
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class CofactorCommentRel extends BasicCommentRel{
+public class CofactorCommentRel extends BasicCommentRel implements CofactorComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_COFACTOR";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "cofactor";
@@ -34,7 +35,7 @@ public class CofactorCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

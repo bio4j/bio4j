@@ -11,6 +11,5 @@ package com.era7.bioinfo.bio4j.model.relationships;
 public interface BasicRelationship {
     
     public String getType();    
-    public void setType(String value);
     
 }

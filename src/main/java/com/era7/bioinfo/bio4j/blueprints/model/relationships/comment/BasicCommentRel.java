@@ -17,14 +17,15 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.comment.BasicComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  *
  * @author ppareja
  */
-public class BasicCommentRel extends BasicRelationship{
+public class BasicCommentRel extends BasicRelationshipBlueprints implements BasicComment{
 
     public static final String NAME = "BASIC_COMMENT";
 
@@ -38,26 +39,32 @@ public class BasicCommentRel extends BasicRelationship{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
+    @Override
     public String getText(){
         return String.valueOf(edge.getProperty(TEXT_PROPERTY));
     }
+    @Override
     public String getStatus(){
         return String.valueOf(edge.getProperty(STATUS_PROPERTY));
     }
+    @Override
     public String getEvidence(){
         return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));
     }
 
+    @Override
     public void setText(String value){
         edge.setProperty(TEXT_PROPERTY, value);
     }    
+    @Override
     public void setStatus(String value){
         edge.setProperty(STATUS_PROPERTY, value);
     }
+    @Override
     public void setEvidence(String value){
         edge.setProperty(EVIDENCE_PROPERTY, value);
     }

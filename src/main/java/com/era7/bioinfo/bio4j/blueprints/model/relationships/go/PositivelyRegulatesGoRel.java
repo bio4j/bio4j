@@ -4,7 +4,7 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.go;
 
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -14,7 +14,7 @@ import com.tinkerpop.blueprints.Edge;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PositivelyRegulatesGoRel extends BasicRelationship {
+public class PositivelyRegulatesGoRel extends BasicRelationshipBlueprints {
 
     public static final String NAME = "POSITIVELY_REGULATES_GO";
     public static final String OBOXML_RELATIONSHIP_NAME = "positively_regulates";

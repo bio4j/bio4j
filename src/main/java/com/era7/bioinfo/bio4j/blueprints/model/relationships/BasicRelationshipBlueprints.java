@@ -24,11 +24,11 @@ import java.util.Set;
  *
  * @author ppareja
  */
-public abstract class BasicRelationship implements Edge{
+public abstract class BasicRelationshipBlueprints implements Edge, com.era7.bioinfo.bio4j.model.relationships.BasicRelationship{
     
     protected Edge edge = null;
 
-    public BasicRelationship(Edge e){
+    public BasicRelationshipBlueprints(Edge e){
         edge = e;
     }
 
@@ -65,6 +65,11 @@ public abstract class BasicRelationship implements Edge{
     @Override
     public Object getId() {
         return edge.getId();
+    }
+    
+    @Override
+    public String getLabel(){
+        return getType();
     }
 
 }

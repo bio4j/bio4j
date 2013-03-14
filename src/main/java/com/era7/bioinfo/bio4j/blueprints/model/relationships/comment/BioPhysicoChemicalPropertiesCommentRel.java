@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.BioPhysicoChemicalPropertiesComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Biophysical and physicochemical properties
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BioPhysicoChemicalPropertiesCommentRel extends BasicCommentRel{
+public class BioPhysicoChemicalPropertiesCommentRel extends BasicCommentRel implements BioPhysicoChemicalPropertiesComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_BIO_PHYSICO_CHEMICAL_PROPERTIES";
 
@@ -85,8 +86,12 @@ public class BioPhysicoChemicalPropertiesCommentRel extends BasicCommentRel{
         edge.setProperty(REDOX_POTENTIAL_EVIDENCE_PROPERTY, value);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

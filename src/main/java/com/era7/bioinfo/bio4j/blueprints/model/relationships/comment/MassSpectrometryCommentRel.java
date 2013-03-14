@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.MassSpectometryComment;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  * Information derived from mass spectrometry experiments
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MassSpectrometryCommentRel extends BasicCommentRel{
+public class MassSpectrometryCommentRel extends BasicCommentRel implements MassSpectometryComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_MASS_SPECTROMETRY";
 
@@ -39,34 +40,42 @@ public class MassSpectrometryCommentRel extends BasicCommentRel{
         super(e);
     }
 
+    @Override
     public String getBegin(){
         return String.valueOf(edge.getProperty(BEGIN_PROPERTY));
     }
+    @Override
     public String getEnd(){
         return String.valueOf(edge.getProperty(END_PROPERTY));
     }
+    @Override
     public String getMass(){
         return String.valueOf(edge.getProperty(MASS_PROPERTY));
     }
+    @Override
     public String getMethod(){
         return String.valueOf(edge.getProperty(METHOD_PROPERTY));
     }
 
+    @Override
     public void setBegin(String value){
         edge.setProperty(BEGIN_PROPERTY, value);
     }
+    @Override
     public void setEnd(String value){
         edge.setProperty(END_PROPERTY, value);
     }
+    @Override
     public void setMass(String value){
         edge.setProperty(MASS_PROPERTY, value);
     }
+    @Override
     public void setMethod(String value){
         edge.setProperty(METHOD_PROPERTY, value);
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

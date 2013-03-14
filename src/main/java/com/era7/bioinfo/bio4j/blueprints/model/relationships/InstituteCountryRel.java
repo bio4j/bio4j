@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InstituteCountryRel extends BasicRelationship{
+public class InstituteCountryRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "INSTITUTE_COUNTRY";
 

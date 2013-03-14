@@ -23,7 +23,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class IsoformEventGeneratorRel extends BasicRelationship{
+public class IsoformEventGeneratorRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "ISOFORM_EVENT_GENERATOR";
 

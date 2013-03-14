@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.PatentNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Patent author
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PatentAuthorRel extends BasicRelationship{
+public class PatentAuthorRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "PATENT_AUTHOR";
 

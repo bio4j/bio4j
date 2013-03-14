@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.OrganismNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinOrganismRel extends BasicRelationship{
+public class ProteinOrganismRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "PROTEIN_ORGANISM";
 

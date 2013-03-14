@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.relationships.comment.InductionComment;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Effects of environmental factors on gene expression
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InductionCommentRel extends BasicCommentRel{
+public class InductionCommentRel extends BasicCommentRel implements InductionComment{
 
     public static final String RELATIONSHIP_NAME = "COMMENT_INDUCTION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "induction";
@@ -33,7 +34,7 @@ public class InductionCommentRel extends BasicCommentRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

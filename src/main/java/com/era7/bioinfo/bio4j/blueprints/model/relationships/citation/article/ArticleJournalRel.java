@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ArticleNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.JournalNode;
-import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationship;
+import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Article journal
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ArticleJournalRel extends BasicRelationship{
+public class ArticleJournalRel extends BasicRelationshipBlueprints{
 
     public static final String NAME = "ARTICLE_JOURNAL";
 
