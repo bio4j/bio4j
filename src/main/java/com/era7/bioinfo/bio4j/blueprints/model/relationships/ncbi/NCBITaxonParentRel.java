@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxonParent;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -25,7 +26,7 @@ import com.tinkerpop.blueprints.Edge;
  * Rel. leading to the child of the current NCBITaxon node
  * @author ppareja
  */
-public class NCBITaxonParentRel extends BasicRelationshipBlueprints{
+public class NCBITaxonParentRel extends BasicRelationshipBlueprints implements NCBITaxonParent{
 
     public static final String NAME = "TAXON_PARENT_NCBI";
 
@@ -34,7 +35,7 @@ public class NCBITaxonParentRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

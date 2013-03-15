@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.ncbi.NCBITaxon;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Relationship linking Uniprot and NCBI taxonomy
  * @author ppareja
  */
-public class NCBITaxonRel extends BasicRelationshipBlueprints{
+public class NCBITaxonRel extends BasicRelationshipBlueprints implements NCBITaxon{
 
     public static final String NAME = "TAXON_NCBI";
 
@@ -33,7 +34,7 @@ public class NCBITaxonRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

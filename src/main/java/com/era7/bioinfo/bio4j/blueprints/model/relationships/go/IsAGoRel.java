@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.go;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.go.IsAGo;
 import com.tinkerpop.blueprints.Edge;
 
 /**
@@ -26,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class IsAGoRel extends BasicRelationshipBlueprints{
+public class IsAGoRel extends BasicRelationshipBlueprints implements IsAGo{
 
     public static final String NAME = "IS_A_GO";
 
@@ -37,7 +38,7 @@ public class IsAGoRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

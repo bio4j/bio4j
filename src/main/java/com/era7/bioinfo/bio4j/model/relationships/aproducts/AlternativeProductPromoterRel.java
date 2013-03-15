@@ -24,8 +24,5 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface AlternativeProductPromoterRel extends BasicRelationship{
-
-    public static final String NAME = "ALTERNATIVE_PRODUCT_PROMOTER";
-    public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "alternative promoter";
-
+    
 }

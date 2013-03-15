@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.DatasetNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinDataset;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Protein's dataset (Swiss-prot or trembl)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinDatasetRel extends BasicRelationshipBlueprints{
+public class ProteinDatasetRel extends BasicRelationshipBlueprints implements ProteinDataset{
 
     public static final String NAME = "PROTEIN_DATASET";
 
@@ -35,16 +36,18 @@ public class ProteinDatasetRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public DatasetNode getDataset(){
         return new DatasetNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

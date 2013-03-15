@@ -25,7 +25,4 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface AlternativeProductSplicingRel extends BasicRelationship{
 
-    public static final String NAME = "ALTERNATIVE_PRODUCT_SPLICING";
-    public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "alternative splicing";
-
 }

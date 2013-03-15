@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.BasicProteinSequenceCaution;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  *
  * @author ppareja
  */
-public class BasicProteinSequenceCautionRel extends BasicRelationshipBlueprints{
+public class BasicProteinSequenceCautionRel extends BasicRelationshipBlueprints implements BasicProteinSequenceCaution{
 
     public static final String NAME = "BASIC_PROTEIN_SEQUENCE_CAUTION";
 
@@ -42,50 +43,64 @@ public class BasicProteinSequenceCautionRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
+    @Override
     public String getText(){
         return String.valueOf(edge.getProperty(TEXT_PROPERTY));
     }
+    @Override
     public String getStatus(){
         return String.valueOf(edge.getProperty(STATUS_PROPERTY));
     }
+    @Override
     public String getEvidence(){
         return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));
     }
+    @Override    
     public String getId(){
         return String.valueOf(edge.getProperty(ID_PROPERTY));
     }
+    @Override
     public String getPosition(){
         return String.valueOf(edge.getProperty(POSITION_PROPERTY));
     }
+    @Override
     public String getResource(){
         return String.valueOf(edge.getProperty(RESOURCE_PROPERTY));
     }
+    @Override
     public String getVersion(){
         return String.valueOf(edge.getProperty(VERSION_PROPERTY));
     }
 
+    @Override
     public void setText(String value){
         edge.setProperty(TEXT_PROPERTY, value);
     }
+    @Override
     public void setStatus(String value){
         edge.setProperty(STATUS_PROPERTY, value);
     }
+    @Override
     public void setEvidence(String value){
         edge.setProperty(EVIDENCE_PROPERTY, value);
     }
+    @Override
     public void setId(String value){
         edge.setProperty(ID_PROPERTY, value);
     }
+    @Override
     public void setPosition(String value){
         edge.setProperty(POSITION_PROPERTY, value);
     }
+    @Override
     public void setResource(String value){
         edge.setProperty(RESOURCE_PROPERTY, value);
     }
+    @Override
     public void setVersion(String value){
         edge.setProperty(VERSION_PROPERTY, value);
     }

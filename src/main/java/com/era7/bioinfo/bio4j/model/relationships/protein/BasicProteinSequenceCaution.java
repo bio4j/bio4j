@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013  "Bio4j"
+ * Copyright (C) 2010-2011  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -14,42 +14,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
  */
-package com.era7.bioinfo.bio4j.model.relationships.features;
+package com.era7.bioinfo.bio4j.model.relationships.protein;
 
-import com.era7.bioinfo.bio4j.model.nodes.FeatureType;
-import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicFeature extends BasicRelationship{
+public interface BasicProteinSequenceCaution extends BasicRelationship{
     
-    //------------GETTERS----------------
-    public String getDescription();
+    public String getText();
     public String getStatus();
     public String getEvidence();
     public String getId();
-    public String getOriginal();
-    public String getVariation();
-    public String getRef();
-    public String getBegin();
-    public String getEnd();
+    public String getPosition();
+    public String getResource();
+    public String getVersion();
 
-    public FeatureType getFeatureType();
-    public Protein getProtein();
-
-            
-    //------------SETTERS-------------------
-    public void setDescription(String value);
-    public void setId(String value);
-    public void setEvidence(String value);
+    public void setText(String value);
     public void setStatus(String value);
-    public void setRef(String value);
-    public void setBegin(String value);
-    public void setEnd(String value);
-    public void setOriginal(String value);
-    public void setVariation(String value);
-    
+    public void setEvidence(String value);
+    public void setId(String value);
+    public void setPosition(String value);
+    public void setResource(String value);
+    public void setVersion(String value);
 }

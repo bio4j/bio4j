@@ -18,7 +18,9 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.FeatureTypeNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.features.BasicFeature;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Basic feature relationship
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public abstract class BasicFeatureRel extends BasicRelationshipBlueprints{
+public abstract class BasicFeatureRel extends BasicRelationshipBlueprints implements BasicFeature{
 
     public static final String NAME = "BASIC_FEATURE";
 
@@ -46,66 +48,88 @@ public abstract class BasicFeatureRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
+    @Override
     public String getDescription(){
         return String.valueOf(edge.getProperty(DESCRIPTION_PROPERTY));
     }
+    @Override
     public String getStatus(){
         return String.valueOf(edge.getProperty(STATUS_PROPERTY));
     }
+    @Override
     public String getEvidence(){
         return String.valueOf(edge.getProperty(EVIDENCE_PROPERTY));
     }
+    @Override
     public String getId(){
         return String.valueOf(edge.getProperty(ID_PROPERTY));
     }
+    @Override
     public String getOriginal(){
         return String.valueOf(edge.getProperty(ORIGINAL_PROPERTY));
     }
+    @Override
     public String getVariation(){
         return String.valueOf(edge.getProperty(VARIATION_PROPERTY));
     }
+    @Override
     public String getRef(){
         return String.valueOf(edge.getProperty(REF_PROPERTY));
     }
+    @Override
     public String getBegin(){
         return String.valueOf(edge.getProperty(BEGIN_PROPERTY));
     }
+    @Override
     public String getEnd(){
         return String.valueOf(edge.getProperty(END_PROPERTY));
-    }    
-
+    }   
+    @Override
     public FeatureTypeNode getFeatureType(){
         return new FeatureTypeNode(edge.getVertex(Direction.OUT));
     }
+    @Override
+    public ProteinNode getProtein(){
+        return new ProteinNode(edge.getVertex(Direction.IN));
+    }
 
+    @Override
     public void setDescription(String value){
         edge.setProperty(DESCRIPTION_PROPERTY, value);
     }
+    @Override
     public void setId(String value){
         edge.setProperty(ID_PROPERTY, value);
     }
+    @Override
     public void setEvidence(String value){
         edge.setProperty(EVIDENCE_PROPERTY, value);
     }
+    @Override
     public void setStatus(String value){
         edge.setProperty(STATUS_PROPERTY, value);
     }
+    @Override
     public void setRef(String value){
         edge.setProperty(REF_PROPERTY,value);
     }
+    @Override
     public void setBegin(String value){
         edge.setProperty(BEGIN_PROPERTY, String.valueOf(value));
     }
+    @Override
     public void setEnd(String value){
         edge.setProperty(END_PROPERTY, String.valueOf(value));
     }
+    @Override
     public void setOriginal(String value){
         edge.setProperty(ORIGINAL_PROPERTY, value);
     }
+    @Override
     public void setVariation(String value){
         edge.setProperty(VARIATION_PROPERTY, value);
     }

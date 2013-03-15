@@ -26,8 +26,5 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface AlternativeProductInitiationRel extends BasicRelationship{
 
-    public static final String NAME = "ALTERNATIVE_PRODUCT_INITIATION";
-    public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "alternative initiation";
-
 }
 
