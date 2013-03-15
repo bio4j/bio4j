@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.StrandFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Beta strand regions within the experimentally determined protein structure
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class StrandFeatureRel extends BasicFeatureRel{
+public class StrandFeatureRel extends BasicFeatureRel implements StrandFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_STRAND";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "strand";
@@ -33,7 +34,7 @@ public class StrandFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

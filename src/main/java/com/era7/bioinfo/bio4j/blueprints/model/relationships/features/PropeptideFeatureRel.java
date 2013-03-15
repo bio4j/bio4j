@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.PropeptideFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Part of a protein that is cleaved during maturation or activation
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PropeptideFeatureRel extends BasicFeatureRel{
+public class PropeptideFeatureRel extends BasicFeatureRel implements PropeptideFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_PROPEPTIDE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "propeptide";
@@ -33,7 +34,7 @@ public class PropeptideFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

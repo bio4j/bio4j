@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.SiteFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Any interesting single amino acid site on the sequence
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SiteFeatureRel extends BasicFeatureRel{
+public class SiteFeatureRel extends BasicFeatureRel implements SiteFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_SITE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "site";
@@ -33,7 +34,7 @@ public class SiteFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

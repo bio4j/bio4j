@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.NucleotidePhosphateBindingRegionFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Nucleotide phosphate binding region
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NucleotidePhosphateBindingRegionFeatureRel extends BasicFeatureRel{
+public class NucleotidePhosphateBindingRegionFeatureRel extends BasicFeatureRel implements NucleotidePhosphateBindingRegionFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_NUCLEOTIDE_PHOSPHATE_BINDING_REGION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "nucleotide phosphate-binding region";
@@ -33,7 +34,7 @@ public class NucleotidePhosphateBindingRegionFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

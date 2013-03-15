@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.RegionOfInterestFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Region of interest in the sequence
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class RegionOfInterestFeatureRel extends BasicFeatureRel{
+public class RegionOfInterestFeatureRel extends BasicFeatureRel implements RegionOfInterestFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_REGION_OF_INTEREST";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "region of interest";
@@ -33,7 +34,7 @@ public class RegionOfInterestFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

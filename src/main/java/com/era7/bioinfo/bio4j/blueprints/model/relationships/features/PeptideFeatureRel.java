@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.PeptideFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Extent of an active peptide in the mature protein
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class PeptideFeatureRel extends BasicFeatureRel{
+public class PeptideFeatureRel extends BasicFeatureRel implements PeptideFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_PEPTIDE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "peptide";
@@ -33,7 +34,7 @@ public class PeptideFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.RepeatFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Positions of repeated sequence motifs or repeated domains
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class RepeatFeatureRel extends BasicFeatureRel{
+public class RepeatFeatureRel extends BasicFeatureRel implements RepeatFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_REPEAT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "repeat";
@@ -34,7 +35,7 @@ public class RepeatFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

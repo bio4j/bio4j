@@ -16,13 +16,14 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.SequenceVariantFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Description of a natural variant of the protein
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SequenceVariantFeatureRel extends BasicFeatureRel{
+public class SequenceVariantFeatureRel extends BasicFeatureRel implements SequenceVariantFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_SEQUENCE_VARIANT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "sequence variant";
@@ -32,7 +33,7 @@ public class SequenceVariantFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

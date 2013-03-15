@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.ShortSequenceMotifFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Short (up to 20 amino acids) sequence motif of biological interest
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ShortSequenceMotifFeatureRel extends BasicFeatureRel{
+public class ShortSequenceMotifFeatureRel extends BasicFeatureRel implements ShortSequenceMotifFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_SHORT_SEQUENCE_MOTIF";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "short sequence motif";
@@ -33,7 +34,7 @@ public class ShortSequenceMotifFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

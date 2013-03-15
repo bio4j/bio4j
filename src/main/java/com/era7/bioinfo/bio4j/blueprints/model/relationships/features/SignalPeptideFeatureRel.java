@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.SignalPeptideFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Sequence targeting proteins to the secretory pathway or periplasmic space
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SignalPeptideFeatureRel extends BasicFeatureRel{
+public class SignalPeptideFeatureRel extends BasicFeatureRel implements SignalPeptideFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_SIGNAL_PEPTIDE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "signal peptide";
@@ -33,7 +34,7 @@ public class SignalPeptideFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

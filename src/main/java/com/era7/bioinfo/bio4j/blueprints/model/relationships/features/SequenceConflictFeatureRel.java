@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.SequenceConflictFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * Description of sequence discrepancies of unknown origin
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SequenceConflictFeatureRel extends BasicFeatureRel{
+public class SequenceConflictFeatureRel extends BasicFeatureRel implements SequenceConflictFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_SEQUENCE_CONFLICT";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "sequence conflict";
@@ -33,7 +34,7 @@ public class SequenceConflictFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

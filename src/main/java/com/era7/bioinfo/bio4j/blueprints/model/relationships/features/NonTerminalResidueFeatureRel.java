@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.features;
 
+import com.era7.bioinfo.bio4j.model.relationships.features.NonTerminalResidueFeature;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * The sequence is incomplete. Indicate that a residue is not the terminal residue of the complete protein
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NonTerminalResidueFeatureRel extends BasicFeatureRel{
+public class NonTerminalResidueFeatureRel extends BasicFeatureRel implements NonTerminalResidueFeature{
 
     public static final String RELATIONSHIP_NAME = "FEATURE_NON_TERMINAL_RESIDUE";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "non-terminal residue";
@@ -33,7 +34,7 @@ public class NonTerminalResidueFeatureRel extends BasicFeatureRel{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 
