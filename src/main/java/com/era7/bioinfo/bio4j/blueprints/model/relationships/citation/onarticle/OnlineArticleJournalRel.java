@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineArticleNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineJournalNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleJournal;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Online journal where an online article is published
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OnlineArticleJournalRel extends BasicRelationshipBlueprints{
+public class OnlineArticleJournalRel extends BasicRelationshipBlueprints implements OnlineArticleJournal{
 
     public static final String NAME = "ONLINE_ARTICLE_JOURNAL";
 
@@ -38,20 +39,24 @@ public class OnlineArticleJournalRel extends BasicRelationshipBlueprints{
     }
 
 
+    @Override
     public String getLocator(){    return String.valueOf(edge.getProperty(LOCATOR_PROPERTY));}
 
+    @Override
     public void setLocator(String value){  edge.setProperty(LOCATOR_PROPERTY, value);}
     
+    @Override
     public OnlineArticleNode getOnlineArticle(){
         return new OnlineArticleNode(getVertex(Direction.IN));
     }
     
+    @Override
     public OnlineJournalNode getOnlineJournal(){
         return new OnlineJournalNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

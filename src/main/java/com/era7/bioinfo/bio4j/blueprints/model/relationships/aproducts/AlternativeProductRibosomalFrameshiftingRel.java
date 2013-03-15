@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductRibosomalFrameshifting;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AlternativeProductRibosomalFrameshiftingRel extends BasicRelationshipBlueprints{
+public class AlternativeProductRibosomalFrameshiftingRel extends BasicRelationshipBlueprints implements AlternativeProductRibosomalFrameshifting{
 
     public static final String NAME = "ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING";
 
@@ -35,7 +36,7 @@ public class AlternativeProductRibosomalFrameshiftingRel extends BasicRelationsh
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

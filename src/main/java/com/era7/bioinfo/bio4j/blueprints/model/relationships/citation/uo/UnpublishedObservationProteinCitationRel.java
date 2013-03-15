@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.UnpublishedObservationNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.uo.UnpublishedObservationProteinCitation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -28,7 +29,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins referenced by unpublished observations
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class UnpublishedObservationProteinCitationRel extends BasicRelationshipBlueprints{
+public class UnpublishedObservationProteinCitationRel extends BasicRelationshipBlueprints implements UnpublishedObservationProteinCitation{
 
     public static final String NAME = "UNPUBLISHED_OBSERVATION_PROTEIN_CITATION";
 
@@ -36,16 +37,18 @@ public class UnpublishedObservationProteinCitationRel extends BasicRelationshipB
         super(e);
     }
     
+    @Override
     public UnpublishedObservationNode getUnpublishedObservation(){
         return new UnpublishedObservationNode(getVertex(Direction.IN));
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

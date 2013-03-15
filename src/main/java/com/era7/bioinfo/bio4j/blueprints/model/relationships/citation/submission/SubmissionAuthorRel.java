@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submissio
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionAuthor;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Submission authors
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubmissionAuthorRel extends BasicRelationshipBlueprints{
+public class SubmissionAuthorRel extends BasicRelationshipBlueprints implements SubmissionAuthor{
 
     public static final String NAME = "SUBMISSION_AUTHOR";
 
@@ -34,6 +35,7 @@ public class SubmissionAuthorRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public SubmissionNode getSubmission(){
         return new SubmissionNode(getVertex(Direction.IN));
     }    
@@ -41,7 +43,7 @@ public class SubmissionAuthorRel extends BasicRelationshipBlueprints{
     
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

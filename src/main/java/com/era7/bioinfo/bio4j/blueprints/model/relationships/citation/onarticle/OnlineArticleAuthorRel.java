@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.OnlineArticleNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.onarticle.OnlineArticleAuthor;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Online article authors 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class OnlineArticleAuthorRel extends BasicRelationshipBlueprints{
+public class OnlineArticleAuthorRel extends BasicRelationshipBlueprints implements OnlineArticleAuthor{
 
     public static final String NAME = "ONLINE_ARTICLE_AUTHOR";
 
@@ -35,16 +36,18 @@ public class OnlineArticleAuthorRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public OnlineArticleNode getOnlineArticle(){
         return new OnlineArticleNode(getVertex(Direction.IN));
     }
     
+    @Override
     public PersonNode getAuthor(){
         return new PersonNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

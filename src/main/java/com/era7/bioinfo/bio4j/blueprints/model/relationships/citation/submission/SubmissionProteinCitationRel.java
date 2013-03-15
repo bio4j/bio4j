@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submissio
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionProteinCitation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins referenced by a submission
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubmissionProteinCitationRel extends BasicRelationshipBlueprints{
+public class SubmissionProteinCitationRel extends BasicRelationshipBlueprints implements SubmissionProteinCitation{
 
     public static final String NAME = "SUBMISSION_PROTEIN_CITATION";
 
@@ -35,16 +36,18 @@ public class SubmissionProteinCitationRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
     }
     
+    @Override
     public SubmissionNode getSubmission(){
         return new SubmissionNode(getVertex(Direction.IN));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

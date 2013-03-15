@@ -19,10 +19,12 @@ package com.era7.bioinfo.bio4j.model.relationships.aproducts;
 
 import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
+
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface AlternativeProductSplicingRel extends BasicRelationship{
+public interface AlternativeProductRibosomalFrameshifting extends BasicRelationship{
+
 
 }

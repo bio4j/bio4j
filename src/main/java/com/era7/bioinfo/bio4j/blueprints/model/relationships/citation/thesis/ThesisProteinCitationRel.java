@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisProteinCitation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins referenced by a Thesis
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ThesisProteinCitationRel extends BasicRelationshipBlueprints{
+public class ThesisProteinCitationRel extends BasicRelationshipBlueprints implements ThesisProteinCitation{
 
     public static final String NAME = "THESIS_PROTEIN_CITATION";
 
@@ -35,16 +36,18 @@ public class ThesisProteinCitationRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ThesisNode getThesis(){
         return new ThesisNode(getVertex(Direction.IN));
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

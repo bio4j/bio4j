@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2013  "Bio4j"
+ * Copyright (C) 2010-2011  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -19,12 +19,10 @@ package com.era7.bioinfo.bio4j.model.relationships.aproducts;
 
 import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
-
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface AlternativeProductInitiationRel extends BasicRelationship{
-
+public interface AlternativeProductPromoter extends BasicRelationship{
+    
 }
-

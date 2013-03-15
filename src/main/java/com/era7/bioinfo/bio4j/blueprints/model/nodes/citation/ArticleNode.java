@@ -92,6 +92,7 @@ public class ArticleNode extends BasicVertex implements Article{
      * gets the article journal
      * @return 
      */
+    @Override
     public JournalNode getJournal(){
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleJournalRel.NAME).iterator();

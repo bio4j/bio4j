@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.PublisherNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookPublisher;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -28,7 +29,7 @@ import com.tinkerpop.blueprints.Edge;
  * Book publisher
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BookPublisherRel extends BasicRelationshipBlueprints{
+public class BookPublisherRel extends BasicRelationshipBlueprints implements BookPublisher{
 
     public static final String NAME = "BOOK_PUBLISHER";
 
@@ -36,16 +37,18 @@ public class BookPublisherRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public BookNode getBook(){
         return new BookNode(getVertex(Direction.IN));
     }
     
+    @Override
     public PublisherNode getPublisher(){
         return new PublisherNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

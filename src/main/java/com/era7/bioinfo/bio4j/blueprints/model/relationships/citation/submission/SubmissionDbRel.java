@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submissio
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.DBNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.SubmissionNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.submission.SubmissionDb;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Submission database
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubmissionDbRel extends BasicRelationshipBlueprints{
+public class SubmissionDbRel extends BasicRelationshipBlueprints implements SubmissionDb{
 
     public static final String NAME = "SUBMISSION_DB";
 
@@ -37,20 +38,24 @@ public class SubmissionDbRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public String getDate(){    return String.valueOf(edge.getProperty(DATE_PROPERTY));}
 
+    @Override
     public void setDate(String value){  edge.setProperty(DATE_PROPERTY, value);}
     
+    @Override
     public DBNode getDB(){
         return new DBNode(getVertex(Direction.OUT));
     }
     
+    @Override
     public SubmissionNode getSubmission(){
         return new SubmissionNode(getVertex(Direction.IN));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

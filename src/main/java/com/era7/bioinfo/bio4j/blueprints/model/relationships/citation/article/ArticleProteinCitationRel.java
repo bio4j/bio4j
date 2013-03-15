@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ArticleNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.article.ArticleProteinCitation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -28,7 +29,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins one article references
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ArticleProteinCitationRel extends BasicRelationshipBlueprints{
+public class ArticleProteinCitationRel extends BasicRelationshipBlueprints implements ArticleProteinCitation{
 
     public static final String NAME = "ARTICLE_PROTEIN_CITATION";
 
@@ -36,16 +37,18 @@ public class ArticleProteinCitationRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ArticleNode getArticle(){
         return new ArticleNode(getVertex(Direction.IN));
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

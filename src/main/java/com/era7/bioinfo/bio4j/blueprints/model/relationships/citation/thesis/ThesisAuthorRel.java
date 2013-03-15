@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.ThesisNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.thesis.ThesisAuthor;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  * Thesis author
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ThesisAuthorRel extends BasicRelationshipBlueprints{
+public class ThesisAuthorRel extends BasicRelationshipBlueprints implements ThesisAuthor{
 
     public static final String NAME = "THESIS_AUTHOR";
 
@@ -34,12 +35,13 @@ public class ThesisAuthorRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ThesisNode getThesis(){
         return new ThesisNode(getVertex(Direction.IN));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

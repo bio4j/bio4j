@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.citation.book.BookProteinCitation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Proteins one book references
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class BookProteinCitationRel extends BasicRelationshipBlueprints{
+public class BookProteinCitationRel extends BasicRelationshipBlueprints implements BookProteinCitation{
 
     public static final String NAME = "BOOK_PROTEIN_CITATION";
 
@@ -40,26 +41,35 @@ public class BookProteinCitationRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public String getTitle(){    return String.valueOf(edge.getProperty(TITLE_PROPERTY));}
+    @Override
     public String getVolume(){    return String.valueOf(edge.getProperty(VOLUME_PROPERTY));}
+    @Override
     public String getFirst(){    return String.valueOf(edge.getProperty(FIRST_PROPERTY));}
+    @Override
     public String getLast(){    return String.valueOf(edge.getProperty(LAST_PROPERTY));}
 
+    @Override
     public void setTitle(String value){  edge.setProperty(TITLE_PROPERTY, value);}
+    @Override
     public void setVolume(String value){  edge.setProperty(VOLUME_PROPERTY, value);}
+    @Override
     public void setFirst(String value){  edge.setProperty(FIRST_PROPERTY, value);}
+    @Override
     public void setLast(String value){  edge.setProperty(LAST_PROPERTY, value);}
 
+    @Override
     public BookNode getBook(){
         return new BookNode(getVertex(Direction.IN));
     }
-    
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

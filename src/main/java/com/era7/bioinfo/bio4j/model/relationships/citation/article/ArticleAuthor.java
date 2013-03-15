@@ -16,12 +16,16 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.citation.article;
 
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface ArticleAuthor {
     
-    public static final String NAME = "ARTICLE_AUTHOR";
+    public Article getArticle();
+    public Person getAuthor();
     
 }

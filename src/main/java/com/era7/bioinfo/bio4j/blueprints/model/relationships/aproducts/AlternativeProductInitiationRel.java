@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.aproducts.AlternativeProductInitiation;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class AlternativeProductInitiationRel extends BasicRelationshipBlueprints{
+public class AlternativeProductInitiationRel extends BasicRelationshipBlueprints implements AlternativeProductInitiation{
 
     public static final String NAME = "ALTERNATIVE_PRODUCT_INITIATION";
 
@@ -35,7 +36,7 @@ public class AlternativeProductInitiationRel extends BasicRelationshipBlueprints
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
