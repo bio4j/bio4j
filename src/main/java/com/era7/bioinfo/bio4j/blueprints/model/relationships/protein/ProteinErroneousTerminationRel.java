@@ -16,13 +16,14 @@
  */
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinErroneousTermination;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinErroneousTerminationRel extends BasicProteinSequenceCautionRel{
+public class ProteinErroneousTerminationRel extends BasicProteinSequenceCautionRel implements ProteinErroneousTermination{
 
     public static final String RELATIONSHIP_NAME = "PROTEIN_ERRONEOUS_TERMINATION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "erroneous termination";
@@ -32,7 +33,7 @@ public class ProteinErroneousTerminationRel extends BasicProteinSequenceCautionR
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

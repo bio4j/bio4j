@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.KeywordNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinKeyword;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinKeywordRel extends BasicRelationshipBlueprints{
+public class ProteinKeywordRel extends BasicRelationshipBlueprints implements ProteinKeyword{
 
     public static final String NAME = "PROTEIN_KEYWORD";
 
@@ -35,16 +36,18 @@ public class ProteinKeywordRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public KeywordNode getKeyword(){
         return new KeywordNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

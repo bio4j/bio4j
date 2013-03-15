@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome.ReactomeTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinReactome;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinReactomeRel extends BasicRelationshipBlueprints{
+public class ProteinReactomeRel extends BasicRelationshipBlueprints implements ProteinReactome{
 
     public static final String NAME = "PROTEIN_REACTOME";
 
@@ -35,16 +36,18 @@ public class ProteinReactomeRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public ReactomeTermNode getReactomeTerm(){
         return new ReactomeTermNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2010-2011  "Bio4j"
+ * Copyright (C) 2010-2013  "Bio4j"
  *
  * This file is part of Bio4j
  *
@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.EnzymeNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinEnzymaticActivity;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * Protein enzymatic activity (EC number connections)
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinEnzymaticActivityRel extends BasicRelationshipBlueprints{
+public class ProteinEnzymaticActivityRel extends BasicRelationshipBlueprints implements ProteinEnzymaticActivity{
 
     public static final String NAME = "PROTEIN_ENZYMATIC_ACTIVITY";
 
@@ -35,16 +36,18 @@ public class ProteinEnzymaticActivityRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public EnzymeNode getEnzyme(){
         return new EnzymeNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

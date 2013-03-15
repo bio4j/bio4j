@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinErroneousGeneModelPrediction;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinErroneousGeneModelPredictionRel extends BasicProteinSequenceCautionRel{
+public class ProteinErroneousGeneModelPredictionRel extends BasicProteinSequenceCautionRel implements ProteinErroneousGeneModelPrediction{
 
     public static final String RELATIONSHIP_NAME = "PROTEIN_ERRONEOUS_GENE_MODEL_PREDICTION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "erroneous gene model prediction";
@@ -33,7 +34,7 @@ public class ProteinErroneousGeneModelPredictionRel extends BasicProteinSequence
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

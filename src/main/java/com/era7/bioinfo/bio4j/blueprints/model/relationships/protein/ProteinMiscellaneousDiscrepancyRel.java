@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinMiscellaneousDiscrepancy;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinMiscellaneousDiscrepancyRel extends BasicProteinSequenceCautionRel{
+public class ProteinMiscellaneousDiscrepancyRel extends BasicProteinSequenceCautionRel implements ProteinMiscellaneousDiscrepancy{
 
     public static final String RELATIONSHIP_NAME = "PROTEIN_MISCELLANEOUS_DISCREPANCY";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "miscellaneous discrepancy";
@@ -33,7 +34,7 @@ public class ProteinMiscellaneousDiscrepancyRel extends BasicProteinSequenceCaut
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

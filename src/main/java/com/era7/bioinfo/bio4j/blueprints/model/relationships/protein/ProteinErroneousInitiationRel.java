@@ -17,6 +17,7 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinErroneousInitiation;
 import com.tinkerpop.blueprints.Edge;
 
 
@@ -24,7 +25,7 @@ import com.tinkerpop.blueprints.Edge;
  *
  * @author ppareja
  */
-public class ProteinErroneousInitiationRel extends BasicProteinSequenceCautionRel{
+public class ProteinErroneousInitiationRel extends BasicProteinSequenceCautionRel implements ProteinErroneousInitiation{
 
     public static final String RELATIONSHIP_NAME = "PROTEIN_ERRONEOUS_INITIATION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "erroneous initiation";
@@ -34,7 +35,7 @@ public class ProteinErroneousInitiationRel extends BasicProteinSequenceCautionRe
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

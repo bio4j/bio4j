@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.IsoformNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoform;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinIsoformRel extends BasicRelationshipBlueprints{
+public class ProteinIsoformRel extends BasicRelationshipBlueprints implements ProteinIsoform{
 
     public static final String NAME = "PROTEIN_ISOFORM";
 
@@ -35,16 +36,18 @@ public class ProteinIsoformRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public IsoformNode getIsoformNode(){
         return new IsoformNode(getVertex(Direction.OUT));
     }
     
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinErroneousTranslation;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinErroneousTranslationRel extends BasicProteinSequenceCautionRel{
+public class ProteinErroneousTranslationRel extends BasicProteinSequenceCautionRel implements ProteinErroneousTranslation{
 
     public static final String RELATIONSHIP_NAME = "PROTEIN_ERRONEOUS_TRANSLATION";
     public static final String UNIPROT_ATTRIBUTE_TYPE_VALUE = "erroneous translation";
@@ -33,7 +34,7 @@ public class ProteinErroneousTranslationRel extends BasicProteinSequenceCautionR
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return RELATIONSHIP_NAME;
     }
 

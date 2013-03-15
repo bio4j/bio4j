@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.PfamNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinPfam;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinPfamRel extends BasicRelationshipBlueprints{
+public class ProteinPfamRel extends BasicRelationshipBlueprints implements ProteinPfam{
 
     public static final String NAME = "PROTEIN_PFAM";
 
@@ -35,16 +36,18 @@ public class ProteinPfamRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public PfamNode getPfam(){
         return new PfamNode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

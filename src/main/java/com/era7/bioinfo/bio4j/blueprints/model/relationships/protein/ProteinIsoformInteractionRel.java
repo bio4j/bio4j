@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.protein;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.IsoformNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoformInteraction;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -27,7 +28,7 @@ import com.tinkerpop.blueprints.Edge;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ProteinIsoformInteractionRel extends BasicRelationshipBlueprints{
+public class ProteinIsoformInteractionRel extends BasicRelationshipBlueprints implements ProteinIsoformInteraction{
 
     public static final String NAME = "PROTEIN_ISOFORM_INTERACTION";
 
@@ -42,27 +43,37 @@ public class ProteinIsoformInteractionRel extends BasicRelationshipBlueprints{
         super(e);
     }
 
+    @Override
     public String getOrganismsDiffer(){    return String.valueOf(edge.getProperty(ORGANISMS_DIFFER_PROPERTY));}
+    @Override
     public String getExperiments(){  return String.valueOf(edge.getProperty(EXPERIMENTS_PROPERTY));}
+    @Override
     public String getIntactId2(){    return String.valueOf(edge.getProperty(INTACT_ID_2_PROPERTY));}
+    @Override
     public String getIntactId1(){  return String.valueOf(edge.getProperty(INTACT_ID_1_PROPERTY));}
 
+    @Override
     public void setOrganismsDiffer(String value){  edge.setProperty(ORGANISMS_DIFFER_PROPERTY, value);}
+    @Override
     public void setExperiments(String value){    edge.setProperty(EXPERIMENTS_PROPERTY, value);}
+    @Override
     public void setIntactId2(String value){  edge.setProperty(INTACT_ID_2_PROPERTY, value);}
+    @Override
     public void setIntactId1(String value){    edge.setProperty(INTACT_ID_1_PROPERTY, value);}
 
+    @Override
     public ProteinNode getProtein(){
         return new ProteinNode(getVertex(Direction.IN));
     }
     
+    @Override
     public IsoformNode getIsoformNode(){
         return new IsoformNode(getVertex(Direction.OUT));
     }
     
     
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
