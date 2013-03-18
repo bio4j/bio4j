@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.ErroneousInitiation;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ErroneousInitiationRel extends BasicRelationshipBlueprints{
+public class ErroneousInitiationRel extends BasicRelationshipBlueprints implements ErroneousInitiation{
 
     public static final String NAME = "ERRONEOUS_INITIATION";
 
@@ -33,7 +34,7 @@ public class ErroneousInitiationRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

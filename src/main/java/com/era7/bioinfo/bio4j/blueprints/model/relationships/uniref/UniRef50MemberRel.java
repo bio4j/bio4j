@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.uniref.Uniref50Member;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class UniRef50MemberRel extends BasicRelationshipBlueprints{
+public class UniRef50MemberRel extends BasicRelationshipBlueprints implements Uniref50Member{
 
     public static final String NAME = "UNIREF_50_MEMBER";
 
@@ -33,7 +34,7 @@ public class UniRef50MemberRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

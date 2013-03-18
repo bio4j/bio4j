@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.Frameshift;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class FrameshiftRel extends BasicRelationshipBlueprints{
+public class FrameshiftRel extends BasicRelationshipBlueprints implements Frameshift{
 
     public static final String NAME = "FRAMESHIFT";
 
@@ -33,7 +34,7 @@ public class FrameshiftRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

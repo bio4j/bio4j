@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
+import com.era7.bioinfo.bio4j.model.relationships.SubcellularLocationParent;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class SubcellularLocationParentRel extends BasicRelationshipBlueprints{
+public class SubcellularLocationParentRel extends BasicRelationshipBlueprints implements SubcellularLocationParent{
 
     public static final String NAME = "SUBCELLULAR_LOCATION_PARENT";
 
@@ -32,7 +33,7 @@ public class SubcellularLocationParentRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

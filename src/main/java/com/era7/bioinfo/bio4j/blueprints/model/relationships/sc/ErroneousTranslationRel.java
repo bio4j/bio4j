@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.ErroneousTranslation;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ErroneousTranslationRel extends BasicRelationshipBlueprints{
+public class ErroneousTranslationRel extends BasicRelationshipBlueprints implements ErroneousTranslation{
 
     public static final String NAME = "ERRONEOUS_TRANSLATION";
 
@@ -33,7 +34,7 @@ public class ErroneousTranslationRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

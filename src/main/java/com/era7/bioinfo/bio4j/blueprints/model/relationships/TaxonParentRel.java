@@ -17,13 +17,14 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
+import com.era7.bioinfo.bio4j.model.relationships.TaxonParent;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class TaxonParentRel extends BasicRelationshipBlueprints{
+public class TaxonParentRel extends BasicRelationshipBlueprints implements TaxonParent{
 
     public static final String NAME = "TAXON_PARENT";
 
@@ -32,7 +33,7 @@ public class TaxonParentRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

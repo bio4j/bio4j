@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.ErroneousGeneModelPrediction;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ErroneousGeneModelPredictionRel extends BasicRelationshipBlueprints{
+public class ErroneousGeneModelPredictionRel extends BasicRelationshipBlueprints implements ErroneousGeneModelPrediction{
 
     public static final String NAME = "ERRONEOUS_GENE_MODEL_PREDICTION";
 
@@ -33,7 +34,7 @@ public class ErroneousGeneModelPredictionRel extends BasicRelationshipBlueprints
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.ErroneousTermination;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class ErroneousTerminationRel extends BasicRelationshipBlueprints{
+public class ErroneousTerminationRel extends BasicRelationshipBlueprints implements ErroneousTermination{
 
     public static final String NAME = "ERRONEOUS_TERMINATION";
 
@@ -33,7 +34,7 @@ public class ErroneousTerminationRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

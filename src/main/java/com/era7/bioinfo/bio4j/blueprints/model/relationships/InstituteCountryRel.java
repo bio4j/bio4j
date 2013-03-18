@@ -17,22 +17,36 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.CountryNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.InstituteNode;
+import com.era7.bioinfo.bio4j.model.relationships.InstituteCountry;
+import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class InstituteCountryRel extends BasicRelationshipBlueprints{
+public class InstituteCountryRel extends BasicRelationshipBlueprints implements InstituteCountry{
 
     public static final String NAME = "INSTITUTE_COUNTRY";
 
     public InstituteCountryRel(Edge e){
         super(e);
     }
+    
+    @Override
+    public InstituteNode getInstitute(){
+        return new InstituteNode(getVertex(Direction.IN));
+    }
+    
+    @Override
+    public CountryNode getCountry(){
+        return new CountryNode(getVertex(Direction.OUT));
+    }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

@@ -17,23 +17,40 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.AlternativeProductNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.IsoformNode;
+import com.era7.bioinfo.bio4j.model.nodes.AlternativeProduct;
+import com.era7.bioinfo.bio4j.model.nodes.Isoform;
+import com.era7.bioinfo.bio4j.model.relationships.IsoformEventGenerator;
+import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class IsoformEventGeneratorRel extends BasicRelationshipBlueprints{
+public class IsoformEventGeneratorRel extends BasicRelationshipBlueprints implements IsoformEventGenerator{
 
     public static final String NAME = "ISOFORM_EVENT_GENERATOR";
 
     public IsoformEventGeneratorRel(Edge e){
         super(e);
     }
+    
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
+    }
+
+    @Override
+    public Isoform getIsoform() {
+        return new IsoformNode(getVertex(Direction.IN));
+    }
+
+    @Override
+    public AlternativeProduct getAlternativeProduct() {
+        return new AlternativeProductNode(getVertex(Direction.OUT));
     }
 
 }

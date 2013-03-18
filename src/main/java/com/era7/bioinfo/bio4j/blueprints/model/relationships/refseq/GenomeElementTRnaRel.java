@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.TRNANode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.refseq.GenomeElementTRna;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
@@ -26,7 +27,7 @@ import com.tinkerpop.blueprints.Edge;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class GenomeElementTRnaRel extends BasicRelationshipBlueprints{
+public class GenomeElementTRnaRel extends BasicRelationshipBlueprints implements GenomeElementTRna{
 
     public static final String NAME = "GENOME_ELEMENT_TRNA";
 
@@ -34,16 +35,18 @@ public class GenomeElementTRnaRel extends BasicRelationshipBlueprints{
         super(e);
     }
     
+    @Override
     public GenomeElementNode getGenomeElement(){
         return new GenomeElementNode(getVertex(Direction.IN));
     }
     
+    @Override
     public TRNANode getTRNA(){
         return new TRNANode(getVertex(Direction.OUT));
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 

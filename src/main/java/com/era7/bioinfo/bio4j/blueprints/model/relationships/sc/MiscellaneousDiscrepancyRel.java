@@ -18,13 +18,14 @@
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.sc;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
+import com.era7.bioinfo.bio4j.model.relationships.sc.MiscellaneousDiscrepancy;
 import com.tinkerpop.blueprints.Edge;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class MiscellaneousDiscrepancyRel extends BasicRelationshipBlueprints{
+public class MiscellaneousDiscrepancyRel extends BasicRelationshipBlueprints implements MiscellaneousDiscrepancy{
 
     public static final String NAME = "MISCELLANEOUS_DISCREPANCY";
 
@@ -33,7 +34,7 @@ public class MiscellaneousDiscrepancyRel extends BasicRelationshipBlueprints{
     }
 
     @Override
-    public String getLabel() {
+    public String getType() {
         return NAME;
     }
 
