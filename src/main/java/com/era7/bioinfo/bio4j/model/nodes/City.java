@@ -16,6 +16,9 @@
  */
 package com.era7.bioinfo.bio4j.model.nodes;
 
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import java.util.List;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
@@ -24,8 +27,10 @@ public interface City extends BasicNode{
     
     //----GETTERS---
     public String getName();
+    public List<Book> getBooks();
 
     //----SETTERS----
-    public void setName(String value);  
+    public void setName(String value);     
+    
     
 }

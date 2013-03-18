@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.reactome;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinReactomeRel;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -58,8 +59,9 @@ public class ReactomeTermNode extends BasicVertex implements ReactomeTerm{
     public void setPathwayName(String value){  vertex.setProperty(PATHWAY_NAME_PROPERTY, value);}
   
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new LinkedList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinReactomeRel.NAME).iterator();
         while(iterator.hasNext()){

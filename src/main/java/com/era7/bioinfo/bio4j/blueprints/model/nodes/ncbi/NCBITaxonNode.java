@@ -20,11 +20,12 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.TaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonRel;
+import com.era7.bioinfo.bio4j.model.nodes.Taxon;
 import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxon;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -87,7 +88,7 @@ public class NCBITaxonNode extends BasicVertex implements NCBITaxon{
      * @return 
      */
     @Override
-    public NCBITaxonNode getParent(){
+    public NCBITaxon getParent(){
         NCBITaxonNode parent = null;
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, NCBITaxonParentRel.NAME).iterator();
@@ -102,8 +103,9 @@ public class NCBITaxonNode extends BasicVertex implements NCBITaxon{
      * 
      * @return 
      */
-    public List<NCBITaxonNode> getChildren(){
-        List<NCBITaxonNode> list = new ArrayList<NCBITaxonNode>();
+    @Override
+    public List<NCBITaxon> getChildren(){
+        List<NCBITaxon> list = new LinkedList<NCBITaxon>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, NCBITaxonParentRel.NAME).iterator();
         
@@ -117,7 +119,8 @@ public class NCBITaxonNode extends BasicVertex implements NCBITaxon{
         return list;
     }
     
-    public TaxonNode getTaxon(){
+    @Override
+    public Taxon getTaxon(){
         TaxonNode taxon = null;
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, NCBITaxonRel.NAME).iterator();

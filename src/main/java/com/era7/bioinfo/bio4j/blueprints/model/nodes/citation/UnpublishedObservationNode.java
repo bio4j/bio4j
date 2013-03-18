@@ -22,6 +22,8 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.UnpublishedObservationProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservation;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -58,7 +60,8 @@ public class UnpublishedObservationNode extends BasicVertex implements Unpublish
      * Gets the author of the unpublished observation
      * @return 
      */
-    public PersonNode getAuthor(){
+    @Override
+    public Person getAuthor(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, UnpublishedObservationAuthorRel.NAME).iterator();
         if(iterator.hasNext()){
             return new PersonNode(iterator.next());
@@ -67,8 +70,9 @@ public class UnpublishedObservationNode extends BasicVertex implements Unpublish
         }
     }
     
-    public List<ProteinNode> getProteinCitations(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getProteinCitations(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, UnpublishedObservationProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));

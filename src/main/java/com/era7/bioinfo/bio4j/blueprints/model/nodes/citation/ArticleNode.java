@@ -23,6 +23,9 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleJournalRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.Consortium;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -80,8 +83,9 @@ public class ArticleNode extends BasicVertex implements Article{
 
 
     
-    public List<ProteinNode> getProteinCitations(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getProteinCitations(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));
@@ -106,8 +110,9 @@ public class ArticleNode extends BasicVertex implements Article{
      * gets consortium authors (if any) of the article
      * @return 
      */
-    public List<ConsortiumNode> getConsortiumAuthors(){
-        List<ConsortiumNode> list = new LinkedList<ConsortiumNode>();
+    @Override
+    public List<Consortium> getConsortiumAuthors(){
+        List<Consortium> list = new LinkedList<Consortium>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();
@@ -121,8 +126,9 @@ public class ArticleNode extends BasicVertex implements Article{
      * gets person authors (if any) of the article
      * @return 
      */
-    public List<PersonNode> getPersonAuthors(){
-        List<PersonNode> list = new LinkedList<PersonNode>();
+    @Override
+    public List<Person> getPersonAuthors(){
+        List<Person> list = new LinkedList<Person>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();

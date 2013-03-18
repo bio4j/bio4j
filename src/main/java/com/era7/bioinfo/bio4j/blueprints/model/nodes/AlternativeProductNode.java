@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.IsoformEventGeneratorRel;
 import com.era7.bioinfo.bio4j.model.nodes.AlternativeProduct;
+import com.era7.bioinfo.bio4j.model.nodes.Isoform;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -49,8 +50,9 @@ public class AlternativeProductNode extends BasicVertex implements AlternativePr
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 
-    public List<IsoformNode> getIsoforms(){
-        List<IsoformNode> list = new LinkedList<IsoformNode>();
+    @Override
+    public List<Isoform> getIsoforms(){
+        List<Isoform> list = new LinkedList<Isoform>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, IsoformEventGeneratorRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new IsoformNode(iterator.next()));

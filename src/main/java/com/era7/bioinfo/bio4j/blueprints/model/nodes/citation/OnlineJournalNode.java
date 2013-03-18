@@ -18,6 +18,7 @@
 package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
 import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournal;
 import com.era7.bioinfo.bio4j.neo4j.model.relationships.citation.onarticle.OnlineArticleJournalRel;
 import com.tinkerpop.blueprints.Direction;
@@ -50,8 +51,9 @@ public class OnlineJournalNode extends BasicVertex implements OnlineJournal{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
-    public List<OnlineArticleNode> getOnlineArticles(){
-        List<OnlineArticleNode> list = new LinkedList<OnlineArticleNode>();
+    @Override
+    public List<OnlineArticle> getOnlineArticles(){
+        List<OnlineArticle> list = new LinkedList<OnlineArticle>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, OnlineArticleJournalRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new OnlineArticleNode(iterator.next()));

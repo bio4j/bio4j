@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinPfamRel;
 import com.era7.bioinfo.bio4j.model.nodes.Pfam;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -56,8 +57,9 @@ public class PfamNode extends BasicVertex implements Pfam{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
 
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new ArrayList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new ArrayList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinPfamRel.NAME).iterator();
         while(iterator.hasNext()){

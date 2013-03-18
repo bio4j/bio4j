@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementMRnaRel;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
 import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TRNA;
 import com.tinkerpop.blueprints.Vertex;
 
@@ -33,7 +34,8 @@ public class TRNANode extends RNANode implements TRNA{
         super(v);
     }
     
-    public GenomeElementNode getGenomeElement(){
+    @Override
+    public GenomeElement getGenomeElement(){
         return new GenomeElementNode(vertex.getVertices(com.tinkerpop.blueprints.Direction.IN, GenomeElementMRnaRel.NAME).iterator().next());
     }    
    

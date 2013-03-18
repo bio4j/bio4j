@@ -24,6 +24,9 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisInstituteRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.thesis.ThesisProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.Institute;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -66,7 +69,7 @@ public class ThesisNode extends BasicVertex implements Thesis{
      * Gets the thesis Institute
      * @return 
      */
-    public InstituteNode getInstitute(){
+    public Institute getInstitute(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisInstituteRel.NAME).iterator();
         if(iterator.hasNext()){
             return new InstituteNode(iterator.next());
@@ -79,7 +82,8 @@ public class ThesisNode extends BasicVertex implements Thesis{
      * Gets the thesis author
      * @return 
      */
-    public PersonNode getAuthor(){
+    @Override
+    public Person getAuthor(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisAuthorRel.NAME).iterator();
         if(iterator.hasNext()){
             return new PersonNode(iterator.next());
@@ -89,8 +93,9 @@ public class ThesisNode extends BasicVertex implements Thesis{
     }
     
     
-    public List<ProteinNode> getProteinCitations(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getProteinCitations(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ThesisProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));

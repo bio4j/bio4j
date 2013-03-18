@@ -20,6 +20,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.citation.BookNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookCityRel;
 import com.era7.bioinfo.bio4j.model.nodes.City;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -50,8 +51,9 @@ public class CityNode extends BasicVertex implements City{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     
-    public List<BookNode> getBooks(){
-        List<BookNode> list = new LinkedList<BookNode>();
+    @Override
+    public List<Book> getBooks(){
+        List<Book> list = new LinkedList<Book>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, BookCityRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new BookNode(iterator.next()));

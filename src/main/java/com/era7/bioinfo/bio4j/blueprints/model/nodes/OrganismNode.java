@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinOrganismRel;
 import com.era7.bioinfo.bio4j.model.nodes.Organism;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -63,8 +64,9 @@ public class OrganismNode extends BasicVertex implements Organism{
     public void setNcbiTaxonomyId(String value){    vertex.setProperty(NCBI_TAXONOMY_ID_PROPERTY, value);}
     
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new LinkedList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinOrganismRel.NAME).iterator();
         while(iterator.hasNext()){

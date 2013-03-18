@@ -24,10 +24,13 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleJournalRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.onarticle.OnlineArticleProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.Consortium;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournal;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -64,7 +67,8 @@ public class OnlineArticleNode extends BasicVertex implements OnlineArticle{
      * Gets the online journal where the online article was submitted
      * @return 
      */
-    public OnlineJournalNode getOnlineJournal(){
+    @Override
+    public OnlineJournal getOnlineJournal(){
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, OnlineArticleJournalRel.NAME).iterator();
         if(iterator.hasNext()){
             return new OnlineJournalNode(iterator.next());
@@ -77,8 +81,9 @@ public class OnlineArticleNode extends BasicVertex implements OnlineArticle{
      * gets consortium authors (if any) of the online article
      * @return 
      */
-    public List<ConsortiumNode> getConsortiumAuthors(){
-        List<ConsortiumNode> list = new ArrayList<ConsortiumNode>();
+    @Override
+    public List<Consortium> getConsortiumAuthors(){
+        List<Consortium> list = new LinkedList<Consortium>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, OnlineArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();
@@ -92,8 +97,9 @@ public class OnlineArticleNode extends BasicVertex implements OnlineArticle{
      * gets person authors (if any) of the online article
      * @return 
      */
-    public List<PersonNode> getPersonAuthors(){
-        List<PersonNode> list = new ArrayList<PersonNode>();
+    @Override
+    public List<Person> getPersonAuthors(){
+        List<Person> list = new LinkedList<Person>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, OnlineArticleAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             Vertex currentNode = iterator.next();
@@ -104,8 +110,9 @@ public class OnlineArticleNode extends BasicVertex implements OnlineArticle{
         return list;
     }
     
-    public List<ProteinNode> getProteinCitations(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getProteinCitations(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, OnlineArticleProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));

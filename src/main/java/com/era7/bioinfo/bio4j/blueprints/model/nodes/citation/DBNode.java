@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.submission.SubmissionDbRel;
 import com.era7.bioinfo.bio4j.model.nodes.citation.DB;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -48,8 +49,9 @@ public class DBNode extends BasicVertex implements DB{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
-    public List<SubmissionNode> getAssociatedSubmissions(){
-        List<SubmissionNode> list = new LinkedList<SubmissionNode>();
+    @Override
+    public List<Submission> getAssociatedSubmissions(){
+        List<Submission> list = new LinkedList<Submission>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, SubmissionDbRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new SubmissionNode(iterator.next()));

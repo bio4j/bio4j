@@ -25,6 +25,16 @@ import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
 import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservation;
 import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
 import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
+import com.era7.bioinfo.bio4j.model.relationships.comment.DomainComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.FunctionComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.PathwayComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.SimilarityComment;
+import com.era7.bioinfo.bio4j.model.relationships.features.ActiveSiteFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.SignalPeptideFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.SpliceVariantFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.TransmembraneRegionFeature;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoformInteraction;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinProteinInteraction;
 import java.util.List;
 
 /**

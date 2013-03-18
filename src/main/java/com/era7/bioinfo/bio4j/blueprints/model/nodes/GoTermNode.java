@@ -20,9 +20,9 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGoRel;
 import com.era7.bioinfo.bio4j.model.nodes.GoTerm;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,8 +100,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
     public void setAlternativeIds(String[] value){  vertex.setProperty(ALTERNATIVE_IDS_PROPERTY, value);}
   
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new LinkedList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinGoRel.NAME).iterator();
         while(iterator.hasNext()){
@@ -115,8 +116,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
      * 
      * @return 
      */
-    public List<GoTermNode> getIsAGoNodes(){
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getIsAGoNodes(){
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, IsAGoRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GoTermNode(iterator.next()));
@@ -127,8 +129,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
      * 
      * @return 
      */
-    public List<GoTermNode> getNegativelyRegulatesNodes(){
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getNegativelyRegulatesNodes(){
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, NegativelyRegulatesGoRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GoTermNode(iterator.next()));
@@ -139,8 +142,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
      * 
      * @return 
      */
-    public List<GoTermNode> getPositivelyRegulatesNodes(){
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getPositivelyRegulatesNodes(){
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PositivelyRegulatesGoRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GoTermNode(iterator.next()));
@@ -151,8 +155,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
      * 
      * @return 
      */
-    public List<GoTermNode> getPartOfNodes(){
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getPartOfNodes(){
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PartOfGoRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GoTermNode(iterator.next()));
@@ -163,8 +168,9 @@ public class GoTermNode extends BasicVertex implements GoTerm{
      * 
      * @return 
      */
-    public List<GoTermNode> getHasPartOfNodes(){
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getHasPartOfNodes(){
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, HasPartOfGoRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GoTermNode(iterator.next()));

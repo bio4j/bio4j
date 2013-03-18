@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.article.ArticleJournalRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
 import com.era7.bioinfo.bio4j.model.nodes.citation.Journal;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -49,8 +50,9 @@ public class JournalNode extends BasicVertex implements Journal{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
     
     
-    public List<ArticleNode> getArticles(){
-        List<ArticleNode> list = new LinkedList<ArticleNode>();
+    @Override
+    public List<Article> getArticles(){
+        List<Article> list = new LinkedList<Article>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ArticleJournalRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ArticleNode(iterator.next()));

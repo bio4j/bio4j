@@ -22,7 +22,16 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinGenomeElementRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.*;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.CDS;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.Gene;
 import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MiscRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.NcRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.RRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TRNA;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.TmRNA;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -64,8 +73,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
     public void setDefinition(String value){  vertex.setProperty(DEFINITION_PROPERTY, value);}
 
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new LinkedList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinGenomeElementRel.NAME).iterator();
         while(iterator.hasNext()){
@@ -80,8 +90,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<CDSNode> getCDS(){
-        List<CDSNode> list = new ArrayList<CDSNode>();
+    @Override
+    public List<CDS> getCDS(){
+        List<CDS> list = new ArrayList<CDS>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementCDSRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new CDSNode(iterator.next()));
@@ -92,8 +103,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<GeneNode> getGenes(){
-        List<GeneNode> list = new ArrayList<GeneNode>();
+    @Override
+    public List<Gene> getGenes(){
+        List<Gene> list = new LinkedList<Gene>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementGeneRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new GeneNode(iterator.next()));
@@ -104,8 +116,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<MRNANode> getMRnas(){
-        List<MRNANode> list = new ArrayList<MRNANode>();
+    @Override
+    public List<MRNA> getMRnas(){
+        List<MRNA> list = new LinkedList<MRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementMRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new MRNANode(iterator.next()));
@@ -116,8 +129,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<MiscRNANode> getMiscRnas(){
-        List<MiscRNANode> list = new ArrayList<MiscRNANode>();
+    @Override
+    public List<MiscRNA> getMiscRnas(){
+        List<MiscRNA> list = new LinkedList<MiscRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementMiscRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new MiscRNANode(iterator.next()));
@@ -128,8 +142,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<NcRNANode> getNcRnas(){
-        List<NcRNANode> list = new ArrayList<NcRNANode>();
+    @Override
+    public List<NcRNA> getNcRnas(){
+        List<NcRNA> list = new LinkedList<NcRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementNcRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new NcRNANode(iterator.next()));
@@ -140,8 +155,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<RRNANode> getRRnas(){
-        List<RRNANode> list = new ArrayList<RRNANode>();
+    @Override
+    public List<RRNA> getRRnas(){
+        List<RRNA> list = new LinkedList<RRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementRRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new RRNANode(iterator.next()));
@@ -152,8 +168,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<TRNANode> getTRnas(){
-        List<TRNANode> list = new ArrayList<TRNANode>();
+    @Override
+    public List<TRNA> getTRnas(){
+        List<TRNA> list = new LinkedList<TRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementTRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new TRNANode(iterator.next()));
@@ -164,8 +181,9 @@ public class GenomeElementNode extends BasicVertex implements GenomeElement{
      * 
      * @return 
      */
-    public List<TmRNANode> getTmRnas(){
-        List<TmRNANode> list = new ArrayList<TmRNANode>();
+    @Override
+    public List<TmRNA> getTmRnas(){
+        List<TmRNA> list = new LinkedList<TmRNA>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, GenomeElementTmRnaRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new TmRNANode(iterator.next()));

@@ -38,7 +38,32 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef90MemberRel;
+import com.era7.bioinfo.bio4j.model.nodes.Enzyme;
+import com.era7.bioinfo.bio4j.model.nodes.GoTerm;
+import com.era7.bioinfo.bio4j.model.nodes.Interpro;
+import com.era7.bioinfo.bio4j.model.nodes.Keyword;
+import com.era7.bioinfo.bio4j.model.nodes.Pfam;
 import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.SubcellularLocation;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
+import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservation;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
+import com.era7.bioinfo.bio4j.model.relationships.comment.DomainComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.FunctionComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.PathwayComment;
+import com.era7.bioinfo.bio4j.model.relationships.comment.SimilarityComment;
+import com.era7.bioinfo.bio4j.model.relationships.features.ActiveSiteFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.SignalPeptideFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.SpliceVariantFeature;
+import com.era7.bioinfo.bio4j.model.relationships.features.TransmembraneRegionFeature;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinIsoformInteraction;
+import com.era7.bioinfo.bio4j.model.relationships.protein.ProteinProteinInteraction;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
@@ -1014,8 +1039,8 @@ public class ProteinNode extends BasicVertex implements Protein{
     }
 
     @Override
-    public List<ProteinNode> getUniref50ClusterThisProteinBelongsTo() {
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    public List<Protein> getUniref50ClusterThisProteinBelongsTo() {
+        List<Protein> list = new LinkedList<Protein>();
         if (isUniref50Representant()) {
             list.add(this);
             Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef50MemberRel.NAME).iterator();
@@ -1030,8 +1055,8 @@ public class ProteinNode extends BasicVertex implements Protein{
     }
 
     @Override
-    public List<ProteinNode> getUniref90ClusterThisProteinBelongsTo() {
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    public List<Protein> getUniref90ClusterThisProteinBelongsTo() {
+        List<Protein> list = new LinkedList<Protein>();
         if (isUniref90Representant()) {
             list.add(this);
             Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef90MemberRel.NAME).iterator();
@@ -1046,8 +1071,8 @@ public class ProteinNode extends BasicVertex implements Protein{
     }
 
     @Override
-    public List<ProteinNode> getUniref100ClusterThisProteinBelongsTo() {
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    public List<Protein> getUniref100ClusterThisProteinBelongsTo() {
+        List<Protein> list = new LinkedList<Protein>();
         if (isUniref100Representant()) {
             list.add(this);
             Iterator<Vertex> relIterator = vertex.getVertices(Direction.OUT, UniRef100MemberRel.NAME).iterator();
@@ -1081,8 +1106,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return dataset;
     }
 
-    public List<GenomeElementNode> getGenomeElements() {
-        List<GenomeElementNode> list = new ArrayList<GenomeElementNode>();
+    @Override
+    public List<GenomeElement> getGenomeElements() {
+        List<GenomeElement> list = new LinkedList<GenomeElement>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinGenomeElementRel.NAME).iterator();
         while (iterator.hasNext()) {
             list.add(new GenomeElementNode(iterator.next()));
@@ -1090,8 +1116,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<SubcellularLocationNode> getSubcellularLocations() {
-        List<SubcellularLocationNode> list = new ArrayList<SubcellularLocationNode>();
+    @Override
+    public List<SubcellularLocation> getSubcellularLocations() {
+        List<SubcellularLocation> list = new LinkedList<SubcellularLocation>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinSubcellularLocationRel.NAME).iterator();
         while (iterator.hasNext()) {
             list.add(new SubcellularLocationNode(iterator.next()));
@@ -1099,8 +1126,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<InterproNode> getInterpro() {
-        List<InterproNode> interpros = new ArrayList<InterproNode>();
+    @Override
+    public List<Interpro> getInterpro() {
+        List<Interpro> interpros = new LinkedList<Interpro>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinInterproRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1110,8 +1138,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return interpros;
     }
 
-    public List<PfamNode> getPfamTerms() {
-        List<PfamNode> pfamTerms = new ArrayList<PfamNode>();
+    @Override
+    public List<Pfam> getPfamTerms() {
+        List<Pfam> pfamTerms = new LinkedList<Pfam>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinPfamRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1121,8 +1150,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return pfamTerms;
     }
 
-    public List<ReactomeTermNode> getReactomeTerms() {
-        List<ReactomeTermNode> list = new LinkedList<ReactomeTermNode>();
+    @Override
+    public List<ReactomeTerm> getReactomeTerms() {
+        List<ReactomeTerm> list = new LinkedList<ReactomeTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinReactomeRel.NAME).iterator();
         while (iterator.hasNext()) {
             ReactomeTermNode reactomeTerm = new ReactomeTermNode(iterator.next());
@@ -1131,8 +1161,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<EnzymeNode> getProteinEnzymaticActivity() {
-        List<EnzymeNode> list = new LinkedList<EnzymeNode>();
+    @Override
+    public List<Enzyme> getProteinEnzymaticActivity() {
+        List<Enzyme> list = new LinkedList<Enzyme>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinEnzymaticActivityRel.NAME).iterator();
         while (iterator.hasNext()) {
             EnzymeNode enzyme = new EnzymeNode(iterator.next());
@@ -1141,8 +1172,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<GoTermNode> getGOAnnotations() {
-        List<GoTermNode> list = new ArrayList<GoTermNode>();
+    @Override
+    public List<GoTerm> getGOAnnotations() {
+        List<GoTerm> list = new LinkedList<GoTerm>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinGoRel.NAME).iterator();
         while (iterator.hasNext()) {
             GoTermNode goTerm = new GoTermNode(iterator.next());
@@ -1151,8 +1183,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<KeywordNode> getKeywords() {
-        List<KeywordNode> keywords = new ArrayList<KeywordNode>();
+    @Override
+    public List<Keyword> getKeywords() {
+        List<Keyword> keywords = new LinkedList<Keyword>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, ProteinKeywordRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1162,8 +1195,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return keywords;
     }
 
-    public List<SignalPeptideFeatureRel> getSignalPeptideFeature() {
-        List<SignalPeptideFeatureRel> list = new ArrayList<SignalPeptideFeatureRel>();
+    @Override
+    public List<SignalPeptideFeature> getSignalPeptideFeature() {
+        List<SignalPeptideFeature> list = new LinkedList<SignalPeptideFeature>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SignalPeptideFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1173,8 +1207,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<SpliceVariantFeatureRel> getSpliceVariantFeature() {
-        List<SpliceVariantFeatureRel> list = new ArrayList<SpliceVariantFeatureRel>();
+    @Override
+    public List<SpliceVariantFeature> getSpliceVariantFeature() {
+        List<SpliceVariantFeature> list = new LinkedList<SpliceVariantFeature>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SpliceVariantFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1184,8 +1219,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<TransmembraneRegionFeatureRel> getTransmembraneRegionFeature() {
-        List<TransmembraneRegionFeatureRel> list = new ArrayList<TransmembraneRegionFeatureRel>();
+    @Override
+    public List<TransmembraneRegionFeature> getTransmembraneRegionFeature() {
+        List<TransmembraneRegionFeature> list = new LinkedList<TransmembraneRegionFeature>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, TransmembraneRegionFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1195,8 +1231,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<ActiveSiteFeatureRel> getActiveSiteFeature() {
-        List<ActiveSiteFeatureRel> list = new ArrayList<ActiveSiteFeatureRel>();
+    @Override
+    public List<ActiveSiteFeature> getActiveSiteFeature() {
+        List<ActiveSiteFeature> list = new LinkedList<ActiveSiteFeature>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ActiveSiteFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1206,8 +1243,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<FunctionCommentRel> getFunctionComment() {
-        List<FunctionCommentRel> list = new ArrayList<FunctionCommentRel>();
+    @Override
+    public List<FunctionComment> getFunctionComment() {
+        List<FunctionComment> list = new LinkedList<FunctionComment>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, FunctionCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1217,8 +1255,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<PathwayCommentRel> getPathwayComment() {
-        List<PathwayCommentRel> list = new ArrayList<PathwayCommentRel>();
+    @Override
+    public List<PathwayComment> getPathwayComment() {
+        List<PathwayComment> list = new LinkedList<PathwayComment>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, PathwayCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1228,8 +1267,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<DomainCommentRel> getDomainComment() {
-        List<DomainCommentRel> list = new ArrayList<DomainCommentRel>();
+    @Override
+    public List<DomainComment> getDomainComment() {
+        List<DomainComment> list = new LinkedList<DomainComment>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, DomainCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1239,8 +1279,9 @@ public class ProteinNode extends BasicVertex implements Protein{
         return list;
     }
 
-    public List<SimilarityCommentRel> getSimilarityComment() {
-        List<SimilarityCommentRel> list = new ArrayList<SimilarityCommentRel>();
+    @Override
+    public List<SimilarityComment> getSimilarityComment() {
+        List<SimilarityComment> list = new LinkedList<SimilarityComment>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SimilarityCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1255,8 +1296,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ProteinProteinInteractionRel> getProteinOutgoingInteractions() {
-        List<ProteinProteinInteractionRel> list = new ArrayList<ProteinProteinInteractionRel>();
+    @Override
+    public List<ProteinProteinInteraction> getProteinOutgoingInteractions() {
+        List<ProteinProteinInteraction> list = new LinkedList<ProteinProteinInteraction>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ProteinProteinInteractionRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1271,8 +1313,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ProteinProteinInteractionRel> getProteinIncomingInteractions() {
-        List<ProteinProteinInteractionRel> list = new ArrayList<ProteinProteinInteractionRel>();
+    @Override
+    public List<ProteinProteinInteraction> getProteinIncomingInteractions() {
+        List<ProteinProteinInteraction> list = new LinkedList<ProteinProteinInteraction>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.IN, ProteinProteinInteractionRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1287,8 +1330,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ProteinIsoformInteractionRel> getIsoformOutgoingInteractions() {
-        List<ProteinIsoformInteractionRel> list = new ArrayList<ProteinIsoformInteractionRel>();
+    @Override
+    public List<ProteinIsoformInteraction> getIsoformOutgoingInteractions() {
+        List<ProteinIsoformInteraction> list = new LinkedList<ProteinIsoformInteraction>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ProteinIsoformInteractionRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1303,8 +1347,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ProteinIsoformInteractionRel> getIsoformIncomingInteractions() {
-        List<ProteinIsoformInteractionRel> list = new ArrayList<ProteinIsoformInteractionRel>();
+    @Override
+    public List<ProteinIsoformInteraction> getIsoformIncomingInteractions() {
+        List<ProteinIsoformInteraction> list = new LinkedList<ProteinIsoformInteraction>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.IN, ProteinIsoformInteractionRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1322,8 +1367,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ArticleNode> getArticleCitations() {
-        List<ArticleNode> list = new ArrayList<ArticleNode>();
+    @Override
+    public List<Article> getArticleCitations() {
+        List<Article> list = new LinkedList<Article>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ArticleProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1337,8 +1383,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<SubmissionNode> getSubmissionCitations() {
-        List<SubmissionNode> list = new ArrayList<SubmissionNode>();
+    @Override
+    public List<Submission> getSubmissionCitations() {
+        List<Submission> list = new ArrayList<Submission>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, SubmissionProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1352,8 +1399,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<OnlineArticleNode> getOnlineArticleCitations() {
-        List<OnlineArticleNode> list = new ArrayList<OnlineArticleNode>();
+    @Override
+    public List<OnlineArticle> getOnlineArticleCitations() {
+        List<OnlineArticle> list = new LinkedList<OnlineArticle>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, OnlineArticleProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1367,8 +1415,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<BookNode> getBookCitations() {
-        List<BookNode> list = new ArrayList<BookNode>();
+    @Override
+    public List<Book> getBookCitations() {
+        List<Book> list = new LinkedList<Book>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, BookProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1382,8 +1431,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<PatentNode> getPatentCitations() {
-        List<PatentNode> list = new ArrayList<PatentNode>();
+    @Override
+    public List<Patent> getPatentCitations() {
+        List<Patent> list = new LinkedList<Patent>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, PatentProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1397,8 +1447,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<ThesisNode> getThesisCitations() {
-        List<ThesisNode> list = new ArrayList<ThesisNode>();
+    @Override
+    public List<Thesis> getThesisCitations() {
+        List<Thesis> list = new LinkedList<Thesis>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ThesisProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -1412,8 +1463,9 @@ public class ProteinNode extends BasicVertex implements Protein{
      *
      * @return
      */
-    public List<UnpublishedObservationNode> getUnpublishedObservationsCitations() {
-        List<UnpublishedObservationNode> list = new ArrayList<UnpublishedObservationNode>();
+    @Override
+    public List<UnpublishedObservation> getUnpublishedObservationsCitations() {
+        List<UnpublishedObservation> list = new LinkedList<UnpublishedObservation>();
 
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, UnpublishedObservationProteinCitationRel.NAME).iterator();
         while (iterator.hasNext()) {

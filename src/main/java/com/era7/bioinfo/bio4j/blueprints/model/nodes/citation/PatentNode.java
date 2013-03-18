@@ -22,6 +22,8 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.PersonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentAuthorRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.patent.PatentProteinCitationRel;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -70,8 +72,9 @@ public class PatentNode extends BasicVertex implements Patent{
      * gets authors (if any) of the patent
      * @return 
      */
-    public List<PersonNode> getAuthors(){
-        List<PersonNode> list = new ArrayList<PersonNode>();
+    @Override
+    public List<Person> getAuthors(){
+        List<Person> list = new ArrayList<Person>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PatentAuthorRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new PersonNode(iterator.next()));
@@ -80,8 +83,9 @@ public class PatentNode extends BasicVertex implements Patent{
     }
     
     
-    public List<ProteinNode> getProteinCitations(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getProteinCitations(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.OUT, PatentProteinCitationRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));

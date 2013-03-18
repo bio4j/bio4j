@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinEnzymaticActivityRel;
 import com.era7.bioinfo.bio4j.model.nodes.Enzyme;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -79,8 +80,9 @@ public class EnzymeNode extends BasicVertex implements Enzyme{
     public void setPrositeCrossReferences(String[] value){    vertex.setProperty(PROSITE_CROSS_REFERENCES_PROPERTY, value);}
 
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> list = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> list = new LinkedList<Protein>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinEnzymaticActivityRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));

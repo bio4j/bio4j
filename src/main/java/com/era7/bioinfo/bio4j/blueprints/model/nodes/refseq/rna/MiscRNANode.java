@@ -18,6 +18,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.rna;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.refseq.GenomeElementNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.refseq.GenomeElementMRnaRel;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
 import com.era7.bioinfo.bio4j.model.nodes.refseq.rna.MiscRNA;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -34,7 +35,8 @@ public class MiscRNANode extends RNANode implements MiscRNA{
         super(v);
     }
     
-    public GenomeElementNode getGenomeElement(){
+    @Override
+    public GenomeElement getGenomeElement(){
         return new GenomeElementNode(vertex.getVertices(Direction.IN, GenomeElementMRnaRel.NAME).iterator().next());
     }
 }

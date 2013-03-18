@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes.citation;
 
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.BasicVertex;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.book.BookPublisherRel;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
 import com.era7.bioinfo.bio4j.model.nodes.citation.Publisher;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
@@ -50,8 +51,9 @@ public class PublisherNode extends BasicVertex implements Publisher{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
-    public List<BookNode> getBooks(){
-        List<BookNode> list = new LinkedList<BookNode>();
+    @Override
+    public List<Book> getBooks(){
+        List<Book> list = new LinkedList<Book>();
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, BookPublisherRel.NAME).iterator();
         while(iterator.hasNext()){
             list.add(new BookNode(iterator.next()));

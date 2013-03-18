@@ -19,6 +19,7 @@ package com.era7.bioinfo.bio4j.blueprints.model.nodes;
 
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinInterproRel;
 import com.era7.bioinfo.bio4j.model.nodes.Interpro;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
@@ -57,8 +58,9 @@ public class InterproNode extends BasicVertex implements Interpro{
     public void setName(String value){  vertex.setProperty(NAME_PROPERTY, value);}
 
     
-    public List<ProteinNode> getAssociatedProteins(){
-        List<ProteinNode> proteins = new LinkedList<ProteinNode>();
+    @Override
+    public List<Protein> getAssociatedProteins(){
+        List<Protein> proteins = new LinkedList<Protein>();
         
         Iterator<Vertex> iterator = vertex.getVertices(Direction.IN, ProteinInterproRel.NAME).iterator();
         while(iterator.hasNext()){
