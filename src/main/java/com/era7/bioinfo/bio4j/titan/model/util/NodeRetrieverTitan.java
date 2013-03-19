@@ -219,7 +219,7 @@ public class NodeRetrieverTitan implements NodeRetriever{
      * @return List of proteins (if any) which match the full name provided
      */
     @Override
-    public List<Protein> getProteinsByFullName(String proteinFullName){        
+    public List<Protein> getProteinByFullName(String proteinFullName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.FULL_NAME_PROPERTY, proteinFullName).iterator();        
         List<Protein> list = new LinkedList<Protein>();        
         while(iterator.hasNext()){
@@ -233,8 +233,26 @@ public class NodeRetrieverTitan implements NodeRetriever{
      * @return List of proteins (if any) which match the gene name provided
      */
     @Override
-    public List<Protein> getProteinsByGeneNames(String proteinGeneName){        
+    public List<Protein> getProteinByGeneNames(String proteinGeneName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.GENE_NAMES_PROPERTY, proteinGeneName).iterator();        
+        List<Protein> list = new LinkedList<Protein>();        
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
+        }        
+        return list;        
+    }
+    @Override
+    public List<Protein> getProteinByPIRReference(String id){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.PIR_REFERENCES_PROPERTY, id).iterator();        
+        List<Protein> list = new LinkedList<Protein>();        
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
+        }        
+        return list;        
+    }
+    @Override
+    public List<Protein> getProteinByKEGGReference(String id){        
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.KEGG_REFERENCES_PROPERTY, id).iterator();        
         List<Protein> list = new LinkedList<Protein>();        
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));
