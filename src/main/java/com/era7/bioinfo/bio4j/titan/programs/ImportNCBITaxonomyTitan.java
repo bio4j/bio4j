@@ -21,7 +21,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ncbi.NCBITaxonNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonParentRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.ncbi.NCBITaxonRel;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.thinkaurelius.titan.core.TitanGraph;
 import com.tinkerpop.blueprints.TransactionalGraph;
@@ -107,7 +107,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
                 TitanGraph graph = manager.getGraph();
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
+                NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
                 HashMap<String, String> nodeParentMap = new HashMap<String, String>();
 
@@ -241,7 +241,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
     }
 
     private static void associateTaxonomy(Bio4jManager manager,
-            NodeRetriever nodeRetriever,
+            NodeRetrieverTitan nodeRetriever,
             TitanGraph graph) {
 
         

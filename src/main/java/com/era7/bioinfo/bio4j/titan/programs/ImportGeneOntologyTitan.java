@@ -19,7 +19,7 @@ package com.era7.bioinfo.bio4j.titan.programs;
 import com.era7.bioinfo.bio4j.blueprints.model.nodes.GoTermNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.go.*;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanGraph;
@@ -85,7 +85,7 @@ public class ImportGeneOntologyTitan implements Executable {
             //-------creating graph handlers---------------------
             Bio4jManager manager = new Bio4jManager(conf);
             TitanGraph graph = manager.getGraph();
-            NodeRetriever nodeRetriever = new NodeRetriever(manager);
+            NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
             BufferedWriter statsBuff = null;
 

@@ -23,7 +23,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef100Mem
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef50MemberRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.uniref.UniRef90MemberRel;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanGraph;
@@ -100,7 +100,7 @@ public class ImportUnirefTitan implements Executable {
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
                 TitanGraph graph = manager.getGraph();
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
+                NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
                 //------------------- UNIREF 100----------------------------
                 System.out.println("Reading Uniref 100 file...");
@@ -177,7 +177,7 @@ public class ImportUnirefTitan implements Executable {
     }
 
     private static int importUnirefFile(TitanGraph graph,
-            NodeRetriever nodeRetriever,
+            NodeRetrieverTitan nodeRetriever,
             File unirefFile,
             String edgeName) throws Exception {
 
@@ -231,7 +231,7 @@ public class ImportUnirefTitan implements Executable {
                     } //---The representant is a protein
                     else {
 
-                        vertex = nodeRetriever.getProteinNodeByAccession(representantAccession).getNode();
+                        vertex = nodeRetriever.getProteinByAccession(representantAccession).getNode();
 
                     }
 
@@ -246,7 +246,7 @@ public class ImportUnirefTitan implements Executable {
                                     memberVertex = tempIsoformNode.getNode();
                                 }
                             } else {
-                                ProteinNode tempProteinNode = nodeRetriever.getProteinNodeByAccession(memberAccession);
+                                ProteinNode tempProteinNode = nodeRetriever.getProteinByAccession(memberAccession);
                                 if(tempProteinNode != null){
                                     memberVertex = tempProteinNode.getNode();
                                 }

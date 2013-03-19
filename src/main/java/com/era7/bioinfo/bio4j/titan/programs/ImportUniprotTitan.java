@@ -51,7 +51,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
 import com.era7.bioinfo.bio4j.titan.model.ProteinNode;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.bioinfoxml.bio4j.UniprotDataXML;
 import com.era7.lib.era7xmlapi.model.XMLElement;
@@ -122,7 +122,7 @@ public class ImportUniprotTitan implements Executable {
             conf.setProperty("storage.backend", "local");
 
             Bio4jManager manager = new Bio4jManager(conf);
-            NodeRetriever nodeRetriever = new NodeRetriever(manager);
+            NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
             TitanGraph graph = manager.getGraph();
 
             try {
@@ -1161,7 +1161,7 @@ public class ImportUniprotTitan implements Executable {
     private static void importProteinFeatures(XMLElement entryXMLElem,
             TitanGraph graph,
             Bio4jManager manager,
-            NodeRetriever nodeRetriever,
+            NodeRetrieverTitan nodeRetriever,
             ProteinNode currentProteinNode) {
 
 
@@ -1328,7 +1328,7 @@ public class ImportUniprotTitan implements Executable {
     private static void importProteinComments(XMLElement entryXMLElem,
             TitanGraph graph,
             Bio4jManager manager,
-            NodeRetriever nodeRetriever,
+            NodeRetrieverTitan nodeRetriever,
             ProteinNode currentProteinNode,
             String proteinSequence,
             UniprotDataXML uniprotDataXML) {
@@ -1881,7 +1881,7 @@ public class ImportUniprotTitan implements Executable {
     private static void importProteinCitations(XMLElement entryXMLElem,
             TitanGraph graph,
             Bio4jManager manager,
-            NodeRetriever nodeRetriever,
+            NodeRetrieverTitan nodeRetriever,
             ProteinNode currentProteinNode,
             UniprotDataXML uniprotDataXML) {
 

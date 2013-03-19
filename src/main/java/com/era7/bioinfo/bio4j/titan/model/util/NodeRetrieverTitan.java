@@ -26,6 +26,40 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.Alternati
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductRibosomalFrameshiftingRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.aproducts.AlternativeProductSplicingRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.model.nodes.AlternativeProduct;
+import com.era7.bioinfo.bio4j.model.nodes.City;
+import com.era7.bioinfo.bio4j.model.nodes.CommentType;
+import com.era7.bioinfo.bio4j.model.nodes.Consortium;
+import com.era7.bioinfo.bio4j.model.nodes.Country;
+import com.era7.bioinfo.bio4j.model.nodes.Dataset;
+import com.era7.bioinfo.bio4j.model.nodes.Enzyme;
+import com.era7.bioinfo.bio4j.model.nodes.FeatureType;
+import com.era7.bioinfo.bio4j.model.nodes.GoTerm;
+import com.era7.bioinfo.bio4j.model.nodes.Institute;
+import com.era7.bioinfo.bio4j.model.nodes.Interpro;
+import com.era7.bioinfo.bio4j.model.nodes.Isoform;
+import com.era7.bioinfo.bio4j.model.nodes.Keyword;
+import com.era7.bioinfo.bio4j.model.nodes.Organism;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Pfam;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.SequenceCaution;
+import com.era7.bioinfo.bio4j.model.nodes.SubcellularLocation;
+import com.era7.bioinfo.bio4j.model.nodes.Taxon;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import com.era7.bioinfo.bio4j.model.nodes.citation.DB;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Journal;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournal;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Publisher;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
+import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxon;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
+import com.era7.bioinfo.bio4j.model.util.NodeRetriever;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -35,17 +69,18 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NodeRetriever {
+public class NodeRetrieverTitan implements NodeRetriever{
 
     protected Bio4jManager manager;
 
-    public NodeRetriever(Bio4jManager bio4jManager) {
+    public NodeRetrieverTitan(Bio4jManager bio4jManager) {
         manager = bio4jManager;
     }
 
     //-------------------------------------------------------------------
     //--------------------------ENZYME-----------------------------------
-    public EnzymeNode getEnzymeById(String id) {
+    @Override
+    public Enzyme getEnzymeById(String id) {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(EnzymeNode.ID_PROPERTY, id).iterator();
         if (iterator.hasNext()) {
             return new EnzymeNode(iterator.next());
@@ -56,7 +91,8 @@ public class NodeRetriever {
 
     //-------------------------------------------------------------------
     //--------------------------DATASETS-----------------------------------
-    public DatasetNode getDatasetByName(String name) {
+    @Override
+    public Dataset getDatasetByName(String name) {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, name).iterator();
         if (iterator.hasNext()) {
             return new DatasetNode(iterator.next());
@@ -65,7 +101,8 @@ public class NodeRetriever {
         }
     }
 
-    public DatasetNode getSwissProtDataset() {
+    @Override
+    public Dataset getSwissProtDataset() {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, DatasetNode.SWISS_PROT_DATASET_NAME).iterator();
         if (iterator.hasNext()) {
             return new DatasetNode(iterator.next());
@@ -74,7 +111,8 @@ public class NodeRetriever {
         }
     }
 
-    public DatasetNode getTremblDataset() {
+    @Override
+    public Dataset getTremblDataset() {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(DatasetNode.NAME_PROPERTY, DatasetNode.TREMBL_DATASET_NAME).iterator();
         if (iterator.hasNext()) {
             return new DatasetNode(iterator.next());
@@ -85,7 +123,8 @@ public class NodeRetriever {
 
     //-------------------------------------------------------------------
     //--------------------------REFSEQ-----------------------------------    
-    public GenomeElementNode getGenomeElementByVersion(String version) {
+    @Override
+    public GenomeElement getGenomeElementByVersion(String version) {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(GenomeElementNode.VERSION_PROPERTY, version).iterator();
         if (iterator.hasNext()) {
             return new GenomeElementNode(iterator.next());
@@ -101,7 +140,8 @@ public class NodeRetriever {
      * @param goId
      * @return GoTermNode with the id provided
      */
-    public GoTermNode getGoTermById(String goId) {
+    @Override
+    public GoTerm getGoTermById(String goId) {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(GoTermNode.ID_PROPERTY, goId).iterator();
         if (iterator.hasNext()) {
             return new GoTermNode(iterator.next());
@@ -109,7 +149,8 @@ public class NodeRetriever {
             return null;
         }
     }
-    public GoTermNode getMolecularFunctionGoTerm(){
+    @Override
+    public GoTerm getMolecularFunctionGoTerm(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(GoTermNode.ID_PROPERTY, GoTermNode.MOLECULAR_FUNCTION_GO_ID).iterator();
         if(iterator.hasNext()){
             return new GoTermNode(iterator.next());
@@ -117,7 +158,8 @@ public class NodeRetriever {
             return null;
         }
     }
-    public GoTermNode getBiologicalProcessGoTerm(){
+    @Override
+    public GoTerm getBiologicalProcessGoTerm(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(GoTermNode.ID_PROPERTY, GoTermNode.BIOLOGICAL_PROCESS_GO_ID).iterator();
         if(iterator.hasNext()){
             return new GoTermNode(iterator.next());
@@ -125,7 +167,8 @@ public class NodeRetriever {
             return null;
         }
     }
-    public GoTermNode getCellularComponentGoTerm(){
+    @Override
+    public GoTerm getCellularComponentGoTerm(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(GoTermNode.ID_PROPERTY, GoTermNode.CELLULAR_COMPONENT_GO_ID).iterator();
         if(iterator.hasNext()){
             return new GoTermNode(iterator.next());
@@ -141,7 +184,8 @@ public class NodeRetriever {
      * @param proteinAccession
      * @return ProteinNode with the accession provided
      */
-    public ProteinNode getProteinNodeByAccession(String proteinAccession) {
+    @Override
+    public Protein getProteinByAccession(String proteinAccession) {
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.ACCESSION_PROPERTY, proteinAccession).iterator();
         if (iterator.hasNext()) {
             return new ProteinNode(iterator.next());
@@ -160,22 +204,24 @@ public class NodeRetriever {
      * @param ensemblPlantsRef 
      * @return ProteinNode with the Ensembl Plants reference provided
      */
-    public ProteinNode getProteinNodeByEnsemblPlantsRef(String ensemblPlantsRef){        
+    @Override
+    public List<Protein> getProteinByEnsemblPlantsRef(String ensemblPlantsRef){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, ensemblPlantsRef).iterator();        
-        if(iterator.hasNext()){
-            return new ProteinNode(iterator.next());
-        }else{
-            return null;
+        List<Protein> list = new LinkedList<Protein>();  
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
         }        
+        return list;         
     }    
     /**
      * 
      * @param proteinFullName
      * @return List of proteins (if any) which match the full name provided
      */
-    public List<ProteinNode> getProteinsByFullName(String proteinFullName){        
+    @Override
+    public List<Protein> getProteinsByFullName(String proteinFullName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.FULL_NAME_PROPERTY, proteinFullName).iterator();        
-        List<ProteinNode> list = new LinkedList<ProteinNode>();        
+        List<Protein> list = new LinkedList<Protein>();        
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));
         }        
@@ -186,9 +232,10 @@ public class NodeRetriever {
      * @param proteinGeneName
      * @return List of proteins (if any) which match the gene name provided
      */
-    public List<ProteinNode> getProteinsByGeneNames(String proteinGeneName){        
+    @Override
+    public List<Protein> getProteinsByGeneNames(String proteinGeneName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.GENE_NAMES_PROPERTY, proteinGeneName).iterator();        
-        List<ProteinNode> list = new LinkedList<ProteinNode>();        
+        List<Protein> list = new LinkedList<Protein>();        
         while(iterator.hasNext()){
             list.add(new ProteinNode(iterator.next()));
         }        
@@ -202,7 +249,8 @@ public class NodeRetriever {
      * @param keywordId 
      * @return KeywordNode with the id provided
      */
-    public KeywordNode getKeywordById(String keywordId){        
+    @Override
+    public Keyword getKeywordById(String keywordId){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(KeywordNode.ID_PROPERTY, keywordId).iterator();        
         if(iterator.hasNext()){
             return new KeywordNode(iterator.next());
@@ -215,7 +263,8 @@ public class NodeRetriever {
      * @param keywordName 
      * @return KeywordNode with the id provided
      */
-    public KeywordNode getKeywordByName(String keywordName){        
+    @Override
+    public Keyword getKeywordByName(String keywordName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(KeywordNode.NAME_PROPERTY, keywordName).iterator();        
         if(iterator.hasNext()){
             return new KeywordNode(iterator.next());
@@ -231,7 +280,8 @@ public class NodeRetriever {
      * @param interproId 
      * @return InterproNode with the id provided
      */
-    public InterproNode getInterproById(String interproId){
+    @Override
+    public Interpro getInterproById(String interproId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(InterproNode.ID_PROPERTY, interproId).iterator();        
         if(iterator.hasNext()){
             return new InterproNode(iterator.next());
@@ -246,7 +296,8 @@ public class NodeRetriever {
      * @param pfamId 
      * @return PfamNode with the id provided
      */
-    public PfamNode getPfamById(String pfamId){        
+    @Override
+    public Pfam getPfamById(String pfamId){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(PfamNode.ID_PROPERTY, pfamId).iterator();        
         if(iterator.hasNext()){
             return new PfamNode(iterator.next());
@@ -261,7 +312,8 @@ public class NodeRetriever {
      * @param scientificName 
      * @return OrganismNode with the scientific name provided
      */
-    public OrganismNode getOrganismByScientificName(String scientificName){        
+    @Override
+    public Organism getOrganismByScientificName(String scientificName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(OrganismNode.SCIENTIFIC_NAME_PROPERTY, scientificName).iterator();        
         if(iterator.hasNext()){
             return new OrganismNode(iterator.next());
@@ -274,7 +326,8 @@ public class NodeRetriever {
      * @param ncbiTaxonomyId 
      * @return OrganismNode with the scientific name provided
      */
-    public OrganismNode getOrganismByNCBITaxonomyId(String ncbiTaxonomyId){        
+    @Override
+    public Organism getOrganismByNCBITaxonomyId(String ncbiTaxonomyId){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, ncbiTaxonomyId).iterator();        
         if(iterator.hasNext()){
             return new OrganismNode(iterator.next());
@@ -290,7 +343,8 @@ public class NodeRetriever {
      * @param taxonName
      * @return TaxonNode with the name provided
      */
-    public TaxonNode getTaxonByName(String taxonName){
+    @Override
+    public Taxon getTaxonByName(String taxonName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(TaxonNode.NAME_PROPERTY, taxonName).iterator();        
         if(iterator.hasNext()){
             return new TaxonNode(iterator.next());
@@ -303,7 +357,8 @@ public class NodeRetriever {
      * @param taxId
      * @return NCBITaxonNode with the tax id provided
      */
-    public NCBITaxonNode getNCBITaxonByTaxId(String taxId){
+    @Override
+    public NCBITaxon getNCBITaxonByTaxId(String taxId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(NCBITaxonNode.TAX_ID_PROPERTY, taxId).iterator();        
         if(iterator.hasNext()){
             return new NCBITaxonNode(iterator.next());
@@ -316,7 +371,8 @@ public class NodeRetriever {
      * @param giId
      * @return NCBITaxonNode with the tax id provided
      */
-    public NCBITaxonNode getNCBITaxonByGiId(String giId){
+    @Override
+    public NCBITaxon getNCBITaxonByGiId(String giId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(NCBITaxonNode.GI_IDS_PROPERTY, giId).iterator();        
         if(iterator.hasNext()){
             return new NCBITaxonNode(iterator.next());
@@ -331,7 +387,8 @@ public class NodeRetriever {
      * @param isoformId
      * @return IsoformNode with the id provided
      */
-    public IsoformNode getIsoformById(String isoformId){
+    @Override
+    public Isoform getIsoformById(String isoformId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(IsoformNode.ID_PROPERTY, isoformId).iterator();        
         if(iterator.hasNext()){
             return new IsoformNode(iterator.next());
@@ -346,9 +403,10 @@ public class NodeRetriever {
      * @param personName
      * @return PersonNode list with the name matching the value provided
      */
-    public List<PersonNode> getPeopleByName(String personName){        
+    @Override
+    public List<Person> getPersonByName(String personName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(PersonNode.NAME_PROPERTY, personName).iterator();        
-        List<PersonNode> list = new LinkedList<PersonNode>();        
+        List<Person> list = new LinkedList<Person>();        
         while(iterator.hasNext()){
             list.add(new PersonNode(iterator.next()));
         }        
@@ -361,7 +419,8 @@ public class NodeRetriever {
      * @param consortiumName
      * @return ConsortiumNode with the name provided
      */
-    public ConsortiumNode getConsortiumByName(String consortiumName){
+    @Override
+    public Consortium getConsortiumByName(String consortiumName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ConsortiumNode.NAME_PROPERTY, consortiumName).iterator();        
         if(iterator.hasNext()){
             return new ConsortiumNode(iterator.next());
@@ -376,7 +435,8 @@ public class NodeRetriever {
      * @param instituteName
      * @return InstituteNode with the name provided
      */
-    public InstituteNode getInstituteByName(String instituteName){
+    @Override
+    public Institute getInstituteByName(String instituteName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(InstituteNode.NAME_PROPERTY, instituteName).iterator();        
         if(iterator.hasNext()){
             return new InstituteNode(iterator.next());
@@ -391,7 +451,8 @@ public class NodeRetriever {
      * @param countryName
      * @return CountryNode with the name provided
      */
-    public CountryNode getCountryNodeByName(String countryName){
+    @Override
+    public Country getCountryNodeByName(String countryName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(CountryNode.NAME_PROPERTY, countryName).iterator();        
         if(iterator.hasNext()){
             return new CountryNode(iterator.next());
@@ -406,7 +467,8 @@ public class NodeRetriever {
      * @param cityName
      * @return CityNode with the name provided
      */
-    public CityNode getCityNodeByName(String cityName){
+    @Override
+    public City getCityNodeByName(String cityName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(CityNode.NAME_PROPERTY, cityName).iterator();        
         if(iterator.hasNext()){
             return new CityNode(iterator.next());
@@ -421,9 +483,10 @@ public class NodeRetriever {
      * @param thesisTitle
      * @return ThesisNode list with the name matching the value provided
      */
-    public List<ThesisNode> getThesisByTitle(String thesisTitle){        
+    @Override
+    public List<Thesis> getThesisByTitle(String thesisTitle){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ThesisNode.TITLE_PROPERTY, thesisTitle).iterator();        
-        List<ThesisNode> list = new LinkedList<ThesisNode>();        
+        List<Thesis> list = new LinkedList<Thesis>();        
         while(iterator.hasNext()){
             list.add(new ThesisNode(iterator.next()));
         }        
@@ -436,7 +499,8 @@ public class NodeRetriever {
      * @param patentNumber
      * @return PatentNode with the number provided
      */
-    public PatentNode getPatentByNumber(String patentNumber){
+    @Override
+    public Patent getPatentByNumber(String patentNumber){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(PatentNode.NUMBER_PROPERTY, patentNumber).iterator();        
         if(iterator.hasNext()){
             return new PatentNode(iterator.next());
@@ -451,9 +515,10 @@ public class NodeRetriever {
      * @param bookName
      * @return BookNode list with the name matching the value provided
      */
-    public List<BookNode> getBooksByName(String bookName){        
+    @Override
+    public List<Book> getBooksByName(String bookName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(BookNode.NAME_PROPERTY, bookName).iterator();        
-        List<BookNode> list = new LinkedList<BookNode>();        
+        List<Book> list = new LinkedList<Book>();        
         while(iterator.hasNext()){
             list.add(new BookNode(iterator.next()));
         }        
@@ -466,7 +531,8 @@ public class NodeRetriever {
      * @param publisherName
      * @return PublisherNode with the name provided
      */
-    public PublisherNode getPublisherByName(String publisherName){
+    @Override
+    public Publisher getPublisherByName(String publisherName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(PublisherNode.NAME_PROPERTY, publisherName).iterator();        
         if(iterator.hasNext()){
             return new PublisherNode(iterator.next());
@@ -481,9 +547,10 @@ public class NodeRetriever {
      * @param onlineArticleTitle
      * @return OnlineArticleNode list with the title matching the value provided
      */
-    public List<OnlineArticleNode> getOnlineArticlesByTitle(String onlineArticleTitle){
+    @Override
+    public List<OnlineArticle> getOnlineArticlesByTitle(String onlineArticleTitle){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(OnlineArticleNode.TITLE_PROPERTY, onlineArticleTitle).iterator();        
-        List<OnlineArticleNode> list = new LinkedList<OnlineArticleNode>();        
+        List<OnlineArticle> list = new LinkedList<OnlineArticle>();        
         while(iterator.hasNext()){
             list.add(new OnlineArticleNode(iterator.next()));
         }        
@@ -496,7 +563,8 @@ public class NodeRetriever {
      * @param onlineJournalName
      * @return OnlineJournalNode with the name provided
      */
-    public OnlineJournalNode getOnlineJournalByName(String onlineJournalName){
+    @Override
+    public OnlineJournal getOnlineJournalByName(String onlineJournalName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(OnlineJournalNode.NAME_PROPERTY, onlineJournalName).iterator();        
         if(iterator.hasNext()){
             return new OnlineJournalNode(iterator.next());
@@ -511,9 +579,10 @@ public class NodeRetriever {
      * @param articleTitle
      * @return ArticleNode list with the title matching the value provided
      */
-    public List<ArticleNode> getArticlesByTitle(String articleTitle){        
+    @Override
+    public List<Article> getArticlesByTitle(String articleTitle){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.TITLE_PROPERTY, articleTitle).iterator();        
-        List<ArticleNode> list = new LinkedList<ArticleNode>();        
+        List<Article> list = new LinkedList<Article>();        
         while(iterator.hasNext()){
             list.add(new ArticleNode(iterator.next()));
         }        
@@ -524,7 +593,8 @@ public class NodeRetriever {
      * @param articleMedlineId
      * @return ArticleNode with the medline id provided
      */
-    public ArticleNode getArticleByMedlineId(String articleMedlineId){
+    @Override
+    public Article getArticleByMedlineId(String articleMedlineId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.MEDLINE_ID_PROPERTY, articleMedlineId).iterator();        
         if(iterator.hasNext()){
             return new ArticleNode(iterator.next());
@@ -537,6 +607,7 @@ public class NodeRetriever {
      * @param articleDoiId
      * @return ArticleNode with the DOI id provided
      */
+    @Override
     public ArticleNode getArticleByDoiId(String articleDoiId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.DOI_ID_PROPERTY, articleDoiId).iterator();        
         if(iterator.hasNext()){
@@ -550,7 +621,8 @@ public class NodeRetriever {
      * @param articlePubmedId
      * @return ArticleNode with the Pubmed id provided
      */
-    public ArticleNode getArticleByPubmedId(String articlePubmedId){
+    @Override
+    public Article getArticleByPubmedId(String articlePubmedId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ArticleNode.PUBMED_ID_PROPERTY, articlePubmedId).iterator();        
         if(iterator.hasNext()){
             return new ArticleNode(iterator.next());
@@ -565,7 +637,8 @@ public class NodeRetriever {
      * @param journalName
      * @return JournalNode with the name provided
      */
-    public JournalNode getJournalByName(String journalName){
+    @Override
+    public Journal getJournalByName(String journalName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(JournalNode.NAME_PROPERTY, journalName).iterator();        
         if(iterator.hasNext()){
             return new JournalNode(iterator.next());
@@ -580,7 +653,8 @@ public class NodeRetriever {
      * @param reactomeTermId
      * @return ReactomeTermNode with the id provided
      */
-    public ReactomeTermNode getReactomeTermById(String reactomeTermId){
+    @Override
+    public ReactomeTerm getReactomeTermById(String reactomeTermId){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(ReactomeTermNode.ID_PROPERTY, reactomeTermId).iterator();
         if(iterator.hasNext()){
             return new ReactomeTermNode(iterator.next());
@@ -595,7 +669,8 @@ public class NodeRetriever {
      * @param featureTypeName
      * @return 
      */
-    public FeatureTypeNode getFeatureTypeByName(String featureTypeName){
+    @Override
+    public FeatureType getFeatureTypeByName(String featureTypeName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(FeatureTypeNode.NAME_PROPERTY, featureTypeName).iterator();
         if(iterator.hasNext()){
             return new FeatureTypeNode(iterator.next());
@@ -610,7 +685,8 @@ public class NodeRetriever {
      * @param commentTypeName
      * @return 
      */
-    public CommentTypeNode getCommentTypeByName(String commentTypeName){
+    @Override
+    public CommentType getCommentTypeByName(String commentTypeName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(CommentTypeNode.NAME_PROPERTY, commentTypeName).iterator();
         if(iterator.hasNext()){
             return new CommentTypeNode(iterator.next());
@@ -625,7 +701,8 @@ public class NodeRetriever {
      * @param subcellularLocationName
      * @return 
      */
-    public SubcellularLocationNode getSubcellularLocationByName(String subcellularLocationName){
+    @Override
+    public SubcellularLocation getSubcellularLocationByName(String subcellularLocationName){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SubcellularLocationNode.NAME_PROPERTY, subcellularLocationName).iterator();
         if(iterator.hasNext()){
             return new SubcellularLocationNode(iterator.next());
@@ -637,7 +714,8 @@ public class NodeRetriever {
     //-------------------------------------------------------------------
     //--------------------ALTERNATIVE PRODUCTS--------------------------------
     
-    public AlternativeProductNode getAlternativeProductInitiationNode(){
+    @Override
+    public AlternativeProduct getAlternativeProductInitiationNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new AlternativeProductNode(iterator.next());
@@ -645,7 +723,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public AlternativeProductNode getAlternativeProductPromoterNode(){
+    @Override
+    public AlternativeProduct getAlternativeProductPromoterNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new AlternativeProductNode(iterator.next());
@@ -653,7 +732,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public AlternativeProductNode getAlternativeProductRibosomalFrameshiftingNode(){
+    @Override
+    public AlternativeProduct getAlternativeProductRibosomalFrameshiftingNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new AlternativeProductNode(iterator.next());
@@ -661,7 +741,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public AlternativeProductNode getAlternativeProductSplicingNode(){
+    @Override
+    public AlternativeProduct getAlternativeProductSplicingNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new AlternativeProductNode(iterator.next());
@@ -672,7 +753,8 @@ public class NodeRetriever {
     
     //-------------------------------------------------------------------
     //--------------------SEQ-CAUTION--------------------------------
-    public SequenceCautionNode getSequenceCautionErroneousGeneModelPredictionNode(){
+    @Override
+    public SequenceCaution getSequenceCautionErroneousGeneModelPredictionNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -680,7 +762,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public SequenceCautionNode getSequenceCautionErroneousInitiationNode(){
+    @Override
+    public SequenceCaution getSequenceCautionErroneousInitiationNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -688,7 +771,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public SequenceCautionNode getSequenceCautionErroneousTranslationNode(){
+    @Override
+    public SequenceCaution getSequenceCautionErroneousTranslationNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -696,7 +780,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public SequenceCautionNode getSequenceCautionErroneousTerminationNode(){
+    @Override
+    public SequenceCaution getSequenceCautionErroneousTerminationNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -704,7 +789,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public SequenceCautionNode getSequenceCautionFrameshiftNode(){
+    @Override
+    public SequenceCaution getSequenceCautionFrameshiftNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -712,7 +798,8 @@ public class NodeRetriever {
             return null;
         } 
     }
-    public SequenceCautionNode getSequenceCautionMiscellaneousDiscrepancyNode(){
+    @Override
+    public SequenceCaution getSequenceCautionMiscellaneousDiscrepancyNode(){
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE).iterator();
         if(iterator.hasNext()){
             return new SequenceCautionNode(iterator.next());
@@ -727,7 +814,8 @@ public class NodeRetriever {
      * @param submissionTitle
      * @return 
      */
-    public SubmissionNode getSubmissionByTitle(String submissionTitle){        
+    @Override
+    public Submission getSubmissionByTitle(String submissionTitle){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(SubmissionNode.TITLE_PROPERTY, submissionTitle).iterator();        
         SubmissionNode submissionNode = null;        
         if(iterator.hasNext()){
@@ -740,7 +828,8 @@ public class NodeRetriever {
     /**
      * 
      */
-    public DBNode getDBByName(String dbName){        
+    @Override
+    public DB getDBByName(String dbName){        
         Iterator<Vertex> iterator = manager.getGraph().getVertices(DBNode.NAME_PROPERTY, dbName).iterator();        
         DBNode dbNode = null;        
         if(iterator.hasNext()){

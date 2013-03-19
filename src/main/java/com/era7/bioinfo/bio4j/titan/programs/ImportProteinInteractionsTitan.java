@@ -21,7 +21,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinIsoformInteractionRel;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.ProteinProteinInteractionRel;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
-import com.era7.bioinfo.bio4j.titan.model.util.NodeRetriever;
+import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.era7.lib.era7xmlapi.model.XMLElement;
 import com.thinkaurelius.titan.core.TitanGraph;
@@ -101,7 +101,7 @@ public class ImportProteinInteractionsTitan implements Executable {
                 //-------creating graph handlers---------------------
                 manager = new Bio4jManager(conf);
                 TitanGraph graph = manager.getGraph();
-                NodeRetriever nodeRetriever = new NodeRetriever(manager);
+                NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
                 //---creating writer for stats file-----
                 statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsTitanStats_" + inFile.getName().split("\\.")[0] + ".txt")));
@@ -126,7 +126,7 @@ public class ImportProteinInteractionsTitan implements Executable {
 
                         accessionSt = entryXMLElem.asJDomElement().getChildText(CommonData.ENTRY_ACCESSION_TAG_NAME);
 
-                        ProteinNode currentProteinNode = nodeRetriever.getProteinNodeByAccession(accessionSt);
+                        ProteinNode currentProteinNode = nodeRetriever.getProteinByAccession(accessionSt);
 
                         List<Element> comments = entryXMLElem.asJDomElement().getChildren(CommonData.COMMENT_TAG_NAME);
 
@@ -163,7 +163,7 @@ public class ImportProteinInteractionsTitan implements Executable {
                                 
                                 if (interactant2AccessionSt != null) {
 
-                                    ProteinNode protein2Node = nodeRetriever.getProteinNodeByAccession(interactant2AccessionSt);                                    
+                                    ProteinNode protein2Node = nodeRetriever.getProteinByAccession(interactant2AccessionSt);                                    
 
                                     if (protein2Node == null) {
                                         //Since we did not find the protein we try to find a isoform instead
