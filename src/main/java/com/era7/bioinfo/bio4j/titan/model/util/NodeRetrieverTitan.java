@@ -242,24 +242,109 @@ public class NodeRetrieverTitan implements NodeRetriever{
         return list;        
     }
     @Override
-    public List<Protein> getProteinByPIRReference(String id){        
-        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.PIR_REFERENCES_PROPERTY, id).iterator();        
-        List<Protein> list = new LinkedList<Protein>();        
-        while(iterator.hasNext()){
-            list.add(new ProteinNode(iterator.next()));
-        }        
-        return list;        
+    public List<Protein> getProteinByPIRReference(String id){              
+        return getProteinReference(ProteinNode.PIR_REFERENCES_PROPERTY, id);                  
     }
     @Override
-    public List<Protein> getProteinByKEGGReference(String id){        
-        Iterator<Vertex> iterator = manager.getGraph().getVertices(ProteinNode.KEGG_REFERENCES_PROPERTY, id).iterator();        
-        List<Protein> list = new LinkedList<Protein>();        
-        while(iterator.hasNext()){
-            list.add(new ProteinNode(iterator.next()));
-        }        
-        return list;        
+    public List<Protein> getProteinByKEGGReference(String id){            
+        return getProteinReference(ProteinNode.KEGG_REFERENCES_PROPERTY, id);                
     }
-    
+    @Override
+    public List<Protein> getProteinByEmblReference(String id){            
+        return getProteinReference(ProteinNode.EMBL_REFERENCES_PROPERTY, id);            
+    }
+    @Override
+    public List<Protein> getProteinByRefSeqReference(String id){              
+        return getProteinReference(ProteinNode.REFSEQ_REFERENCES_PROPERTY, id);      
+    }
+    @Override
+    public List<Protein> getProteinByArrayExpressReference(String id){    
+        return getProteinReference(ProteinNode.ARRAY_EXPRESS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinByUniGeneReference(String id){           
+        return getProteinReference(ProteinNode.UNIGENE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinByDBaseEcoliReference(String id){           
+        return getProteinReference(ProteinNode.DBASE_ECOLI_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinByAarhusGhent2DPageReference(String id){           
+        return getProteinReference(ProteinNode.AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinByAGDReference(String id){           
+        return getProteinReference(ProteinNode.AGD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinByAllergomeReference(String id){           
+        return getProteinReference(ProteinNode.ALLERGOME_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByAnu2DPageReference(String id){           
+        return getProteinReference(ProteinNode.ANU_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByArachnoServerReference(String id){           
+        return getProteinReference(ProteinNode.ARACHNOSERVER_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByBGEEReference(String id){           
+        return getProteinReference(ProteinNode.BGEE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByBindingDBReference(String id){           
+        return getProteinReference(ProteinNode.BINDING_DB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByBioCycReference(String id){           
+        return getProteinReference(ProteinNode.BIOCYC_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByBrendaReference(String id){           
+        return getProteinReference(ProteinNode.BRENDA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCazyReference(String id){           
+        return getProteinReference(ProteinNode.CAZY_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCGDReference(String id){           
+        return getProteinReference(ProteinNode.CGD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCHEmblReference(String id){           
+        return getProteinReference(ProteinNode.CHEMBL_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCleanexReference(String id){           
+        return getProteinReference(ProteinNode.CLEANEX_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCompluYeast2DPageReference(String id){           
+        return getProteinReference(ProteinNode.COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCornea2DPageReference(String id){           
+        return getProteinReference(ProteinNode.CORNEA_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCTDReference(String id){           
+        return getProteinReference(ProteinNode.CTD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByCYGDReference(String id){           
+        return getProteinReference(ProteinNode.CYGD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDBSNPReference(String id){           
+        return getProteinReference(ProteinNode.DBSNP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDDBJReference(String id){           
+        return getProteinReference(ProteinNode.DDBJ_REFERENCES_PROPERTY, id);
+    }
     //-------------------------------------------------------------------
     //--------------------KEYWORDS--------------------------------    
     /**
@@ -856,4 +941,14 @@ public class NodeRetrieverTitan implements NodeRetriever{
         return dbNode; 
     }
     
+    
+    
+    private List<Protein> getProteinReference(String referenceName, String id){
+        Iterator<Vertex> iterator = manager.getGraph().getVertices(referenceName, id).iterator();        
+        List<Protein> list = new LinkedList<Protein>();        
+        while(iterator.hasNext()){
+            list.add(new ProteinNode(iterator.next()));
+        }        
+        return list; 
+    }
 }
