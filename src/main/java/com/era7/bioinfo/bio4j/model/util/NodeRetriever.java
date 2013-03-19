@@ -162,6 +162,7 @@ public interface NodeRetriever {
     public List<Protein> getProteinsByPharmGKBReference(String id);
     public List<Protein> getProteinsByPHCI2DPageReference(String id);
     public List<Protein> getProteinsByPhosphositeReference(String id);
+    public List<Protein> getProteinsByPhosSiteReference(String id);
     public List<Protein> getProteinsByPhylomeDBReference(String id);
     public List<Protein> getProteinsByPirsfReference(String id);
     public List<Protein> getProteinsByPMapCutDBReference(String id);

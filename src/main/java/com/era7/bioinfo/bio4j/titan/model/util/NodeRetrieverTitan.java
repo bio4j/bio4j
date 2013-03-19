@@ -326,6 +326,10 @@ public class NodeRetrieverTitan implements NodeRetriever{
         return getProteinReference(ProteinNode.COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY, id);
     }
     @Override
+    public List<Protein> getProteinsByConoServerReference(String id) {
+        return getProteinReference(ProteinNode.CONOSERVER_REFERENCES_PROPERTY, id);
+    }    
+    @Override
     public List<Protein> getProteinsByCornea2DPageReference(String id){           
         return getProteinReference(ProteinNode.CORNEA_2DPAGE_REFERENCES_PROPERTY, id);
     }
@@ -352,6 +356,10 @@ public class NodeRetrieverTitan implements NodeRetriever{
     @Override
     public List<Protein> getProteinsByDIPReference(String id){           
         return getProteinReference(ProteinNode.DIP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDisprotReference(String id) {
+        return getProteinReference(ProteinNode.DISPROT_REFERENCES_PROPERTY, id);
     }
     @Override
     public List<Protein> getProteinsByDMDMReference(String id){           
@@ -480,6 +488,326 @@ public class NodeRetrieverTitan implements NodeRetriever{
     @Override
     public List<Protein> getProteinsByHGNCReference(String id){           
         return getProteinReference(ProteinNode.HGNC_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHogenomReference(String id){           
+        return getProteinReference(ProteinNode.HOGENOM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHovergenReference(String id){           
+        return getProteinReference(ProteinNode.HOVERGEN_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHPAReference(String id){           
+        return getProteinReference(ProteinNode.HPA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHSSPReference(String id){           
+        return getProteinReference(ProteinNode.HSSP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHugeReference(String id){           
+        return getProteinReference(ProteinNode.HUGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByIMGTReference(String id){           
+        return getProteinReference(ProteinNode.IMGT_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByInparanoidReference(String id){           
+        return getProteinReference(ProteinNode.INPARANOID_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByIntactReference(String id){           
+        return getProteinReference(ProteinNode.INTACT_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByIPIReference(String id){           
+        return getProteinReference(ProteinNode.IPI_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByKOReference(String id){           
+        return getProteinReference(ProteinNode.KO_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByLegioListReference(String id){           
+        return getProteinReference(ProteinNode.LEGIO_LIST_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByLepromaReference(String id){           
+        return getProteinReference(ProteinNode.LEPROMA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMaizeGDBReference(String id){           
+        return getProteinReference(ProteinNode.MAIZE_GDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMeropsReference(String id){           
+        return getProteinReference(ProteinNode.MEROPS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMGIReference(String id){           
+        return getProteinReference(ProteinNode.MGI_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMicadoReference(String id){           
+        return getProteinReference(ProteinNode.MICADO_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMIMReference(String id){           
+        return getProteinReference(ProteinNode.MIM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMintReference(String id){           
+        return getProteinReference(ProteinNode.MINT_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByModBaseReference(String id){           
+        return getProteinReference(ProteinNode.MODBASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByMycoclapReference(String id){           
+        return getProteinReference(ProteinNode.MYCOCLAP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByNextBioReference(String id){           
+        return getProteinReference(ProteinNode.NEXTBIO_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByNextProtReference(String id){           
+        return getProteinReference(ProteinNode.NEXTPROT_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByOGPReference(String id){           
+        return getProteinReference(ProteinNode.OGP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByOMAReference(String id){           
+        return getProteinReference(ProteinNode.OMA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByOrphanetReference(String id){           
+        return getProteinReference(ProteinNode.ORPHANET_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByOrthoDBReference(String id){           
+        return getProteinReference(ProteinNode.ORTHODB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPantherReference(String id){           
+        return getProteinReference(ProteinNode.PANTHER_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPathwayReference(String id){           
+        return getProteinReference(ProteinNode.PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPatricReference(String id){           
+        return getProteinReference(ProteinNode.PATRIC_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPaxDBReference(String id){           
+        return getProteinReference(ProteinNode.PAXDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPDBReference(String id){           
+        return getProteinReference(ProteinNode.PDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPDBJReference(String id){           
+        return getProteinReference(ProteinNode.PDBJ_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPDBSumReference(String id){           
+        return getProteinReference(ProteinNode.PDBSUM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPeptideAtlasReference(String id){           
+        return getProteinReference(ProteinNode.PEPTIDE_ATLAS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPeroxiBaseReference(String id){           
+        return getProteinReference(ProteinNode.PEROXIBASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPharmGKBReference(String id){           
+        return getProteinReference(ProteinNode.PHARMGKB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPHCI2DPageReference(String id){           
+        return getProteinReference(ProteinNode.PHCI_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPhosphositeReference(String id){           
+        return getProteinReference(ProteinNode.PHOSPHOSITE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPhosSiteReference(String id){           
+        return getProteinReference(ProteinNode.PHOS_SITE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPhylomeDBReference(String id){           
+        return getProteinReference(ProteinNode.PHYLOME_DB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPirsfReference(String id){           
+        return getProteinReference(ProteinNode.PIRSF_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPMapCutDBReference(String id){           
+        return getProteinReference(ProteinNode.PMAP_CUTDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPMMA2DPageReference(String id){           
+        return getProteinReference(ProteinNode.PMMA_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPPTaseDBReference(String id){           
+        return getProteinReference(ProteinNode.PPTASEDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPrideReference(String id){           
+        return getProteinReference(ProteinNode.PRIDE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPrintsReference(String id){           
+        return getProteinReference(ProteinNode.PRINTS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByProDomReference(String id){           
+        return getProteinReference(ProteinNode.PRODOM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPromexReference(String id){           
+        return getProteinReference(ProteinNode.PROMEX_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByProSiteReference(String id){           
+        return getProteinReference(ProteinNode.PROSITE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByProtClustDBReference(String id){           
+        return getProteinReference(ProteinNode.PROT_CLUST_DB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByProteinModelPortalReference(String id){           
+        return getProteinReference(ProteinNode.PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByProtonetReference(String id){           
+        return getProteinReference(ProteinNode.PROTONET_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByPseudoCapReference(String id){           
+        return getProteinReference(ProteinNode.PSEUDO_CAP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByRatHeart2DPageReference(String id){           
+        return getProteinReference(ProteinNode.RAT_HEART_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByRCSBPDBReference(String id){           
+        return getProteinReference(ProteinNode.RCSB_PDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByReBaseReference(String id){           
+        return getProteinReference(ProteinNode.REBASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByReproductionReference(String id){           
+        return getProteinReference(ProteinNode.REPRODUCTION_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByRGDReference(String id){           
+        return getProteinReference(ProteinNode.RGD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByRougeReference(String id){           
+        return getProteinReference(ProteinNode.ROUGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySBKBReference(String id){           
+        return getProteinReference(ProteinNode.SBKB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySGDReference(String id){           
+        return getProteinReference(ProteinNode.SGD_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySiena2DPageReference(String id){           
+        return getProteinReference(ProteinNode.SIENA_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySmartReference(String id){           
+        return getProteinReference(ProteinNode.SMART_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySMRReference(String id){           
+        return getProteinReference(ProteinNode.SMR_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySourceReference(String id){           
+        return getProteinReference(ProteinNode.SOURCE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByStringReference(String id){           
+        return getProteinReference(ProteinNode.STRING_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySupfamReference(String id){           
+        return getProteinReference(ProteinNode.SUPFAM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsBySwiss2DPageReference(String id){           
+        return getProteinReference(ProteinNode.SWISS_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByTairReference(String id){           
+        return getProteinReference(ProteinNode.TAIR_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByTCDBReference(String id){           
+        return getProteinReference(ProteinNode.TCDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByTigrFamsReference(String id){           
+        return getProteinReference(ProteinNode.TIGRFAMS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByTuberculistReference(String id){           
+        return getProteinReference(ProteinNode.TUBERCULIST_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByUCD2DPageReference(String id){           
+        return getProteinReference(ProteinNode.UCD_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByUCSCReference(String id){           
+        return getProteinReference(ProteinNode.UCSC_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByUniPathwayReference(String id){           
+        return getProteinReference(ProteinNode.UNIPATHWAY_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByVectorBaseReference(String id){           
+        return getProteinReference(ProteinNode.VECTOR_BASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByWorld2DPageReference(String id){           
+        return getProteinReference(ProteinNode.WORLD_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByWormBaseReference(String id){           
+        return getProteinReference(ProteinNode.WORM_BASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByXenBaseReference(String id){           
+        return getProteinReference(ProteinNode.XEN_BASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByZfinReference(String id){           
+        return getProteinReference(ProteinNode.ZFIN_REFERENCES_PROPERTY, id);
     }
     //-------------------------------------------------------------------
     //--------------------KEYWORDS--------------------------------    
@@ -1087,4 +1415,5 @@ public class NodeRetrieverTitan implements NodeRetriever{
         }        
         return list; 
     }
+    
 }
