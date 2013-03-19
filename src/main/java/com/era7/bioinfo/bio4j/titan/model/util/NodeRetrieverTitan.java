@@ -345,6 +345,142 @@ public class NodeRetrieverTitan implements NodeRetriever{
     public List<Protein> getProteinsByDDBJReference(String id){           
         return getProteinReference(ProteinNode.DDBJ_REFERENCES_PROPERTY, id);
     }
+    @Override
+    public List<Protein> getProteinsByDictyBaseReference(String id){           
+        return getProteinReference(ProteinNode.DICTY_BASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDIPReference(String id){           
+        return getProteinReference(ProteinNode.DIP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDMDMReference(String id){           
+        return getProteinReference(ProteinNode.DMDM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDNASUReference(String id){           
+        return getProteinReference(ProteinNode.DNASU_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByDosacCobs2DPageReference(String id){           
+        return getProteinReference(ProteinNode.DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEchoBaseReference(String id){           
+        return getProteinReference(ProteinNode.ECHOBASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEcoGeneReference(String id){           
+        return getProteinReference(ProteinNode.ECOGENE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEggNogReference(String id){           
+        return getProteinReference(ProteinNode.EGGNOG_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEnsemblBacteriaReference(String id){           
+        return getProteinReference(ProteinNode.ENSEMBL_BACTERIA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEnsemblFungiReference(String id){           
+        return getProteinReference(ProteinNode.ENSEMBL_FUNGI_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEnsemblMetazoaReference(String id){           
+        return getProteinReference(ProteinNode.ENSEMBL_METAZOA_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEnsemblProtistsReference(String id){           
+        return getProteinReference(ProteinNode.ENSEMBL_PROTISTS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEUHCVDBReference(String id){           
+        return getProteinReference(ProteinNode.EUHCVDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEUPathDBReference(String id){           
+        return getProteinReference(ProteinNode.EUPATHDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByEvolutionaryTraceReference(String id){           
+        return getProteinReference(ProteinNode.EVOLUTIONARY_TRACE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByFlyBaseReference(String id){           
+        return getProteinReference(ProteinNode.FLYBASE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenAtlasReference(String id){           
+        return getProteinReference(ProteinNode.GENATLAS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenBankReference(String id){           
+        return getProteinReference(ProteinNode.GENBANK_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGene3DReference(String id){           
+        return getProteinReference(ProteinNode.GENE3D_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenecardsReference(String id){           
+        return getProteinReference(ProteinNode.GENECARDS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGeneFarmReference(String id){           
+        return getProteinReference(ProteinNode.GENEFARM_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGeneIDReference(String id){           
+        return getProteinReference(ProteinNode.GENEID_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGeneTreeReference(String id){           
+        return getProteinReference(ProteinNode.GENETREE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenevestigatorReference(String id){           
+        return getProteinReference(ProteinNode.GENEVESTIGATOR_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenolistReference(String id){           
+        return getProteinReference(ProteinNode.GENOLIST_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenomeReviewsReference(String id){           
+        return getProteinReference(ProteinNode.GENOME_REVIEWS_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGenomeRNAIReference(String id){           
+        return getProteinReference(ProteinNode.GENOME_RNAI_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGermOnlineReference(String id){           
+        return getProteinReference(ProteinNode.GERMONLINE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGlycoSuiteDBReference(String id){           
+        return getProteinReference(ProteinNode.GLYCOSUITEDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGPCRDBReference(String id){           
+        return getProteinReference(ProteinNode.GPCRDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByGrameneReference(String id){           
+        return getProteinReference(ProteinNode.GRAMENE_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHinvDBReference(String id){           
+        return getProteinReference(ProteinNode.HINVDB_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHamapReference(String id){           
+        return getProteinReference(ProteinNode.HAMAP_REFERENCES_PROPERTY, id);
+    }
+    @Override
+    public List<Protein> getProteinsByHGNCReference(String id){           
+        return getProteinReference(ProteinNode.HGNC_REFERENCES_PROPERTY, id);
+    }
     //-------------------------------------------------------------------
     //--------------------KEYWORDS--------------------------------    
     /**
