@@ -17,8 +17,11 @@
 
 package com.era7.bioinfo.bio4j.blueprints.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.CommentTypeNode;
+import com.era7.bioinfo.bio4j.blueprints.model.nodes.ProteinNode;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.BasicRelationshipBlueprints;
 import com.era7.bioinfo.bio4j.model.relationships.comment.BasicComment;
+import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 
 /**
@@ -73,6 +76,16 @@ public class BasicCommentRel extends BasicRelationshipBlueprints implements Basi
     public String toString(){
         return "text = " + getText() + "\n" +
                 "status = " + getStatus();
+    }
+
+    @Override
+    public ProteinNode getProtein() {
+        return new ProteinNode(getVertex(Direction.IN));
+    }
+
+    @Override
+    public CommentTypeNode getCommentType() {
+        return new CommentTypeNode(getVertex(Direction.OUT));
     }
 
 }
