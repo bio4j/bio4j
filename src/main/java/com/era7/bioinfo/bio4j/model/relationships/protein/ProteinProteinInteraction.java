@@ -35,7 +35,7 @@ public interface ProteinProteinInteraction extends BasicRelationship {
     public void setIntactId2(String value);
     public void setIntactId1(String value);
 
-    public Protein getProtein1();    
-    public Protein getProtein2();
+    public <T extends Protein> T getProtein1();    
+    public <T extends Protein> T getProtein2();
     
 }

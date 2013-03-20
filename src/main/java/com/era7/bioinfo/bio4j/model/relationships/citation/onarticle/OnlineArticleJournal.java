@@ -28,10 +28,10 @@ public interface OnlineArticleJournal extends BasicRelationship{
     
     //---------GETTERS------------
     public String getLocator();
-    public OnlineArticle getOnlineArticle();
+    public <T extends OnlineArticle> T getOnlineArticle();    
+    public <T extends OnlineJournal> T getOnlineJournal();
 
     //---------SETTERS-----------
     public void setLocator(String value);   
-    public OnlineJournal getOnlineJournal();
     
 }

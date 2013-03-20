@@ -25,6 +25,6 @@ import com.era7.bioinfo.bio4j.model.nodes.Isoform;
  */
 public interface IsoformEventGenerator {
     
-    public Isoform getIsoform();
-    public AlternativeProduct getAlternativeProduct();
+    public <T extends Isoform> T getIsoform();
+    public <T extends AlternativeProduct> T getAlternativeProduct();
 }

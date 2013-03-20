@@ -25,7 +25,7 @@ public interface ProteinSubcellularLocation extends BasicRelationship{
     public void setTopologyStatus(String value);
 
     
-    public Protein getProtein();    
-    public SubcellularLocation getSubcellularLocation();
+    public <T extends Protein> T getProtein();    
+    public <T extends SubcellularLocation> T getSubcellularLocation();
     
 }

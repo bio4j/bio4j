@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface GenomeElementCDS extends BasicRelationship{
     
-    public GenomeElement getGenomeElement();    
-    public CDS getCDS();
+    public <T extends GenomeElement> T getGenomeElement();    
+    public <T extends CDS> T getCDS();
     
 }

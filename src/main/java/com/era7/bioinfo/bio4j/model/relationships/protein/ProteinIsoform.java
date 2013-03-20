@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface ProteinIsoform extends BasicRelationship{
     
-    public Protein getProtein();    
-    public Isoform getIsoformNode();
+    public <T extends Protein> T getProtein();    
+    public <T extends Isoform> T getIsoformNode();
     
 }

@@ -31,8 +31,8 @@ public interface ArticleJournal extends BasicRelationship{
     public String getVolume();
     public String getFirst();
     public String getLast();
-    public Article getArticle();
-    public Journal getJournal();
+    public <T extends Article> T getArticle();
+    public <T extends Journal> T getJournal();
 
     //--------SETTERS------------
     public void setDate(String value);

@@ -25,7 +25,7 @@ import com.era7.bioinfo.bio4j.model.nodes.Protein;
  */
 public interface ProteinDataset {
     
-    public Protein getProtein();    
-    public Dataset getDataset();
+    public <T extends Protein> T getProtein();    
+    public <T extends Dataset> T getDataset();
     
 }

@@ -37,8 +37,8 @@ public interface BasicFeature extends BasicRelationship{
     public String getBegin();
     public String getEnd();
 
-    public FeatureType getFeatureType();
-    public Protein getProtein();
+    public <T extends FeatureType> T getFeatureType();
+    public <T extends Protein> T getProtein();
 
             
     //------------SETTERS-------------------

@@ -28,8 +28,8 @@ public interface SubmissionDb extends BasicRelationship{
         
     //----------GETTERS----------------
     public String getDate();
-    public DB getDB();    
-    public Submission getSubmission();
+    public <T extends DB> T getDB();    
+    public <T extends Submission> T getSubmission();
 
     //----------SETTERS----------------
     public void setDate(String value);

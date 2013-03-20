@@ -36,7 +36,7 @@ public interface ProteinIsoformInteraction extends BasicRelationship{
     public void setIntactId2(String value);
     public void setIntactId1(String value);
 
-    public Protein getProtein();    
-    public Isoform getIsoformNode();
+    public <T extends Protein> T getProtein();    
+    public <T extends Isoform> T getIsoformNode();
     
 }

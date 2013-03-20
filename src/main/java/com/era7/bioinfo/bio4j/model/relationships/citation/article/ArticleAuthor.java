@@ -25,7 +25,7 @@ import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
  */
 public interface ArticleAuthor {
     
-    public Article getArticle();
-    public Person getAuthor();
+    public <T extends Article> T getArticle();
+    public <T extends Person> T getAuthor();
     
 }

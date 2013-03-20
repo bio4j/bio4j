@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface ProteinPfam extends BasicRelationship {
     
-    public Protein getProtein();    
-    public Pfam getPfam();
+    public <T extends Protein> T getProtein();    
+    public <T extends Pfam> T getPfam();
     
 }

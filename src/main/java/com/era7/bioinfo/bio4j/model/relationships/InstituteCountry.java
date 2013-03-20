@@ -25,7 +25,7 @@ import com.era7.bioinfo.bio4j.model.nodes.Institute;
  */
 public interface InstituteCountry extends BasicRelationship{
     
-    public Institute getInstitute();    
-    public Country getCountry();
+    public <T extends Institute> T getInstitute();    
+    public <T extends Country> T getCountry();
     
 }

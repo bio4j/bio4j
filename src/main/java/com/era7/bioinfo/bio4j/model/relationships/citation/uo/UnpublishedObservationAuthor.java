@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.nodes.citation.UnpublishedObservation;
 public interface UnpublishedObservationAuthor {
     
     //-----------GETTERS----------------
-    public UnpublishedObservation getUnpublishedObservation();    
-    public Person getAuthor();
+    public <T extends UnpublishedObservation> T getUnpublishedObservation();    
+    public <T extends Person> T getAuthor();
     
 }

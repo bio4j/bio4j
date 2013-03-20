@@ -27,8 +27,8 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 public interface ProteinGo extends BasicRelationship{
     
     public String getEvidence();
-    public Protein getProtein();    
-    public GoTerm getGoTerm();
+    public <T extends Protein> T getProtein();    
+    public <T extends GoTerm> T getGoTerm();
 
     public void setEvidence(String value);   
     

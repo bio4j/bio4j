@@ -27,8 +27,8 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 public interface SubmissionProteinCitation extends BasicRelationship{
     
     //----------GETTERS----------------
-    public Protein getProtein();
-    public Submission getSubmission();
+    public <T extends Protein> T getProtein();
+    public <T extends Submission> T getSubmission();
 
     
 }

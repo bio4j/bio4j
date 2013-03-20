@@ -25,6 +25,6 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface SubmissionAuthor extends BasicRelationship{
     
-    public Submission getSubmission();
+    public <T extends Submission> T getSubmission();
     
 }

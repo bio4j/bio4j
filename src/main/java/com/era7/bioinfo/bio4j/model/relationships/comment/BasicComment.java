@@ -16,6 +16,8 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.comment;
 
+import com.era7.bioinfo.bio4j.model.nodes.CommentType;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
 import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
@@ -28,6 +30,9 @@ public interface BasicComment extends BasicRelationship{
     public String getText();
     public String getStatus();
     public String getEvidence();
+    
+    public <T extends Protein> T getProtein();
+    public <T extends CommentType> T getCommentType();
 
     //----------SETTERS-------------
     public void setText(String value);

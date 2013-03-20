@@ -26,6 +26,6 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 public interface ThesisAuthor extends BasicRelationship{
     
     //----------GETTERS----------------
-    public Thesis getThesis();
+    public <T extends Thesis> T getThesis();
     
 }

@@ -31,8 +31,8 @@ public interface BookProteinCitation extends BasicRelationship{
     public String getVolume();
     public String getFirst();
     public String getLast();
-    public Book getBook();    
-    public Protein getProtein();
+    public <T extends Book> T getBook();    
+    public <T extends Protein> T getProtein();
 
     //-------SETTERS---------------
     public void setTitle(String value);

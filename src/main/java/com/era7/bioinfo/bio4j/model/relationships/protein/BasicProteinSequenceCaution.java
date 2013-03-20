@@ -16,6 +16,8 @@
  */
 package com.era7.bioinfo.bio4j.model.relationships.protein;
 
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.SequenceCaution;
 import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 
 /**
@@ -31,6 +33,9 @@ public interface BasicProteinSequenceCaution extends BasicRelationship{
     public String getPosition();
     public String getResource();
     public String getVersion();
+    
+    public <T extends Protein> T getProtein();
+    public <T extends SequenceCaution> T getSequenceCaution();
 
     public void setText(String value);
     public void setStatus(String value);

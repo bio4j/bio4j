@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface ProteinKeyword extends BasicRelationship{
     
-    public Protein getProtein();    
-    public Keyword getKeyword();
+    public <T extends Protein> T getProtein();    
+    public <T extends Keyword> T getKeyword();
     
 }

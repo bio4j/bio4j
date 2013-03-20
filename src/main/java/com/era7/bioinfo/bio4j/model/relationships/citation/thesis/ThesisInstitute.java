@@ -27,7 +27,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
 public interface ThesisInstitute extends BasicRelationship{
     
     //--------GETTERS-------------
-    public Thesis getThesis();    
-    public Institute getInstitute();
+    public <T extends Thesis> T getThesis();    
+    public <T extends Institute> T getInstitute();
     
 }

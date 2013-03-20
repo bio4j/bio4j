@@ -26,7 +26,7 @@ import com.era7.bioinfo.bio4j.model.relationships.BasicRelationship;
  */
 public interface GenomeElementMRna extends BasicRelationship{
     
-    public GenomeElement getGenomeElement();    
-    public MRNA getMRNA();
+    public <T extends GenomeElement> T getGenomeElement();    
+    public <T extends MRNA> T getMRNA();
     
 }
