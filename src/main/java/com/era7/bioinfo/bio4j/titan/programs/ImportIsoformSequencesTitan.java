@@ -119,7 +119,7 @@ public class ImportIsoformSequencesTitan implements Executable {
                         String sequence = seqStBuilder.toString();
                         seqStBuilder.delete(0, seqStBuilder.length());
                         
-                        IsoformNode isoformNode = nodeRetriever.getIsoformById(isoformIdSt);
+                        IsoformNode isoformNode = (IsoformNode)nodeRetriever.getIsoformById(isoformIdSt);
                         if(isoformNode != null){
                             
                             System.out.println("Setting name+seq for: " + isoformNode.getId());

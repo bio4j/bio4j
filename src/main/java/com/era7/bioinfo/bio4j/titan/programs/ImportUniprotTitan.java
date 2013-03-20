@@ -1902,7 +1902,7 @@ public class ImportUniprotTitan implements Executable {
 
                 for (Element person : authorPersonElems) {
 
-                    List<PersonNode> personList = nodeRetriever.getPeopleByName(person.getAttributeValue("name"));
+                    List<PersonNode> personList = nodeRetriever.getPersonByName(person.getAttributeValue("name"));
                     PersonNode personNode = null;
                     if (!personList.isEmpty()) {
                         personNode = personList.get(0);
@@ -2133,7 +2133,7 @@ public class ImportUniprotTitan implements Executable {
                                 List<Element> editorsElems = editorListElem.getChildren("person");
                                 for (Element person : editorsElems) {
 
-                                    List<PersonNode> editorNodes = nodeRetriever.getPeopleByName(person.getAttributeValue("name"));
+                                    List<PersonNode> editorNodes = nodeRetriever.getPersonByName(person.getAttributeValue("name"));
                                     PersonNode editorNode;
                                     if (editorNodes.isEmpty()) {
                                         editorNode = new PersonNode(manager.createNode(PersonNode.NODE_TYPE));
