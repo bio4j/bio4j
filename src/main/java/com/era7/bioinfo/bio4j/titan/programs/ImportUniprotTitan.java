@@ -49,6 +49,7 @@ import com.era7.bioinfo.bio4j.blueprints.model.relationships.citation.uo.Unpubli
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.comment.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.features.*;
 import com.era7.bioinfo.bio4j.blueprints.model.relationships.protein.*;
+import com.era7.bioinfo.bio4j.model.enums.UniprotDBXref;
 import com.era7.bioinfo.bio4j.titan.model.ProteinNode;
 import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
@@ -349,7 +350,7 @@ public class ImportUniprotTitan implements Executable {
                         
                         for (Element dbReferenceElem : dbReferenceList) {                            
                             String refId = dbReferenceElem.getAttributeValue("id");
-                            if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Ensembl")) {
+                            if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals(UniprotDBXref.ENSEMBL.getUniprotAttributeValue())) {
                                 ensemblReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIR")) {
                                 pirReferences.add(refId);
