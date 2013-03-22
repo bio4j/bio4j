@@ -91,7 +91,15 @@ public class ProteinNode extends BasicVertex implements Protein{
     public static final String MODIFIED_DATE_PROPERTY = "protein_modified_date";
     public static final String GENE_NAMES_PROPERTY = "protein_gene_names";
     public static final String ALTERNATIVE_ACCESSIONS_PROPERTY = "protein_alternative_accessions";
+    
     //---------------------DB CROSS REFERENCES----------------------------------------
+    public static final String ALLERGOME_REFERENCES_PROPERTY = "protein_allergome_references";
+    public static final String ARACHNOSERVER_REFERENCES_PROPERTY = "protein_arachnoserver_references";
+    public static final String BGEE_REFERENCES_PROPERTY = "protein_bgee_references";
+    public static final String BINDING_DB_REFERENCES_PROPERTY = "protein_binding_db_references";
+    public static final String BIOCYC_REFERENCES_PROPERTY = "protein_biocyc_references";
+    
+    
     public static final String ENSEMBL_REFERENCES_PROPERTY = "protein_ensembl_references";
     public static final String PIR_REFERENCES_PROPERTY = "protein_pir_references";
     public static final String KEGG_REFERENCES_PROPERTY = "protein_kegg_references";
@@ -100,15 +108,9 @@ public class ProteinNode extends BasicVertex implements Protein{
     public static final String ARRAY_EXPRESS_REFERENCES_PROPERTY = "protein_array_express_references";
     public static final String UNIGENE_REFERENCES_PROPERTY = "protein_unigene_references";
     public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
-    public static final String DBASE_ECOLI_REFERENCES_PROPERTY = "protein_2dbase_ecoli_references";
-    public static final String AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY = "protein_aarhus_ghent_2dpage_references";
-    public static final String AGD_REFERENCES_PROPERTY = "protein_agd_references";
-    public static final String ALLERGOME_REFERENCES_PROPERTY = "protein_allergome_references";
-    public static final String ANU_2DPAGE_REFERENCES_PROPERTY = "protein_anu_2dpage_references";
-    public static final String ARACHNOSERVER_REFERENCES_PROPERTY = "protein_arachnoserver_references";
-    public static final String BGEE_REFERENCES_PROPERTY = "protein_bgee_references";
-    public static final String BINDING_DB_REFERENCES_PROPERTY = "protein_binding_db_references";
-    public static final String BIOCYC_REFERENCES_PROPERTY = "protein_biocyc_references";
+    
+    
+    
     public static final String BRENDA_REFERENCES_PROPERTY = "protein_brenda_references";
     public static final String CAZY_REFERENCES_PROPERTY = "protein_cazy_references";
     public static final String CGD_REFERENCES_PROPERTY = "protein_cgd_references";

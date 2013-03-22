@@ -383,7 +383,7 @@ public class ImportUniprotTitan implements Executable {
                                 reactomeReferences.put(refId, pathwayName);
                             } else if (attributeType.equals(UniprotDBXref.ENSEMBL_PLANTS.getUniprotAttributeValue())) {
                                 ensemblPlantsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("2DBase-Ecoli")) {
+                            } else if (attributeType.equals(UniprotDBXref.DBASE_ECOLI.getUniprotAttributeValue())) {
                                 dbaseEcoliReferences.add(refId);
                             } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Aarhus/Ghent-2DPAGE")) {
                                 aarhusGhent2DPageReferences.add(refId);
