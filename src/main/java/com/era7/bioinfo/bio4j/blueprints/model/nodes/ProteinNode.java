@@ -98,6 +98,19 @@ public class ProteinNode extends BasicVertex implements Protein{
     public static final String BGEE_REFERENCES_PROPERTY = "protein_bgee_references";
     public static final String BINDING_DB_REFERENCES_PROPERTY = "protein_binding_db_references";
     public static final String BIOCYC_REFERENCES_PROPERTY = "protein_biocyc_references";
+    public static final String BRENDA_REFERENCES_PROPERTY = "protein_brenda_references";
+    public static final String CAZY_REFERENCES_PROPERTY = "protein_cazy_references";
+    public static final String CGD_REFERENCES_PROPERTY = "protein_cgd_references";
+    public static final String CHEMBL_REFERENCES_PROPERTY = "protein_chembl_references";
+    public static final String CHITARS_REFERENCES_PROPERTY = "protein_chitars_references";
+    public static final String CLEANEX_REFERENCES_PROPERTY = "protein_cleanex_references";
+    public static final String COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY = "protein_compluyeast_2dpage_references";
+    public static final String CONOSERVER_REFERENCES_PROPERTY = "protein_conoserver_references";
+    public static final String CTD_REFERENCES_PROPERTY = "protein_ctd_references";
+    public static final String CYGD_REFERENCES_PROPERTY = "protein_cygd_references";
+    public static final String DBSNP_REFERENCES_PROPERTY = "protein_dbsnp_references";
+    public static final String DDBJ_REFERENCES_PROPERTY = "protein_ddbj_references";
+    public static final String DICTY_BASE_REFERENCES_PROPERTY = "protein_dicty_base_references";
     
     
     public static final String ENSEMBL_REFERENCES_PROPERTY = "protein_ensembl_references";
@@ -111,19 +124,9 @@ public class ProteinNode extends BasicVertex implements Protein{
     
     
     
-    public static final String BRENDA_REFERENCES_PROPERTY = "protein_brenda_references";
-    public static final String CAZY_REFERENCES_PROPERTY = "protein_cazy_references";
-    public static final String CGD_REFERENCES_PROPERTY = "protein_cgd_references";
-    public static final String CHEMBL_REFERENCES_PROPERTY = "protein_chembl_references";
-    public static final String CLEANEX_REFERENCES_PROPERTY = "protein_cleanex_references";
-    public static final String COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY = "protein_compluyeast_2dpage_references";
-    public static final String CONOSERVER_REFERENCES_PROPERTY = "protein_conoserver_references";
-    public static final String CORNEA_2DPAGE_REFERENCES_PROPERTY = "protein_cornea_2dpage_references";
-    public static final String CTD_REFERENCES_PROPERTY = "protein_ctd_references";
-    public static final String CYGD_REFERENCES_PROPERTY = "protein_cygd_references";
-    public static final String DBSNP_REFERENCES_PROPERTY = "protein_dbsnp_references";
-    public static final String DDBJ_REFERENCES_PROPERTY = "protein_ddbj_references";
-    public static final String DICTY_BASE_REFERENCES_PROPERTY = "protein_dicty_base_references";
+    
+    
+    
     public static final String DIP_REFERENCES_PROPERTY = "protein_dip_references";
     public static final String DISPROT_REFERENCES_PROPERTY = "protein_disprot_references";
     public static final String DMDM_REFERENCES_PROPERTY = "protein_dmdm_references";
@@ -500,7 +503,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<TransmembraneRegionFeature> getTransmembraneRegionFeature() {
-        List<TransmembraneRegionFeature> list = new LinkedList<TransmembraneRegionFeature>();
+        List<TransmembraneRegionFeature> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, TransmembraneRegionFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -512,7 +515,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<ActiveSiteFeature> getActiveSiteFeature() {
-        List<ActiveSiteFeature> list = new LinkedList<ActiveSiteFeature>();
+        List<ActiveSiteFeature> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, ActiveSiteFeatureRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -524,7 +527,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<FunctionComment> getFunctionComment() {
-        List<FunctionComment> list = new LinkedList<FunctionComment>();
+        List<FunctionComment> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, FunctionCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -536,7 +539,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<PathwayComment> getPathwayComment() {
-        List<PathwayComment> list = new LinkedList<PathwayComment>();
+        List<PathwayComment> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, PathwayCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -548,7 +551,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<DomainComment> getDomainComment() {
-        List<DomainComment> list = new LinkedList<DomainComment>();
+        List<DomainComment> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, DomainCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
@@ -560,7 +563,7 @@ public class ProteinNode extends BasicVertex implements Protein{
 
     @Override
     public List<SimilarityComment> getSimilarityComment() {
-        List<SimilarityComment> list = new LinkedList<SimilarityComment>();
+        List<SimilarityComment> list = new LinkedList<>();
 
         Iterator<Edge> iterator = vertex.getEdges(Direction.OUT, SimilarityCommentRel.NAME).iterator();
         while (iterator.hasNext()) {
