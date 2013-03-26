@@ -1274,96 +1274,22 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     }
     
     @Override
-    public void setPeptideAtlasReferences(String[] list){
-        setReference(list, PEPTIDE_ATLAS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPeroxibaseReferences(String[] list){
-        setReference(list, PEROXIBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPharmGKBReferences(String[] list){
-        setReference(list, PHARMGKB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPhci2DPageReferences(String[] list){
-        setReference(list, PHCI_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPhosphositeReferences(String[] list){
-        setReference(list, PHOSPHOSITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPhosSiteReferences(String[] list){
-        setReference(list, PHOS_SITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPhylomeDBReferences(String[] list){
-        setReference(list, PHYLOME_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPIRSFReferences(String[] list){
-        setReference(list, PIRSF_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPmapCutDBReferences(String[] list){
-        setReference(list, PMAP_CUTDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPMMA2DPageReferences(String[] list){
-        setReference(list, PMMA_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPomBaseReferences(String[] list){
-        setReference(list, POMBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPPTaseDBReferences(String[] list){
-        setReference(list, PPTASEDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPrideReferences(String[] list){
-        setReference(list, PRIDE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPrintsReferences(String[] list){
-        setReference(list, PRINTS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setProdomReferences(String[] list){
-        setReference(list, PRODOM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPromexReferences(String[] list){
-        setReference(list, PROMEX_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPrositeReferences(String[] list){
-        setReference(list, PROSITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setProtClustDBReferences(String[] list){
-        setReference(list, PROT_CLUST_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
+    public void setPeptideAtlasReferences(String[] list){        setReference(UniprotDBXref.PEPTIDE_ATLAS, list);    }
+    public void setPeroxibaseReferences(String[] list){        setReference(UniprotDBXref.PEROXIBASE, list);    }
+    public void setPharmGKBReferences(String[] list){        setReference(UniprotDBXref.PHARM_GKB, list);    }
+    public void setPhosphositeReferences(String[] list){        setReference(UniprotDBXref.PHOSPHOSITE, list);    }
+    public void setPhosSiteReferences(String[] list){        setReference(UniprotDBXref.PHOS_SITE, list);    }
+    public void setPhylomeDBReferences(String[] list){        setReference(UniprotDBXref.PHYLOME_DB, list);    }
+    public void setPIRSFReferences(String[] list){        setReference(UniprotDBXref.PIRSF, list);    }
+    public void setPmapCutDBReferences(String[] list){        setReference(UniprotDBXref.PMAP_CUT_DB, list);    }    
+    public void setPomBaseReferences(String[] list){        setReference(UniprotDBXref.POMBASE, list);    }
+    public void setPPTaseDBReferences(String[] list){        setReference(UniprotDBXref.PPTASE_DB, list);    }
+    public void setPrideReferences(String[] list){        setReference(UniprotDBXref.PRIDE, list);    }
+    public void setPrintsReferences(String[] list){        setReference(UniprotDBXref.PRINTS, list);    }
+    public void setProdomReferences(String[] list){        setReference(UniprotDBXref.PRODOM, list);    }
+    public void setPromexReferences(String[] list){        setReference(UniprotDBXref.PROMEX, list);    }
+    public void setPrositeReferences(String[] list){        setReference(UniprotDBXref.PROSITE, list);    }
+    public void setProtClustDBReferences(String[] list){        setReference(UniprotDBXref.PROT_CLUST_DB, list);    }
     public void setProteinModelPortalReferences(String[] list){        setReference(UniprotDBXref.PROTEIN_MODEL_PORTAL, list);    }
     public void setProtonetReferences(String[] list){        setReference(UniprotDBXref.PROTONET, list);    }
     public void setPseudoCapReferences(String[] list){        setReference(UniprotDBXref.PSEUDOCAP, list);    }
