@@ -143,20 +143,6 @@ public class ProteinNode extends BasicVertex implements Protein{
     public static final String GLYCOSUITEDB_REFERENCES_PROPERTY = "protein_glycosuitedb_references";
     public static final String GPCRDB_REFERENCES_PROPERTY = "protein_gpcrdb_references";
     public static final String GRAMENE_REFERENCES_PROPERTY = "protein_gramene_references";
-    
-    
-    public static final String ENSEMBL_REFERENCES_PROPERTY = "protein_ensembl_references";
-    public static final String PIR_REFERENCES_PROPERTY = "protein_pir_references";
-    public static final String KEGG_REFERENCES_PROPERTY = "protein_kegg_references";
-    public static final String EMBL_REFERENCES_PROPERTY = "protein_embl_references";
-    public static final String REFSEQ_REFERENCES_PROPERTY = "protein_refseq_references";
-    public static final String ARRAY_EXPRESS_REFERENCES_PROPERTY = "protein_array_express_references";
-    public static final String UNIGENE_REFERENCES_PROPERTY = "protein_unigene_references";
-    public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
-        
-    
-    
-    
     public static final String HINVDB_REFERENCES_PROPERTY = "protein_hinvdb_references";
     public static final String HAMAP_REFERENCES_PROPERTY = "protein_hamap_references";
     public static final String HGNC_REFERENCES_PROPERTY = "protein_hgnc_references";
@@ -196,13 +182,24 @@ public class ProteinNode extends BasicVertex implements Protein{
     public static final String PEPTIDE_ATLAS_REFERENCES_PROPERTY = "protein_peptide_atlas_references";
     public static final String PEROXIBASE_REFERENCES_PROPERTY = "protein_peroxibase_references";
     public static final String PHARMGKB_REFERENCES_PROPERTY = "protein_pharmgkb_references";
-    public static final String PHCI_2DPAGE_REFERENCES_PROPERTY = "protein_phci_2dpage_references";
+    
+    
+    public static final String ENSEMBL_REFERENCES_PROPERTY = "protein_ensembl_references";
+    public static final String PIR_REFERENCES_PROPERTY = "protein_pir_references";
+    public static final String KEGG_REFERENCES_PROPERTY = "protein_kegg_references";
+    public static final String EMBL_REFERENCES_PROPERTY = "protein_embl_references";
+    public static final String REFSEQ_REFERENCES_PROPERTY = "protein_refseq_references";
+    public static final String ARRAY_EXPRESS_REFERENCES_PROPERTY = "protein_array_express_references";
+    public static final String UNIGENE_REFERENCES_PROPERTY = "protein_unigene_references";
+    public static final String ENSEMBL_PLANTS_REFERENCES_PROPERTY = "protein_ensembl_plants_references";
+            
+    
+    
     public static final String PHOSPHOSITE_REFERENCES_PROPERTY = "protein_phosphosite_references";
     public static final String PHOS_SITE_REFERENCES_PROPERTY = "protein_phos_site_references";
     public static final String PHYLOME_DB_REFERENCES_PROPERTY = "protein_phylome_db_references";
     public static final String PIRSF_REFERENCES_PROPERTY = "protein_pirsf_references";
     public static final String PMAP_CUTDB_REFERENCES_PROPERTY = "protein_pmap_cutdb_references";
-    public static final String PMMA_2DPAGE_REFERENCES_PROPERTY = "protein_pmma_2dpage_references";
     public static final String POMBASE_REFERENCES_PROPERTY = "protein_pombase_references";
     public static final String PPTASEDB_REFERENCES_PROPERTY = "protein_pptasedb_references";
     public static final String PRIDE_REFERENCES_PROPERTY = "protein_pride_references";
