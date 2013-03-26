@@ -21,14 +21,7 @@ package com.era7.bioinfo.bio4j.model.enums;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public enum UniprotDBXref {
-    
-    
-    
-    REFSEQ("protein_refseq_references","RefSeq"), 
-    
-     
-    UNIGENE("protein_unigene_references","UniGene"),
-    
+        
     ALLERGOME("protein_allergome_references","Allergome"),
     ARACHNO_SERVER("protein_arachnoserver_references","ArachnoServer"),
     ARRAY_EXPRESS("protein_array_express_references","ArrayExpress"), 
@@ -135,11 +128,39 @@ public enum UniprotDBXref {
     PRINTS("protein_prints_references","PRINTS"), 
     PRODOM("protein_prodom_references","ProDom"), 
     PROMEX("protein_promex_references","ProMEX"), 
-    PROSITE("protein_prosite_references","PROSITE"), PROT_CLUST_DB, 
-    PROTEIN_MODEL_PORTAL, PROTONET, PSEUDOCAP, RAT_HEART_2D_PAGE, RCSBPDB, REBASE,
-    REPRODUCTION_2D_PAGE, RGD, ROUGE, SBKB, SGD, SIENA_2D_PAGE, SMART, SMR, SOURCE,
-    STRING, SUPFAM, SWISS_2D_PAGE, TAIR, TCDB, TIGRFAMS, TUBERCULIST, UCD2D, UCSC,
-    UNIPATHWAY, VECTORBASE, WORLD_2D_PAGE, WORMBASE, XENBASE, ZFIN;
+    PROSITE("protein_prosite_references","PROSITE"), 
+    PROT_CLUST_DB("protein_prot_clust_db_references","ProtClustDB"), 
+    PROTEIN_MODEL_PORTAL("protein_model_portal_references","ProteinModelPortal"), 
+    PROTONET("protein_protonet_references","ProtoNet"), 
+    PSEUDOCAP("protein_pseudo_cap_references","PseudoCAP"), 
+    RCSBPDB("protein_rcsb_pdb_references","RCSB PDB"), 
+    REBASE("protein_rebase_references","REBASE"),
+    REFSEQ("protein_refseq_references","RefSeq"), 
+    REPRODUCTION_2D_PAGE("protein_reproduction_2dpage_references","REPRODUCTION-2DPAGE"),
+    RGD("protein_rgd_references","RGD"), 
+    ROUGE("protein_rouge_references","Rouge"),
+    SABIO_RK("protein_sabio_rk_references","SABIO-RK"), 
+    SBKB("protein_sbkb_references","SBKB"), 
+    SGD("protein_sgd_references","SGD"), 
+    SMART("protein_smart_references","SMART"), 
+    SMR("protein_smr_references","SMR"), 
+    SOURCE("protein_source_references","SOURCE"),
+    STRING("protein_string_references","STRING"), 
+    SUPFAM("protein_supfam_references","SUPFAM"), 
+    SWISS_2D_PAGE("protein_swiss_2dpage_references","SWISS-2DPAGE"), 
+    TAIR("protein_tair_references","TAIR"), 
+    TCDB("protein_tcb_references","TCDB"), 
+    TIGRFAMS("protein_tigrfams_references","TIGRFAMs"), 
+    TUBERCULIST("protein_tuberculist_references","TubercuList"), 
+    UCD2D("protein_ucd_2dpage_references","UCD-2DPAGE"), 
+    UCSC("protein_ucsc_references","UCSC"),
+    UNIGENE("protein_unigene_references","UniGene"),
+    UNIPATHWAY("protein_unipathway_references","UniPathway"), 
+    VECTORBASE("protein_vector_base_references","VectorBase"), 
+    WORLD_2D_PAGE("protein_world_2dpage_references","World-2DPAGE"), 
+    WORMBASE("protein_worm_base_references","WormBase"), 
+    XENBASE("protein_xen_base_references","Xenbase"), 
+    ZFIN("protein_zfin_references","ZFIN");
     
     private final String uniprotAtributeValue;
     private final String proteinReferencePropertyName;
