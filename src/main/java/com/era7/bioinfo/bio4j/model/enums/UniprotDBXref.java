@@ -152,7 +152,7 @@ public enum UniprotDBXref {
     TCDB("protein_tcb_references","TCDB"), 
     TIGRFAMS("protein_tigrfams_references","TIGRFAMs"), 
     TUBERCULIST("protein_tuberculist_references","TubercuList"), 
-    UCD2D("protein_ucd_2dpage_references","UCD-2DPAGE"), 
+    UCD_2D_PAGE("protein_ucd_2dpage_references","UCD-2DPAGE"), 
     UCSC("protein_ucsc_references","UCSC"),
     UNIGENE("protein_unigene_references","UniGene"),
     UNIPATHWAY("protein_unipathway_references","UniPathway"), 
