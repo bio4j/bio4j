@@ -16,6 +16,7 @@
  */
 package com.era7.bioinfo.bio4j.titan.model;
 
+import com.era7.bioinfo.bio4j.model.enums.UniprotDBXref;
 import com.thinkaurelius.titan.core.TitanProperty;
 import com.thinkaurelius.titan.core.TitanVertex;
 import com.tinkerpop.blueprints.Vertex;
@@ -1467,58 +1468,36 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
         setRefs(list, TIGRFAMS_REFERENCES_PROPERTY);
     }
     
-    @Override
+    
     public void setTuberculistReferences(String[] list){
         setRefs(list, TUBERCULIST_REFERENCES_PROPERTY);
     }
     
-    @Override
+    
     public void setUCD2DPageReferences(String[] list){
         setRefs(list, UCD_2DPAGE_REFERENCES_PROPERTY);
     }
     
-    @Override
+    
     public void setUCSCReferences(String[] list){
         setRefs(list, UCSC_REFERENCES_PROPERTY);
-    }
+    }  
+    
+    public void setUnipathwayReferences(String[] list){   setReference(UniprotDBXref.UNIPATHWAY, list);    }   
+    public void setVectorBaseReferences(String[] list){   setReference(UniprotDBXref.VECTORBASE, list);    }    
+    public void setWorld2DPageReferences(String[] list){  setReference(UniprotDBXref.WORLD_2D_PAGE, list); }
+    public void setWormBaseReferences(String[] list){     setReference(UniprotDBXref.WORMBASE, list);  }    
+    public void setXenBaseReferences(String[] list){     setReference(UniprotDBXref.XENBASE, list);    }
+    public void setZFINReferences(String[] list){        setReference(UniprotDBXref.ZFIN, list);    }
+    
+    
     
     @Override
-    public void setUnipathwayReferences(String[] list){
-        setRefs(list, UNIPATHWAY_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setVectorBaseReferences(String[] list){
-        setRefs(list, VECTOR_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setWorld2DPageReferences(String[] list){
-        setRefs(list, WORLD_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setWormBaseReferences(String[] list){
-        setRefs(list, WORM_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setXenBaseReferences(String[] list){
-        setRefs(list, XEN_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setZFINReferences(String[] list){
-        setRefs(list, ZFIN_REFERENCES_PROPERTY);
-    }
-    
-    
-    
-    private String[] getRefs(String propertyName){
+    public String[] getReference(UniprotDBXref ref){
         String[] result;
         TitanVertex tempVertex = (TitanVertex) vertex;
-        Iterator<TitanProperty> iterator = tempVertex.getProperties(propertyName).iterator();
-        List<String> tempList = new LinkedList<String>();
+        Iterator<TitanProperty> iterator = tempVertex.getProperties(ref.getProteinReferencePropertyName()).iterator();
+        List<String> tempList = new LinkedList<>();
         while(iterator.hasNext()){
             tempList.add((String)iterator.next().getAttribute());
         }
@@ -1526,12 +1505,13 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
         return result;
     }
     
-    private void setRefs(String[] list, String propertyName){
+    @Override
+    public void setReference(UniprotDBXref ref, String[] value){
         TitanVertex tempVertex = (TitanVertex) vertex;
         //first we have to delete any previous properties
-        tempVertex.removeProperty(propertyName);
-        for (String string : list) {
-            tempVertex.addProperty(propertyName, string);
+        tempVertex.removeProperty(ref.getProteinReferencePropertyName());
+        for (String string : value) {
+            tempVertex.addProperty(ref.getProteinReferencePropertyName(), string);
         }  
     }
     
