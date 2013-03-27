@@ -954,326 +954,70 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     }
     
     @Override
-    public void setDosacCobs2DPageReferences(String[] list){
-        setReference(list, DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDrugbankReferences(String[] list){
-        setReference(list, DRUGBANK_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEchoBaseReferences(String[] list){
-        setReference(list, ECHOBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEcogeneReferences(String[] list){
-        setReference(list, ECOGENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEggnogReferences(String[] list){
-        setReference(list, EGGNOG_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEnsemblBacteriaReferences(String[] list){
-        setReference(list, ENSEMBL_BACTERIA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEnsemblFungiReferences(String[] list){
-        setReference(list, ENSEMBL_FUNGI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEnsemblMetazoaReferences(String[] list){
-        setReference(list, ENSEMBL_METAZOA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEnsemblProtistsReferences(String[] list){
-        setReference(list, ENSEMBL_PROTISTS_REFERENCES_PROPERTY);
-    }
-        
-    @Override
-    public void setEuhcvDBReferences(String[] list){
-        setReference(list, EUHCVDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEupathDBReferences(String[] list){
-        setReference(list, EUPATHDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setEvolutionaryTraceReferences(String[] list){
-        setReference(list, EVOLUTIONARY_TRACE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setFlyBaseReferences(String[] list){
-        setReference(list, FLYBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenAtlasReferences(String[] list){
-        setReference(list, GENATLAS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenBankReferences(String[] list){
-        setReference(list, GENBANK_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGene3DReferences(String[] list){
-        setReference(list, GENE3D_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGeneCardsReferences(String[] list){
-        setReference(list, GENECARDS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGeneFarmReferences(String[] list){
-        setReference(list, GENEFARM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGeneIDReferences(String[] list){
-        setReference(list, GENEID_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGeneTreeReferences(String[] list){
-        setReference(list, GENETREE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenevestigatorReferences(String[] list){
-        setReference(list, GENEVESTIGATOR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenolistReferences(String[] list){
-        setReference(list, GENOLIST_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenomeReviewsReferences(String[] list){
-        setReference(list, GENOME_REVIEWS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGenomeRNAIReferences(String[] list){
-        setReference(list, GENOME_RNAI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGermOnlineReferences(String[] list){
-        setReference(list, GERMONLINE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGlycoSuiteDBReferences(String[] list){
-        setReference(list, GLYCOSUITEDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGPCRDBReferences(String[] list){
-        setReference(list, GPCRDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setGrameneReferences(String[] list){
-        setReference(list, GRAMENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHINVDBReferences(String[] list){
-        setReference(list, HINVDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHamapReferences(String[] list){
-        setReference(list, HAMAP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHGNCReferences(String[] list){
-        setReference(list, HGNC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHogenomReferences(String[] list){
-        setReference(list, HOGENOM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHovergenReferences(String[] list){
-        setReference(list, HOVERGEN_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHpaReferences(String[] list){
-        setReference(list, HPA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHsspReferences(String[] list){
-        setReference(list, HSSP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setHugeReferences(String[] list){
-        setReference(list, HUGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setIMGTReferences(String[] list){
-        setReference(list, IMGT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setINPARANOIDReferences(String[] list){
-        setReference(list, INPARANOID_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setIntactReferences(String[] list){
-        setReference(list, INTACT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setIPIReferences(String[] list){
-        setReference(list, IPI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setKOReferences(String[] list){
-        setReference(list, KO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setLegioListReferences(String[] list){
-        setReference(list, LEGIO_LIST_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setLepromaReferences(String[] list){
-        setReference(list, LEPROMA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMaizeGDBReferences(String[] list){
-        setReference(list, MAIZE_GDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMeropsReferences(String[] list){
-        setReference(list, MEROPS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMGIReferences(String[] list){
-        setReference(list, MGI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMicadoReferences(String[] list){
-        setReference(list, MICADO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMIMReferences(String[] list){
-        setReference(list, MIM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMINTReferences(String[] list){
-        setReference(list, MINT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setModbaseReferences(String[] list){
-        setReference(list, MODBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setMycoclapReferences(String[] list){
-        setReference(list, MYCOCLAP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setNextbioReferences(String[] list){
-        setReference(list, NEXTBIO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setNextprotReferences(String[] list){
-        setReference(list, NEXTPROT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setOGPReferences(String[] list){
-        setReference(list, OGP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setOMAReferences(String[] list){
-        setReference(list, OMA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setOrphanetReferences(String[] list){
-        setReference(list, ORPHANET_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setOrthoDBReferences(String[] list){
-        setReference(list, ORTHODB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPantherReferences(String[] list){
-        setReference(list, PANTHER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPathwayInteractionDBReferences(String[] list){
-        setReference(list, PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPatricReferences(String[] list){
-        setReference(list, PATRIC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPaxDBReferences(String[] list){
-        setReference(list, PAXDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPDBReferences(String[] list){
-        setReference(list, PDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPDBJReferences(String[] list){
-        setReference(list, PDBJ_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setPDBSumReferences(String[] list){
-        setReference(list, PDBSUM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
+    public void setDosacCobs2DPageReferences(String[] list){        setReference(UniprotDBXref.DOSAC_COBS_2D_PAGE, list);    }
+    public void setDrugbankReferences(String[] list){        setReference(UniprotDBXref.DRUG_BANK, list);    }
+    public void setEchoBaseReferences(String[] list){        setReference(UniprotDBXref.ECHO_BASE, list);    }
+    public void setEcogeneReferences(String[] list){        setReference(UniprotDBXref.ECO_GENE, list);    }
+    public void setEggnogReferences(String[] list){        setReference(UniprotDBXref.EGGNOG, list);    }
+    public void setEnsemblBacteriaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_BACTERIA, list);    }
+    public void setEnsemblFungiReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_FUNGI, list);    }
+    public void setEnsemblMetazoaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_METAZOA, list);    }
+    public void setEnsemblProtistsReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_PROTISTS, list);    }
+    public void setEuhcvDBReferences(String[] list){        setReference(UniprotDBXref.EUHCV_DB, list);    }
+    public void setEupathDBReferences(String[] list){        setReference(UniprotDBXref.EUPATH_DB, list);    }
+    public void setEvolutionaryTraceReferences(String[] list){        setReference(UniprotDBXref.EVOLUTIONARY_TRACE, list);    }
+    public void setFlyBaseReferences(String[] list){        setReference(UniprotDBXref.FLYBASE, list);    }
+    public void setGenAtlasReferences(String[] list){        setReference(UniprotDBXref.GENATLAS, list);    }
+    public void setGenBankReferences(String[] list){        setReference(UniprotDBXref.GENBANK, list);    }
+    public void setGene3DReferences(String[] list){        setReference(UniprotDBXref.GENE3D, list);    }
+    public void setGeneCardsReferences(String[] list){        setReference(UniprotDBXref.GENECARDS, list);    }
+    public void setGeneFarmReferences(String[] list){        setReference(UniprotDBXref.GENEFARM, list);    }
+    public void setGeneIDReferences(String[] list){        setReference(UniprotDBXref.GENEID, list);    }
+    public void setGeneTreeReferences(String[] list){        setReference(UniprotDBXref.GENETREE, list);    }
+    public void setGenevestigatorReferences(String[] list){        setReference(UniprotDBXref.GENEVESTIGATOR, list);    }
+    public void setGenolistReferences(String[] list){        setReference(UniprotDBXref.GENOLIST, list);    }
+    public void setGenomeReviewsReferences(String[] list){        setReference(UniprotDBXref.GENOME_REVIEWS, list);    }
+    public void setGenomeRNAIReferences(String[] list){        setReference(UniprotDBXref.GENOME_RNAI, list);    }
+    public void setGermOnlineReferences(String[] list){        setReference(UniprotDBXref.GERMONLINE, list);    }
+    public void setGlycoSuiteDBReferences(String[] list){        setReference(UniprotDBXref.GLYCO_SUITE_DB, list);    }
+    public void setGPCRDBReferences(String[] list){        setReference(UniprotDBXref.GPCR_DB, list);    }
+    public void setGrameneReferences(String[] list){        setReference(UniprotDBXref.GRAMENE, list);    }
+    public void setHINVDBReferences(String[] list){        setReference(UniprotDBXref.HINV_DB, list);    }
+    public void setHamapReferences(String[] list){        setReference(UniprotDBXref.HAMAP, list);    }
+    public void setHGNCReferences(String[] list){        setReference(UniprotDBXref.HGNC, list);    }
+    public void setHogenomReferences(String[] list){        setReference(UniprotDBXref.HOGENOM, list);    }
+    public void setHovergenReferences(String[] list){        setReference(UniprotDBXref.HOVERGEN, list);    }
+    public void setHpaReferences(String[] list){        setReference(UniprotDBXref.HPA, list);    }
+    public void setHsspReferences(String[] list){        setReference(UniprotDBXref.HSSP, list);    }
+    public void setHugeReferences(String[] list){        setReference(UniprotDBXref.HUGE, list);    }
+    public void setIMGTReferences(String[] list){        setReference(UniprotDBXref.IMGT, list);    }
+    public void setINPARANOIDReferences(String[] list){        setReference(UniprotDBXref.INPARANOID, list);    }
+    public void setIntactReferences(String[] list){        setReference(UniprotDBXref.INTACT, list);    }
+    public void setIPIReferences(String[] list){        setReference(UniprotDBXref.IPI, list);    }
+    public void setKOReferences(String[] list){        setReference(UniprotDBXref.KO, list);    }
+    public void setLegioListReferences(String[] list){        setReference(UniprotDBXref.LEGIOLIST, list);    }
+    public void setLepromaReferences(String[] list){        setReference(UniprotDBXref.LEPROMA, list);    }
+    public void setMaizeGDBReferences(String[] list){        setReference(UniprotDBXref.MAIZEGD_DB, list);    }
+    public void setMeropsReferences(String[] list){        setReference(UniprotDBXref.MEROPS, list);    }
+    public void setMGIReferences(String[] list){        setReference(UniprotDBXref.MGI, list);    }
+    public void setMicadoReferences(String[] list){        setReference(UniprotDBXref.MICADO, list);    }
+    public void setMIMReferences(String[] list){        setReference(UniprotDBXref.MIM, list);    }
+    public void setMINTReferences(String[] list){        setReference(UniprotDBXref.MINT, list);    }
+    public void setModbaseReferences(String[] list){        setReference(UniprotDBXref.MODBASE, list);    }
+    public void setMycoclapReferences(String[] list){        setReference(UniprotDBXref.MYCOCLAP, list);    }
+    public void setNextbioReferences(String[] list){        setReference(UniprotDBXref.NEXTBIO, list);    }
+    public void setNextprotReferences(String[] list){        setReference(UniprotDBXref.NEXTPROT, list);    }
+    public void setOGPReferences(String[] list){        setReference(UniprotDBXref.OGP, list);    }
+    public void setOMAReferences(String[] list){        setReference(UniprotDBXref.OMA, list);    }
+    public void setOrphanetReferences(String[] list){        setReference(UniprotDBXref.ORPHANET, list);    }
+    public void setOrthoDBReferences(String[] list){        setReference(UniprotDBXref.ORTHO_DB, list);    }
+    public void setPantherReferences(String[] list){        setReference(UniprotDBXref.PANTHER, list);    }
+    public void setPathwayInteractionDBReferences(String[] list){        setReference(UniprotDBXref.PATHWAY_INTERACTION_DB, list);    }
+    public void setPatricReferences(String[] list){        setReference(UniprotDBXref.PATRIC, list);    }
+    public void setPaxDBReferences(String[] list){        setReference(UniprotDBXref.PAXDB, list);    }
+    public void setPDBReferences(String[] list){        setReference(UniprotDBXref.PDB, list);    }
+    public void setPDBJReferences(String[] list){        setReference(UniprotDBXref.PDBJ, list);    }
+    public void setPDBSumReferences(String[] list){        setReference(UniprotDBXref.PDBSUM, list);    }
     public void setPeptideAtlasReferences(String[] list){        setReference(UniprotDBXref.PEPTIDE_ATLAS, list);    }
     public void setPeroxibaseReferences(String[] list){        setReference(UniprotDBXref.PEROXIBASE, list);    }
     public void setPharmGKBReferences(String[] list){        setReference(UniprotDBXref.PHARM_GKB, list);    }
