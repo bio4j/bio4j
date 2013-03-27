@@ -779,189 +779,46 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     //---------------------------------------------------------------------
     
     @Override
-    public void setGeneNames(String[] list){
-        setReference(list, GENE_NAMES_PROPERTY);        
-    }
+    public void setGeneNames(String[] list){    setMultiValuedProperty(GENE_NAMES_PROPERTY, list);}
+    @Override
+    public void setAlternativeAccessions(String[] list){ setMultiValuedProperty(ALTERNATIVE_ACCESSIONS_PROPERTY, list);}
+       
     
-    @Override
-    public void setEMBLreferences(String[] list){
-        setReference(list, EMBL_REFERENCES_PROPERTY);        
-    }
-    
-    @Override
-    public void setEnsemblPlantsReferences(String[] list){
-        setReference(list, ENSEMBL_PLANTS_REFERENCES_PROPERTY);
-    }
-
-    @Override
-    public void setReferenceeqReferences(String[] list){
-        setReference(list, REFSEQ_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setAlternativeAccessions(String[] list){
-        setReference(list, ALTERNATIVE_ACCESSIONS_PROPERTY);
-    }
-    
-    @Override
-    public void setPIRReferences(String[] list){
-        setReference(list, PIR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setKeggReferences(String[] list){
-        setReference(list, KEGG_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setArrayExpressReferences(String[] list){
-        setReference(list, ARRAY_EXPRESS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setUniGeneReferences(String[] list){
-        setReference(list, UNIGENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDBaseEcoliReferences(String[] list){
-        setReference(list, DBASE_ECOLI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setAarhusGhent2DPageReferences(String[] list){
-        setReference(list, AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setAGDReferences(String[] list){
-        setReference(list, AGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setAllergomeReferences(String[] list){
-        setReference(list, ALLERGOME_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setAnu2DPageReferences(String[] list){
-        setReference(list, ANU_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setArachnoServerReferences(String[] list){
-        setReference(list, ARACHNOSERVER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setBGeeReferences(String[] list){
-        setReference(list, BGEE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setBindingDBReferences(String[] list){
-        setReference(list, BINDING_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setBiocycReferences(String[] list){
-        setReference(list, BIOCYC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setBrendaReferences(String[] list){
-        setReference(list, BRENDA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCazyReferences(String[] list){
-        setReference(list, CAZY_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCGDReferences(String[] list){
-        setReference(list, CGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCHEmblReferences(String[] list){
-        setReference(list, CHEMBL_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCleanexReferences(String[] list){
-        setReference(list, CLEANEX_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCompluYeast2DPageReferences(String[] list){
-        setReference(list, COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setConoServerReferences(String[] list){
-        setReference(list, CONOSERVER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCornea2DPageReferences(String[] list){
-        setReference(list, CORNEA_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCTDReferences(String[] list){
-        setReference(list, CTD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setCYGDReferences(String[] list){
-        setReference(list, CYGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDBSNPReferences(String[] list){
-        setReference(list, DBSNP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDDBJReferences(String[] list){
-        setReference(list, DDBJ_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDictyBaseReferences(String[] list){
-        setReference(list, DICTY_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDIPReferences(String[] list){
-        setReference(list, DIP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDisprotReferences(String[] list){
-        setReference(list, DISPROT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDMDMReferences(String[] list){
-        setReference(list, DMDM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public void setDnasuReferences(String[] list){
-        setReference(list, DNASU_REFERENCES_PROPERTY);
-    }
-    
-    @Override
+    public void setRefseqReferences(String[] list){        setReference(UniprotDBXref.REFSEQ, list);    }   
+    public void setKeggReferences(String[] list){        setReference(UniprotDBXref.KEGG, list);    }
+    public void setArrayExpressReferences(String[] list){        setReference(UniprotDBXref.ARRAY_EXPRESS, list);    }
+    public void setUniGeneReferences(String[] list){        setReference(UniprotDBXref.UNIGENE, list);    }
+    public void setAllergomeReferences(String[] list){        setReference(UniprotDBXref.ALLERGOME, list);    }
+    public void setArachnoServerReferences(String[] list){        setReference(UniprotDBXref.ARACHNO_SERVER, list);    }
+    public void setBGeeReferences(String[] list){        setReference(UniprotDBXref.BGEE, list);    }
+    public void setBindingDBReferences(String[] list){        setReference(UniprotDBXref.BINDING_DB, list);    }
+    public void setBiocycReferences(String[] list){        setReference(UniprotDBXref.BIOCYC, list);    }
+    public void setBrendaReferences(String[] list){        setReference(UniprotDBXref.BRENDA, list);    }
+    public void setCazyReferences(String[] list){        setReference(UniprotDBXref.CAZY, list);    }
+    public void setCGDReferences(String[] list){        setReference(UniprotDBXref.CGD, list);    }
+    public void setCHEmblReferences(String[] list){        setReference(UniprotDBXref.CHEMBL, list);    }
+    public void setCleanexReferences(String[] list){        setReference(UniprotDBXref.CLEANEX, list);    }
+    public void setCompluYeast2DPageReferences(String[] list){        setReference(UniprotDBXref.COMPLUYEAST_2D_PAGE, list);    }
+    public void setConoServerReferences(String[] list){        setReference(UniprotDBXref.CONO_SERVER, list);    }
+    public void setCTDReferences(String[] list){        setReference(UniprotDBXref.CTD, list);    }
+    public void setCYGDReferences(String[] list){        setReference(UniprotDBXref.CYGD, list);    }
+    public void setDBSNPReferences(String[] list){        setReference(UniprotDBXref.DBSNP, list);    }
+    public void setDDBJReferences(String[] list){        setReference(UniprotDBXref.DDBJ, list);    }
+    public void setDictyBaseReferences(String[] list){        setReference(UniprotDBXref.DICTY_BASE, list);    }
+    public void setDIPReferences(String[] list){        setReference(UniprotDBXref.DIP, list);    }
+    public void setDisprotReferences(String[] list){        setReference(UniprotDBXref.DISPROT, list);    }
+    public void setDMDMReferences(String[] list){        setReference(UniprotDBXref.DMDM, list);    }
+    public void setDnasuReferences(String[] list){        setReference(UniprotDBXref.DNASU, list);    }
     public void setDosacCobs2DPageReferences(String[] list){        setReference(UniprotDBXref.DOSAC_COBS_2D_PAGE, list);    }
     public void setDrugbankReferences(String[] list){        setReference(UniprotDBXref.DRUG_BANK, list);    }
     public void setEchoBaseReferences(String[] list){        setReference(UniprotDBXref.ECHO_BASE, list);    }
     public void setEcogeneReferences(String[] list){        setReference(UniprotDBXref.ECO_GENE, list);    }
     public void setEggnogReferences(String[] list){        setReference(UniprotDBXref.EGGNOG, list);    }
+    public void setEMBLreferences(String[] list){        setReference(UniprotDBXref.EMBL, list);           }   
     public void setEnsemblBacteriaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_BACTERIA, list);    }
     public void setEnsemblFungiReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_FUNGI, list);    }
     public void setEnsemblMetazoaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_METAZOA, list);    }
+    public void setEnsemblPlantsReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_PLANTS, list);    }
     public void setEnsemblProtistsReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_PROTISTS, list);    }
     public void setEuhcvDBReferences(String[] list){        setReference(UniprotDBXref.EUHCV_DB, list);    }
     public void setEupathDBReferences(String[] list){        setReference(UniprotDBXref.EUPATH_DB, list);    }
@@ -1024,6 +881,7 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     public void setPhosphositeReferences(String[] list){        setReference(UniprotDBXref.PHOSPHOSITE, list);    }
     public void setPhosSiteReferences(String[] list){        setReference(UniprotDBXref.PHOS_SITE, list);    }
     public void setPhylomeDBReferences(String[] list){        setReference(UniprotDBXref.PHYLOME_DB, list);    }
+    public void setPIRReferences(String[] list){        setReference(UniprotDBXref.PIR, list);    }
     public void setPIRSFReferences(String[] list){        setReference(UniprotDBXref.PIRSF, list);    }
     public void setPmapCutDBReferences(String[] list){        setReference(UniprotDBXref.PMAP_CUT_DB, list);    }    
     public void setPomBaseReferences(String[] list){        setReference(UniprotDBXref.POMBASE, list);    }
@@ -1080,12 +938,15 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     
     @Override
     public void setReference(UniprotDBXref ref, String[] value){
+        setMultiValuedProperty(ref.getProteinReferencePropertyName(), value);
+    }
+    
+    private void setMultiValuedProperty(String propertyName, String[] value){
         TitanVertex tempVertex = (TitanVertex) vertex;
-        //first we have to delete any previous properties
-        tempVertex.removeProperty(ref.getProteinReferencePropertyName());
+        tempVertex.removeProperty(propertyName);
         for (String string : value) {
-            tempVertex.addProperty(ref.getProteinReferencePropertyName(), string);
-        }  
+            tempVertex.addProperty(propertyName, string);
+        } 
     }
     
 }
