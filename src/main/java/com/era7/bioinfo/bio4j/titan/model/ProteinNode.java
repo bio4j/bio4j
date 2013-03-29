@@ -40,738 +40,150 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     
     @Override
     public String[] getGeneNames(){
-        return getRefs(GENE_NAMES_PROPERTY);        
-    }
-    
-    @Override
-    public String[] getEMBLReferences(){
-        return getRefs(EMBL_REFERENCES_PROPERTY);        
-    }
-    
-    @Override
-    public String[] getEnsemblPlantsReferences(){
-        return getRefs(ENSEMBL_PLANTS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRefseqReferences(){
-        return getRefs(REFSEQ_REFERENCES_PROPERTY);
+        return getMultiValuedProperty(GENE_NAMES_PROPERTY);        
     }
 
     @Override
     public String[] getAlternativeAcessions(){
-        return getRefs(ALTERNATIVE_ACCESSIONS_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEnsemblReferences(){
-        return getRefs(ENSEMBL_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPIRReferences(){
-        return getRefs(PIR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getKeggReferences(){
-        return getRefs(KEGG_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getArrayExpressReferences(){
-        return getRefs(ARRAY_EXPRESS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getUniGeneReferences(){
-        return getRefs(UNIGENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDBaseEColiReferences(){
-        return getRefs(DBASE_ECOLI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getAarhusGhent2DPageReferences(){
-        return getRefs(AARHUS_GHENT_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getAGDReferences(){
-        return getRefs(AGD_REFERENCES_PROPERTY);
-    }
-   
-    @Override
-    public String[] getANU2DPageReferences(){
-        return getRefs(ANU_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getArachnoServerReferences(){
-        return getRefs(ARACHNOSERVER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getBGeeReferences(){
-        return getRefs(BGEE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getBindingDBReferences(){
-        return getRefs(BINDING_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getBioCycReferences(){
-        return getRefs(BIOCYC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getBrendaReferences(){
-        return getRefs(BRENDA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCazyReferences(){
-        return getRefs(CAZY_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCGDReferences(){
-        return getRefs(CGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCHEMBLReferences(){
-        return getRefs(CHEMBL_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCleanexReferences(){
-        return getRefs(CLEANEX_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCompluyeast2DPageReferences(){
-        return getRefs(COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getConoServerReferences(){
-        return getRefs(CONOSERVER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCornea2DPageReferences(){
-        return getRefs(CORNEA_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCTDReferences(){
-        return getRefs(CTD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getCYGDReferences(){
-        return getRefs(CYGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDBSNPReferences(){
-        return getRefs(DBSNP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDDBJReferences(){
-        return getRefs(DDBJ_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDictyBaseReferences(){
-        return getRefs(DICTY_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDIPReferences(){
-        return getRefs(DIP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDisprotReferences(){
-        return getRefs(DISPROT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDMDMReferences(){
-        return getRefs(DMDM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDnasuReferences(){
-        return getRefs(DNASU_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDosacCobs2DPageReferences(){
-        return getRefs(DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getDrugBankReferences(){
-        return getRefs(DRUGBANK_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEchoBaseReferences(){
-        return getRefs(ECHOBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEcoGeneReferences(){
-        return getRefs(ECOGENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEggnogReferences(){
-        return getRefs(EGGNOG_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEnsemblBacteriaReferences(){
-        return getRefs(ENSEMBL_BACTERIA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEnsemblFungiReferences(){
-        return getRefs(ENSEMBL_FUNGI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEnsemblMetazoaReferences(){
-        return getRefs(ENSEMBL_METAZOA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEnsemblProtistsReferences(){
-        return getRefs(ENSEMBL_PROTISTS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEUHCVDBReferences(){
-        return getRefs(EUHCVDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEUPathDBReferences(){
-        return getRefs(EUPATHDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getEvolutionaryTraceReferences(){
-        return getRefs(EVOLUTIONARY_TRACE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getFlybaseReferences(){
-        return getRefs(FLYBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenAtlasReferences(){
-        return getRefs(GENATLAS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenbankReferences(){
-        return getRefs(GENBANK_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGene3DReferences(){
-        return getRefs(GENE3D_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenecardsReferences(){
-        return getRefs(GENECARDS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenefarmReferences(){
-        return getRefs(GENEFARM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGeneIDReferences(){
-        return getRefs(GENEID_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGeneTreeReferences(){
-        return getRefs(GENETREE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenevestigatorReferences(){
-        return getRefs(GENEVESTIGATOR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenolistReferences(){
-        return getRefs(GENOLIST_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenomeReviewsReferences(){
-        return getRefs(GENOME_REVIEWS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGenomeRNAIReferences(){
-        return getRefs(GENOME_RNAI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGermOnlineReferences(){
-        return getRefs(GERMONLINE_REFERENCES_PROPERTY);
-    }    
-    
-    @Override
-    public String[] getGlycoSuiteDBReferences(){
-        return getRefs(GLYCOSUITEDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGPCRDBReferences(){
-        return getRefs(GPCRDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getGrameneReferences(){
-        return getRefs(GRAMENE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHINVDBReferences(){
-        return getRefs(HINVDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHamapReferences(){
-        return getRefs(HAMAP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHGNCReferences(){
-        return getRefs(HGNC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHogenomReferences(){
-        return getRefs(HOGENOM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHovergenReferences(){
-        return getRefs(HOVERGEN_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHPAReferences(){
-        return getRefs(HPA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHSSPReferences(){
-        return getRefs(HSSP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getHugeReferences(){
-        return getRefs(HUGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getIMGTReferences(){
-        return getRefs(IMGT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getInparanoidReferences(){
-        return getRefs(INPARANOID_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getIntactReferences(){
-        return getRefs(INTACT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getIPIReferences(){
-        return getRefs(IPI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getKOReferences(){
-        return getRefs(KO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getLegioListReferences(){
-        return getRefs(LEGIO_LIST_REFERENCES_PROPERTY);
-    }    
-    
-    @Override
-    public String[] getLepromaReferences(){
-        return getRefs(LEPROMA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMaizeGDBReferences(){
-        return getRefs(MAIZE_GDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMeropsReferences(){
-        return getRefs(MEROPS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMGIReferences(){
-        return getRefs(MGI_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMicadoReferences(){
-        return getRefs(MICADO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMIMReferences(){
-        return getRefs(MIM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMintReferences(){
-        return getRefs(MINT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getModbaseReferences(){
-        return getRefs(MODBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getMycoClapReferences(){
-        return getRefs(MYCOCLAP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getNextBioReferences(){
-        return getRefs(NEXTBIO_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getNextProtReferences(){
-        return getRefs(NEXTPROT_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getOGPReferences(){
-        return getRefs(OGP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getOMAReferences(){
-        return getRefs(OMA_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getOrphanetReferences(){
-        return getRefs(ORPHANET_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getOrthoDBReferences(){
-        return getRefs(ORTHODB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPantherReferences(){
-        return getRefs(PANTHER_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPathwayInteractionDBReferences(){
-        return getRefs(PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPatricReferences(){
-        return getRefs(PATRIC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPaxDBReferences(){
-        return getRefs(PAXDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPDBReferences(){
-        return getRefs(PDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPDBJReferences(){
-        return getRefs(PDBJ_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPDBSumReferences(){
-        return getRefs(PDBSUM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPeptideAtlasReferences(){
-        return getRefs(PEPTIDE_ATLAS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPeroxibaseReferences(){
-        return getRefs(PEROXIBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPharmGKBReferences(){
-        return getRefs(PHARMGKB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPhci2DPageReferences(){
-        return getRefs(PHCI_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPhosphositeReferences(){
-        return getRefs(PHOSPHOSITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPhosSiteReferences(){
-        return getRefs(PHOS_SITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPhylomeDBReferences(){
-        return getRefs(PHYLOME_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPIRSFReferences(){
-        return getRefs(PIRSF_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPmapCutDBReferences(){
-        return getRefs(PMAP_CUTDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPMMA2DPageReferences(){
-        return getRefs(PMMA_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPombaseReferences(){
-        return getRefs(POMBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPptaseDBReferences(){
-        return getRefs(PPTASEDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPrideReferences(){
-        return getRefs(PRIDE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPrintsReferences(){
-        return getRefs(PRINTS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getProdomReferences(){
-        return getRefs(PRODOM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPromexReferences(){
-        return getRefs(PROMEX_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPrositeReferences(){
-        return getRefs(PROSITE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getProtClustDBReferences(){
-        return getRefs(PROT_CLUST_DB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getProteinModelPortalReferences(){
-        return getRefs(PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getProtonetReferences(){
-        return getRefs(PROTONET_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getPseudoCapReferences(){
-        return getRefs(PSEUDO_CAP_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRatHeart2DPageReferences(){
-        return getRefs(RAT_HEART_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRCSBPDBReferences(){
-        return getRefs(RCSB_PDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRebaseReferences(){
-        return getRefs(REBASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getReproduction2DPageReferences(){
-        return getRefs(REPRODUCTION_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRGDReferences(){
-        return getRefs(RGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getRougeReferences(){
-        return getRefs(ROUGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSBKBReferences(){
-        return getRefs(SBKB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSGDReferences(){
-        return getRefs(SGD_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSiena2DPageReferences(){
-        return getRefs(SIENA_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSmartReferences(){
-        return getRefs(SMART_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSMRReferences(){
-        return getRefs(SMR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSourceReferences(){
-        return getRefs(SOURCE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getStringReferences(){
-        return getRefs(STRING_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSupfamReferences(){
-        return getRefs(SUPFAM_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getSwiss2DPageReferences(){
-        return getRefs(SWISS_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getTairReferences(){
-        return getRefs(TAIR_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getTCDBReferences(){
-        return getRefs(TCDB_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getTIGRFAMSReferences(){
-        return getRefs(TIGRFAMS_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getTuberculistReferences(){
-        return getRefs(TUBERCULIST_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getUCD2DPageReferences(){
-        return getRefs(UCD_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getUCSCPageReferences(){
-        return getRefs(UCSC_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getUnipathwayReferences(){
-        return getRefs(UNIPATHWAY_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getVectorBaseReferences(){
-        return getRefs(VECTOR_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getWorld2DPageReferences(){
-        return getRefs(WORLD_2DPAGE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getWormBaseReferences(){
-        return getRefs(WORM_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getXenBaseReferences(){
-        return getRefs(XEN_BASE_REFERENCES_PROPERTY);
-    }
-    
-    @Override
-    public String[] getZfinReferences(){
-        return getRefs(ZFIN_REFERENCES_PROPERTY);
-    }
+        return getMultiValuedProperty(ALTERNATIVE_ACCESSIONS_PROPERTY);
+    }
+    
+    public String[] getEMBLReferences(){        return getReference(UniprotDBXref.EMBL);        }
+    public String[] getEnsemblPlantsReferences(){        return getReference(UniprotDBXref.ENSEMBL_PLANTS);    }
+    public String[] getRefseqReferences(){        return getReference(UniprotDBXref.REFSEQ);    }
+    public String[] getEnsemblReferences(){        return getReference(UniprotDBXref.ENSEMBL);    }
+    public String[] getPIRReferences(){        return getReference(UniprotDBXref.PIR);    }
+    public String[] getKeggReferences(){        return getReference(UniprotDBXref.KEGG);    }
+    public String[] getArrayExpressReferences(){        return getReference(UniprotDBXref.ARRAY_EXPRESS);    }
+    public String[] getUniGeneReferences(){        return getReference(UniprotDBXref.UNIGENE);    }
+    public String[] getArachnoServerReferences(){        return getReference(UniprotDBXref.ARACHNO_SERVER);    }
+    public String[] getBGeeReferences(){        return getReference(UniprotDBXref.BGEE);    }
+    public String[] getBindingDBReferences(){        return getReference(UniprotDBXref.BINDING_DB);    }
+    public String[] getBioCycReferences(){        return getReference(UniprotDBXref.BIOCYC);    }
+    public String[] getBrendaReferences(){        return getReference(UniprotDBXref.BRENDA);    }
+    public String[] getCazyReferences(){        return getReference(UniprotDBXref.CAZY);    }
+    public String[] getCGDReferences(){        return getReference(UniprotDBXref.CGD);    }
+    public String[] getCHEMBLReferences(){        return getReference(UniprotDBXref.CHEMBL);    }
+    public String[] getCleanexReferences(){        return getReference(UniprotDBXref.CLEANEX);    }
+    public String[] getCompluyeast2DPageReferences(){        return getReference(UniprotDBXref.COMPLUYEAST_2D_PAGE);    }
+    public String[] getConoServerReferences(){        return getReference(UniprotDBXref.CONO_SERVER);    }    
+    public String[] getCTDReferences(){        return getReference(UniprotDBXref.CTD);    }
+    public String[] getCYGDReferences(){        return getReference(UniprotDBXref.CYGD);    }
+    public String[] getDBSNPReferences(){        return getReference(UniprotDBXref.DBSNP);    }
+    public String[] getDDBJReferences(){        return getReference(UniprotDBXref.DDBJ);    }
+    public String[] getDictyBaseReferences(){        return getReference(UniprotDBXref.DICTY_BASE);    }
+    public String[] getDIPReferences(){        return getReference(UniprotDBXref.DIP);    }
+    public String[] getDisprotReferences(){        return getReference(UniprotDBXref.DISPROT);    }
+    public String[] getDMDMReferences(){        return getReference(UniprotDBXref.DMDM);    }
+    public String[] getDnasuReferences(){        return getReference(UniprotDBXref.DNASU);    }
+    public String[] getDosacCobs2DPageReferences(){        return getReference(UniprotDBXref.DOSAC_COBS_2D_PAGE);    }    
+    public String[] getDrugBankReferences(){        return getReference(UniprotDBXref.DRUG_BANK);    }
+    public String[] getEchoBaseReferences(){        return getReference(UniprotDBXref.ECHO_BASE);    }
+    public String[] getEcoGeneReferences(){        return getReference(UniprotDBXref.ECO_GENE);    }
+    public String[] getEggnogReferences(){        return getReference(UniprotDBXref.EGGNOG);    }
+    public String[] getEnsemblBacteriaReferences(){        return getReference(UniprotDBXref.ENSEMBL_BACTERIA);    }
+    public String[] getEnsemblFungiReferences(){        return getReference(UniprotDBXref.ENSEMBL_FUNGI);    }
+    public String[] getEnsemblMetazoaReferences(){        return getReference(UniprotDBXref.ENSEMBL_METAZOA);    }
+    public String[] getEnsemblProtistsReferences(){        return getReference(UniprotDBXref.ENSEMBL_PROTISTS);    }
+    public String[] getEUHCVDBReferences(){        return getReference(UniprotDBXref.EUHCV_DB);    }
+    public String[] getEUPathDBReferences(){        return getReference(UniprotDBXref.EUPATH_DB);    }
+    public String[] getEvolutionaryTraceReferences(){        return getReference(UniprotDBXref.EVOLUTIONARY_TRACE);    }
+    public String[] getFlybaseReferences(){        return getReference(UniprotDBXref.FLYBASE);    }
+    public String[] getGenAtlasReferences(){        return getReference(UniprotDBXref.GENATLAS);    }
+    public String[] getGenbankReferences(){        return getReference(UniprotDBXref.GENBANK);    }
+    public String[] getGene3DReferences(){        return getReference(UniprotDBXref.GENE3D);    }
+    public String[] getGenecardsReferences(){        return getReference(UniprotDBXref.GENECARDS);    }
+    public String[] getGenefarmReferences(){        return getReference(UniprotDBXref.GENEFARM);    }
+    public String[] getGeneIDReferences(){        return getReference(UniprotDBXref.GENEID);    }
+    public String[] getGeneTreeReferences(){        return getReference(UniprotDBXref.GENETREE);    }
+    public String[] getGenevestigatorReferences(){        return getReference(UniprotDBXref.GENEVESTIGATOR);    }
+    public String[] getGenolistReferences(){        return getReference(UniprotDBXref.GENOLIST);    }
+    public String[] getGenomeReviewsReferences(){        return getReference(UniprotDBXref.GENOME_REVIEWS);    }
+    public String[] getGenomeRNAIReferences(){        return getReference(UniprotDBXref.GENOME_RNAI);    }
+    public String[] getGermOnlineReferences(){        return getReference(UniprotDBXref.GERMONLINE);    }    
+    public String[] getGlycoSuiteDBReferences(){        return getReference(UniprotDBXref.GLYCO_SUITE_DB);    }
+    public String[] getGPCRDBReferences(){        return getReference(UniprotDBXref.GPCR_DB);    }
+    public String[] getGrameneReferences(){        return getReference(UniprotDBXref.GRAMENE);    }
+    public String[] getHINVDBReferences(){        return getReference(UniprotDBXref.HINV_DB);    }
+    public String[] getHamapReferences(){        return getReference(UniprotDBXref.HAMAP);    }
+    public String[] getHGNCReferences(){        return getReference(UniprotDBXref.HGNC);    }
+    public String[] getHogenomReferences(){        return getReference(UniprotDBXref.HOGENOM);    }
+    public String[] getHovergenReferences(){        return getReference(UniprotDBXref.HOVERGEN);    }
+    public String[] getHPAReferences(){        return getReference(UniprotDBXref.HPA);    }
+    public String[] getHSSPReferences(){        return getReference(UniprotDBXref.HSSP);    }
+    public String[] getHugeReferences(){        return getReference(UniprotDBXref.HUGE);    }
+    public String[] getIMGTReferences(){        return getReference(UniprotDBXref.IMGT);    }
+    public String[] getInparanoidReferences(){        return getReference(UniprotDBXref.INPARANOID);    }
+    public String[] getIntactReferences(){        return getReference(UniprotDBXref.INTACT);    }
+    public String[] getIPIReferences(){        return getReference(UniprotDBXref.IPI);    }
+    public String[] getKOReferences(){        return getReference(UniprotDBXref.KO);    }
+    public String[] getLegioListReferences(){        return getReference(UniprotDBXref.LEGIOLIST);    }    
+    public String[] getLepromaReferences(){        return getReference(UniprotDBXref.LEPROMA);    }
+    public String[] getMaizeGDBReferences(){        return getReference(UniprotDBXref.MAIZEGD_DB);    }
+    public String[] getMeropsReferences(){        return getReference(UniprotDBXref.MEROPS);    }
+    public String[] getMGIReferences(){        return getReference(UniprotDBXref.MGI);    }
+    public String[] getMicadoReferences(){        return getReference(UniprotDBXref.MICADO);    }
+    public String[] getMIMReferences(){        return getReference(UniprotDBXref.MIM);    }
+    public String[] getMintReferences(){        return getReference(UniprotDBXref.MINT);    }
+    public String[] getModbaseReferences(){        return getReference(UniprotDBXref.MODBASE);    }
+    public String[] getMycoClapReferences(){        return getReference(UniprotDBXref.MYCOCLAP);    }
+    public String[] getNextBioReferences(){        return getReference(UniprotDBXref.NEXTBIO);    }
+    public String[] getNextProtReferences(){        return getReference(UniprotDBXref.NEXTPROT);    }
+    public String[] getOGPReferences(){        return getReference(UniprotDBXref.OGP);    }
+    public String[] getOMAReferences(){        return getReference(UniprotDBXref.OMA);    }
+    public String[] getOrphanetReferences(){        return getReference(UniprotDBXref.ORPHANET);    }
+    public String[] getOrthoDBReferences(){        return getReference(UniprotDBXref.ORTHO_DB);    }
+    public String[] getPantherReferences(){        return getReference(UniprotDBXref.PANTHER);    }
+    public String[] getPathwayInteractionDBReferences(){        return getReference(UniprotDBXref.PATHWAY_INTERACTION_DB);    }
+    public String[] getPatricReferences(){        return getReference(UniprotDBXref.PATRIC);    }
+    public String[] getPaxDBReferences(){        return getReference(UniprotDBXref.PAXDB);    }
+    public String[] getPDBReferences(){        return getReference(UniprotDBXref.PDB);    }
+    public String[] getPDBJReferences(){        return getReference(UniprotDBXref.PDBJ);    }
+    public String[] getPDBSumReferences(){        return getReference(UniprotDBXref.PDBSUM);   }
+    public String[] getPeptideAtlasReferences(){        return getReference(UniprotDBXref.PEPTIDE_ATLAS);    }
+    public String[] getPeroxibaseReferences(){        return getReference(UniprotDBXref.PEROXIBASE);    }
+    public String[] getPharmGKBReferences(){        return getReference(UniprotDBXref.PHARM_GKB);    }
+    public String[] getPhosphositeReferences(){        return getReference(UniprotDBXref.PHOSPHOSITE);    }
+    public String[] getPhosSiteReferences(){        return getReference(UniprotDBXref.PHOS_SITE);    }
+    public String[] getPhylomeDBReferences(){        return getReference(UniprotDBXref.PHYLOME_DB);    }
+    public String[] getPIRSFReferences(){        return getReference(UniprotDBXref.PIRSF);    }
+    public String[] getPmapCutDBReferences(){        return getReference(UniprotDBXref.PMAP_CUT_DB);    }
+    public String[] getPombaseReferences(){        return getReference(UniprotDBXref.POMBASE);    }
+    public String[] getPptaseDBReferences(){        return getReference(UniprotDBXref.PPTASE_DB);    }
+    public String[] getPrideReferences(){        return getReference(UniprotDBXref.PRIDE);    }
+    public String[] getPrintsReferences(){        return getReference(UniprotDBXref.PRINTS);    }
+    public String[] getProdomReferences(){        return getReference(UniprotDBXref.PRODOM);    }
+    public String[] getPromexReferences(){        return getReference(UniprotDBXref.PROMEX);    }
+    public String[] getPrositeReferences(){        return getReference(UniprotDBXref.PROSITE);    }
+    public String[] getProtClustDBReferences(){        return getReference(UniprotDBXref.PROT_CLUST_DB);    }
+    public String[] getProteinModelPortalReferences(){        return getReference(UniprotDBXref.PROTEIN_MODEL_PORTAL);    }
+    public String[] getProtonetReferences(){        return getReference(UniprotDBXref.PROTONET);    }
+    public String[] getPseudoCapReferences(){        return getReference(UniprotDBXref.PSEUDOCAP);    }
+    public String[] getRCSBPDBReferences(){       return getReference(UniprotDBXref.RCSBPDB);    }
+    public String[] getRebaseReferences(){        return getReference(UniprotDBXref.REBASE);    }
+    public String[] getReproduction2DPageReferences(){        return getReference(UniprotDBXref.REPRODUCTION_2D_PAGE);    }
+    public String[] getRGDReferences(){        return getReference(UniprotDBXref.RGD);    }
+    public String[] getRougeReferences(){        return getReference(UniprotDBXref.ROUGE);    }
+    public String[] getSBKBReferences(){        return getReference(UniprotDBXref.SBKB);    }
+    public String[] getSGDReferences(){        return getReference(UniprotDBXref.SGD);    }
+    public String[] getSmartReferences(){        return getReference(UniprotDBXref.SMART);    }
+    public String[] getSMRReferences(){        return getReference(UniprotDBXref.SMR);    }
+    public String[] getSourceReferences(){        return getReference(UniprotDBXref.SOURCE);    }
+    public String[] getStringReferences(){        return getReference(UniprotDBXref.STRING);    }
+    public String[] getSupfamReferences(){        return getReference(UniprotDBXref.SUPFAM);    }
+    public String[] getSwiss2DPageReferences(){        return getReference(UniprotDBXref.SWISS_2D_PAGE);    }
+    public String[] getTairReferences(){        return getReference(UniprotDBXref.TAIR );    }
+    public String[] getTCDBReferences(){        return getReference(UniprotDBXref.TCDB);    }
+    public String[] getTIGRFAMSReferences(){        return getReference(UniprotDBXref.TIGRFAMS);    }
+    public String[] getTuberculistReferences(){        return getReference(UniprotDBXref.TUBERCULIST);    }
+    public String[] getUCD2DPageReferences(){        return getReference(UniprotDBXref.UCD_2D_PAGE);    }
+    public String[] getUCSCPageReferences(){        return getReference(UniprotDBXref.UCSC);    }
+    public String[] getUnipathwayReferences(){        return getReference(UniprotDBXref.UNIPATHWAY);    }
+    public String[] getVectorBaseReferences(){        return getReference(UniprotDBXref.VECTORBASE);    }
+    public String[] getWorld2DPageReferences(){        return getReference(UniprotDBXref.WORLD_2D_PAGE);    }
+    public String[] getWormBaseReferences(){        return getReference(UniprotDBXref.WORMBASE);    }
+    public String[] getXenBaseReferences(){        return getReference(UniprotDBXref.XENBASE);    }
+    public String[] getZfinReferences(){        return getReference(UniprotDBXref.ZFIN);    }
     
     
     
@@ -948,5 +360,16 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
             tempVertex.addProperty(propertyName, string);
         } 
     }
+    
+    private String[] getMultiValuedProperty(String propertyName){
+        TitanVertex tempVertex = (TitanVertex) vertex;
+        Iterator<TitanProperty> iterator = tempVertex.getProperties(propertyName).iterator();
+        LinkedList<String> list = new LinkedList<>();
+        while(iterator.hasNext()){
+            list.add(String.valueOf(iterator.next().getAttribute()));
+        }
+        return list.toArray(new String[list.size()]);
+    }
+        
     
 }
