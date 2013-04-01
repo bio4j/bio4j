@@ -248,439 +248,423 @@ public class NodeRetrieverTitan implements NodeRetriever{
     }
     @Override
     public List<ProteinNode> getProteinsByBioCycReference(String id){           
-        return getProteinReference(ProteinNode.BIOCYC_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.BIOCYC.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByBrendaReference(String id){           
-        return getProteinReference(ProteinNode.BRENDA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.BRENDA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCazyReference(String id){           
-        return getProteinReference(ProteinNode.CAZY_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CAZY.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCGDReference(String id){           
-        return getProteinReference(ProteinNode.CGD_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CGD.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCHEmblReference(String id){           
-        return getProteinReference(ProteinNode.CHEMBL_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CHEMBL.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCleanexReference(String id){           
-        return getProteinReference(ProteinNode.CLEANEX_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CLEANEX.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCompluYeast2DPageReference(String id){           
-        return getProteinReference(ProteinNode.COMPLUYEAST_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.COMPLUYEAST_2D_PAGE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByConoServerReference(String id) {
-        return getProteinReference(ProteinNode.CONOSERVER_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CONO_SERVER.getProteinReferencePropertyName(), id);
     }    
     @Override
-    public List<ProteinNode> getProteinsByCornea2DPageReference(String id){           
-        return getProteinReference(ProteinNode.CORNEA_2DPAGE_REFERENCES_PROPERTY, id);
-    }
-    @Override
     public List<ProteinNode> getProteinsByCTDReference(String id){           
-        return getProteinReference(ProteinNode.CTD_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CTD.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByCYGDReference(String id){           
-        return getProteinReference(ProteinNode.CYGD_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.CYGD.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDBSNPReference(String id){           
-        return getProteinReference(ProteinNode.DBSNP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DBSNP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDDBJReference(String id){           
-        return getProteinReference(ProteinNode.DDBJ_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DDBJ.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDictyBaseReference(String id){           
-        return getProteinReference(ProteinNode.DICTY_BASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DICTY_BASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDIPReference(String id){           
-        return getProteinReference(ProteinNode.DIP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DIP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDisprotReference(String id) {
-        return getProteinReference(ProteinNode.DISPROT_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DISPROT.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDMDMReference(String id){           
-        return getProteinReference(ProteinNode.DMDM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DMDM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDNASUReference(String id){           
-        return getProteinReference(ProteinNode.DNASU_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DNASU.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByDosacCobs2DPageReference(String id){           
-        return getProteinReference(ProteinNode.DOSAC_COBS_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.DOSAC_COBS_2D_PAGE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEchoBaseReference(String id){           
-        return getProteinReference(ProteinNode.ECHOBASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ECHO_BASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEcoGeneReference(String id){           
-        return getProteinReference(ProteinNode.ECOGENE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ECO_GENE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEggNogReference(String id){           
-        return getProteinReference(ProteinNode.EGGNOG_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.EGGNOG.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEnsemblBacteriaReference(String id){           
-        return getProteinReference(ProteinNode.ENSEMBL_BACTERIA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ENSEMBL_BACTERIA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEnsemblFungiReference(String id){           
-        return getProteinReference(ProteinNode.ENSEMBL_FUNGI_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ENSEMBL_FUNGI.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEnsemblMetazoaReference(String id){           
-        return getProteinReference(ProteinNode.ENSEMBL_METAZOA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ENSEMBL_METAZOA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEnsemblProtistsReference(String id){           
-        return getProteinReference(ProteinNode.ENSEMBL_PROTISTS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ENSEMBL_PROTISTS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEUHCVDBReference(String id){           
-        return getProteinReference(ProteinNode.EUHCVDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.EUHCV_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEUPathDBReference(String id){           
-        return getProteinReference(ProteinNode.EUPATHDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.EUPATH_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByEvolutionaryTraceReference(String id){           
-        return getProteinReference(ProteinNode.EVOLUTIONARY_TRACE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.EVOLUTIONARY_TRACE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByFlyBaseReference(String id){           
-        return getProteinReference(ProteinNode.FLYBASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.FLYBASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenAtlasReference(String id){           
-        return getProteinReference(ProteinNode.GENATLAS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENATLAS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenBankReference(String id){           
-        return getProteinReference(ProteinNode.GENBANK_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENBANK.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGene3DReference(String id){           
-        return getProteinReference(ProteinNode.GENE3D_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENE3D.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenecardsReference(String id){           
-        return getProteinReference(ProteinNode.GENECARDS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENECARDS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGeneFarmReference(String id){           
-        return getProteinReference(ProteinNode.GENEFARM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENEFARM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGeneIDReference(String id){           
-        return getProteinReference(ProteinNode.GENEID_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENEID.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGeneTreeReference(String id){           
-        return getProteinReference(ProteinNode.GENETREE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENETREE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenevestigatorReference(String id){           
-        return getProteinReference(ProteinNode.GENEVESTIGATOR_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENEVESTIGATOR.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenolistReference(String id){           
-        return getProteinReference(ProteinNode.GENOLIST_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENOLIST.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenomeReviewsReference(String id){           
-        return getProteinReference(ProteinNode.GENOME_REVIEWS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENOME_REVIEWS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGenomeRNAIReference(String id){           
-        return getProteinReference(ProteinNode.GENOME_RNAI_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GENOME_RNAI.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGermOnlineReference(String id){           
-        return getProteinReference(ProteinNode.GERMONLINE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GERMONLINE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGlycoSuiteDBReference(String id){           
-        return getProteinReference(ProteinNode.GLYCOSUITEDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GLYCO_SUITE_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGPCRDBReference(String id){           
-        return getProteinReference(ProteinNode.GPCRDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GPCR_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByGrameneReference(String id){           
-        return getProteinReference(ProteinNode.GRAMENE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.GRAMENE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHinvDBReference(String id){           
-        return getProteinReference(ProteinNode.HINVDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HINV_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHamapReference(String id){           
-        return getProteinReference(ProteinNode.HAMAP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HAMAP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHGNCReference(String id){           
-        return getProteinReference(ProteinNode.HGNC_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HGNC.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHogenomReference(String id){           
-        return getProteinReference(ProteinNode.HOGENOM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HOGENOM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHovergenReference(String id){           
-        return getProteinReference(ProteinNode.HOVERGEN_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HOVERGEN.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHPAReference(String id){           
-        return getProteinReference(ProteinNode.HPA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HPA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHSSPReference(String id){           
-        return getProteinReference(ProteinNode.HSSP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HSSP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByHugeReference(String id){           
-        return getProteinReference(ProteinNode.HUGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.HUGE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByIMGTReference(String id){           
-        return getProteinReference(ProteinNode.IMGT_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.IMGT.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByInparanoidReference(String id){           
-        return getProteinReference(ProteinNode.INPARANOID_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.INPARANOID.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByIntactReference(String id){           
-        return getProteinReference(ProteinNode.INTACT_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.INTACT.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByIPIReference(String id){           
-        return getProteinReference(ProteinNode.IPI_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.IPI.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByKOReference(String id){           
-        return getProteinReference(ProteinNode.KO_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.KO.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByLegioListReference(String id){           
-        return getProteinReference(ProteinNode.LEGIO_LIST_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.LEGIOLIST.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByLepromaReference(String id){           
-        return getProteinReference(ProteinNode.LEPROMA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.LEPROMA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMaizeGDBReference(String id){           
-        return getProteinReference(ProteinNode.MAIZE_GDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MAIZEGD_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMeropsReference(String id){           
-        return getProteinReference(ProteinNode.MEROPS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MEROPS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMGIReference(String id){           
-        return getProteinReference(ProteinNode.MGI_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MGI.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMicadoReference(String id){           
-        return getProteinReference(ProteinNode.MICADO_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MICADO.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMIMReference(String id){           
-        return getProteinReference(ProteinNode.MIM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MIM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMintReference(String id){           
-        return getProteinReference(ProteinNode.MINT_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MINT.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByModBaseReference(String id){           
-        return getProteinReference(ProteinNode.MODBASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MODBASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByMycoclapReference(String id){           
-        return getProteinReference(ProteinNode.MYCOCLAP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.MYCOCLAP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByNextBioReference(String id){           
-        return getProteinReference(ProteinNode.NEXTBIO_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.NEXTBIO.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByNextProtReference(String id){           
-        return getProteinReference(ProteinNode.NEXTPROT_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.NEXTPROT.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByOGPReference(String id){           
-        return getProteinReference(ProteinNode.OGP_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.OGP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByOMAReference(String id){           
-        return getProteinReference(ProteinNode.OMA_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.OMA.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByOrphanetReference(String id){           
-        return getProteinReference(ProteinNode.ORPHANET_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ORPHANET.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByOrthoDBReference(String id){           
-        return getProteinReference(ProteinNode.ORTHODB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ORTHO_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPantherReference(String id){           
-        return getProteinReference(ProteinNode.PANTHER_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PANTHER.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPathwayReference(String id){           
-        return getProteinReference(ProteinNode.PATHWAY_INTERACTION_DB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PATHWAY_INTERACTION_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPatricReference(String id){           
-        return getProteinReference(ProteinNode.PATRIC_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PATRIC.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPaxDBReference(String id){           
-        return getProteinReference(ProteinNode.PAXDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PAXDB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPDBReference(String id){           
-        return getProteinReference(ProteinNode.PDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PDB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPDBJReference(String id){           
-        return getProteinReference(ProteinNode.PDBJ_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PDBJ.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPDBSumReference(String id){           
-        return getProteinReference(ProteinNode.PDBSUM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PDBSUM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPeptideAtlasReference(String id){           
-        return getProteinReference(ProteinNode.PEPTIDE_ATLAS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PEPTIDE_ATLAS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPeroxiBaseReference(String id){           
-        return getProteinReference(ProteinNode.PEROXIBASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PEROXIBASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPharmGKBReference(String id){           
-        return getProteinReference(ProteinNode.PHARMGKB_REFERENCES_PROPERTY, id);
-    }
-    @Override
-    public List<ProteinNode> getProteinsByPHCI2DPageReference(String id){           
-        return getProteinReference(ProteinNode.PHCI_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PHARM_GKB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPhosphositeReference(String id){           
-        return getProteinReference(ProteinNode.PHOSPHOSITE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PHOSPHOSITE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPhosSiteReference(String id){           
-        return getProteinReference(ProteinNode.PHOS_SITE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PHOS_SITE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPhylomeDBReference(String id){           
-        return getProteinReference(ProteinNode.PHYLOME_DB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PHYLOME_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPirsfReference(String id){           
-        return getProteinReference(ProteinNode.PIRSF_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PIRSF.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPMapCutDBReference(String id){           
-        return getProteinReference(ProteinNode.PMAP_CUTDB_REFERENCES_PROPERTY, id);
-    }
-    @Override
-    public List<ProteinNode> getProteinsByPMMA2DPageReference(String id){           
-        return getProteinReference(ProteinNode.PMMA_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PMAP_CUT_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPPTaseDBReference(String id){           
-        return getProteinReference(ProteinNode.PPTASEDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PPTASE_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPrideReference(String id){           
-        return getProteinReference(ProteinNode.PRIDE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PRIDE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPrintsReference(String id){           
-        return getProteinReference(ProteinNode.PRINTS_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PRINTS.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByProDomReference(String id){           
-        return getProteinReference(ProteinNode.PRODOM_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PRODOM.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPromexReference(String id){           
-        return getProteinReference(ProteinNode.PROMEX_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PROMEX.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByProSiteReference(String id){           
-        return getProteinReference(ProteinNode.PROSITE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PROSITE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByProtClustDBReference(String id){           
-        return getProteinReference(ProteinNode.PROT_CLUST_DB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PROT_CLUST_DB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByProteinModelPortalReference(String id){           
-        return getProteinReference(ProteinNode.PROTEIN_MODEL_PORTAL_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PROTEIN_MODEL_PORTAL.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByProtonetReference(String id){           
-        return getProteinReference(ProteinNode.PROTONET_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PROTONET.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByPseudoCapReference(String id){           
-        return getProteinReference(ProteinNode.PSEUDO_CAP_REFERENCES_PROPERTY, id);
-    }
-    @Override
-    public List<ProteinNode> getProteinsByRatHeart2DPageReference(String id){           
-        return getProteinReference(ProteinNode.RAT_HEART_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.PSEUDOCAP.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByRCSBPDBReference(String id){           
-        return getProteinReference(ProteinNode.RCSB_PDB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.RCSBPDB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByReBaseReference(String id){           
-        return getProteinReference(ProteinNode.REBASE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.REBASE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByReproductionReference(String id){           
-        return getProteinReference(ProteinNode.REPRODUCTION_2DPAGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.REPRODUCTION_2D_PAGE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByRGDReference(String id){           
-        return getProteinReference(ProteinNode.RGD_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.RGD.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsByRougeReference(String id){           
-        return getProteinReference(ProteinNode.ROUGE_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.ROUGE.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsBySBKBReference(String id){           
-        return getProteinReference(ProteinNode.SBKB_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.SBKB.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsBySGDReference(String id){           
-        return getProteinReference(ProteinNode.SGD_REFERENCES_PROPERTY, id);
+        return getProteinReference(UniprotDBXref.SGD.getProteinReferencePropertyName(), id);
     }
     @Override
     public List<ProteinNode> getProteinsBySmartReference(String id){           

@@ -68,11 +68,7 @@ public interface NodeRetriever{
     public List<? extends Protein> getProteinByRefSeqReference(String id);
     public List<? extends Protein> getProteinByArrayExpressReference(String id);
     public List<? extends Protein> getProteinByUniGeneReference(String id);
-    public List<? extends Protein> getProteinByDBaseEcoliReference(String id);
-    public List<? extends Protein> getProteinByAarhusGhent2DPageReference(String id);
-    public List<? extends Protein> getProteinByAGDReference(String id);
     public List<? extends Protein> getProteinByAllergomeReference(String id);
-    public List<? extends Protein> getProteinsByAnu2DPageReference(String id);
     public List<? extends Protein> getProteinsByArachnoServerReference(String id);
     public List<? extends Protein> getProteinsByBGEEReference(String id);
     public List<? extends Protein> getProteinsByBindingDBReference(String id);
@@ -84,7 +80,6 @@ public interface NodeRetriever{
     public List<? extends Protein> getProteinsByCleanexReference(String id);
     public List<? extends Protein> getProteinsByCompluYeast2DPageReference(String id);
     public List<? extends Protein> getProteinsByConoServerReference(String id);
-    public List<? extends Protein> getProteinsByCornea2DPageReference(String id);
     public List<? extends Protein> getProteinsByCTDReference(String id);
     public List<? extends Protein> getProteinsByCYGDReference(String id);
     public List<? extends Protein> getProteinsByDBSNPReference(String id);
@@ -160,13 +155,11 @@ public interface NodeRetriever{
     public List<? extends Protein> getProteinsByPeptideAtlasReference(String id);
     public List<? extends Protein> getProteinsByPeroxiBaseReference(String id);
     public List<? extends Protein> getProteinsByPharmGKBReference(String id);
-    public List<? extends Protein> getProteinsByPHCI2DPageReference(String id);
     public List<? extends Protein> getProteinsByPhosphositeReference(String id);
     public List<? extends Protein> getProteinsByPhosSiteReference(String id);
     public List<? extends Protein> getProteinsByPhylomeDBReference(String id);
     public List<? extends Protein> getProteinsByPirsfReference(String id);
     public List<? extends Protein> getProteinsByPMapCutDBReference(String id);
-    public List<? extends Protein> getProteinsByPMMA2DPageReference(String id);
     public List<? extends Protein> getProteinsByPPTaseDBReference(String id);
     public List<? extends Protein> getProteinsByPrideReference(String id);
     public List<? extends Protein> getProteinsByPrintsReference(String id);
@@ -177,7 +170,6 @@ public interface NodeRetriever{
     public List<? extends Protein> getProteinsByProteinModelPortalReference(String id);
     public List<? extends Protein> getProteinsByProtonetReference(String id);
     public List<? extends Protein> getProteinsByPseudoCapReference(String id);
-    public List<? extends Protein> getProteinsByRatHeart2DPageReference(String id);
     public List<? extends Protein> getProteinsByRCSBPDBReference(String id);
     public List<? extends Protein> getProteinsByReBaseReference(String id);
     public List<? extends Protein> getProteinsByReproductionReference(String id);
@@ -185,7 +177,6 @@ public interface NodeRetriever{
     public List<? extends Protein> getProteinsByRougeReference(String id);
     public List<? extends Protein> getProteinsBySBKBReference(String id);
     public List<? extends Protein> getProteinsBySGDReference(String id);
-    public List<? extends Protein> getProteinsBySiena2DPageReference(String id);
     public List<? extends Protein> getProteinsBySmartReference(String id);
     public List<? extends Protein> getProteinsBySMRReference(String id);
     public List<? extends Protein> getProteinsBySourceReference(String id);

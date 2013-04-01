@@ -227,6 +227,7 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
     public void setEcogeneReferences(String[] list){        setReference(UniprotDBXref.ECO_GENE, list);    }
     public void setEggnogReferences(String[] list){        setReference(UniprotDBXref.EGGNOG, list);    }
     public void setEMBLreferences(String[] list){        setReference(UniprotDBXref.EMBL, list);           }   
+    public void setEnsemblReferences(String[] list){    setReference(UniprotDBXref.ENSEMBL, list);}
     public void setEnsemblBacteriaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_BACTERIA, list);    }
     public void setEnsemblFungiReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_FUNGI, list);    }
     public void setEnsemblMetazoaReferences(String[] list){        setReference(UniprotDBXref.ENSEMBL_METAZOA, list);    }

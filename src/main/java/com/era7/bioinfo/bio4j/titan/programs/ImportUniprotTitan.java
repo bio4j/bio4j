@@ -187,7 +187,7 @@ public class ImportUniprotTitan implements Executable {
 
                         currentAccessionId = accessionSt;
                         
-                        List<String> alternativeAccessions = new LinkedList<String>();
+                        List<String> alternativeAccessions = new LinkedList<>();
                         //-----------alternative accessions-------------
                         List<Element> altAccessionsList = entryXMLElem.asJDomElement().getChildren(CommonData.ENTRY_ACCESSION_TAG_NAME);
                         for (int i = 1; i < altAccessionsList.size(); i++) {
@@ -207,11 +207,7 @@ public class ImportUniprotTitan implements Executable {
                         LinkedList<String> arrayExpressReferences = new LinkedList<>();
                         LinkedList<String> unigeneReferences = new LinkedList<>();
                         LinkedList<String> ensemblReferences = new LinkedList<>();
-                        LinkedList<String> dbaseEcoliReferences = new LinkedList<>();
-                        LinkedList<String> aarhusGhent2DPageReferences = new LinkedList<>();
-                        LinkedList<String> agdReferences = new LinkedList<>();
                         LinkedList<String> allergomeReferences = new LinkedList<>();
-                        LinkedList<String> anu2dPageReferences = new LinkedList<>();
                         LinkedList<String> arachnoServerReferences = new LinkedList<>();
                         LinkedList<String> bgeeReferences = new LinkedList<>();
                         LinkedList<String> bindingDBReferences = new LinkedList<>();
@@ -223,7 +219,6 @@ public class ImportUniprotTitan implements Executable {
                         LinkedList<String> cleanexReferences = new LinkedList<>();
                         LinkedList<String> compluyeast2dPageReferences = new LinkedList<>();
                         LinkedList<String> conoserverReferences = new LinkedList<>();
-                        LinkedList<String> cornea2DPageReferences = new LinkedList<>();
                         LinkedList<String> ctdReferences = new LinkedList<>();
                         LinkedList<String> cygdReferences = new LinkedList<>();
                         LinkedList<String> dbsnpReferences = new LinkedList<>();
@@ -300,13 +295,11 @@ public class ImportUniprotTitan implements Executable {
                         LinkedList<String> peptideAtlasReferences = new LinkedList<>();
                         LinkedList<String> peroxibaseReferences = new LinkedList<>();
                         LinkedList<String> pharmGKBReferences = new LinkedList<>();
-                        LinkedList<String> phci2dpageReferences = new LinkedList<>();
                         LinkedList<String> phosphositeReferences = new LinkedList<>();
                         LinkedList<String> phosSiteReferences = new LinkedList<>();
                         LinkedList<String> phylomeDbReferences = new LinkedList<>();
                         LinkedList<String> pirsfReferences = new LinkedList<>();
                         LinkedList<String> pmapCutdbReferences = new LinkedList<>();
-                        LinkedList<String> pmma2dPageReferences = new LinkedList<>();
                         LinkedList<String> pomBaseReferences = new LinkedList<>();
                         LinkedList<String> pptaseDbReferences = new LinkedList<>();
                         LinkedList<String> prideReferences = new LinkedList<>();
@@ -318,7 +311,6 @@ public class ImportUniprotTitan implements Executable {
                         LinkedList<String> proteinModelPortalReferences = new LinkedList<>();
                         LinkedList<String> protonetReferences = new LinkedList<>();
                         LinkedList<String> pseudocapReferences = new LinkedList<>();
-                        LinkedList<String> ratHeart2dPageReferences = new LinkedList<>();
                         LinkedList<String> rcsbPdbReferences = new LinkedList<>();
                         LinkedList<String> rebaseReferences = new LinkedList<>();
                         LinkedList<String> reproduction2dPageReferences = new LinkedList<>();
@@ -326,7 +318,6 @@ public class ImportUniprotTitan implements Executable {
                         LinkedList<String> rougeReferences = new LinkedList<>();
                         LinkedList<String> sbkbReferences = new LinkedList<>();
                         LinkedList<String> sgdReferences = new LinkedList<>();
-                        LinkedList<String> siena2dPageReferences = new LinkedList<>();
                         LinkedList<String> smartReferences = new LinkedList<>();
                         LinkedList<String> smrReferences = new LinkedList<>();
                         LinkedList<String> sourceReferences = new LinkedList<>();
@@ -383,281 +374,263 @@ public class ImportUniprotTitan implements Executable {
                                 reactomeReferences.put(refId, pathwayName);
                             } else if (attributeType.equals(UniprotDBXref.ENSEMBL_PLANTS.getUniprotAttributeValue())) {
                                 ensemblPlantsReferences.add(refId);
-                            } else if (attributeType.equals(UniprotDBXref.DBASE_ECOLI.getUniprotAttributeValue())) {
-                                dbaseEcoliReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Aarhus/Ghent-2DPAGE")) {
-                                aarhusGhent2DPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("AGD")) {
-                                agdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Allergome")) {
+                            } else if (attributeType.equals(UniprotDBXref.ALLERGOME.getUniprotAttributeValue())) {
                                 allergomeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ANU-2DPAGE")) {
-                                anu2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ArachnoServer")) {
+                            } else if (attributeType.equals(UniprotDBXref.ARACHNO_SERVER.getUniprotAttributeValue())) {
                                 arachnoServerReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Bgee")) {
+                            } else if (attributeType.equals(UniprotDBXref.BGEE.getUniprotAttributeValue())) {
                                 bgeeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("BindingDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.BINDING_DB.getUniprotAttributeValue())) {
                                 bindingDBReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("BioCyc")) {
+                            } else if (attributeType.equals(UniprotDBXref.BIOCYC.getUniprotAttributeValue())) {
                                 biocycReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("BRENDA")) {
+                            } else if (attributeType.equals(UniprotDBXref.BRENDA.getUniprotAttributeValue())) {
                                 brendaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("CAZy")) {
+                            } else if (attributeType.equals(UniprotDBXref.CAZY.getUniprotAttributeValue())) {
                                 cazyReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("CGD")) {
+                            } else if (attributeType.equals(UniprotDBXref.CGD.getUniprotAttributeValue())) {
                                 cgdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ChEMBL")) {
+                            } else if (attributeType.equals(UniprotDBXref.CHEMBL.getUniprotAttributeValue())) {
                                 chemblReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("CleanEx")) {
+                            } else if (attributeType.equals(UniprotDBXref.CLEANEX.getUniprotAttributeValue())) {
                                 cleanexReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("COMPLUYEAST-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.COMPLUYEAST_2D_PAGE.getUniprotAttributeValue())) {
                                 compluyeast2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ConoServer")) {
+                            } else if (attributeType.equals(UniprotDBXref.CONO_SERVER.getUniprotAttributeValue())) {
                                 conoserverReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Cornea-2DPAGE")) {
-                                cornea2DPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("CTD")) {
+                            } else if (attributeType.equals(UniprotDBXref.CTD.getUniprotAttributeValue())) {
                                 ctdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("CYGD")) {
+                            } else if (attributeType.equals(UniprotDBXref.CYGD.getUniprotAttributeValue())) {
                                 cygdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("dbSNP")) {
+                            } else if (attributeType.equals(UniprotDBXref.DBSNP.getUniprotAttributeValue())) {
                                 dbsnpReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DDBJ")) {
+                            } else if (attributeType.equals(UniprotDBXref.DDBJ.getUniprotAttributeValue())) {
                                 ddbjReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("dictyBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.DICTY_BASE.getUniprotAttributeValue())) {
                                 dictyBaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DIP")) {
+                            } else if (attributeType.equals(UniprotDBXref.DIP.getUniprotAttributeValue())) {
                                 dipReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DisProt")) {
+                            } else if (attributeType.equals(UniprotDBXref.DISPROT.getUniprotAttributeValue())) {
                                 disprotReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DMDM")) {
+                            } else if (attributeType.equals(UniprotDBXref.DMDM.getUniprotAttributeValue())) {
                                 dmdmReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DNASU")) {
+                            } else if (attributeType.equals(UniprotDBXref.DNASU.getUniprotAttributeValue())) {
                                 dnasuReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DOSAC-COBS-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.DOSAC_COBS_2D_PAGE.getUniprotAttributeValue())) {
                                 dosacCobs2DPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("DrugBank")) {
+                            } else if (attributeType.equals(UniprotDBXref.DRUG_BANK.getUniprotAttributeValue())) {
                                 drugbankReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EchoBASE")) {
+                            } else if (attributeType.equals(UniprotDBXref.ECHO_BASE.getUniprotAttributeValue())) {
                                 echobaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EcoGene")) {
+                            } else if (attributeType.equals(UniprotDBXref.ECO_GENE.getUniprotAttributeValue())) {
                                 ecogeneReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("eggNOG")) {
+                            } else if (attributeType.equals(UniprotDBXref.EGGNOG.getUniprotAttributeValue())) {
                                 eggnogReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EnsemblBacteria")) {
+                            } else if (attributeType.equals(UniprotDBXref.ENSEMBL_BACTERIA.getUniprotAttributeValue())) {
                                 ensemblBacteriaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EnsemblFungi")) {
+                            } else if (attributeType.equals(UniprotDBXref.ENSEMBL_FUNGI.getUniprotAttributeValue())) {
                                 ensemblFungiReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EnsemblMetazoa")) {
+                            } else if (attributeType.equals(UniprotDBXref.ENSEMBL_METAZOA.getUniprotAttributeValue())) {
                                 ensemblMetazoaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EnsemblProtists")) {
+                            } else if (attributeType.equals(UniprotDBXref.ENSEMBL_PROTISTS.getUniprotAttributeValue())) {
                                 ensemblProtistsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("euHCVdb")) {
+                            } else if (attributeType.equals(UniprotDBXref.EUHCV_DB.getUniprotAttributeValue())) {
                                 euhcvdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EuPathDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.EUPATH_DB.getUniprotAttributeValue())) {
                                 eupathdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("EvolutionaryTrace")) {
+                            } else if (attributeType.equals(UniprotDBXref.EVOLUTIONARY_TRACE.getUniprotAttributeValue())) {
                                 evolutionaryTraceReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("FlyBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.FLYBASE.getUniprotAttributeValue())) {
                                 flybaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GenAtlas")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENATLAS.getUniprotAttributeValue())) {
                                 genatlasReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GenBank")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENBANK.getUniprotAttributeValue())) {
                                 genbankReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Gene3D")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENE3D.getUniprotAttributeValue())) {
                                 gene3dReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GeneCards")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENECARDS.getUniprotAttributeValue())) {
                                 genecardsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GeneFarm")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENEFARM.getUniprotAttributeValue())) {
                                 genefarmReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GeneID")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENEID.getUniprotAttributeValue())) {
                                 geneIdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GeneTree")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENETREE.getUniprotAttributeValue())) {
                                 genetreeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Genevestigator")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENEVESTIGATOR.getUniprotAttributeValue())) {
                                 genevestigatorReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GenoList")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENOLIST.getUniprotAttributeValue())) {
                                 genolistReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GenomeReviews")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENOME_REVIEWS.getUniprotAttributeValue())) {
                                 genomeReviewsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GenomeRNAi")) {
+                            } else if (attributeType.equals(UniprotDBXref.GENOME_RNAI.getUniprotAttributeValue())) {
                                 genomeRNAIReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GermOnline")) {
+                            } else if (attributeType.equals(UniprotDBXref.GERMONLINE.getUniprotAttributeValue())) {
                                 germonlineReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GlycoSuiteDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.GLYCO_SUITE_DB.getUniprotAttributeValue())) {
                                 glycosuitedbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("GPCRDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.GPCR_DB.getUniprotAttributeValue())) {
                                 gpcrdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Gramene")) {
+                            } else if (attributeType.equals(UniprotDBXref.GRAMENE.getUniprotAttributeValue())) {
                                 grameneReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("H-InvDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.HINV_DB.getUniprotAttributeValue())) {
                                 hinvdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HAMAP")) {
+                            } else if (attributeType.equals(UniprotDBXref.HAMAP.getUniprotAttributeValue())) {
                                 hamapReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HGNC")) {
+                            } else if (attributeType.equals(UniprotDBXref.HGNC.getUniprotAttributeValue())) {
                                 hgncReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HOGENOM")) {
+                            } else if (attributeType.equals(UniprotDBXref.HOGENOM.getUniprotAttributeValue())) {
                                 hogenomReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HOVERGEN")) {
+                            } else if (attributeType.equals(UniprotDBXref.HOVERGEN.getUniprotAttributeValue())) {
                                 hovergenReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HPA")) {
+                            } else if (attributeType.equals(UniprotDBXref.HPA.getUniprotAttributeValue())) {
                                 hpaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HSSP")) {
+                            } else if (attributeType.equals(UniprotDBXref.HSSP.getUniprotAttributeValue())) {
                                 hsspReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("HUGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.HUGE.getUniprotAttributeValue())) {
                                 hugeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("IMGT")) {
+                            } else if (attributeType.equals(UniprotDBXref.IMGT.getUniprotAttributeValue())) {
                                 imgtReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("InParanoid")) {
+                            } else if (attributeType.equals(UniprotDBXref.INPARANOID.getUniprotAttributeValue())) {
                                 inparanoidReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("IntAct")) {
+                            } else if (attributeType.equals(UniprotDBXref.INTACT.getUniprotAttributeValue())) {
                                 intactReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("IPI")) {
+                            } else if (attributeType.equals(UniprotDBXref.IPI.getUniprotAttributeValue())) {
                                 ipiReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("KO")) {
+                            } else if (attributeType.equals(UniprotDBXref.KO.getUniprotAttributeValue())) {
                                 koReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("LegioList")) {
+                            } else if (attributeType.equals(UniprotDBXref.LEGIOLIST.getUniprotAttributeValue())) {
                                 legiolistReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Leproma")) {
+                            } else if (attributeType.equals(UniprotDBXref.LEPROMA.getUniprotAttributeValue())) {
                                 lepromaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("MaizeGDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.MAIZEGD_DB.getUniprotAttributeValue())) {
                                 maizeGDBReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("MEROPS")) {
+                            } else if (attributeType.equals(UniprotDBXref.MEROPS.getUniprotAttributeValue())) {
                                 meropsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("MGI")) {
+                            } else if (attributeType.equals(UniprotDBXref.MGI.getUniprotAttributeValue())) {
                                 mgiReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Micado")) {
+                            } else if (attributeType.equals(UniprotDBXref.MICADO.getUniprotAttributeValue())) {
                                 micadoReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("MIM")) {
+                            } else if (attributeType.equals(UniprotDBXref.MIM.getUniprotAttributeValue())) {
                                 mimReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("MINT")) {
+                            } else if (attributeType.equals(UniprotDBXref.MINT.getUniprotAttributeValue())) {
                                 mintReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ModBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.MODBASE.getUniprotAttributeValue())) {
                                 modbaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("mycoCLAP")) {
+                            } else if (attributeType.equals(UniprotDBXref.MYCOCLAP.getUniprotAttributeValue())) {
                                 mycoclapReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("NextBio")) {
+                            } else if (attributeType.equals(UniprotDBXref.NEXTBIO.getUniprotAttributeValue())) {
                                 nextbioReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("neXtProt")) {
+                            } else if (attributeType.equals(UniprotDBXref.NEXTPROT.getUniprotAttributeValue())) {
                                 nextprotReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("OGP")) {
+                            } else if (attributeType.equals(UniprotDBXref.OGP.getUniprotAttributeValue())) {
                                 ogpReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("OMA")) {
+                            } else if (attributeType.equals(UniprotDBXref.OMA.getUniprotAttributeValue())) {
                                 omaReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Orphanet")) {
+                            } else if (attributeType.equals(UniprotDBXref.ORPHANET.getUniprotAttributeValue())) {
                                 orphanetReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("OrthoDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.ORTHO_DB.getUniprotAttributeValue())) {
                                 orthodbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PANTHER")) {
+                            } else if (attributeType.equals(UniprotDBXref.PANTHER.getUniprotAttributeValue())) {
                                 pantherReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Pathway_Interaction_DB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PATHWAY_INTERACTION_DB.getUniprotAttributeValue())) {
                                 pathwayInteractionDBReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PATRIC")) {
+                            } else if (attributeType.equals(UniprotDBXref.PATRIC.getUniprotAttributeValue())) {
                                 patricReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PaxDb")) {
+                            } else if (attributeType.equals(UniprotDBXref.PAXDB.getUniprotAttributeValue())) {
                                 paxdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PDB.getUniprotAttributeValue())) {
                                 pdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PDBj")) {
+                            } else if (attributeType.equals(UniprotDBXref.PDBJ.getUniprotAttributeValue())) {
                                 pdbjReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PDBsum")) {
+                            } else if (attributeType.equals(UniprotDBXref.PDBSUM.getUniprotAttributeValue())) {
                                 pdbsumReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PeptideAtlas")) {
+                            } else if (attributeType.equals(UniprotDBXref.PEPTIDE_ATLAS.getUniprotAttributeValue())) {
                                 peptideAtlasReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PeroxiBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.PEROXIBASE.getUniprotAttributeValue())) {
                                 peroxibaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PharmGKB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PHARM_GKB.getUniprotAttributeValue())) {
                                 pharmGKBReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PHCI-2DPAGE")) {
-                                phci2dpageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PhosphoSite")) {
+                            } else if (attributeType.equals(UniprotDBXref.PHOSPHOSITE.getUniprotAttributeValue())) {
                                 phosphositeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PhosSite")) {
+                            } else if (attributeType.equals(UniprotDBXref.PHOS_SITE.getUniprotAttributeValue())) {
                                 phosSiteReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PhylomeDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PHYLOME_DB.getUniprotAttributeValue())) {
                                 phylomeDbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PIRSF")) {
+                            } else if (attributeType.equals(UniprotDBXref.PIRSF.getUniprotAttributeValue())) {
                                 pirsfReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PMAP-CutDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PMAP_CUT_DB.getUniprotAttributeValue())) {
                                 pmapCutdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PMMA-2DPAGE")) {
-                                pmma2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PomBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.POMBASE.getUniprotAttributeValue())) {
                                 pomBaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PptaseDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PPTASE_DB.getUniprotAttributeValue())) {
                                 pptaseDbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PRIDE")) {
+                            } else if (attributeType.equals(UniprotDBXref.PRIDE.getUniprotAttributeValue())) {
                                 prideReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PRINTS")) {
+                            } else if (attributeType.equals(UniprotDBXref.PRINTS.getUniprotAttributeValue())) {
                                 printsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ProDom")) {
+                            } else if (attributeType.equals(UniprotDBXref.PRODOM.getUniprotAttributeValue())) {
                                 prodomReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ProMEX")) {
+                            } else if (attributeType.equals(UniprotDBXref.PROMEX.getUniprotAttributeValue())) {
                                 promexReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PROSITE")) {
+                            } else if (attributeType.equals(UniprotDBXref.PROSITE.getUniprotAttributeValue())) {
                                 prositeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ProtClustDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.PROT_CLUST_DB.getUniprotAttributeValue())) {
                                 protClustDbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ProteinModelPortal")) {
+                            } else if (attributeType.equals(UniprotDBXref.PROTEIN_MODEL_PORTAL.getUniprotAttributeValue())) {
                                 proteinModelPortalReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ProtoNet")) {
+                            } else if (attributeType.equals(UniprotDBXref.PROTONET.getUniprotAttributeValue())) {
                                 protonetReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("PseudoCAP")) {
+                            } else if (attributeType.equals(UniprotDBXref.PSEUDOCAP.getUniprotAttributeValue())) {
                                 pseudocapReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Rat-heart-2DPAGE")) {
-                                ratHeart2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RCSB PDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.RCSBPDB.getUniprotAttributeValue())) {
                                 rcsbPdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("REBASE")) {
+                            } else if (attributeType.equals(UniprotDBXref.REBASE.getUniprotAttributeValue())) {
                                 rebaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("REPRODUCTION-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.REPRODUCTION_2D_PAGE.getUniprotAttributeValue())) {
                                 reproduction2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("RGD")) {
+                            } else if (attributeType.equals(UniprotDBXref.RGD.getUniprotAttributeValue())) {
                                 rgdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Rouge")) {
+                            } else if (attributeType.equals(UniprotDBXref.ROUGE.getUniprotAttributeValue())) {
                                 rougeReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SBKB")) {
+                            } else if (attributeType.equals(UniprotDBXref.SBKB.getUniprotAttributeValue())) {
                                 sbkbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SGD")) {
+                            } else if (attributeType.equals(UniprotDBXref.SGD.getUniprotAttributeValue())) {
                                 sgdReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Siena-2DPAGE")) {
-                                siena2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SMART")) {
+                            } else if (attributeType.equals(UniprotDBXref.SMART.getUniprotAttributeValue())) {
                                 smartReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SMR")) {
+                            } else if (attributeType.equals(UniprotDBXref.SMR.getUniprotAttributeValue())) {
                                 smrReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SOURCE")) {
+                            } else if (attributeType.equals(UniprotDBXref.SOURCE.getUniprotAttributeValue())) {
                                 sourceReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("STRING")) {
+                            } else if (attributeType.equals(UniprotDBXref.STRING.getUniprotAttributeValue())) {
                                 stringReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SUPFAM")) {
+                            } else if (attributeType.equals(UniprotDBXref.SUPFAM.getUniprotAttributeValue())) {
                                 supfamReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("SWISS-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.SWISS_2D_PAGE.getUniprotAttributeValue())) {
                                 swiss2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("TAIR")) {
+                            } else if (attributeType.equals(UniprotDBXref.TAIR.getUniprotAttributeValue())) {
                                 tairReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("TCDB")) {
+                            } else if (attributeType.equals(UniprotDBXref.TCDB.getUniprotAttributeValue())) {
                                 tcdbReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("TIGRFAMs")) {
+                            } else if (attributeType.equals(UniprotDBXref.TIGRFAMS.getUniprotAttributeValue())) {
                                 tigrfamsReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("TubercuList")) {
+                            } else if (attributeType.equals(UniprotDBXref.TUBERCULIST.getUniprotAttributeValue())) {
                                 tuberculistReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UCD-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.UCD_2D_PAGE.getUniprotAttributeValue())) {
                                 ucd2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UCSC")) {
+                            } else if (attributeType.equals(UniprotDBXref.UCSC.getUniprotAttributeValue())) {
                                 ucscReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("UniPathway")) {
+                            } else if (attributeType.equals(UniprotDBXref.UNIPATHWAY.getUniprotAttributeValue())) {
                                 unipathwayReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("VectorBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.VECTORBASE.getUniprotAttributeValue())) {
                                 vectorBaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("World-2DPAGE")) {
+                            } else if (attributeType.equals(UniprotDBXref.WORLD_2D_PAGE.getUniprotAttributeValue())) {
                                 world2dPageReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("WormBase")) {
+                            } else if (attributeType.equals(UniprotDBXref.WORMBASE.getUniprotAttributeValue())) {
                                 wormBaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("Xenbase")) {
+                            } else if (attributeType.equals(UniprotDBXref.XENBASE.getUniprotAttributeValue())) {
                                 xenBaseReferences.add(refId);
-                            } else if (dbReferenceElem.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE).equals("ZFIN")) {
+                            } else if (attributeType.equals(UniprotDBXref.ZFIN.getUniprotAttributeValue())) {
                                 zfinReferences.add(refId);
                             }
                             
@@ -684,11 +657,7 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setEnsemblPlantsReferences(convertToStringArray(ensemblPlantsReferences));
                         currentProteinNode.setUniGeneReferences(convertToStringArray(unigeneReferences));
                         currentProteinNode.setEnsemblReferences(convertToStringArray(ensemblReferences));
-                        currentProteinNode.setDBaseEcoliReferences(convertToStringArray(dbaseEcoliReferences));
-                        currentProteinNode.setAarhusGhent2DPageReferences(convertToStringArray(aarhusGhent2DPageReferences));
-                        currentProteinNode.setAGDReferences(convertToStringArray(agdReferences));
                         currentProteinNode.setAllergomeReferences(convertToStringArray(allergomeReferences));
-                        currentProteinNode.setAnu2DPageReferences(convertToStringArray(anu2dPageReferences));
                         currentProteinNode.setArachnoServerReferences(convertToStringArray(arachnoServerReferences));
                         currentProteinNode.setBGeeReferences(convertToStringArray(bgeeReferences));
                         currentProteinNode.setBindingDBReferences(convertToStringArray(bindingDBReferences));
@@ -700,7 +669,6 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setCleanexReferences(convertToStringArray(cleanexReferences));
                         currentProteinNode.setCompluYeast2DPageReferences(convertToStringArray(compluyeast2dPageReferences));
                         currentProteinNode.setConoServerReferences(convertToStringArray(conoserverReferences));
-                        currentProteinNode.setCornea2DPageReferences(convertToStringArray(cornea2DPageReferences));
                         currentProteinNode.setCTDReferences(convertToStringArray(ctdReferences));
                         currentProteinNode.setCYGDReferences(convertToStringArray(cygdReferences));
                         currentProteinNode.setDBSNPReferences(convertToStringArray(dbsnpReferences));
@@ -777,13 +745,11 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setPeptideAtlasReferences(convertToStringArray(peptideAtlasReferences));
                         currentProteinNode.setPeroxibaseReferences(convertToStringArray(peroxibaseReferences));
                         currentProteinNode.setPharmGKBReferences(convertToStringArray(pharmGKBReferences));
-                        currentProteinNode.setPhci2DPageReferences(convertToStringArray(phci2dpageReferences));
                         currentProteinNode.setPhosphositeReferences(convertToStringArray(phosphositeReferences));
                         currentProteinNode.setPhosSiteReferences(convertToStringArray(phosSiteReferences));
                         currentProteinNode.setPhylomeDBReferences(convertToStringArray(phylomeDbReferences));
                         currentProteinNode.setPIRSFReferences(convertToStringArray(pirsfReferences));
                         currentProteinNode.setPmapCutDBReferences(convertToStringArray(pmapCutdbReferences));
-                        currentProteinNode.setPMMA2DPageReferences(convertToStringArray(pmma2dPageReferences));
                         currentProteinNode.setPomBaseReferences(convertToStringArray(pomBaseReferences));
                         currentProteinNode.setPPTaseDBReferences(convertToStringArray(pptaseDbReferences));
                         currentProteinNode.setPrintsReferences(convertToStringArray(printsReferences));
@@ -795,7 +761,6 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setProteinModelPortalReferences(convertToStringArray(proteinModelPortalReferences));
                         currentProteinNode.setProtonetReferences(convertToStringArray(protonetReferences));
                         currentProteinNode.setPseudoCapReferences(convertToStringArray(pseudocapReferences));
-                        currentProteinNode.setRatHeart2DPageReferences(convertToStringArray(ratHeart2dPageReferences));
                         currentProteinNode.setRCSBPDBReferences(convertToStringArray(rcsbPdbReferences));
                         currentProteinNode.setRebaseReferences(convertToStringArray(rebaseReferences));
                         currentProteinNode.setReproduction2DPageReferences(convertToStringArray(reproduction2dPageReferences));
@@ -803,7 +768,6 @@ public class ImportUniprotTitan implements Executable {
                         currentProteinNode.setRougeReferences(convertToStringArray(rougeReferences));
                         currentProteinNode.setSBKBReferences(convertToStringArray(sbkbReferences));
                         currentProteinNode.setSGDReferences(convertToStringArray(sgdReferences));
-                        currentProteinNode.setSiena2DPageReferences(convertToStringArray(siena2dPageReferences));
                         currentProteinNode.setSmartReferences(convertToStringArray(smartReferences));
                         currentProteinNode.setSMRReferences(convertToStringArray(smrReferences));
                         currentProteinNode.setSourceReferences(convertToStringArray(sourceReferences));
@@ -826,7 +790,7 @@ public class ImportUniprotTitan implements Executable {
 
                         //---------------gene-names-------------------
                         Element geneElement = entryXMLElem.asJDomElement().getChild(CommonData.GENE_TAG_NAME);
-                        ArrayList<String> geneNames = new ArrayList<String>();
+                        ArrayList<String> geneNames = new ArrayList<>();
                         if (geneElement != null) {
                             List<Element> genesList = geneElement.getChildren(CommonData.GENE_NAME_TAG_NAME);
                             for (Element geneNameElem : genesList) {
@@ -1626,7 +1590,7 @@ public class ImportUniprotTitan implements Executable {
                     String idSt = "";
                     String versionSt = "";
 
-                    ArrayList<String> positionsList = new ArrayList<String>();
+                    ArrayList<String> positionsList = new ArrayList<>();
 
                     Element sequenceElem = conflictElem.getChild("sequence");
                     if (sequenceElem != null) {
@@ -1898,8 +1862,8 @@ public class ImportUniprotTitan implements Executable {
 
                 String citationType = citation.getAttributeValue(CommonData.DB_REFERENCE_TYPE_ATTRIBUTE);
 
-                List<PersonNode> authorsPersonNodes = new ArrayList<PersonNode>();
-                List<ConsortiumNode> authorsConsortiumNodes = new ArrayList<ConsortiumNode>();
+                List<PersonNode> authorsPersonNodes = new ArrayList<>();
+                List<ConsortiumNode> authorsConsortiumNodes = new ArrayList<>();
 
                 List<Element> authorPersonElems = citation.getChild("authorList").getChildren("person");
                 List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
