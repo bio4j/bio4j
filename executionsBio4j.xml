@@ -1,4 +1,5 @@
 <scheduled_executions>	
+<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.InitBio4jDB</class_full_name>
 		<arguments>
@@ -6,7 +7,7 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>	
-	<!--
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportEnzymeDB</class_full_name>
 		<arguments>
@@ -22,8 +23,7 @@
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
 		</arguments>
-	</execution>	
-	
+	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportRefSeq</class_full_name>
 		<arguments>
@@ -32,7 +32,8 @@
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>
-	-->		
+	
+			
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
@@ -42,7 +43,6 @@
 			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
-	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
 		<arguments>
@@ -52,6 +52,8 @@
 			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
+	-->
+	<!--
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
@@ -69,14 +71,14 @@
 		</arguments>
 	</execution>	
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportIsoformSequences</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportIsoformSequences</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot_varsplic.fasta</argument>
 			<argument>bio4jdb</argument>
 		</arguments>
 	</execution>
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniref</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniref</class_full_name>
 		<arguments>
 			<argument>uniref100.xml</argument>
 			<argument>uniref90.xml</argument>
@@ -87,7 +89,7 @@
 	</execution>
 		
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportNCBITaxonomy</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportNCBITaxonomy</class_full_name>
 		<arguments>
 			<argument>nodes.dmp</argument>
 			<argument>names.dmp</argument>
@@ -96,15 +98,25 @@
 			<argument>true</argument>
 		</arguments>
 	</execution>
+	
 	-->	
 	<!--
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.IndexNCBITaxonomyByGiId</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.IndexNCBITaxonomyByGiId</class_full_name>
 		<arguments>
 			<argument>gi_taxid_nucl.dmp</argument>
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>			
 		</arguments>
 	</execution>	
+	
+	
 	-->
+	<execution>
+		<class_full_name>com.era7.bioinfo.bio4j.tools.GetNodeAndRelsStatistics</class_full_name>
+		<arguments>
+			<argument>bio4jdb</argument>
+			<argument>neo4j.properties</argument>			
+		</arguments>
+	</execution>
 </scheduled_executions>
