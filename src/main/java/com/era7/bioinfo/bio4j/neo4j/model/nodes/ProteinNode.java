@@ -237,7 +237,7 @@ public class ProteinNode extends BasicEntity {
     }
     
     public List<GenomeElementNode> getGenomeElements(){
-        List<GenomeElementNode> list = new ArrayList<GenomeElementNode>();
+        List<GenomeElementNode> list = new ArrayList<>();
         Iterator<Relationship> iterator = node.getRelationships(new ProteinGenomeElementRel(null), Direction.OUTGOING).iterator();
         while(iterator.hasNext()){
             list.add(new GenomeElementNode(iterator.next().getEndNode()));
@@ -247,7 +247,7 @@ public class ProteinNode extends BasicEntity {
 
     
     public List<SubcellularLocationNode> getSubcellularLocations(){
-        List<SubcellularLocationNode> list = new ArrayList<SubcellularLocationNode>();        
+        List<SubcellularLocationNode> list = new ArrayList<>();        
         Iterator<Relationship> iterator = node.getRelationships(new ProteinSubcellularLocationRel(null), Direction.OUTGOING).iterator();
         while(iterator.hasNext()){
             list.add(new SubcellularLocationNode(iterator.next().getEndNode()));
