@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 import org.neo4j.unsafe.batchinsert.*;
 
 /**
@@ -102,22 +103,22 @@ public class ImportEnzymeDB implements Executable {
                 nodeTypeIndex = indexProvider.nodeIndex( Bio4jManager.NODE_TYPE_INDEX_NAME, indexProps);
 
                 //------------------node properties maps-----------------------------------
-                Map<String, Object> enzymeProperties = new HashMap<String, Object>();
+                Map<String, Object> enzymeProperties = new HashMap<>();
                 enzymeProperties.put(EnzymeNode.NODE_TYPE_PROPERTY, EnzymeNode.NODE_TYPE);
                 //--------------------------------------------------------------------------
                
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
-                String line = null;
+                String line;
 
                 boolean enzymeFound = false;
                 String officialName = "";
                 String enzymeId = "";
                 String commentsSt = "";
                 String catalyticActivity = "";
-                List<String> alternateNames = new LinkedList<String>();
-                List<String> cofactors = new LinkedList<String>();
-                List<String> prositeCrossRefs = new LinkedList<String>();
+                List<String> alternateNames = new LinkedList<>();
+                List<String> cofactors = new LinkedList<>();
+                List<String> prositeCrossRefs = new LinkedList<>();
                 boolean deletedEntry = false;
                 boolean transferredEntry = false;
                 

@@ -343,7 +343,7 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
         Iterator<TitanProperty> iterator = tempVertex.getProperties(ref.getProteinReferencePropertyName()).iterator();
         List<String> tempList = new LinkedList<>();
         while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
+            tempList.add((String)iterator.next().getValue());
         }
         result = tempList.toArray(new String[tempList.size()]);
         return result;
@@ -367,7 +367,7 @@ public class ProteinNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.P
         Iterator<TitanProperty> iterator = tempVertex.getProperties(propertyName).iterator();
         LinkedList<String> list = new LinkedList<>();
         while(iterator.hasNext()){
-            list.add(String.valueOf(iterator.next().getAttribute()));
+            list.add(String.valueOf(iterator.next().getValue()));
         }
         return list.toArray(new String[list.size()]);
     }

@@ -35,6 +35,7 @@ import java.util.logging.SimpleFormatter;
 import org.jdom.Element;
 import org.neo4j.graphdb.index.IndexHits;
 import org.neo4j.helpers.collection.MapUtil;
+import org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider;
 import org.neo4j.unsafe.batchinsert.*;
 
 /**

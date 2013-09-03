@@ -21,6 +21,7 @@ import com.era7.bioinfo.bio4j.titan.model.util.Bio4jManager;
 import com.era7.bioinfo.bio4j.titan.model.util.NodeRetrieverTitan;
 import com.era7.lib.bioinfo.bioinfoutil.Executable;
 import com.tinkerpop.blueprints.util.wrappers.batch.BatchGraph;
+import com.tinkerpop.blueprints.util.wrappers.batch.VertexIDType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.FileHandler;
@@ -72,7 +73,7 @@ public class IndexNCBITaxonomyByGiIdTitan implements Executable {
 
             //-------creating graph handlers---------------------
             Bio4jManager manager = new Bio4jManager(conf);
-            BatchGraph bGraph = new BatchGraph(manager.getGraph(), BatchGraph.IdType.STRING, 1000);
+            BatchGraph bGraph = new BatchGraph(manager.getGraph(), VertexIDType.STRING, 1000);
             NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
             int lineCounter = 0;

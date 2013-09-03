@@ -84,4 +84,5 @@ public class ProteinSubcellularLocationRel extends BasicRelationshipBlueprints i
                 "\ntopology status = " + getTopologyStatus();
     }
 
+
 }

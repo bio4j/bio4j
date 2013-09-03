@@ -38,9 +38,9 @@ public class GoTermNode extends com.era7.bioinfo.bio4j.blueprints.model.nodes.Go
         String[] result;
         TitanVertex tempVertex = (TitanVertex) vertex;
         Iterator<TitanProperty> iterator = tempVertex.getProperties(ALTERNATIVE_IDS_PROPERTY).iterator();
-        List<String> tempList = new LinkedList<String>();
+        List<String> tempList = new LinkedList<>();
         while(iterator.hasNext()){
-            tempList.add((String)iterator.next().getAttribute());
+            tempList.add((String)iterator.next().getValue());
         }
         result = tempList.toArray(new String[tempList.size()]);
         return result; 

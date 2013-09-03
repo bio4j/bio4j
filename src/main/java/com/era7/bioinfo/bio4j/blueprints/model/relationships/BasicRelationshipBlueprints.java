@@ -72,4 +72,9 @@ public abstract class BasicRelationshipBlueprints implements Edge, com.era7.bioi
         return getType();
     }
 
+    @Override
+    public void remove(){
+        edge.remove();
+    }
+
 }
