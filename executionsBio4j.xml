@@ -1,7 +1,7 @@
 <scheduled_executions>	
 <!--
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.InitBio4jDB</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.InitBio4jDB</class_full_name>
 		<arguments>
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
@@ -9,7 +9,7 @@
 	</execution>	
 	
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportEnzymeDB</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportEnzymeDB</class_full_name>
 		<arguments>
 			<argument>enzyme.dat</argument>
 			<argument>bio4jdb</argument>
@@ -17,7 +17,7 @@
 		</arguments>
 	</execution>		
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportGeneOntology</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportGeneOntology</class_full_name>
 		<arguments>
 			<argument>go.xml</argument>
 			<argument>bio4jdb</argument>
@@ -25,17 +25,17 @@
 		</arguments>
 	</execution>		
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportRefSeq</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportRefSeq</class_full_name>
 		<arguments>
 			<argument>refseq_data</argument>
 			<argument>bio4jdb</argument>
 			<argument>batchInserter.properties</argument>
 		</arguments>
 	</execution>
-	
+	-->
 			
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
 			<argument>bio4jdb</argument>
@@ -44,7 +44,7 @@
 		</arguments>
 	</execution>	
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniprot</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
 			<argument>bio4jdb</argument>
@@ -52,10 +52,10 @@
 			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
-	-->
+	
 	<!--
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
 			<argument>bio4jdb</argument>
@@ -63,7 +63,7 @@
 		</arguments>
 	</execution>
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.programs.ImportProteinInteractions</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportProteinInteractions</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
 			<argument>bio4jdb</argument>
@@ -111,7 +111,7 @@
 	</execution>	
 	
 	
-	-->
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.tools.GetNodeAndRelsStatistics</class_full_name>
 		<arguments>
@@ -119,4 +119,5 @@
 			<argument>neo4j.properties</argument>			
 		</arguments>
 	</execution>
+	-->
 </scheduled_executions>
