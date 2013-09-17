@@ -113,14 +113,14 @@ public class ImportRefSeqTitan implements Executable {
                             String commentSt = "";
                             StringBuilder seqStBuilder = new StringBuilder();
 
-                            ArrayList<String> cdsList = new ArrayList<String>();
-                            ArrayList<String> geneList = new ArrayList<String>();
-                            ArrayList<String> miscRnaList = new ArrayList<String>();
-                            ArrayList<String> mRnaList = new ArrayList<String>();
-                            ArrayList<String> ncRnaList = new ArrayList<String>();
-                            ArrayList<String> rRnaList = new ArrayList<String>();
-                            ArrayList<String> tmRnaList = new ArrayList<String>();
-                            ArrayList<String> tRnaList = new ArrayList<String>();
+                            ArrayList<String> cdsList = new ArrayList<>();
+                            ArrayList<String> geneList = new ArrayList<>();
+                            ArrayList<String> miscRnaList = new ArrayList<>();
+                            ArrayList<String> mRnaList = new ArrayList<>();
+                            ArrayList<String> ncRnaList = new ArrayList<>();
+                            ArrayList<String> rRnaList = new ArrayList<>();
+                            ArrayList<String> tmRnaList = new ArrayList<>();
+                            ArrayList<String> tRnaList = new ArrayList<>();
 
                             boolean originFound = false;
 

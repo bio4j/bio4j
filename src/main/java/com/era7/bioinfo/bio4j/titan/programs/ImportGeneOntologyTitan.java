@@ -104,12 +104,12 @@ public class ImportGeneOntologyTitan implements Executable {
                 //---creating writer for stats file-----
                 statsBuff = new BufferedWriter(new FileWriter(new File("ImportGeneOntologyBPStats.txt")));
 
-                Map<String, ArrayList<String>> termParentsMap = new HashMap<String, ArrayList<String>>();
-                Map<String, ArrayList<String>> regulatesMap = new HashMap<String, ArrayList<String>>();
-                Map<String, ArrayList<String>> negativelyRegulatesMap = new HashMap<String, ArrayList<String>>();
-                Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<String, ArrayList<String>>();
-                Map<String, ArrayList<String>> partOfMap = new HashMap<String, ArrayList<String>>();
-                Map<String, ArrayList<String>> hasPartMap = new HashMap<String, ArrayList<String>>();
+                Map<String, ArrayList<String>> termParentsMap = new HashMap<>();
+                Map<String, ArrayList<String>> regulatesMap = new HashMap<>();
+                Map<String, ArrayList<String>> negativelyRegulatesMap = new HashMap<>();
+                Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<>();
+                Map<String, ArrayList<String>> partOfMap = new HashMap<>();
+                Map<String, ArrayList<String>> hasPartMap = new HashMap<>();
 
 
                 BufferedReader reader = new BufferedReader(new FileReader(inFile));
@@ -175,7 +175,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                         //----term parents----
                         List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IsAGoRel.OBOXML_RELATIONSHIP_NAME);
-                        ArrayList<String> array = new ArrayList<String>();
+                        ArrayList<String> array = new ArrayList<>();
                         for (Element elem : termParentTerms) {
                             array.add(elem.getText().trim());
                         }
@@ -194,7 +194,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                                 ArrayList<String> tempArray = regulatesMap.get(goId);
                                 if (tempArray == null) {
-                                    tempArray = new ArrayList<String>();
+                                    tempArray = new ArrayList<>();
                                     regulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
@@ -203,7 +203,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                                 ArrayList<String> tempArray = positivelyRegulatesMap.get(goId);
                                 if (tempArray == null) {
-                                    tempArray = new ArrayList<String>();
+                                    tempArray = new ArrayList<>();
                                     positivelyRegulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
@@ -212,7 +212,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                                 ArrayList<String> tempArray = negativelyRegulatesMap.get(goId);
                                 if (tempArray == null) {
-                                    tempArray = new ArrayList<String>();
+                                    tempArray = new ArrayList<>();
                                     negativelyRegulatesMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
@@ -221,7 +221,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                                 ArrayList<String> tempArray = partOfMap.get(goId);
                                 if (tempArray == null) {
-                                    tempArray = new ArrayList<String>();
+                                    tempArray = new ArrayList<>();
                                     partOfMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);
@@ -230,7 +230,7 @@ public class ImportGeneOntologyTitan implements Executable {
 
                                 ArrayList<String> tempArray = hasPartMap.get(goId);
                                 if (tempArray == null) {
-                                    tempArray = new ArrayList<String>();
+                                    tempArray = new ArrayList<>();
                                     hasPartMap.put(goId, tempArray);
                                 }
                                 tempArray.add(toSt);

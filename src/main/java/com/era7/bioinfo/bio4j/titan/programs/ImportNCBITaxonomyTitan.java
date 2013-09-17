@@ -109,7 +109,7 @@ public class ImportNCBITaxonomyTitan implements Executable {
                 TitanGraph graph = manager.getGraph();
                 NodeRetrieverTitan nodeRetriever = new NodeRetrieverTitan(manager);
 
-                HashMap<String, String> nodeParentMap = new HashMap<String, String>();
+                HashMap<String, String> nodeParentMap = new HashMap<>();
 
                 logger.log(Level.INFO, "reading nodes file...");
 

@@ -105,9 +105,9 @@ public class ImportEnzymeDBTitan implements Executable {
                 String enzymeId = "";
                 String commentsSt = "";
                 String catalyticActivity = "";
-                List<String> alternateNames = new LinkedList<String>();
-                List<String> cofactors = new LinkedList<String>();
-                List<String> prositeCrossRefs = new LinkedList<String>();
+                List<String> alternateNames = new LinkedList<>();
+                List<String> cofactors = new LinkedList<>();
+                List<String> prositeCrossRefs = new LinkedList<>();
                 boolean deletedEntry = false;
                 boolean transferredEntry = false;
 
