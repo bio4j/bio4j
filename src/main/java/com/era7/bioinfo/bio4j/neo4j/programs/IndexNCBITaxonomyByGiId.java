@@ -112,17 +112,13 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     if (nCBITaxonNodeId != null) {
                         giIndex.add(nCBITaxonNodeId, MapUtil.map(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId));
                     } else {
-//                        System.out.println("NCBI taxon node is null ... :(");
-//                        System.out.println("giId = " + giId);
-//                        System.out.println("taxId = " + taxId);
-
                         outBufferedWriter.write(giId + "\t" + taxId + "\n");
                     }
 
                     lineCounter++;
 
                     if (lineCounter % 100000 == 0) {
-                        System.out.println("lineCounter = " + lineCounter);
+                        logger.log(Level.INFO, (lineCounter + " lines parsed..."));
                         outBufferedWriter.flush();
                     }
                 }
@@ -131,7 +127,7 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                 outBufferedWriter.close();
 
             } catch (Exception e) {
-                Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, e);
+                logger.log(Level.SEVERE, e.getMessage());
             } finally {
 
                 //closing logger file handler
@@ -150,7 +146,7 @@ public class IndexNCBITaxonomyByGiId implements Executable {
                     long seconds = (elapsedSeconds % 3600) % 60;
 
                     statsBuff.write("Statistics for program IndexNCBITaxonomyByGiId:\nInput file: " + inFile.getName()
-                            + "\nThere were " + lineCounter + " taxonomic units indexed.\n"
+                            + "\nThere were " + lineCounter + " association pairs processed.\n"
                             + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
                     //---closing stats writer---
