@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
+import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.graphdb.index.RelationshipIndex;
 
 /**
@@ -145,7 +146,7 @@ public class Bio4jManager extends Neo4jManager {
     
     private Map<String, String> getIndexProps(){
         
-        Map<String, String> indexProps = new HashMap<String, String>();        
+        Map<String, String> indexProps = new HashMap<>();        
         indexProps.put(PROVIDER_ST, LUCENE_ST);
         indexProps.put(TYPE_ST, EXACT_ST);
         
@@ -154,7 +155,7 @@ public class Bio4jManager extends Neo4jManager {
     
     private Map<String, String> getIndexFullTextProps(){
         
-        Map<String, String> indexFullTextProps = new HashMap<String, String>();
+        Map<String, String> indexFullTextProps = new HashMap<>();
         indexFullTextProps.put(PROVIDER_ST, LUCENE_ST);
         indexFullTextProps.put(TYPE_ST, FULL_TEXT_ST);
         
