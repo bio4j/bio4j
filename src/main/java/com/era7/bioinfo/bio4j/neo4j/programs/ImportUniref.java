@@ -249,6 +249,7 @@ public class ImportUniref implements Executable {
                         if (repIndexHits.size() == 1) {
                             representantId = repIndexHits.getSingle();
                         }
+                        repIndexHits.close();
 
                     } //---The representant is a protein
                     else {
@@ -258,6 +259,7 @@ public class ImportUniref implements Executable {
                             //System.out.println("representantAccession = " + representantAccession);
                             representantId = hits.getSingle();
                         }
+                        hits.close();
 
                     }
 
@@ -272,11 +274,13 @@ public class ImportUniref implements Executable {
                                 if (isoHits.size() == 1) {
                                     memberId = isoHits.getSingle();
                                 }
+                                isoHits.close();
                             } else {
                                 IndexHits<Long> protHits = proteinAccessionIndex.get(ProteinNode.PROTEIN_ACCESSION_INDEX, memberAccession);
                                 if (protHits.size() == 1) {
                                     memberId = protHits.getSingle();
                                 }
+                                protHits.close();
                             }
 
                             if (memberId >= 0) {

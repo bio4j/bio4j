@@ -992,6 +992,7 @@ public class ImportUniprot implements Executable {
             if (featureTypeNameIndexHits.hasNext()) {
                 featureTypeNodeId = featureTypeNameIndexHits.getSingle();
             }
+            featureTypeNameIndexHits.close();
 
             if (featureTypeNodeId < 0) {
 
@@ -1240,6 +1241,7 @@ public class ImportUniprot implements Executable {
             if (commentTypeNameIndexHits.hasNext()) {
                 commentTypeId = commentTypeNameIndexHits.getSingle();
             }
+            commentTypeNameIndexHits.close();
             if (commentTypeId < 0) {
                 commentTypeProperties.put(CommentTypeNode.NAME_PROPERTY, commentTypeSt);
                 commentTypeId = inserter.createNode(commentTypeProperties);
@@ -1387,6 +1389,7 @@ public class ImportUniprot implements Executable {
                             if (firstLocationIndexHits.hasNext()) {
                                 firstLocationId = firstLocationIndexHits.getSingle();
                             }
+                            firstLocationIndexHits.close();
                             long lastLocationId = firstLocationId;
 
                             if (firstLocationId < 0) {
@@ -1402,6 +1405,7 @@ public class ImportUniprot implements Executable {
                                 IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
                                 if (tempLocationIndexHits.hasNext()) {
                                     tempLocationId = tempLocationIndexHits.getSingle();
+                                    tempLocationIndexHits.close();
                                 } else {
                                     subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
                                     tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
@@ -1476,6 +1480,7 @@ public class ImportUniprot implements Executable {
                             if (isoformIdIndexHits.hasNext()) {
                                 isoformId = isoformIdIndexHits.getSingle();
                             }
+                            isoformIdIndexHits.close();
                             if (isoformId < 0) {
                                 isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
                             }
@@ -1898,6 +1903,7 @@ public class ImportUniprot implements Executable {
                     if (personNameIndexHits.hasNext()) {
                         personId = personNameIndexHits.getSingle();
                     }
+                    personNameIndexHits.close();
                     if (personId < 0) {
                         personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
                         personId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
@@ -1914,6 +1920,7 @@ public class ImportUniprot implements Executable {
                     if (consortiumIdIndexHits.hasNext()) {
                         consortiumId = consortiumIdIndexHits.getSingle();
                     }
+                    consortiumIdIndexHits.close();
                     if (consortiumId < 0) {
                         consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
                         consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex, nodeTypeIndex);
@@ -1941,6 +1948,7 @@ public class ImportUniprot implements Executable {
                             if (thesisTitleIndexHits.hasNext()) {
                                 thesisId = thesisTitleIndexHits.getSingle();
                             }
+                            thesisTitleIndexHits.close();
                             if (thesisId < 0) {
                                 thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
                                 thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
@@ -1965,6 +1973,7 @@ public class ImportUniprot implements Executable {
                                     if (instituteNameIndexHits.hasNext()) {
                                         instituteId = instituteNameIndexHits.getSingle();
                                     }
+                                    instituteNameIndexHits.close();
                                     if (instituteId < 0) {
                                         instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
                                         instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex, nodeTypeIndex);
@@ -1978,6 +1987,7 @@ public class ImportUniprot implements Executable {
                                         if (countryNameIndexHits.hasNext()) {
                                             countryId = countryNameIndexHits.getSingle();
                                         }
+                                        countryNameIndexHits.close();
                                         if (countryId < 0) {
                                             countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
                                             countryId = createCountryNode(countryProperties, inserter, countryNameIndex, nodeTypeIndex);
@@ -2019,6 +2029,7 @@ public class ImportUniprot implements Executable {
                                 if (patentNumberIndexHits.hasNext()) {
                                     patentId = patentNumberIndexHits.getSingle();
                                 }
+                                patentNumberIndexHits.close();
 
                                 if (patentId < 0) {
                                     patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
@@ -2063,6 +2074,7 @@ public class ImportUniprot implements Executable {
                             IndexHits<Long> submissionTitleIndexHits = submissionTitleIndex.get(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt);
                             if (submissionTitleIndexHits.hasNext()) {
                                 submissionId = submissionTitleIndexHits.getSingle();
+                                submissionTitleIndexHits.close();
                             } else {
                                 //---submission node creation and indexing
                                 submissionId = inserter.createNode(submissionProperties);
@@ -2089,6 +2101,7 @@ public class ImportUniprot implements Executable {
                                 if (dbNameIndexHits.hasNext()) {
                                     dbId = dbNameIndexHits.getSingle();
                                 }
+                                dbNameIndexHits.close();
                                 if (dbId < 0) {
                                     dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
                                     dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
@@ -2147,6 +2160,7 @@ public class ImportUniprot implements Executable {
                             if (bookNameIndexHits.hasNext()) {
                                 bookId = bookNameIndexHits.getSingle();
                             }
+                            bookNameIndexHits.close();
 
                             if (bookId < 0) {
                                 bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
@@ -2176,6 +2190,7 @@ public class ImportUniprot implements Executable {
                                         if (personNameIndexHits.hasNext()) {
                                             editorId = personNameIndexHits.getSingle();
                                         }
+                                        personNameIndexHits.close();
                                         if (editorId < 0) {
                                             personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
                                             editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
@@ -2196,6 +2211,7 @@ public class ImportUniprot implements Executable {
                                     if (publisherNameIndexHits.hasNext()) {
                                         publisherId = publisherNameIndexHits.getSingle();
                                     }
+                                    publisherNameIndexHits.close();
                                     if (publisherId < 0) {
                                         publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
                                         publisherId = inserter.createNode(publisherProperties);
@@ -2216,6 +2232,7 @@ public class ImportUniprot implements Executable {
                                     if (cityNameIndexHits.hasNext()) {
                                         cityId = cityNameIndexHits.getSingle();
                                     }
+                                    cityNameIndexHits.close();
                                     if (cityId < 0) {
                                         cityProperties.put(CityNode.NAME_PROPERTY, citySt);
                                         cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
@@ -2259,6 +2276,7 @@ public class ImportUniprot implements Executable {
                             if (onlineArticleTitleIndexHits.hasNext()) {
                                 onlineArticleId = onlineArticleTitleIndexHits.getSingle();
                             }
+                            onlineArticleTitleIndexHits.close();
                             if (onlineArticleId < 0) {
                                 onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
                                 onlineArticleId = inserter.createNode(onlineArticleProperties);
@@ -2288,6 +2306,7 @@ public class ImportUniprot implements Executable {
                                     if (onlineJournalNameIndexHits.hasNext()) {
                                         onlineJournalId = onlineJournalNameIndexHits.getSingle();
                                     }
+                                    onlineJournalNameIndexHits.close();
                                     if (onlineJournalId < 0) {
                                         onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
                                         onlineJournalId = inserter.createNode(onlineJournalProperties);
@@ -2364,6 +2383,7 @@ public class ImportUniprot implements Executable {
                             if (articleTitleIndexHits.hasNext()) {
                                 articleId = articleTitleIndexHits.getSingle();
                             }
+                            articleTitleIndexHits.close();
                             if (articleId < 0) {
                                 articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
                                 articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
@@ -2406,6 +2426,7 @@ public class ImportUniprot implements Executable {
                                     if (journalNameIndexHits.hasNext()) {
                                         journalId = journalNameIndexHits.getSingle();
                                     }
+                                    journalNameIndexHits.close();
                                     if (journalId < 0) {
                                         journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
                                         journalId = inserter.createNode(journalProperties);
