@@ -763,4 +763,58 @@ public class NodeRetriever {
     
     //-------------------------------------------------------------------
     //--------------------SEQ-CAUTION --------------------------------
+    
+    public SequenceCautionNode getSequenceCautionErroneousInitiationNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_INITIATION);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    public SequenceCautionNode getSequenceCautionErroneousTranslationNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TRANSLATION);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    public SequenceCautionNode getSequenceCautionFrameshiftNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_FRAMESHIFT);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    public SequenceCautionNode getSequenceCautionErroneousTerminationNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TERMINATION);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    public SequenceCautionNode getSequenceCautionMiscellaneousDiscrepancyNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_MISCELLANEOUS_DISCREPANCY);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
+    
+    public SequenceCautionNode getSequenceCautionErroneousGeneModelPredictionNode(){
+        IndexHits<Node> hits = manager.getMainNodesIndex().get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_GENE_MODEL_PREDICTION);
+        if(hits.hasNext()){
+            return new SequenceCautionNode(hits.getSingle());
+        }else{
+            return null;
+        } 
+    }
 }

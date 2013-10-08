@@ -85,8 +85,8 @@ public class InitBio4jDB implements Executable {
             BatchInserter inserter = null;
             BatchInserterIndexProvider indexProvider = null;
 
-            Map<String, Object> alternativeProductProperties = new HashMap<String, Object>();
-            Map<String, Object> sequenceCautionProperties = new HashMap<String, Object>();
+            Map<String, Object> alternativeProductProperties = new HashMap<>();
+            Map<String, Object> sequenceCautionProperties = new HashMap<>();
 
             long alternativeProductInitiationId;
             long alternativeProductPromoterId;
@@ -117,6 +117,8 @@ public class InitBio4jDB implements Executable {
 
                 BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                                                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex mainNodesIndex = indexProvider.nodeIndex(Bio4jManager.MAIN_NODES_INDEX_NAME,
+                                                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
 
                 //----------------------------------------------------------------------------------------------------------------
                 //A few relationships/nodes which
@@ -125,57 +127,57 @@ public class InitBio4jDB implements Executable {
                 alternativeProductProperties.put(AlternativeProductNode.NODE_TYPE_PROPERTY, AlternativeProductNode.NODE_TYPE);
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductInitiationId, alternativeProductInitiationRel, null);
+                alternativeProductInitiationId = inserter.createNode(alternativeProductProperties);                
                 nodeTypeIndex.add(alternativeProductInitiationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
+                mainNodesIndex.add(alternativeProductInitiationId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_INITIATION));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductPromoterId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductPromoterId, alternativeProductPromoterRel, null);
                 nodeTypeIndex.add(alternativeProductPromoterId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
+                mainNodesIndex.add(alternativeProductPromoterId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_PROMOTER));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 alternativeProductSplicingId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductSplicingId, alternativeProductSplicingRel, null);
                 nodeTypeIndex.add(alternativeProductSplicingId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
+                mainNodesIndex.add(alternativeProductSplicingId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_SPLICING));
 
                 alternativeProductProperties.put(AlternativeProductNode.NAME_PROPERTY, AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
-                alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), alternativeProductRibosomalFrameshiftingId, alternativeProductRibosomalFrameshiftingRel, null);
+                alternativeProductRibosomalFrameshiftingId = inserter.createNode(alternativeProductProperties);                
                 nodeTypeIndex.add(alternativeProductRibosomalFrameshiftingId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, AlternativeProductNode.NODE_TYPE));
+                mainNodesIndex.add(alternativeProductRibosomalFrameshiftingId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING));
 
                 //---------------------SEQUENCE CAUTION------------------------
                 sequenceCautionProperties.put(SequenceCautionNode.NODE_TYPE_PROPERTY, SequenceCautionNode.NODE_TYPE);
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousInitiationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousInitiationId, erroneousInitiationRel, null);
                 nodeTypeIndex.add(seqCautionErroneousInitiationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionErroneousInitiationId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_INITIATION));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousTranslationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTranslationId, erroneousTranslationRel, null);
                 nodeTypeIndex.add(seqCautionErroneousTranslationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionErroneousTranslationId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TRANSLATION));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionFrameshiftId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionFrameshiftId, frameshiftRel, null);
                 nodeTypeIndex.add(seqCautionFrameshiftId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionFrameshiftId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_FRAMESHIFT));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousTerminationId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousTerminationId, erroneousTerminationRel, null);
                 nodeTypeIndex.add(seqCautionErroneousTerminationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionErroneousTerminationId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TERMINATION));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionMiscellaneousDiscrepancyId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionMiscellaneousDiscrepancyId, miscellaneousDiscrepancyRel, null);
                 nodeTypeIndex.add(seqCautionMiscellaneousDiscrepancyId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionMiscellaneousDiscrepancyId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_MISCELLANEOUS_DISCREPANCY));
 
                 sequenceCautionProperties.put(SequenceCautionNode.NAME_PROPERTY, ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE);
                 seqCautionErroneousGeneModelPredictionId = inserter.createNode(sequenceCautionProperties);
-                inserter.createRelationship(inserter.getReferenceNode(), seqCautionErroneousGeneModelPredictionId, erroneousGeneModelPredictionRel, null);
                 nodeTypeIndex.add(seqCautionErroneousGeneModelPredictionId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SequenceCautionNode.NODE_TYPE));
+                mainNodesIndex.add(seqCautionErroneousGeneModelPredictionId, MapUtil.map(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_GENE_MODEL_PREDICTION));
                 //---------------------------------------------------------------------------------------------------------------
 
             } catch (Exception e) {

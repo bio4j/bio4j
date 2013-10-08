@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.index.Index;
-import org.neo4j.graphdb.index.IndexManager;
 import org.neo4j.graphdb.index.RelationshipIndex;
 
 /**
@@ -43,6 +42,12 @@ public class Bio4jManager extends Neo4jManager {
     public static final String ALTERNATIVE_PRODUCT_PROMOTER = "alternative_product_promoter";
     public static final String ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING = "alternative_product_ribosomal_frameshifting";
     public static final String ALTERNATIVE_PRODUCT_SPLICING = "alternative_product_splicing";
+    public static final String SEQUENCE_CAUTION_ERRONEOUS_INITIATION = "sequence_caution_erroneous_initiation";
+    public static final String SEQUENCE_CAUTION_ERRONEOUS_TRANSLATION = "sequence_caution_erroneous_translation";
+    public static final String SEQUENCE_CAUTION_FRAMESHIFT = "sequence_caution_framshift";
+    public static final String SEQUENCE_CAUTION_ERRONEOUS_TERMINATION = "sequence_caution_erroneous_termination";
+    public static final String SEQUENCE_CAUTION_MISCELLANEOUS_DISCREPANCY = "sequence_caution_miscellaneous_discrepancy";
+    public static final String SEQUENCE_CAUTION_ERRONEOUS_GENE_MODEL_PREDICTION = "sequence_caution_erroneous_gene_model_prediction";
     //------------------------------------------------------------
     
     //-----------------node indexes-----------------------

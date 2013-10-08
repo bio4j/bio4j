@@ -360,12 +360,28 @@ public class ImportUniprot implements Executable {
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
                         MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
+                BatchInserterIndex mainNodesIndex = indexProvider.nodeIndex(Bio4jManager.MAIN_NODES_INDEX_NAME,
+                        MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
                 //----------------------------------------------------------------------
                 //----------------------------------------------------------------------
 
                 reader = new BufferedReader(new FileReader(inFile));
                 StringBuilder entryStBuilder = new StringBuilder();
 
+                
+                //----------------------------------------------------------------------
+                //------------------------looking up for main nodes---------------------
+                alternativeProductInitiationId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_INITIATION).getSingle();
+                alternativeProductPromoterId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_PROMOTER).getSingle();
+                alternativeProductSplicingId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_SPLICING).getSingle();
+                alternativeProductRibosomalFrameshiftingId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.ALTERNATIVE_PRODUCT_RIBOSOMAL_FRAMESHIFTING).getSingle();
+                seqCautionErroneousInitiationId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_INITIATION).getSingle();
+                seqCautionErroneousTranslationId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TRANSLATION).getSingle();
+                seqCautionFrameshiftId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_FRAMESHIFT).getSingle();
+                seqCautionErroneousTerminationId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_TERMINATION).getSingle();
+                seqCautionMiscellaneousDiscrepancyId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_MISCELLANEOUS_DISCREPANCY).getSingle();
+                seqCautionErroneousGeneModelPredictionId = mainNodesIndex.get(Bio4jManager.MAIN_NODES_INDEX_NAME, Bio4jManager.SEQUENCE_CAUTION_ERRONEOUS_GENE_MODEL_PREDICTION).getSingle();
+                //----------------------------------------------------------------------
 
                 //----------------------------------------------------------------------------------
                 //---------------------initializing node type properties----------------------------
