@@ -2083,6 +2083,7 @@ public class ImportUniprot implements Executable {
                                 if (!titleSt.isEmpty()) {
                                     //--indexing node by title---
                                     submissionTitleIndex.add(submissionId, MapUtil.map(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt));
+                                    submissionTitleIndex.flush();
                                 }
                             }
 
