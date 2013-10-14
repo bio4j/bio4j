@@ -193,7 +193,7 @@ public class Bio4jManager extends Neo4jManager {
         countryNameIndex = graphService.index().forNodes(CountryNode.COUNTRY_NAME_INDEX, indexProps);
         cityNameIndex = graphService.index().forNodes(CityNode.CITY_NAME_INDEX, indexProps);
         thesisTitleFullTextIndex = graphService.index().forNodes(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, indexFullTextProps);
-        submissionTitleIndex = graphService.index().forNodes(SubmissionNode.SUBMISSION_TITLE_INDEX, indexProps);
+        submissionTitleIndex = graphService.index().forNodes(SubmissionNode.SUBMISSION_TITLE_INDEX, indexFullTextProps);
         patentNumberIndex = graphService.index().forNodes(PatentNode.PATENT_NUMBER_INDEX, indexProps);
         bookNameFullTextIndex = graphService.index().forNodes(BookNode.BOOK_NAME_FULL_TEXT_INDEX, indexFullTextProps);
         publisherNameIndex = graphService.index().forNodes(PublisherNode.PUBLISHER_NAME_INDEX, indexProps);
