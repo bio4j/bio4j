@@ -1,0 +1,18 @@
+<uniprot_data>
+	<keywords>true</keywords>
+	<interpro>true</interpro>
+	<pfam>true</pfam>
+	<citations>true</citations>
+	<articles>true</articles>
+	<online_articles>true</online_articles>
+	<thesis>true</thesis>
+	<books>true</books>
+	<submissions>true</submissions>
+	<patents>true</patents>
+	<unpublished_observations>true</unpublished_observations>
+	<comments>true</comments>
+	<features>true</features>
+	<reactome>true</reactome>
+	<isoforms>true</isoforms>
+	<subcellular_locations>true</subcellular_locations>
+</uniprot_data>

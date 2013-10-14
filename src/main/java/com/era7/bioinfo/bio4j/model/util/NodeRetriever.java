@@ -4,606 +4,265 @@
  */
 package com.era7.bioinfo.bio4j.model.util;
 
-import com.era7.bioinfo.bio4j.model.nodes.*;
-import com.era7.bioinfo.bio4j.model.nodes.citation.*;
-import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxonNode;
-import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElementNode;
-import com.era7.bioinfo.bio4j.model.relationships.MainDatasetRel;
-import com.era7.bioinfo.bio4j.model.relationships.MainTaxonRel;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
+import com.era7.bioinfo.bio4j.model.nodes.AlternativeProduct;
+import com.era7.bioinfo.bio4j.model.nodes.City;
+import com.era7.bioinfo.bio4j.model.nodes.CommentType;
+import com.era7.bioinfo.bio4j.model.nodes.Consortium;
+import com.era7.bioinfo.bio4j.model.nodes.Country;
+import com.era7.bioinfo.bio4j.model.nodes.Dataset;
+import com.era7.bioinfo.bio4j.model.nodes.Enzyme;
+import com.era7.bioinfo.bio4j.model.nodes.FeatureType;
+import com.era7.bioinfo.bio4j.model.nodes.GoTerm;
+import com.era7.bioinfo.bio4j.model.nodes.Institute;
+import com.era7.bioinfo.bio4j.model.nodes.Interpro;
+import com.era7.bioinfo.bio4j.model.nodes.Isoform;
+import com.era7.bioinfo.bio4j.model.nodes.Keyword;
+import com.era7.bioinfo.bio4j.model.nodes.Organism;
+import com.era7.bioinfo.bio4j.model.nodes.Person;
+import com.era7.bioinfo.bio4j.model.nodes.Pfam;
+import com.era7.bioinfo.bio4j.model.nodes.Protein;
+import com.era7.bioinfo.bio4j.model.nodes.SequenceCaution;
+import com.era7.bioinfo.bio4j.model.nodes.SubcellularLocation;
+import com.era7.bioinfo.bio4j.model.nodes.Taxon;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Article;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Book;
+import com.era7.bioinfo.bio4j.model.nodes.citation.DB;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Journal;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineArticle;
+import com.era7.bioinfo.bio4j.model.nodes.citation.OnlineJournal;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Patent;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Publisher;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Submission;
+import com.era7.bioinfo.bio4j.model.nodes.citation.Thesis;
+import com.era7.bioinfo.bio4j.model.nodes.ncbi.NCBITaxon;
+import com.era7.bioinfo.bio4j.model.nodes.reactome.ReactomeTerm;
+import com.era7.bioinfo.bio4j.model.nodes.refseq.GenomeElement;
 import java.util.List;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.Relationship;
-import org.neo4j.graphdb.index.IndexHits;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public class NodeRetriever {
+public interface NodeRetriever{
     
-    protected Bio4jManager manager;
+    public <T extends Enzyme> T getEnzymeById(String id);
     
+    public <T extends Dataset> T getDatasetByName(String name);
+    public <T extends Dataset> T getSwissProtDataset();
+    public <T extends Dataset> T getTremblDataset();
     
-    public NodeRetriever(Bio4jManager bio4jManager){
-        manager = bio4jManager;
-    }
+    public <T extends GenomeElement> T getGenomeElementByVersion(String version);
     
+    public <T extends GoTerm> T getGoTermById(String goId); 
+    public <T extends GoTerm> T getMolecularFunctionGoTerm();
+    public <T extends GoTerm> T getBiologicalProcessGoTerm();
+    public <T extends GoTerm> T getCellularComponentGoTerm();
     
-    //-------------------------------------------------------------------
-    //--------------------------TAXONOMY-----------------------------------
+    public Protein getProteinByAccession(String proteinAccession);
+    public List<? extends Protein> getProteinByEnsemblPlantsRef(String ensemblPlantsRef);
+    public List<? extends Protein> getProteinByFullName(String proteinFullName);
+    public List<? extends Protein> getProteinByGeneNames(String proteinGeneName);
+    public List<? extends Protein> getProteinByPIRReference(String id);
+    public List<? extends Protein> getProteinByKEGGReference(String id);
+    public List<? extends Protein> getProteinByEmblReference(String id);
+    public List<? extends Protein> getProteinByRefSeqReference(String id);
+    public List<? extends Protein> getProteinByArrayExpressReference(String id);
+    public List<? extends Protein> getProteinByUniGeneReference(String id);
+    public List<? extends Protein> getProteinByAllergomeReference(String id);
+    public List<? extends Protein> getProteinsByArachnoServerReference(String id);
+    public List<? extends Protein> getProteinsByBGEEReference(String id);
+    public List<? extends Protein> getProteinsByBindingDBReference(String id);
+    public List<? extends Protein> getProteinsByBioCycReference(String id);
+    public List<? extends Protein> getProteinsByBrendaReference(String id);
+    public List<? extends Protein> getProteinsByCazyReference(String id);
+    public List<? extends Protein> getProteinsByCGDReference(String id);
+    public List<? extends Protein> getProteinsByCHEmblReference(String id);
+    public List<? extends Protein> getProteinsByCleanexReference(String id);
+    public List<? extends Protein> getProteinsByCompluYeast2DPageReference(String id);
+    public List<? extends Protein> getProteinsByConoServerReference(String id);
+    public List<? extends Protein> getProteinsByCTDReference(String id);
+    public List<? extends Protein> getProteinsByCYGDReference(String id);
+    public List<? extends Protein> getProteinsByDBSNPReference(String id);
+    public List<? extends Protein> getProteinsByDDBJReference(String id);
+    public List<? extends Protein> getProteinsByDictyBaseReference(String id);
+    public List<? extends Protein> getProteinsByDIPReference(String id);
+    public List<? extends Protein> getProteinsByDisprotReference(String id);
+    public List<? extends Protein> getProteinsByDMDMReference(String id);
+    public List<? extends Protein> getProteinsByDNASUReference(String id);
+    public List<? extends Protein> getProteinsByDosacCobs2DPageReference(String id);
+    public List<? extends Protein> getProteinsByEchoBaseReference(String id);
+    public List<? extends Protein> getProteinsByEcoGeneReference(String id);
+    public List<? extends Protein> getProteinsByEggNogReference(String id);
+    public List<? extends Protein> getProteinsByEnsemblBacteriaReference(String id);
+    public List<? extends Protein> getProteinsByEnsemblFungiReference(String id);
+    public List<? extends Protein> getProteinsByEnsemblMetazoaReference(String id);
+    public List<? extends Protein> getProteinsByEnsemblProtistsReference(String id);
+    public List<? extends Protein> getProteinsByEUHCVDBReference(String id);
+    public List<? extends Protein> getProteinsByEUPathDBReference(String id);
+    public List<? extends Protein> getProteinsByEvolutionaryTraceReference(String id);
+    public List<? extends Protein> getProteinsByFlyBaseReference(String id);
+    public List<? extends Protein> getProteinsByGenAtlasReference(String id);
+    public List<? extends Protein> getProteinsByGenBankReference(String id);
+    public List<? extends Protein> getProteinsByGene3DReference(String id);
+    public List<? extends Protein> getProteinsByGenecardsReference(String id);
+    public List<? extends Protein> getProteinsByGeneFarmReference(String id);
+    public List<? extends Protein> getProteinsByGeneIDReference(String id);
+    public List<? extends Protein> getProteinsByGeneTreeReference(String id);
+    public List<? extends Protein> getProteinsByGenevestigatorReference(String id);
+    public List<? extends Protein> getProteinsByGenolistReference(String id);
+    public List<? extends Protein> getProteinsByGenomeReviewsReference(String id);
+    public List<? extends Protein> getProteinsByGenomeRNAIReference(String id);
+    public List<? extends Protein> getProteinsByGermOnlineReference(String id);
+    public List<? extends Protein> getProteinsByGlycoSuiteDBReference(String id);
+    public List<? extends Protein> getProteinsByGPCRDBReference(String id);
+    public List<? extends Protein> getProteinsByGrameneReference(String id);
+    public List<? extends Protein> getProteinsByHinvDBReference(String id);
+    public List<? extends Protein> getProteinsByHamapReference(String id);
+    public List<? extends Protein> getProteinsByHGNCReference(String id);
+    public List<? extends Protein> getProteinsByHogenomReference(String id);
+    public List<? extends Protein> getProteinsByHovergenReference(String id);
+    public List<? extends Protein> getProteinsByHPAReference(String id);
+    public List<? extends Protein> getProteinsByHSSPReference(String id);
+    public List<? extends Protein> getProteinsByHugeReference(String id);
+    public List<? extends Protein> getProteinsByIMGTReference(String id);
+    public List<? extends Protein> getProteinsByInparanoidReference(String id);
+    public List<? extends Protein> getProteinsByIntactReference(String id);
+    public List<? extends Protein> getProteinsByIPIReference(String id);
+    public List<? extends Protein> getProteinsByKOReference(String id);
+    public List<? extends Protein> getProteinsByLegioListReference(String id);
+    public List<? extends Protein> getProteinsByLepromaReference(String id);
+    public List<? extends Protein> getProteinsByMaizeGDBReference(String id);
+    public List<? extends Protein> getProteinsByMeropsReference(String id);
+    public List<? extends Protein> getProteinsByMGIReference(String id);
+    public List<? extends Protein> getProteinsByMicadoReference(String id);
+    public List<? extends Protein> getProteinsByMIMReference(String id);
+    public List<? extends Protein> getProteinsByMintReference(String id);
+    public List<? extends Protein> getProteinsByModBaseReference(String id);
+    public List<? extends Protein> getProteinsByMycoclapReference(String id);
+    public List<? extends Protein> getProteinsByNextBioReference(String id);
+    public List<? extends Protein> getProteinsByNextProtReference(String id);
+    public List<? extends Protein> getProteinsByOGPReference(String id);
+    public List<? extends Protein> getProteinsByOMAReference(String id);
+    public List<? extends Protein> getProteinsByOrphanetReference(String id);
+    public List<? extends Protein> getProteinsByOrthoDBReference(String id);
+    public List<? extends Protein> getProteinsByPantherReference(String id);
+    public List<? extends Protein> getProteinsByPathwayReference(String id);
+    public List<? extends Protein> getProteinsByPatricReference(String id);
+    public List<? extends Protein> getProteinsByPaxDBReference(String id);
+    public List<? extends Protein> getProteinsByPDBReference(String id);
+    public List<? extends Protein> getProteinsByPDBJReference(String id);
+    public List<? extends Protein> getProteinsByPDBSumReference(String id);
+    public List<? extends Protein> getProteinsByPeptideAtlasReference(String id);
+    public List<? extends Protein> getProteinsByPeroxiBaseReference(String id);
+    public List<? extends Protein> getProteinsByPharmGKBReference(String id);
+    public List<? extends Protein> getProteinsByPhosphositeReference(String id);
+    public List<? extends Protein> getProteinsByPhosSiteReference(String id);
+    public List<? extends Protein> getProteinsByPhylomeDBReference(String id);
+    public List<? extends Protein> getProteinsByPirsfReference(String id);
+    public List<? extends Protein> getProteinsByPMapCutDBReference(String id);
+    public List<? extends Protein> getProteinsByPPTaseDBReference(String id);
+    public List<? extends Protein> getProteinsByPrideReference(String id);
+    public List<? extends Protein> getProteinsByPrintsReference(String id);
+    public List<? extends Protein> getProteinsByProDomReference(String id);
+    public List<? extends Protein> getProteinsByPromexReference(String id);
+    public List<? extends Protein> getProteinsByProSiteReference(String id);
+    public List<? extends Protein> getProteinsByProtClustDBReference(String id);
+    public List<? extends Protein> getProteinsByProteinModelPortalReference(String id);
+    public List<? extends Protein> getProteinsByProtonetReference(String id);
+    public List<? extends Protein> getProteinsByPseudoCapReference(String id);
+    public List<? extends Protein> getProteinsByRCSBPDBReference(String id);
+    public List<? extends Protein> getProteinsByReBaseReference(String id);
+    public List<? extends Protein> getProteinsByReproductionReference(String id);
+    public List<? extends Protein> getProteinsByRGDReference(String id);
+    public List<? extends Protein> getProteinsByRougeReference(String id);
+    public List<? extends Protein> getProteinsBySBKBReference(String id);
+    public List<? extends Protein> getProteinsBySGDReference(String id);
+    public List<? extends Protein> getProteinsBySmartReference(String id);
+    public List<? extends Protein> getProteinsBySMRReference(String id);
+    public List<? extends Protein> getProteinsBySourceReference(String id);
+    public List<? extends Protein> getProteinsByStringReference(String id);
+    public List<? extends Protein> getProteinsBySupfamReference(String id);
+    public List<? extends Protein> getProteinsBySwiss2DPageReference(String id);
+    public List<? extends Protein> getProteinsByTairReference(String id);
+    public List<? extends Protein> getProteinsByTCDBReference(String id);
+    public List<? extends Protein> getProteinsByTigrFamsReference(String id);
+    public List<? extends Protein> getProteinsByTuberculistReference(String id);
+    public List<? extends Protein> getProteinsByUCD2DPageReference(String id);
+    public List<? extends Protein> getProteinsByUCSCReference(String id);
+    public List<? extends Protein> getProteinsByUniPathwayReference(String id);
+    public List<? extends Protein> getProteinsByVectorBaseReference(String id);
+    public List<? extends Protein> getProteinsByWorld2DPageReference(String id);
+    public List<? extends Protein> getProteinsByWormBaseReference(String id);
+    public List<? extends Protein> getProteinsByXenBaseReference(String id);
+    public List<? extends Protein> getProteinsByZfinReference(String id);    
     
-    public TaxonNode getMainTaxon(){
-        return new TaxonNode(manager.getReferenceNode().getRelationships(new MainTaxonRel(null), Direction.OUTGOING).iterator().next().getEndNode());        
-    }
+    public <T extends Keyword> T getKeywordById(String keywordId);
+    public <T extends Keyword> T getKeywordByName(String keywordName);
     
-    //-------------------------------------------------------------------
-    //--------------------------ENZYME-----------------------------------
+    public <T extends Interpro> T getInterproById(String interproId);
     
-    public EnzymeNode getEnzymeById(String id){
-        IndexHits<Node> hits = manager.getEnzymeIdIndex().get(EnzymeNode.ENZYME_ID_INDEX, id);
-        
-        if(hits.hasNext()){
-            return new EnzymeNode(hits.getSingle());
-        }else{
-            return null;
-        }
-    }
+    public <T extends Pfam> T getPfamById(String pfamId);
     
-    //-------------------------------------------------------------------
-    //--------------------------DATASETS-----------------------------------
+    public <T extends Organism> T getOrganismByScientificName(String scientificName);
+    public <T extends Organism> T getOrganismByNCBITaxonomyId(String ncbiTaxonomyId);
     
-    public List<DatasetNode> getMainDatasets(){
-        List<DatasetNode> list = new LinkedList<DatasetNode>();
-        Iterator<Relationship> relIt = manager.getReferenceNode().getRelationships(new MainDatasetRel(null), Direction.OUTGOING).iterator();
-        while(relIt.hasNext()){
-            list.add(new DatasetNode(relIt.next().getEndNode()));
-        }
-        return list;
-    }
+    public <T extends Taxon> T getTaxonByName(String taxonName);
     
-    public DatasetNode getDatasetByName(String name){
-        IndexHits<Node> hits = manager.getDatasetNameIndex().get(DatasetNode.DATASET_NAME_INDEX, name);
-        
-        if(hits.hasNext()){
-            return new DatasetNode(hits.getSingle());
-        }else{
-            return null;
-        }
-    }
+    public <T extends NCBITaxon> T getNCBITaxonByTaxId(String taxId);
+    public <T extends NCBITaxon> T getNCBITaxonByGiId(String giId);
     
-    //-------------------------------------------------------------------
-    //--------------------------REFSEQ-----------------------------------
+    public <T extends Isoform> T getIsoformById(String isoformId);
     
+    public List<? extends Person> getPersonByName(String personName);
     
-    public GenomeElementNode getGenomeElementByVersion(String version){
-        
-        IndexHits<Node> hits = manager.getGenomeElementVersionIndex().get(GenomeElementNode.GENOME_ELEMENT_VERSION_INDEX, version);
-        
-        if(hits.hasNext()){
-            return new GenomeElementNode(hits.getSingle());
-        }else{
-            return null;
-        }
-    }
+    public <T extends Consortium> T getConsortiumByName(String consortiumName);
     
+    public <T extends Institute> T getInstituteByName(String instituteName);
     
-    //-------------------------------------------------------------------
-    //--------------------GENE ONTOLOGY--------------------------------
+    public <T extends Country> T getCountryNodeByName(String countryName);
     
-    /**
-     * 
-     * @param goId
-     * @return GoTermNode with the id provided
-     */
-    public GoTermNode getGoTermById(String goId){
-        
-        IndexHits<Node> hits = manager.getGoTermIdIndex().get(GoTermNode.GO_TERM_ID_INDEX, goId);
-        
-        if(hits.hasNext()){
-            return new GoTermNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends City> T getCityNodeByName(String cityName);
     
+    public List<? extends Thesis> getThesisByTitle(String thesisTitle);
     
-    //-------------------------------------------------------------------
-    //--------------------PROTEINS--------------------------------
+    public <T extends Patent> T getPatentByNumber(String patentNumber);
     
-    /**
-     * 
-     * @param proteinAccession 
-     * @return ProteinNode with the accession provided
-     */
-    public ProteinNode getProteinNodeByAccession(String proteinAccession){
-        
-        IndexHits<Node> hits = manager.getProteinAccessionIndex().get(ProteinNode.PROTEIN_ACCESSION_INDEX, proteinAccession);
-        
-        if(hits.hasNext()){
-            return new ProteinNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public List<? extends Book> getBooksByName(String bookName);
     
-    /**
-     * 
-     * @param ensemblPlantsRef 
-     * @return ProteinNode with the Ensembl Plants reference provided
-     */
-    public ProteinNode getProteinNodeByEnsemblPlantsRef(String ensemblPlantsRef){
-        
-        IndexHits<Node> hits = manager.getProteinEnsemblPlantsIndex().get(ProteinNode.PROTEIN_ENSEMBL_PLANTS_INDEX, ensemblPlantsRef);
-        
-        if(hits.hasNext()){
-            return new ProteinNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends Publisher> T getPublisherByName(String publisherName);
     
-    /**
-     * 
-     * @param proteinFullName
-     * @return List of proteins (if any) which match the full name provided
-     */
-    public List<ProteinNode> getProteinsByFullName(String proteinFullName){
-        
-        IndexHits<Node> hits = manager.getProteinFullNameFullTextIndex().query(ProteinNode.PROTEIN_FULL_NAME_FULL_TEXT_INDEX, proteinFullName);
-        
-        List<ProteinNode> list = new ArrayList<ProteinNode>();
-        
-        while(hits.hasNext()){
-            list.add(new ProteinNode(hits.next()));
-        }        
-        return list;        
-    }
+    public List<? extends OnlineArticle> getOnlineArticlesByTitle(String onlineArticleTitle);
     
-    /**
-     * 
-     * @param proteinGeneName
-     * @return List of proteins (if any) which match the gene name provided
-     */
-    public List<ProteinNode> getProteinsByGeneNames(String proteinGeneName){
-        
-        IndexHits<Node> hits = manager.getProteinGeneNamesFullTextIndex().query(ProteinNode.PROTEIN_GENE_NAMES_FULL_TEXT_INDEX, proteinGeneName);
-        
-        List<ProteinNode> list = new ArrayList<ProteinNode>();
-        
-        while(hits.hasNext()){
-            list.add(new ProteinNode(hits.next()));
-        }        
-        return list;        
-    }
+    public <T extends OnlineJournal> T getOnlineJournalByName(String onlineJournalName);
     
+    public List<? extends Article> getArticlesByTitle(String articleTitle);    
+    public <T extends Article> T getArticleByMedlineId(String articleMedlineId);
+    public <T extends Article> T getArticleByDoiId(String articleDoiId);    
+    public <T extends Article> T getArticleByPubmedId(String articlePubmedId);
     
-    //-------------------------------------------------------------------
-    //--------------------KEYWORDS--------------------------------
+    public <T extends Journal> T getJournalByName(String journalName);
     
-    /**
-     * 
-     * @param keywordId 
-     * @return KeywordNode with the id provided
-     */
-    public KeywordNode getKeywordById(String keywordId){
-        
-        IndexHits<Node> hits = manager.getKeywordIdIndex().get(KeywordNode.KEYWORD_ID_INDEX, keywordId);
-        
-        if(hits.hasNext()){
-            return new KeywordNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends ReactomeTerm> T getReactomeTermById(String reactomeTermId);
     
-    /**
-     * 
-     * @param keywordName 
-     * @return KeywordNode with the id provided
-     */
-    public KeywordNode getKeywordByName(String keywordName){
-        
-        IndexHits<Node> hits = manager.getKeywordNameIndex().get(KeywordNode.KEYWORD_NAME_INDEX, keywordName);
-        
-        if(hits.hasNext()){
-            return new KeywordNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends FeatureType> T getFeatureTypeByName(String featureTypeName);
     
+    public <T extends CommentType> T getCommentTypeByName(String commentTypeName);
     
-    //-------------------------------------------------------------------
-    //--------------------INTERPRO--------------------------------
-    /**
-     * 
-     * @param interproId 
-     * @return InterproNode with the id provided
-     */
-    public InterproNode getInterproById(String interproId){
-        
-        IndexHits<Node> hits = manager.getInterproIdIndex().get(InterproNode.INTERPRO_ID_INDEX, interproId);
-        
-        if(hits.hasNext()){
-            return new InterproNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends SubcellularLocation> T getSubcellularLocationByName(String subcellularLocationName);
     
-    //-------------------------------------------------------------------
-    //--------------------PFAM--------------------------------
-    /**
-     * 
-     * @param pfamId 
-     * @return PfamNode with the id provided
-     */
-    public PfamNode getPfamById(String pfamId){
-        
-        IndexHits<Node> hits = manager.getPfamIdIndex().get(PfamNode.PFAM_ID_INDEX, pfamId);
-        
-        if(hits.hasNext()){
-            return new PfamNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends AlternativeProduct> T getAlternativeProductInitiationNode();
+    public <T extends AlternativeProduct> T getAlternativeProductPromoterNode();
+    public <T extends AlternativeProduct> T getAlternativeProductRibosomalFrameshiftingNode();
+    public <T extends AlternativeProduct> T getAlternativeProductSplicingNode();
     
-    //-------------------------------------------------------------------
-    //--------------------ORGANISM--------------------------------
-    /**
-     * 
-     * @param scientificName 
-     * @return OrganismNode with the scientific name provided
-     */
-    public OrganismNode getOrganismByScientificName(String scientificName){
-        
-        IndexHits<Node> hits = manager.getOrganismScientificNameIndex().get(OrganismNode.ORGANISM_SCIENTIFIC_NAME_INDEX, scientificName);
-        
-        if(hits.hasNext()){
-            return new OrganismNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
-    /**
-     * 
-     * @param ncbiTaxonomyId 
-     * @return OrganismNode with the scientific name provided
-     */
-    public OrganismNode getOrganismByNCBITaxonomyId(String ncbiTaxonomyId){
-        
-        IndexHits<Node> hits = manager.getOrganismNcbiTaxonomyIdIndex().get(OrganismNode.ORGANISM_NCBI_TAXONOMY_ID_INDEX, ncbiTaxonomyId);
-        
-        if(hits.hasNext()){
-            return new OrganismNode(hits.getSingle());
-        }else{
-            return null;
-        }        
-    }
+    public <T extends SequenceCaution> T getSequenceCautionErroneousGeneModelPredictionNode();
+    public <T extends SequenceCaution> T getSequenceCautionErroneousInitiationNode();
+    public <T extends SequenceCaution> T getSequenceCautionErroneousTranslationNode();
+    public <T extends SequenceCaution> T getSequenceCautionErroneousTerminationNode();
+    public <T extends SequenceCaution> T getSequenceCautionFrameshiftNode();
+    public <T extends SequenceCaution> T getSequenceCautionMiscellaneousDiscrepancyNode();
     
-    //-------------------------------------------------------------------
-    //--------------------TAXON--------------------------------
+    public <T extends Submission> T getSubmissionByTitle(String submissionTitle);
     
-    /**
-     * 
-     * @param taxonName
-     * @return TaxonNode with the name provided
-     */
-    public TaxonNode getTaxonByName(String taxonName){
-        IndexHits<Node> hits = manager.getTaxonNameIndex().get(TaxonNode.TAXON_NAME_INDEX, taxonName);        
-        if(hits.hasNext()){
-            return new TaxonNode(hits.getSingle());
-        }else{
-            return null;
-        }   
-    }
-    
-    /**
-     * 
-     * @param taxId
-     * @return NCBITaxonNode with the tax id provided
-     */
-    public NCBITaxonNode getNCBITaxonByTaxId(String taxId){
-        IndexHits<Node> hits = manager.getNCBITaxonIdIndex().get(NCBITaxonNode.NCBI_TAXON_ID_INDEX, taxId);        
-        if(hits.hasNext()){
-            return new NCBITaxonNode(hits.getSingle());
-        }else{
-            return null;
-        }   
-    }
-    /**
-     * 
-     * @param giId
-     * @return NCBITaxonNode with the tax id provided
-     */
-    public NCBITaxonNode getNCBITaxonByGiId(String giId){
-        IndexHits<Node> hits = manager.getNCBITaxonGiIdIndex().get(NCBITaxonNode.NCBI_TAXON_GI_ID_INDEX, giId);        
-        if(hits.hasNext()){
-            return new NCBITaxonNode(hits.getSingle());
-        }else{
-            return null;
-        }   
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------ISOFORMS--------------------------------
-    /**
-     * 
-     * @param isoformId
-     * @return IsoformNode with the id provided
-     */
-    public IsoformNode getIsoformById(String isoformId){
-        IndexHits<Node> hits = manager.getIsoformIdIndex().get(IsoformNode.ISOFORM_ID_INDEX, isoformId);        
-        if(hits.hasNext()){
-            return new IsoformNode(hits.getSingle());
-        }else{
-            return null;
-        }   
-    }
-    //-------------------------------------------------------------------
-    //--------------------PERSON--------------------------------
-    /**
-     * 
-     * @param personName
-     * @return PersonNode list with the name matching the value provided
-     */
-    public List<PersonNode> getPeopleByName(String personName){
-        
-        IndexHits<Node> hits = manager.getPersonNameIndex().get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, personName);
-        
-        List<PersonNode> list = new ArrayList<PersonNode>();
-        
-        while(hits.hasNext()){
-            list.add(new PersonNode(hits.next()));
-        }        
-        return list; 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------CONSORTIUMS--------------------------------
-    /**
-     * 
-     * @param consortiumName
-     * @return ConsortiumNode with the name provided
-     */
-    public ConsortiumNode getConsortiumByName(String consortiumName){
-        IndexHits<Node> hits = manager.getConsortiumNameIndex().get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumName);        
-        if(hits.hasNext()){
-            return new ConsortiumNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------INSTITUTES--------------------------------
-    /**
-     * 
-     * @param instituteName
-     * @return InstituteNode with the name provided
-     */
-    public InstituteNode getInstituteByName(String instituteName){
-        IndexHits<Node> hits = manager.getInstituteNameIndex().get(InstituteNode.INSTITUTE_NAME_INDEX, instituteName);        
-        if(hits.hasNext()){
-            return new InstituteNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    //-------------------------------------------------------------------
-    //--------------------COUNTRIES--------------------------------
-    /**
-     * 
-     * @param countryName
-     * @return CountryNode with the name provided
-     */
-    public CountryNode getCountryNodeByName(String countryName){
-        IndexHits<Node> hits = manager.getCountryNameIndex().get(CountryNode.COUNTRY_NAME_INDEX, countryName);        
-        if(hits.hasNext()){
-            return new CountryNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------CITY--------------------------------
-    /**
-     * 
-     * @param cityName
-     * @return CityNode with the name provided
-     */
-    public CityNode getCityNodeByName(String cityName){
-        IndexHits<Node> hits = manager.getCityNameIndex().get(CityNode.CITY_NAME_INDEX, cityName);        
-        if(hits.hasNext()){
-            return new CityNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------THESIS--------------------------------
-    /**
-     * 
-     * @param thesisName
-     * @return ThesisNode list with the name matching the value provided
-     */
-    public List<ThesisNode> getThesisByName(String thesisName){
-        
-        IndexHits<Node> hits = manager.getThesisFullTextIndex().get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, thesisName);
-        
-        List<ThesisNode> list = new ArrayList<ThesisNode>();
-        
-        while(hits.hasNext()){
-            list.add(new ThesisNode(hits.next()));
-        }        
-        return list; 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------PATENTS--------------------------------
-    /**
-     * 
-     * @param patentNumber
-     * @return PatentNode with the number provided
-     */
-    public PatentNode getPatentByNumber(String patentNumber){
-        IndexHits<Node> hits = manager.getPatentNumberIndex().get(PatentNode.PATENT_NUMBER_INDEX, patentNumber);        
-        if(hits.hasNext()){
-            return new PatentNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------BOOKS--------------------------------
-    /**
-     * 
-     * @param bookName
-     * @return BookNode list with the name matching the value provided
-     */
-    public List<BookNode> getBooksByName(String bookName){
-        
-        IndexHits<Node> hits = manager.getBookNameFullTextIndex().get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, bookName);
-        
-        List<BookNode> list = new ArrayList<BookNode>();
-        
-        while(hits.hasNext()){
-            list.add(new BookNode(hits.next()));
-        }        
-        return list; 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------PUBLISHER--------------------------------
-    /**
-     * 
-     * @param publisherName
-     * @return PublisherNode with the name provided
-     */
-    public PublisherNode getPublisherByName(String publisherName){
-        IndexHits<Node> hits = manager.getPublisherNameIndex().get(PublisherNode.PUBLISHER_NAME_INDEX, publisherName);        
-        if(hits.hasNext()){
-            return new PublisherNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------ONLINE ARTICLES--------------------------------
-    /**
-     * 
-     * @param onlineArticleTitle
-     * @return OnlineArticleNode list with the title matching the value provided
-     */
-    public List<OnlineArticleNode> getOnlineArticlesByTitle(String onlineArticleTitle){
-        
-        IndexHits<Node> hits = manager.getOnlineArticleTitleFullTextIndex().get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, onlineArticleTitle);
-        
-        List<OnlineArticleNode> list = new ArrayList<OnlineArticleNode>();
-        
-        while(hits.hasNext()){
-            list.add(new OnlineArticleNode(hits.next()));
-        }        
-        return list; 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------ONLINE JOURNAL--------------------------------
-    /**
-     * 
-     * @param onlineJournalName
-     * @return OnlineJournalNode with the name provided
-     */
-    public OnlineJournalNode getOnlineJournalByName(String onlineJournalName){
-        IndexHits<Node> hits = manager.getOnlineJournalNameIndex().get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, onlineJournalName);        
-        if(hits.hasNext()){
-            return new OnlineJournalNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    //-------------------------------------------------------------------
-    //--------------------ARTICLES--------------------------------
-    /**
-     * 
-     * @param articleTitle
-     * @return ArticleNode list with the title matching the value provided
-     */
-    public List<ArticleNode> getArticlesByTitle(String articleTitle){
-        
-        IndexHits<Node> hits = manager.getArticleTitleFullTextIndex().get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, articleTitle);
-        
-        List<ArticleNode> list = new ArrayList<ArticleNode>();
-        
-        while(hits.hasNext()){
-            list.add(new ArticleNode(hits.next()));
-        }        
-        return list; 
-    }
-    /**
-     * 
-     * @param articleMedlineId
-     * @return ArticleNode with the medline id provided
-     */
-    public ArticleNode getArticleByMedlineId(String articleMedlineId){
-        IndexHits<Node> hits = manager.getArticleMedLineIdIndex().get(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, articleMedlineId);        
-        if(hits.hasNext()){
-            return new ArticleNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    /**
-     * 
-     * @param articleDoiId
-     * @return ArticleNode with the DOI id provided
-     */
-    public ArticleNode getArticleByDoiId(String articleDoiId){
-        IndexHits<Node> hits = manager.getArticleDoiIdIndex().get(ArticleNode.ARTICLE_DOI_ID_INDEX, articleDoiId);        
-        if(hits.hasNext()){
-            return new ArticleNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    /**
-     * 
-     * @param articlePubmedId
-     * @return ArticleNode with the Pubmed id provided
-     */
-    public ArticleNode getArticleByPubmedId(String articlePubmedId){
-        IndexHits<Node> hits = manager.getArticlePubmedIdIndex().get(ArticleNode.ARTICLE_PUBMED_ID_INDEX, articlePubmedId);        
-        if(hits.hasNext()){
-            return new ArticleNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    /**
-     * 
-     * @param journalName
-     * @return JournalNode with the name provided
-     */
-    public JournalNode getJournalByName(String journalName){
-        IndexHits<Node> hits = manager.getJournalNameIndex().get(JournalNode.JOURNAL_NAME_INDEX, journalName);        
-        if(hits.hasNext()){
-            return new JournalNode(hits.getSingle());
-        }else{
-            return null;
-        } 
-    }
-    
-    
+    public <T extends DB> T getDBByName(String dbName);
 }
