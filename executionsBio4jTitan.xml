@@ -3,14 +3,14 @@
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.InitBio4jTitan</class_full_name>
 		<arguments>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>		
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportEnzymeDBTitan</class_full_name>
 		<arguments>			
 			<argument>enzyme.dat</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
 	
@@ -18,24 +18,25 @@
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportGeneOntologyTitan</class_full_name>
 		<arguments>
 			<argument>go.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>	
-	<!--
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportRefSeqTitan</class_full_name>
 		<arguments>
 			<argument>refseq_data</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
+	<!--
 	-->
 	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportUniprotTitan</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>	
@@ -43,30 +44,30 @@
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportUniprotTitan</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 			<argument>uniprotData.xml</argument>
 		</arguments>
 	</execution>
-	<!--
+	
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportProteinInteractionsTitan</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportProteinInteractionsTitan</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
 	<execution>
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.ImportIsoformSequencesTitan</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot_varsplic.fasta</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
 	<execution>
@@ -75,7 +76,7 @@
 			<argument>uniref100.xml</argument>
 			<argument>uniref90.xml</argument>
 			<argument>uniref50.xml</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 		</arguments>
 	</execution>
 	<execution>
@@ -84,7 +85,7 @@
 			<argument>nodes.dmp</argument>
 			<argument>names.dmp</argument>
 			<argument>merged.dmp</argument>
-			<argument>bio4jdb</argument>
+			<argument>bio4j_titan</argument>
 			<argument>true</argument>
 		</arguments>
 	</execution>
@@ -92,8 +93,9 @@
 		<class_full_name>com.era7.bioinfo.bio4j.titan.programs.IndexNCBITaxonomyByGiIdTitan</class_full_name>
 		<arguments>
 			<argument>gi_taxid_nucl.dmp</argument>
-			<argument>bio4jdb</argument>		
+			<argument>bio4j_titan</argument>		
 		</arguments>
 	</execution>
+	<!--
 	-->
 </scheduled_executions>
