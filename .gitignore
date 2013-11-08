@@ -1,0 +1,14 @@
+# stuff
+*/target/*
+*/artifacts/*
+*/project/target
+*/project/project
+target
+project/target
+.idea/*
+.idea_modules/*
+credentials.sbt
+*/target/*
+*/artifacts/*
+lib/
+*.pem
