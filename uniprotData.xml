@@ -15,4 +15,5 @@
 	<reactome>true</reactome>
 	<isoforms>true</isoforms>
 	<subcellular_locations>true</subcellular_locations>
+	<gene_ontology>true</gene_ontology>
 </uniprot_data>
