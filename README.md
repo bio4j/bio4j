@@ -8,9 +8,11 @@ Since it relies on a high-performance graph engine, data is stored in a way that
 On the contrary, traditional relational databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
 
 
+## APIs
 
-## Technologies
+* [**Abstract domain model**]()
+* [**Blueprints layer**]()
+* [**Technology specific versions**](docs/technologies.markdown)
 
-* [**Titan**](https://github.com/bio4j/bio4j-titandb)
-* [**Neo4j**](https://github.com/bio4j/bio4j-neo4jdb)
+
 
