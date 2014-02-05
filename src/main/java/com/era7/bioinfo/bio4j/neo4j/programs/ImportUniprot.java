@@ -613,6 +613,8 @@ public class ImportUniprot implements Executable {
                                     reactomeTermIdIndex.add(reactomeTermNodeId, MapUtil.map(ReactomeTermNode.REACTOME_TERM_ID_INDEX, reactomeId));
                                     //----flushing reactome index---
                                     reactomeTermIdIndex.flush();
+                                    //---adding reactome term node to node_type index----
+                                    nodeTypeIndex.add(reactomeTermNodeId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ReactomeTermNode.NODE_TYPE));
                                 }
                                 inserter.createRelationship(currentProteinId, reactomeTermNodeId, proteinReactomeRel, null);
                             }
@@ -681,7 +683,6 @@ public class ImportUniprot implements Executable {
                             for (Element keywordElem : keywordsList) {
                                 String keywordId = keywordElem.getAttributeValue(CommonData.KEYWORD_ID_ATTRIBUTE);
                                 String keywordName = keywordElem.getText();
-                                //long keywordNodeId = indexService.getSingleNode(KeywordNode.KEYWORD_ID_INDEX, keywordId);
                                 long keywordNodeId = -1;
                                 IndexHits<Long> keyworIdIndexHits = keywordIdIndex.get(KeywordNode.KEYWORD_ID_INDEX, keywordId);
                                 if (keyworIdIndexHits.hasNext()) {
