@@ -11,7 +11,7 @@ On the contrary, traditional relational databases must flatten the data they rep
 ## APIs
 
 * [**Abstract domain model**](docs/domain_model.markdown)
-* [**Blueprints layer**]()
+* [**Blueprints layer**](docs/blueprints.markdown)
 * [**Technology specific versions**](docs/technologies.markdown)
 
 
