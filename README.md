@@ -15,4 +15,6 @@ On the contrary, traditional relational databases must flatten the data they rep
 * [**Technology specific versions**](docs/technologies.markdown)
 
 
+###  Licensing
 
+Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.org/licenses/agpl.html).
