@@ -1,5 +1,4 @@
-Bio4j
-=====
+## Bio4j
 
 Bio4j is a bioinformatics graph based DB including most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**RefSeq**](http://www.ncbi.nlm.nih.gov/RefSeq/), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
 
@@ -8,13 +7,63 @@ Since it relies on a high-performance graph engine, data is stored in a way that
 On the contrary, traditional relational databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
 
 
-## APIs
+### Scalability
 
-* [**Abstract domain model**](docs/domain_model.markdown)
-* [**Blueprints layer**](docs/blueprints.markdown)
-* [**Technology specific versions**](docs/technologies.markdown)
+* First of all, Bio4j has an [**Abstract Domain Model**](https://github.com/bio4j/model), which allows you to use it without binding to a particular backend implementation.
 
+* Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/model), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
+
+* And finally, there are technology specific versions:
+  - [**Titan DB implementation**](https://github.com/bio4j/titandb)
+  - [**Neo4j DB implementation**](https://github.com/bio4j/neo4jdb)
+
+### Modularity
+
+Bio4j includes a few different data sources and you may not always be interested in having all of them together. That’s why the importing process is modular and customizable, allowing you to import just the data you are interested in.
+
+Also, Bio4j has [Statika-based module system](https://github.com/bio4j/modules), which dramatically simplifies the process of building and deploying custom releases of Bio4j.
+
+### Performance
+
+In Bio4j data is organized in a way semantically equivalent to what it represents thanks to the graph structure. That means that queries which would even be impossible to perform with a standard Relational DB, can be feasible with Bio4j obtaining good performance results.
 
 ###  Licensing
 
 Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.org/licenses/agpl.html).
+
+
+-----
+
+
+## Documentation
+
+* [Getting started](docs/getting-started.md)
+* [Domain model](docs/domain-model.md)
+* [Bio4j modules](docs/bio4j-modules.md)
+* [Importing Bio4j](docs/importing-bio4j.md)
+* Entry points and Indexing:
+  - [Auxiliary relationships](docs/auxiliary-relationships.md)
+  - [Node indexing](docs/node-indexing.md)
+* [FAQ](docs/faq.md)
+* [Bio4j 0.8 javadocs](http://bio4j.com/docs/bio4j/apidocs/)
+* [Examples](docs/examples.md)
+
+
+-----
+
+
+## Community
+
+### Mail list
+There is a [google user group](http://groups.google.com/group/bio4j-user) available for Bio4j. Here you can post any question or general issue you may have related to Bio4j project. 
+
+### Twitter
+Bio4j twitter account [@bio4j](http://twitter.com/bio4j) is quite active, follow us if you want to be up to date with new features and project versions.
+
+### LinkedIn
+
+Bio4j [LinkedIn group](http://www.linkedin.com/groups/Bio4j-3890937) 
+
+### Github issues
+
+You can check or open new issues in the Bio4j repository [issue tracker](https://github.com/bio4j/bio4j/issues).
