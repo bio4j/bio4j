@@ -9,9 +9,9 @@ On the contrary, traditional relational databases must flatten the data they rep
 
 ### Scalability
 
-* First of all, Bio4j has an [**Abstract Domain Model**](https://github.com/bio4j/model), which allows you to use it without binding to a particular backend implementation.
+* First of all, Bio4j has an [**Abstract Domain Model**](https://github.com/bio4j/bio4j), which allows you to use it without binding to a particular backend implementation.
 
-* Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/model), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
+* Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/blueprints), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
 
 * And finally, there are technology specific versions:
   - [**Titan DB implementation**](https://github.com/bio4j/titandb)
@@ -48,6 +48,16 @@ Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.
 * [Bio4j 0.8 javadocs](http://bio4j.com/docs/bio4j/apidocs/)
 * [Examples](docs/examples.md)
 
+
+### SBT dependency
+
+To use it in your sbt-project, add this to `build.sbt`:
+
+```scala
+resolvers += "Era7 maven releases" at "http://releases.era7.com.s3.amazonaws.com"
+
+libraryDependencies += "bio4j" % "bio4j" % "0.10.0"
+```
 
 -----
 

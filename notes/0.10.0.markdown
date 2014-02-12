@@ -1,0 +1,2 @@
+* All obsolete code was removed
+* Only the abstract model is left
