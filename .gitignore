@@ -13,6 +13,7 @@ project/plugins/project/
 .project
 .classpath
 .settings/
+.cache
 
 # st2
 *.sublime-project
