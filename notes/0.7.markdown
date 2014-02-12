@@ -1,0 +1,24 @@
+This release (0.7) has been created from the sources:
+
+- Uniprot KB (both Swiss-prot and Trembl)
+- Uniref (50,90,100)
+- Gene Ontology termdb full ontology OBO/xml file
+- Uniprot isoform sequences fasta file
+- RefSeq complete release
+- NCBI taxonomy (files nodes.dmp and names.dmp)
+- Gene identifier (GI) <--> NCBI taxonomy ID file (gi_taxid_nucl.dmp)
+- Enzyme Expasy DB
+
+For this version all sources were downloaded on the date: **18-12-2011**
+
+Total size for this release: **90 GB**
+
+Here is the list including the snapshot IDs for the different regions:
+
+1. **eu-west1-** --> snap-ca1568a2
+2. **us-east-1** --> snap-d4a502b0
+3. **us-west-1** --> snap-5dbe443e
+4. **us-west-2** --> snap-b6bf0cde
+5. **ap-southeast-1** --> ------
+6. **ap-northeast-1** --> snap-f3653399
+7. **sa-east-1** --> snap-4fc81827

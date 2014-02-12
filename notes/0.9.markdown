@@ -1,0 +1,19 @@
+This release (0.9) has been created from the sources:
+
+- Uniprot KB (both Swiss-prot and Trembl)
+- Uniref (50,90,100)
+- Gene Ontology termdb full ontology OBO/xml file
+- Uniprot isoform sequences fasta file
+- RefSeq complete release
+- NCBI taxonomy (files nodes.dmp and names.dmp)
+- Gene identifier (GI) <--> NCBI taxonomy ID file (gi_taxid_nucl.dmp)
+- Enzyme Expasy DB
+
+For this version all sources were downloaded on the date: **09-04-2013**
+This version was built with **Neo4j 1.9.3**
+
+Total size for this release: 180 GB
+
+Here is the list including the snapshot IDs for the different regions:
+
+eu-west1- --> snap-1185fd0f
