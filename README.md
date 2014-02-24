@@ -45,7 +45,7 @@ Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.
   - [Auxiliary relationships](docs/auxiliary-relationships.md)
   - [Node indexing](docs/node-indexing.md)
 * [FAQ](docs/faq.md)
-* [Bio4j 0.8 javadocs](http://bio4j.com/docs/bio4j/apidocs/)
+* [API documentation for v0.11.0](http://bio4j.com/docs/bio4j/api/0.11.0)
 * [Examples](docs/examples.md)
 
 
