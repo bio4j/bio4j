@@ -25,3 +25,5 @@ data/out/
 
 credentials.sbt
 *credentials*
+
+gh-pages/
