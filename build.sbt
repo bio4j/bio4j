@@ -10,4 +10,6 @@ bucketSuffix := "era7.com"
 
 javacOptions in (Compile, doc) := Seq()
 
-target in (Compile, doc) := baseDirectory.value / "docs" / "api"
+target in (Compile, doc) := baseDirectory.value / "docs" / "api" / version.value.stripSuffix("-SNAPSHOT")
+
+cleanFiles += (target in (Compile, doc)).value
