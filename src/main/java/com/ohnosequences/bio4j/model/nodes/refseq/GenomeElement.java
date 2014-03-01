@@ -16,7 +16,7 @@
  */
 package com.ohnosequences.bio4j.model.nodes.refseq;
 
-import com.ohnosequences.bio4j.model.nodes.BasicNode;
+import com.ohnosequences.bio4j.model.Node;
 import com.ohnosequences.bio4j.model.nodes.Protein;
 import com.ohnosequences.bio4j.model.nodes.refseq.rna.MRNA;
 import com.ohnosequences.bio4j.model.nodes.refseq.rna.MiscRNA;
@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElement extends BasicNode{
+public interface GenomeElement extends Node{
     
     
     //--------GETTERS-----------

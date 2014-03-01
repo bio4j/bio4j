@@ -16,14 +16,14 @@
  */
 package com.ohnosequences.bio4j.model.nodes.refseq.rna;
 
-import com.ohnosequences.bio4j.model.nodes.BasicNode;
+import com.ohnosequences.bio4j.model.Node;
 import com.ohnosequences.bio4j.model.nodes.refseq.GenomeElement;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface RNA extends BasicNode {
+public interface RNA extends Node {
     
     
     //-----------GETTERS------------

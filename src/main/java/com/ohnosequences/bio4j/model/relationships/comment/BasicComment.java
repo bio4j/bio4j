@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.comment;
 
 import com.ohnosequences.bio4j.model.nodes.CommentType;
 import com.ohnosequences.bio4j.model.nodes.Protein;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicComment extends BasicRelationship{
+public interface BasicComment extends Relationship{
     
     //---------GETTERS--------------
     public String getText();

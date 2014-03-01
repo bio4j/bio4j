@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.protein;
 
 import com.ohnosequences.bio4j.model.nodes.Enzyme;
 import com.ohnosequences.bio4j.model.nodes.Protein;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinEnzymaticActivity extends BasicRelationship{
+public interface ProteinEnzymaticActivity extends Relationship{
     
     public Protein getProtein();
     public Enzyme getEnzyme();

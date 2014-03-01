@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.refseq;
 
 import com.ohnosequences.bio4j.model.nodes.refseq.CDS;
 import com.ohnosequences.bio4j.model.nodes.refseq.GenomeElement;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElementCDS extends BasicRelationship{
+public interface GenomeElementCDS extends Relationship{
     
     public GenomeElement getGenomeElement();    
     public CDS getCDS();

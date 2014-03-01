@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.citation.uo;
 
 import com.ohnosequences.bio4j.model.nodes.Protein;
 import com.ohnosequences.bio4j.model.nodes.citation.UnpublishedObservation;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UnpublishedObservationProteinCitation extends BasicRelationship{
+public interface UnpublishedObservationProteinCitation extends Relationship{
     
     //--------------GETTERS------------------
     public UnpublishedObservation getUnpublishedObservation();    

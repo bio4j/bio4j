@@ -16,14 +16,14 @@
  */
 package com.ohnosequences.bio4j.model.nodes.citation;
 
-import com.ohnosequences.bio4j.model.nodes.BasicNode;
+import com.ohnosequences.bio4j.model.Node;
 import java.util.List;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Journal extends BasicNode{
+public interface Journal extends Node{
     
     //----GETTERS---
     public String getName();

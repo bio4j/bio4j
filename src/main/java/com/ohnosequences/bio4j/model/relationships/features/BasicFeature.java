@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.features;
 
 import com.ohnosequences.bio4j.model.nodes.FeatureType;
 import com.ohnosequences.bio4j.model.nodes.Protein;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicFeature extends BasicRelationship{
+public interface BasicFeature extends Relationship{
     
     //------------GETTERS----------------
     public String getDescription();

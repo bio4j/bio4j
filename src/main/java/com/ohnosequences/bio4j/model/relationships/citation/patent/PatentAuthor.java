@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.citation.patent;
 
 import com.ohnosequences.bio4j.model.nodes.Person;
 import com.ohnosequences.bio4j.model.nodes.citation.Patent;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface PatentAuthor extends BasicRelationship{
+public interface PatentAuthor extends Relationship{
     
     //---------GETTERS------------
     public Patent getPatent(); 

@@ -17,13 +17,13 @@
 package com.ohnosequences.bio4j.model.relationships.citation.submission;
 
 import com.ohnosequences.bio4j.model.nodes.citation.Submission;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubmissionAuthor extends BasicRelationship{
+public interface SubmissionAuthor extends Relationship{
     
     public Submission getSubmission();
     

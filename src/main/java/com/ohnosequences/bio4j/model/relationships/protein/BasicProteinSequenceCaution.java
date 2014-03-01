@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.protein;
 
 import com.ohnosequences.bio4j.model.nodes.Protein;
 import com.ohnosequences.bio4j.model.nodes.SequenceCaution;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicProteinSequenceCaution extends BasicRelationship{
+public interface BasicProteinSequenceCaution extends Relationship{
     
     public String getText();
     public String getStatus();

@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.protein;
 
 import com.ohnosequences.bio4j.model.nodes.Interpro;
 import com.ohnosequences.bio4j.model.nodes.Protein;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinInterpro extends BasicRelationship{
+public interface ProteinInterpro extends Relationship{
     
     public Protein getProtein();    
     public Interpro getInterpro();

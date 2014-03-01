@@ -16,13 +16,13 @@
  */
 package com.ohnosequences.bio4j.model.nodes.refseq;
 
-import com.ohnosequences.bio4j.model.nodes.BasicNode;
+import com.ohnosequences.bio4j.model.Node;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Gene extends BasicNode{
+public interface Gene extends Node{
     
     //---------GETTERS------------
     public String getPositions();

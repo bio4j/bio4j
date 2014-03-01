@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.citation.onarticle;
 
 import com.ohnosequences.bio4j.model.nodes.citation.OnlineArticle;
 import com.ohnosequences.bio4j.model.nodes.citation.OnlineJournal;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface OnlineArticleJournal extends BasicRelationship{
+public interface OnlineArticleJournal extends Relationship{
     
     //---------GETTERS------------
     public String getLocator();

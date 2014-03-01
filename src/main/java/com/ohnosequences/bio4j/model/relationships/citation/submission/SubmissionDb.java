@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.citation.submission;
 
 import com.ohnosequences.bio4j.model.nodes.citation.DB;
 import com.ohnosequences.bio4j.model.nodes.citation.Submission;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubmissionDb extends BasicRelationship{
+public interface SubmissionDb extends Relationship{
         
     //----------GETTERS----------------
     public String getDate();

@@ -17,12 +17,12 @@
 
 package com.ohnosequences.bio4j.model.relationships.aproducts;
 
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface AlternativeProductPromoter extends BasicRelationship{
+public interface AlternativeProductPromoter extends Relationship{
     
 }

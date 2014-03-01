@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.refseq;
 
 import com.ohnosequences.bio4j.model.nodes.refseq.GenomeElement;
 import com.ohnosequences.bio4j.model.nodes.refseq.rna.MRNA;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElementMRna extends BasicRelationship{
+public interface GenomeElementMRna extends Relationship{
     
     public GenomeElement getGenomeElement();    
     public MRNA getMRNA();

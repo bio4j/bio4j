@@ -16,7 +16,7 @@
  */
 package com.ohnosequences.bio4j.model.nodes.ncbi;
 
-import com.ohnosequences.bio4j.model.nodes.BasicNode;
+import com.ohnosequences.bio4j.model.Node;
 import com.ohnosequences.bio4j.model.nodes.Taxon;
 import java.util.List;
 
@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface NCBITaxon extends BasicNode{
+public interface NCBITaxon extends Node{
     
     //----------------GETTERS---------------------
     public String getName();

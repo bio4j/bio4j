@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.refseq;
 
 import com.ohnosequences.bio4j.model.nodes.refseq.GenomeElement;
 import com.ohnosequences.bio4j.model.nodes.refseq.rna.NcRNA;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElementNcRna extends BasicRelationship{
+public interface GenomeElementNcRna extends Relationship{
     
     public GenomeElement getGenomeElement();    
     public NcRNA getNcRNA();

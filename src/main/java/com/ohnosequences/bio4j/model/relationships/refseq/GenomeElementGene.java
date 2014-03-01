@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.refseq;
 
 import com.ohnosequences.bio4j.model.nodes.refseq.Gene;
 import com.ohnosequences.bio4j.model.nodes.refseq.GenomeElement;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElementGene extends BasicRelationship{
+public interface GenomeElementGene extends Relationship{
     
     public GenomeElement getGenomeElement();    
     public Gene getGene();

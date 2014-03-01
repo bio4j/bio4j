@@ -16,12 +16,12 @@
  */
 package com.ohnosequences.bio4j.model.relationships.sc;
 
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Frameshift extends BasicRelationship{
+public interface Frameshift extends Relationship{
     
 }

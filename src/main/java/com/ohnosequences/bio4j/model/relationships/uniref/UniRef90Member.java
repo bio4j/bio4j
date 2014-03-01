@@ -16,12 +16,12 @@
  */
 package com.ohnosequences.bio4j.model.relationships.uniref;
 
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UniRef90Member extends BasicRelationship{
+public interface UniRef90Member extends Relationship{
     
 }

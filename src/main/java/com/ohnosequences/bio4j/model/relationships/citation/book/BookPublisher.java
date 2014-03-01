@@ -18,13 +18,13 @@ package com.ohnosequences.bio4j.model.relationships.citation.book;
 
 import com.ohnosequences.bio4j.model.nodes.citation.Book;
 import com.ohnosequences.bio4j.model.nodes.citation.Publisher;
-import com.ohnosequences.bio4j.model.relationships.BasicRelationship;
+import com.ohnosequences.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BookPublisher extends BasicRelationship{
+public interface BookPublisher extends Relationship{
     
     //-------GETTERS-------------
     public Book getBook();
