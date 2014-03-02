@@ -6,6 +6,5 @@ package com.bio4j.model;
  */
 public interface Node {
     
-    public String getType();    
-    public void setType(String value);    
+  public String getType();  
 }
