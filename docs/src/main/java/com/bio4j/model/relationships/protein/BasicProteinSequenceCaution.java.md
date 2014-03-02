@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicProteinSequenceCaution extends Relationship{
+public interface BasicProteinSequenceCaution extends Relationship {
     
     public String getText();
     public String getStatus();

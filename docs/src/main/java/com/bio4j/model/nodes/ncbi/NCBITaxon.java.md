@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface NCBITaxon extends Node{
+public interface NCBITaxon extends Node {
     
     //----------------GETTERS---------------------
     public String getName();

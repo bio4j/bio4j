@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinKeyword extends Relationship{
+public interface ProteinKeyword extends Relationship {
     
     public Protein getProtein();    
     public Keyword getKeyword();

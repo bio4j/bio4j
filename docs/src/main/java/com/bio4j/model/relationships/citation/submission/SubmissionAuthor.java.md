@@ -25,7 +25,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubmissionAuthor extends Relationship{
+public interface SubmissionAuthor extends Relationship {
     
     public Submission getSubmission();
     

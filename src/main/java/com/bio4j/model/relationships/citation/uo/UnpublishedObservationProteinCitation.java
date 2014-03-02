@@ -8,7 +8,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UnpublishedObservationProteinCitation extends Relationship{
+public interface UnpublishedObservationProteinCitation extends Relationship {
     
     //--------------GETTERS------------------
     public UnpublishedObservation getUnpublishedObservation();    

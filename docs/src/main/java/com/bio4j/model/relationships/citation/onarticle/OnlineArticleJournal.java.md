@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface OnlineArticleJournal extends Relationship{
+public interface OnlineArticleJournal extends Relationship {
     
     //---------GETTERS------------
     public String getLocator();

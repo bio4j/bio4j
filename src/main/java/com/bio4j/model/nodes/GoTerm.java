@@ -8,7 +8,7 @@ import com.bio4j.model.Node;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GoTerm extends Node{
+public interface GoTerm extends Node {
     
     //----GETTERS---
     public String getId();

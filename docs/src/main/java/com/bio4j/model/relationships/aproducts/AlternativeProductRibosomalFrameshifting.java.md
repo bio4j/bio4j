@@ -25,7 +25,7 @@ import com.bio4j.model.Relationship;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface AlternativeProductRibosomalFrameshifting extends Relationship{
+public interface AlternativeProductRibosomalFrameshifting extends Relationship {
 
 
 }

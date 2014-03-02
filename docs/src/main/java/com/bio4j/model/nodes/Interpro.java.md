@@ -10,7 +10,7 @@ import com.bio4j.model.Node;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Interpro extends Node{
+public interface Interpro extends Node {
     
     //----GETTERS---
     public String getId();

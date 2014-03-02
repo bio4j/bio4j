@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Protein extends Node{
+public interface Protein extends Node {
  
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------

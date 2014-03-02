@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElementTmRna extends Relationship{
+public interface GenomeElementTmRna extends Relationship {
     
     public GenomeElement getGenomeElement();
     public TmRNA getTmRNA();

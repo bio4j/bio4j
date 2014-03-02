@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ReactomeTerm extends Node{
+public interface ReactomeTerm extends Node {
     
     //------GETTERS-----
     public String getId();

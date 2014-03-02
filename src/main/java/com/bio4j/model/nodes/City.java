@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface City extends Node{
+public interface City extends Node {
     
     //----GETTERS---
     public String getName();

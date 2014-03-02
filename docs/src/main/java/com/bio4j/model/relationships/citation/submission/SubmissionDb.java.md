@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubmissionDb extends Relationship{
+public interface SubmissionDb extends Relationship {
         
     //----------GETTERS----------------
     public String getDate();

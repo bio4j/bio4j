@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Submission extends Node{
+public interface Submission extends Node {
     
     //--------GETTERS-------------
     public String getTitle();

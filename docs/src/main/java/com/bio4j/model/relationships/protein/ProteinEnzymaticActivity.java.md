@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinEnzymaticActivity extends Relationship{
+public interface ProteinEnzymaticActivity extends Relationship {
     
     public Protein getProtein();
     public Enzyme getEnzyme();

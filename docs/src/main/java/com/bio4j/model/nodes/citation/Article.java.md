@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Article extends Node{
+public interface Article extends Node {
     
     //----GETTERS---
     public String getTitle();

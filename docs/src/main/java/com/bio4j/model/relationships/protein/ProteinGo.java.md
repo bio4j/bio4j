@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinGo extends Relationship{
+public interface ProteinGo extends Relationship {
     
     public String getEvidence();
     public Protein getProtein();    

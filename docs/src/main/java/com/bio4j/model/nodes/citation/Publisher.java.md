@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Publisher extends Node{
+public interface Publisher extends Node {
         
     //----GETTERS---
     public String getName();

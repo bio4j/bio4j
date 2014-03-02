@@ -26,7 +26,7 @@ import com.bio4j.model.Relationship;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ThesisProteinCitation extends Relationship{
+public interface ThesisProteinCitation extends Relationship {
     
     //---------GETTERS-------------
     public Thesis getThesis();    

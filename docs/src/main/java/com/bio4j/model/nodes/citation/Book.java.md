@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Book extends Node{
+public interface Book extends Node {
     
     //----GETTERS---
     public String getName();

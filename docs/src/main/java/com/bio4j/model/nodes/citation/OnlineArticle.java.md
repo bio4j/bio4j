@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface OnlineArticle extends Node{
+public interface OnlineArticle extends Node {
     
     //----GETTERS---
     public String getTitle();

@@ -9,9 +9,8 @@ import com.bio4j.model.nodes.Institute;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface InstituteCountry extends Relationship{
+public interface InstituteCountry extends Relationship {
     
     public Institute getInstitute();    
-    public Country getCountry();
-    
+    public Country getCountry();    
 }
