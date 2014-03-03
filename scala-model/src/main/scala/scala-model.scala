@@ -18,25 +18,29 @@ package bio4j.scalamodel
 
   - https://groups.google.com/d/msg/gremlin-users/KqBv3jlj6xM/Fz7QLltUnxwJ
 
+  All this means that the fields and relationships that a node has are
+
+  - local to that type
+  - declared externally
+  - accessed through typeclasses
+
   ### restrictions
 
-  One simple way of enforcing such restrictions is available when declaring such a model
+  When you declare a property, you can
 
-  ``` scala
-    
-    // a Protein node
-    // note that it can perfectly be an object!
-    case object Protein extends Node
+  - restrict the source type and its arity
+  - restrict the target type and its arity
 
-    // which fields and ops are available is done through ProteinOps
-    trait NodeOps[N <: Node, M <: Module] {
+  Note that at this point one does not need to choose between properties and edges. Essentially, a property is just and edge which
+
+  1. has as source a non-primitive type, as target a primitive one
+  2. for a given source it is unique
+
+  _I need to remind myself about the view of properties as a special kind of edges_
   
-      // get something of a rel that can be associated with N
-      // guided by a singleton type (scoped to module?)
-    }
-  ```
-
 */
+
+
 /*
   A node has just a type; all of its properties can be accessed through rels
 */
