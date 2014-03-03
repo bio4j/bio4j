@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Pfam;
@@ -11,7 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface ProteinPfam extends Relationship {
     
-    public Protein getProtein();    
-    public Pfam getPfam();
-    
+  public Protein getProtein();    
+  public Pfam getPfam();    
 }

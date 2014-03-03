@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.refseq;
 
 import com.bio4j.model.nodes.refseq.GenomeElement;
@@ -11,6 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface GenomeElementRRna extends Relationship {
     
-    public GenomeElement getGenomeElement();
-    public RRNA getRRNA();
+  public GenomeElement getGenomeElement();
+  public RRNA getRRNA();
 }

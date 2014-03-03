@@ -13,8 +13,8 @@ import com.bio4j.model.nodes.Isoform;
  */
 public interface IsoformEventGenerator {
     
-    public Isoform getIsoform();
-    public AlternativeProduct getAlternativeProduct();
+  public Isoform getIsoform();
+  public AlternativeProduct getAlternativeProduct();
 }
 
 ```

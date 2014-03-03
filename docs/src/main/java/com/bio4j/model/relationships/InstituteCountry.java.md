@@ -13,9 +13,8 @@ import com.bio4j.model.nodes.Institute;
  */
 public interface InstituteCountry extends Relationship {
     
-    public Institute getInstitute();    
-    public Country getCountry();
-    
+  public Institute getInstitute();    
+  public Country getCountry();    
 }
 
 ```

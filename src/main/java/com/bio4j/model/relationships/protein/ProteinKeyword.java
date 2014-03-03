@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Keyword;
@@ -11,7 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface ProteinKeyword extends Relationship {
     
-    public Protein getProtein();    
-    public Keyword getKeyword();
-    
+  public Protein getProtein();
+  public Keyword getKeyword();
 }

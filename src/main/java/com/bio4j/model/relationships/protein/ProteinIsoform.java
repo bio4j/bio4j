@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Isoform;
@@ -11,7 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface ProteinIsoform extends Relationship {
     
-    public Protein getProtein();    
-    public Isoform getIsoformNode();
-    
+  public Protein getProtein();
+  public Isoform getIsoformNode();   
 }

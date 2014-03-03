@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Protein;
@@ -11,7 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface ProteinReactome extends Relationship {
     
-    public Protein getProtein();    
-    public ReactomeTerm getReactomeTerm();
-    
+  public Protein getProtein();    
+  public ReactomeTerm getReactomeTerm();
 }

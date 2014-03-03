@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.features;
 
 import com.bio4j.model.nodes.FeatureType;

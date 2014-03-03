@@ -20,8 +20,7 @@ public interface Isoform extends Node {
     public void setId(String value);
     public void setNote(String value);
     public void setName(String value);
-    public void setSequence(String value);
-    
+    public void setSequence(String value);  
 }
 
 ```

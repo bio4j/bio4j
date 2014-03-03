@@ -1,4 +1,3 @@
-
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Interpro;
@@ -11,7 +10,6 @@ import com.bio4j.model.Relationship;
  */
 public interface ProteinInterpro extends Relationship {
     
-    public Protein getProtein();    
-    public Interpro getInterpro();
-    
+  public Protein getProtein();
+  public Interpro getInterpro();   
 }
