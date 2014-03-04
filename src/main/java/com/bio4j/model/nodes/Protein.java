@@ -1,6 +1,6 @@
 package com.bio4j.model.nodes;
 
-import com.bio4j.model.Vertex;
+import com.bio4j.model.Node;
 
 import com.bio4j.model.enums.UniprotDBXref;
 import com.bio4j.model.nodes.citation.Article;
@@ -28,7 +28,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Protein extends Vertex {
+public interface Protein extends Node {
  
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------

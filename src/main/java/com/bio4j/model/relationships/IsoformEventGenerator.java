@@ -1,6 +1,6 @@
 package com.bio4j.model.relationships;
 
-import com.bio4j.model.Edge;
+import com.bio4j.model.Relationship;
 
 import com.bio4j.model.nodes.AlternativeProduct;
 import com.bio4j.model.nodes.Isoform;

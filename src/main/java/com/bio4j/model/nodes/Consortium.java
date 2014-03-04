@@ -1,12 +1,12 @@
 package com.bio4j.model.nodes;
 
-import com.bio4j.model.Vertex;
+import com.bio4j.model.Node;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Consortium extends Vertex {
+public interface Consortium extends Node {
     
     //----GETTERS---
     public String getName();

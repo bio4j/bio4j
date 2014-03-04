@@ -3,13 +3,13 @@ package com.bio4j.model.relationships.citation.submission;
 
 import com.bio4j.model.nodes.citation.DB;
 import com.bio4j.model.nodes.citation.Submission;
-import com.bio4j.model.Edge;
+import com.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubmissionDb extends Edge {
+public interface SubmissionDb extends Relationship {
         
     //----------GETTERS----------------
     public String getDate();

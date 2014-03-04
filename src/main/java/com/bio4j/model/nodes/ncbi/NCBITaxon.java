@@ -1,7 +1,7 @@
 
 package com.bio4j.model.nodes.ncbi;
 
-import com.bio4j.model.Vertex;
+import com.bio4j.model.Node;
 import com.bio4j.model.nodes.Taxon;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface NCBITaxon extends Vertex {
+public interface NCBITaxon extends Node {
     
     //----------------GETTERS---------------------
     public String getName();

@@ -2,13 +2,13 @@ package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Protein;
 import com.bio4j.model.nodes.SequenceCaution;
-import com.bio4j.model.Edge;
+import com.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicProteinSequenceCaution extends Edge {
+public interface BasicProteinSequenceCaution extends Relationship {
     
   public String getText();
   public String getStatus();

@@ -1,12 +1,12 @@
 package com.bio4j.model.nodes;
 
-import com.bio4j.model.Vertex;
+import com.bio4j.model.Node;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface CommentType extends Vertex {
+public interface CommentType extends Node {
     
     //----GETTERS---
     public String getName();

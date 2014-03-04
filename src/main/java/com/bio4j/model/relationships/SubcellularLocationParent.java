@@ -1,9 +1,9 @@
 package com.bio4j.model.relationships;
 
-import com.bio4j.model.Edge;
+import com.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubcellularLocationParent extends Edge {}
+public interface SubcellularLocationParent extends Relationship {}

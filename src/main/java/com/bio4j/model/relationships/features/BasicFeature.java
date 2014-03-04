@@ -2,13 +2,13 @@ package com.bio4j.model.relationships.features;
 
 import com.bio4j.model.nodes.FeatureType;
 import com.bio4j.model.nodes.Protein;
-import com.bio4j.model.Edge;
+import com.bio4j.model.Relationship;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicFeature extends Edge {
+public interface BasicFeature extends Relationship {
     
     //------------GETTERS----------------
     public String getDescription();
