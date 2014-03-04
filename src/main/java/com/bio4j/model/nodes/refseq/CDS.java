@@ -1,13 +1,13 @@
 
 package com.bio4j.model.nodes.refseq;
 
-import com.bio4j.model.Node;
+import com.bio4j.model.Vertex;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface CDS extends Node {
+public interface CDS extends Vertex {
     
     //---------GETTERS------------
     public String getPositions();

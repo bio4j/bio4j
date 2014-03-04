@@ -1,12 +1,12 @@
 package com.bio4j.model.nodes;
 
-import com.bio4j.model.Node;
+import com.bio4j.model.Vertex;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubcellularLocation extends Node {
+public interface SubcellularLocation extends Vertex {
     
     //----GETTERS---
     public String getName();

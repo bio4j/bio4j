@@ -2,13 +2,13 @@ package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Protein;
 import com.bio4j.model.nodes.SubcellularLocation;
-import com.bio4j.model.Relationship;
+import com.bio4j.model.Edge;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinSubcellularLocation extends Relationship {
+public interface ProteinSubcellularLocation extends Edge {
     
   public String getEvidence();
   public String getStatus();

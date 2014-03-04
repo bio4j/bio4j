@@ -1,7 +1,7 @@
 
 package com.bio4j.model.nodes.refseq;
 
-import com.bio4j.model.Node;
+import com.bio4j.model.Vertex;
 import com.bio4j.model.nodes.Protein;
 import com.bio4j.model.nodes.refseq.rna.MRNA;
 import com.bio4j.model.nodes.refseq.rna.MiscRNA;
@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElement extends Node {
+public interface GenomeElement extends Vertex {
     
     
     //--------GETTERS-----------

@@ -2,13 +2,13 @@ package com.bio4j.model.nodes;
 
 import java.util.List;
 
-import com.bio4j.model.Node;
+import com.bio4j.model.Vertex;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Enzyme extends Node {
+public interface Enzyme extends Vertex {
     
     //----------GETTERS-------------
     public String getId();
