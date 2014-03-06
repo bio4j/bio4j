@@ -1,0 +1,4 @@
+* Changed package to com.bio4j instead of com.ohnosequences.bio4j;
+* Change the name of the abstract node and rel types, move them to the root model package;
+* Removed unrelated class CommonData;
+* Some general refactoring;
