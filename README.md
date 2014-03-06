@@ -59,8 +59,6 @@ resolvers += "Era7 maven releases" at "http://releases.era7.com.s3.amazonaws.com
 libraryDependencies += "bio4j" % "bio4j" % "0.11.0"
 ```
 
-> **Note:** version `0.11.0` is currently in development
-
 -----
 
 
