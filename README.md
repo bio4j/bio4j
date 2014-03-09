@@ -45,7 +45,7 @@ Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.
   - [Auxiliary relationships](docs/auxiliary-relationships.md)
   - [Node indexing](docs/node-indexing.md)
 * [FAQ](docs/faq.md)
-* API Docs: [v0.10.0](http://bio4j.com/bio4j/docs/api/0.10.0); [v0.11.0](http://bio4j.com/bio4j/docs/api/0.11.0)
+* API Docs: [v0.11.0](http://bio4j.com/bio4j/docs/api/0.11.0)
 * [Examples](docs/examples.md)
 
 
@@ -56,7 +56,7 @@ To use it in your sbt-project, add this to `build.sbt`:
 ```scala
 resolvers += "Era7 maven releases" at "http://releases.era7.com.s3.amazonaws.com"
 
-libraryDependencies += "bio4j" % "bio4j" % "0.10.0"
+libraryDependencies += "bio4j" % "bio4j" % "0.11.0"
 ```
 
 -----
