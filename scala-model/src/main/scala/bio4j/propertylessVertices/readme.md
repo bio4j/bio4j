@@ -60,7 +60,7 @@ object OrgsGraph {
 }
 
 // or use abstract modules
-abstract class DeclareRel[
+abstract class Rel[
   N <: Vertex: Singleton#is,
   E <: Edge: Singleton#is,
   M <: Vertex: Singleton#is
@@ -73,7 +73,7 @@ abstract class DeclareRel[
 {
   implicit val set = source -- edge --> target 
 }
-case object userMemberOfOrg extends DeclareRel(user, memberOf, org)
+case object userMemberOfOrg extends Rel(user, memberOf, org)
 
 // somewhere else
 object doSomething {
@@ -85,5 +85,16 @@ object doSomething {
 
 I think this is flexible enough, and with abstract modules could work well for what we want.
 
+#### terminology
 
+It is maybe a good idea to use _Relationship_ or _Rel_ for the `Edge` together with the specification of the source and target types.
+
+## vertex properties as edges
+
+The idea is to
+
+1. use the edge label as the key for the property
+2. move the value to the target node (literal in this case)
+
+It is key (hahaha) to keep in mind that all this is about describing the types, not how or where they are stored. So, no problem with taking a node to be a (essentially named) literal.
 
