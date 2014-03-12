@@ -89,6 +89,82 @@ I think this is flexible enough, and with abstract modules could work well for w
 
 It is maybe a good idea to use _Relationship_ or _Rel_ for the `Edge` together with the specification of the source and target types.
 
+## arities and the like
+
+The default types for the relationship actions are
+
+``` scala
+val targets: Option[List[TargetType]] = x.target(rel)
+val sources: Option[List[SourceType]] = y.source(rel)
+```
+
+There are **4** different things here, with two dual couples:
+
+1. **single-valued** given `x`, there is at most one `r` with source `x`
+2. **injective** given `x`, there is at most one `r` with target `x`
+
+<!-- <br/> -->
+
+1. **everywhere-defined** given `x`, there is at least one `r` with source `x`
+2. **surjective** given `x`, there is at least one `r` with target `x`
+
+
+In terms of the types above, we have
+
+- **single-valued** and **everywhere-defined** affect the **target** type
+    + **single-valued** means no `List`,
+    + **everywhere-defined** means no `Option`
+- **injective** and **surjective** affect the **source** type
+    + **injective** means no `List`,
+    + **surjective** means no `Option`
+
+``` scala
+// imaginary trait
+trait AnyRel {
+
+  type SourceType
+  type TargetType
+}
+
+trait AnySourceArity {
+
+  type Rel
+  val rel: Rel
+  type SourceResult
+}
+trait DefaultSourceArity extends AnySourceArity {
+
+  type Rel
+  val rel: Rel
+  type SourceResult = Option[List[rel.SourceType]]
+}
+
+trait SingleValued                  extends AnySourceArity { type SourceResult = Option[rel.SourceType] }
+trait EverywhereDefined             extends AnySourceArity { type SourceResult = List[rel.SourceType] }
+trait SingleValuedEverywhereDefined extends AnySourceArity { type SourceResult = rel.SourceType }
+```
+
+Examples can help here. 
+
+### single-valued, injective
+
+This means that
+
+``` scala
+// x fatherOf y
+// single-valued
+val father Option[Human] = someone source fatherOf
+// injective: the dual rel
+val children: Option[Human] = other target fatherOf
+```
+
+### everywhere defined, surjective
+
+``` scala
+// todo
+```
+
+
 ## vertex properties as edges
 
 The idea is to
@@ -96,5 +172,15 @@ The idea is to
 1. use the edge label as the key for the property
 2. move the value to the target node (literal in this case)
 
-It is key (hahaha) to keep in mind that all this is about describing the types, not how or where they are stored. So, no problem with taking a node to be a (essentially named) literal.
+It is key (hahaha) to keep in mind that all this is about describing the types, not how or where they are stored. So, no problem with taking a vertex to be a (essentially named) literal.
 
+> should "normal" vertices and literals be treated differently?
+
+## vertex operations
+
+The most basic thing that we want is to get edges (of a fixed label) with source `v`. For that, we have
+
+- the vertex type
+- the edge type (including the label)
+
+We should return the type derived from the relationship target type (and its arity).
