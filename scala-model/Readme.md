@@ -4,7 +4,7 @@
 
 - using Bio4j from Scala code
 - abstract over storage
-- 
+ 
 
 ## how
 
