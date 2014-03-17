@@ -1,5 +1,3 @@
 package com.bio4j.model.util;
 
-public interface NodeRetriever<N extends com.bio4j.model.Node>{
-  // public N getNode();
-}
+public interface NodeRetriever<N extends com.bio4j.model.Node>{}
