@@ -1,5 +1,4 @@
-
-package com.bio4j.model.nodes.ncbi;
+package com.bio4j.model.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.nodes.Taxon;

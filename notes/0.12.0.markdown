@@ -1,0 +1,4 @@
+* Moved `NCBITaxon` node to the `com.bio4j.model.nodes` package (removed `.ncbi` suffix);
+* Same for `ReactomeTerm`: `com.bio4j.model.nodes{.reactome => }`;
+* Separated `NodeRetriever` on a set of interfaces per a node type: `com.bio4j.model.util.<NodeType>Retriever`
+* Made `NodeRetriever` an abstract interface dependent on the node type: `NodeRetriever<N extends com.bio4j.model.Node>`

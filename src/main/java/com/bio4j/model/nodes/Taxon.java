@@ -6,6 +6,7 @@ import com.bio4j.model.Node;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
+// this is uniprot taxon in contrast to the NCBI taxon
 public interface Taxon extends Node {
     
     //----GETTERS---
