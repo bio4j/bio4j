@@ -164,7 +164,6 @@ val children: Option[Human] = other target fatherOf
 // todo
 ```
 
-
 ## vertex properties as edges
 
 The idea is to
