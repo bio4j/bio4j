@@ -1,6 +1,7 @@
 package com.bio4j.model.nodes;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
 import com.bio4j.model.enums.UniprotDBXref;
 import com.bio4j.model.nodes.citation.Article;
@@ -24,12 +25,13 @@ import com.bio4j.model.relationships.protein.ProteinIsoformInteraction;
 import com.bio4j.model.relationships.protein.ProteinProteinInteraction;
 import java.util.List;
 
-/**
- *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- */
-public interface Protein extends Node {
- 
+public interface Protein extends Node<Protein, Protein.type> {
+    
+  enum type implements NodeType<Protein, Protein.type> {
+
+    protein;
+    public type value() { return protein; }
+  }
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------

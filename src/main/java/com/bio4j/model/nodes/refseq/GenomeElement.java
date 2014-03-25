@@ -10,13 +10,20 @@ import com.bio4j.model.nodes.refseq.rna.RRNA;
 import com.bio4j.model.nodes.refseq.rna.TRNA;
 import com.bio4j.model.nodes.refseq.rna.TmRNA;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface GenomeElement extends Node {
+public interface GenomeElement extends Node<GenomeElement, GenomeElement.type> {
     
+  enum type implements NodeType<GenomeElement, GenomeElement.type> {
+
+    genomeElement;
+    public type value() { return genomeElement; }
+  }
+  
     
     //--------GETTERS-----------
     public String getVersion();

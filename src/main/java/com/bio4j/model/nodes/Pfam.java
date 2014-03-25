@@ -3,13 +3,15 @@ package com.bio4j.model.nodes;
 import java.util.List;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
-/**
- *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- */
-public interface Pfam extends Node {
+public interface Pfam extends Node<Pfam, Pfam.type> {
     
+  enum type implements NodeType<Pfam, Pfam.type> {
+
+    pfam;
+    public type value() { return pfam; }
+  }
     //----GETTERS---
     public String getId();
     public String getName();

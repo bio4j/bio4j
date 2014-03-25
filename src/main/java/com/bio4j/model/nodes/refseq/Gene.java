@@ -2,12 +2,19 @@
 package com.bio4j.model.nodes.refseq;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Gene extends Node {
+public interface Gene extends Node<Gene, Gene.type> {
+    
+  enum type implements NodeType<Gene, Gene.type> {
+
+    gene;
+    public type value() { return gene; }
+  }
     
     //---------GETTERS------------
     public String getPositions();

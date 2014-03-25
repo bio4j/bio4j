@@ -3,13 +3,20 @@ package com.bio4j.model.nodes;
 import java.util.List;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Enzyme extends Node {
+public interface Enzyme extends Node<Enzyme, Enzyme.type> {
     
+  enum type implements NodeType<Enzyme, Enzyme.type> {
+
+    enzyme;
+    public type value() { return enzyme; }
+  }
+   
     //----------GETTERS-------------
     public String getId();
     public String getOfficialName();

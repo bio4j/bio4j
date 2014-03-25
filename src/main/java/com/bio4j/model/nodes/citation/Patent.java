@@ -5,12 +5,19 @@ import com.bio4j.model.Node;
 import com.bio4j.model.nodes.Person;
 import com.bio4j.model.nodes.Protein;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Patent extends Node {
+public interface Patent extends Node<Patent, Patent.type> {
+    
+  enum type implements NodeType<Patent, Patent.type> {
+
+    patent;
+    public type value() { return patent; }
+  }
     
     //----GETTERS---
     public String getNumber();

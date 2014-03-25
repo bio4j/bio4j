@@ -3,12 +3,19 @@ package com.bio4j.model.nodes;
 import java.util.List;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Organism extends Node {
+public interface Organism extends Node<Organism, Organism.type> {
+    
+  enum type implements NodeType<Organism, Organism.type> {
+
+    organism;
+    public type value() { return organism; }
+  }
     
     //----GETTERS---
     public String getScientificName();

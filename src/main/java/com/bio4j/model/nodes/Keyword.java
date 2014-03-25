@@ -1,12 +1,19 @@
 package com.bio4j.model.nodes;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Keyword extends Node {
+public interface Keyword extends Node<Keyword, Keyword.type> {
+    
+  enum type implements NodeType<Keyword, Keyword.type> {
+
+    keyword;
+    public type value() { return keyword; }
+  }
     
     //----GETTERS---
     public String getId();

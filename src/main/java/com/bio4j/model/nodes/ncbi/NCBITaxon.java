@@ -4,13 +4,19 @@ package com.bio4j.model.nodes.ncbi;
 import com.bio4j.model.Node;
 import com.bio4j.model.nodes.Taxon;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface NCBITaxon extends Node {
+public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.type> {
     
+  enum type implements NodeType<NCBITaxon, NCBITaxon.type> {
+
+    ncbiTaxon;
+    public type value() { return ncbiTaxon; }
+  }    
     //----------------GETTERS---------------------
     public String getName();
     public String getTaxId();

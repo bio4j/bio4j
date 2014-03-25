@@ -1,10 +1,17 @@
 package com.bio4j.model;
 
-/**
- *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- */
-public interface Node {
-    
-  public String getType();  
+/*
+  A typed node.
+
+  @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+*/
+public interface Node <
+  N extends Node<N,T>, 
+  T extends Enum<T> & NodeType<N,T>
+> {
+
+  /*
+    Its type
+  */
+  public T getType();
 }

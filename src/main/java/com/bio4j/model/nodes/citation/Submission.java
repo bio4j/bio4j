@@ -6,13 +6,20 @@ import com.bio4j.model.nodes.Consortium;
 import com.bio4j.model.nodes.Person;
 import com.bio4j.model.nodes.Protein;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Submission extends Node {
+public interface Submission extends Node<Submission, Submission.type> {
     
+  enum type implements NodeType<Submission, Submission.type> {
+
+    submission;
+    public type value() { return submission; }
+  }
+      
     //--------GETTERS-------------
     public String getTitle();
     public String getDate();

@@ -6,13 +6,19 @@ import com.bio4j.model.nodes.City;
 import com.bio4j.model.nodes.Person;
 import com.bio4j.model.nodes.Protein;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Book extends Node {
+public interface Book extends Node<Book, Book.type> {
     
+  enum type implements NodeType<Book, Book.type> {
+
+    book;
+    public type value() { return book; }
+  }   
     //----GETTERS---
     public String getName();
     public String getDate();

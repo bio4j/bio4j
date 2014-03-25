@@ -6,13 +6,19 @@ import com.bio4j.model.nodes.Consortium;
 import com.bio4j.model.nodes.Person;
 import com.bio4j.model.nodes.Protein;
 import java.util.List;
+import com.bio4j.model.NodeType;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Article extends Node {
+public interface Article extends Node<Article, Article.type> {
     
+  enum type implements NodeType<Article, Article.type> {
+
+    article;
+    public type value() { return article; }
+  }   
     //----GETTERS---
     public String getTitle();
     public String getPubmedId();
