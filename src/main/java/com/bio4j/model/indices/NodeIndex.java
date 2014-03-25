@@ -1,7 +1,10 @@
 package com.bio4j.model.indices;
 
 import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 
-public abstract class NodeIndex<N extends Node, K>{
-  abstract N getNode(K key);
-}
+public interface NodeIndex <
+  N extends Node<N,T>, 
+  T extends Enum<T> & NodeType<N,T>, 
+  V
+> {}
