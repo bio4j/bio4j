@@ -1,5 +1,4 @@
-
-package com.bio4j.model.nodes.reactome;
+package com.bio4j.model.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.nodes.Protein;
@@ -18,16 +17,13 @@ public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.type> {
     public type value() { return reactomeTerm; }
   }
   
-    //------GETTERS-----
-    public String getId();
-    public String getPathwayName();
-    public List<Protein> getAssociatedProteins();
+  //------GETTERS-----
+  public String getId();
+  public String getPathwayName();
+  public List<Protein> getAssociatedProteins();
 
-    //------SETTERS------
-    public void setId(String value);
-    public void setPathwayName(String value);
-  
-    
-    
-    
+  //------SETTERS------
+  public void setId(String value);
+  public void setPathwayName(String value);
+   
 }

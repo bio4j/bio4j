@@ -1,7 +1,7 @@
 package com.bio4j.model.relationships.protein;
 
 import com.bio4j.model.nodes.Protein;
-import com.bio4j.model.nodes.reactome.ReactomeTerm;
+import com.bio4j.model.nodes.ReactomeTerm;
 import com.bio4j.model.Relationship;
 
 /**
