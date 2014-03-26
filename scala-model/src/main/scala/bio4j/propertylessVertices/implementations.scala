@@ -12,7 +12,7 @@ trait AnyVertexOf {
   type Rep
 
   import shapeless.record._
-  def ->>(v: Rep): FieldType[VertexType, Rep] = field[VertexType](v)
+  def ->>(v: Rep): FieldType[vertexType.type, Rep] = field[vertexType.type](v)
 }
 
 class VertexOf[VT <: AnyVertexType](val vertexType: VT) extends AnyVertexOf {

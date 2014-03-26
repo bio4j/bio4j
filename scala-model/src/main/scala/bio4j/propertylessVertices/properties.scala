@@ -1,45 +1,37 @@
 package bio4j.graphs
 
-/*
-  Properties
-*/
-import shapeless.FieldOf
-trait AnyPropertyType extends LiteralType
-class PropertyType[V]() extends AnyPropertyType with FieldOf[V]
+import shapeless.record.FieldType
 
 /*
-  witness of an Edge of type E having a property of type P
+  ## Accessing properties
+
+  The basic static requirement for accessing a property is for it to be declared for that vertex/edge type; that means having a witness of type `AnyVertexTypeHas`. Now, given that, you need to be able to produce something given
+
+  - a representation of the given vertex declaration
+  - the property type itself
+
 */
-trait PropertyOf {
 
-  /*
-    Only Edges have properties
-  */
-  type E <: AnyEdgeType
-  type P <: AnyPropertyType
+trait AnyVertexProperty {
+
+  type VertexOf <: AnyVertexOf
+  val vertexOf: VertexOf
+
+  type PropertyType <: AnyPropertyType
+  val propertyType: PropertyType
+
+  def apply(vertex: vertexOf.Rep): propertyType.Rep
 }
 
-object PropertyOf {
+abstract class VertexProperty[
+  VO <: AnyVertexOf,
+  PT <: AnyPropertyType
+](
+  val vertexOf: VO,
+  val propertyType: PT
+) extends AnyVertexProperty {
 
-  type propertyOf[aN <: AnyEdgeType] = {
-
-    type is[aP <: AnyPropertyType] = PropertyOf { type N = aN; type P = aP }
-  }
-
-  type is[aN <: AnyEdgeType, aP <: AnyPropertyType] = PropertyOf { type N = aN; type P = aP }
+  type VertexOf = VO
+  type PropertyType = PT
 }
 
-trait AnyHas {
-
-  type Edge <: AnyEdgeType
-  val edge: Edge
-
-  type Property <: AnyPropertyType
-  val property: Property
-}
-
-case class Has[E <: AnyEdgeType, P <: AnyPropertyType](edge: E, property: P) extends AnyHas {
-
-  type Edge = E
-  type Property = P
-}
