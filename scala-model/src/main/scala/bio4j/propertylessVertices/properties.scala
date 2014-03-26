@@ -35,3 +35,12 @@ abstract class VertexProperty[
   type PropertyType = PT
 }
 
+/*
+  ### the ops game
+
+  I need to
+
+  1. get a VertexOfOps class providing a getProperty method
+  2. that method requires an implicit VertexProperty instance of the given type
+  3. the return type is determined by the Property itself, and the value produced by the apply method of the aforementioned VertexProperty
+*/

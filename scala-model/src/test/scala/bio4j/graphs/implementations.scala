@@ -21,7 +21,7 @@ object vertices {
 
   case object readName extends VertexProperty(User, isPublic) {
 
-    def apply(vertex: User.Rep): isPublic.Rep = {
+    def apply(vertex: String): Boolean = {
 
       vertex match {
         case "Alexey Alekhin" => true
@@ -30,6 +30,8 @@ object vertices {
       
     }
   }
+
+  
 
   case class readByLabel[PT <: AnyPropertyType](val propertyType: PT) {
 
