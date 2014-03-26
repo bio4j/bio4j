@@ -28,11 +28,16 @@ object edgeTypes {
     implicit val y = this has validUntil
   }
 
+  // explicit witness
   case object usersOwnOrgs extends Rel(user, owns, org)
+  // its arity
   implicit val usersOwnOrgsArity = usersOwnOrgs oneToMany
-
+  // another one
   case object orgsOwnOrgs extends Rel(org, owns, org)
   implicit val orgsOwnOrgsArity = orgsOwnOrgs manyToOne
 
+  import DeclareRels._
+  // pretty cool DSL
+  implicit val thisIsSoCoolItScaresMe = user -- memberOf --> org manyToOne
 
 }

@@ -1,15 +1,15 @@
-package bio4j.model
+// package bio4j.model
 
-object implementation {
+// object implementation {
   
-  /*
-    is this right? or incredibly stupid?
+  
+//    // is this right? or incredibly stupid?
 
-    Maybe just fields where the key is the node type?
-  */
-  trait NodeRef {
+//    // Maybe just fields where the key is the node type?
+  
+//   trait NodeRef {
 
-    type Node <: AnyNode
-    val node: Node
-  }
-}
+//     type Node <: AnyNode
+//     val node: Node
+//   }
+// }

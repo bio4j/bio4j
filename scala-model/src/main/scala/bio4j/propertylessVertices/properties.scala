@@ -8,7 +8,7 @@ trait AnyPropertyType extends LiteralType
 class PropertyType[V]() extends AnyPropertyType with FieldOf[V]
 
 /*
-  witness of am Edge of type E having a property of type P
+  witness of an Edge of type E having a property of type P
 */
 trait PropertyOf {
 
