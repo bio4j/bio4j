@@ -1,6 +1,6 @@
-package bio4j.graphs.test
+package bio4j.model.test
 
-import bio4j.graphs._
+import bio4j.model._
 import shapeless.syntax.singleton._
 import shapeless._ 
 import shapeless.record._

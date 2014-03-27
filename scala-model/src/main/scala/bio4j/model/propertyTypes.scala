@@ -1,4 +1,4 @@
-package bio4j.graphs
+package bio4j.model
 
 /*
   Properties

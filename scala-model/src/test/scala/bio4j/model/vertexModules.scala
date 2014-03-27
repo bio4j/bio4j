@@ -1,19 +1,19 @@
-package bio4j.model.test
+// package bio4j.model.test
 
-import bio4j.model._
+// import bio4j.model._
 
-case object Protein extends AnyVertex { val label = "protein" }
-object ProteinOps extends AnyVertexOps {
+// case object Protein extends AnyVertex { val label = "protein" }
+// object ProteinOps extends AnyVertexOps {
 
-  type Vertex = Protein.type
-  def doSomething() = "lalala"
-}
+//   type Vertex = Protein.type
+//   def doSomething() = "lalala"
+// }
 
-case object ProteinModule extends AnyVertexModule {
+// case object ProteinModule extends AnyVertexModule {
   
-  type Vertex = Protein.type
-  val vertex = Protein
-  type VertexOps = ProteinOps.type
+//   type Vertex = Protein.type
+//   val vertex = Protein
+//   type VertexOps = ProteinOps.type
 
-  implicit def vertexOps[V <: Vertex](v: V): VertexOps = ProteinOps
-}
+//   implicit def vertexOps[V <: Vertex](v: V): VertexOps = ProteinOps
+// }

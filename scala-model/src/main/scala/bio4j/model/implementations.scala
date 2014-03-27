@@ -1,4 +1,4 @@
-package bio4j.graphs
+package bio4j.model
 
 /*
   Given a vertex type, their instances are modeled as instances of other type tagged with the corresponding vertex type.

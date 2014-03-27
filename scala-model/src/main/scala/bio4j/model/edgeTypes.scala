@@ -1,4 +1,4 @@
-package bio4j.graphs
+package bio4j.model
 
 /*
   Declares an Edge type. They are essentially classified by its label, a `String`.

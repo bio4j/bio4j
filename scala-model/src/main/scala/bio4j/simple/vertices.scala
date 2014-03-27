@@ -1,4 +1,4 @@
-package bio4j.model
+package bio4j.simple
 
 trait AnyVertex {  val label: String  }
 trait AnyVertexOps {

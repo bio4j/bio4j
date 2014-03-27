@@ -1,8 +1,8 @@
-package bio4j.graphs.test
+package bio4j.model.test
 
 object edgeTypes {
   
-  import bio4j.graphs._
+  import bio4j.model._
   import propertyTypes._
   import vertexTypes._
 
