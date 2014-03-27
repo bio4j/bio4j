@@ -1,9 +1,9 @@
 package com.bio4j.model.experiment.superabstract;
 
-public interface Property <T> {
+public interface Property <H, T> {
 
   public T get();
 
-  public void set(T value);
+  public H set(T value);
 
 }

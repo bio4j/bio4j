@@ -11,7 +11,7 @@ public interface Taxon extends Node<Taxon, Taxon.type> {
   // not needed, but it's here just so that you can see how this can only return `taxon`
   public type getType();
 
-  public Property<String> name();
+  public Property<Taxon, String> name();
 
   //----GETTERS---
   // public String getName();
