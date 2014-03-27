@@ -15,7 +15,7 @@ public interface InstituteCountry extends Relationship <
   InstituteCountry, InstituteCountry.type,
   Country, Country.type
 > {
-  
+
   enum type implements RelationshipType <
     Institute, Institute.type,
     InstituteCountry, InstituteCountry.type,
