@@ -1,28 +1,34 @@
-
 package com.bio4j.model.relationships.citation.article;
+
+import com.bio4j.model.Property;
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
 
 import com.bio4j.model.nodes.citation.Article;
 import com.bio4j.model.nodes.citation.Journal;
-import com.bio4j.model.Relationship;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Alexey Alekhin <aalekhin@ohnosequences.com>
  */
-public interface ArticleJournal extends Relationship {
+public interface ArticleJournal extends Relationship <
+    Article, Article.type,
+    ArticleJournal, ArticleJournal.type,
+    Journal, Journal.type
+> {
     
-    //--------GETTERS----------
-    public String getDate();
-    public String getVolume();
-    public String getFirst();
-    public String getLast();
-    public Article getArticle();
-    public Journal getJournal();
+    enum type implements RelationshipType <
+        Article, Article.type,
+        ArticleJournal, ArticleJournal.type,
+        Journal, Journal.type
+    > {
+        ArticleJournal;
+        public type value() { return ArticleJournal; }
+    }
 
-    //--------SETTERS------------
-    public void setDate(String value);
-    public void setVolume(String value);
-    public void setFirst(String value);
-    public void setLast(String value);
-    
+    public Property<String> date();
+    public Property<String> volume();
+    public Property<String> first();
+    public Property<String> last();
+
 }

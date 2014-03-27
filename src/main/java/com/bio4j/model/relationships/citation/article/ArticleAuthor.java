@@ -1,16 +1,28 @@
-
 package com.bio4j.model.relationships.citation.article;
+
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
 
 import com.bio4j.model.nodes.Person;
 import com.bio4j.model.nodes.citation.Article;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Alexey Alekhin <aalekhin@ohnosequences.com>
  */
-public interface ArticleAuthor {
+public interface ArticleAuthor extends Relationship <
+  Article, Article.type,
+  ArticleAuthor, ArticleAuthor.type,
+  Person, Person.type
+> {
     
-    public Article getArticle();
-    public Person getAuthor();
+  enum type implements RelationshipType <
+    Article, Article.type,
+    ArticleAuthor, ArticleAuthor.type,
+    Person, Person.type
+  > {
+    ArticleAuthor;
+    public type value() { return ArticleAuthor; }
+  }
     
 }
