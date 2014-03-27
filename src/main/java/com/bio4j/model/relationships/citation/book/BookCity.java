@@ -1,18 +1,28 @@
-
 package com.bio4j.model.relationships.citation.book;
+
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
 
 import com.bio4j.model.nodes.City;
 import com.bio4j.model.nodes.citation.Book;
-import com.bio4j.model.Relationship;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Alexey Alekhin <aalekhin@ohnosequences.com>
  */
-public interface BookCity extends Relationship {
+public interface BookCity extends Relationship <
+  Book, Book.type,
+  BookCity, BookCity.type,
+  City, City.type
+> {
     
-    //-------GETTERS-----
-    public Book getBook();
-    public City getCity();
-    
+  enum type implements RelationshipType <
+    Book, Book.type,
+    BookCity, BookCity.type,
+    City, City.type
+  > {
+    BookCity;
+    public type value() { return BookCity; }
+  }
+
 }
