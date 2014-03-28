@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.Isoform;
+import com.bio4j.model.isoforms.nodes.Isoform;
 
 public interface IsoformRetriever extends NodeRetriever<Isoform>{
 

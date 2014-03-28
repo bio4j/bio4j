@@ -12,4 +12,6 @@ public interface Node <
     Its type
   */
   public T getType();
+
+  public <V, P extends PropertyOf<N,T,V>> V get(P property);
 }

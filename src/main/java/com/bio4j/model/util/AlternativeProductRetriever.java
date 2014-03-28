@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.AlternativeProduct;
+import com.bio4j.model.isoforms.nodes.AlternativeProduct;
 
 public interface AlternativeProductRetriever extends NodeRetriever<AlternativeProduct> {
 

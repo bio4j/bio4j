@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.Keyword;
+import com.bio4j.model.uniprot.nodes.Keyword;
 
 public interface KeywordRetriever extends NodeRetriever<Keyword>{
 

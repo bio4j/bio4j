@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.refseq.GenomeElement;
+import com.bio4j.model.refseq.nodes.GenomeElement;
 
 public interface GenomeElementRetriever extends NodeRetriever<GenomeElement>{
 

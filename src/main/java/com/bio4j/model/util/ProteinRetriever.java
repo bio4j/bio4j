@@ -1,7 +1,7 @@
 package com.bio4j.model.util;
 
 import java.util.List;
-import com.bio4j.model.nodes.Protein;
+import com.bio4j.model.uniprot.nodes.Protein;
 
 public interface ProteinRetriever extends NodeRetriever<Protein>{
 

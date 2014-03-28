@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.GoTerm;
+import com.bio4j.model.go.nodes.GoTerm;
 
 public interface GoTermRetriever extends NodeRetriever<GoTerm>{
 

@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.Pfam;
+import com.bio4j.model.uniprot.nodes.Pfam;
 
 public interface PfamRetriever extends NodeRetriever<Pfam>{
 

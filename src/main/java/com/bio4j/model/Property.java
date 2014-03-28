@@ -1,9 +1,8 @@
 package com.bio4j.model;
 
-public interface Property<T> {
+/*
+  A Property. Just a marker.
 
-  public T get();
-
-  public void set(T value);
-
-}
+  @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+*/
+public interface Property {}

@@ -1,7 +1,7 @@
 package com.bio4j.model.util;
 
 import java.util.List;
-import com.bio4j.model.nodes.citation.Thesis;
+import com.bio4j.model.uniprot.nodes.Thesis;
 
 public interface ThesisRetriever extends NodeRetriever<Thesis> {
 

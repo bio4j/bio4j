@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.Consortium;
+import com.bio4j.model.uniprot.nodes.Consortium;
 
 public interface ConsortiumRetriever extends NodeRetriever<Consortium>{
 

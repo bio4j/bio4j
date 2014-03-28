@@ -1,6 +1,6 @@
 package com.bio4j.model.util;
 
-import com.bio4j.model.nodes.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 
 public interface NCBITaxonRetriever extends NodeRetriever<NCBITaxon>{
 
