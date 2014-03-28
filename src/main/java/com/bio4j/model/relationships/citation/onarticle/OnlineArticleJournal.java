@@ -1,22 +1,31 @@
-
 package com.bio4j.model.relationships.citation.onarticle;
+
+import com.bio4j.model.Property;
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
 
 import com.bio4j.model.nodes.citation.OnlineArticle;
 import com.bio4j.model.nodes.citation.OnlineJournal;
-import com.bio4j.model.Relationship;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Alexey Alekhin <aalekhin@ohnosequences.com>
  */
-public interface OnlineArticleJournal extends Relationship {
+public interface OnlineArticleJournal extends Relationship <
+    OnlineArticle, OnlineArticle.type,
+    OnlineArticleJournal, OnlineArticleJournal.type,
+    OnlineJournal, OnlineJournal.type
+> {
     
-    //---------GETTERS------------
-    public String getLocator();
-    public OnlineArticle getOnlineArticle();    
-    public OnlineJournal getOnlineJournal();
+    enum type implements RelationshipType <
+        OnlineArticle, OnlineArticle.type,
+        OnlineArticleJournal, OnlineArticleJournal.type,
+        OnlineJournal, OnlineJournal.type
+    > {
+        OnlineArticleJournal;
+        public type value() { return OnlineArticleJournal; }
+    }
 
-    //---------SETTERS-----------
-    public void setLocator(String value);   
-    
+    public Property<String> locator();
+
 }
