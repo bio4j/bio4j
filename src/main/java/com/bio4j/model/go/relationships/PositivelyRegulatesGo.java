@@ -23,6 +23,7 @@ public interface PositivelyRegulatesGo extends Relationship <
   > {
     positivelyRegulatesGo;
     public type value() { return positivelyRegulatesGo; }
+    public arity arity() { return arity.manyToMany; }
   }
 
   public GoTerm source();

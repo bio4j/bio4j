@@ -23,6 +23,7 @@ public interface BookCity extends Relationship <
   > {
     BookCity;
     public type value() { return BookCity; }
+    public arity arity() { return arity.manyToOne; }
   }
 
 }

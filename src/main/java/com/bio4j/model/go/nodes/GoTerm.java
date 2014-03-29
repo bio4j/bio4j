@@ -38,7 +38,14 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
 
   // relationships
   public List<Protein> associatedProteins();
+  // should be
+  public List<Protein> in_proteinGo();
+
   public List<GoTerm> isAGoNodes();
+  // should be two of them
+  public List<GoTerm> in_isAGo();
+  public List<GoTerm> out_isAGo();
+
   public List<GoTerm> negativelyRegulatesNodes();
   public List<GoTerm> positivelyRegulatesNodes();
   public List<GoTerm> partOfNodes();

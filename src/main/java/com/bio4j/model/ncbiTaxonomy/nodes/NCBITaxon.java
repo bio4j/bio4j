@@ -35,6 +35,7 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.type>,
 
   // other rels
   public NCBITaxon parent();
-  public List<NCBITaxon> getChildren();    
-  public Taxon getTaxon();  
+  public List<NCBITaxon> children();
+
+  public Taxon taxon();
 }

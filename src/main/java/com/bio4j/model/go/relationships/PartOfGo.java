@@ -23,6 +23,7 @@ public interface PartOfGo extends Relationship <
   > {
     partOfGo;
     public type value() { return partOfGo; }
+    public arity arity() { return arity.manyToMany; }
   }
 
   public GoTerm source();

@@ -23,6 +23,8 @@ public interface OrganismNCBITaxon extends Relationship <
   > {
     OrganismNCBITaxon;
     public type value() { return OrganismNCBITaxon; }
+    // TODO: review this
+    public arity arity() { return arity.manyToMany; }
   }
 
 }

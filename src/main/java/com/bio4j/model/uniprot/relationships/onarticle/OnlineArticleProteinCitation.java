@@ -21,8 +21,9 @@ public interface OnlineArticleProteinCitation extends Relationship <
         OnlineArticleProteinCitation, OnlineArticleProteinCitation.type,
         Protein, Protein.type
     > {
-        OnlineArticleProteinCitation;
-        public type value() { return OnlineArticleProteinCitation; }
+        onlineArticleProteinCitation;
+        public type value() { return onlineArticleProteinCitation; }
+        public arity arity() { return arity.manyToMany; }
     }
 
 }

@@ -21,4 +21,11 @@ public interface RelationshipType <
 
   // public ST getSourceType();
   // public TT getTargetType();
+
+  // why not arity here?
+  public arity arity();
+
+  public static enum arity {
+    oneToOne, oneToMany, manyToOne, manyToMany;
+  }
 }

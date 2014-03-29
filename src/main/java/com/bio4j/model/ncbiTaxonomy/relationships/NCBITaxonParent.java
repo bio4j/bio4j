@@ -23,6 +23,7 @@ public interface NCBITaxonParent extends Relationship <
   > {
     ncbiTaxonParent;
     public type value() { return ncbiTaxonParent; }
+    public arity arity() { return arity.manyToOne; }
   }
 
   @Override

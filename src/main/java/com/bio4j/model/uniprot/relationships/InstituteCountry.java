@@ -24,6 +24,7 @@ public interface InstituteCountry extends Relationship <
 
     instituteCountry;
     public type value() { return instituteCountry; }
+    public arity arity() { return arity.manyToOne; }
   }
 
   // replace this by source/target??

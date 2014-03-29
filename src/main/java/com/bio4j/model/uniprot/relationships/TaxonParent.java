@@ -18,5 +18,6 @@ public interface TaxonParent extends Relationship <
 
     taxonParent;
     public type value() { return taxonParent; }
+    public arity arity() { return arity.manyToOne; }
   }
 }

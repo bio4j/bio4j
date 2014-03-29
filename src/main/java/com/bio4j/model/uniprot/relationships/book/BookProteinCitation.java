@@ -23,6 +23,7 @@ public interface BookProteinCitation extends Relationship <
     > {
         BookProteinCitation;
         public type value() { return BookProteinCitation; }
+        public arity arity() { return arity.manyToMany; }
     }
 
     public String title();

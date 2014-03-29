@@ -23,6 +23,7 @@ public interface IsAGo extends Relationship <
   > {
     isAGo;
     public type value() { return isAGo; }
+    public arity arity() { return arity.manyToMany; }
   }
 
   public GoTerm source();

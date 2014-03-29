@@ -21,8 +21,9 @@ public interface BookAuthor extends Relationship <
     BookAuthor, BookAuthor.type,
     Person, Person.type
   > {
-    BookAuthor;
-    public type value() { return BookAuthor; }
+    bookAuthor;
+    public type value() { return bookAuthor; }
+    public arity arity() { return arity.manyToMany; }
   }
 
 }

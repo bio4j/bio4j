@@ -23,6 +23,7 @@ public interface OnlineArticleJournal extends Relationship <
     > {
         OnlineArticleJournal;
         public type value() { return OnlineArticleJournal; }
+        public arity arity() { return arity.manyToOne; }
     }
 
     public String locator();

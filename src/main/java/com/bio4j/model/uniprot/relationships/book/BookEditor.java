@@ -23,6 +23,7 @@ public interface BookEditor extends Relationship <
   > {
     BookEditor;
     public type value() { return BookEditor; }
+    public arity arity() { return arity.manyToMany; }
   }
 
 }

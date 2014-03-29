@@ -26,6 +26,8 @@ public interface IsoformEventGenerator extends Relationship <
   > {
     isoformEventGenerator;
     public type value() { return isoformEventGenerator; }
+    // TODO: review
+    public arity arity() { return arity.manyToMany; }
   }
 
   @Override  

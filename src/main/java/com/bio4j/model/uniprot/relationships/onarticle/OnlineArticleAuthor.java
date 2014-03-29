@@ -23,6 +23,7 @@ public interface OnlineArticleAuthor extends Relationship <
   > {
     OnlineArticleAuthor;
     public type value() { return OnlineArticleAuthor; }
+    public arity arity() { return arity.manyToMany; }
   }
 
 }

@@ -23,6 +23,7 @@ public interface NegativelyRegulatesGo extends Relationship <
   > {
     negativelyRegulatesGo;
     public type value() { return negativelyRegulatesGo; }
+    public arity arity() { return arity.manyToMany; }
   }
 
   public GoTerm source();
