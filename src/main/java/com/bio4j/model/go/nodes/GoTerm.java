@@ -7,6 +7,11 @@ import com.bio4j.model.NodeType;
 
 // properties
 import com.bio4j.model.properties.name;
+import com.bio4j.model.properties.id;
+import com.bio4j.model.properties.comment;
+import com.bio4j.model.properties.obsolete;
+import com.bio4j.model.properties.definition;
+import com.bio4j.model.properties.alternativeIds;
 
 // other nodes
 import com.bio4j.model.uniprot.nodes.Protein;
@@ -16,22 +21,21 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface GoTerm extends Node<GoTerm, GoTerm.type>,
-name 
-
+  // properties
+  name,
+  id,
+  definition,
+  comment,
+  obsolete,
+  alternativeIds
 {
-    
+
+  public static type TYPE = type.goTerm;
   public static enum type implements NodeType<GoTerm, GoTerm.type> {
     goTerm;
     public type value() { return goTerm; }
   }
- 
-  public String id();
-  public String definition();
-  public String namespace();
-  public Boolean obsolete();
-  public String comment();
-  public String[] alternativeIds();
-  
+
   // relationships
   public List<Protein> associatedProteins();
   public List<GoTerm> isAGoNodes();

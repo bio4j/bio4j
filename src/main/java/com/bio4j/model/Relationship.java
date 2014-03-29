@@ -29,9 +29,9 @@ public interface Relationship <
   /*
     get the source
   */
-  public S getSource();
+  public S source();
   /*
     get the target
   */
-  public T getTarget();
+  public T target();
 }

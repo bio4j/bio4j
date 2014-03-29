@@ -13,12 +13,15 @@ import com.bio4j.model.properties.note;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Isoform extends Node<Isoform, Isoform.type>,  
+public interface Isoform extends Node<Isoform, Isoform.type>,
+  // properties
   id,
   name,
   sequence,
   note
-{   
+{ 
+  
+  public static type TYPE = type.isoform;  
   public static enum type implements NodeType<Isoform, Isoform.type> {
     isoform;
     public type value() { return isoform; }

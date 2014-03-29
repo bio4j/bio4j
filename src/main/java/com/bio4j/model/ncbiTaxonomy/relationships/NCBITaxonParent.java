@@ -15,6 +15,7 @@ public interface NCBITaxonParent extends Relationship <
   NCBITaxon, NCBITaxon.type
 > {
 
+  public static type TYPE = type.ncbiTaxonParent;
   public static enum type implements RelationshipType <
     NCBITaxon, NCBITaxon.type,
     NCBITaxonParent, NCBITaxonParent.type,
@@ -24,4 +25,7 @@ public interface NCBITaxonParent extends Relationship <
     public type value() { return ncbiTaxonParent; }
   }
 
+  @Override
+  public NCBITaxon source();
+  public NCBITaxon target();
 }

@@ -15,6 +15,7 @@ public interface HasPartOfGo extends Relationship <
   GoTerm, GoTerm.type
 > {
 
+  public static type TYPE = type.hasPartOfGo;
   public static enum type implements RelationshipType <
     GoTerm, GoTerm.type,
     HasPartOfGo, HasPartOfGo.type,
