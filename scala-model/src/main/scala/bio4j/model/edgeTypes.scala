@@ -20,6 +20,9 @@ object AnyEdgeType {
   implicit def edgeTypeOps[E <: AnyEdgeType](edgeType: E): EdgeTypeOps[E] = EdgeTypeOps(edgeType) 
 }
 
+/*
+  
+*/
 case class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
 
   def has[P <: AnyPropertyType](propertyType: P): (E EdgeTypeHas P) = EdgeTypeHas(edgeType, propertyType)
@@ -28,7 +31,7 @@ case class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
 /*
   Witnesses of a source/type adscription to an edge type are called rels. It's not that I love this name, but...
 */
-trait AnyRel {
+trait AnyRelType {
 
   type Source <: AnyVertexType
   val source: Source
@@ -39,16 +42,16 @@ trait AnyRel {
   type Target <: AnyVertexType
   val target: Target
 }
-object AnyRel {
+object AnyRelType {
   
-  implicit def relOps[R <: AnyRel](rel: R): RelOps[R] = RelOps(rel)
+  implicit def relOps[R <: AnyRelType](rel: R): RelOps[R] = RelOps(rel)
 }
 
-class Rel[
+class RelType[
   X <: AnyVertexType, 
   E <: AnyEdgeType, 
   Y <: AnyVertexType
-](val source: X, val edge: E, val target: Y) extends AnyRel {
+](val source: X, val edge: E, val target: Y) extends AnyRelType {
 
   type Source = X
   type Edge = E
@@ -62,15 +65,16 @@ class Rel[
   We need to start with one vertex type, then an edge type and then another vertex type. This involves 
 */
 
-object DeclareRels {
+object DeclareRelTypes {
 
   case class SourceOps[S <: AnyVertexType](source: S) {
 
-    def --[E <: AnyEdgeType](edge: E) = SourceAndEdge(source, edge)
+    def --[E <: AnyEdgeType](edgeType: E) = SourceAndEdge(source, edgeType)
   }
-  case class SourceAndEdge[S <: AnyVertexType, E <: AnyEdgeType](source: S, edge: E) {
 
-    def -->[T <: AnyVertexType](target: T): Rel[S,E,T] = new Rel[S,E,T](source, edge, target)
+  case class SourceAndEdge[S <: AnyVertexType, E <: AnyEdgeType](source: S, edgeType: E) {
+
+    def -->[T <: AnyVertexType](target: T): RelType[S,E,T] = new RelType[S,E,T](source, edgeType, target)
   }
 
   implicit def toSourceOps[S <: AnyVertexType](source: S): SourceOps[S] = SourceOps(source)
@@ -82,17 +86,17 @@ object DeclareRels {
 */
 sealed trait AnyArity {
 
-  type Rel <: AnyRel
-  val rel: Rel
+  type RelType <: AnyRelType
+  val rel: RelType
 }
 
 // TODO think about the output types
-case class ManyToMany[R <: AnyRel](rel: R) extends AnyArity { type Rel = R }
-case class ManyToOne[R <: AnyRel](rel: R)  extends AnyArity { type Rel = R }
-case class OneToMany[R <: AnyRel](rel: R)  extends AnyArity { type Rel = R }
-case class OneToOne[R <: AnyRel](rel: R)   extends AnyArity { type Rel = R }
+case class ManyToMany[R <: AnyRelType](rel: R) extends AnyArity { type RelType = R }
+case class ManyToOne[R <: AnyRelType](rel: R)  extends AnyArity { type RelType = R }
+case class OneToMany[R <: AnyRelType](rel: R)  extends AnyArity { type RelType = R }
+case class OneToOne[R <: AnyRelType](rel: R)   extends AnyArity { type RelType = R }
 
-case class RelOps[R <: AnyRel](rel: R) {
+case class RelOps[R <: AnyRelType](rel: R) {
 
   def manyToMany:  ManyToMany[R] = ManyToMany(rel)
   def manyToOne:    ManyToOne[R] = ManyToOne(rel)

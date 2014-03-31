@@ -8,6 +8,27 @@
 
 ## how
 
+### nice but hard
+
+Everything through typeclasses, separate types from values, use records. It is _maybe_ possible, but looks pretty hard.
+
+There are two levels here
+
+1. graph schemas
+2. graph instances
+
+We use singleton types for schemas, and instances are to be thought of as _models_. Due to the limitations of the Scala language, some collection of types being a model is kept implicit (hahaha).
+
+#### graph schemas
+
+A bit of terminology
+
+- edge, vertex types
+- rel type = witness for edge having specific source and target types
+
+#### graph instances
+
+
 ### simple
 
 This is what we are going to do as a first step:
@@ -44,6 +65,3 @@ I don't see any signifcant problems with this approach, and it would allow for a
 1. store/access different modules in different ways, express modules at the abstract level
 2. get precise typing for everything
 
-### nice but hard
-
-Everything through typeclasses, separate types from values, use records. It is _maybe_ possible, but looks pretty hard.

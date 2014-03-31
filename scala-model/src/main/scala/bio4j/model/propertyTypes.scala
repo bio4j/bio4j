@@ -5,8 +5,12 @@ package bio4j.model
 */
 import shapeless.FieldOf
 
+/*
+  this has a label!
+*/
 trait AnyPropertyType extends LiteralType {
 
+  // should this go somewhere else?
   type Rep
 }
 class PropertyType[V]() extends AnyPropertyType with FieldOf[V] {
@@ -45,6 +49,13 @@ trait AnyVertexTypeHas {
 
   type PropertyType <: AnyPropertyType
   val propertyType: PropertyType
+}
+
+object AnyVertexTypeHas {
+
+  type PropertyOf[V <: AnyVertexType] = { 
+    type is[P <: AnyPropertyType] = AnyVertexTypeHas { type VertexType = V; type PropertyType = P }
+  }
 }
 
 case class VertexTypeHas[

@@ -11,27 +11,27 @@ import shapeless.record.FieldType
   - the property type itself
 
 */
-
 trait AnyVertexProperty {
 
-  type VertexOf <: AnyVertexOf
-  val vertexOf: VertexOf
+  type Vertex <: AnyVertex
+  val vertex: Vertex
 
   type PropertyType <: AnyPropertyType
   val propertyType: PropertyType
 
-  def apply(vertex: vertexOf.Rep): propertyType.Rep
+  import shapeless.record.KeyTag
+  def apply(v: vertex.Rep with KeyTag[vertex.type, vertex.Rep]): propertyType.Rep
 }
 
-abstract class VertexProperty[
-  VO <: AnyVertexOf,
+abstract class VertexProperty [
+  V <: AnyVertex,
   PT <: AnyPropertyType
 ](
-  val vertexOf: VO,
+  val vertex: V,
   val propertyType: PT
 ) extends AnyVertexProperty {
 
-  type VertexOf = VO
+  type Vertex = V
   type PropertyType = PT
 }
 
@@ -40,7 +40,7 @@ abstract class VertexProperty[
 
   I need to
 
-  1. get a VertexOfOps class providing a getProperty method
+  1. get a VertexOps class providing a getProperty method
   2. that method requires an implicit VertexProperty instance of the given type
   3. the return type is determined by the Property itself, and the value produced by the apply method of the aforementioned VertexProperty
 */

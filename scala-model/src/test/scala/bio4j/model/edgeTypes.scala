@@ -6,38 +6,38 @@ object edgeTypes {
   import propertyTypes._
   import vertexTypes._
 
-  case object memberOf extends EdgeType {
+  case object MemberOf extends EdgeType {
 
     this has isPublic
   }
   
   // add some more props externally  
   // directly
-  implicit val withSince = EdgeTypeHas(memberOf, since)
+  implicit val withSince = EdgeTypeHas(MemberOf, since)
   // through ops
-  implicit val withValidUntil = memberOf has validUntil
+  implicit val withValidUntil = MemberOf has validUntil
 
   // specify a source and target
-  case object usersMembersOfOrgs extends Rel(user, memberOf, org)
+  case object usersMembersOfOrgs extends RelType(User, MemberOf, Org)
   // and now its arity
   implicit val arity = usersMembersOfOrgs manyToMany
 
-  case object owns extends EdgeType {
+  case object Owns extends EdgeType {
 
     implicit val x = this has since
     implicit val y = this has validUntil
   }
 
   // explicit witness
-  case object usersOwnOrgs extends Rel(user, owns, org)
+  case object usersOwnOrgs extends RelType(User, Owns, Org)
   // its arity
   implicit val usersOwnOrgsArity = usersOwnOrgs oneToMany
   // another one
-  case object orgsOwnOrgs extends Rel(org, owns, org)
+  case object orgsOwnOrgs extends RelType(Org, Owns, Org)
   implicit val orgsOwnOrgsArity = orgsOwnOrgs manyToOne
 
-  import DeclareRels._
+  import DeclareRelTypes._
   // pretty cool DSL
-  implicit val thisIsSoCoolItScaresMe = user -- memberOf --> org manyToOne
+  implicit val thisIsSoCoolItScaresMe = User -- MemberOf --> Org manyToOne
 
 }

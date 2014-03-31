@@ -12,8 +12,8 @@ resolvers ++= Seq(
 )
 
 libraryDependencies ++= Seq(
-  "com.chuusai" % "shapeless" % "2.0.0-M1" cross CrossVersion.full
-//  "com.chuusai" % "shapeless_2.10.3" % "2.0.0-M1" // alternatively ...
+  "com.chuusai" % "shapeless" % "2.0.0-M1" cross CrossVersion.full,
+  "org.scalatest" %% "scalatest" % "2.0" % "test"
 )
 
 bucketSuffix := "era7.com"
