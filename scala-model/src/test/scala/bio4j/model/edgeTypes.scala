@@ -13,7 +13,7 @@ object edgeTypes {
   
   // add some more props externally  
   // directly
-  implicit val withSince = EdgeTypeHas(MemberOf, since)
+  implicit val withSince = EdgeTypeHasProperty(MemberOf, since)
   // through ops
   implicit val withValidUntil = MemberOf has validUntil
 

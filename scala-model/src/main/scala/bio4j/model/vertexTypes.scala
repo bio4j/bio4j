@@ -8,7 +8,7 @@ trait AnyVertexType {  val label: String  }
   A convenience class for declaring types as case objects; just do
 
   ``` scala
-  case object User extends NodeType
+  case object User extends VertexType
   ```
 */
 class VertexType  extends AnyVertexType { val label = this.toString }
@@ -19,10 +19,9 @@ object AnyVertexType {
   implicit def vertexTypeOps[E <: AnyVertexType](vertexType: E): VertexTypeOps[E] = VertexTypeOps(vertexType) 
 }
 
-/*
-  
-*/
 case class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
 
-  def has[P <: AnyPropertyType](propertyType: P): (E VertexTypeHas P) = VertexTypeHas(vertexType, propertyType)
+
+  def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = 
+    VertexTypeHasProperty(vertexType, property)
 }

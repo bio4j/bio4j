@@ -15,5 +15,11 @@ object vertexTypes {
     implicit val _name   = this has name
   }
 
-  case object Org extends VertexType  
+  // User module?
+  abstract class UserModule extends Vertex(User) {
+
+    // require implicits here
+  }
+
+  case object Org extends VertexType
 }

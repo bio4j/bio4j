@@ -25,7 +25,7 @@ object AnyEdgeType {
 */
 case class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
 
-  def has[P <: AnyPropertyType](propertyType: P): (E EdgeTypeHas P) = EdgeTypeHas(edgeType, propertyType)
+  def has[P <: AnyProperty](property: P): (E EdgeTypeHasProperty P) = EdgeTypeHasProperty(edgeType, property)
 }
 
 /*
