@@ -31,6 +31,7 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface GoTerm extends Node<GoTerm, GoTerm.type>,
+
   // properties
   name,
   id,
@@ -88,6 +89,13 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   public List<HasPartOf> out_hasPartOf();
   public List<GoTerm> out_hasPartOf_nodes();
 
+  public static type TYPE = type.goTerm;
+  
+  public static enum type implements NodeType<GoTerm, GoTerm.type> {
+    goTerm;
+    public type value() { return goTerm; }
+  }
+
   ///////////////////////// extras ////////////////////////////////////
 
   // goAnnotation
@@ -95,11 +103,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   public List<GoAnnotation> in_goAnnotation();
   public List<Protein> in_goAnnotation_nodes();
 
-  public static type TYPE = type.goTerm;
-  public static enum type implements NodeType<GoTerm, GoTerm.type> {
-    goTerm;
-    public type value() { return goTerm; }
-  }
+
 
   // relationships
   // public List<Protein> associatedProteins();

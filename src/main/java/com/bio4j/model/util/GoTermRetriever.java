@@ -8,5 +8,4 @@ public interface GoTermRetriever extends NodeRetriever<GoTerm>{
   public GoTerm getMolecularFunctionGoTerm();
   public GoTerm getBiologicalProcessGoTerm();
   public GoTerm getCellularComponentGoTerm();
-  
 }

@@ -8,6 +8,7 @@ import com.bio4j.model.go.nodes.GoTerm;
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface HasPartOf extends Relationship <
   GoTerm, GoTerm.type,
