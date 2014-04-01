@@ -19,13 +19,18 @@ public interface RelationshipType <
   */
   public RT value();
 
-  // public ST getSourceType();
-  // public TT getTargetType();
-
-  // why not arity here?
+  /*
+    the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor essentially).
+  */
   public arity arity();
 
   public static enum arity {
-    oneToOne, oneToMany, manyToOne, manyToMany;
+
+    // TODO: explain this
+    // given x: S ...
+    oneToOne, 
+    oneToMany, 
+    manyToOne, 
+    manyToMany;
   }
 }

@@ -27,11 +27,11 @@ public interface Relationship <
   public RT getType();
 
   /*
-    get the source
+    source node
   */
   public S source();
   /*
-    get the target
+    target node
   */
   public T target();
 }

@@ -8,7 +8,7 @@ public interface alternativeIds extends Property {
   public static enum type implements PropertyType<type, String[]> {
     alternativeIds;
     public type value() { return alternativeIds; }
-    public Class<String[]> getValueClass() { return String[].class; }
+    public Class<String[]> valueClass() { return String[].class; }
   }
 
   public static type TYPE = type.alternativeIds;

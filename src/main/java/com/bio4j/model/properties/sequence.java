@@ -8,7 +8,7 @@ public interface sequence extends Property {
   public static enum type implements PropertyType<type, String> {
     sequence;
     public type value() { return sequence; }
-    public Class<String> getValueClass() { return String.class; }
+    public Class<String> valueClass() { return String.class; }
   }
 
   public static type TYPE = type.sequence;

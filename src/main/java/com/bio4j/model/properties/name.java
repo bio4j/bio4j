@@ -8,7 +8,7 @@ public interface name extends Property {
   public static enum type implements PropertyType<type, String> {
     name;
     public type value() { return name; }
-    public Class<String> getValueClass() { return String.class; }
+    public Class<String> valueClass() { return String.class; }
   }
 
   public static type TYPE = type.name;

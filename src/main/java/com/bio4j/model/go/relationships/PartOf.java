@@ -9,20 +9,20 @@ import com.bio4j.model.go.nodes.GoTerm;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface IsAGo extends Relationship <
+public interface PartOf extends Relationship <
   GoTerm, GoTerm.type,
-  IsAGo,  IsAGo.type,
+  PartOf,  PartOf.type,
   GoTerm, GoTerm.type
 > {
 
-  public static type TYPE = type.isAGo;
+  public static type TYPE = type.partOfGo;
   public static enum type implements RelationshipType <
     GoTerm, GoTerm.type,
-    IsAGo,  IsAGo.type,
+    PartOf,  PartOf.type,
     GoTerm, GoTerm.type
   > {
-    isAGo;
-    public type value() { return isAGo; }
+    partOfGo;
+    public type value() { return partOfGo; }
     public arity arity() { return arity.manyToMany; }
   }
 

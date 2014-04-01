@@ -11,5 +11,5 @@ public interface PropertyType<PT extends Enum<PT> & PropertyType<PT,V>, V> {
   public PT value();
 
   // just in case
-  public Class<V> getValueClass();
+  public Class<V> valueClass();
 }

@@ -9,20 +9,20 @@ import com.bio4j.model.go.nodes.GoTerm;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface HasPartOfGo extends Relationship <
+public interface NegativelyRegulates extends Relationship <
   GoTerm, GoTerm.type,
-  HasPartOfGo, HasPartOfGo.type,
+  NegativelyRegulates, NegativelyRegulates.type,
   GoTerm, GoTerm.type
 > {
 
-  public static type TYPE = type.hasPartOfGo;
+  public static type TYPE = type.negativelyRegulates;
   public static enum type implements RelationshipType <
     GoTerm, GoTerm.type,
-    HasPartOfGo, HasPartOfGo.type,
+    NegativelyRegulates, NegativelyRegulates.type,
     GoTerm, GoTerm.type
   > {
-    hasPartOfGo;
-    public type value() { return hasPartOfGo; }
+    negativelyRegulates;
+    public type value() { return negativelyRegulates; }
     public arity arity() { return arity.manyToMany; }
   }
 

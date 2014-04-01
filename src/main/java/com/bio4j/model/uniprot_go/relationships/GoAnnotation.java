@@ -8,21 +8,22 @@ import com.bio4j.model.uniprot.nodes.Protein;
 /**
  *
  * @author Pablo Pareja <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com> 
  */
-public interface ProteinGo extends Relationship <
+public interface GoAnnotation extends Relationship <
   Protein, Protein.type,
-  ProteinGo, ProteinGo.type,
+  GoAnnotation, GoAnnotation.type,
   GoTerm, GoTerm.type
 > {
 
-  public static type TYPE = type.proteinGo;
+  public static type TYPE = type.goAnnotation;
   public static enum type implements RelationshipType <
     Protein, Protein.type,
-    ProteinGo, ProteinGo.type,
+    GoAnnotation, GoAnnotation.type,
     GoTerm, GoTerm.type
   > {
-    proteinGo;
-    public type value() { return proteinGo; }
+    goAnnotation;
+    public type value() { return goAnnotation; }
     public arity arity() { return arity.manyToMany; }
   }
 
