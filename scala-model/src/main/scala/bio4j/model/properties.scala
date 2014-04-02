@@ -44,6 +44,13 @@ extends AnyEdgeTypeHasProperty {
   type Property = P
 }
 
+object AnyEdgeTypeHasProperty {
+
+  type PropertyOf[V <: AnyEdgeType] = { 
+    type is[P <: AnyProperty] = AnyEdgeTypeHasProperty { type EdgeType = V; type Property = P }
+  }
+}
+
 /*
   witness for a vertex type declaring a property of the given type
 */
