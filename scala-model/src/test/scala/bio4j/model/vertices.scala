@@ -6,28 +6,30 @@ import bio4j.model._
 import shapeless.record.FieldType
 
 object vertices {
-  
-  // now users are user ->> "hey Joe" 
-  case object user extends Vertex(User) { type Rep = Impl;
 
-    // stupid implementation
-    case class Impl(
+  // stupid implementation
+    case class UserImpl(
       val id: String,
       val name: String,
       val since: Int
     )
+  
+  // now users are user ->> "hey Joe" 
+  case object user extends Vertex(User) { type Rep = UserImpl;
+
+    
     // provide implicits here for all properties
     // or elsewhere
     implicit object readId extends ReadProperty(id) {
 
       @Override
-      def apply(vRep: FieldType[user.type, Impl]): String = (vRep:Impl).id
+      def apply(vRep: FieldType[user.type, UserImpl]): String = (vRep:UserImpl).id
     }
 
     implicit object readSince extends ReadProperty(since) {
 
       @Override
-      def apply(vRep: FieldType[user.type, user.Rep]): since.Rep = (vRep:Impl).since
+      def apply(vRep: FieldType[user.type, user.Rep]): since.Rep = (vRep:UserImpl).since
     }
   }
 }
@@ -40,7 +42,7 @@ class UserSuite extends org.scalatest.FunSuite {
 
     import vertexTypes.User._
     import user._
-    val x = user ->> user.Impl(
+    val x = user ->> UserImpl(
                                 id = "1ad3a34df",
                                 name = "Robustiano Satrústegui",
                                 since = 2349965

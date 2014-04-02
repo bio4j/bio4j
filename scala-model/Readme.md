@@ -48,6 +48,10 @@ val followers = x <-- follows --?
 
 **THE ABOVE IS WRONG**. We should only retrieve things based in a rel instance for the corresponding types. this way the arity, source/target types etc are all known and client code can easily provide implementations for it.
 
+- client code implements how to retrieve something given a known `Rel` + arity type: source, target, return type if needed, etc
+- given the right `Rel` witness in scope the typeclass above gets resolved.
+- `Rel` instances should already have the corresponding `Vertex` instances of their types
+
 
 -----
 

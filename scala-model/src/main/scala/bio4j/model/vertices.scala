@@ -50,9 +50,11 @@ object AnyVertex {
   import shapeless.record.KeyTag  
 
   type FieldOf[Rep, V <: AnyVertex] = { type is[X] = Rep with KeyTag[V, Rep] }
+
+  type VertexType[VT <: AnyVertexType] = AnyVertex { type VertexType = VT }
 }
 
-class Vertex[VT <: AnyVertexType](val vertexType: VT) extends AnyVertex {
+abstract class Vertex[VT <: AnyVertexType](val vertexType: VT) extends AnyVertex {
 
   type VertexType = VT
 }
