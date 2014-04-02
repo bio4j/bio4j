@@ -28,6 +28,28 @@ A bit of terminology
 
 #### graph instances
 
+#### operations
+
+``` scala
+val x = user ->> store.node(id = "34sdad5as9")
+// get properties
+val x_id x get id
+val x_name = x get name
+// relationships
+val x_blockRels = x out blocks
+val x_blocksWhen = x_blocRels map { b => (b get date) }
+// get the nodes
+val followedBy ?-- follows --> x
+val followers = x <-- follows --?
+```
+
+- getting properties for vertices and edges could be the same in principle; but, as source and target are specified indepedently, it could be possible to defer specification of properties for edges so that it depends on a source/target specification.
+- getting the edges of a given type out of a vertex could contain edges with different...
+
+**THE ABOVE IS WRONG**. We should only retrieve things based in a rel instance for the corresponding types. this way the arity, source/target types etc are all known and client code can easily provide implementations for it.
+
+
+-----
 
 ### simple
 
