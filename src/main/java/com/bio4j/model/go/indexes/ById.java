@@ -10,4 +10,3 @@ public interface ById extends NodeUniqueIndex<GoTerm, GoTerm.type, id.type, Stri
   @Override
   public GoTerm getNode(String byValue);
 }
-

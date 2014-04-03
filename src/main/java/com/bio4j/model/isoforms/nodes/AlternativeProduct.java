@@ -9,12 +9,14 @@ import com.bio4j.model.NodeType;
 import com.bio4j.model.properties.name;
 
 /**
- *
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface AlternativeProduct extends Node<AlternativeProduct, AlternativeProduct.type>,
+
   // properties
-  name 
+  name
+  
 {    
 
   public static type TYPE = type.alternativeProduct;
