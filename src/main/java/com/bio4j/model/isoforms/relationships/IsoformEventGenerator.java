@@ -10,6 +10,7 @@ import com.bio4j.model.isoforms.nodes.Isoform;
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface IsoformEventGenerator extends Relationship <
   Isoform, Isoform.type,
@@ -27,7 +28,8 @@ public interface IsoformEventGenerator extends Relationship <
     isoformEventGenerator;
     public type value() { return isoformEventGenerator; }
     // TODO: review
-    public arity arity() { return arity.manyToMany; }
+    public arity arity() { return 
+      arity.manyToMany; }
   }
 
   @Override  
