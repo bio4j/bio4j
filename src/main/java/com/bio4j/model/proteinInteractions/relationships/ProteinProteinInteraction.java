@@ -8,7 +8,7 @@ import com.bio4j.model.RelationshipType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-// TODO: migrate
+// TODO migrate; I don't get the source or target here
 public interface ProteinProteinInteraction {
     
   public String getOrganismsDiffer();

@@ -1,5 +1,4 @@
-
-package com.bio4j.model.refseq.nodes.rna;
+package com.bio4j.model.refseq.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.refseq.nodes.GenomeElement;

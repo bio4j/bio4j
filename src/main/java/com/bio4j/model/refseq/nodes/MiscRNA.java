@@ -1,6 +1,4 @@
-
-package com.bio4j.model.refseq.nodes.rna;
-
+package com.bio4j.model.refseq.nodes;
 
 /**
  *
@@ -8,6 +6,7 @@ package com.bio4j.model.refseq.nodes.rna;
  */
 public interface MiscRNA extends RNA<MiscRNA, MiscRNA.type> { 
 
+  public static type TYPE = type.miscRNA;
   enum type implements RNAType<MiscRNA, MiscRNA.type> {
 
     miscRNA;

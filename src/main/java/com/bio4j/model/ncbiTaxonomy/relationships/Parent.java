@@ -8,25 +8,33 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 /**
  *
  * @author Pablo Pareja <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface NCBITaxonParent extends Relationship <
-  NCBITaxon, NCBITaxon.type,
-  NCBITaxonParent, NCBITaxonParent.type,
-  NCBITaxon, NCBITaxon.type
-> {
+public interface Parent extends Relationship <
 
-  public static type TYPE = type.ncbiTaxonParent;
-  public static enum type implements RelationshipType <
-    NCBITaxon, NCBITaxon.type,
-    NCBITaxonParent, NCBITaxonParent.type,
-    NCBITaxon, NCBITaxon.type
-  > {
-    ncbiTaxonParent;
-    public type value() { return ncbiTaxonParent; }
-    public arity arity() { return arity.manyToOne; }
-  }
+  NCBITaxon, NCBITaxon.type,
+  Parent, Parent.type,
+  NCBITaxon, NCBITaxon.type
+
+> 
+
+{
 
   @Override
   public NCBITaxon source();
+  @Override
   public NCBITaxon target();
+
+  public static type TYPE = type.parent;
+  public static enum type implements RelationshipType <
+    NCBITaxon, NCBITaxon.type,
+    Parent, Parent.type,
+    NCBITaxon, NCBITaxon.type
+  > {
+    parent;
+    public type value() { return parent; }
+    public arity arity() { return arity.manyToOne; }
+  }
+
+  
 }
