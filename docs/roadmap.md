@@ -88,6 +88,18 @@ For documentation,
 - the AWS option needs to be promoted as the default
 - the import docs should be crystal clear
 
+### examples
+
+- @evdokim
+- laughedelic
+- @marina-manrique
+
+All of them based in AWS and bundles. At a minimum
+
+- basic traversals using the abstract model
+- some Cypher stuff
+- any biologically meaningful thing
+
 ## Bio4j paper
 
 - **Deadline** 2014-??-??
@@ -147,6 +159,16 @@ This would need to be manually maintained; I don't see any other option. Not so 
     + @evdokim
 
 Working on it. Should be finished before the end of the GSoC community bonding phase. It would be nice to start working on a Titan implementation for it.
+
+## Drosophila data integration?
+
+- **Deadline** ??
+- **Who**
+    + @laughedelic
+    + @rtobes
+    + @eparejatobes
+
+Need to check this with @rtobes
 
 ## Idris + Bio4j type providers
 
