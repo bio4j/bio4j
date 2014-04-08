@@ -23,6 +23,8 @@ public interface SubcellularLocationParent extends Relationship <
     subcellularLocationParent;
     public type value() { return subcellularLocationParent; }
     public arity arity() { return arity.manyToOne; }
+    public SubcellularLocation.type sourceType() { return SubcellularLocation.TYPE; }
+    public SubcellularLocation.type targetType() { return SubcellularLocation.TYPE; }
   }
 
 }

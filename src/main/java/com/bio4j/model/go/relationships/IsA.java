@@ -12,7 +12,7 @@ import com.bio4j.model.go.nodes.GoTerm;
  */
 public interface IsA extends Relationship <
   GoTerm, GoTerm.type,
-  IsA,  IsA.type,
+  IsA, IsA.type,
   GoTerm, GoTerm.type
 > {
 
@@ -25,6 +25,8 @@ public interface IsA extends Relationship <
     isA;
     public type value() { return isA; }
     public arity arity() { return arity.manyToMany; }
+    public GoTerm.type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.type targetType() { return GoTerm.TYPE; }
   }
 
   public GoTerm source();

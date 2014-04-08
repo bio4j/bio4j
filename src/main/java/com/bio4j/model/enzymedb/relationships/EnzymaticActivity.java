@@ -26,6 +26,8 @@ public interface EnzymaticActivity extends Relationship <
   > {
     enzymaticActivity;
     public type value() { return enzymaticActivity; }
+    public Protein.type sourceType() { return Protein.TYPE; }
+    public Enzyme.type targetType() { return Enzyme.TYPE; }
     public arity arity() { return arity.manyToMany; }
   }
 

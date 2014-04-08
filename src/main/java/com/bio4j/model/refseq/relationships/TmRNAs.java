@@ -32,5 +32,7 @@ public interface TmRNAs extends Relationship <
     tmRNAs;
     public type value() { return tmRNAs; }
     public arity arity() { return arity.manyToMany; } // TODO review this
+    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
+    public TmRNA.type targetType() { return TmRNA.TYPE; }
   }
 }

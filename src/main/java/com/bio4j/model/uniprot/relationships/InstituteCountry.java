@@ -16,7 +16,8 @@ public interface InstituteCountry extends Relationship <
   Country, Country.type
 > {
 
-  enum type implements RelationshipType <
+  public static type TYPE = type.instituteCountry;
+  public enum type implements RelationshipType <
     Institute, Institute.type,
     InstituteCountry, InstituteCountry.type,
     Country, Country.type
@@ -25,6 +26,8 @@ public interface InstituteCountry extends Relationship <
     instituteCountry;
     public type value() { return instituteCountry; }
     public arity arity() { return arity.manyToOne; }
+    public Institute.type sourceType() { return Institute.TYPE; }
+    public Country.type targetType() { return Country.TYPE; }
   }
 
   // replace this by source/target??

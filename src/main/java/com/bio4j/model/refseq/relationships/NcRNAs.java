@@ -32,5 +32,7 @@ public interface NcRNAs extends Relationship <
     ncRNAs;
     public type value() { return ncRNAs; }
     public arity arity() { return arity.manyToMany; } // TODO review this
+    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
+    public NcRNA.type targetType() { return NcRNA.TYPE; }
   }
 }

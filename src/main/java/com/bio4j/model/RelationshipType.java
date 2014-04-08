@@ -20,7 +20,7 @@ public interface RelationshipType <
   public RT value();
 
   /*
-    the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor essentially).
+    the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor/span essentially).
   */
   public arity arity();
 
@@ -33,4 +33,7 @@ public interface RelationshipType <
     manyToOne, 
     manyToMany;
   }
+
+  public ST sourceType();
+  public TT targetType();
 }

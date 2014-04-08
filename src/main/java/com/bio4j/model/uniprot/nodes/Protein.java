@@ -35,8 +35,9 @@ import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteracti
 import java.util.List;
 
 public interface Protein extends Node<Protein, Protein.type> {
-    
-  enum type implements NodeType<Protein, Protein.type> {
+  
+  public static type TYPE = type.protein; 
+  public static enum type implements NodeType<Protein, Protein.type> {
 
     protein;
     public type value() { return protein; }

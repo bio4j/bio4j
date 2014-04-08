@@ -13,8 +13,9 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface OnlineArticle extends Node<OnlineArticle, OnlineArticle.type> {
-    
-  enum type implements NodeType<OnlineArticle, OnlineArticle.type> {
+  
+  public static OnlineArticle.type TYPE = type.onlineArticle;  
+  public static enum type implements NodeType<OnlineArticle, OnlineArticle.type> {
 
     onlineArticle;
     public type value() { return onlineArticle; }

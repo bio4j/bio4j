@@ -89,8 +89,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   public List<HasPartOf> out_hasPartOf();
   public List<GoTerm> out_hasPartOf_nodes();
 
-  public static type TYPE = type.goTerm;
-  
+  public static type TYPE = type.goTerm;  
   public static enum type implements NodeType<GoTerm, GoTerm.type> {
     goTerm;
     public type value() { return goTerm; }

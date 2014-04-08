@@ -24,6 +24,9 @@ public interface ArticleJournal extends Relationship <
         articleJournal;
         public type value() { return articleJournal; }
         public arity arity() { return arity.manyToOne; }
+        public Article.type sourceType() { return Article.TYPE; }
+        public Journal.type targetType() { return Journal.TYPE; }
+
     }
 
     public String date();

@@ -32,5 +32,7 @@ public interface CDSs extends Relationship <
     cdss;
     public type value() { return cdss; }
     public arity arity() { return arity.manyToMany; } // TODO review this
+    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
+    public CDS.type targetType() { return CDS.TYPE; }
   }
 }

@@ -67,6 +67,7 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.type>,
   public List<? extends TmRNA> out_tmRNAs_nodes();
   // TODO all the other RNAs
 
+  public static type TYPE = type.genomeElement;
   public static enum type implements NodeType<GenomeElement, GenomeElement.type> {
 
     genomeElement;

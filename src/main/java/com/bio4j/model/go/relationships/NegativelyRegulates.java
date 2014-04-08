@@ -25,6 +25,8 @@ public interface NegativelyRegulates extends Relationship <
     negativelyRegulates;
     public type value() { return negativelyRegulates; }
     public arity arity() { return arity.manyToMany; }
+    public GoTerm.type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.type targetType() { return GoTerm.TYPE; }
   }
 
   public GoTerm source();

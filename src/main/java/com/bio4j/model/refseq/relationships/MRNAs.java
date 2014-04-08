@@ -32,5 +32,7 @@ public interface MRNAs extends Relationship <
     mRNAs;
     public type value() { return mRNAs; }
     public arity arity() { return arity.manyToMany; } // TODO review this
+    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
+    public MRNA.type targetType() { return MRNA.TYPE; }
   }
 }

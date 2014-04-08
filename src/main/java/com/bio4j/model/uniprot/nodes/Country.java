@@ -8,8 +8,9 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Country extends Node<Country, Country.type> {
-    
-  enum type implements NodeType<Country, Country.type> {
+  
+  public static type TYPE = type.country;   
+  public static enum type implements NodeType<Country, Country.type> {
 
     country;
     public type value() { return country; }

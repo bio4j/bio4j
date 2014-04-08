@@ -17,7 +17,6 @@ public interface Parent extends Relationship <
   NCBITaxon, NCBITaxon.type
 
 > 
-
 {
 
   @Override
@@ -33,8 +32,8 @@ public interface Parent extends Relationship <
   > {
     parent;
     public type value() { return parent; }
+    public NCBITaxon.type sourceType() { return NCBITaxon.TYPE; }
+    public NCBITaxon.type targetType() { return NCBITaxon.TYPE; }
     public arity arity() { return arity.manyToOne; }
-  }
-
-  
+  }  
 }

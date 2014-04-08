@@ -25,6 +25,8 @@ public interface HasPartOf extends Relationship <
     hasPartOf;
     public type value() { return hasPartOf; }
     public arity arity() { return arity.manyToMany; }
+    public GoTerm.type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.type targetType() { return GoTerm.TYPE; }
   }
 
   public GoTerm source();

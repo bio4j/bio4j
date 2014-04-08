@@ -24,6 +24,9 @@ public interface BookCity extends Relationship <
     BookCity;
     public type value() { return BookCity; }
     public arity arity() { return arity.manyToOne; }
+    public Book.type sourceType() { return Book.TYPE; }
+    public City.type targetType() { return City.TYPE; }
+
   }
 
 }

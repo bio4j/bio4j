@@ -11,7 +11,8 @@ import com.bio4j.model.NodeType;
  */
 public interface Organism extends Node<Organism, Organism.type> {
     
-  enum type implements NodeType<Organism, Organism.type> {
+  public static type TYPE = type.organism;
+  public static enum type implements NodeType<Organism, Organism.type> {
 
     organism;
     public type value() { return organism; }

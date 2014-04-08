@@ -24,6 +24,9 @@ public interface ArticleAuthor extends Relationship <
     articleAuthor;
     public type value() { return articleAuthor; }
     public arity arity() { return arity.manyToMany; }
+    public Article.type sourceType() { return Article.TYPE; }
+    public Person.type targetType() { return Person.TYPE; }
+
   }
     
 }

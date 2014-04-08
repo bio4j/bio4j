@@ -16,7 +16,8 @@ public interface OnlineArticleProteinCitation extends Relationship <
     Protein, Protein.type
 > {
 
-    enum type implements RelationshipType <
+    public static type TYPE = type.onlineArticleProteinCitation;
+    public static enum type implements RelationshipType <
         OnlineArticle, OnlineArticle.type,
         OnlineArticleProteinCitation, OnlineArticleProteinCitation.type,
         Protein, Protein.type
@@ -24,6 +25,8 @@ public interface OnlineArticleProteinCitation extends Relationship <
         onlineArticleProteinCitation;
         public type value() { return onlineArticleProteinCitation; }
         public arity arity() { return arity.manyToMany; }
+        public OnlineArticle.type sourceType() { return OnlineArticle.TYPE; }
+        public Protein.type targetType() { return Protein.TYPE; }
     }
 
 }

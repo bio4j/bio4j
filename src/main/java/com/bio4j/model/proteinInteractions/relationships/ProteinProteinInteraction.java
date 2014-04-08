@@ -7,10 +7,24 @@ import com.bio4j.model.RelationshipType;
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-// TODO migrate; I don't get the source or target here
-public interface ProteinProteinInteraction {
-    
+public interface ProteinProteinInteraction extends Relationship <
+
+  Protein, Protein.type,
+  ProteinProteinInteraction, ProteinProteinInteraction.type,
+  Protein, Protein.type
+
+> 
+{
+
+  @Override
+  public Protein source();
+  @Override
+  public Protein target();
+
+  // TODO migrate to properties
+
   public String getOrganismsDiffer();
   public String getExperiments();
   public String getIntactId2();
@@ -21,6 +35,16 @@ public interface ProteinProteinInteraction {
   public void setIntactId2(String value);
   public void setIntactId1(String value);
 
-  public Protein getProtein1();
-  public Protein getProtein2();    
+  public static type TYPE = type.proteinProteinInteraction;
+  public static enum type implements RelationshipType <
+    Protein, Protein.type,
+    ProteinProteinInteraction, ProteinProteinInteraction.type,
+    Protein, Protein.type
+  > {
+    proteinProteinInteraction;
+    public type value() { return proteinProteinInteraction; }
+    public arity arity() { return arity.manyToMany; }
+    public Protein.type sourceType() { return Protein.TYPE; }
+    public Protein.type targetType() { return Protein.TYPE; }
+  }  
 }

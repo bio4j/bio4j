@@ -10,11 +10,13 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Journal extends Node<Journal, Journal.type> {
-    
-  enum type implements NodeType<Journal, Journal.type> {
+  
+  public static type TYPE = type.INSTANCE;
+  public static enum type implements NodeType<Journal, Journal.type> {
 
     journal;
     public type value() { return journal; }
+    public static type INSTANCE = journal;
   }    
     //----GETTERS---
     public String getName();

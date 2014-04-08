@@ -24,6 +24,9 @@ public interface BookProteinCitation extends Relationship <
         BookProteinCitation;
         public type value() { return BookProteinCitation; }
         public arity arity() { return arity.manyToMany; }
+        public Book.type sourceType() { return Book.TYPE; }
+        public Protein.type targetType() { return Protein.TYPE; }
+
     }
 
     public String title();

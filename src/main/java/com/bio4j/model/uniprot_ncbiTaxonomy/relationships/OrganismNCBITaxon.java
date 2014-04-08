@@ -25,6 +25,8 @@ public interface OrganismNCBITaxon extends Relationship <
     public type value() { return OrganismNCBITaxon; }
     // TODO: review this
     public arity arity() { return arity.manyToMany; }
+    public Organism.type sourceType() { return Organism.TYPE; }
+    public NCBITaxon.type targetType() { return NCBITaxon.TYPE; }
   }
 
 }

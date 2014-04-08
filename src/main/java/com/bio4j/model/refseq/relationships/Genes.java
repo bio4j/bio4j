@@ -32,5 +32,7 @@ public interface Genes extends Relationship <
     genes;
     public type value() { return genes; }
     public arity arity() { return arity.manyToMany; } // TODO review this
+    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
+    public Gene.type targetType() { return Gene.TYPE; }
   }
 }

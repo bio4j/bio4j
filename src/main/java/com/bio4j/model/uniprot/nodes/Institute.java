@@ -9,7 +9,8 @@ import com.bio4j.model.NodeType;
  */
 public interface Institute extends Node<Institute, Institute.type> {
     
-  enum type implements NodeType<Institute, Institute.type> {
+  public static type TYPE = type.institute;  
+  public static enum type implements NodeType<Institute, Institute.type> {
 
     institute;
     public type value() { return institute; }

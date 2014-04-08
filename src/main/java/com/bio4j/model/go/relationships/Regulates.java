@@ -18,8 +18,7 @@ public interface Regulates extends Relationship <
   public GoTerm source();
   public GoTerm target();
 
-  public static type TYPE = type.regulates;
-  
+  public static type TYPE = type.regulates; 
   public static enum type implements RelationshipType <
     GoTerm, GoTerm.type,
     Regulates,  Regulates.type,
@@ -28,6 +27,9 @@ public interface Regulates extends Relationship <
     regulates;
     public type value() { return regulates; }
     public arity arity() { return arity.manyToMany; }
+    public GoTerm.type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.type targetType() { return GoTerm.TYPE; }
+
   }
 
   

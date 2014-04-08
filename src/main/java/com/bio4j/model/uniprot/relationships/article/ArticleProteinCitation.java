@@ -24,6 +24,9 @@ public interface ArticleProteinCitation extends Relationship <
         articleProteinCitation;
         public type value() { return articleProteinCitation; }
         public arity arity() { return arity.manyToMany; }
+        public Article.type sourceType() { return Article.TYPE; }
+        public Protein.type targetType() { return Protein.TYPE; }
+
     }
 
 }

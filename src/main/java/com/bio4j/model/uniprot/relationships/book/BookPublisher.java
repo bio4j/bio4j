@@ -24,6 +24,9 @@ public interface BookPublisher extends Relationship <
     bookPublisher;
     public type value() { return bookPublisher; }
     public arity arity() { return arity.manyToOne; }
+    public Book.type sourceType() { return Book.TYPE; }
+    public Publisher.type targetType() { return Publisher.TYPE; }
+
   }
 
 }

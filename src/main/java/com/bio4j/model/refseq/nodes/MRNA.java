@@ -7,6 +7,7 @@ package com.bio4j.model.refseq.nodes;
  */
 public interface MRNA extends RNA<MRNA, MRNA.type> { 
 
+  public static type TYPE = type.mRNA;
   public static enum type implements RNAType<MRNA, MRNA.type> {
 
     mRNA;

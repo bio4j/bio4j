@@ -25,6 +25,7 @@ public interface RNA <
   //   R extends RNA,
   //   RT extends Enum<RT> & NodeType<R,RT>
   // > extends NodeType<R, RNA.type> {}
-   
+  
+  // TODO migrate to rels 
   public GenomeElement getGenomeElement();
 }

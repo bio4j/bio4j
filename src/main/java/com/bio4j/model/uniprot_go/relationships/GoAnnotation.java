@@ -25,6 +25,8 @@ public interface GoAnnotation extends Relationship <
     goAnnotation;
     public type value() { return goAnnotation; }
     public arity arity() { return arity.manyToMany; }
+    public Protein.type sourceType() { return Protein.TYPE; }
+    public GoTerm.type targetType() { return GoTerm.TYPE; }
   }
 
   // TODO: migrate

@@ -11,11 +11,13 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface City extends Node<City, City.type> {
-    
-  enum type implements NodeType<City, City.type> {
+  
+  public static type TYPE = type.INSTANCE;
+  public static enum type implements NodeType<City, City.type> {
 
     city;
     public type value() { return city; }
+    public static type INSTANCE = city;
   }
 
     //----GETTERS---
@@ -23,5 +25,5 @@ public interface City extends Node<City, City.type> {
     public List<Book> getBooks();
 
     //----SETTERS----
-    public void setName(String value);        
+    public void setName(String value);    
 }

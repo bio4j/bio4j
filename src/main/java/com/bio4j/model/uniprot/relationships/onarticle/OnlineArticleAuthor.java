@@ -16,14 +16,18 @@ public interface OnlineArticleAuthor extends Relationship <
   Person, Person.type
 > {
 
-  enum type implements RelationshipType <
+  public static type TYPE = type.onlineArticleAuthor;
+  public static enum type implements RelationshipType <
     OnlineArticle, OnlineArticle.type,
     OnlineArticleAuthor, OnlineArticleAuthor.type,
     Person, Person.type
   > {
-    OnlineArticleAuthor;
-    public type value() { return OnlineArticleAuthor; }
+
+    onlineArticleAuthor;
+    public type value() { return onlineArticleAuthor; }
     public arity arity() { return arity.manyToMany; }
+    public OnlineArticle.type sourceType() { return OnlineArticle.TYPE; }
+    public Person.type targetType() { return Person.TYPE; }
   }
 
 }
