@@ -3,7 +3,7 @@ package com.bio4j.model;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.bio4j.model.go.go_module;
+import com.bio4j.model.go.GoModule;
 
 // TODO maybe?
 /*
@@ -13,7 +13,7 @@ import com.bio4j.model.go.go_module;
 */
 public enum modules {
 
-  GeneOntology(new go_module());
+  GeneOntology(new GoModule());
   // TODO add the others
 
   private Module module = null; 
