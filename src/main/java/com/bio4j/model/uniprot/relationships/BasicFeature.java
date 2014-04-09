@@ -1,8 +1,7 @@
-package com.bio4j.model.uniprot.relationships.features;
+package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.uniprot.nodes.FeatureType;
 import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.Relationship;
 
 /**
  *

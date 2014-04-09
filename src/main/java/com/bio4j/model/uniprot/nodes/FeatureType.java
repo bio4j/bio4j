@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface FeatureType extends Node<FeatureType, FeatureType.type> {
+public interface FeatureType extends Node<FeatureType, FeatureType.Type> {
     
-  enum type implements NodeType<FeatureType, FeatureType.type> {
+  enum Type implements NodeType<FeatureType, FeatureType.Type> {
 
     featureType;
-    public type value() { return featureType; }
+    public Type value() { return featureType; }
   }
  
     //----GETTERS---

@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Consortium extends Node<Consortium, Consortium.type> {
+public interface Consortium extends Node<Consortium, Consortium.Type> {
     
-  enum type implements NodeType<Consortium, Consortium.type> {
+  enum Type implements NodeType<Consortium, Consortium.Type> {
 
     consortium;
-    public type value() { return consortium; }
+    public Type value() { return consortium; }
   }
    
     //----GETTERS---

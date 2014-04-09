@@ -1,4 +1,4 @@
-package com.bio4j.model.uniprot.relationships.features;
+package com.bio4j.model.uniprot.relationships;
 
 /**
  *

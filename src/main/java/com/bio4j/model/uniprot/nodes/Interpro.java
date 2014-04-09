@@ -9,12 +9,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Interpro extends Node<Interpro, Interpro.type> {
+public interface Interpro extends Node<Interpro, Interpro.Type> {
     
-  enum type implements NodeType<Interpro, Interpro.type> {
+  enum Type implements NodeType<Interpro, Interpro.Type> {
 
     interpro;
-    public type value() { return interpro; }
+    public Type value() { return interpro; }
   }
   
     //----GETTERS---

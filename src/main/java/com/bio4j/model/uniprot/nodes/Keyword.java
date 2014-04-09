@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Keyword extends Node<Keyword, Keyword.type> {
+public interface Keyword extends Node<Keyword, Keyword.Type> {
     
-  enum type implements NodeType<Keyword, Keyword.type> {
+  enum Type implements NodeType<Keyword, Keyword.Type> {
 
     keyword;
-    public type value() { return keyword; }
+    public Type value() { return keyword; }
   }
     
     //----GETTERS---

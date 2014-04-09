@@ -7,15 +7,15 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Person extends Node<Person, Person.type> {
+public interface Person extends Node<Person, Person.Type> {
     
-  public static enum type implements NodeType<Person, Person.type> {
+  public static enum Type implements NodeType<Person, Person.Type> {
 
     person;
-    public type value() { return person; }
+    public Type value() { return person; }
   }
   // good?
-  public static Person.type TYPE = type.person;
+  public static Person.Type TYPE = Type.person;
 
   public String name();
 }

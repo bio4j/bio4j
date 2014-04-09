@@ -9,12 +9,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface DB extends Node<DB, DB.type> {
+public interface DB extends Node<DB, DB.Type> {
     
-  enum type implements NodeType<DB, DB.type> {
+  enum Type implements NodeType<DB, DB.Type> {
 
     db;
-    public type value() { return db; }
+    public Type value() { return db; }
   }    
     //----GETTERS---
     public String getName();

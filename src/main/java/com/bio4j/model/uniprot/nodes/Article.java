@@ -12,15 +12,16 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Article extends Node<Article, Article.type> {
+public interface Article extends Node<Article, Article.Type> {
   
-  public static type TYPE = type.INSTANCE; 
-  public static enum type implements NodeType<Article, Article.type> {
-
+  public static Type TYPE = Type.INSTANCE;
+  
+  public static enum Type implements NodeType<Article, Article.Type> {
     article;
-    public type value() { return article; }
-    public static type INSTANCE = article;
+    public Type value() { return article; }
+    public static Type INSTANCE = article;
   }   
+  
   //----GETTERS---
   public String getTitle();
   public String getPubmedId();

@@ -9,13 +9,13 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Organism extends Node<Organism, Organism.type> {
+public interface Organism extends Node<Organism, Organism.Type> {
     
-  public static type TYPE = type.organism;
-  public static enum type implements NodeType<Organism, Organism.type> {
+  public static Type TYPE = Type.organism;
+  public static enum Type implements NodeType<Organism, Organism.Type> {
 
     organism;
-    public type value() { return organism; }
+    public Type value() { return organism; }
   }
     
     //----GETTERS---

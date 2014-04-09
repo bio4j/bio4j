@@ -7,13 +7,13 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Institute extends Node<Institute, Institute.type> {
+public interface Institute extends Node<Institute, Institute.Type> {
     
-  public static type TYPE = type.institute;  
-  public static enum type implements NodeType<Institute, Institute.type> {
+  public static Type TYPE = Type.institute;  
+  public static enum Type implements NodeType<Institute, Institute.Type> {
 
     institute;
-    public type value() { return institute; }
+    public Type value() { return institute; }
   }
 
     //----GETTERS---
