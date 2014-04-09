@@ -1,7 +1,5 @@
 package com.bio4j.model.refseq.nodes;
 
-import com.bio4j.model.Node;
-import com.bio4j.model.refseq.nodes.GenomeElement;
 import com.bio4j.model.NodeType;
 
 public interface RNAType <

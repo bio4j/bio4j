@@ -2,9 +2,6 @@ package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-import com.bio4j.model.go.nodes.GoTerm;
-import com.bio4j.model.go.relationships.HasPartOf;
-import com.bio4j.model.go.relationships.HasPartOf.type;
 import com.bio4j.model.uniprot.nodes.FeatureType;
 import com.bio4j.model.uniprot.nodes.Protein;
 

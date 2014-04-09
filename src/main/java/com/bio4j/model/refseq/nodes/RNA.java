@@ -2,7 +2,6 @@ package com.bio4j.model.refseq.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.refseq.nodes.GenomeElement;
-import com.bio4j.model.NodeType;
 
 import com.bio4j.model.properties.note;
 import com.bio4j.model.properties.positions;
