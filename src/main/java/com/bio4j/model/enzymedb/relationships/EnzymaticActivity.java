@@ -14,21 +14,21 @@ import com.bio4j.model.enzymedb.nodes.Enzyme;
  */
 public interface EnzymaticActivity extends Relationship <
   Protein, Protein.type,
-  EnzymaticActivity, EnzymaticActivity.type,
-  Enzyme, Enzyme.type
+  EnzymaticActivity, EnzymaticActivity.Type,
+  Enzyme, Enzyme.Type
 > {
 
-  public static type TYPE = type.enzymaticActivity;
-  public static enum type implements RelationshipType <
-    Protein, Protein.type,
-    EnzymaticActivity, EnzymaticActivity.type,
-    Enzyme, Enzyme.type
+  public static Type TYPE = Type.enzymaticActivity;
+  public static enum Type implements RelationshipType <
+    Protein, Protein.Type,
+    EnzymaticActivity, EnzymaticActivity.Type,
+    Enzyme, Enzyme.Type
   > {
     enzymaticActivity;
-    public type value() { return enzymaticActivity; }
-    public Protein.type sourceType() { return Protein.TYPE; }
-    public Enzyme.type targetType() { return Enzyme.TYPE; }
-    public arity arity() { return arity.manyToMany; }
+    public Type value() { return enzymaticActivity; }
+    public Protein.Type sourceType() { return Protein.TYPE; }
+    public Enzyme.Type targetType() { return Enzyme.TYPE; }
+    public Arity arity() { return Arity.manyToMany; }
   }
 
   public Protein source();
