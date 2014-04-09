@@ -23,19 +23,29 @@ import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.refseq.nodes.GenomeElement;
+import com.bio4j.model.properties.FullName;
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.properties.Sequence;
+import com.bio4j.model.properties.ShortName;
 import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
 import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
 
 import java.util.List;
 
-public interface Protein extends Node<Protein, Protein.Type> {
-  
-  public static Type TYPE = Type.protein; 
-  public static enum Type implements NodeType<Protein, Protein.Type> {
+public interface Protein extends Node<Protein, Protein.Type>,
 
-    protein;
-    public Type value() { return protein; }
-  }
+	Name,
+	Sequence,
+	FullName,
+	ShortName
+	{
+  
+	  public static Type TYPE = Type.protein; 
+	  public static enum Type implements NodeType<Protein, Protein.Type> {
+	
+	    protein;
+	    public Type value() { return protein; }
+	  }
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
