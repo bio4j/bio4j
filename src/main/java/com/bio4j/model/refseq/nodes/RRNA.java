@@ -4,12 +4,12 @@ package com.bio4j.model.refseq.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface RRNA extends RNA<RRNA, RRNA.type> { 
+public interface RRNA extends RNA<RRNA, RRNA.Type> { 
 
-  public static type TYPE = type.rRNA;
-  public static enum type implements RNAType<RRNA, RRNA.type> {
+  public static Type TYPE = Type.rRNA;
+  public static enum Type implements RNAType<RRNA, RRNA.Type> {
 
     rRNA;
-    public type value() { return rRNA; }
+    public Type value() { return rRNA; }
   }   
 }
