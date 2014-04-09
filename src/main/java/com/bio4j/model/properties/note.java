@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface note extends Property {
 
-  public static enum type implements PropertyType<type, String> {
-    note;
-    public type value() { return note; }
-    public Class<String> valueClass() { return String.class; }
-  }
+  // public static enum type implements PropertyType<type, String> {
+  //   note;
+  //   public type value() { return note; }
+  //   public Class<String> valueClass() { return String.class; }
+  // }
 
-  public static type TYPE = type.note;
+  // public static type TYPE = type.note;
 
-  public String note();
+  // public String note();
 }

@@ -5,4 +5,8 @@ package com.bio4j.model;
 
   @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
 */
-public interface Property {}
+public interface Property <
+  N extends Node<N,T>, 
+  T extends Enum<T> & NodeType<N,T>
+> 
+{}

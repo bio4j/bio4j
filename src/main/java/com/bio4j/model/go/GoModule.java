@@ -41,19 +41,19 @@ public class GoModule implements Module {
   }};
 
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-
+    // GoTerm
     add(
-      name.TYPE
+      id.TYPE(GoTerm.TYPE)  
     ); add(
-      id.TYPE
+      definition.TYPE(GoTerm.TYPE)
     ); add(
-      definition.TYPE
+      comment.TYPE(GoTerm.TYPE)
     ); add(
-      comment.TYPE
+      obsolete.TYPE(GoTerm.TYPE)
     ); add(
-      obsolete.TYPE
+      name.TYPE(GoTerm.TYPE)
     ); add(
-      alternativeIds.TYPE
+      alternativeIds.TYPE(GoTerm.TYPE)
     );
   }};
 

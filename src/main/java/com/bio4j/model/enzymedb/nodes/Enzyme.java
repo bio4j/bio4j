@@ -28,14 +28,15 @@ import com.bio4j.model.uniprot.nodes.Protein;
 public interface Enzyme extends Node<Enzyme, Enzyme.type>,
 
   // properties
-  id,
-  officialName,
-  alternateNames,
-  catalyticActivity,
-  cofactors,
-  comment, // WARNING: changed this from comments to comment
-  prositeCrossReferences
-
+  // id,
+  // officialName,
+  // alternateNames,
+  // catalyticActivity,
+  // cofactors,
+  // comment, // WARNING: changed this from comments to comment
+  // prositeCrossReferences
+  id<Enzyme, Enzyme.type>,
+  cofactors<Enzyme, Enzyme.type>
 {
   
   // enzymaticActivity

@@ -13,20 +13,20 @@ import com.bio4j.model.uniprot.nodes.Protein;
 public interface GoAnnotation extends Relationship <
   Protein, Protein.type,
   GoAnnotation, GoAnnotation.type,
-  GoTerm, GoTerm.type
+  GoTerm, GoTerm.Type
 > {
 
   public static type TYPE = type.goAnnotation;
   public static enum type implements RelationshipType <
     Protein, Protein.type,
     GoAnnotation, GoAnnotation.type,
-    GoTerm, GoTerm.type
+    GoTerm, GoTerm.Type
   > {
     goAnnotation;
     public type value() { return goAnnotation; }
     public arity arity() { return arity.manyToMany; }
     public Protein.type sourceType() { return Protein.TYPE; }
-    public GoTerm.type targetType() { return GoTerm.TYPE; }
+    public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
 
   // TODO: migrate

@@ -12,9 +12,9 @@ import com.bio4j.model.go.nodes.GoTerm;
  */
 public interface PositivelyRegulates extends Relationship <
 
-  GoTerm, GoTerm.type,
-  PositivelyRegulates,  PositivelyRegulates.type,
-  GoTerm, GoTerm.type
+  GoTerm, GoTerm.Type,
+  PositivelyRegulates,  PositivelyRegulates.Type,
+  GoTerm, GoTerm.Type
 
 > 
 {
@@ -22,12 +22,12 @@ public interface PositivelyRegulates extends Relationship <
   public GoTerm source();
   public GoTerm target();
 
-  public static type TYPE = type.positivelyRegulates;
-  public static enum type implements RelationshipType <
+  public static Type TYPE = Type.positivelyRegulates;
+  public static enum Type implements RelationshipType <
 
-    GoTerm, GoTerm.type,
-    PositivelyRegulates,  PositivelyRegulates.type,
-    GoTerm, GoTerm.type
+    GoTerm, GoTerm.Type,
+    PositivelyRegulates,  PositivelyRegulates.Type,
+    GoTerm, GoTerm.Type
 
   > 
   {
@@ -35,9 +35,9 @@ public interface PositivelyRegulates extends Relationship <
 
     public arity arity() { return arity.manyToMany; }
     
-    public type value() { return positivelyRegulates; }    
-    public GoTerm.type sourceType() { return GoTerm.TYPE; }
-    public GoTerm.type targetType() { return GoTerm.TYPE; }
+    public Type value() { return positivelyRegulates; }    
+    public GoTerm.Type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
 
   

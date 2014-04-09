@@ -1,5 +1,7 @@
 Nice.javaProject
 
+javaVersion := "1.8"
+
 organization := "bio4j"
 
 name := "bio4j"

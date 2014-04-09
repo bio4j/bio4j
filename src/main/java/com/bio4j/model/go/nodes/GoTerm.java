@@ -30,15 +30,15 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface GoTerm extends Node<GoTerm, GoTerm.type>,
+public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 
   // properties
-  name,
-  id,
-  definition,
-  comment,
-  obsolete,
-  alternativeIds
+  id<GoTerm, GoTerm.Type>,
+  name<GoTerm, GoTerm.Type>,
+  definition<GoTerm, GoTerm.Type>,
+  comment<GoTerm, GoTerm.Type>,
+  obsolete<GoTerm, GoTerm.Type>,
+  alternativeIds<GoTerm, GoTerm.Type>
 {
 
   // isA
@@ -89,10 +89,11 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   public List<HasPartOf> out_hasPartOf();
   public List<GoTerm> out_hasPartOf_nodes();
 
-  public static type TYPE = type.goTerm;  
-  public static enum type implements NodeType<GoTerm, GoTerm.type> {
+  public default Type getType() { return TYPE; }
+  public static Type TYPE = Type.goTerm;  
+  public static enum Type implements NodeType<GoTerm, GoTerm.Type> {
     goTerm;
-    public type value() { return goTerm; }
+    public Type value() { return goTerm; }
   }
 
   ///////////////////////// extras ////////////////////////////////////

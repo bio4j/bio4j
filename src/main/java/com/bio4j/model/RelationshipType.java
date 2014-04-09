@@ -21,8 +21,9 @@ public interface RelationshipType <
 
   /*
     the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor/span essentially).
+    Relationships are by default `manyToMany`
   */
-  public arity arity();
+  public default arity arity() { return arity.manyToMany; }
 
   public static enum arity {
 

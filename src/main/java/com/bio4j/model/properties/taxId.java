@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface taxId extends Property {
 
-  public static enum type implements PropertyType<type, String> {
-    taxId;
-    public type value() { return taxId; }
-    public Class<String> valueClass() { return String.class; }
-  }
+  // public static enum type implements PropertyType<type, String> {
+  //   taxId;
+  //   public type value() { return taxId; }
+  //   public Class<String> valueClass() { return String.class; }
+  // }
 
-  public static type TYPE = type.taxId;
+  // public static type TYPE = type.taxId;
 
-  public String taxId();
+  // public String taxId();
 }

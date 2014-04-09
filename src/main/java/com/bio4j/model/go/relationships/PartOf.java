@@ -11,22 +11,22 @@ import com.bio4j.model.go.nodes.GoTerm;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface PartOf extends Relationship <
-  GoTerm, GoTerm.type,
-  PartOf,  PartOf.type,
-  GoTerm, GoTerm.type
+  GoTerm, GoTerm.Type,
+  PartOf,  PartOf.Type,
+  GoTerm, GoTerm.Type
 > {
 
-  public static type TYPE = type.partOfGo;
-  public static enum type implements RelationshipType <
-    GoTerm, GoTerm.type,
-    PartOf,  PartOf.type,
-    GoTerm, GoTerm.type
+  public static Type TYPE = Type.partOfGo;
+  public static enum Type implements RelationshipType <
+    GoTerm, GoTerm.Type,
+    PartOf,  PartOf.Type,
+    GoTerm, GoTerm.Type
   > {
     partOfGo;
-    public type value() { return partOfGo; }
+    public Type value() { return partOfGo; }
     public arity arity() { return arity.manyToMany; }
-    public GoTerm.type sourceType() { return GoTerm.TYPE; }
-    public GoTerm.type targetType() { return GoTerm.TYPE; }
+    public GoTerm.Type sourceType() { return GoTerm.TYPE; }
+    public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
 
   public GoTerm source();
