@@ -11,7 +11,7 @@ public interface OfficialName extends Property {
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.OfficialName;
+  public static type TYPE = type.officialName;
 
   public String officialName();
 }
