@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface Comment extends Property {
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<Type, String> {
     comment;
-    public type value() { return comment; }
+    public Type value() { return comment; }
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.comment;
+  public static Type TYPE = Type.comment;
 
   public String comment();
 }

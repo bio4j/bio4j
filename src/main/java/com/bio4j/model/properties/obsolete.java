@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface Obsolete extends Property {
 
-  public static enum type implements PropertyType<type, Boolean> {
+  public static enum Type implements PropertyType<Type, Boolean> {
     obsolete;
-    public type value() { return obsolete; }
+    public Type value() { return obsolete; }
     public Class<Boolean> valueClass() { return Boolean.class; }
   }
 
-  public static type TYPE = type.obsolete;
+  public static Type TYPE = Type.obsolete;
 
   public Boolean obsolete();
 }

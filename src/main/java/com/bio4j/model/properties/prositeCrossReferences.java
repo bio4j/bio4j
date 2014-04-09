@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface PrositeCrossReferences extends Property {
 
-  public static enum type implements PropertyType<type, String[]> {
+  public static enum Type implements PropertyType<Type, String[]> {
     prositeCrossReferences;
-    public type value() { return prositeCrossReferences; }
+    public Type value() { return prositeCrossReferences; }
     public Class<String[]> valueClass() { return String[].class; }
   }
 
-  public static type TYPE = type.prositeCrossReferences;
+  public static Type TYPE = Type.prositeCrossReferences;
 
   public String[] prositeCrossReferences();
 }

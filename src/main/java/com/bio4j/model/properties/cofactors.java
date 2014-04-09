@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface Cofactors extends Property {
 
-  public static enum type implements PropertyType<type, String[]> {
+  public static enum Type implements PropertyType<Type, String[]> {
     cofactors;
-    public type value() { return cofactors; }
+    public Type value() { return cofactors; }
     public Class<String[]> valueClass() { return String[].class; }
   }
 
-  public static type TYPE = type.cofactors;
+  public static Type TYPE = Type.cofactors;
 
   public String[] cofactors();
 }

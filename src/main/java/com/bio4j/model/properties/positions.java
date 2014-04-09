@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface Positions extends Property {
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<Type, String> {
     positions;
-    public type value() { return positions; }
+    public Type value() { return positions; }
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.positions;
+  public static Type TYPE = Type.positions;
 
   public String positions();
 }

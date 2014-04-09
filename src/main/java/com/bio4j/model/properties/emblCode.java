@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface EmblCode extends Property {
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<Type, String> {
     emblCode;
-    public type value() { return emblCode; }
+    public Type value() { return emblCode; }
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.emblCode;
+  public static Type TYPE = Type.emblCode;
 
   public String emblCode();
 }

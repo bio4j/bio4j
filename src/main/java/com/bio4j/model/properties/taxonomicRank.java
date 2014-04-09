@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface TaxonomicRank extends Property {
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<Type, String> {
     taxonomicRank;
-    public type value() { return taxonomicRank; }
+    public Type value() { return taxonomicRank; }
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.taxonomicRank;
+  public static Type TYPE = Type.taxonomicRank;
 
   public String taxonomicRank();
 }

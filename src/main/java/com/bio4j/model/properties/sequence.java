@@ -5,13 +5,13 @@ import com.bio4j.model.PropertyType;
 
 public interface Sequence extends Property {
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<Type, String> {
     sequence;
-    public type value() { return sequence; }
+    public Type value() { return sequence; }
     public Class<String> valueClass() { return String.class; }
   }
 
-  public static type TYPE = type.sequence;
+  public static Type TYPE = Type.sequence;
 
   public String sequence();
 }
