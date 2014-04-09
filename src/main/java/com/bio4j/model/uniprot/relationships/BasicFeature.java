@@ -6,14 +6,18 @@ import com.bio4j.model.uniprot.nodes.FeatureType;
 import com.bio4j.model.uniprot.nodes.Protein;
 
 /**
- *
+ * Base Relationship class for features. The source is bounded by this to be a Protein; same for the target: FeatureType.
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface BasicFeature extends Relationship <
-Protein, Protein.Type,
-BasicFeature, BasicFeature.Type,
-FeatureType, FeatureType.Type
->{
+
+public interface BasicFeature <
+
+  R extends BasicFeature<R,RT>, 
+  RT extends Enum<RT> & BasicFeatureType<R,RT>
+
+> extends Relationship<Protein,Protein.Type, R,RT, FeatureType,FeatureType.Type> {
     
     //------------GETTERS----------------
     public String getDescription();
@@ -36,19 +40,6 @@ FeatureType, FeatureType.Type
     public void setEnd(String value);
     public void setOriginal(String value);
     public void setVariation(String value);
-    
-    public static Type TYPE = Type.basicFeature;
-    public static enum Type implements RelationshipType <
-      Protein, Protein.Type,
-      BasicFeature, BasicFeature.Type,
-      FeatureType, FeatureType.Type
-    > {
-      basicFeature;
-      public Type value() { return basicFeature; }
-      public Arity arity() { return Arity.manyToMany; }
-      public Protein.Type sourceType() { return Protein.TYPE; }
-      public FeatureType.Type targetType() { return FeatureType.TYPE; }
-    }
 
     public Protein source();
     public FeatureType target();
