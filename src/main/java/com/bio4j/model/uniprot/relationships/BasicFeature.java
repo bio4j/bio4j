@@ -1,5 +1,10 @@
 package com.bio4j.model.uniprot.relationships;
 
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
+import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.relationships.HasPartOf;
+import com.bio4j.model.go.relationships.HasPartOf.type;
 import com.bio4j.model.uniprot.nodes.FeatureType;
 import com.bio4j.model.uniprot.nodes.Protein;
 
@@ -7,7 +12,11 @@ import com.bio4j.model.uniprot.nodes.Protein;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicFeature{
+public interface BasicFeature extends Relationship <
+Protein, Protein.Type,
+BasicFeature, BasicFeature.Type,
+FeatureType, FeatureType.Type
+>{
     
     //------------GETTERS----------------
     public String getDescription();
@@ -19,10 +28,6 @@ public interface BasicFeature{
     public String getRef();
     public String getBegin();
     public String getEnd();
-
-    public FeatureType getFeatureType();
-    public Protein getProtein();
-
             
     //------------SETTERS-------------------
     public void setDescription(String value);
@@ -34,5 +39,21 @@ public interface BasicFeature{
     public void setEnd(String value);
     public void setOriginal(String value);
     public void setVariation(String value);
+    
+    public static Type TYPE = Type.basicFeature;
+    public static enum Type implements RelationshipType <
+      Protein, Protein.Type,
+      BasicFeature, BasicFeature.Type,
+      FeatureType, FeatureType.Type
+    > {
+      basicFeature;
+      public Type value() { return basicFeature; }
+      public Arity arity() { return Arity.manyToMany; }
+      public Protein.Type sourceType() { return Protein.TYPE; }
+      public FeatureType.Type targetType() { return FeatureType.TYPE; }
+    }
+
+    public Protein source();
+    public FeatureType target();
     
 }

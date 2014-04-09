@@ -22,9 +22,9 @@ public interface RelationshipType <
   /*
     the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor/span essentially).
   */
-  public arity arity();
+  public Arity arity();
 
-  public static enum arity {
+  public static enum Arity {
 
     // TODO: explain this
     // given x: S ...

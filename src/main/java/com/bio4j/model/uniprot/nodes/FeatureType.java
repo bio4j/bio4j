@@ -9,11 +9,13 @@ import com.bio4j.model.NodeType;
  */
 public interface FeatureType extends Node<FeatureType, FeatureType.Type> {
     
-  enum Type implements NodeType<FeatureType, FeatureType.Type> {
-
-    featureType;
-    public Type value() { return featureType; }
-  }
+	public static Type TYPE = Type.featureType; 
+	
+	enum Type implements NodeType<FeatureType, FeatureType.Type> {
+	
+	    featureType;
+	    public Type value() { return featureType; }
+	}
  
     //----GETTERS---
     public String getName();
