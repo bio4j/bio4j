@@ -25,7 +25,7 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface Enzyme extends Node<Enzyme, Enzyme.type>,
+public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
 
   // properties
   id,
@@ -40,16 +40,16 @@ public interface Enzyme extends Node<Enzyme, Enzyme.type>,
   
   // enzymaticActivity
   // incoming
-  public List<EnzymaticActivity> in_enzymaticActivity();
-  public List<Protein> in_enzymaticActivity_nodes();
+  public List<EnzymaticActivity> enzymaticActivity_in();
+  public List<Protein> enzymaticActivityin_Nodes();
   
   // WARNING: moved to rel method
   // public List<Protein> associatedProteins();  
 
-  public static type TYPE = type.enzyme;
-  public static enum type implements NodeType<Enzyme, Enzyme.type> {
+  public static Type TYPE = Type.enzyme;
+  public static enum Type implements NodeType<Enzyme, Enzyme.Type> {
 
     enzyme;
-    public type value() { return enzyme; }
+    public Type value() { return enzyme; }
   }  
 }

@@ -64,6 +64,10 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   // outgoing
   public List<NegativelyRegulates> out_negativelyRegulates(); 
   public List<GoTerm> out_negativelyRegulates_nodes();
+  
+  public List<GoTerm> negativelyRegulates_out_nodes();
+  public List<GoTerm> negativelyRegulates_outNodes();
+  
 
   // positivelyRegulates
   // incoming
