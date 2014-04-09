@@ -23,7 +23,11 @@ import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.refseq.nodes.GenomeElement;
+import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.FullName;
+import com.bio4j.model.properties.Length;
+import com.bio4j.model.properties.Mass;
+import com.bio4j.model.properties.ModifiedDate;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Sequence;
 import com.bio4j.model.properties.ShortName;
@@ -37,7 +41,11 @@ public interface Protein extends Node<Protein, Protein.Type>,
 	Name,
 	Sequence,
 	FullName,
-	ShortName
+	ShortName,
+	Accession,
+	ModifiedDate,
+	Mass,
+	Length
 	{
   
 	  public static Type TYPE = Type.protein; 
@@ -49,14 +57,7 @@ public interface Protein extends Node<Protein, Protein.Type>,
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    public String getName();
-    public String getFullName();
-    public String getShortName();
-    public String getAccession();
-    public String getSequence();
-    public String getModifiedDate();
-    public float getMass();
-    public int getLength();
+    
     public String[] getGeneNames();    
     public String[] getAlternativeAcessions();
     
@@ -101,14 +102,7 @@ public interface Protein extends Node<Protein, Protein.Type>,
     //---------------------------------------------------------------------------------------------
     //-------------------------------------SETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    public void setName(String value);
-    public void setFullName(String value);
-    public void setShortName(String value);
-    public void setAccession(String value);
-    public void setSequence(String value);
-    public void setModifiedDate(String value);
-    public void setMass(float value);
-    public void setLength(int value);
+    
     public void setGeneNames(String[] value);
     public void setAlternativeAccessions(String[] value);
     
