@@ -7,10 +7,10 @@ import com.bio4j.model.NodeType;
 
 // properties
 import com.bio4j.model.properties.id;
-import com.bio4j.model.properties.officialName;
-import com.bio4j.model.properties.alternateNames;
-import com.bio4j.model.properties.catalyticActivity;
-import com.bio4j.model.properties.cofactors;
+import com.bio4j.model.properties.OfficialName;
+import com.bio4j.model.properties.AlternateNames;
+import com.bio4j.model.properties.CatalyticActivity;
+import com.bio4j.model.properties.Cofactors;
 import com.bio4j.model.properties.comment;
 import com.bio4j.model.properties.prositeCrossReferences;
 
@@ -29,10 +29,10 @@ public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
 
   // properties
   id,
-  officialName,
-  alternateNames,
-  catalyticActivity,
-  cofactors,
+  OfficialName,
+  AlternateNames,
+  CatalyticActivity,
+  Cofactors,
   comment, // WARNING: changed this from comments to comment
   prositeCrossReferences
 

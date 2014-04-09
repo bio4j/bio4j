@@ -11,7 +11,7 @@ import com.bio4j.model.properties.comment;
 import com.bio4j.model.properties.taxId;
 import com.bio4j.model.properties.scientificName;
 import com.bio4j.model.properties.taxonomicRank;
-import com.bio4j.model.properties.emblCode;
+import com.bio4j.model.properties.EmblCode;
 
 // relationships
 import com.bio4j.model.ncbiTaxonomy.relationships.Parent;
@@ -32,7 +32,7 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.type>,
   comment, // WARNING changed comments to comment
   scientificName,
   taxonomicRank, // WARNING this was rank before
-  emblCode // TODO maybe this should be promoted to a rel
+  EmblCode // TODO maybe this should be promoted to a rel
 
 {
   

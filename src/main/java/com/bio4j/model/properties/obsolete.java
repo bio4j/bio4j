@@ -3,7 +3,7 @@ package com.bio4j.model.properties;
 import com.bio4j.model.Property;
 import com.bio4j.model.PropertyType;
 
-public interface obsolete extends Property {
+public interface Obsolete extends Property {
 
   public static enum type implements PropertyType<type, Boolean> {
     obsolete;

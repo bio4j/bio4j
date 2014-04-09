@@ -53,7 +53,7 @@ public class GoModule implements Module {
     ); add(
       obsolete.TYPE
     ); add(
-      alternativeIds.TYPE
+      AlternativeIds.TYPE
     );
   }};
 

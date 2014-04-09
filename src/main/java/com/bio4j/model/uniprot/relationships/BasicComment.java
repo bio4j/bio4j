@@ -1,6 +1,8 @@
 
 package com.bio4j.model.uniprot.relationships;
 
+import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
 import com.bio4j.model.RelationshipType.Arity;
@@ -11,11 +13,14 @@ import com.bio4j.model.uniprot.nodes.Protein;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface BasicComment extends Relationship <
-	Protein, Protein.Type,
-	BasicComment, BasicComment.Type,
-	CommentType, CommentType.Type
-	>{
+public interface BasicComment <
+	S extends Node<S,ST>,
+	ST extends Enum<ST> & NodeType<S,ST>,
+	R extends BasicComment<S,ST,R,RT,T,TT>, 
+	RT extends Enum<RT> & BasicCommentType<S,ST,R,RT,T,TT>,
+	T extends Node<T,TT>,
+	TT extends Enum<TT> & NodeType<T,TT>	
+	> extends Relationship<S,ST, R,RT, T,TT> {
     
     //---------GETTERS--------------
     public String getText();

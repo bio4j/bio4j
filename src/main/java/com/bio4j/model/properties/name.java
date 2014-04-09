@@ -3,7 +3,7 @@ package com.bio4j.model.properties;
 import com.bio4j.model.Property;
 import com.bio4j.model.PropertyType;
 
-public interface name extends Property {
+public interface Name extends Property {
 
   public static enum type implements PropertyType<type, String> {
     name;

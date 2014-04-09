@@ -3,15 +3,15 @@ package com.bio4j.model.properties;
 import com.bio4j.model.Property;
 import com.bio4j.model.PropertyType;
 
-public interface alternateNames extends Property {
+public interface AlternateNames extends Property {
 
-  public static enum type implements PropertyType<type, String[]> {
+  public static enum Type implements PropertyType<Type, String[]> {
     alternateNames;
-    public type value() { return alternateNames; }
+    public Type value() { return alternateNames; }
     public Class<String[]> valueClass() { return String[].class; }
   }
 
-  public static type TYPE = type.alternateNames;
+  public static Type TYPE = Type.alternateNames;
 
   public String[] alternateNames();
 }

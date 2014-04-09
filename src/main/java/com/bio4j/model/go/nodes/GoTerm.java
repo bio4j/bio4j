@@ -11,7 +11,7 @@ import com.bio4j.model.properties.id;
 import com.bio4j.model.properties.comment;
 import com.bio4j.model.properties.obsolete;
 import com.bio4j.model.properties.definition;
-import com.bio4j.model.properties.alternativeIds;
+import com.bio4j.model.properties.AlternativeIds;
 
 // relationships
 import com.bio4j.model.go.relationships.IsA;
@@ -38,7 +38,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.type>,
   definition,
   comment,
   obsolete,
-  alternativeIds
+  AlternativeIds
 {
 
   // isA
