@@ -14,7 +14,6 @@ import com.bio4j.model.enums.UniprotDBXref;
 // TODO back to rel pkg
 import com.bio4j.model.uniprot.relationships.features.*;
 import com.bio4j.model.uniprot.relationships.comment.*;
-
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
 import com.bio4j.model.uniprot.relationships.DomainComment;
 // import com.bio4j.model.uniprot.relationships.FunctionComment;
@@ -27,16 +26,16 @@ import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.refseq.nodes.GenomeElement;
-
 import com.bio4j.model.properties.Accession;
+import com.bio4j.model.properties.AlternativeAccessions;
 import com.bio4j.model.properties.FullName;
+import com.bio4j.model.properties.GeneNames;
 import com.bio4j.model.properties.Length;
 import com.bio4j.model.properties.Mass;
 import com.bio4j.model.properties.ModifiedDate;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Sequence;
 import com.bio4j.model.properties.ShortName;
-
 import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
 import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
 
@@ -51,7 +50,9 @@ public interface Protein extends Node<Protein, Protein.Type>,
 	Accession<Protein, Protein.Type>,
 	ModifiedDate<Protein, Protein.Type>,
 	Mass<Protein, Protein.Type>,
-	Length<Protein, Protein.Type>
+	Length<Protein, Protein.Type>,
+	GeneNames<Protein, Protein.Type>,
+	AlternativeAccessions<Protein, Protein.Type>
 	{
   
 	  public static Type TYPE = Type.protein; 
@@ -64,7 +65,6 @@ public interface Protein extends Node<Protein, Protein.Type>,
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
     
-    public String[] getGeneNames();    
     public String[] getAlternativeAcessions();
     
     public String[] getReference(UniprotDBXref ref);   
