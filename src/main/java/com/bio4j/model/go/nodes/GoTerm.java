@@ -44,55 +44,52 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 
   // isA
   // incoming
-  public List<IsA> in_isA();
-  public List<GoTerm> in_isA_nodes();
+  public List<IsA> isA_in();
+  public List<GoTerm> isA_inNodes();
   // outgoing
-  public List<IsA> out_isA(); 
-  public List<GoTerm> out_isA_nodes();
+  public List<IsA> isA_out(); 
+  public List<GoTerm> isA_outNodes();
 
   // regulates
   // incoming
-  public List<Regulates> in_regulates();
-  public List<GoTerm> in_regulates_nodes();
+  public List<Regulates> regulates_in();
+  public List<GoTerm> regulates_inNodes();
   // outgoing
-  public List<Regulates> out_regulates(); 
-  public List<GoTerm> out_regulates_nodes();
+  public List<Regulates> regulates_out(); 
+  public List<GoTerm> regulates_outNodes();
 
   // negativelyRegulates
   // incoming
-  public List<NegativelyRegulates> in_negativelyRegulates();
-  public List<GoTerm> in_negativelyRegulates_nodes();
+  public List<NegativelyRegulates> negativelyRegulates_in();
+  public List<GoTerm> negativelyRegulates_inNodes();
   // outgoing
-  public List<NegativelyRegulates> out_negativelyRegulates(); 
-  public List<GoTerm> out_negativelyRegulates_nodes();
-  
-  public List<GoTerm> negativelyRegulates_out_nodes();
+  public List<NegativelyRegulates> negativelyRegulates_out(); 
   public List<GoTerm> negativelyRegulates_outNodes();
-  
+    
 
   // positivelyRegulates
   // incoming
-  public List<PositivelyRegulates> in_positivelyRegulates();
-  public List<GoTerm> in_positivelyRegulates_nodes();
+  public List<PositivelyRegulates> positivelyRegulates_in();
+  public List<GoTerm> positivelyRegulates_inNodes();
   // outgoing
-  public List<PositivelyRegulates> out_positivelyRegulates(); 
-  public List<GoTerm> out_positivelyRegulates_nodes();  
+  public List<PositivelyRegulates> positivelyRegulates_out(); 
+  public List<GoTerm> positivelyRegulates_outNodes();  
   
   // partOf
   // incoming
-  public List<PartOf> in_partOf();
-  public List<GoTerm> in_partOf_nodes();
+  public List<PartOf> partOf_in();
+  public List<GoTerm> partOf_inNodes();
   // outgoing
-  public List<PartOf> out_partOf();
-  public List<GoTerm> out_partOf_nodes();
+  public List<PartOf> partOf_out();
+  public List<GoTerm> partOf_outNodes();
 
   // hasPartOf
   // incoming
-  public List<HasPartOf> in_hasPartOf();
-  public List<GoTerm> in_hasPartOf_nodes();
+  public List<HasPartOf> hasPartOf_in();
+  public List<GoTerm> hasPartOf_inNodes();
   // outgoing
-  public List<HasPartOf> out_hasPartOf();
-  public List<GoTerm> out_hasPartOf_nodes();
+  public List<HasPartOf> hasPartOf_out();
+  public List<GoTerm> hasPartOf_outNodes();
 
   public default Type getType() { return TYPE; }
   public static Type TYPE = Type.goTerm;
@@ -105,8 +102,8 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 
   // goAnnotation
   // incoming
-  public List<GoAnnotation> in_goAnnotation();
-  public List<Protein> in_goAnnotation_nodes();
+  public List<GoAnnotation> goAnnotation_in();
+  public List<Protein> goAnnotation_inNodes();
 
 
 

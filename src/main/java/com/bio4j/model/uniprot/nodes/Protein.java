@@ -64,9 +64,7 @@ public interface Protein extends Node<Protein, Protein.Type>,
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    
-    public String[] getAlternativeAcessions();
-    
+        
     public String[] getReference(UniprotDBXref ref);   
    
     public boolean isUniref50Representant();
