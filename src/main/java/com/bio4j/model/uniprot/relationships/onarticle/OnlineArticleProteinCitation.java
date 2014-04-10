@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.citation.onarticle;
+package com.bio4j.model.uniprot.relationships.onarticle;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
@@ -11,22 +11,22 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface OnlineArticleProteinCitation extends Relationship <
-    OnlineArticle, OnlineArticle.type,
-    OnlineArticleProteinCitation, OnlineArticleProteinCitation.type,
-    Protein, Protein.type
+    OnlineArticle, OnlineArticle.Type,
+    OnlineArticleProteinCitation, OnlineArticleProteinCitation.Type,
+    Protein, Protein.Type
 > {
 
-    public static type TYPE = type.onlineArticleProteinCitation;
-    public static enum type implements RelationshipType <
-        OnlineArticle, OnlineArticle.type,
-        OnlineArticleProteinCitation, OnlineArticleProteinCitation.type,
-        Protein, Protein.type
+    public static Type TYPE = Type.onlineArticleProteinCitation;
+    public static enum Type implements RelationshipType <
+        OnlineArticle, OnlineArticle.Type,
+        OnlineArticleProteinCitation, OnlineArticleProteinCitation.Type,
+        Protein, Protein.Type
     > {
         onlineArticleProteinCitation;
-        public type value() { return onlineArticleProteinCitation; }
-        public arity arity() { return arity.manyToMany; }
-        public OnlineArticle.type sourceType() { return OnlineArticle.TYPE; }
-        public Protein.type targetType() { return Protein.TYPE; }
+        public Type value() { return onlineArticleProteinCitation; }
+        public Arity arity() { return Arity.manyToMany; }
+        public OnlineArticle.Type sourceType() { return OnlineArticle.TYPE; }
+        public Protein.Type targetType() { return Protein.TYPE; }
     }
 
 }
