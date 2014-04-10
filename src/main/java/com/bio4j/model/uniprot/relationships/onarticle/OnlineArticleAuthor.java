@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.citation.onarticle;
+package com.bio4j.model.uniprot.relationships.onarticle;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
