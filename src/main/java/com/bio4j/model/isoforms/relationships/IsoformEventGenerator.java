@@ -13,29 +13,30 @@ import com.bio4j.model.isoforms.nodes.Isoform;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface IsoformEventGenerator extends Relationship <
-  Isoform, Isoform.type,
-  IsoformEventGenerator,  IsoformEventGenerator.type,
-  AlternativeProduct, AlternativeProduct.type
+  Isoform, Isoform.Type,
+  IsoformEventGenerator,  IsoformEventGenerator.Type,
+  AlternativeProduct, AlternativeProduct.Type
 > 
 {
-
-  public static type TYPE = type.isoformEventGenerator;
-  public static enum type implements RelationshipType <
-    Isoform, Isoform.type,
-    IsoformEventGenerator,  IsoformEventGenerator.type,
-    AlternativeProduct, AlternativeProduct.type
-  > {
-    isoformEventGenerator;
-    public type value() { return isoformEventGenerator; }
-
-    public Isoform.type sourceType() { return Isoform.TYPE; }
-    public AlternativeProduct.type targetType() { return AlternativeProduct.TYPE; }
-    // TODO: review
-    public arity arity() { return arity.manyToMany; }
-  }
 
   @Override  
   public Isoform source();
   @Override
   public AlternativeProduct target();
+
+
+  public static Type TYPE = Type.isoformEventGenerator;
+  public static enum Type implements RelationshipType <
+    Isoform, Isoform.Type,
+    IsoformEventGenerator,  IsoformEventGenerator.Type,
+    AlternativeProduct, AlternativeProduct.Type
+  > {
+    isoformEventGenerator;
+    public Type value() { return isoformEventGenerator; }
+
+    public Isoform.Type sourceType() { return Isoform.TYPE; }
+    public AlternativeProduct.Type targetType() { return AlternativeProduct.TYPE; }
+    // TODO: review
+    public Arity arity() { return Arity.manyToMany; }
+  }
 }

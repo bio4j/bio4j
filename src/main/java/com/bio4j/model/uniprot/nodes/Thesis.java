@@ -12,12 +12,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Thesis extends Node<Thesis, Thesis.type> {
+public interface Thesis extends Node<Thesis, Thesis.Type> {
     
-  enum type implements NodeType<Thesis, Thesis.type> {
+  public static enum Type implements NodeType<Thesis, Thesis.Type> {
 
     thesis;
-    public type value() { return thesis; }
+    public Type value() { return thesis; }
   }
    
     //------GETTERS----

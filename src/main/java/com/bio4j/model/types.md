@@ -36,7 +36,7 @@ Every interface in the abstract model has a corresponding type, nested as as sta
 public class TaxonImpl implements Taxon {
 
   @Override
-  public Taxon.type type() { return Taxon.TYPE; }
+  public Taxon.Type type() { return Taxon.TYPE; }
   
   // if you want to set the label (a String)
   private static final String label = Taxon.TYPE.name();  
@@ -87,11 +87,11 @@ public interface name extends Property {
 
   public String name();
 
-  public static type TYPE = type.name;
+  public static Type TYPE = Type.name;
 
-  public static enum type implements PropertyType<type, String> {
+  public static enum Type implements PropertyType<type, String> {
     name;
-    public type value() { return name; }
+    public Type value() { return name; }
     public Class<String> valueClass() { return String.class; }
   }
 }
@@ -99,7 +99,7 @@ public interface name extends Property {
 
 Again as with Nodes and Rels
 
-- you access the property type type as `<property_name>.type`
+- you access the property type type as `<property_name>.Type`
 - a value (the only one) of that type is accessible as the static field `<property_name>.TYPE`
 
 

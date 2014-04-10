@@ -9,22 +9,22 @@ import com.bio4j.model.uniprot.nodes.SubcellularLocation;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface SubcellularLocationParent extends Relationship <
-  SubcellularLocation, SubcellularLocation.type,
-  SubcellularLocationParent, SubcellularLocationParent.type,
-  SubcellularLocation, SubcellularLocation.type
+  SubcellularLocation, SubcellularLocation.Type,
+  SubcellularLocationParent, SubcellularLocationParent.Type,
+  SubcellularLocation, SubcellularLocation.Type
 > {
     
-  enum type implements RelationshipType <
-    SubcellularLocation, SubcellularLocation.type,
-    SubcellularLocationParent, SubcellularLocationParent.type,
-    SubcellularLocation, SubcellularLocation.type
+  public static enum Type implements RelationshipType <
+    SubcellularLocation, SubcellularLocation.Type,
+    SubcellularLocationParent, SubcellularLocationParent.Type,
+    SubcellularLocation, SubcellularLocation.Type
   > {
 
     subcellularLocationParent;
-    public type value() { return subcellularLocationParent; }
-    public arity arity() { return arity.manyToOne; }
-    public SubcellularLocation.type sourceType() { return SubcellularLocation.TYPE; }
-    public SubcellularLocation.type targetType() { return SubcellularLocation.TYPE; }
+    public Type value() { return subcellularLocationParent; }
+    public Arity arity() { return Arity.manyToOne; }
+    public SubcellularLocation.Type sourceType() { return SubcellularLocation.TYPE; }
+    public SubcellularLocation.Type targetType() { return SubcellularLocation.TYPE; }
   }
 
 }

@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.RRNA;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface RRNAs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  RRNAs,  RRNAs.type,
-  RRNA, RRNA.type
+  GenomeElement, GenomeElement.Type,
+  RRNAs,  RRNAs.Type,
+  RRNA, RRNA.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface RRNAs extends Relationship <
   @Override
   public RRNA target();
 
-  public static type TYPE = type.rRNAs;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    RRNAs,  RRNAs.type,
-    RRNA, RRNA.type
+  public static Type TYPE = Type.rRNAs;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    RRNAs,  RRNAs.Type,
+    RRNA, RRNA.Type
   > {
     rRNAs;
-    public type value() { return rRNAs; }
-    public arity arity() { return arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public RRNA.type targetType() { return RRNA.TYPE; }
+    public Type value() { return rRNAs; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review this
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public RRNA.Type targetType() { return RRNA.TYPE; }
   }
 }

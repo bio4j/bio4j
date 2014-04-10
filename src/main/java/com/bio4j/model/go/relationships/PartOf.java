@@ -24,7 +24,7 @@ public interface PartOf extends Relationship <
   > {
     partOfGo;
     public Type value() { return partOfGo; }
-    public arity arity() { return arity.manyToMany; }
+    public Arity arity() { return Arity.manyToMany; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }

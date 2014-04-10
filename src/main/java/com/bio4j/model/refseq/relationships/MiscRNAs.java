@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.MiscRNA;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface MiscRNAs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  MiscRNAs,  MiscRNAs.type,
-  MiscRNA, MiscRNA.type
+  GenomeElement, GenomeElement.Type,
+  MiscRNAs,  MiscRNAs.Type,
+  MiscRNA, MiscRNA.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface MiscRNAs extends Relationship <
   @Override
   public MiscRNA target();
 
-  public static type TYPE = type.miscRNAs;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    MiscRNAs,  MiscRNAs.type,
-    MiscRNA, MiscRNA.type
+  public static Type TYPE = Type.miscRNAs;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    MiscRNAs,  MiscRNAs.Type,
+    MiscRNA, MiscRNA.Type
   > {
     miscRNAs;
-    public type value() { return miscRNAs; }
-    public arity arity() { return arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public MiscRNA.type targetType() { return MiscRNA.TYPE; }
+    public Type value() { return miscRNAs; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review this
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public MiscRNA.Type targetType() { return MiscRNA.TYPE; }
   }
 }

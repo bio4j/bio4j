@@ -11,9 +11,9 @@ import com.bio4j.model.RelationshipType;
  */
 public interface ProteinProteinInteraction extends Relationship <
 
-  Protein, Protein.type,
-  ProteinProteinInteraction, ProteinProteinInteraction.type,
-  Protein, Protein.type
+  Protein, Protein.Type,
+  ProteinProteinInteraction, ProteinProteinInteraction.Type,
+  Protein, Protein.Type
 
 > 
 {
@@ -35,16 +35,16 @@ public interface ProteinProteinInteraction extends Relationship <
   public void setIntactId2(String value);
   public void setIntactId1(String value);
 
-  public static type TYPE = type.proteinProteinInteraction;
-  public static enum type implements RelationshipType <
-    Protein, Protein.type,
-    ProteinProteinInteraction, ProteinProteinInteraction.type,
-    Protein, Protein.type
+  public static Type TYPE = Type.proteinProteinInteraction;
+  public static enum Type implements RelationshipType <
+    Protein, Protein.Type,
+    ProteinProteinInteraction, ProteinProteinInteraction.Type,
+    Protein, Protein.Type
   > {
     proteinProteinInteraction;
-    public type value() { return proteinProteinInteraction; }
-    public arity arity() { return arity.manyToMany; }
-    public Protein.type sourceType() { return Protein.TYPE; }
-    public Protein.type targetType() { return Protein.TYPE; }
+    public Type value() { return proteinProteinInteraction; }
+    public Arity arity() { return Arity.manyToMany; }
+    public Protein.Type sourceType() { return Protein.TYPE; }
+    public Protein.Type targetType() { return Protein.TYPE; }
   }  
 }

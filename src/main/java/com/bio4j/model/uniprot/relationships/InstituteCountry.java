@@ -11,23 +11,23 @@ import com.bio4j.model.uniprot.nodes.Institute;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface InstituteCountry extends Relationship <
-  Institute, Institute.type,
-  InstituteCountry, InstituteCountry.type,
-  Country, Country.type
+  Institute, Institute.Type,
+  InstituteCountry, InstituteCountry.Type,
+  Country, Country.Type
 > {
 
-  public static type TYPE = type.instituteCountry;
-  public enum type implements RelationshipType <
-    Institute, Institute.type,
-    InstituteCountry, InstituteCountry.type,
-    Country, Country.type
+  public static Type TYPE = Type.instituteCountry;
+  public static enum Type implements RelationshipType <
+    Institute, Institute.Type,
+    InstituteCountry, InstituteCountry.Type,
+    Country, Country.Type
   > {
 
     instituteCountry;
-    public type value() { return instituteCountry; }
-    public arity arity() { return arity.manyToOne; }
-    public Institute.type sourceType() { return Institute.TYPE; }
-    public Country.type targetType() { return Country.TYPE; }
+    public Type value() { return instituteCountry; }
+    public Arity arity() { return Arity.manyToOne; }
+    public Institute.Type sourceType() { return Institute.TYPE; }
+    public Country.Type targetType() { return Country.TYPE; }
   }
 
   // replace this by source/target??

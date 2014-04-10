@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.NcRNA;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface NcRNAs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  NcRNAs,  NcRNAs.type,
-  NcRNA, NcRNA.type
+  GenomeElement, GenomeElement.Type,
+  NcRNAs,  NcRNAs.Type,
+  NcRNA, NcRNA.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface NcRNAs extends Relationship <
   @Override
   public NcRNA target();
 
-  public static type TYPE = type.ncRNAs;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    NcRNAs,  NcRNAs.type,
-    NcRNA, NcRNA.type
+  public static Type TYPE = Type.ncRNAs;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    NcRNAs,  NcRNAs.Type,
+    NcRNA, NcRNA.Type
   > {
     ncRNAs;
-    public type value() { return ncRNAs; }
-    public arity arity() { return arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public NcRNA.type targetType() { return NcRNA.TYPE; }
+    public Type value() { return ncRNAs; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review this
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public NcRNA.Type targetType() { return NcRNA.TYPE; }
   }
 }

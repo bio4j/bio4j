@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com> 
  */
 public interface GoAnnotation extends Relationship <
-  Protein, Protein.type,
-  GoAnnotation, GoAnnotation.type,
+  Protein, Protein.Type,
+  GoAnnotation, GoAnnotation.Type,
   GoTerm, GoTerm.Type
 > {
 
-  public static type TYPE = type.goAnnotation;
-  public static enum type implements RelationshipType <
-    Protein, Protein.type,
-    GoAnnotation, GoAnnotation.type,
+  public static Type TYPE = Type.goAnnotation;
+  public static enum Type implements RelationshipType <
+    Protein, Protein.Type,
+    GoAnnotation, GoAnnotation.Type,
     GoTerm, GoTerm.Type
   > {
     goAnnotation;
-    public type value() { return goAnnotation; }
-    public arity arity() { return arity.manyToMany; }
-    public Protein.type sourceType() { return Protein.TYPE; }
+    public Type value() { return goAnnotation; }
+    public Arity arity() { return Arity.manyToMany; }
+    public Protein.Type sourceType() { return Protein.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
 

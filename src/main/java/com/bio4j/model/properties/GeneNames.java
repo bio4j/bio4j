@@ -6,7 +6,7 @@ import com.bio4j.model.Property;
 import com.bio4j.model.PropertyType;
 import com.bio4j.model.properties.FullName.Type;
 
-public interface GeneNames  <N extends Element<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
+public interface GeneNames<N extends Element<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
 extends Property<N, NT> {
 
 // the property method

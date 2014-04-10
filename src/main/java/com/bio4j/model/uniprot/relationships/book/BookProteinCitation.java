@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.Book;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface BookProteinCitation extends Relationship <
-    Book, Book.type,
-    BookProteinCitation, BookProteinCitation.type,
-    Protein, Protein.type
+    Book, Book.Type,
+    BookProteinCitation, BookProteinCitation.Type,
+    Protein, Protein.Type
 > {
 
-    enum type implements RelationshipType <
-        Book, Book.type,
-        BookProteinCitation, BookProteinCitation.type,
-        Protein, Protein.type
+    public static enum Type implements RelationshipType <
+        Book, Book.Type,
+        BookProteinCitation, BookProteinCitation.Type,
+        Protein, Protein.Type
     > {
         BookProteinCitation;
-        public type value() { return BookProteinCitation; }
-        public arity arity() { return arity.manyToMany; }
-        public Book.type sourceType() { return Book.TYPE; }
-        public Protein.type targetType() { return Protein.TYPE; }
+        public Type value() { return BookProteinCitation; }
+        public Arity arity() { return Arity.manyToMany; }
+        public Book.Type sourceType() { return Book.TYPE; }
+        public Protein.Type targetType() { return Protein.TYPE; }
 
     }
 

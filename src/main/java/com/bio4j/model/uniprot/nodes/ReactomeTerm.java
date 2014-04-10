@@ -9,12 +9,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.type> {
+public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.Type> {
     
-  enum type implements NodeType<ReactomeTerm, ReactomeTerm.type> {
+  public static enum Type implements NodeType<ReactomeTerm, ReactomeTerm.Type> {
 
     reactomeTerm;
-    public type value() { return reactomeTerm; }
+    public Type value() { return reactomeTerm; }
   }
   
   //------GETTERS-----

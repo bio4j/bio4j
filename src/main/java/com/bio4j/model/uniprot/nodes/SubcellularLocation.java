@@ -7,13 +7,13 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SubcellularLocation extends Node<SubcellularLocation, SubcellularLocation.type> {
+public interface SubcellularLocation extends Node<SubcellularLocation, SubcellularLocation.Type> {
   
-  public static type TYPE = type.subcellularLocation;  
-  public static enum type implements NodeType<SubcellularLocation, SubcellularLocation.type> {
+  public static Type TYPE = Type.subcellularLocation;  
+  public static enum Type implements NodeType<SubcellularLocation, SubcellularLocation.Type> {
 
     subcellularLocation;
-    public type value() { return subcellularLocation; }
+    public Type value() { return subcellularLocation; }
   }
     
 }

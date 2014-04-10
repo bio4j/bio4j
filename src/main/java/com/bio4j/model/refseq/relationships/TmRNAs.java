@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.TmRNA;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface TmRNAs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  TmRNAs, TmRNAs.type,
-  TmRNA, TmRNA.type
+  GenomeElement, GenomeElement.Type,
+  TmRNAs, TmRNAs.Type,
+  TmRNA, TmRNA.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface TmRNAs extends Relationship <
   @Override
   public TmRNA target();
 
-  public static type TYPE = type.tmRNAs;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    TmRNAs, TmRNAs.type,
-    TmRNA, TmRNA.type
+  public static Type TYPE = Type.tmRNAs;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    TmRNAs, TmRNAs.Type,
+    TmRNA, TmRNA.Type
   > {
     tmRNAs;
-    public type value() { return tmRNAs; }
-    public arity arity() { return arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public TmRNA.type targetType() { return TmRNA.TYPE; }
+    public Type value() { return tmRNAs; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review this
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public TmRNA.Type targetType() { return TmRNA.TYPE; }
   }
 }

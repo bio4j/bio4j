@@ -12,12 +12,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Submission extends Node<Submission, Submission.type> {
+public interface Submission extends Node<Submission, Submission.Type> {
     
-  enum type implements NodeType<Submission, Submission.type> {
+  public static enum Type implements NodeType<Submission, Submission.Type> {
 
     submission;
-    public type value() { return submission; }
+    public Type value() { return submission; }
   }
       
     //--------GETTERS-------------

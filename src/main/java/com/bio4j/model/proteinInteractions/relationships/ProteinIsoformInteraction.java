@@ -13,9 +13,9 @@ import com.bio4j.model.isoforms.nodes.Isoform;
  */
 public interface ProteinIsoformInteraction extends Relationship <
 
-  Protein, Protein.type,
-  ProteinIsoformInteraction, ProteinIsoformInteraction.type,
-  Isoform, Isoform.type
+  Protein, Protein.Type,
+  ProteinIsoformInteraction, ProteinIsoformInteraction.Type,
+  Isoform, Isoform.Type
 
 > 
 {
@@ -36,16 +36,16 @@ public interface ProteinIsoformInteraction extends Relationship <
   public void setIntactId2(String value);
   public void setIntactId1(String value);
 
-  public static type TYPE = type.proteinIsoformInteraction;
-  public static enum type implements RelationshipType <
-    Protein, Protein.type,
-    ProteinIsoformInteraction, ProteinIsoformInteraction.type,
-    Isoform, Isoform.type
+  public static Type TYPE = Type.proteinIsoformInteraction;
+  public static enum Type implements RelationshipType <
+    Protein, Protein.Type,
+    ProteinIsoformInteraction, ProteinIsoformInteraction.Type,
+    Isoform, Isoform.Type
   > {
     proteinIsoformInteraction;
-    public type value() { return proteinIsoformInteraction; }
-    public arity arity() { return arity.manyToMany; }
-    public Protein.type sourceType() { return Protein.TYPE; }
-    public Isoform.type targetType() { return Isoform.TYPE; }
+    public Type value() { return proteinIsoformInteraction; }
+    public Arity arity() { return Arity.manyToMany; }
+    public Protein.Type sourceType() { return Protein.TYPE; }
+    public Isoform.Type targetType() { return Isoform.TYPE; }
   }  
 }

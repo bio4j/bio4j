@@ -24,7 +24,7 @@ public interface IsA extends Relationship <
   > {
     isA;
     public Type value() { return isA; }
-    public arity arity() { return arity.manyToMany; }
+    public Arity arity() { return Arity.manyToMany; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }

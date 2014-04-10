@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.OnlineJournal;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface OnlineArticleJournal extends Relationship <
-    OnlineArticle, OnlineArticle.type,
-    OnlineArticleJournal, OnlineArticleJournal.type,
-    OnlineJournal, OnlineJournal.type
+    OnlineArticle, OnlineArticle.Type,
+    OnlineArticleJournal, OnlineArticleJournal.Type,
+    OnlineJournal, OnlineJournal.Type
 > {
     
-    enum type implements RelationshipType <
-        OnlineArticle, OnlineArticle.type,
-        OnlineArticleJournal, OnlineArticleJournal.type,
-        OnlineJournal, OnlineJournal.type
+    public static enum Type implements RelationshipType <
+        OnlineArticle, OnlineArticle.Type,
+        OnlineArticleJournal, OnlineArticleJournal.Type,
+        OnlineJournal, OnlineJournal.Type
     > {
         OnlineArticleJournal;
-        public type value() { return OnlineArticleJournal; }
-        public arity arity() { return arity.manyToOne; }
-        public OnlineArticle.type sourceType() { return OnlineArticle.TYPE; }
-        public OnlineJournal.type targetType() { return OnlineJournal.TYPE; }
+        public Type value() { return OnlineArticleJournal; }
+        public Arity arity() { return Arity.manyToOne; }
+        public OnlineArticle.Type sourceType() { return OnlineArticle.TYPE; }
+        public OnlineJournal.Type targetType() { return OnlineJournal.TYPE; }
     }
 
     public String locator();

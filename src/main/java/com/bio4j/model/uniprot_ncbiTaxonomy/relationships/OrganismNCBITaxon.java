@@ -11,22 +11,22 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface OrganismNCBITaxon extends Relationship <
-  Organism, Organism.type,
-  OrganismNCBITaxon, OrganismNCBITaxon.type,
-  NCBITaxon, NCBITaxon.type
+  Organism, Organism.Type,
+  OrganismNCBITaxon, OrganismNCBITaxon.Type,
+  NCBITaxon, NCBITaxon.Type
 > {
 
-  public static enum type implements RelationshipType <
-    Organism, Organism.type,
-    OrganismNCBITaxon, OrganismNCBITaxon.type,
-    NCBITaxon, NCBITaxon.type
+  public static enum Type implements RelationshipType <
+    Organism, Organism.Type,
+    OrganismNCBITaxon, OrganismNCBITaxon.Type,
+    NCBITaxon, NCBITaxon.Type
   > {
     OrganismNCBITaxon;
-    public type value() { return OrganismNCBITaxon; }
+    public Type value() { return OrganismNCBITaxon; }
     // TODO: review this
-    public arity arity() { return arity.manyToMany; }
-    public Organism.type sourceType() { return Organism.TYPE; }
-    public NCBITaxon.type targetType() { return NCBITaxon.TYPE; }
+    public Arity arity() { return Arity.manyToMany; }
+    public Organism.Type sourceType() { return Organism.TYPE; }
+    public NCBITaxon.Type targetType() { return NCBITaxon.TYPE; }
   }
 
 }

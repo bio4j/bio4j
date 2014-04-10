@@ -12,9 +12,9 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
  */
 public interface Parent extends Relationship <
 
-  NCBITaxon, NCBITaxon.type,
-  Parent, Parent.type,
-  NCBITaxon, NCBITaxon.type
+  NCBITaxon, NCBITaxon.Type,
+  Parent, Parent.Type,
+  NCBITaxon, NCBITaxon.Type
 
 > 
 {
@@ -24,16 +24,16 @@ public interface Parent extends Relationship <
   @Override
   public NCBITaxon target();
 
-  public static type TYPE = type.parent;
-  public static enum type implements RelationshipType <
-    NCBITaxon, NCBITaxon.type,
-    Parent, Parent.type,
-    NCBITaxon, NCBITaxon.type
+  public static Type TYPE = Type.parent;
+  public static enum Type implements RelationshipType <
+    NCBITaxon, NCBITaxon.Type,
+    Parent, Parent.Type,
+    NCBITaxon, NCBITaxon.Type
   > {
     parent;
-    public type value() { return parent; }
-    public NCBITaxon.type sourceType() { return NCBITaxon.TYPE; }
-    public NCBITaxon.type targetType() { return NCBITaxon.TYPE; }
-    public arity arity() { return arity.manyToOne; }
+    public Type value() { return parent; }
+    public NCBITaxon.Type sourceType() { return NCBITaxon.TYPE; }
+    public NCBITaxon.Type targetType() { return NCBITaxon.TYPE; }
+    public Arity arity() { return Arity.manyToOne; }
   }  
 }

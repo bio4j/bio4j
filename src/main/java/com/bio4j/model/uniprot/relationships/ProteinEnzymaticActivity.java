@@ -14,20 +14,20 @@ package com.bio4j.model.uniprot.relationships;
 //  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
 //  */
 // public interface EnzymaticActivity extends Relationship <
-//   Protein, Protein.type,
-//   EnzymaticActivity, EnzymaticActivity.type,
-//   Enzyme, Enzyme.type
+//   Protein, Protein.Type,
+//   EnzymaticActivity, EnzymaticActivity.Type,
+//   Enzyme, Enzyme.Type
 // > {
 
-//   public static type TYPE = type.enzymaticActivity;
-//   public static enum type implements RelationshipType <
-//     Protein, Protein.type,
-//     EnzymaticActivity, EnzymaticActivity.type,
-//     Enzyme, Enzyme.type
+//   public static Type TYPE = Type.enzymaticActivity;
+//   public static enum Type implements RelationshipType <
+//     Protein, Protein.Type,
+//     EnzymaticActivity, EnzymaticActivity.Type,
+//     Enzyme, Enzyme.Type
 //   > {
 //     enzymaticActivity;
-//     public type value() { return enzymaticActivity; }
-//     public arity arity() { return arity.manyToMany; }
+//     public Type value() { return enzymaticActivity; }
+//     public Arity arity() { return Arity.manyToMany; }
 //   }
 
 //   public Protein source();

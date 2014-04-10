@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.Journal;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface ArticleJournal extends Relationship <
-    Article, Article.type,
-    ArticleJournal, ArticleJournal.type,
-    Journal, Journal.type
+    Article, Article.Type,
+    ArticleJournal, ArticleJournal.Type,
+    Journal, Journal.Type
 > {
     
-    enum type implements RelationshipType <
-        Article, Article.type,
-        ArticleJournal, ArticleJournal.type,
-        Journal, Journal.type
+    public static enum Type implements RelationshipType <
+        Article, Article.Type,
+        ArticleJournal, ArticleJournal.Type,
+        Journal, Journal.Type
     > {
         articleJournal;
-        public type value() { return articleJournal; }
-        public arity arity() { return arity.manyToOne; }
-        public Article.type sourceType() { return Article.TYPE; }
-        public Journal.type targetType() { return Journal.TYPE; }
+        public Type value() { return articleJournal; }
+        public Arity arity() { return Arity.manyToOne; }
+        public Article.Type sourceType() { return Article.TYPE; }
+        public Journal.Type targetType() { return Journal.TYPE; }
 
     }
 

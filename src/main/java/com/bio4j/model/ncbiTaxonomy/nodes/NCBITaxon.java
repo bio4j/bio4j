@@ -24,15 +24,15 @@ import com.bio4j.model.uniprot.nodes.Taxon;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.type>,
+public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.Type>,
   
   // properties
-  TaxId<NCBITaxon, NCBITaxon.type>, // TODO what is this? probably should be changed to id
-  Name<NCBITaxon, NCBITaxon.type>,
-  Comment<NCBITaxon, NCBITaxon.type>, // WARNING changed comments to comment
-  ScientificName<NCBITaxon, NCBITaxon.type>,
-  TaxonomicRank<NCBITaxon, NCBITaxon.type>, // WARNING this was rank before
-  EmblCode<NCBITaxon, NCBITaxon.type> // TODO maybe this should be promoted to a rel
+  TaxId<NCBITaxon, NCBITaxon.Type>, // TODO what is this? probably should be changed to id
+  Name<NCBITaxon, NCBITaxon.Type>,
+  Comment<NCBITaxon, NCBITaxon.Type>, // WARNING changed comments to comment
+  ScientificName<NCBITaxon, NCBITaxon.Type>,
+  TaxonomicRank<NCBITaxon, NCBITaxon.Type>, // WARNING this was rank before
+  EmblCode<NCBITaxon, NCBITaxon.Type> // TODO maybe this should be promoted to a rel
 
 {
   
@@ -47,9 +47,9 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.type>,
   // TODO what is this??
   public Taxon taxon();
 
-  public static type TYPE = type.ncbiTaxon;  
-  public static enum type implements NodeType<NCBITaxon, NCBITaxon.type> {
+  public static Type TYPE = Type.ncbiTaxon;  
+  public static enum Type implements NodeType<NCBITaxon, NCBITaxon.Type> {
     ncbiTaxon;
-    public type value() { return ncbiTaxon; }
+    public Type value() { return ncbiTaxon; }
   }
 }

@@ -13,21 +13,15 @@ import com.bio4j.model.properties.Note;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface CDS extends Node<CDS, CDS.type>,
-
-  // properties
-  Positions,
-  Note
-
-{
+public interface CDS extends GenomicFeature<CDS, CDS.Type> {
   
   // cdss
   // incoming
   // TODO
 
-  public static type TYPE = type.cds;
-  public static enum type implements NodeType<CDS, CDS.type> {
+  public static Type TYPE = Type.cds;
+  public static enum Type implements GenomicFeatureType<CDS, CDS.Type> {
     cds;
-    public type value() { return cds; }
+    public Type value() { return cds; }
   }
 }

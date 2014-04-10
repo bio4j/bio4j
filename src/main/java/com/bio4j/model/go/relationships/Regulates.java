@@ -27,7 +27,7 @@ public interface Regulates extends Relationship <
   > {
     regulates;
     public Type value() { return regulates; }
-    public arity arity() { return arity.manyToMany; }
+    public Arity arity() { return Arity.manyToMany; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
 

@@ -1,30 +1,27 @@
-
 package com.bio4j.model.refseq.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
+// relationships
+// import com.bio4j.model.refseq.relationships.HasGene;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Gene extends Node<Gene, Gene.type> {
+public interface Gene extends GenomicFeature<Gene, Gene.Type> {
 
-  public static type TYPE = type.gene;
-  public static enum type implements NodeType<Gene, Gene.type> {
+  // hasGene
+  // in
+  // public List<? extends HasGene> hasGene_in();
+  public List<? extends GenomeElement> hasGene_inNodes();
+
+
+  public static Type TYPE = Type.gene;
+  public static enum Type implements GenomicFeatureType<Gene, Gene.Type> {
 
     gene;
-    public type value() { return gene; }
+    public Type value() { return gene; }
   }
-    
-  //---------GETTERS------------
-  public String getPositions();
-  public String getNote();
-  public GenomeElement getGenomeElement();
-
-
-  //---------SETTERS-------
-  public void setPositions(String value);
-  public void setNote(String value);
-
 }

@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.MRNA;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface MRNAs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  MRNAs,  MRNAs.type,
-  MRNA, MRNA.type
+  GenomeElement, GenomeElement.Type,
+  MRNAs,  MRNAs.Type,
+  MRNA, MRNA.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface MRNAs extends Relationship <
   @Override
   public MRNA target();
 
-  public static type TYPE = type.mRNAs;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    MRNAs,  MRNAs.type,
-    MRNA, MRNA.type
+  public static Type TYPE = Type.mRNAs;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    MRNAs,  MRNAs.Type,
+    MRNA, MRNA.Type
   > {
     mRNAs;
-    public type value() { return mRNAs; }
-    public arity arity() { return arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public MRNA.type targetType() { return MRNA.TYPE; }
+    public Type value() { return mRNAs; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review this
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public MRNA.Type targetType() { return MRNA.TYPE; }
   }
 }

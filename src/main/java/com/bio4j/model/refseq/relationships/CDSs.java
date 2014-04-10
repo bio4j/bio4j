@@ -13,9 +13,9 @@ import com.bio4j.model.refseq.nodes.CDS;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface CDSs extends Relationship <
-  GenomeElement, GenomeElement.type,
-  CDSs, CDSs.type,
-  CDS, CDS.type
+  GenomeElement, GenomeElement.Type,
+  CDSs, CDSs.Type,
+  CDS, CDS.Type
 > {
 
   @Override
@@ -23,16 +23,16 @@ public interface CDSs extends Relationship <
   @Override
   public CDS target();
 
-  public static type TYPE = type.cdss;
-  public static enum type implements RelationshipType <
-    GenomeElement, GenomeElement.type,
-    CDSs, CDSs.type,
-    CDS, CDS.type
+  public static Type TYPE = Type.cdss;
+  public static enum Type implements RelationshipType <
+    GenomeElement, GenomeElement.Type,
+    CDSs, CDSs.Type,
+    CDS, CDS.Type
   > {
     cdss;
-    public type value() { return cdss; }
+    public Type value() { return cdss; }
     public Arity arity() { return Arity.manyToMany; } // TODO review this
-    public GenomeElement.type sourceType() { return GenomeElement.TYPE; }
-    public CDS.type targetType() { return CDS.TYPE; }
+    public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
+    public CDS.Type targetType() { return CDS.TYPE; }
   }
 }

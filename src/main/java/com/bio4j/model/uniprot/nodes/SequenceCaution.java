@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface SequenceCaution extends Node<SequenceCaution, SequenceCaution.type> {
+public interface SequenceCaution extends Node<SequenceCaution, SequenceCaution.Type> {
     
-  enum type implements NodeType<SequenceCaution, SequenceCaution.type> {
+  public static enum Type implements NodeType<SequenceCaution, SequenceCaution.Type> {
 
     sequenceCaution;
-    public type value() { return sequenceCaution; }
+    public Type value() { return sequenceCaution; }
   }
     
     //----GETTERS---

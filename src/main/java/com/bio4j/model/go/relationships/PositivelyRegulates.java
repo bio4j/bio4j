@@ -33,7 +33,7 @@ public interface PositivelyRegulates extends Relationship <
   {
     positivelyRegulates;
 
-    public arity arity() { return arity.manyToMany; }
+    public Arity arity() { return Arity.manyToMany; }
     
     public Type value() { return positivelyRegulates; }    
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }

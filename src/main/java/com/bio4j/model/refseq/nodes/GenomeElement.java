@@ -27,12 +27,12 @@ import com.bio4j.model.refseq.relationships.CDSs;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface GenomeElement extends Node<GenomeElement, GenomeElement.type>,
+public interface GenomeElement extends Node<GenomeElement, GenomeElement.Type>,
 
   // properties
-  Comment,
-  Definition,
-  Version
+  Comment<GenomeElement, GenomeElement.Type>,
+  Definition<GenomeElement, GenomeElement.Type>,
+  Version<GenomeElement, GenomeElement.Type>
 
 {
   
@@ -67,11 +67,11 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.type>,
   public List<? extends TmRNA> out_tmRNAs_nodes();
   // TODO all the other RNAs
 
-  public static type TYPE = type.genomeElement;
-  public static enum type implements NodeType<GenomeElement, GenomeElement.type> {
+  public static Type TYPE = Type.genomeElement;
+  public static enum Type implements NodeType<GenomeElement, GenomeElement.Type> {
 
     genomeElement;
-    public type value() { return genomeElement; }
+    public Type value() { return genomeElement; }
   }
 
   public List<Protein> getAssociatedProteins();

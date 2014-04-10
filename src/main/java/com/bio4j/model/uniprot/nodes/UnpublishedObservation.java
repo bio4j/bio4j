@@ -10,12 +10,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UnpublishedObservation extends Node<UnpublishedObservation, UnpublishedObservation.type> {
+public interface UnpublishedObservation extends Node<UnpublishedObservation, UnpublishedObservation.Type> {
     
-  enum type implements NodeType<UnpublishedObservation, UnpublishedObservation.type> {
+  public static enum Type implements NodeType<UnpublishedObservation, UnpublishedObservation.Type> {
 
     unpublishedObservation;
-    public type value() { return unpublishedObservation; }
+    public Type value() { return unpublishedObservation; }
   }
   
   //------GETTERS-----
