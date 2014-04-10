@@ -6,7 +6,7 @@ import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
 // properties
-import com.bio4j.model.properties.name;
+import com.bio4j.model.properties.Name;
 
 /**
  * 
@@ -15,7 +15,7 @@ import com.bio4j.model.properties.name;
 public interface AlternativeProduct extends Node<AlternativeProduct, AlternativeProduct.type>,
 
   // properties
-  name
+  Name<AlternativeProduct, AlternativeProduct.type>
   
 {    
 

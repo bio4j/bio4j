@@ -5,12 +5,12 @@ import java.util.List;
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
-public interface Pfam extends Node<Pfam, Pfam.type> {
+public interface Pfam extends Node<Pfam, Pfam.Type> {
     
-  enum type implements NodeType<Pfam, Pfam.type> {
+  enum Type implements NodeType<Pfam, Pfam.Type> {
 
     pfam;
-    public type value() { return pfam; }
+    public Type value() { return pfam; }
   }
     //----GETTERS---
     public String getId();

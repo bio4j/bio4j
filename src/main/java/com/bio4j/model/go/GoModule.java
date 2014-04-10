@@ -43,17 +43,17 @@ public class GoModule implements Module {
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
     // GoTerm
     add(
-      id.TYPE(GoTerm.TYPE)  
+      new Id.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     ); add(
-      definition.TYPE(GoTerm.TYPE)
+      new Definition.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     ); add(
-      comment.TYPE(GoTerm.TYPE)
+      new Comment.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     ); add(
-      obsolete.TYPE(GoTerm.TYPE)
+      new Obsolete.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     ); add(
-      name.TYPE(GoTerm.TYPE)
+      new Name.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     ); add(
-      alternativeIds.TYPE(GoTerm.TYPE)
+      new AlternativeIds.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)
     );
   }};
 

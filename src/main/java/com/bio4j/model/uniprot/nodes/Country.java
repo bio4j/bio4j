@@ -7,13 +7,13 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Country extends Node<Country, Country.type> {
+public interface Country extends Node<Country, Country.Type> {
   
-  public static type TYPE = type.country;   
-  public static enum type implements NodeType<Country, Country.type> {
+  public static Type TYPE = Type.country;   
+  public static enum Type implements NodeType<Country, Country.Type> {
 
     country;
-    public type value() { return country; }
+    public Type value() { return country; }
   }
  
     //----GETTERS---

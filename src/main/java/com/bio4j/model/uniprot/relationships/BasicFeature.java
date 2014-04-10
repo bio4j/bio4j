@@ -1,14 +1,23 @@
-package com.bio4j.model.uniprot.relationships.features;
+package com.bio4j.model.uniprot.relationships;
 
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
 import com.bio4j.model.uniprot.nodes.FeatureType;
 import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.Relationship;
 
 /**
- *
+ * Base Relationship class for features. The source is bounded by this to be a Protein; same for the target: FeatureType.
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface BasicFeature{
+
+public interface BasicFeature <
+
+  R extends BasicFeature<R,RT>, 
+  RT extends Enum<RT> & BasicFeatureType<R,RT>
+
+> extends Relationship<Protein,Protein.Type, R,RT, FeatureType,FeatureType.Type> {
     
     //------------GETTERS----------------
     public String getDescription();
@@ -20,10 +29,6 @@ public interface BasicFeature{
     public String getRef();
     public String getBegin();
     public String getEnd();
-
-    public FeatureType getFeatureType();
-    public Protein getProtein();
-
             
     //------------SETTERS-------------------
     public void setDescription(String value);
@@ -35,5 +40,8 @@ public interface BasicFeature{
     public void setEnd(String value);
     public void setOriginal(String value);
     public void setVariation(String value);
+
+    public Protein source();
+    public FeatureType target();
     
 }

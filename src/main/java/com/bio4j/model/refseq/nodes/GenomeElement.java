@@ -7,9 +7,9 @@ import com.bio4j.model.uniprot.nodes.Protein;
 import java.util.List;
 
 // properties
-import com.bio4j.model.properties.comment;
-import com.bio4j.model.properties.definition;
-import com.bio4j.model.properties.version;
+import com.bio4j.model.properties.Comment;
+import com.bio4j.model.properties.Definition;
+import com.bio4j.model.properties.Version;
 
 // relationships
 import com.bio4j.model.refseq.relationships.MRNAs;
@@ -30,9 +30,9 @@ import com.bio4j.model.refseq.relationships.CDSs;
 public interface GenomeElement extends Node<GenomeElement, GenomeElement.type>,
 
   // properties
-  comment,
-  definition,
-  version
+  Comment,
+  Definition,
+  Version
 
 {
   

@@ -4,8 +4,8 @@ import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
 // properties
-import com.bio4j.model.properties.positions;
-import com.bio4j.model.properties.note;
+import com.bio4j.model.properties.Positions;
+import com.bio4j.model.properties.Note;
 
 // relationships
 
@@ -16,8 +16,8 @@ import com.bio4j.model.properties.note;
 public interface CDS extends Node<CDS, CDS.type>,
 
   // properties
-  positions,
-  note
+  Positions,
+  Note
 
 {
   

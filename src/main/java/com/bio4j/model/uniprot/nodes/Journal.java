@@ -9,14 +9,14 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Journal extends Node<Journal, Journal.type> {
+public interface Journal extends Node<Journal, Journal.Type> {
   
-  public static type TYPE = type.INSTANCE;
-  public static enum type implements NodeType<Journal, Journal.type> {
+  public static Type TYPE = Type.INSTANCE;
+  public static enum Type implements NodeType<Journal, Journal.Type> {
 
     journal;
-    public type value() { return journal; }
-    public static type INSTANCE = journal;
+    public Type value() { return journal; }
+    public static Type INSTANCE = journal;
   }    
     //----GETTERS---
     public String getName();

@@ -6,12 +6,12 @@ import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
 // properties
-import com.bio4j.model.properties.name;
-import com.bio4j.model.properties.id;
-import com.bio4j.model.properties.comment;
-import com.bio4j.model.properties.obsolete;
-import com.bio4j.model.properties.definition;
-import com.bio4j.model.properties.alternativeIds;
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.properties.Id;
+import com.bio4j.model.properties.Comment;
+import com.bio4j.model.properties.Obsolete;
+import com.bio4j.model.properties.Definition;
+import com.bio4j.model.properties.AlternativeIds;
 
 // relationships
 import com.bio4j.model.go.relationships.IsA;
@@ -33,12 +33,13 @@ import com.bio4j.model.uniprot.nodes.Protein;
 public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 
   // properties
-  id<GoTerm, GoTerm.Type>,
-  name<GoTerm, GoTerm.Type>,
-  definition<GoTerm, GoTerm.Type>,
-  comment<GoTerm, GoTerm.Type>,
-  obsolete<GoTerm, GoTerm.Type>,
-  alternativeIds<GoTerm, GoTerm.Type>
+  Id <GoTerm, GoTerm.Type>,
+  Name <GoTerm, GoTerm.Type>,
+  Definition <GoTerm, GoTerm.Type>,
+  Comment <GoTerm, GoTerm.Type>,
+  Obsolete <GoTerm, GoTerm.Type>,
+  AlternativeIds <GoTerm, GoTerm.Type>
+
 {
 
   // isA
@@ -64,6 +65,10 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
   // outgoing
   public List<NegativelyRegulates> out_negativelyRegulates(); 
   public List<GoTerm> out_negativelyRegulates_nodes();
+  
+  public List<GoTerm> negativelyRegulates_out_nodes();
+  public List<GoTerm> negativelyRegulates_outNodes();
+  
 
   // positivelyRegulates
   // incoming
@@ -90,7 +95,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
   public List<GoTerm> out_hasPartOf_nodes();
 
   public default Type getType() { return TYPE; }
-  public static Type TYPE = Type.goTerm;  
+  public static Type TYPE = Type.goTerm;
   public static enum Type implements NodeType<GoTerm, GoTerm.Type> {
     goTerm;
     public Type value() { return goTerm; }

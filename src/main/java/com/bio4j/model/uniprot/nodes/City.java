@@ -10,14 +10,14 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface City extends Node<City, City.type> {
+public interface City extends Node<City, City.Type> {
   
-  public static type TYPE = type.INSTANCE;
-  public static enum type implements NodeType<City, City.type> {
-
+  public static Type TYPE = Type.INSTANCE;
+  
+  public static enum Type implements NodeType<City, City.Type> {
     city;
-    public type value() { return city; }
-    public static type INSTANCE = city;
+    public Type value() { return city; }
+    public static Type INSTANCE = city;
   }
 
     //----GETTERS---

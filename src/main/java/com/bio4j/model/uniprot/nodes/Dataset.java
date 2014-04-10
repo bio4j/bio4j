@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Dataset extends Node<Dataset, Dataset.type> {
+public interface Dataset extends Node<Dataset, Dataset.Type> {
     
-  enum type implements NodeType<Dataset, Dataset.type> {
+  enum Type implements NodeType<Dataset, Dataset.Type> {
 
     dataset;
-    public type value() { return dataset; }
+    public Type value() { return dataset; }
   }
 
     

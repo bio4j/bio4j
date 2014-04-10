@@ -11,12 +11,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Patent extends Node<Patent, Patent.type> {
+public interface Patent extends Node<Patent, Patent.Type> {
     
-  enum type implements NodeType<Patent, Patent.type> {
+  enum Type implements NodeType<Patent, Patent.Type> {
 
     patent;
-    public type value() { return patent; }
+    public Type value() { return patent; }
   }
     
     //----GETTERS---

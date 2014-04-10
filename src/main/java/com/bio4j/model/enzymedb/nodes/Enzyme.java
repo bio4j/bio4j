@@ -6,13 +6,13 @@ import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
 // properties
-import com.bio4j.model.properties.id;
-import com.bio4j.model.properties.officialName;
-import com.bio4j.model.properties.alternateNames;
-import com.bio4j.model.properties.catalyticActivity;
-import com.bio4j.model.properties.cofactors;
-import com.bio4j.model.properties.comment;
-import com.bio4j.model.properties.prositeCrossReferences;
+import com.bio4j.model.properties.Id;
+import com.bio4j.model.properties.Cofactors;
+import com.bio4j.model.properties.OfficialName;
+import com.bio4j.model.properties.AlternateNames;
+import com.bio4j.model.properties.CatalyticActivity;
+import com.bio4j.model.properties.Comment;
+import com.bio4j.model.properties.PrositeCrossReferences;
 
 // relationships
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
@@ -25,32 +25,31 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface Enzyme extends Node<Enzyme, Enzyme.type>,
+public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
 
   // properties
-  // id,
-  // officialName,
-  // alternateNames,
-  // catalyticActivity,
-  // cofactors,
-  // comment, // WARNING: changed this from comments to comment
-  // prositeCrossReferences
-  id<Enzyme, Enzyme.type>,
-  cofactors<Enzyme, Enzyme.type>
+  Id<Enzyme, Enzyme.Type>,
+  Cofactors<Enzyme, Enzyme.Type>,
+  OfficialName<Enzyme, Enzyme.Type>,
+  AlternateNames<Enzyme, Enzyme.Type>,
+  CatalyticActivity<Enzyme, Enzyme.Type>,
+  Comment<Enzyme, Enzyme.Type>, // WARNING: changed this from comments to comment
+  PrositeCrossReferences<Enzyme, Enzyme.Type>
+
 {
   
   // enzymaticActivity
   // incoming
-  public List<EnzymaticActivity> in_enzymaticActivity();
-  public List<Protein> in_enzymaticActivity_nodes();
+  public List<EnzymaticActivity> enzymaticActivity_in();
+  public List<Protein> enzymaticActivityin_Nodes();
   
   // WARNING: moved to rel method
   // public List<Protein> associatedProteins();  
 
-  public static type TYPE = type.enzyme;
-  public static enum type implements NodeType<Enzyme, Enzyme.type> {
+  public static Type TYPE = Type.enzyme;
+  public static enum Type implements NodeType<Enzyme, Enzyme.Type> {
 
     enzyme;
-    public type value() { return enzyme; }
+    public Type value() { return enzyme; }
   }  
 }

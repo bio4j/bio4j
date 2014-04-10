@@ -12,14 +12,14 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Book extends Node<Book, Book.type> {
+public interface Book extends Node<Book, Book.Type> {
    
-  public static type TYPE = type.INSTANCE;
-  public static enum type implements NodeType<Book, Book.type> {
+  public static Type TYPE = Type.INSTANCE;
+  public static enum Type implements NodeType<Book, Book.Type> {
 
     book;
-    public type value() { return book; }
-    public static type INSTANCE = book;
+    public Type value() { return book; }
+    public static Type INSTANCE = book;
   }   
     //----GETTERS---
     public String getName();

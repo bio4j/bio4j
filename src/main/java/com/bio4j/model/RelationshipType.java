@@ -12,7 +12,7 @@ public interface RelationshipType <
   RT extends Enum<RT> & RelationshipType<S,ST,R,RT,T,TT>,
   T extends Node<T,TT>,
   TT extends Enum<TT> & NodeType<T,TT>
-> {
+> extends ElementType<R,RT> {
 
   /*
     this is a strong hint for you to implement this as a singleton
@@ -23,12 +23,11 @@ public interface RelationshipType <
     the arity for this relationship. This corresponds to the relationship between the two node types (as a distributor/span essentially).
     Relationships are by default `manyToMany`
   */
-  public default arity arity() { return arity.manyToMany; }
+  public default Arity arity() { return Arity.manyToMany; }
 
-  public static enum arity {
+  public static enum Arity {
 
     // TODO: explain this
-    // given x: S ...
     oneToOne, 
     oneToMany, 
     manyToOne, 

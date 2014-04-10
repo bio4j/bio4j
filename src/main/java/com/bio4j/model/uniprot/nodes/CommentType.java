@@ -7,12 +7,12 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface CommentType extends Node<CommentType, CommentType.type> {
+public interface CommentType extends Node<CommentType, CommentType.Type> {
     
-  enum type implements NodeType<CommentType, CommentType.type> {
+  enum Type implements NodeType<CommentType, CommentType.Type> {
 
     commentType;
-    public type value() { return commentType; }
+    public Type value() { return commentType; }
   }
   
     //----GETTERS---

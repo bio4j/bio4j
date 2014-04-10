@@ -4,12 +4,12 @@ package com.bio4j.model.refseq.nodes;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface MiscRNA extends RNA<MiscRNA, MiscRNA.type> { 
+public interface MiscRNA extends RNA<MiscRNA, MiscRNA.Type> { 
 
-  public static type TYPE = type.miscRNA;
-  enum type implements RNAType<MiscRNA, MiscRNA.type> {
+  public static Type TYPE = Type.miscRNA;
+  enum Type implements RNAType<MiscRNA, MiscRNA.Type> {
 
     miscRNA;
-    public type value() { return miscRNA; }
+    public Type value() { return miscRNA; }
   }   
 }

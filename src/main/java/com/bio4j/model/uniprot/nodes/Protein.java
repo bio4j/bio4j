@@ -2,7 +2,6 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
-
 import com.bio4j.model.enums.UniprotDBXref;
 // import com.bio4j.model.uniprot.nodes.Article;
 // import com.bio4j.model.uniprot.nodes.Book;
@@ -12,47 +11,59 @@ import com.bio4j.model.enums.UniprotDBXref;
 // import com.bio4j.model.uniprot.nodes.Thesis;
 // import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 
+// TODO back to rel pkg
+import com.bio4j.model.uniprot.relationships.features.*;
+import com.bio4j.model.uniprot.relationships.comment.*;
+
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
-
+import com.bio4j.model.uniprot.relationships.DomainComment;
+// import com.bio4j.model.uniprot.relationships.FunctionComment;
+// import com.bio4j.model.uniprot.relationships.PathwayComment;
+// import com.bio4j.model.uniprot.relationships.SimilarityComment;
+import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
+// import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
+// import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
+// import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
-
 import com.bio4j.model.go.nodes.GoTerm;
-
 import com.bio4j.model.refseq.nodes.GenomeElement;
 
-import com.bio4j.model.uniprot.relationships.comment.DomainComment;
-import com.bio4j.model.uniprot.relationships.comment.FunctionComment;
-import com.bio4j.model.uniprot.relationships.comment.PathwayComment;
-import com.bio4j.model.uniprot.relationships.comment.SimilarityComment;
-
-import com.bio4j.model.uniprot.relationships.features.ActiveSiteFeature;
-import com.bio4j.model.uniprot.relationships.features.SignalPeptideFeature;
-import com.bio4j.model.uniprot.relationships.features.SpliceVariantFeature;
-import com.bio4j.model.uniprot.relationships.features.TransmembraneRegionFeature;
+import com.bio4j.model.properties.Accession;
+import com.bio4j.model.properties.FullName;
+import com.bio4j.model.properties.Length;
+import com.bio4j.model.properties.Mass;
+import com.bio4j.model.properties.ModifiedDate;
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.properties.Sequence;
+import com.bio4j.model.properties.ShortName;
 
 import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
 import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
+
 import java.util.List;
 
-public interface Protein extends Node<Protein, Protein.type> {
-  
-  public static type TYPE = type.protein; 
-  public static enum type implements NodeType<Protein, Protein.type> {
+public interface Protein extends Node<Protein, Protein.Type>,
 
-    protein;
-    public type value() { return protein; }
-  }
+	Name<Protein, Protein.Type>,
+	Sequence<Protein, Protein.Type>,
+	FullName<Protein, Protein.Type>,
+	ShortName<Protein, Protein.Type>,
+	Accession<Protein, Protein.Type>,
+	ModifiedDate<Protein, Protein.Type>,
+	Mass<Protein, Protein.Type>,
+	Length<Protein, Protein.Type>
+	{
+  
+	  public static Type TYPE = Type.protein; 
+	  public static enum Type implements NodeType<Protein, Protein.Type> {
+	
+	    protein;
+	    public Type value() { return protein; }
+	  }
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    public String getName();
-    public String getFullName();
-    public String getShortName();
-    public String getAccession();
-    public String getSequence();
-    public String getModifiedDate();
-    public float getMass();
-    public int getLength();
+    
     public String[] getGeneNames();    
     public String[] getAlternativeAcessions();
     
@@ -97,14 +108,7 @@ public interface Protein extends Node<Protein, Protein.type> {
     //---------------------------------------------------------------------------------------------
     //-------------------------------------SETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
-    public void setName(String value);
-    public void setFullName(String value);
-    public void setShortName(String value);
-    public void setAccession(String value);
-    public void setSequence(String value);
-    public void setModifiedDate(String value);
-    public void setMass(float value);
-    public void setLength(int value);
+    
     public void setGeneNames(String[] value);
     public void setAlternativeAccessions(String[] value);
     

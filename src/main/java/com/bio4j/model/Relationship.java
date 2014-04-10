@@ -19,7 +19,7 @@ public interface Relationship <
   RT extends Enum<RT> & RelationshipType<S,ST,R,RT,T,TT>,
   T extends Node<T,TT>,
   TT extends Enum<TT> & NodeType<T,TT>
-> {
+> extends Element<R,RT> {
 
   /*
     Its type

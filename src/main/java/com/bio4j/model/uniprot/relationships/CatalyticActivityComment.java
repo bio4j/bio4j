@@ -1,5 +1,5 @@
 
-package com.bio4j.model.uniprot.relationships.comment;
+package com.bio4j.model.uniprot.relationships;
 
 
 /**
