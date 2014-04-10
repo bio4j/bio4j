@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.Book;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface BookAuthor extends Relationship <
-  Book, Book.type,
-  BookAuthor, BookAuthor.type,
-  Person, Person.type
+  Book, Book.Type,
+  BookAuthor, BookAuthor.Type,
+  Person, Person.Type
 > {
 
-  enum type implements RelationshipType <
-    Book, Book.type,
-    BookAuthor, BookAuthor.type,
-    Person, Person.type
+  enum Type implements RelationshipType <
+    Book, Book.Type,
+    BookAuthor, BookAuthor.Type,
+    Person, Person.Type
   > {
     bookAuthor;
-    public type value() { return bookAuthor; }
-    public arity arity() { return arity.manyToMany; }
-    public Book.type sourceType() { return Book.TYPE; }
-    public Person.type targetType() { return Person.TYPE; }
+    public Type value() { return bookAuthor; }
+    public Arity arity() { return Arity.manyToMany; }
+    public Book.Type sourceType() { return Book.TYPE; }
+    public Person.Type targetType() { return Person.TYPE; }
 
   }
 

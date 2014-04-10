@@ -9,14 +9,14 @@ import com.bio4j.model.NodeType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Publisher extends Node<Publisher, Publisher.type> {
+public interface Publisher extends Node<Publisher, Publisher.Type> {
   
-  public static type TYPE = type.INSTANCE;
-  public static enum type implements NodeType<Publisher, Publisher.type> {
+  public static Type TYPE = Type.INSTANCE;
+  public static enum Type implements NodeType<Publisher, Publisher.Type> {
 
     publisher;
-    public type value() { return publisher; }
-    public static type INSTANCE = publisher;
+    public Type value() { return publisher; }
+    public static Type INSTANCE = publisher;
   }
           
     //----GETTERS---

@@ -23,6 +23,7 @@ import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
 import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
 import com.bio4j.model.uniprot.relationships.ProteinInterpro;
+import com.bio4j.model.uniprot.relationships.ProteinKeyword;
 import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 import com.bio4j.model.uniprot.relationships.ProteinPfam;
 import com.bio4j.model.uniprot.relationships.ProteinReactome;
@@ -31,9 +32,11 @@ import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
 // import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
 // import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.relationships.IsA;
 import com.bio4j.model.refseq.nodes.GenomeElement;
+import com.bio4j.model.relationships.citation.article.ArticleProteinCitation;
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
 import com.bio4j.model.properties.FullName;
@@ -119,11 +122,19 @@ public interface Protein extends Node<Protein, Protein.Type>,
     
     // proteinEnzymaticActivity
     // outgoing
-    public List<ProteinEnzymaticActitivy> proteinEnzymaticActivity_out(); 
+    public List<EnzymaticActivity> proteinEnzymaticActivity_out(); 
     public List<Enzyme> proteinEnzymaticActivity_outNodes();
     
-    public List<GoTerm> getGOAnnotations();
-    public List<Keyword> getKeywords();
+    // proteinKeyword
+    // outgoing
+    public List<ProteinKeyword> proteinKeyword_out(); 
+    public List<Keyword> proteinKeyword_outNodes();
+    
+    // proteinArticleCitation
+    // outgoing
+    public List<ArticleProteinCitation> articleProteinCitation_out(); 
+    public List<Article> articleProteinCitation_outNodes();
+    
     public List<SignalPeptideFeature> getSignalPeptideFeature();
     public List<SpliceVariantFeature> getSpliceVariantFeature();
     public List<TransmembraneRegionFeature> getTransmembraneRegionFeature();
@@ -143,6 +154,8 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<Patent> getPatentCitations();
     public List<Thesis> getThesisCitations();
     public List<UnpublishedObservation> getUnpublishedObservationsCitations();
+    public List<GoTerm> getGOAnnotations();
+    
     
     //---------------------------------------------------------------------------------------------
     //-------------------------------------SETTERS-------------------------------------------------

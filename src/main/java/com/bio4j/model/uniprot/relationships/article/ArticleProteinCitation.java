@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.citation.article;
+package com.bio4j.model.uniprot.relationships.article;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
@@ -11,21 +11,21 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author Pablo Pareja <ppareja@era7.com>
  */
 public interface ArticleProteinCitation extends Relationship <
-    Article, Article.type,
-    ArticleProteinCitation, ArticleProteinCitation.type,
-    Protein, Protein.type
+    Article, Article.Type,
+    ArticleProteinCitation, ArticleProteinCitation.Type,
+    Protein, Protein.Type
 > {
 
-    enum type implements RelationshipType <
-        Article, Article.type,
-        ArticleProteinCitation, ArticleProteinCitation.type,
-        Protein, Protein.type
+    enum Type implements RelationshipType <
+        Article, Article.Type,
+        ArticleProteinCitation, ArticleProteinCitation.Type,
+        Protein, Protein.Type
     > {
         articleProteinCitation;
-        public type value() { return articleProteinCitation; }
-        public arity arity() { return arity.manyToMany; }
-        public Article.type sourceType() { return Article.TYPE; }
-        public Protein.type targetType() { return Protein.TYPE; }
+        public Type value() { return articleProteinCitation; }
+        public Arity arity() { return Arity.manyToMany; }
+        public Article.Type sourceType() { return Article.TYPE; }
+        public Protein.Type targetType() { return Protein.TYPE; }
 
     }
 
