@@ -20,11 +20,15 @@ import com.bio4j.model.uniprot.relationships.DomainComment;
 // import com.bio4j.model.uniprot.relationships.PathwayComment;
 // import com.bio4j.model.uniprot.relationships.SimilarityComment;
 import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
+import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
+import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 // import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
 // import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
 // import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.relationships.IsA;
 import com.bio4j.model.refseq.nodes.GenomeElement;
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
@@ -73,9 +77,22 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<Protein> getUniref50ClusterThisProteinBelongsTo();
     public List<Protein> getUniref90ClusterThisProteinBelongsTo();
     public List<Protein> getUniref100ClusterThisProteinBelongsTo();
-    public Organism getOrganism();
-    public Dataset getDataset();
-    public List<GenomeElement> getGenomeElements();
+    
+    // proteinOrganism
+    // outgoing
+    public List<ProteinOrganism> proteinOrganism_out(); 
+    public List<Organism> proteinOrganism_outNodes();
+    
+    // proteinDataset
+    // outgoing
+    public List<ProteinDataset> proteinDataset_out(); 
+    public List<Dataset> proteinDataset_outNodes();
+    
+    // proteinGenomeElement
+    // outgoing
+    public List<ProteinGenomeElement> proteinGenomeElement_out(); 
+    public List<GenomeElement> proteinGenomeElement_outNodes();
+    
     public List<SubcellularLocation> getSubcellularLocations();
     public List<Interpro> getInterpro();
     public List<Pfam> getPfamTerms();

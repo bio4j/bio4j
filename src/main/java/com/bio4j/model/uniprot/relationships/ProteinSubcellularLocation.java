@@ -1,8 +1,7 @@
-package com.bio4j.model.proteinInteractions.relationships;
+package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.SubcellularLocation;
-import com.bio4j.model.Relationship;
 
 /**
  *
