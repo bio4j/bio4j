@@ -5,34 +5,32 @@ import com.bio4j.model.RelationshipType;
 
 // source and target
 import com.bio4j.model.refseq.nodes.GenomeElement;
-import com.bio4j.model.refseq.nodes.MiscRNA;
+import com.bio4j.model.refseq.nodes.NcRNA;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface MiscRNAs extends Relationship <
-  GenomeElement, GenomeElement.Type,
-  MiscRNAs,  MiscRNAs.Type,
-  MiscRNA, MiscRNA.Type
+public interface HasNcRNA extends HasGenomicFeature <
+  HasNcRNA,  HasNcRNA.Type,
+  NcRNA, NcRNA.Type
 > {
 
   @Override
   public GenomeElement source();
   @Override
-  public MiscRNA target();
+  public NcRNA target();
 
-  public static Type TYPE = Type.miscRNAs;
-  public static enum Type implements RelationshipType <
-    GenomeElement, GenomeElement.Type,
-    MiscRNAs,  MiscRNAs.Type,
-    MiscRNA, MiscRNA.Type
+  public static Type TYPE = Type.hasNcRNA;
+  public static enum Type implements HasGenomicFeatureType <
+    HasNcRNA,  HasNcRNA.Type,
+    NcRNA, NcRNA.Type
   > {
-    miscRNAs;
-    public Type value() { return miscRNAs; }
+    hasNcRNA;
+    public Type value() { return hasNcRNA; }
     public Arity arity() { return Arity.manyToMany; } // TODO review this
     public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
-    public MiscRNA.Type targetType() { return MiscRNA.TYPE; }
+    public NcRNA.Type targetType() { return NcRNA.TYPE; }
   }
 }

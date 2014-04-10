@@ -5,34 +5,32 @@ import com.bio4j.model.RelationshipType;
 
 // source and target
 import com.bio4j.model.refseq.nodes.GenomeElement;
-import com.bio4j.model.refseq.nodes.CDS;
+import com.bio4j.model.refseq.nodes.MRNA;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface CDSs extends Relationship <
-  GenomeElement, GenomeElement.Type,
-  CDSs, CDSs.Type,
-  CDS, CDS.Type
+public interface HasMRNA extends HasGenomicFeature <
+  HasMRNA,  HasMRNA.Type,
+  MRNA, MRNA.Type
 > {
 
   @Override
   public GenomeElement source();
   @Override
-  public CDS target();
+  public MRNA target();
 
-  public static Type TYPE = Type.cdss;
-  public static enum Type implements RelationshipType <
-    GenomeElement, GenomeElement.Type,
-    CDSs, CDSs.Type,
-    CDS, CDS.Type
+  public static Type TYPE = Type.hasMRNA;
+  public static enum Type implements HasGenomicFeatureType <
+    HasMRNA,  HasMRNA.Type,
+    MRNA, MRNA.Type
   > {
-    cdss;
-    public Type value() { return cdss; }
+    hasMRNA;
+    public Type value() { return hasMRNA; }
     public Arity arity() { return Arity.manyToMany; } // TODO review this
     public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
-    public CDS.Type targetType() { return CDS.TYPE; }
+    public MRNA.Type targetType() { return MRNA.TYPE; }
   }
 }

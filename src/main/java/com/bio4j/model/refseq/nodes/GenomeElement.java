@@ -12,15 +12,15 @@ import com.bio4j.model.properties.Definition;
 import com.bio4j.model.properties.Version;
 
 // relationships
-import com.bio4j.model.refseq.relationships.MRNAs;
-import com.bio4j.model.refseq.relationships.MiscRNAs;
-import com.bio4j.model.refseq.relationships.NcRNAs;
-import com.bio4j.model.refseq.relationships.TRNAs;
-import com.bio4j.model.refseq.relationships.TmRNAs;
-import com.bio4j.model.refseq.relationships.RRNAs;
+import com.bio4j.model.refseq.relationships.HasMRNA;
+import com.bio4j.model.refseq.relationships.HasMiscRNA;
+import com.bio4j.model.refseq.relationships.HasNcRNA;
+import com.bio4j.model.refseq.relationships.HasTRNA;
+import com.bio4j.model.refseq.relationships.HasTmRNA;
+import com.bio4j.model.refseq.relationships.HasRRNA;
 
-import com.bio4j.model.refseq.relationships.Genes;
-import com.bio4j.model.refseq.relationships.CDSs;
+import com.bio4j.model.refseq.relationships.HasGene;
+import com.bio4j.model.refseq.relationships.HasCDS;
 
 /**
  *
@@ -36,36 +36,50 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.Type>,
 
 {
   
+  // hasCDS
+  // out
+  public List<? extends HasCDS> hasCDS_out();
+  public List<? extends CDS> hasCDS_outNodes();
+
+  // hasGene
+  // out
+  public List<? extends HasGene> hasGene_out();
+  public List<? extends Gene> hasGene_outNodes();
+
+  // RNAs
+
   // mRNAs
   // outgoing
-  public List<? extends MRNAs> out_mRNAs();
-  public List<? extends MRNA> out_mRNAs_nodes();
+  public List<? extends HasMRNA> hasMRNA_out();
+  public List<? extends MRNA> hasMRNA_outNodes();
 
   // miscRNAs
   // outgoing
-  public List<? extends MiscRNAs> out_miscRNAs();
-  public List<? extends MiscRNA> out_miscRNAs_nodes();
+  public List<? extends HasMiscRNA> hasMiscRNA_out();
+  public List<? extends MiscRNA> hasMiscRNA_outNodes();
 
   // ncRNAs
   // outgoing
-  public List<? extends NcRNAs> out_ncRNAs();
-  public List<? extends NcRNA> out_ncRNAs_nodes();
+  public List<? extends HasNcRNA> hasNcRNA_out();
+  public List<? extends NcRNA> hasNcRNA_outNodes();
 
   // RRNAs
   // outgoing
-  public List<? extends RRNAs> out_rRNAs();
-  public List<? extends RRNA> out_rRNAs_nodes();
+  public List<? extends HasRRNA> hasRRNA_out();
+  public List<? extends RRNA> hasRRNA_outNodes();
 
   // TRNAs
   // outgoing
-  public List<? extends TRNAs> out_tRNAs();
-  public List<? extends TRNA> out_tRNAs_nodes();
+  public List<? extends HasTRNA> hasTRNA_out();
+  public List<? extends TRNA> hasTRNA_outNodes();
 
   // TmRNAs
   // outgoing
-  public List<? extends TmRNAs> out_tmRNAs();
-  public List<? extends TmRNA> out_tmRNAs_nodes();
-  // TODO all the other RNAs
+  public List<? extends HasTmRNA> hasTmRNA_out();
+  public List<? extends TmRNA> hasTmRNA_outNodes();
+
+
+
 
   public static Type TYPE = Type.genomeElement;
   public static enum Type implements NodeType<GenomeElement, GenomeElement.Type> {
@@ -74,6 +88,7 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.Type>,
     public Type value() { return genomeElement; }
   }
 
+  // TODO move to Protein
   public List<Protein> getAssociatedProteins();
   public List<CDS> getCDS();
   public List<Gene> getGenes();

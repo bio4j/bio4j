@@ -5,34 +5,32 @@ import com.bio4j.model.RelationshipType;
 
 // source and target
 import com.bio4j.model.refseq.nodes.GenomeElement;
-import com.bio4j.model.refseq.nodes.TRNA;
+import com.bio4j.model.refseq.nodes.TmRNA;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface TRNAs extends Relationship <
-  GenomeElement, GenomeElement.Type,
-  TRNAs,  TRNAs.Type,
-  TRNA, TRNA.Type
+public interface HasTmRNA extends HasGenomicFeature <
+  HasTmRNA,  HasTmRNA.Type,
+  TmRNA, TmRNA.Type
 > {
 
   @Override
   public GenomeElement source();
   @Override
-  public TRNA target();
+  public TmRNA target();
 
-  public static Type TYPE = Type.tRNAs;
-  public static enum Type implements RelationshipType <
-    GenomeElement, GenomeElement.Type,
-    TRNAs,  TRNAs.Type,
-    TRNA, TRNA.Type
+  public static Type TYPE = Type.hasTmRNA;
+  public static enum Type implements HasGenomicFeatureType <
+    HasTmRNA,  HasTmRNA.Type,
+    TmRNA, TmRNA.Type
   > {
-    tRNAs;
-    public Type value() { return tRNAs; }
+    hasTmRNA;
+    public Type value() { return hasTmRNA; }
     public Arity arity() { return Arity.manyToMany; } // TODO review this
     public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
-    public TRNA.Type targetType() { return TRNA.TYPE; }
+    public TmRNA.Type targetType() { return TmRNA.TYPE; }
   }
 }

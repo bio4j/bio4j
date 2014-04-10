@@ -14,11 +14,7 @@ import com.bio4j.model.properties.Positions;
 public interface RNA <
   R extends RNA<R,T>,
   T extends Enum<T> & RNAType<R,T>
-> extends Node<R,T>,
-  // properties
-  Note,
-  Positions
-{
+> extends GenomicFeature<R,T> {
     
   // interface type <
   //   R extends RNA,

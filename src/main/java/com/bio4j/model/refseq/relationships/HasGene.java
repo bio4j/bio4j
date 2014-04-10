@@ -12,8 +12,7 @@ import com.bio4j.model.refseq.nodes.Gene;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
-public interface HasGene extends Relationship <
-  GenomeElement, GenomeElement.Type,
+public interface HasGene extends HasGenomicFeature <
   HasGene,  HasGene.Type,
   Gene, Gene.Type
 > {
@@ -23,14 +22,13 @@ public interface HasGene extends Relationship <
   @Override
   public Gene target();
 
-  public static Type TYPE = Type.genes;
-  public static enum Type implements RelationshipType <
-    GenomeElement, GenomeElement.Type,
+  public static Type TYPE = Type.hasGene;
+  public static enum Type implements HasGenomicFeatureType <
     HasGene,  HasGene.Type,
     Gene, Gene.Type
   > {
-    genes;
-    public Type value() { return genes; }
+    hasGene;
+    public Type value() { return hasGene; }
     public Arity arity() { return Arity.manyToMany; } // TODO review this
     public GenomeElement.Type sourceType() { return GenomeElement.TYPE; }
     public Gene.Type targetType() { return Gene.TYPE; }

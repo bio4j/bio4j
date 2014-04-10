@@ -3,8 +3,10 @@ package com.bio4j.model.refseq.nodes;
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
+import java.util.List;
+
 // relationships
-// import com.bio4j.model.refseq.relationships.HasGene;
+import com.bio4j.model.refseq.relationships.HasGene;
 
 /**
  *
@@ -14,7 +16,7 @@ public interface Gene extends GenomicFeature<Gene, Gene.Type> {
 
   // hasGene
   // in
-  // public List<? extends HasGene> hasGene_in();
+  public List<? extends HasGene> hasGene_in();
   public List<? extends GenomeElement> hasGene_inNodes();
 
 
