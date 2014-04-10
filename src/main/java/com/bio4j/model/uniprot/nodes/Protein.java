@@ -13,6 +13,8 @@ import com.bio4j.model.enums.UniprotDBXref;
 
 // TODO back to rel pkg
 import com.bio4j.model.uniprot.relationships.features.*;
+import com.bio4j.model.uniprot.relationships.submission.SubmissionProteinCitation;
+import com.bio4j.model.uniprot.relationships.article.ArticleProteinCitation;
 import com.bio4j.model.uniprot.relationships.comment.*;
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
 import com.bio4j.model.uniprot.relationships.DomainComment;
@@ -36,7 +38,6 @@ import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.relationships.IsA;
 import com.bio4j.model.refseq.nodes.GenomeElement;
-import com.bio4j.model.relationships.citation.article.ArticleProteinCitation;
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
 import com.bio4j.model.properties.FullName;
@@ -66,12 +67,12 @@ public interface Protein extends Node<Protein, Protein.Type>,
 	AlternativeAccessions<Protein, Protein.Type>
 	{
   
-	  public static Type TYPE = Type.protein; 
-	  public static enum Type implements NodeType<Protein, Protein.Type> {
+	public static Type TYPE = Type.protein; 
+	public static enum Type implements NodeType<Protein, Protein.Type> {
 	
 	    protein;
 	    public Type value() { return protein; }
-	  }
+	 }
     //---------------------------------------------------------------------------------------------
     //-------------------------------------GETTERS-------------------------------------------------
     //---------------------------------------------------------------------------------------------
@@ -92,8 +93,8 @@ public interface Protein extends Node<Protein, Protein.Type>,
     
     // proteinDataset
     // outgoing
-    public List<ProteinDataset> proteinDataset_out(); 
-    public List<Dataset> proteinDataset_outNodes();
+    public ProteinDataset proteinDataset_out(); 
+    public Dataset proteinDataset_outNodes();
     
     // proteinGenomeElement
     // outgoing
@@ -102,8 +103,8 @@ public interface Protein extends Node<Protein, Protein.Type>,
     
     // proteinSubcellularLocation
     // outgoing
-    public List<ProteinSubcellularLocation> proteinSubcellularLocation_out(); 
-    public List<SubcellularLocation> proteinSubcellularLocation_outNodes();
+    public ProteinSubcellularLocation proteinSubcellularLocation_out(); 
+    public SubcellularLocation proteinSubcellularLocation_outNodes();
     
     // proteinInterpro
     // outgoing
@@ -130,10 +131,15 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<ProteinKeyword> proteinKeyword_out(); 
     public List<Keyword> proteinKeyword_outNodes();
     
-    // proteinArticleCitation
+    // articleProteinCitation
     // outgoing
     public List<ArticleProteinCitation> articleProteinCitation_out(); 
     public List<Article> articleProteinCitation_outNodes();
+    
+    // submissionProteinCitation
+    // outgoing
+    public List<SubmissionProteinCitation> submissionProteinCitation_out(); 
+    public List<Submission> submissionProteinCitation_outNodes();
     
     public List<SignalPeptideFeature> getSignalPeptideFeature();
     public List<SpliceVariantFeature> getSpliceVariantFeature();
@@ -147,7 +153,6 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<ProteinProteinInteraction> getProteinIncomingInteractions();
     public List<ProteinIsoformInteraction> getIsoformOutgoingInteractions();
     public List<ProteinIsoformInteraction> getIsoformIncomingInteractions();
-    public List<Article> getArticleCitations();
     public List<Submission> getSubmissionCitations();
     public List<OnlineArticle> getOnlineArticleCitations();
     public List<Book> getBookCitations();
