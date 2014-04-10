@@ -38,14 +38,13 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.Type>,
   
   // parent
   // incoming
-  public List<? extends Parent> in_parent();
-  public List<? extends Taxon> in_parent_nodes();
+  public List<? extends Parent> parent_in();
+  public List<? extends Taxon> parent_inNodes();
   // outgoing
-  public Parent out_parent();
-  public Taxon out_parent_nodes();
+  public Parent parent_out();
+  public Taxon parent_outNodes();
 
-  // TODO what is this??
-  public Taxon taxon();
+  public Taxon taxon(); // TODO what is this??
 
   public static Type TYPE = Type.ncbiTaxon;  
   public static enum Type implements NodeType<NCBITaxon, NCBITaxon.Type> {
