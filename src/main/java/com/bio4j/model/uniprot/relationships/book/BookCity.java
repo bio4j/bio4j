@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.citation.book;
+package com.bio4j.model.uniprot.relationships.book;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
@@ -16,6 +16,7 @@ public interface BookCity extends Relationship <
   City, City.Type
 > {
     
+
   public static enum Type implements RelationshipType <
     Book, Book.Type,
     BookCity, BookCity.Type,

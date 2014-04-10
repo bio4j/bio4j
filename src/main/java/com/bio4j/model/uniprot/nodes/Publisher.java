@@ -11,12 +11,11 @@ import com.bio4j.model.NodeType;
  */
 public interface Publisher extends Node<Publisher, Publisher.Type> {
   
-  public static Type TYPE = Type.INSTANCE;
+  public static Type TYPE = Type.publisher;
   public static enum Type implements NodeType<Publisher, Publisher.Type> {
 
     publisher;
     public Type value() { return publisher; }
-    public static type INSTANCE = publisher;
   }
           
     //----GETTERS---

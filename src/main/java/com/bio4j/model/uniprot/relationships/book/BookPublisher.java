@@ -1,8 +1,8 @@
-package com.bio4j.model.relationships.citation.book;
+package com.bio4j.model.uniprot.relationships.book;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
+import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Publisher;
 import com.bio4j.model.uniprot.nodes.Book;
 
