@@ -22,7 +22,11 @@ import com.bio4j.model.uniprot.relationships.DomainComment;
 import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
 import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
+import com.bio4j.model.uniprot.relationships.ProteinInterpro;
 import com.bio4j.model.uniprot.relationships.ProteinOrganism;
+import com.bio4j.model.uniprot.relationships.ProteinPfam;
+import com.bio4j.model.uniprot.relationships.ProteinReactome;
+import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
 // import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
 // import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
 // import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
@@ -93,11 +97,31 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<ProteinGenomeElement> proteinGenomeElement_out(); 
     public List<GenomeElement> proteinGenomeElement_outNodes();
     
-    public List<SubcellularLocation> getSubcellularLocations();
-    public List<Interpro> getInterpro();
-    public List<Pfam> getPfamTerms();
-    public List<ReactomeTerm> getReactomeTerms();
-    public List<Enzyme> getProteinEnzymaticActivity();
+    // proteinSubcellularLocation
+    // outgoing
+    public List<ProteinSubcellularLocation> proteinSubcellularLocation_out(); 
+    public List<SubcellularLocation> proteinSubcellularLocation_outNodes();
+    
+    // proteinInterpro
+    // outgoing
+    public List<ProteinInterpro> proteinInterpro_out(); 
+    public List<Interpro> proteinInterpro_outNodes();
+    
+    // proteinPfam
+    // outgoing
+    public List<ProteinPfam> proteinPfam_out(); 
+    public List<Pfam> proteinPfam_outNodes();
+    
+    // proteinReactome
+    // outgoing
+    public List<ProteinReactome> proteinReactome_out(); 
+    public List<ReactomeTerm> proteinReactome_outNodes();
+    
+    // proteinEnzymaticActivity
+    // outgoing
+    public List<ProteinEnzymaticActitivy> proteinEnzymaticActivity_out(); 
+    public List<Enzyme> proteinEnzymaticActivity_outNodes();
+    
     public List<GoTerm> getGOAnnotations();
     public List<Keyword> getKeywords();
     public List<SignalPeptideFeature> getSignalPeptideFeature();
