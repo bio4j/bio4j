@@ -23,7 +23,7 @@ public interface UniRef100Member extends Relationship <
     Protein, Protein.Type,
     UniRef100Member, UniRef100Member.Type,
     Protein, Protein.Type
-    
+
   > {
 
     uniRef100Member;
@@ -34,7 +34,4 @@ public interface UniRef100Member extends Relationship <
     public Protein.Type sourceType() { return Protein.TYPE; }
     public Protein.Type targetType() { return Protein.TYPE; }
   }  
-
-
-
 }
