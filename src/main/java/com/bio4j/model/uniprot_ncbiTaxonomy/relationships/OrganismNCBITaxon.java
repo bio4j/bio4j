@@ -16,15 +16,21 @@ public interface OrganismNCBITaxon extends Relationship <
   NCBITaxon, NCBITaxon.Type
 > {
 
+  public Organism source();
+  public NCBITaxon target();
+
   public static enum Type implements RelationshipType <
     Organism, Organism.Type,
     OrganismNCBITaxon, OrganismNCBITaxon.Type,
     NCBITaxon, NCBITaxon.Type
   > {
-    OrganismNCBITaxon;
-    public Type value() { return OrganismNCBITaxon; }
+
+    organismNCBITaxon;
+
     // TODO: review this
     public Arity arity() { return Arity.manyToMany; }
+    
+    public Type value() { return organismNCBITaxon; }
     public Organism.Type sourceType() { return Organism.TYPE; }
     public NCBITaxon.Type targetType() { return NCBITaxon.TYPE; }
   }

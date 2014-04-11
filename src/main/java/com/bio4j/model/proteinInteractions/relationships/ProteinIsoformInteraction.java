@@ -6,6 +6,9 @@ import com.bio4j.model.RelationshipType;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.isoforms.nodes.Isoform;
 
+// properties
+import com.bio4j.model.properties.Experiments;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
@@ -17,7 +20,11 @@ public interface ProteinIsoformInteraction extends Relationship <
   ProteinIsoformInteraction, ProteinIsoformInteraction.Type,
   Isoform, Isoform.Type
 
-> 
+>,
+
+  // properties
+  Experiments<ProteinIsoformInteraction, ProteinIsoformInteraction.Type>
+ 
 {
 
   @Override
@@ -26,15 +33,9 @@ public interface ProteinIsoformInteraction extends Relationship <
   public Isoform target();
 
   // TODO migrate to properties
-  public String getOrganismsDiffer();
-  public String getExperiments();
-  public String getIntactId2();
-  public String getIntactId1();
-
-  public void setOrganismsDiffer(String value);
-  public void setExperiments(String value);
-  public void setIntactId2(String value);
-  public void setIntactId1(String value);
+  public String getOrganismsDiffer(); // TODO ??
+  public String getIntactId2(); // TODO ??
+  public String getIntactId1(); // TODO ??
 
   public static Type TYPE = Type.proteinIsoformInteraction;
   public static enum Type implements RelationshipType <

@@ -16,6 +16,7 @@ import com.bio4j.model.properties.EmblCode;
 // relationships
 import com.bio4j.model.ncbiTaxonomy.relationships.Parent;
 
+// other nodes
 import com.bio4j.model.uniprot.nodes.Taxon;
 
 
@@ -39,11 +40,12 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.Type>,
   // parent
   // incoming
   public List<? extends Parent> parent_in();
-  public List<? extends Taxon> parent_inNodes();
+  public List<? extends NCBITaxon> parent_inNodes();
   // outgoing
   public Parent parent_out();
-  public Taxon parent_outNodes();
+  public NCBITaxon parent_outNodes();
 
+  // is this about some sort of connection with UniProt taxonomy?
   public Taxon taxon(); // TODO what is this??
 
   public static Type TYPE = Type.ncbiTaxon;  

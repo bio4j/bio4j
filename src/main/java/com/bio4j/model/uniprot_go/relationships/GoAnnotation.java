@@ -5,6 +5,9 @@ import com.bio4j.model.RelationshipType;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.uniprot.nodes.Protein;
 
+// properties
+import com.bio4j.model.properties.Evidence;
+
 /**
  *
  * @author Pablo Pareja <ppareja@era7.com>
@@ -14,7 +17,18 @@ public interface GoAnnotation extends Relationship <
   Protein, Protein.Type,
   GoAnnotation, GoAnnotation.Type,
   GoTerm, GoTerm.Type
-> {
+>,
+  
+  // properties
+  Evidence<GoAnnotation, GoAnnotation.Type>
+
+{
+
+  @Override
+  public Protein source();
+  @Override
+  public GoTerm target();
+
 
   public static Type TYPE = Type.goAnnotation;
   public static enum Type implements RelationshipType <
@@ -28,12 +42,4 @@ public interface GoAnnotation extends Relationship <
     public Protein.Type sourceType() { return Protein.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
-
-  // TODO: migrate
-  public String evidence();
-
-  @Override
-  public Protein source();
-  @Override
-  public GoTerm target();
 }
