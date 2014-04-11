@@ -4,6 +4,7 @@ package com.bio4j.model.uniprot.relationships.patent;
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
 import com.bio4j.model.RelationshipType.Arity;
+import com.bio4j.model.refseq.relationships.HasTRNA.Type;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Patent;
 
@@ -17,6 +18,7 @@ public interface PatentAuthor extends Relationship <
 	Person, Person.Type
 	> {
 	
+	public static Type TYPE = Type.patentAuthor;
 	enum Type implements RelationshipType <
 	  Patent, Patent.Type,
 	  PatentAuthor, PatentAuthor.Type,

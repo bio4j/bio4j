@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot.relationships.onarticle;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
+import com.bio4j.model.properties.Locator;
 import com.bio4j.model.uniprot.nodes.OnlineArticle;
 import com.bio4j.model.uniprot.nodes.OnlineJournal;
 
@@ -14,7 +14,8 @@ public interface OnlineArticleJournal extends Relationship <
     OnlineArticle, OnlineArticle.Type,
     OnlineArticleJournal, OnlineArticleJournal.Type,
     OnlineJournal, OnlineJournal.Type
-> {
+    >,
+    Locator<OnlineArticleJournal,OnlineArticleJournal.Type>{
     
     public static enum Type implements RelationshipType <
         OnlineArticle, OnlineArticle.Type,

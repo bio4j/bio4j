@@ -2,7 +2,10 @@ package com.bio4j.model.uniprot.relationships.book;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
+import com.bio4j.model.properties.First;
+import com.bio4j.model.properties.Last;
+import com.bio4j.model.properties.Title;
+import com.bio4j.model.properties.Volume;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Book;
 
@@ -14,7 +17,12 @@ public interface BookProteinCitation extends Relationship <
     Book, Book.Type,
     BookProteinCitation, BookProteinCitation.Type,
     Protein, Protein.Type
-> {
+    >,
+    Title<BookProteinCitation, BookProteinCitation.Type>,
+    Volume<BookProteinCitation, BookProteinCitation.Type>,
+    First<BookProteinCitation, BookProteinCitation.Type>,
+    Last<BookProteinCitation, BookProteinCitation.Type>
+    {
 
     public static enum Type implements RelationshipType <
         Book, Book.Type,
@@ -29,9 +37,5 @@ public interface BookProteinCitation extends Relationship <
 
     }
 
-    public String title();
-    public String volume();
-    public String first();
-    public String last();
 
 }

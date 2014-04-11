@@ -1,7 +1,5 @@
 package com.bio4j.model.refseq.relationships;
 
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
 
 // source and target
 import com.bio4j.model.refseq.nodes.GenomeElement;

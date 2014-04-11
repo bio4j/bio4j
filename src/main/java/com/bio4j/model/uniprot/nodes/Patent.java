@@ -13,11 +13,11 @@ import com.bio4j.model.NodeType;
  */
 public interface Patent extends Node<Patent, Patent.Type> {
     
-  enum Type implements NodeType<Patent, Patent.Type> {
-
-    patent;
-    public Type value() { return patent; }
-  }
+	  enum Type implements NodeType<Patent, Patent.Type> {
+	
+	    patent;
+	    public Type value() { return patent; }
+	  }
     
     //----GETTERS---
     public String getNumber();
