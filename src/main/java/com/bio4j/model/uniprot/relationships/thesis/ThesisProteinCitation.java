@@ -1,5 +1,5 @@
 
-package com.bio4j.model.relationships.citation.thesis;
+package com.bio4j.model.uniprot.relationships.thesis;
 
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Thesis;

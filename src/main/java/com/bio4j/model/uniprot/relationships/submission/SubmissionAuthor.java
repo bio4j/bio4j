@@ -1,8 +1,7 @@
 
-package com.bio4j.model.relationships.citation.submission;
+package com.bio4j.model.uniprot.relationships.submission;
 
 import com.bio4j.model.uniprot.nodes.Submission;
-import com.bio4j.model.Relationship;
 
 /**
  *
