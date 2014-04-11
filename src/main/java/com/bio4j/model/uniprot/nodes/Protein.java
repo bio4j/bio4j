@@ -12,10 +12,8 @@ import com.bio4j.model.enums.UniprotDBXref;
 // import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 
 // TODO back to rel pkg
-import com.bio4j.model.uniprot.relationships.features.*;
 import com.bio4j.model.uniprot.relationships.submission.SubmissionProteinCitation;
 import com.bio4j.model.uniprot.relationships.article.ArticleProteinCitation;
-import com.bio4j.model.uniprot.relationships.comment.*;
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
 import com.bio4j.model.uniprot.relationships.DomainComment;
 // import com.bio4j.model.uniprot.relationships.FunctionComment;

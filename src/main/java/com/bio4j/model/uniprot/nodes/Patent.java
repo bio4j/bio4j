@@ -4,31 +4,43 @@ package com.bio4j.model.uniprot.nodes;
 import com.bio4j.model.Node;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot.relationships.patent.PatentAuthor;
+
 import java.util.List;
+
 import com.bio4j.model.NodeType;
+import com.bio4j.model.properties.Date;
+import com.bio4j.model.properties.Number;
+import com.bio4j.model.properties.Title;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Patent extends Node<Patent, Patent.Type> {
+public interface Patent extends Node<Patent, Patent.Type>,
+	Number<Patent, Patent.Type>,
+	Title<Patent, Patent.Type>,
+	Date<Patent, Patent.Type>{
     
-	  enum Type implements NodeType<Patent, Patent.Type> {
+	public static Type TYPE = Type.patent; 
+	enum Type implements NodeType<Patent, Patent.Type> {
 	
 	    patent;
 	    public Type value() { return patent; }
-	  }
-    
-    //----GETTERS---
-    public String getNumber();
-    public String getDate();
-    public String getTitle();
-    public List<Person> getAuthors();      
+	}
+		
+       
     public List<Protein> getProteinCitations();
-
-    //----SETTERS---
-    public void setNumber(String value);
-    public void setDate(String value);
-    public void setTitle(String value);    
+    
+    // patentAuthor
+    // outgoing
+    public List<PatentAuthor> patentAuthor_out(); 
+    public List<Person> patentAuthor_outNodes();
+    
+    // patentProteinCitation
+    // outgoing
+    public List<PatentAuthor> patentProteinCitation_out(); 
+    public List<Person> patentProteinCitation_outNodes();
+ 
     
 }
