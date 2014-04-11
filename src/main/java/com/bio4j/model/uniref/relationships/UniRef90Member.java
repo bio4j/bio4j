@@ -1,6 +1,5 @@
-package com.bio4j.model.relationships.uniref;
+package com.bio4j.model.uniref.relationships;
 
-import com.bio4j.model.Relationship;
 
 /**
  *

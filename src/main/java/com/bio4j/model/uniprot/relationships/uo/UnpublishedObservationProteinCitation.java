@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.citation.uo;
+package com.bio4j.model.uniprot.relationships.uo;
 
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
