@@ -9,28 +9,28 @@ import com.bio4j.model.uniprot.nodes.Protein;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UniRef90Member extends Relationship <
+public interface UniRef50Member extends Relationship <
 
   Protein, Protein.Type,
-  UniRef90Member, UniRef90Member.Type,
+  UniRef50Member, UniRef50Member.Type,
   Protein, Protein.Type
 
 > {
 
-  public static Type TYPE = Type.uniRef90Member;
+  public static Type TYPE = Type.uniRef50Member;
   public static enum Type implements RelationshipType <
 
     Protein, Protein.Type,
-    UniRef90Member, UniRef90Member.Type,
+    UniRef50Member, UniRef50Member.Type,
     Protein, Protein.Type
 
   > {
 
-    uniRef90Member;
+    uniRef50Member;
 
     public Arity arity() { return Arity.manyToOne; }
 
-    public Type value() { return uniRef90Member; }
+    public Type value() { return uniRef50Member; }
     public Protein.Type sourceType() { return Protein.TYPE; }
     public Protein.Type targetType() { return Protein.TYPE; }
   }  
