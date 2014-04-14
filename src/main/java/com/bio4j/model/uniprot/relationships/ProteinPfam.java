@@ -1,5 +1,8 @@
 package com.bio4j.model.uniprot.relationships;
 
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
+import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Pfam;
 import com.bio4j.model.uniprot.nodes.Protein;
 
@@ -7,8 +10,27 @@ import com.bio4j.model.uniprot.nodes.Protein;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinPfam{
-    
-  public Protein getProtein();    
-  public Pfam getPfam();    
+public interface ProteinPfam extends Relationship <
+	Protein, Protein.Type,
+	ProteinPfam, ProteinPfam.Type,
+	Pfam, Pfam.Type
+	> {
+	
+	public static Type TYPE = Type.proteinPfam;
+	public static enum Type implements RelationshipType <
+		Protein, Protein.Type,
+		ProteinPfam, ProteinPfam.Type,
+		Pfam, Pfam.Type
+		  > {
+		
+		   proteinPfam;
+		   public Type value() { return proteinPfam; }
+		   public Arity arity() { return Arity.manyToMany; }
+		   public Protein.Type sourceType() { return Protein.TYPE; }
+		   public Pfam.Type targetType() { return Pfam.TYPE; }
+	}
+		
+	public Protein source();
+	public Pfam target();
+	
 }

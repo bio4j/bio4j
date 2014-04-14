@@ -1,5 +1,8 @@
 package com.bio4j.model.uniprot.relationships;
 
+import com.bio4j.model.Relationship;
+import com.bio4j.model.RelationshipType;
+import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
 
@@ -7,8 +10,27 @@ import com.bio4j.model.uniprot.nodes.ReactomeTerm;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface ProteinReactome{
-    
-  public Protein getProtein();    
-  public ReactomeTerm getReactomeTerm();
+public interface ProteinReactome extends Relationship <
+	Protein, Protein.Type,
+	ProteinReactome, ProteinReactome.Type,
+	ReactomeTerm, ReactomeTerm.Type
+	> {
+	
+	public static Type TYPE = Type.proteinReactome;
+	public static enum Type implements RelationshipType <
+		Protein, Protein.Type,
+		ProteinReactome, ProteinReactome.Type,
+		ReactomeTerm, ReactomeTerm.Type
+		  > {
+		
+		   proteinReactome;
+		   public Type value() { return proteinReactome; }
+		   public Arity arity() { return Arity.manyToMany; }
+		   public Protein.Type sourceType() { return Protein.TYPE; }
+		   public ReactomeTerm.Type targetType() { return ReactomeTerm.TYPE; }
+	}
+		
+	public Protein source();
+	public ReactomeTerm target();
+
 }
