@@ -28,12 +28,11 @@ public interface Article extends Node<Article, Article.Type>,
 	DoId<Article, Article.Type>
 	{
   
-	  public static Type TYPE = Type.INSTANCE;
+	  public static Type TYPE = Type.article;
 	  
 	  public static enum Type implements NodeType<Article, Article.Type> {
 	    article;
 	    public Type value() { return article; }
-	    public static Type INSTANCE = article;
 	  }   
 	  
 	// articleProteinCitation
@@ -49,7 +48,8 @@ public interface Article extends Node<Article, Article.Type>,
 	// articleAuthor
 	// outgoing
 	public List<ArticleAuthor> articleAuthor_out(); 
-	public <Person & Consortium> articleAuthor_outNodes();
+	// this does not make any sense
+	public <T extends Person & Consortium> T articleAuthor_outNodes();
 	       
     
     

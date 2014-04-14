@@ -16,7 +16,7 @@ public interface ProteinSubcellularLocation extends Relationship <
 	ProteinSubcellularLocation, ProteinSubcellularLocation.Type,
 	SubcellularLocation, SubcellularLocation.Type
 	>,
-	Evidence<ProteinSubcellularLocation, ProteinSubcellularLocation.Type>,
+	Evidence<ProteinSubcellularLocation, ProteinSubcellularLocation.Type>
 	{
 	
 	public static Type TYPE = Type.proteinSubcellularLocation;
@@ -36,7 +36,6 @@ public interface ProteinSubcellularLocation extends Relationship <
 	public Protein source();
 	public SubcellularLocation target();
 
-}
   public String getStatus();
   public String getTopology();
   public String getTopologyStatus();
@@ -44,5 +43,5 @@ public interface ProteinSubcellularLocation extends Relationship <
   public void setStatus(String value);
   public void setTopology(String value);
   public void setTopologyStatus(String value);
-
+}
 

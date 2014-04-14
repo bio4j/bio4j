@@ -10,8 +10,9 @@ import com.bio4j.model.properties.Name;
  */
 public interface CommentType extends Node<CommentType, CommentType.Type>,
 	Name<CommentType,CommentType.Type>{
-    
-  enum Type implements NodeType<CommentType, CommentType.Type> {
+  
+  public static Type TYPE = Type.commentType;
+  public static enum Type implements NodeType<CommentType, CommentType.Type> {
 
     commentType;
     public Type value() { return commentType; }

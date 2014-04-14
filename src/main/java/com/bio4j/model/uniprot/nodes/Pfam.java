@@ -5,21 +5,22 @@ import java.util.List;
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
-public interface Pfam extends Node<Pfam, Pfam.Type> {
-    
-  enum Type implements NodeType<Pfam, Pfam.Type> {
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.properties.Id;
+
+public interface Pfam extends Node<Pfam, Pfam.Type>,
+
+  Id<Pfam, Pfam.Type>,
+  Name<Pfam, Pfam.Type>
+{
+  
+  public static Type TYPE = Type.pfam;  
+
+  public static enum Type implements NodeType<Pfam, Pfam.Type> {
 
     pfam;
     public Type value() { return pfam; }
   }
-    //----GETTERS---
-    public String getId();
-    public String getName();
     
-    public List<Protein> getAssociatedProteins();
-
-    //----SETTERS----
-    public void setId(String value);
-    public void setName(String value);  
-    
+  public List<Protein> getAssociatedProteins();
 }

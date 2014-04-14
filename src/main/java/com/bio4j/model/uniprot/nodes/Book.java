@@ -20,12 +20,11 @@ public interface Book extends Node<Book, Book.Type>,
 	Name<Book, Book.Type>,
 	Date<Book, Book.Type>{
 	   
-	public static Type TYPE = Type.INSTANCE;
+	public static Type TYPE = Type.book;
 	public static enum Type implements NodeType<Book, Book.Type> {
 	
 	    book;
 	    public Type value() { return book; }
-	    public static Type INSTANCE = book;
 	}   
     
     public List<Protein> getProteinCitations();

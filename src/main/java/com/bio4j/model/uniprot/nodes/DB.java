@@ -15,17 +15,16 @@ import com.bio4j.model.properties.Name;
 public interface DB extends Node<DB, DB.Type>,
 	Name<DB,DB.Type>{
 	
-	public static Type TYPE = Type.INSTANCE;
+	public static Type TYPE = Type.db;
     
 	enum Type implements NodeType<DB, DB.Type> {
 	
 	    db;
 	    public Type value() { return db; }
-	    public static Type INSTANCE = db;
 	}    
 	
-	
-    public List<Submission> getAssociatedSubmissions();
+	// TODO rels
+  public List<Submission> getAssociatedSubmissions();
     
     
 }

@@ -16,12 +16,11 @@ import com.bio4j.model.NodeType;
 public interface City extends Node<City, City.Type>,
 	Name<City, City.Type>{
   
-	  public static Type TYPE = Type.INSTANCE;
+	  public static Type TYPE = Type.city;
 	  
 	  public static enum Type implements NodeType<City, City.Type> {
 	    city;
 	    public Type value() { return city; }
-	    public static Type INSTANCE = city;
 	  }
 
 	// bookCity

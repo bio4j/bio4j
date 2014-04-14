@@ -11,13 +11,12 @@ import com.bio4j.model.properties.Name;
 public interface Dataset extends Node<Dataset, Dataset.Type>,
 	Name<Dataset,Dataset.Type>{
 	
-	public static Type TYPE = Type.INSTANCE;
+	public static Type TYPE = Type.dataset;
 	
-  enum Type implements NodeType<Dataset, Dataset.Type> {
+  public static enum Type implements NodeType<Dataset, Dataset.Type> {
 
     dataset;
     public Type value() { return dataset; }
-    public static Type INSTANCE = dataset;
   }
 
     

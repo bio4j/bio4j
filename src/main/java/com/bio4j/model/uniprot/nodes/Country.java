@@ -19,7 +19,6 @@ public interface Country extends Node<Country, Country.Type>,
 	
 	    country;
 	    public Type value() { return country; }
-	    public static Type INSTANCE = country;
 	  }
      
 	// instituteCountry

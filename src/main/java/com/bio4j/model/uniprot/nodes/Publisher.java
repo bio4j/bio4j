@@ -5,11 +5,17 @@ import com.bio4j.model.Node;
 import java.util.List;
 import com.bio4j.model.NodeType;
 
+import com.bio4j.model.properties.Name;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Publisher extends Node<Publisher, Publisher.Type> {
+public interface Publisher extends Node<Publisher, Publisher.Type>, 
+
+  // properties
+  Name<Publisher, Publisher.Type>
+{
   
   public static Type TYPE = Type.publisher;
   public static enum Type implements NodeType<Publisher, Publisher.Type> {
@@ -17,11 +23,7 @@ public interface Publisher extends Node<Publisher, Publisher.Type> {
     publisher;
     public Type value() { return publisher; }
   }
-          
-    //----GETTERS---
-    public String getName();
-    public List<Book> getBooks();
 
-    //----SETTERS---
-    public void setName(String value);
+    // TODO rels
+    public List<Book> getBooks();
 }

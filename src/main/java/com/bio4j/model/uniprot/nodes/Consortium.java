@@ -11,13 +11,12 @@ import com.bio4j.model.properties.Name;
 public interface Consortium extends Node<Consortium, Consortium.Type>,
 	Name<Consortium, Consortium.Type>{
 	
-	public static Type TYPE = Type.INSTANCE;
+	public static Type TYPE = Type.consortium;
 	
-	enum Type implements NodeType<Consortium, Consortium.Type> {
+	public static enum Type implements NodeType<Consortium, Consortium.Type> {
 
 	   consortium;
 	   public Type value() { return consortium; }
-	   public static Type INSTANCE = consortium;
 	}
    
 }
