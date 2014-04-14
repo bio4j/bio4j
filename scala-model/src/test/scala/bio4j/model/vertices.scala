@@ -26,6 +26,7 @@ object vertices {
       def apply(vRep: FieldType[user.type, UserImpl]): String = (vRep:UserImpl).id
     }
 
+    // probably better object + implicit, not implicit object
     implicit object readSince extends ReadProperty(since) {
 
       @Override
@@ -57,6 +58,7 @@ class UserSuite extends org.scalatest.FunSuite {
     // hahaha
     // val x_since = x.get(since)
     val x_since = x.get(since)
+    val x_since_again = x get since
 
     println (user +" get "+ id +": "+ x_id)
     println (user +" get "+ since +": "+ x_since.toString)
