@@ -12,7 +12,9 @@ import com.bio4j.model.go.nodes.*;
 import com.bio4j.model.properties.*;
 import com.bio4j.model.go.relationships.*;
 
-public class GoModule implements Module {
+public enum GoModule implements Module {
+
+  go;
   
   public static String PKG = "com.bio4j.model.go";
 

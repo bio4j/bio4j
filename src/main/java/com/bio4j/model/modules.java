@@ -13,7 +13,7 @@ import com.bio4j.model.go.GoModule;
 */
 public enum modules {
 
-  GeneOntology(new GoModule());
+  GeneOntology(GoModule.go);
   // TODO add the others
 
   private Module module = null; 

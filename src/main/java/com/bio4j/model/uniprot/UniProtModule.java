@@ -12,6 +12,8 @@ public enum UniProtModule implements Module {
 
   uniprot;
 
+  public static String PKG = "com.bio4j.model.uniprot";
+
   public String pkg() { return null; }
   public Set<Module> dependencies() { return null; }
   public Set<PropertyType> propertyTypes() { return null; }
