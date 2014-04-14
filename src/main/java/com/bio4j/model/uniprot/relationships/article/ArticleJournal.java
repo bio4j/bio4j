@@ -2,7 +2,10 @@ package com.bio4j.model.uniprot.relationships.article;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
+import com.bio4j.model.properties.Date;
+import com.bio4j.model.properties.First;
+import com.bio4j.model.properties.Last;
+import com.bio4j.model.properties.Volume;
 import com.bio4j.model.uniprot.nodes.Article;
 import com.bio4j.model.uniprot.nodes.Journal;
 
@@ -14,7 +17,11 @@ public interface ArticleJournal extends Relationship <
     Article, Article.Type,
     ArticleJournal, ArticleJournal.Type,
     Journal, Journal.Type
-> {
+    >,
+    Date<ArticleJournal, ArticleJournal.Type>,
+    Volume<ArticleJournal, ArticleJournal.Type>,
+    First<ArticleJournal, ArticleJournal.Type>,
+    Last<ArticleJournal, ArticleJournal.Type>{
     
     public static enum Type implements RelationshipType <
         Article, Article.Type,
@@ -28,10 +35,8 @@ public interface ArticleJournal extends Relationship <
         public Journal.Type targetType() { return Journal.TYPE; }
 
     }
-
-    public String date();
-    public String volume();
-    public String first();
-    public String last(); 
+    
+    public Article source();
+    public Journal target();
 
 }

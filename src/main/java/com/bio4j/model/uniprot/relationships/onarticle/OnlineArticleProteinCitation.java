@@ -2,7 +2,6 @@ package com.bio4j.model.uniprot.relationships.onarticle;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
 import com.bio4j.model.uniprot.nodes.OnlineArticle;
 import com.bio4j.model.uniprot.nodes.Protein;
 
@@ -28,5 +27,8 @@ public interface OnlineArticleProteinCitation extends Relationship <
         public OnlineArticle.Type sourceType() { return OnlineArticle.TYPE; }
         public Protein.Type targetType() { return Protein.TYPE; }
     }
+    
+    public OnlineArticle source();
+    public Protein target();
 
 }

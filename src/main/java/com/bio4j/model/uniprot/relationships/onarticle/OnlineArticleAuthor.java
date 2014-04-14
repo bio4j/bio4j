@@ -2,7 +2,6 @@ package com.bio4j.model.uniprot.relationships.onarticle;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.OnlineArticle;
 
@@ -29,5 +28,8 @@ public interface OnlineArticleAuthor extends Relationship <
     public OnlineArticle.Type sourceType() { return OnlineArticle.TYPE; }
     public Person.Type targetType() { return Person.TYPE; }
   }
+  
+  public OnlineArticle source();
+  public Person target();
 
 }

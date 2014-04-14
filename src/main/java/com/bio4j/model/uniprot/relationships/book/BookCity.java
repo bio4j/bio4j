@@ -2,7 +2,6 @@ package com.bio4j.model.uniprot.relationships.book;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
 import com.bio4j.model.uniprot.nodes.City;
 import com.bio4j.model.uniprot.nodes.Book;
 
@@ -29,5 +28,8 @@ public interface BookCity extends Relationship <
     public City.Type targetType() { return City.TYPE; }
 
   }
+  
+  public Book source();
+  public City target();
 
 }

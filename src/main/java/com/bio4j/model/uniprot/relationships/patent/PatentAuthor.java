@@ -3,8 +3,6 @@ package com.bio4j.model.uniprot.relationships.patent;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-import com.bio4j.model.RelationshipType.Arity;
-import com.bio4j.model.refseq.relationships.HasTRNA.Type;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Patent;
 
@@ -31,5 +29,8 @@ public interface PatentAuthor extends Relationship <
 	  public Person.Type targetType() { return Person.TYPE; }
 	
 	}
+	
+	public Patent source();
+	public Person target();
 
 }

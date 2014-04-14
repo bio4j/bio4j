@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot.relationships.article;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
+import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.uniprot.nodes.Article;
 import com.bio4j.model.uniprot.nodes.Protein;
 
@@ -28,5 +28,8 @@ public interface ArticleProteinCitation extends Relationship <
         public Protein.Type targetType() { return Protein.TYPE; }
 
     }
+    
+    public Article source();
+    public Protein target();
 
 }

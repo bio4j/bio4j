@@ -36,6 +36,9 @@ public interface BookProteinCitation extends Relationship <
         public Protein.Type targetType() { return Protein.TYPE; }
 
     }
+    
+    public Book source();
+    public Protein target();
 
 
 }

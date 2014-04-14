@@ -28,5 +28,8 @@ public interface BookEditor extends Relationship <
     public Person.Type targetType() { return Person.TYPE; }
 
   }
+  
+  public Book source();
+  public Person target();
 
 }

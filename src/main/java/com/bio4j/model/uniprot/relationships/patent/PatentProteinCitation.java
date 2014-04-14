@@ -1,10 +1,8 @@
 
 package com.bio4j.model.uniprot.relationships.patent;
 
-import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Patent;
-import com.bio4j.model.uniprot.relationships.patent.PatentAuthor.Type;
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
 
@@ -30,5 +28,8 @@ public interface PatentProteinCitation extends Relationship <
 	  public Patent.Type sourceType() { return Patent.TYPE; }
 	  public Protein.Type targetType() { return Protein.TYPE; }
 	}
+	
+	public Patent source();
+	public Protein target();
 
 }

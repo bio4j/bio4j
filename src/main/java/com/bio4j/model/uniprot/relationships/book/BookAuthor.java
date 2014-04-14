@@ -2,7 +2,6 @@ package com.bio4j.model.uniprot.relationships.book;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
-
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Book;
 
@@ -28,5 +27,8 @@ public interface BookAuthor extends Relationship <
     public Person.Type targetType() { return Person.TYPE; }
 
   }
+  
+  public Book source();
+  public Person target();
 
 }

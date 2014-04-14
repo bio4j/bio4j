@@ -28,7 +28,8 @@ public interface OnlineArticleJournal extends Relationship <
         public OnlineArticle.Type sourceType() { return OnlineArticle.TYPE; }
         public OnlineJournal.Type targetType() { return OnlineJournal.TYPE; }
     }
-
-    public String locator();
+    
+    public OnlineArticle source();
+    public OnlineJournal target();
 
 }
