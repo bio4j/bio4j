@@ -19,6 +19,7 @@ public interface OrganismNCBITaxon extends Relationship <
   public Organism source();
   public NCBITaxon target();
 
+  public static Type TYPE = Type.organismNCBITaxon; 
   public static enum Type implements RelationshipType <
     Organism, Organism.Type,
     OrganismNCBITaxon, OrganismNCBITaxon.Type,
