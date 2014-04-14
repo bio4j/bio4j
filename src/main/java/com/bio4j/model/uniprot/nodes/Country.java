@@ -1,8 +1,11 @@
 package com.bio4j.model.uniprot.nodes;
 
+import java.util.List;
+
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 import com.bio4j.model.properties.Name;
+import com.bio4j.model.uniprot.relationships.InstituteCountry;
 
 /**
  *
@@ -19,4 +22,8 @@ public interface Country extends Node<Country, Country.Type>,
 	    public static Type INSTANCE = country;
 	  }
      
+	// instituteCountry
+	// ingoing
+	public List<InstituteCountry> instituteCountry_in(); 
+	public List<Institute> instituteCountry_inNodes();
 }

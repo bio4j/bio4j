@@ -3,6 +3,7 @@ package com.bio4j.model.uniprot.nodes;
 import com.bio4j.model.Node;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.uniprot.nodes.Book;
+import com.bio4j.model.uniprot.relationships.book.BookCity;
 
 import java.util.List;
 
@@ -23,6 +24,9 @@ public interface City extends Node<City, City.Type>,
 	    public static Type INSTANCE = city;
 	  }
 
-    public List<Book> getBooks();
+	// bookCity
+	// ingoing
+	public List<BookCity> bookCity_in(); 
+	public List<Book> bookCity_inNodes();
 
 }

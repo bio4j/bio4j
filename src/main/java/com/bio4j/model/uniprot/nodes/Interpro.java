@@ -4,28 +4,30 @@ import java.util.List;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
+import com.bio4j.model.properties.Id;
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.uniprot.relationships.ProteinInterpro;
 
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Interpro extends Node<Interpro, Interpro.Type> {
+public interface Interpro extends Node<Interpro, Interpro.Type>,
+	Id<Interpro, Interpro.Type>,
+	Name<Interpro, Interpro.Type>{
     
-  enum Type implements NodeType<Interpro, Interpro.Type> {
-
-    interpro;
-    public Type value() { return interpro; }
-  }
+	public static Type TYPE = Type.INSTANCE;
+	enum Type implements NodeType<Interpro, Interpro.Type> {
+	
+	    interpro;
+	    public Type value() { return interpro; }
+	    public static Type INSTANCE = interpro;
+	}
   
-    //----GETTERS---
-    public String getId();
-    public String getName();
-    
-    public List<Protein> getAssociatedProteins();
-
-    //----SETTERS----
-    public void setId(String value);
-    public void setName(String value);    
+	// proteinInterpro
+	// ingoing
+	public List<ProteinInterpro> proteinInterpro_in(); 
+	public List<Protein> proteinInterpro_inNodes();
     
     
 }
