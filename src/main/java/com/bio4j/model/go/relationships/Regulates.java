@@ -25,9 +25,12 @@ public interface Regulates extends Relationship <
     Regulates,  Regulates.Type,
     GoTerm, GoTerm.Type
   > {
+    
     regulates;
+
+    public Arity arity() { return Arity.manyToMany; } // TODO review arity
+
     public Type value() { return regulates; }
-    public Arity arity() { return Arity.manyToMany; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
 

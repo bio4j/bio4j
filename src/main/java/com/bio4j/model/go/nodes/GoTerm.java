@@ -33,12 +33,12 @@ import com.bio4j.model.uniprot.nodes.Protein;
 public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 
   // properties
-  Id <GoTerm, GoTerm.Type>,
-  Name <GoTerm, GoTerm.Type>,
-  Definition <GoTerm, GoTerm.Type>,
-  Comment <GoTerm, GoTerm.Type>,
-  Obsolete <GoTerm, GoTerm.Type>,
-  AlternativeIds <GoTerm, GoTerm.Type>
+  Id<GoTerm, GoTerm.Type>,
+  Name<GoTerm, GoTerm.Type>,
+  Definition<GoTerm, GoTerm.Type>,
+  Comment<GoTerm, GoTerm.Type>,
+  Obsolete<GoTerm, GoTerm.Type>,
+  AlternativeIds<GoTerm, GoTerm.Type>
 
 {
 

@@ -11,11 +11,9 @@ import com.bio4j.model.go.nodes.GoTerm;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface PositivelyRegulates extends Relationship <
-
   GoTerm, GoTerm.Type,
   PositivelyRegulates,  PositivelyRegulates.Type,
   GoTerm, GoTerm.Type
-
 > 
 {
 
@@ -33,7 +31,7 @@ public interface PositivelyRegulates extends Relationship <
   {
     positivelyRegulates;
 
-    public Arity arity() { return Arity.manyToMany; }
+    public Arity arity() { return Arity.manyToMany; } // TODO review arity
     
     public Type value() { return positivelyRegulates; }    
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }

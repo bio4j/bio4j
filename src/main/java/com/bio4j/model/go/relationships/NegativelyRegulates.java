@@ -16,6 +16,9 @@ public interface NegativelyRegulates extends Relationship <
   GoTerm, GoTerm.Type
 > {
 
+  public GoTerm source();
+  public GoTerm target();
+
   public static Type TYPE = Type.negativelyRegulates;
   public static enum Type implements RelationshipType <
     GoTerm, GoTerm.Type,
@@ -23,12 +26,11 @@ public interface NegativelyRegulates extends Relationship <
     GoTerm, GoTerm.Type
   > {
     negativelyRegulates;
+
+    public Arity arity() { return Arity.manyToMany; } // TODO review arities
+
     public Type value() { return negativelyRegulates; }
-    public Arity arity() { return Arity.manyToMany; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
   }
-
-  public GoTerm source();
-  public GoTerm target();
 }
