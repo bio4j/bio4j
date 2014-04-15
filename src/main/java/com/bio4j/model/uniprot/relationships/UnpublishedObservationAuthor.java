@@ -1,5 +1,4 @@
-
-package com.bio4j.model.uniprot.relationships.uo;
+package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Person;

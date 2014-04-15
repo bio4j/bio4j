@@ -1,5 +1,4 @@
-
-package com.bio4j.model.uniprot.relationships.patent;
+package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
