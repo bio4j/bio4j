@@ -17,9 +17,7 @@ public interface HasGene extends HasGenomicFeature <
   Gene, Gene.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public Gene target();
 
   public static Type TYPE = Type.hasGene;

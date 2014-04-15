@@ -19,6 +19,6 @@ public interface GenomicFeature <
   
   // properties
   Note<GF, GFT>,
-  Positions<GF, GFT> // TODO why not a pair of numbers?
+  Positions<GF, GFT> // TODO why not a pair of numbers? and why not at the rel level?
 
 {}

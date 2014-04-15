@@ -17,7 +17,7 @@ public enum RefSeqModule implements Module {
   refseq;
 
   public static String PKG = "com.bio4j.model.refseq";
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{}};
+  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{}}; // TODO review this
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
     add(CDS.TYPE);
     add(Gene.TYPE);
@@ -41,12 +41,34 @@ public enum RefSeqModule implements Module {
   }};
 
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // TODO a lot of props here
+    // CDS
+    add(Note.<CDS,CDS.Type>TYPE(CDS.TYPE));
+    add(Positions.<CDS,CDS.Type>TYPE(CDS.TYPE));
+    // Gene
+    add(Note.<Gene,Gene.Type>TYPE(Gene.TYPE));
+    add(Positions.<Gene,Gene.Type>TYPE(Gene.TYPE));
+    // MRNA
+    add(Note.<MRNA,MRNA.Type>TYPE(MRNA.TYPE));
+    add(Positions.<MRNA,MRNA.Type>TYPE(MRNA.TYPE));
+    // MiscRNA
+    add(Note.<MiscRNA,MiscRNA.Type>TYPE(MiscRNA.TYPE));
+    add(Positions.<MiscRNA,MiscRNA.Type>TYPE(MiscRNA.TYPE));
+    // NcRNA
+    add(Note.<NcRNA,NcRNA.Type>TYPE(NcRNA.TYPE));
+    add(Positions.<NcRNA,NcRNA.Type>TYPE(NcRNA.TYPE));
+    // RRNA
+    add(Note.<RRNA,RRNA.Type>TYPE(RRNA.TYPE));
+    add(Positions.<RRNA,RRNA.Type>TYPE(RRNA.TYPE));
+    // TRNA
+    add(Note.<TRNA,TRNA.Type>TYPE(TRNA.TYPE));
+    add(Positions.<TRNA,TRNA.Type>TYPE(TRNA.TYPE));
+    // TmRNA
+    add(Note.<TmRNA,TmRNA.Type>TYPE(TmRNA.TYPE));
+    add(Positions.<TmRNA,TmRNA.Type>TYPE(TmRNA.TYPE));
   }};
 
 
   public String pkg() { return PKG; }
-  // TODO really no deps here?
   public Set<Module> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }

@@ -17,9 +17,7 @@ public interface HasMiscRNA extends HasGenomicFeature <
   MiscRNA, MiscRNA.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public MiscRNA target();
 
   public static Type TYPE = Type.hasMiscRNA;

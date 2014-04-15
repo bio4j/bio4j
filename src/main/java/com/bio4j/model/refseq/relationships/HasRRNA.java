@@ -17,9 +17,7 @@ public interface HasRRNA extends HasGenomicFeature <
   RRNA, RRNA.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public RRNA target();
 
   public static Type TYPE = Type.hasRRNA;

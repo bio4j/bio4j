@@ -17,9 +17,7 @@ public interface HasNcRNA extends HasGenomicFeature <
   NcRNA, NcRNA.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public NcRNA target();
 
   public static Type TYPE = Type.hasNcRNA;

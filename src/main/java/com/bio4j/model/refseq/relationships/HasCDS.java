@@ -17,9 +17,7 @@ public interface HasCDS extends HasGenomicFeature <
   CDS, CDS.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public CDS target();
 
   public static Type TYPE = Type.hasCDS;

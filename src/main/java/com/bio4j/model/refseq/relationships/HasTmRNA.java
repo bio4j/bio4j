@@ -17,9 +17,7 @@ public interface HasTmRNA extends HasGenomicFeature <
   TmRNA, TmRNA.Type
 > {
 
-  @Override
   public GenomeElement source();
-  @Override
   public TmRNA target();
 
   public static Type TYPE = Type.hasTmRNA;
