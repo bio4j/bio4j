@@ -17,14 +17,14 @@ public interface AlternativeProduct extends Node<AlternativeProduct, Alternative
 
   // properties
   Name<AlternativeProduct, AlternativeProduct.Type>
-  
 {    
+
+  // TODO what is this
+  public List<Isoform> getIsoforms();
 
   public static Type TYPE = Type.alternativeProduct;
   public static enum Type implements NodeType<AlternativeProduct, AlternativeProduct.Type> {
     alternativeProduct;
     public Type value() { return alternativeProduct; }
   }
-
-  public List<Isoform> getIsoforms();
 }

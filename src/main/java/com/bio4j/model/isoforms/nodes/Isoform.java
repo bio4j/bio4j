@@ -23,6 +23,7 @@ public interface Isoform extends Node<Isoform, Isoform.Type>,
   
 { 
   
+  // TODO most likely rel methods missing here
   public static Type TYPE = Type.isoform;  
   public static enum Type implements NodeType<Isoform, Isoform.Type> {
     isoform;

@@ -19,11 +19,8 @@ public interface IsoformEventGenerator extends Relationship <
 > 
 {
 
-  @Override  
   public Isoform source();
-  @Override
   public AlternativeProduct target();
-
 
   public static Type TYPE = Type.isoformEventGenerator;
   public static enum Type implements RelationshipType <
@@ -32,11 +29,13 @@ public interface IsoformEventGenerator extends Relationship <
     AlternativeProduct, AlternativeProduct.Type
   > {
     isoformEventGenerator;
+
+    // TODO: review
+    public Arity arity() { return Arity.manyToMany; }
+
     public Type value() { return isoformEventGenerator; }
 
     public Isoform.Type sourceType() { return Isoform.TYPE; }
     public AlternativeProduct.Type targetType() { return AlternativeProduct.TYPE; }
-    // TODO: review
-    public Arity arity() { return Arity.manyToMany; }
   }
 }
