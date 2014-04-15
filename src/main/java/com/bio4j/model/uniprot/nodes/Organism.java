@@ -5,11 +5,21 @@ import java.util.List;
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
+import com.bio4j.model.properties.ScientificName;
+import com.bio4j.model.properties.CommonName;
+import com.bio4j.model.properties.SynonymName;
+
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Organism extends Node<Organism, Organism.Type> {
+public interface Organism extends Node<Organism, Organism.Type>,
+
+  // properties
+  ScientificName<Organism, Organism.Type>,
+  CommonName<Organism, Organism.Type>,
+  SynonymName<Organism, Organism.Type>
+{
     
   public static Type TYPE = Type.organism;
   public static enum Type implements NodeType<Organism, Organism.Type> {
@@ -18,18 +28,10 @@ public interface Organism extends Node<Organism, Organism.Type> {
     public Type value() { return organism; }
   }
     
-    //----GETTERS---
-    public String getScientificName();
-    public String getCommonName();
-    public String getSynonymName();
-    public String getNcbiTaxonomyId();
-    
-    public List<Protein> getAssociatedProteins();
-
-    //----SETTERS----
-    public void setScientificName(String value);
-    public void setCommonName(String value);
-    public void setSynonymName(String value);
-    public void setNcbiTaxonomyId(String value);   
-    
+  // TODO rel?
+  public String getNcbiTaxonomyId();
+  // TODO move to rel 
+  public List<Protein> getAssociatedProteins();
+  public void setNcbiTaxonomyId(String value);   
+  
 }

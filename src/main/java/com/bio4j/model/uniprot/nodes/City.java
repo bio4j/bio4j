@@ -14,7 +14,10 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface City extends Node<City, City.Type>,
-	Name<City, City.Type>{
+	
+	// properties
+	Name<City, City.Type>
+{
   
 	  public static Type TYPE = Type.city;
 	  
@@ -24,7 +27,7 @@ public interface City extends Node<City, City.Type>,
 	  }
 
 	// bookCity
-	// ingoing
+	// incoming
 	public List<BookCity> bookCity_in(); 
 	public List<Book> bookCity_inNodes();
 

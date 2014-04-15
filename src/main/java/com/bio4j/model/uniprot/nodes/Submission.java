@@ -17,9 +17,11 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Submission extends Node<Submission, Submission.Type>,
+  
+  // properties
 	Title<Submission, Submission.Type>,
 	Date<Submission, Submission.Type>
-	{
+{
 	
 	public static Type TYPE = Type.submission;    
 	public static enum Type implements NodeType<Submission, Submission.Type> {

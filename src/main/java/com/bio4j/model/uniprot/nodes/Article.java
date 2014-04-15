@@ -22,18 +22,20 @@ import com.bio4j.model.NodeType;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Article extends Node<Article, Article.Type>,
+	
+	// properties
 	Title<Article, Article.Type>,
 	PubmedId<Article, Article.Type>,
 	MedlineId<Article, Article.Type>,
 	DoId<Article, Article.Type>
-	{
+{
   
-	  public static Type TYPE = Type.article;
-	  
-	  public static enum Type implements NodeType<Article, Article.Type> {
-	    article;
-	    public Type value() { return article; }
-	  }   
+  public static Type TYPE = Type.article;
+  
+  public static enum Type implements NodeType<Article, Article.Type> {
+    article;
+    public Type value() { return article; }
+  }
 	  
 	// articleProteinCitation
 	// outgoing
@@ -48,9 +50,6 @@ public interface Article extends Node<Article, Article.Type>,
 	// articleAuthor
 	// outgoing
 	public List<ArticleAuthor> articleAuthor_out(); 
-	// this does not make any sense
-	public <T extends Person & Consortium> T articleAuthor_outNodes();
-	       
-    
-    
+	// could be Consortium too
+	public Person articleAuthor_outNodes();
 }

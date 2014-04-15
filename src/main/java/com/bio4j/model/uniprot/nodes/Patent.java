@@ -18,12 +18,15 @@ import com.bio4j.model.properties.Title;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Patent extends Node<Patent, Patent.Type>,
+  
+  // properties
 	Number<Patent, Patent.Type>,
 	Title<Patent, Patent.Type>,
-	Date<Patent, Patent.Type>{
+	Date<Patent, Patent.Type>
+{
     
 	public static Type TYPE = Type.patent; 
-	enum Type implements NodeType<Patent, Patent.Type> {
+	public static enum Type implements NodeType<Patent, Patent.Type> {
 	
 	    patent;
 	    public Type value() { return patent; }

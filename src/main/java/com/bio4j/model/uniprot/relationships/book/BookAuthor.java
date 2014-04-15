@@ -9,6 +9,7 @@ import com.bio4j.model.uniprot.nodes.Book;
  *
  * @author Pablo Pareja <ppareja@era7.com>
  */
+// bookAuthor
 public interface BookAuthor extends Relationship <
   Book, Book.Type,
   BookAuthor, BookAuthor.Type,

@@ -9,7 +9,10 @@ import com.bio4j.model.properties.Name;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Dataset extends Node<Dataset, Dataset.Type>,
-	Name<Dataset,Dataset.Type>{
+  
+  // properties
+	Name<Dataset,Dataset.Type>
+{
 	
 	public static Type TYPE = Type.dataset;
 	

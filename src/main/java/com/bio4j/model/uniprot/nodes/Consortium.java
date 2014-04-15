@@ -9,7 +9,10 @@ import com.bio4j.model.properties.Name;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Consortium extends Node<Consortium, Consortium.Type>,
-	Name<Consortium, Consortium.Type>{
+  
+  // properties
+  Name<Consortium, Consortium.Type>
+{
 	
 	public static Type TYPE = Type.consortium;
 	

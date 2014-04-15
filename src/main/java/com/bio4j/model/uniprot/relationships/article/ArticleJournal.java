@@ -13,6 +13,7 @@ import com.bio4j.model.uniprot.nodes.Journal;
  *
  * @author Pablo Pareja <ppareja@era7.com>
  */
+// inJournal
 public interface ArticleJournal extends Relationship <
     Article, Article.Type,
     ArticleJournal, ArticleJournal.Type,

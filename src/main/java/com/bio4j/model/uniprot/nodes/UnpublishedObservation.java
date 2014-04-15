@@ -13,7 +13,8 @@ import com.bio4j.model.properties.Date;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface UnpublishedObservation extends Node<UnpublishedObservation, UnpublishedObservation.Type>, 
-
+  
+  // properties
   Date<UnpublishedObservation, UnpublishedObservation.Type>
 {
     

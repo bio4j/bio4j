@@ -1,4 +1,3 @@
-
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.Node;
@@ -15,7 +14,6 @@ public interface Journal extends Node<Journal, Journal.Type>,
   
   // properties
   Name<Journal, Journal.Type>
-
 {
   
   public static Type TYPE = Type.journal;

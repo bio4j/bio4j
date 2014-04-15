@@ -10,6 +10,7 @@ import com.bio4j.model.RelationshipType;
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
+// patentCitesProtein
 public interface PatentProteinCitation extends Relationship <
 	Patent, Patent.Type,
 	PatentProteinCitation, PatentProteinCitation.Type,
@@ -17,7 +18,7 @@ public interface PatentProteinCitation extends Relationship <
 	> {
 	
 	public static Type TYPE = Type.patentProteinCitation;
-	enum Type implements RelationshipType <
+	public static enum Type implements RelationshipType <
 	  Patent, Patent.Type,
 	  PatentProteinCitation, PatentProteinCitation.Type,
 	  Protein, Protein.Type

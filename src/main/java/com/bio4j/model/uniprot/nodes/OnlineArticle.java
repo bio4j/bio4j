@@ -26,15 +26,10 @@ public interface OnlineArticle extends Node<OnlineArticle, OnlineArticle.Type>,
     onlineArticle;
     public Type value() { return onlineArticle; }
   }  
-    //----GETTERS---
-    public String getTitle();
-    public OnlineJournal getOnlineJournal();
-    public List<Consortium> getConsortiumAuthors();
-    public List<Person> getPersonAuthors();
-    public List<Protein> getProteinCitations();
-    
-    //----SETTERS---
-    public void setTitle(String value);
-    
-    
+
+  // TODO move to rels
+  public OnlineJournal getOnlineJournal();
+  public List<Consortium> getConsortiumAuthors();
+  public List<Person> getPersonAuthors();
+  public List<Protein> getProteinCitations();
 }

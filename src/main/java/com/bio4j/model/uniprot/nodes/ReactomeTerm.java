@@ -6,6 +6,7 @@ import java.util.List;
 import com.bio4j.model.NodeType;
 
 import com.bio4j.model.properties.Id;
+import com.bio4j.model.properties.PathwayName;
 
 /**
  *
@@ -14,8 +15,9 @@ import com.bio4j.model.properties.Id;
 public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.Type>,
   
   // properties
-  Id<ReactomeTerm, ReactomeTerm.Type>
- {
+  Id<ReactomeTerm, ReactomeTerm.Type>,
+  PathwayName<ReactomeTerm, ReactomeTerm.Type>
+{
     
   public static Type TYPE = Type.reactomeTerm;
 
@@ -25,10 +27,6 @@ public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.Type>,
     public Type value() { return reactomeTerm; }
   }
   
-  // TODO move to properties  
-  public String getPathwayName();
-  public List<Protein> getAssociatedProteins();
-
-  public void setPathwayName(String value);
-   
+  // TODO move to rel 
+  public List<Protein> getAssociatedProteins();   
 }

@@ -9,6 +9,7 @@ import com.bio4j.model.uniprot.nodes.Article;
  *
  * @author Pablo Pareja <ppareja@era7.com>
  */
+// articleAuthor
 public interface ArticleAuthor extends Relationship <
   Article, Article.Type,
   ArticleAuthor, ArticleAuthor.Type,
