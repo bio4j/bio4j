@@ -16,7 +16,11 @@ public interface EnzymaticActivity extends Relationship <
   Protein, Protein.Type,
   EnzymaticActivity, EnzymaticActivity.Type,
   Enzyme, Enzyme.Type
-> {
+> 
+{
+
+  public Protein source();
+  public Enzyme target();
 
   public static Type TYPE = Type.enzymaticActivity;
   public static enum Type implements RelationshipType <
@@ -24,13 +28,15 @@ public interface EnzymaticActivity extends Relationship <
     EnzymaticActivity, EnzymaticActivity.Type,
     Enzyme, Enzyme.Type
   > {
+    
     enzymaticActivity;
+
+    public Arity arity() { return Arity.manyToMany; }
+
     public Type value() { return enzymaticActivity; }
     public Protein.Type sourceType() { return Protein.TYPE; }
     public Enzyme.Type targetType() { return Enzyme.TYPE; }
-    public Arity arity() { return Arity.manyToMany; }
+    
   }
 
-  public Protein source();
-  public Enzyme target();
 }
