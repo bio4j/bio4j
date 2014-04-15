@@ -14,44 +14,37 @@ trait AnyVertex {
   type VertexType <: AnyVertexType
   val vertexType: VertexType
 
-  // the raw underlying type representing this vertex
+  /* The raw underlying type representing this vertex */
   type Rep
 
+  /* Tags `Rep` with this vertex type */
   import shapeless.record._
 
-  /*
-    Tags a Rep with this vertex type
-  */
+  type VertexRep = FieldType[vertex.type, Rep]
   def ->>(v: Rep): FieldType[vertex.type, Rep] = field[vertex.type](v)
 
-  // read a property from this representation
+  /* Read a property from this representation */
   abstract case class ReadProperty[P <: AnyProperty](val p: P) {
 
-    def apply(vRep: FieldType[vertex.type, Rep]): p.Rep
+    def apply(vRep: VertexRep): p.Rep
   }
 
   import AnyVertexTypeHasProperty.PropertyOf
 
-  // this should go somewhere else
-  case class PropertyOps(val vRep: FieldType[vertex.type, Rep]) {
+  // TODO: this should go somewhere else
+  case class PropertyOps(val vRep: VertexRep) {
 
-    def get[P <: AnyProperty]
-    (p: P)
-    (implicit 
-      witness: PropertyOf[vertex.VertexType]#is[P],
-      retrieve: ReadProperty[P]
-    ) = retrieve(vRep)
+    def get[P <: AnyProperty](p: P)
+      (implicit 
+        witness: PropertyOf[vertex.VertexType]#is[P],
+        retrieve: ReadProperty[P]
+      ) = retrieve(vRep)
   }
   
-  implicit def propertyOps[P <: AnyProperty]
-    (vRep: FieldType[vertex.type, Rep]): vertex.PropertyOps = PropertyOps(vRep)
+  implicit def propertyOps(vRep: VertexRep): vertex.PropertyOps = PropertyOps(vRep)
 }
 
 object AnyVertex {
-
-  import shapeless.record.KeyTag  
-
-  type FieldOf[Rep, V <: AnyVertex] = { type is[X] = Rep with KeyTag[V, Rep] }
 
   type VertexType[VT <: AnyVertexType] = AnyVertex { type VertexType = VT }
 }

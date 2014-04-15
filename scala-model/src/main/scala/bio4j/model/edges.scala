@@ -7,36 +7,33 @@ trait AnyEdge {
   type EdgeType <: AnyEdgeType
   val edgeType: EdgeType
 
-  // the raw underlying type representing this Edge
+  /* The raw underlying type representing this Edge */
   type Rep
 
+  /* Tags `Rep` with this edge type */
   import shapeless.record._
 
-  /*
-    Tags a Rep with this edge type
-  */
-  def ->>(v: Rep): FieldType[edge.type, Rep] = field[edge.type](v)
+  type EdgeRep = FieldType[edge.type, Rep]
+  def ->>(e: Rep): FieldType[edge.type, Rep] = field[edge.type](e)
 
-  // read a property from this representation
+  /* Read a property from this representation */
   abstract case class ReadProperty[P <: AnyProperty](val p: P) {
 
-    def apply(edgeRep: FieldType[edge.type, Rep]): p.Rep
+    def apply(edgeRep: EdgeRep): p.Rep
   }
 
 
-  // this should go somewhere else
-  case class PropertyOps(val edgeRep: FieldType[edge.type, Rep]) {
+  // TODO: this should go somewhere else
+  case class PropertyOps(val edgeRep: EdgeRep) {
 
     import AnyEdgeTypeHasProperty.PropertyOf
 
-    def get[P <: AnyProperty]
-    (p: P)
-    (implicit 
-      witness: PropertyOf[edge.EdgeType]#is[P],
-      retrieve: ReadProperty[P]
-    ) = retrieve(edgeRep)
+    def get[P <: AnyProperty](p: P)
+      (implicit 
+        witness: PropertyOf[edge.EdgeType]#is[P],
+        retrieve: ReadProperty[P]
+      ) = retrieve(edgeRep)
   }
   
-  implicit def propertyOps[P <: AnyProperty]
-    (edgeRep: FieldType[edge.type, Rep]): edge.PropertyOps = PropertyOps(edgeRep)
+  implicit def propertyOps(edgeRep: EdgeRep): edge.PropertyOps = PropertyOps(edgeRep)
 }

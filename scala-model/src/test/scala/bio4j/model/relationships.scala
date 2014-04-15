@@ -17,7 +17,7 @@ object memberOf extends Rel(usersMembersOfOrgs) {
 object getSource extends Source(memberOf, user) {
 
   @Override  
-  def apply(relRep: FieldType[memberOf.type, memberOf.Rep]): FieldType[user.type, user.Rep] = 
+  def apply(relRep: memberOf.RelRep): user.VertexRep = 
     user ->> UserImpl(
                         id = "1ad3a34df",
                         name = "Robustiano Satrústegui",

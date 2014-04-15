@@ -23,14 +23,14 @@ object vertices {
     implicit object readId extends ReadProperty(id) {
 
       @Override
-      def apply(vRep: FieldType[user.type, UserImpl]): String = (vRep:UserImpl).id
+      def apply(vRep: user.VertexRep): String = (vRep:UserImpl).id
     }
 
     // probably better object + implicit, not implicit object
     implicit object readSince extends ReadProperty(since) {
 
       @Override
-      def apply(vRep: FieldType[user.type, user.Rep]): since.Rep = (vRep:UserImpl).since
+      def apply(vRep: user.VertexRep): since.Rep = (vRep:UserImpl).since
     }
   }
 }
