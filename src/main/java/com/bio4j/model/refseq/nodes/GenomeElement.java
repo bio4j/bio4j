@@ -91,11 +91,4 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.Type>,
   // TODO move to Protein
   public List<Protein> getAssociatedProteins();
   public List<CDS> getCDS();
-  public List<Gene> getGenes();
-  public List<MRNA> getMRnas();
-  public List<MiscRNA> getMiscRnas();
-  public List<NcRNA> getNcRnas();
-  public List<RRNA> getRRnas();
-  public List<TRNA> getTRnas();
-  public List<TmRNA> getTmRnas();
 }
