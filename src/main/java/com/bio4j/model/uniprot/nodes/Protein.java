@@ -3,22 +3,31 @@ package com.bio4j.model.uniprot.nodes;
 import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 import com.bio4j.model.enums.UniprotDBXref;
-// import com.bio4j.model.uniprot.nodes.Article;
-// import com.bio4j.model.uniprot.nodes.Book;
-// import com.bio4j.model.uniprot.nodes.OnlineArticle;
-// import com.bio4j.model.uniprot.nodes.Patent;
-// import com.bio4j.model.uniprot.nodes.Submission;
-// import com.bio4j.model.uniprot.nodes.Thesis;
-// import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 
-// TODO back to rel pkg
-import com.bio4j.model.uniprot.relationships.submission.SubmissionProteinCitation;
-import com.bio4j.model.uniprot.relationships.article.ArticleProteinCitation;
+// nodes
+import com.bio4j.model.uniprot.nodes.Article;
+import com.bio4j.model.uniprot.nodes.Book;
+import com.bio4j.model.uniprot.nodes.OnlineArticle;
+import com.bio4j.model.uniprot.nodes.Patent;
+import com.bio4j.model.uniprot.nodes.Submission;
+import com.bio4j.model.uniprot.nodes.Thesis;
+import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
+
+import com.bio4j.model.enzymedb.nodes.Enzyme;
+
+import com.bio4j.model.go.nodes.GoTerm;
+
+import com.bio4j.model.refseq.nodes.GenomeElement;
+
+
+// relationships
+import com.bio4j.model.uniprot.relationships.SubmissionProteinCitation;
+import com.bio4j.model.uniprot.relationships.ArticleProteinCitation;
 import com.bio4j.model.uniprot.relationships.DomainComment;
-// import com.bio4j.model.uniprot.relationships.FunctionComment;
-// import com.bio4j.model.uniprot.relationships.PathwayComment;
-// import com.bio4j.model.uniprot.relationships.SimilarityComment;
+import com.bio4j.model.uniprot.relationships.FunctionComment;
+import com.bio4j.model.uniprot.relationships.PathwayComment;
+import com.bio4j.model.uniprot.relationships.SimilarityComment;
 import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
 import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
@@ -28,14 +37,18 @@ import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 import com.bio4j.model.uniprot.relationships.ProteinPfam;
 import com.bio4j.model.uniprot.relationships.ProteinReactome;
 import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
-// import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
-// import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
-// import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
-import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
+import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
+import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
+
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
-import com.bio4j.model.go.nodes.GoTerm;
+
+import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
+import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
+
 import com.bio4j.model.go.relationships.IsA;
-import com.bio4j.model.refseq.nodes.GenomeElement;
+
+// properties
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
 import com.bio4j.model.properties.FullName;
@@ -46,8 +59,6 @@ import com.bio4j.model.properties.ModifiedDate;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Sequence;
 import com.bio4j.model.properties.ShortName;
-import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
-import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
 
 import java.util.List;
 

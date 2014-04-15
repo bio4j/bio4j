@@ -9,9 +9,9 @@ import com.bio4j.model.properties.Title;
 import com.bio4j.model.uniprot.nodes.Consortium;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot.relationships.article.ArticleAuthor;
-import com.bio4j.model.uniprot.relationships.article.ArticleJournal;
-import com.bio4j.model.uniprot.relationships.article.ArticleProteinCitation;
+import com.bio4j.model.uniprot.relationships.ArticleAuthor;
+import com.bio4j.model.uniprot.relationships.ArticleJournal;
+import com.bio4j.model.uniprot.relationships.ArticleProteinCitation;
 
 import java.util.List;
 

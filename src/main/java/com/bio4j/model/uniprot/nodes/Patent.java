@@ -1,10 +1,9 @@
-
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot.relationships.patent.PatentAuthor;
+import com.bio4j.model.uniprot.relationships.PatentAuthor;
 
 import java.util.List;
 

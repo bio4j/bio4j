@@ -24,6 +24,7 @@ public interface ArticleJournal extends Relationship <
     First<ArticleJournal, ArticleJournal.Type>,
     Last<ArticleJournal, ArticleJournal.Type>{
     
+    public static Type TYPE = Type.articleJournal;    
     public static enum Type implements RelationshipType <
         Article, Article.Type,
         ArticleJournal, ArticleJournal.Type,

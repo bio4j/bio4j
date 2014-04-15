@@ -16,6 +16,7 @@ public interface ArticleAuthor extends Relationship <
   Person, Person.Type
   > {
     
+  public static Type TYPE = Type.articleAuthor;
   public static enum Type implements RelationshipType <
     Article, Article.Type,
     ArticleAuthor, ArticleAuthor.Type,

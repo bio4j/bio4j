@@ -16,6 +16,7 @@ public interface BookAuthor extends Relationship <
   Person, Person.Type
 > {
 
+  public static Type TYPE = Type.bookAuthor;
   public static enum Type implements RelationshipType <
     Book, Book.Type,
     BookAuthor, BookAuthor.Type,

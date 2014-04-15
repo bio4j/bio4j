@@ -8,7 +8,7 @@ import com.bio4j.model.uniprot.nodes.DB;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Submission;
-import com.bio4j.model.uniprot.relationships.submission.SubmissionAuthor.Type;
+import com.bio4j.model.uniprot.relationships.SubmissionAuthor.Type;
 
 /**
  *

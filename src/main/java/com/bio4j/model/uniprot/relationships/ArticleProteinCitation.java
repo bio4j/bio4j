@@ -20,6 +20,7 @@ public interface ArticleProteinCitation extends Relationship <
   public Article source();
   public Protein target();
 
+  public static Type TYPE = Type.articleProteinCitation;
   public static enum Type implements RelationshipType <
       Article, Article.Type,
       ArticleProteinCitation, ArticleProteinCitation.Type,

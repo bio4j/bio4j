@@ -1,4 +1,4 @@
-package com.bio4j.model.proteinInteractions.relationships;
+package com.bio4j.model.uniprot.relationships;
 
 /**
  *

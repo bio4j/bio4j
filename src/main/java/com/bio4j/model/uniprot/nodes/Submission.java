@@ -4,7 +4,7 @@ package com.bio4j.model.uniprot.nodes;
 import com.bio4j.model.Node;
 import com.bio4j.model.properties.Date;
 import com.bio4j.model.properties.Title;
-import com.bio4j.model.uniprot.relationships.submission.SubmissionDb;
+import com.bio4j.model.uniprot.relationships.SubmissionDb;
 import com.bio4j.model.uniprot.nodes.Consortium;
 import com.bio4j.model.uniprot.nodes.Person;
 

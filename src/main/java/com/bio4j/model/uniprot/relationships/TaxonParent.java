@@ -10,7 +10,7 @@ public interface TaxonParent extends Relationship <
   Taxon, Taxon.Type
 > {
   
-  public static Type TYPE = Type.INSTANCE;   
+  public static Type TYPE = Type.taxonParent;   
   public static enum Type implements RelationshipType <
     Taxon, Taxon.Type,
     TaxonParent, TaxonParent.Type,
@@ -18,7 +18,7 @@ public interface TaxonParent extends Relationship <
   > {
 
     taxonParent;
-    public static type INSTANCE = taxonParent;
+
     public Type value() { return taxonParent; }
     public Arity arity() { return Arity.manyToOne; }
     public Taxon.Type sourceType() { return Taxon.TYPE; }
