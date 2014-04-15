@@ -19,7 +19,6 @@ import com.bio4j.model.ncbiTaxonomy.relationships.Parent;
 // other nodes
 import com.bio4j.model.uniprot.nodes.Taxon;
 
-
 /**
  *
  * @author Pablo Pareja Tobes <ppareja@era7.com>

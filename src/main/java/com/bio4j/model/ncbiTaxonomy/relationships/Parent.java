@@ -11,11 +11,9 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface Parent extends Relationship <
-
   NCBITaxon, NCBITaxon.Type,
   Parent, Parent.Type,
   NCBITaxon, NCBITaxon.Type
-
 > 
 {
 
@@ -28,10 +26,13 @@ public interface Parent extends Relationship <
     Parent, Parent.Type,
     NCBITaxon, NCBITaxon.Type
   > {
+
     parent;
+
+    public Arity arity() { return Arity.manyToOne; }
+    
     public Type value() { return parent; }
     public NCBITaxon.Type sourceType() { return NCBITaxon.TYPE; }
     public NCBITaxon.Type targetType() { return NCBITaxon.TYPE; }
-    public Arity arity() { return Arity.manyToOne; }
   }  
 }
