@@ -1,4 +1,4 @@
-package com.bio4j.model.enzymedb;
+package com.bio4j.model.ncbiTaxonomy;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -8,42 +8,40 @@ import com.bio4j.model.NodeType;
 import com.bio4j.model.RelationshipType;
 import com.bio4j.model.PropertyType;
 
-// deps
-import com.bio4j.model.uniprot.UniProtModule;
-
-import com.bio4j.model.enzymedb.nodes.*;
-import com.bio4j.model.enzymedb.relationships.*;
+import com.bio4j.model.ncbiTaxonomy.nodes.*;
+import com.bio4j.model.ncbiTaxonomy.relationships.*;
 import com.bio4j.model.properties.*;
 
+import com.bio4j.model.uniprot.UniProtModule;
 
-public enum EnzymeDBModule implements Module {
 
-  enzymeDB;
+public enum NcbiTaxonomyModule implements Module {
+
+  ncbiTaxonomy;
   
   // package name
-  public static String PKG = "com.bio4j.model.enzymedb";
+  public static String PKG = "com.bio4j.model.ncbiTaxonomy";
   // dependencies
   public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{
-    add(UniProtModule.uniprot);
+   // TODO no deps?
   }};
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
-    add(Enzyme.TYPE);
+    add(NCBITaxon.TYPE);
   }};
   // relationship types
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
-    add(EnzymaticActivity.TYPE);
+    add(Parent.TYPE);
   }};
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // Enzyme
-    add(Id.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(Cofactors.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(OfficialName.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(AlternateNames.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(CatalyticActivity.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(Comment.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(PrositeCrossReferences.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE));
+    // NcbiTaxon
+    add(TaxId.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
+    add(Name.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
+    add(Comment.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
+    add(ScientificName.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
+    add(TaxonomicRank.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
+    add(EmblCode.<NCBITaxon, NCBITaxon.Type>TYPE(NCBITaxon.TYPE));
   }};
 
   public String pkg() { return PKG; }

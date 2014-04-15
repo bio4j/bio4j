@@ -36,12 +36,12 @@ public enum GoModule implements Module {
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
     // GoTerm
-    add(new Id.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE)); 
-    add(new Definition.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE));
-    add(new Comment.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE));
-    add(new Obsolete.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE));
-    add(new Name.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE));
-    add(new AlternativeIds.Type<GoTerm, GoTerm.Type>(GoTerm.TYPE));
+    add(Id.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE)); 
+    add(Definition.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
+    add(Comment.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
+    add(Obsolete.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
+    add(Name.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
+    add(AlternativeIds.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
   }};
 
 

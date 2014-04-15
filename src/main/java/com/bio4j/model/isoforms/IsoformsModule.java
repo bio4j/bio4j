@@ -1,4 +1,4 @@
-package com.bio4j.model.enzymedb;
+package com.bio4j.model.isoforms;
 
 import java.util.Set;
 import java.util.HashSet;
@@ -8,42 +8,43 @@ import com.bio4j.model.NodeType;
 import com.bio4j.model.RelationshipType;
 import com.bio4j.model.PropertyType;
 
-// deps
-import com.bio4j.model.uniprot.UniProtModule;
-
-import com.bio4j.model.enzymedb.nodes.*;
-import com.bio4j.model.enzymedb.relationships.*;
+import com.bio4j.model.isoforms.nodes.*;
+import com.bio4j.model.isoforms.relationships.*;
 import com.bio4j.model.properties.*;
 
+import com.bio4j.model.uniprot.UniProtModule;
 
-public enum EnzymeDBModule implements Module {
 
-  enzymeDB;
+public enum IsoformsModule implements Module {
+
+  isoforms;
   
   // package name
-  public static String PKG = "com.bio4j.model.enzymedb";
+  public static String PKG = "com.bio4j.model.isoforms";
   // dependencies
   public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{
     add(UniProtModule.uniprot);
+    // TODO something else?
   }};
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
-    add(Enzyme.TYPE);
+    add(Isoform.TYPE);
+    add(AlternativeProduct.TYPE);
   }};
   // relationship types
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
-    add(EnzymaticActivity.TYPE);
+    add(IsoformEventGenerator.TYPE);
+    // TODO add the others
   }};
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // Enzyme
-    add(Id.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(Cofactors.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(OfficialName.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(AlternateNames.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(CatalyticActivity.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(Comment.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE)); 
-    add(PrositeCrossReferences.<Enzyme, Enzyme.Type>TYPE(Enzyme.TYPE));
+    // Isoform
+    add(Id.<Isoform, Isoform.Type>TYPE(Isoform.TYPE));
+    add(Name.<Isoform, Isoform.Type>TYPE(Isoform.TYPE));
+    add(Sequence.<Isoform, Isoform.Type>TYPE(Isoform.TYPE));
+    add(Note.<Isoform, Isoform.Type>TYPE(Isoform.TYPE));
+    // AlternativeProduct
+    add(Name.<AlternativeProduct, AlternativeProduct.Type>TYPE(AlternativeProduct.TYPE));
   }};
 
   public String pkg() { return PKG; }

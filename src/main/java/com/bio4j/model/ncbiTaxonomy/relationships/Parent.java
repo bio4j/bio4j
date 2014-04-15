@@ -19,9 +19,7 @@ public interface Parent extends Relationship <
 > 
 {
 
-  @Override
   public NCBITaxon source();
-  @Override
   public NCBITaxon target();
 
   public static Type TYPE = Type.parent;

@@ -48,7 +48,8 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.Type>,
   // is this about some sort of connection with UniProt taxonomy?
   public Taxon taxon(); // TODO what is this??
 
-  public static Type TYPE = Type.ncbiTaxon;  
+  public static Type TYPE = Type.ncbiTaxon;
+  
   public static enum Type implements NodeType<NCBITaxon, NCBITaxon.Type> {
     ncbiTaxon;
     public Type value() { return ncbiTaxon; }
