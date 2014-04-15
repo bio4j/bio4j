@@ -34,8 +34,8 @@ public enum ProteinInteractionsModule implements Module {
   }};
   // properties
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    add(Experiments.<ProteinProteinInteraction, ProteinProteinInteraction.Type>TYPE(ProteinProteinInteraction.TYPE));
-    add(Experiments.<ProteinIsoformInteraction, ProteinIsoformInteraction.Type>TYPE(ProteinIsoformInteraction.TYPE));
+    add(Experiments.<ProteinProteinInteraction,ProteinProteinInteraction.Type>TYPE(ProteinProteinInteraction.TYPE));
+    add(Experiments.<ProteinIsoformInteraction,ProteinIsoformInteraction.Type>TYPE(ProteinIsoformInteraction.TYPE));
   }};
 
   public String pkg() { return PKG; }

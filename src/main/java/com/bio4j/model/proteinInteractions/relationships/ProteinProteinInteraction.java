@@ -21,16 +21,13 @@ public interface ProteinProteinInteraction extends Relationship <
 
   // properties
   Experiments<ProteinProteinInteraction, ProteinProteinInteraction.Type>
-
 {
 
-  @Override
   public Protein source();
-  @Override
   public Protein target();
 
   // TODO migrate to properties
-  public String getOrganismsDiffer();
+  public String getOrganismsDiffer(); // TODO ????
   public String getIntactId2(); // TODO what is this
   public String getIntactId1(); // TODO what is this
 
@@ -40,9 +37,12 @@ public interface ProteinProteinInteraction extends Relationship <
     ProteinProteinInteraction, ProteinProteinInteraction.Type,
     Protein, Protein.Type
   > {
+
     proteinProteinInteraction;
-    public Type value() { return proteinProteinInteraction; }
+
     public Arity arity() { return Arity.manyToMany; }
+
+    public Type value() { return proteinProteinInteraction; }
     public Protein.Type sourceType() { return Protein.TYPE; }
     public Protein.Type targetType() { return Protein.TYPE; }
   }  

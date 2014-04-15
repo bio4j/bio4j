@@ -15,21 +15,16 @@ import com.bio4j.model.properties.Experiments;
  * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
  */
 public interface ProteinIsoformInteraction extends Relationship <
-
   Protein, Protein.Type,
   ProteinIsoformInteraction, ProteinIsoformInteraction.Type,
   Isoform, Isoform.Type
-
 >,
 
   // properties
   Experiments<ProteinIsoformInteraction, ProteinIsoformInteraction.Type>
- 
 {
 
-  @Override
   public Protein source();
-  @Override
   public Isoform target();
 
   // TODO migrate to properties
@@ -43,9 +38,12 @@ public interface ProteinIsoformInteraction extends Relationship <
     ProteinIsoformInteraction, ProteinIsoformInteraction.Type,
     Isoform, Isoform.Type
   > {
+
     proteinIsoformInteraction;
-    public Type value() { return proteinIsoformInteraction; }
+    
     public Arity arity() { return Arity.manyToMany; }
+
+    public Type value() { return proteinIsoformInteraction; }
     public Protein.Type sourceType() { return Protein.TYPE; }
     public Isoform.Type targetType() { return Isoform.TYPE; }
   }  
