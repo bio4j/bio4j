@@ -41,7 +41,7 @@ public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
   // enzymaticActivity
   // incoming
   public List<EnzymaticActivity> enzymaticActivity_in();
-  public List<Protein> enzymaticActivityin_Nodes();
+  public List<Protein> enzymaticActivity_inNodes();
   
   // WARNING: moved to rel method
   // public List<Protein> associatedProteins();  
