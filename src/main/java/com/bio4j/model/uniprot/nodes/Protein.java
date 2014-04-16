@@ -46,7 +46,6 @@ import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
 import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
 import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
 
-import com.bio4j.model.go.relationships.IsA;
 
 // properties
 import com.bio4j.model.properties.Accession;

@@ -4,33 +4,48 @@ import com.bio4j.model.Node;
 import com.bio4j.model.uniprot.nodes.Institute;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
-import java.util.List;
-import com.bio4j.model.NodeType;
+import com.bio4j.model.uniprot.relationships.ThesisAuthor;
+import com.bio4j.model.uniprot.relationships.ThesisInstitute;
+import com.bio4j.model.uniprot.relationships.ThesisProteinCitation;
 
+import java.util.List;
+
+import com.bio4j.model.NodeType;
 import com.bio4j.model.properties.Title;
 import com.bio4j.model.properties.Date;
 
 /**
- *
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Thesis extends Node<Thesis, Thesis.Type>,
 
-  // properties
-  Title<Thesis, Thesis.Type>,
-  Date<Thesis, Thesis.Type>
-{
-  
-  public static Type TYPE = Type.thesis;
-  
-  public static enum Type implements NodeType<Thesis, Thesis.Type> {
+	// properties
+	Title<Thesis, Thesis.Type>, Date<Thesis, Thesis.Type> {
 
-    thesis;
-    public Type value() { return thesis; }
-  }
+	public static Type TYPE = Type.thesis;
 
-  // TODO move to rels
-  public Institute getInstitute();
-  public Person getAuthor();
-  public List<Protein> getProteinCitations();
+	public static enum Type implements NodeType<Thesis, Thesis.Type> {
+
+		thesis;
+		public Type value() {
+			return thesis;
+		}
+	}
+
+	// thesisInstitute
+	// outgoing
+	public ThesisInstitute thesisInstitute_out();
+	public Institute thesisInstitute_outNodes();
+	
+	// thesisAuthor
+	// outgoing
+	public ThesisAuthor thesisAuthor_out();
+	public Person thesisAuthor_outNodes();
+	
+	// thesisProteinCitation
+	// outgoing
+	public List<ThesisProteinCitation> thesisProteinCitation_out();
+	public List<Protein> thesisProteinCitation_outNodes();
+
 }
