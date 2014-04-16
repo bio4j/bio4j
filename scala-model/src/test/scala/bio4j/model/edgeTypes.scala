@@ -18,9 +18,7 @@ object edgeTypes {
   implicit val withValidUntil = MemberOf has validUntil
 
   // specify a source and target
-  case object usersMembersOfOrgs extends RelType(User, MemberOf, Org)
-  // and now its arity
-  implicit val arity = usersMembersOfOrgs manyToMany
+  case object usersMembersOfOrgs extends RelType(many(User), MemberOf, many(Org))
 
   case object Owns extends EdgeType {
 
@@ -29,14 +27,10 @@ object edgeTypes {
   }
 
   // explicit witness
-  case object usersOwnOrgs extends RelType(User, Owns, Org)
-  // its arity
-  implicit val usersOwnOrgsArity = usersOwnOrgs oneToMany
+  case object usersOwnOrgs extends RelType(one(User), Owns, many(Org))
   // another one
-  case object orgsOwnOrgs extends RelType(Org, Owns, Org)
-  implicit val orgsOwnOrgsArity = orgsOwnOrgs manyToOne
+  case object orgsOwnOrgs extends RelType(many(Org), Owns, one(Org))
 
-  import DeclareRelTypes._
   // pretty cool DSL
   implicit val thisIsSoCoolItScaresMe = many(User) -- MemberOf --> one(Org)
   implicit val manymanymany = many(Org) -- Owns --> many(Org)
