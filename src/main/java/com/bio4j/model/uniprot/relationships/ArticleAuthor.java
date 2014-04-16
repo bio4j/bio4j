@@ -31,7 +31,5 @@ public interface ArticleAuthor extends Relationship <
   	}
   
   public Article source();
-  public Person target();
-  
-    
+  public Person target(); 
 }
