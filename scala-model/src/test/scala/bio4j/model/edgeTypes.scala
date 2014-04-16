@@ -38,6 +38,7 @@ object edgeTypes {
 
   import DeclareRelTypes._
   // pretty cool DSL
-  implicit val thisIsSoCoolItScaresMe = User -- MemberOf --> Org manyToOne
+  implicit val thisIsSoCoolItScaresMe = many(User) -- MemberOf --> one(Org)
+  implicit val manymanymany = many(Org) -- Owns --> many(Org)
 
 }

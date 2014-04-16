@@ -39,17 +39,32 @@ class RelType[
 
 object DeclareRelTypes {
 
-  case class SourceTypeOps[S <: AnyVertexType](sourceType: S) {
+  /* You can write `many(user) -- memberOf --> one(org)` */
 
-    def --[E <: AnyEdgeType](edgeType: E) = SourceAndEdgeType(sourceType, edgeType)
+  case class one[V <: AnyVertexType](v: V) {
+    def --[E <: AnyEdgeType](edgeType: E) = oneToSmth(v, edgeType)
   }
 
-  case class SourceAndEdgeType[S <: AnyVertexType, E <: AnyEdgeType](sourceType: S, edgeType: E) {
-
-    def -->[T <: AnyVertexType](targetType: T): RelType[S,E,T] = new RelType[S,E,T](sourceType, edgeType, targetType)
+  case class oneToSmth[S <: AnyVertexType, E <: AnyEdgeType](sourceType: S, edgeType: E) {
+    def -->[T <: AnyVertexType](targetType: one[T]) = 
+      OneToOne (new RelType[S,E,T](sourceType, edgeType, targetType.v))
+    def -->[T <: AnyVertexType](targetType: many[T]) = 
+      OneToMany (new RelType[S,E,T](sourceType, edgeType, targetType.v))
   }
 
-  implicit def toSourceOps[S <: AnyVertexType](sourceType: S): SourceTypeOps[S] = SourceTypeOps(sourceType)
+
+  case class many[V <: AnyVertexType](v: V) {
+    def --[E <: AnyEdgeType](edgeType: E) = manyToSmth(v, edgeType)
+  }
+
+  case class manyToSmth[S <: AnyVertexType, E <: AnyEdgeType](sourceType: S, edgeType: E) {
+    def -->[T <: AnyVertexType](targetType: one[T]) = 
+      ManyToOne (new RelType[S,E,T](sourceType, edgeType, targetType.v))
+    def -->[T <: AnyVertexType](targetType: many[T]) = 
+      ManyToMany (new RelType[S,E,T](sourceType, edgeType, targetType.v))
+  }
+
+  implicit def toSourceOps[S <: AnyVertexType](sourceType: S): many[S] = many(sourceType)
 }
 
 
