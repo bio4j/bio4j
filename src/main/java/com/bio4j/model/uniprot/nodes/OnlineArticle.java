@@ -1,35 +1,49 @@
-
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.Node;
 import com.bio4j.model.uniprot.nodes.Consortium;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
-import java.util.List;
-import com.bio4j.model.NodeType;
+import com.bio4j.model.uniprot.relationships.OnlineArticleJournal;
+import com.bio4j.model.uniprot.relationships.OnlineArticleProteinCitation;
 
+import java.util.List;
+
+import com.bio4j.model.NodeType;
 import com.bio4j.model.properties.Title;
 
 /**
- *
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface OnlineArticle extends Node<OnlineArticle, OnlineArticle.Type>,
-  
-  // properties
-  Title<OnlineArticle, OnlineArticle.Type>
-{
-  
-  public static Type TYPE = Type.onlineArticle;  
-  public static enum Type implements NodeType<OnlineArticle, OnlineArticle.Type> {
 
-    onlineArticle;
-    public Type value() { return onlineArticle; }
-  }  
+	// properties
+	Title<OnlineArticle, OnlineArticle.Type> {
 
-  // TODO move to rels
-  public OnlineJournal getOnlineJournal();
-  public List<Consortium> getConsortiumAuthors();
-  public List<Person> getPersonAuthors();
-  public List<Protein> getProteinCitations();
+	public static Type TYPE = Type.onlineArticle;
+
+	public static enum Type implements
+			NodeType<OnlineArticle, OnlineArticle.Type> {
+
+		onlineArticle;
+		public Type value() {
+			return onlineArticle;
+		}
+	}
+	
+	// onlineArticleJournal
+    // outGoing
+    public List<OnlineArticleJournal> onlineArticleJournal_out(); 
+    public List<OnlineJournal> onlineArticleJournal_outNodes();
+
+    // onlineArticleProteinCitation
+    // outGoing
+    public List<OnlineArticleProteinCitation> onlineArticleProteinCitation_out(); 
+    public List<Protein> onlineArticleProteinCitation_outNodes();
+
+	public List<Consortium> getConsortiumAuthors();
+
+	public List<Person> getPersonAuthors();
+
 }
