@@ -21,7 +21,5 @@ object AnyVertexType {
 
 case class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
 
-
-  def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = 
-    VertexTypeHasProperty(vertexType, property)
+  def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = VertexTypeHasProperty(vertexType, property)
 }

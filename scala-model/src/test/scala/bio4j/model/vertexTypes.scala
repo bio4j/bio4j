@@ -9,10 +9,9 @@ object vertexTypes {
 
   // just labels and witnesses for properties
   case object User extends VertexType {
-
-    implicit val _id     = this has id
-    implicit val _since  = this has since
-    implicit val _name   = this has name
+    implicit val userId     = this has id
+    // implicit val userSince  = this has since
+    implicit val userName   = this has name
   }
 
   // User module?
@@ -22,6 +21,6 @@ object vertexTypes {
   }
 
   case object Org extends VertexType {
-    implicit val _name   = this has name
+    implicit val orgName   = this has name
   }
 }

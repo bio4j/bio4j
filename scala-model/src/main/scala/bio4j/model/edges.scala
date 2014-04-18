@@ -13,18 +13,16 @@ trait AnyEdge {
   /* Tags `Rep` with this edge type */
   import shapeless.record._
 
-  type EdgeRep = FieldType[edge.type, Rep]
+  type TaggedRep = FieldType[edge.type, Rep]
   def ->>(e: Rep): FieldType[edge.type, Rep] = field[edge.type](e)
 
   /* Read a property from this representation */
   abstract case class ReadProperty[P <: AnyProperty](val p: P) {
-
-    def apply(edgeRep: EdgeRep): p.Rep
+    def apply(edgeRep: TaggedRep): p.Rep
   }
 
-
   // TODO: this should go somewhere else
-  case class PropertyOps(val edgeRep: EdgeRep) {
+  case class PropertyOps(val edgeRep: TaggedRep) {
 
     import AnyEdgeTypeHasProperty.PropertyOf
 
@@ -35,7 +33,7 @@ trait AnyEdge {
       ) = retrieve(edgeRep)
   }
   
-  implicit def propertyOps(edgeRep: EdgeRep): edge.PropertyOps = PropertyOps(edgeRep)
+  implicit def propertyOps(edgeRep: TaggedRep): edge.PropertyOps = PropertyOps(edgeRep)
 }
 
 abstract class Edge[ET <: AnyEdgeType](val edgeType: ET)

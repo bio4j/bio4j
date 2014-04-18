@@ -8,7 +8,7 @@ import vertexTypes._
 object edgeTypes {
 
   case object MemberOf extends EdgeType {
-    this has isPublic
+    // implicit val hasIsPublic = this has isPublic
   }
   // add some more props externally  
   // directly

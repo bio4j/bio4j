@@ -20,9 +20,6 @@ object AnyEdgeType {
   implicit def edgeTypeOps[E <: AnyEdgeType](edgeType: E): EdgeTypeOps[E] = EdgeTypeOps(edgeType) 
 }
 
-/*
-  
-*/
 case class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
 
   def has[P <: AnyProperty](property: P): (E EdgeTypeHasProperty P) = EdgeTypeHasProperty(edgeType, property)

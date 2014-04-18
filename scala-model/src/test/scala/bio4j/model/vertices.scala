@@ -7,61 +7,90 @@ import shapeless.record.FieldType
 
 object vertices {
 
-  // stupid implementation
-    case class UserImpl(
-      val id: String,
-      val name: String,
-      val since: Int
-    )
+  /* A representation of the `User` vertex type */
+  case class UserImpl(
+    val id: String,
+    val name: String,
+    val since: Int
+  )
   
-  // now users are user ->> "hey Joe" 
-  case object user extends Vertex(User) { type Rep = UserImpl;
+  case object user extends Vertex(User) { self =>
+    /* Now users can be created with `user ->> UserImpl(...)`  */
+    type Rep = UserImpl
 
-    
-    // provide implicits here for all properties
-    // or elsewhere
+    /* Provide implicits here (or elsewhere) for all (or some) properties */
     implicit object readId extends ReadProperty(id) {
-
-      @Override
-      def apply(vRep: user.VertexRep): String = (vRep:UserImpl).id
+      def apply(rep: self.TaggedRep): id.Rep = (rep: self.Rep).id
     }
-
-    // probably better object + implicit, not implicit object
     implicit object readSince extends ReadProperty(since) {
-
-      @Override
-      def apply(vRep: user.VertexRep): since.Rep = (vRep:UserImpl).since
+      def apply(rep: self.TaggedRep): since.Rep = (rep: self.Rep).since
     }
   }
+
+  case object org extends Vertex(Org) { self =>
+    /*
+      We are lazy, so we will use the same representation for orgs
+      even though we care only about the `name` property
+    */
+    type Rep = UserImpl
+
+    implicit object readName extends ReadProperty(name) {
+      def apply(rep: self.TaggedRep) = rep.name
+    }
+  }
+
 }
 
-class UserSuite extends org.scalatest.FunSuite {
+class VertexSuite extends org.scalatest.FunSuite {
 
   import vertices._  
 
-  test("retrieve properties") {
+  test("retrieve vertex properties") {
 
+    import vertices.user._
     import vertexTypes.User._
-    import user._
-    val x = user ->> UserImpl(
-                                id = "1ad3a34df",
-                                name = "Robustiano Satrústegui",
-                                since = 2349965
-                              )
+    val u = user ->> UserImpl(id = "1ad3a34df", name = "Robustiano Satrústegui", since = 2349965)
 
-    val x_id = x.get(id)
-    // too bad, no witness for since
-    // val x_since = x.get(since)
-    // add it here!
-    // implicit val Iknowit = User has since
-    // but no way of retrieving it!
-    // hahaha
-    // val x_since = x.get(since)
-    val x_since = x.get(since)
-    val x_since_again = x get since
+    val u_id = u.get(id)
+    /* 
+      Too bad, no witness for `since`, so `u.get(since)` won't compile.
+      But we can add it here!
+    */
+    implicit val userSince = User has since
+    val u_since = u.get(since)
+    val u_since_again = u get since
 
-    println (user +" get "+ id +": "+ x_id)
-    println (user +" get "+ since +": "+ x_since.toString)
+    /* 
+      We can also add a retriever for the `name` property externally:
+    */
+    implicit object readUserName extends user.ReadProperty(name) {
+      def apply(rep: user.TaggedRep) = rep.name
+    }
+
+    assert((u get id) === "1ad3a34df")
+    assert((u get name) === "Robustiano Satrústegui")
+    assert((u get since) === 2349965)
+
+
+    /* 
+      Again, we are using user's representation for org, 
+      even though it has only the `name` property
+    */
+    import vertices.org._
+    import vertexTypes.Org._
+    val o = org ->> UserImpl(id = "NYSE:ORCL", name = "Orcale Inc.", since = 1977)
+
+    assert((o get name) === "Orcale Inc.")
+
+    /*
+      Now we realized, that we can do more things with this 
+      representation of org so we just implement it in place:
+    */
+    implicit val orgFounded = Org has since
+    implicit object readOrgSince extends org.ReadProperty(since) {
+      def apply(rep: org.TaggedRep) = rep.since
+    }
+    assert((o get since) === 1977)
 
   }
 }

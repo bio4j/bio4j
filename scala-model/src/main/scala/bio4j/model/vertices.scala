@@ -20,19 +20,19 @@ trait AnyVertex {
   /* Tags `Rep` with this vertex type */
   import shapeless.record._
 
-  type VertexRep = FieldType[vertex.type, Rep]
+  type TaggedRep = FieldType[vertex.type, Rep]
   def ->>(v: Rep): FieldType[vertex.type, Rep] = field[vertex.type](v)
 
   /* Read a property from this representation */
   abstract case class ReadProperty[P <: AnyProperty](val p: P) {
 
-    def apply(vRep: VertexRep): p.Rep
+    def apply(vRep: TaggedRep): p.Rep
   }
 
   import AnyVertexTypeHasProperty.PropertyOf
 
   // TODO: this should go somewhere else
-  case class PropertyOps(val vRep: VertexRep) {
+  case class PropertyOps(val vRep: TaggedRep) {
 
     def get[P <: AnyProperty](p: P)
       (implicit 
@@ -41,15 +41,15 @@ trait AnyVertex {
       ) = retrieve(vRep)
   }
   
-  implicit def propertyOps(vRep: VertexRep): vertex.PropertyOps = PropertyOps(vRep)
+  implicit def propertyOps(vRep: TaggedRep): vertex.PropertyOps = PropertyOps(vRep)
 
   ///////////////////////////////////////////
 
   abstract case class RetrieveRel[R <: AnyRel](val r: R) {
-    def apply(vRep: VertexRep): r.Rep
+    def apply(vRep: TaggedRep): r.Rep
   }
 
-  implicit class RelOps(val vRep: VertexRep) {
+  implicit class RelOps(val vRep: TaggedRep) {
     def out[
       E <: AnyEdgeType, 
       T <: AnyVertexType,
@@ -57,11 +57,6 @@ trait AnyVertex {
       R <: Rel[RT]
     ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
   }
-}
-
-object AnyVertex {
-
-  type VertexType[VT <: AnyVertexType] = AnyVertex { type VertexType = VT }
 }
 
 abstract class Vertex[VT <: AnyVertexType](val vertexType: VT) extends AnyVertex {

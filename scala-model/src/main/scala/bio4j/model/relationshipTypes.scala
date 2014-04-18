@@ -52,5 +52,17 @@ class RelType[
   type EdgeType = E
   type OutArity = Y
 
-  // if needed add here implicits for witnessing that this rel goes from X to Y
+  // implicit val s = SourceOf[this.type]#is[this.SourceType]
+}
+
+object AnyRelType {
+  type SourceOf[RT <: AnyRelType] = { 
+    type is[VT <: AnyVertexType] = AnyRelType { type SourceType = VT }
+  }
+  type EdgeOf[RT <: AnyRelType] = { 
+    type is[ET <: AnyEdgeType] = AnyRelType { type EdgeType = ET }
+  }
+  type TargetOf[RT <: AnyRelType] = { 
+    type is[VT <: AnyVertexType] = AnyRelType { type TargetType = VT }
+  }
 }

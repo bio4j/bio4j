@@ -18,4 +18,5 @@ libraryDependencies ++= Seq(
 
 bucketSuffix := "era7.com"
 
-// docsOutputDir := "docs/src/"
+// the new cool option for super-fast recompiling from sbt-0.13.2
+// incOptions := incOptions.value.withNameHashing(true)
