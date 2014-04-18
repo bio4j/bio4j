@@ -4,25 +4,22 @@ package bio4j.model.test
 
 import bio4j.model._
 
-import properties._
+import edgeTypes._
 import vertexTypes._
 
-object edgeTypes {
+object relTypes {
+  // specify a source and target
+  case object UsersMembersOfOrgs extends RelType(many(User), MemberOf, many(Org))
 
-  case object MemberOf extends EdgeType {
-    // implicit val hasIsPublic = this has isPublic
-  }
-  // add some more props externally  
-  // directly
-  implicit val withSince = EdgeTypeHasProperty(MemberOf, since)
-  // through ops
-  implicit val withValidUntil = MemberOf has validUntil
+  // explicit witness
+  case object UserOwnOrgs extends RelType(one(User), Owns, many(Org))
+  // another one
+  case object OrgsOwnOrgs extends RelType(many(Org), Owns, one(Org))
 
+  // pretty cool DSL
+  implicit val thisIsSoCoolItScaresMe = many(User) -- MemberOf --> one(Org)
+  implicit val manymanymany = many(Org) -- Owns --> many(Org)
 
-  case object Owns extends EdgeType {
-    implicit val x = this has since
-    implicit val y = this has validUntil
-  }
 }
 
 ```

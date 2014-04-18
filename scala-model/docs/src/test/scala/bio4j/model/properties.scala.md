@@ -2,27 +2,15 @@
 ```scala
 package bio4j.model.test
 
-import bio4j.model._
+object properties {
 
-import properties._
-import vertexTypes._
-
-object edgeTypes {
-
-  case object MemberOf extends EdgeType {
-    // implicit val hasIsPublic = this has isPublic
-  }
-  // add some more props externally  
-  // directly
-  implicit val withSince = EdgeTypeHasProperty(MemberOf, since)
-  // through ops
-  implicit val withValidUntil = MemberOf has validUntil
-
-
-  case object Owns extends EdgeType {
-    implicit val x = this has since
-    implicit val y = this has validUntil
-  }
+  import bio4j.model.Property
+  
+  case object since extends Property[Int]
+  case object validUntil extends Property[Int]
+  case object name extends Property[String]
+  case object isPublic extends Property[Boolean]
+  case object id extends Property[String]
 }
 
 ```

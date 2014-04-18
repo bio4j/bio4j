@@ -4,24 +4,52 @@ package bio4j.model.test
 
 import bio4j.model._
 
-import properties._
+import edgeTypes._
 import vertexTypes._
+import properties._
 
-object edgeTypes {
+object edges {
 
-  case object MemberOf extends EdgeType {
-    // implicit val hasIsPublic = this has isPublic
+  case class MemberOfImpl(
+    val isPublic: Boolean,
+    val since: Int,
+    val validUntil: Int
+  )
+
+  object memberOf extends Edge(MemberOf) { self =>
+    type Rep = MemberOfImpl
+
+    implicit object readSince extends ReadProperty(since) {
+      def apply(rep: self.TaggedRep) = rep.since
+    }
+    implicit object readIsPublic extends ReadProperty(isPublic) {
+      def apply(rep: self.TaggedRep) = rep.isPublic
+    }
+    implicit object readValidUntil extends ReadProperty(validUntil) {
+      def apply(rep: self.TaggedRep) = rep.validUntil
+    }
   }
-  // add some more props externally  
-  // directly
-  implicit val withSince = EdgeTypeHasProperty(MemberOf, since)
-  // through ops
-  implicit val withValidUntil = MemberOf has validUntil
+}
 
+class EdgeSuite extends org.scalatest.FunSuite {
 
-  case object Owns extends EdgeType {
-    implicit val x = this has since
-    implicit val y = this has validUntil
+  import edges._  
+
+  test("retrieve edge properties") {
+
+    import edgeTypes._
+    import edgeTypes.MemberOf._
+    import edges.memberOf._
+    val m = memberOf ->> MemberOfImpl(isPublic = true, since = 2349965, validUntil = 38724987)
+
+    // the witness for `isPublic` is commented in the edgeTypes
+    // so we just add it here:
+    implicit val witness = MemberOf has isPublic
+
+    assert((m get isPublic) === true)
+    assert((m get since) === 2349965)
+    assert((m get validUntil) === 38724987)
+
   }
 }
 
