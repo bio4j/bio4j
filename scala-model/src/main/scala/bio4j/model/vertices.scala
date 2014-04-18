@@ -7,21 +7,12 @@ package bio4j.model
   
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
-trait AnyVertex {
+trait AnyVertex extends Tagged {
   
   vertex =>
 
   type VertexType <: AnyVertexType
   val vertexType: VertexType
-
-  /* The raw underlying type representing this vertex */
-  type Rep
-
-  /* Tags `Rep` with this vertex type */
-  import shapeless.record._
-
-  type TaggedRep = FieldType[vertex.type, Rep]
-  def ->>(v: Rep): FieldType[vertex.type, Rep] = field[vertex.type](v)
 
   /* Read a property from this representation */
   abstract case class ReadProperty[P <: AnyProperty](val p: P) {
@@ -29,20 +20,18 @@ trait AnyVertex {
     def apply(vRep: TaggedRep): p.Rep
   }
 
-  import AnyVertexTypeHasProperty.PropertyOf
+  // TODO this should go somewhere else
+  implicit class PropertyOps(val vRep: TaggedRep) {
 
-  // TODO: this should go somewhere else
-  case class PropertyOps(val vRep: TaggedRep) {
+    // TODO this name is awful
+    import AnyVertexTypeHasProperty.PropertyOf
 
-    def get[P <: AnyProperty](p: P)
+    def get[P <: AnyProperty: PropertyOf[vertex.VertexType]#is](p: P)
       (implicit 
-        witness: PropertyOf[vertex.VertexType]#is[P],
         retrieve: ReadProperty[P]
       ) = retrieve(vRep)
   }
   
-  implicit def propertyOps(vRep: TaggedRep): vertex.PropertyOps = PropertyOps(vRep)
-
   ///////////////////////////////////////////
 
   abstract case class RetrieveRel[R <: AnyRel](val r: R) {
@@ -53,10 +42,15 @@ trait AnyVertex {
     def out[
       E <: AnyEdgeType, 
       T <: AnyVertexType,
-      RT <: RelType[AritVertex[VertexType], E, AritVertex[T]],
+      RT <: RelType[ArityVertex[VertexType], E, ArityVertex[T]],
       R <: Rel[RT]
     ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
   }
+}
+
+object AnyVertex {
+
+  type ofType[VT <: AnyVertexType] = AnyVertex { type VertexType = VT }
 }
 
 abstract class Vertex[VT <: AnyVertexType](val vertexType: VT) extends AnyVertex {

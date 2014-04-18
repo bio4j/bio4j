@@ -17,10 +17,11 @@ class EdgeType extends AnyEdgeType { val label = this.toString }
 
 object AnyEdgeType {
 
-  implicit def edgeTypeOps[E <: AnyEdgeType](edgeType: E): EdgeTypeOps[E] = EdgeTypeOps(edgeType) 
+  implicit class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
+
+    def has[P <: AnyProperty](property: P): (E EdgeTypeHasProperty P) = EdgeTypeHasProperty(edgeType, property)
+  }
+
 }
 
-case class EdgeTypeOps[E <: AnyEdgeType](val edgeType: E) {
 
-  def has[P <: AnyProperty](property: P): (E EdgeTypeHasProperty P) = EdgeTypeHasProperty(edgeType, property)
-}

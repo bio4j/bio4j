@@ -3,17 +3,17 @@ package bio4j.model
 /*
   Arities for rels. The point of this is that it lets you specify the right output type for when you get the outgoing edges of a given type from a vertex.
 */
-sealed trait AnyAritVertex { 
+sealed trait AnyArityVertex { 
   type VType <: AnyVertexType
   val  vType: VType
   def --[E <: AnyEdgeType](e: E) = SourceAndEdgeType(this, e)
 }
-sealed trait AritVertex[VT <: AnyVertexType] extends AnyAritVertex { type VType = VT }
-case class  one[V <: AnyVertexType](vType: V) extends AritVertex[V]
-case class many[V <: AnyVertexType](vType: V) extends AritVertex[V]
+sealed trait ArityVertex[VT <: AnyVertexType] extends AnyArityVertex { type VType = VT }
+case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V]
+case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 
-case class SourceAndEdgeType[S <: AnyAritVertex, E <: AnyEdgeType](s: S, e: E) {
-  def -->[T <: AnyAritVertex](t: T) = new RelType[S,E,T](s, e, t)
+case class SourceAndEdgeType[S <: AnyArityVertex, E <: AnyEdgeType](s: S, e: E) {
+  def -->[T <: AnyArityVertex](t: T) = new RelType[S,E,T](s, e, t)
 }
 
 /*
@@ -21,7 +21,7 @@ case class SourceAndEdgeType[S <: AnyAritVertex, E <: AnyEdgeType](s: S, e: E) {
 */
 trait AnyRelType {
 
-  type InArity <: AnyAritVertex
+  type InArity <: AnyArityVertex
   val inArity: InArity
 
   type SourceType = InArity#VType
@@ -30,7 +30,7 @@ trait AnyRelType {
   type EdgeType <: AnyEdgeType
   val edgeType: EdgeType
 
-  type OutArity <: AnyAritVertex
+  type OutArity <: AnyArityVertex
   val outArity: OutArity
 
   type TargetType = OutArity#VType
@@ -43,9 +43,9 @@ trait AnyRelType {
 // }
 
 class RelType[
-  X <: AnyAritVertex, 
+  X <: AnyArityVertex, 
   E <: AnyEdgeType, 
-  Y <: AnyAritVertex
+  Y <: AnyArityVertex
 ](val inArity: X, val edgeType: E, val outArity: Y) extends AnyRelType {
 
   type InArity = X

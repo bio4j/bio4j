@@ -16,10 +16,9 @@ class LiteralType extends AnyVertexType { val label = this.toString }
 
 object AnyVertexType {
 
-  implicit def vertexTypeOps[E <: AnyVertexType](vertexType: E): VertexTypeOps[E] = VertexTypeOps(vertexType) 
+  implicit class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
+
+    def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = VertexTypeHasProperty(vertexType, property)
+  }
 }
 
-case class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
-
-  def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = VertexTypeHasProperty(vertexType, property)
-}

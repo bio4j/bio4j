@@ -2,7 +2,7 @@ package bio4j.model
 
 import shapeless.record._
 
-trait AnyRel {
+trait AnyRel extends Tagged {
 
   rel =>
 
@@ -19,33 +19,25 @@ trait AnyRel {
   type TargetType = relType.TargetType
   val targetType: TargetType = relType.targetType
 
-  /* The raw underlying type representing this Rel */
-  type Rep
-
-  /* Tags `Rep` with this rel type */
-  type TaggedRep = FieldType[rel.type, Rep]
-  def ->>(r: Rep): FieldType[rel.type, Rep] = field[rel.type](r)
-
-
   /* Get source-edge-target from this representation */
-  abstract case class GetSource[V <: Vertex[SourceType]](val v: V) {
+  abstract case class GetSource[V <: AnyVertex.ofType[SourceType]](val v: V) {
     def apply(relRep: TaggedRep): v.TaggedRep
   }
   abstract case class GetEdge[E <: Edge[EdgeType]](val e: E) {
     def apply(relRep: TaggedRep): e.TaggedRep
   }
-  abstract case class GetTarget[V <: Vertex[TargetType]](val v: V) {
+  abstract case class GetTarget[V <: AnyVertex.ofType[TargetType]](val v: V) {
     def apply(relRep: TaggedRep): v.TaggedRep
   }
 
   implicit class RelOps(val relRep: TaggedRep) {
     import AnyRelType._
 
-    def getSource[V <: Vertex[SourceType]](implicit getter: GetSource[V]) = getter(relRep)
+    def source[V <: AnyVertex.ofType[SourceType]](implicit getter: GetSource[V]) = getter(relRep)
 
-    def getEdge[E <: Edge[EdgeType]](implicit getter: GetEdge[E]) = getter(relRep)
+    def edge[E <: Edge[EdgeType]](implicit getter: GetEdge[E]) = getter(relRep)
 
-    def getTarget[V <: Vertex[TargetType]](implicit getter: GetTarget[V]) = getter(relRep)
+    def target[V <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[V]) = getter(relRep)
   }
 }
 

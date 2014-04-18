@@ -78,9 +78,9 @@ class VertexSuite extends org.scalatest.FunSuite {
     */
     import vertices.org._
     import vertexTypes.Org._
-    val o = org ->> UserImpl(id = "NYSE:ORCL", name = "Orcale Inc.", since = 1977)
+    val o = org ->> UserImpl(id = "NYSE:ORCL", name = "Oracle Inc.", since = 1977)
 
-    assert((o get name) === "Orcale Inc.")
+    assert((o get name) === "Oracle Inc.")
 
     /*
       Now we realized, that we can do more things with this 
