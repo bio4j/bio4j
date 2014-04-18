@@ -37,3 +37,6 @@ trait AnyEdge {
   
   implicit def propertyOps(edgeRep: EdgeRep): edge.PropertyOps = PropertyOps(edgeRep)
 }
+
+abstract class Edge[ET <: AnyEdgeType](val edgeType: ET)
+  extends AnyEdge { type EdgeType = ET }

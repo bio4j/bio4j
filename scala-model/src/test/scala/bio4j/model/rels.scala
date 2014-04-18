@@ -3,17 +3,22 @@ package bio4j.model.test
 import bio4j.model._
 
 import edgeTypes._
+import relTypes._
 import vertexTypes._
 import vertices._
 import shapeless.record.FieldType
 
-object memberOf extends Rel(usersMembersOfOrgs) {
+object rels {
 
-  self =>
+  case class RelImpl[RT <: AnyRelType](val rt: RT)(
+    val source: RT#SourceType
+  )
 
-  type Rep = String
-}
+  object usersMembersOfOrgs extends Rel(UsersMembersOfOrgs) { rel =>
+    type Rep = String
+  }
 
+/*
 object getSource extends Source(memberOf, user) {
 
   @Override  
@@ -24,3 +29,5 @@ object getSource extends Source(memberOf, user) {
                         since = 2349965
                       )
   }
+*/
+}

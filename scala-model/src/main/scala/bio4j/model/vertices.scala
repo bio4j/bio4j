@@ -42,6 +42,21 @@ trait AnyVertex {
   }
   
   implicit def propertyOps(vRep: VertexRep): vertex.PropertyOps = PropertyOps(vRep)
+
+  ///////////////////////////////////////////
+
+  abstract case class RetrieveRel[R <: AnyRel](val r: R) {
+    def apply(vRep: VertexRep): r.Rep
+  }
+
+  implicit class RelOps(val vRep: VertexRep) {
+    def out[
+      E <: AnyEdgeType, 
+      T <: AnyVertexType,
+      RT <: RelType[AritVertex[VertexType], E, AritVertex[T]],
+      R <: Rel[RT]
+    ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
+  }
 }
 
 object AnyVertex {

@@ -5,7 +5,7 @@ object vertexTypes {
   import bio4j.model.VertexType
 
   import bio4j.model._
-  import propertyTypes._
+  import properties._
 
   // just labels and witnesses for properties
   case object User extends VertexType {
@@ -21,5 +21,7 @@ object vertexTypes {
     // require implicits here
   }
 
-  case object Org extends VertexType
+  case object Org extends VertexType {
+    implicit val _name   = this has name
+  }
 }

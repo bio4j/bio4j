@@ -1,7 +1,7 @@
 package bio4j.model.test
 
 import vertexTypes._
-import propertyTypes._
+import properties._
 import bio4j.model._
 import shapeless.record.FieldType
 

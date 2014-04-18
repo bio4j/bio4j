@@ -16,7 +16,7 @@ trait AnyRel {
   type TargetType = relType.TargetType
   val targetType: TargetType = relType.targetType
 
-  /* The raw underlying type representing this Edge */
+  /* The raw underlying type representing this Rel */
   type Rep
 
   /* Tags `Rep` with this rel type */

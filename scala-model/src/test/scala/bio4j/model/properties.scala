@@ -1,6 +1,6 @@
 package bio4j.model.test
 
-object propertyTypes {
+object properties {
 
   import bio4j.model.Property
   
