@@ -8,17 +8,17 @@ Arities for rels. The point of this is that it lets you specify the right output
 
 
 ```scala
-sealed trait AnyAritVertex { 
+sealed trait AnyArityVertex { 
   type VType <: AnyVertexType
   val  vType: VType
   def --[E <: AnyEdgeType](e: E) = SourceAndEdgeType(this, e)
 }
-sealed trait AritVertex[VT <: AnyVertexType] extends AnyAritVertex { type VType = VT }
-case class  one[V <: AnyVertexType](vType: V) extends AritVertex[V]
-case class many[V <: AnyVertexType](vType: V) extends AritVertex[V]
+sealed trait ArityVertex[VT <: AnyVertexType] extends AnyArityVertex { type VType = VT }
+case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V]
+case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 
-case class SourceAndEdgeType[S <: AnyAritVertex, E <: AnyEdgeType](s: S, e: E) {
-  def -->[T <: AnyAritVertex](t: T) = new RelType[S,E,T](s, e, t)
+case class SourceAndEdgeType[S <: AnyArityVertex, E <: AnyEdgeType](s: S, e: E) {
+  def -->[T <: AnyArityVertex](t: T) = new RelType[S,E,T](s, e, t)
 }
 ```
 
@@ -29,7 +29,7 @@ Witnesses of a sourceType/type adscription to an edge type are called rels. It's
 ```scala
 trait AnyRelType {
 
-  type InArity <: AnyAritVertex
+  type InArity <: AnyArityVertex
   val inArity: InArity
 
   type SourceType = InArity#VType
@@ -38,7 +38,7 @@ trait AnyRelType {
   type EdgeType <: AnyEdgeType
   val edgeType: EdgeType
 
-  type OutArity <: AnyAritVertex
+  type OutArity <: AnyArityVertex
   val outArity: OutArity
 
   type TargetType = OutArity#VType
@@ -51,9 +51,9 @@ trait AnyRelType {
 // }
 
 class RelType[
-  X <: AnyAritVertex, 
+  X <: AnyArityVertex, 
   E <: AnyEdgeType, 
-  Y <: AnyAritVertex
+  Y <: AnyArityVertex
 ](val inArity: X, val edgeType: E, val outArity: Y) extends AnyRelType {
 
   type InArity = X
@@ -83,40 +83,42 @@ object AnyRelType {
 ### Index
 
 + src
-  + main
-    + scala
-      + bio4j
-        + model
-          + [edges.scala][main/scala/bio4j/model/edges.scala]
-          + [edgeTypes.scala][main/scala/bio4j/model/edgeTypes.scala]
-          + [properties.scala][main/scala/bio4j/model/properties.scala]
-          + [relationships.scala][main/scala/bio4j/model/relationships.scala]
-          + [relationshipTypes.scala][main/scala/bio4j/model/relationshipTypes.scala]
-          + [vertexTypes.scala][main/scala/bio4j/model/vertexTypes.scala]
-          + [vertices.scala][main/scala/bio4j/model/vertices.scala]
   + test
     + scala
       + bio4j
         + model
-          + [edges.scala][test/scala/bio4j/model/edges.scala]
-          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
           + [properties.scala][test/scala/bio4j/model/properties.scala]
-          + [rels.scala][test/scala/bio4j/model/rels.scala]
-          + [relTypes.scala][test/scala/bio4j/model/relTypes.scala]
-          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [edges.scala][test/scala/bio4j/model/edges.scala]
           + [vertices.scala][test/scala/bio4j/model/vertices.scala]
+          + [rels.scala][test/scala/bio4j/model/rels.scala]
+          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [relTypes.scala][test/scala/bio4j/model/relTypes.scala]
+          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
+  + main
+    + scala
+      + bio4j
+        + model
+          + [properties.scala][main/scala/bio4j/model/properties.scala]
+          + [reps.scala][main/scala/bio4j/model/reps.scala]
+          + [edges.scala][main/scala/bio4j/model/edges.scala]
+          + [vertices.scala][main/scala/bio4j/model/vertices.scala]
+          + [relationships.scala][main/scala/bio4j/model/relationships.scala]
+          + [relationshipTypes.scala][main/scala/bio4j/model/relationshipTypes.scala]
+          + [vertexTypes.scala][main/scala/bio4j/model/vertexTypes.scala]
+          + [edgeTypes.scala][main/scala/bio4j/model/edgeTypes.scala]
 
-[main/scala/bio4j/model/edges.scala]: edges.scala.md
-[main/scala/bio4j/model/edgeTypes.scala]: edgeTypes.scala.md
+[test/scala/bio4j/model/properties.scala]: ../../../../test/scala/bio4j/model/properties.scala.md
+[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
+[test/scala/bio4j/model/vertices.scala]: ../../../../test/scala/bio4j/model/vertices.scala.md
+[test/scala/bio4j/model/rels.scala]: ../../../../test/scala/bio4j/model/rels.scala.md
+[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
+[test/scala/bio4j/model/relTypes.scala]: ../../../../test/scala/bio4j/model/relTypes.scala.md
+[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
 [main/scala/bio4j/model/properties.scala]: properties.scala.md
+[main/scala/bio4j/model/reps.scala]: reps.scala.md
+[main/scala/bio4j/model/edges.scala]: edges.scala.md
+[main/scala/bio4j/model/vertices.scala]: vertices.scala.md
 [main/scala/bio4j/model/relationships.scala]: relationships.scala.md
 [main/scala/bio4j/model/relationshipTypes.scala]: relationshipTypes.scala.md
 [main/scala/bio4j/model/vertexTypes.scala]: vertexTypes.scala.md
-[main/scala/bio4j/model/vertices.scala]: vertices.scala.md
-[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
-[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
-[test/scala/bio4j/model/properties.scala]: ../../../../test/scala/bio4j/model/properties.scala.md
-[test/scala/bio4j/model/rels.scala]: ../../../../test/scala/bio4j/model/rels.scala.md
-[test/scala/bio4j/model/relTypes.scala]: ../../../../test/scala/bio4j/model/relTypes.scala.md
-[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
-[test/scala/bio4j/model/vertices.scala]: ../../../../test/scala/bio4j/model/vertices.scala.md
+[main/scala/bio4j/model/edgeTypes.scala]: edgeTypes.scala.md
