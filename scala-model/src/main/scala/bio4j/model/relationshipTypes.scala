@@ -6,14 +6,14 @@ package bio4j.model
 sealed trait AnyArityVertex { 
   type VType <: AnyVertexType
   val  vType: VType
-  def --[E <: AnyEdgeType](e: E) = SourceAndEdgeType(this, e)
+  def --(label: String) = SourceAndEdgeType(this)
 }
 sealed trait ArityVertex[VT <: AnyVertexType] extends AnyArityVertex { type VType = VT }
 case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 
-case class SourceAndEdgeType[S <: AnyArityVertex, E <: AnyEdgeType](s: S, e: E) {
-  def -->[T <: AnyArityVertex](t: T) = new RelType[S,E,T](s, e, t)
+case class SourceAndEdgeType[S <: AnyArityVertex](s: S) {
+  def -->[T <: AnyArityVertex](t: T) = new RelType[S,T](s,t)
 }
 
 /*
@@ -27,8 +27,7 @@ trait AnyRelType {
   type SourceType = InArity#VType
   val sourceType: SourceType = inArity.vType
 
-  type EdgeType <: AnyEdgeType
-  val edgeType: EdgeType
+  val label: String
 
   type OutArity <: AnyArityVertex
   val outArity: OutArity
@@ -44,25 +43,29 @@ trait AnyRelType {
 
 class RelType[
   X <: AnyArityVertex, 
-  E <: AnyEdgeType, 
   Y <: AnyArityVertex
-](val inArity: X, val edgeType: E, val outArity: Y) extends AnyRelType {
+](val inArity: X, val outArity: Y) extends AnyRelType {
 
   type InArity = X
-  type EdgeType = E
   type OutArity = Y
 
-  // implicit val s = SourceOf[this.type]#is[this.SourceType]
+  // for this thing to work, you should extends this class by a _case_ class/object
+  val label = this.toString 
 }
 
 object AnyRelType {
-  type SourceOf[RT <: AnyRelType] = { 
-    type is[VT <: AnyVertexType] = AnyRelType { type SourceType = VT }
-  }
-  type EdgeOf[RT <: AnyRelType] = { 
-    type is[ET <: AnyEdgeType] = AnyRelType { type EdgeType = ET }
-  }
-  type TargetOf[RT <: AnyRelType] = { 
-    type is[VT <: AnyVertexType] = AnyRelType { type TargetType = VT }
-  }
+  // type SourceOf[RT <: AnyRelType] = { 
+  //   type is[VT <: AnyVertexType] = AnyRelType { type SourceType = VT }
+  // }
+  // type TargetOf[RT <: AnyRelType] = { 
+  //   type is[VT <: AnyVertexType] = AnyRelType { type TargetType = VT }
+  // }
+
+  implicit def relTypeOps[R <: AnyRelType](r: R) = RelTypeOps(r)
+}
+
+case class RelTypeOps[R <: AnyRelType](val relType: R) {
+
+  def has[P <: AnyProperty](property: P) = RelTypeHasProperty(relType, property)
+
 }

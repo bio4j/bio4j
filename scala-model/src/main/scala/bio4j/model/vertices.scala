@@ -34,18 +34,18 @@ trait AnyVertex extends Tagged {
   
   ///////////////////////////////////////////
 
-  abstract case class RetrieveRel[R <: AnyRel](val r: R) {
-    def apply(vRep: TaggedRep): r.Rep
-  }
+  // abstract case class RetrieveRel[R <: AnyRel](val r: R) {
+  //   def apply(vRep: TaggedRep): r.Rep
+  // }
 
-  implicit class RelOps(val vRep: TaggedRep) {
-    def out[
-      E <: AnyEdgeType, 
-      T <: AnyVertexType,
-      RT <: RelType[ArityVertex[VertexType], E, ArityVertex[T]],
-      R <: Rel[RT]
-    ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
-  }
+  // implicit class RelOps(val vRep: TaggedRep) {
+  //   def out[
+  //     E <: AnyEdgeType, 
+  //     T <: AnyVertexType,
+  //     RT <: RelType[ArityVertex[VertexType], E, ArityVertex[T]],
+  //     R <: Rel[RT]
+  //   ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
+  // }
 }
 
 object AnyVertex {
