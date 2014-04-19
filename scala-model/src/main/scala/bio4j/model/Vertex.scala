@@ -13,17 +13,17 @@ trait AnyVertex extends Tagged { self =>
   val tpe: Tpe
   
   /* Read a property from this representation */
-  abstract case class GetProperty[P <: AnyProperty](val p: P) {
+  abstract class GetProperty[P <: AnyProperty](val p: P) {
     def apply(rep: self.TaggedRep): p.Rep
   }
 
   case class PropertyOps(rep: self.TaggedRep) {
     import SmthHasProperty._
-    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit getter: GetProperty[P]) = getter(rep)
+    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is, GP <: GetProperty[P]](p: P)
+      (implicit getter: GP) = getter(rep)
   }
 
-  implicit def getProperty(rep: self.TaggedRep) = PropertyOps(rep)
+  implicit def propertyOps(rep: self.TaggedRep) = PropertyOps(rep)
 
 
   abstract case class RetrieveEdge[E <: AnyEdge](val r: E) {
@@ -32,6 +32,9 @@ trait AnyVertex extends Tagged { self =>
 
   implicit class EdgeOps(val vRep: TaggedRep) {
     def out[E <: AnyEdge.withSourceType[self.Tpe]]
+      (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
+
+    def in[E <: AnyEdge.withTargetType[self.Tpe]]
       (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
   }
 

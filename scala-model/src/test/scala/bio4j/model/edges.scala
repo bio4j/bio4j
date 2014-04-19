@@ -128,7 +128,10 @@ class EdgeSuite extends org.scalatest.FunSuite {
     implicit object retrieveOwns extends user.RetrieveEdge(owns) {
       def apply(rep: user.TaggedRep) = owners find { _.source == rep }
     }
-    assert(martin.out(owns).map(_.target) === Some(typesafe))
+    assert(
+      ((martin out owns) map (_.target)) === Some(typesafe)
+      // martin >-- owns --> 
+    )
     // cool, martin owns some typesafe org
 
   }
