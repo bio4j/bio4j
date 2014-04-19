@@ -28,9 +28,6 @@ trait SmthHasProperty {
 }
 
 object SmthHasProperty {
-  type Property[P <: AnyProperty] = { 
-    type has[S] = SmthHasProperty { type Smth = S; type Property = P }
-  }
   type PropertyOf[S] = { 
     type is[P <: AnyProperty] = SmthHasProperty { type Smth = S; type Property = P }
   }

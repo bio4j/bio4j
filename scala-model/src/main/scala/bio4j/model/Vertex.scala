@@ -12,21 +12,6 @@ trait AnyVertex extends Tagged { self =>
   type Tpe <: AnyVertexType
   val tpe: Tpe
   
-  ///////////////////////////////////////////
-
-  // abstract case class RetrieveEdge[R <: AnyEdge](val r: R) {
-  //   def apply(vRep: TaggedRep): r.Rep
-  // }
-
-  // implicit class EdgeOps(val vRep: TaggedRep) {
-  //   def out[
-  //     E <: AnyEdgeType, 
-  //     T <: AnyVertexType,
-  //     RT <: EdgeType[ArityVertex[Tpe], E, ArityVertex[T]],
-  //     R <: Edge[RT]
-  //   ](r: R)(implicit retrieve: RetrieveEdge[R]) = retrieve(vRep)
-  // }
-
   /* Read a property from this representation */
   abstract case class GetProperty[P <: AnyProperty](val p: P) {
     def apply(rep: self.TaggedRep): p.Rep
@@ -39,10 +24,20 @@ trait AnyVertex extends Tagged { self =>
   }
 
   implicit def getProperty(rep: self.TaggedRep) = PropertyOps(rep)
+
+
+  abstract case class RetrieveEdge[E <: AnyEdge](val r: E) {
+    def apply(vRep: TaggedRep): r.tpe.Out[r.Rep]
+  }
+
+  implicit class EdgeOps(val vRep: TaggedRep) {
+    def out[E <: AnyEdge.withSourceType[self.Tpe]]
+      (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
+  }
+
 }
 
 object AnyVertex {
-
   type ofType[VT <: AnyVertexType] = AnyVertex { type Tpe = VT }
 }
 

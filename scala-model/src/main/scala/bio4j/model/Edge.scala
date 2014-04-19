@@ -45,3 +45,8 @@ trait AnyEdge extends Tagged { self =>
 case class Edge[ET <: AnyEdgeType](val tpe: ET) extends AnyEdge { self =>
   type Tpe = ET
 }
+
+object AnyEdge {
+  type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
+  type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
+}

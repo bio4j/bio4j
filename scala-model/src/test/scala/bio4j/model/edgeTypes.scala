@@ -6,7 +6,10 @@ import properties._
 
 object edgeTypes {
   // specify a source and target
-  case object MemberOf extends EdgeType(many(User), many(Org))
+  case object MemberOf extends EdgeType(User, Org) {
+    type In[_] = List[_]
+    type Out[_] = List[_]
+  }
   // add some more props externally  
   // directly
   implicit val withSince = EdgeTypeHasProperty(MemberOf, since)
@@ -14,7 +17,10 @@ object edgeTypes {
   implicit val withValidUntil = MemberOf has validUntil
 
   // explicit witness
-  case object Owns extends EdgeType(one(User), many(Org)){
+  case object Owns extends EdgeType(User, Org){
+    type In[_] = List[_]
+    type Out[_] = Option[_]
+
     implicit val x = this has since
     implicit val y = this has validUntil
   }
@@ -22,7 +28,7 @@ object edgeTypes {
   // case object OrgsOwnOrgs extends EdgeType(many(Org), Owns, one(Org))
 
   // pretty cool DSL
-  implicit val thisIsSoCoolItScaresMe = many(User) -- "MemberOf" --> one(Org)
-  implicit val manymanymany = many(Org) -- "Owns" --> many(Org)
+  // implicit val thisIsSoCoolItScaresMe = many(User) -- "MemberOf" --> one(Org)
+  // implicit val manymanymany = many(Org) -- "Owns" --> many(Org)
 
 }

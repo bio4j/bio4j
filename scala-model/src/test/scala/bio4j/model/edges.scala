@@ -51,14 +51,14 @@ class EdgeSuite extends org.scalatest.FunSuite {
     val u = user ->> UserImpl(id = "1ad3a34df", name = "Robustiano Satrústegui", since = 2349965)
     val o: org.TaggedRep = org ->> UserImpl(id = "NYSE:ORCL", name = "Orcale Inc.", since = 1977)
 
-    val r = memberOf ->> UMOImpl(source = u, target = o)(isPublic = true, since = 2349965, validUntil = 38724987)
+    val m = memberOf ->> UMOImpl(source = u, target = o)(isPublic = true, since = 2349965, validUntil = 38724987)
 
-    assert((r source) === u)
+    assert((m source) === u)
 
     // I think this is a bug; this import shouldn't be needed
     import vertexTypes.User._
     assert(
-      (r.source get id) === "1ad3a34df"
+      (m.source get id) === "1ad3a34df"
     )
 
     // val followers_ids = (user out follows) map { _ get id }
@@ -67,16 +67,25 @@ class EdgeSuite extends org.scalatest.FunSuite {
     implicit object targetGetter extends GetTarget[org.type](org) {
       def apply(rep: memberOf.TaggedRep) = rep.target
     }
-    assert(r.target === o)
+    assert(m.target === o)
 
     /* Getting edge properties */
-    assert(r.get(since) === 2349965)
-    assert(r.get(validUntil) === 38724987)
+    assert(m.get(since) === 2349965)
+    assert(m.get(validUntil) === 38724987)
 
     implicit val weForgotToImportIt = memberOf.tpe has isPublic
     implicit object readIsPublic extends GetProperty(isPublic) {
       def apply(rep: memberOf.TaggedRep) = rep.isPublic
     }
-    assert(r.get(isPublic) === true)
+    assert(m.get(isPublic) === true)
+
+    /* Just a static list of all `memberOf` edges */
+    val members: List[memberOf.TaggedRep] = List(m,m,m)
+
+    /* Retrieving edge */
+    implicit object retrieveMemberOf extends user.RetrieveEdge(memberOf) {
+      def apply(rep: user.TaggedRep) = members filter { _.source == rep }
+    }
+    assert(u.out(memberOf) === List(m,m,m))
   }
 }
