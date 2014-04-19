@@ -1,22 +1,6 @@
 package bio4j.model
 
 /*
-  Arities for rels. The point of this is that it lets you specify the right output type for when you get the outgoing edges of a given type from a vertex.
-*/
-// sealed trait AnyArityVertex { 
-//   type VType <: AnyVertexType
-//   val  vType: VType
-//   def --(label: String) = SourceAndEdgeType(this)
-// }
-// sealed trait ArityVertex[VT <: AnyVertexType] extends AnyArityVertex { type VType = VT }
-// case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V]
-// case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V]
-
-// case class SourceAndEdgeType[S <: AnyArityVertex](s: S) {
-//   def -->[T <: AnyArityVertex](t: T) = new EdgeType[S,T](s,t)
-// }
-
-/*
   Witnesses of a sourceType/type adscription to an edge type are called rels. It's not that I love this name, but...
 */
 trait AnyEdgeType {
@@ -38,26 +22,73 @@ abstract class EdgeType[
   I[_], O[_],
   S <: AnyVertexType, 
   T <: AnyVertexType
-](val sourceType: S, val targetType: T) extends AnyEdgeType {
+] extends AnyEdgeType {
 
-  // type In = I
-  // type Out = O
+  type In[X] = I[X]
+  type Out[X] = O[X]
 
   type SourceType = S
   type TargetType = T
 
-  // for this thing to work, you should extends this class by a _case_ class/object
+  // for this thing to work, you should extend this class by a _case_ class/object
   val label = this.toString 
 }
 
+case class Id[T](val t: T)
+
 object AnyEdgeType {
   implicit def edgeTypeOps[ET <: AnyEdgeType](et: ET) = EdgeTypeOps(et)
+  implicit def elimId[T](idt: Id[T]) = idt.t
 }
 
+/* Arities */
+
+class ManyToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
+  extends EdgeType[List, List, S, T]
+
+class OneToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
+  extends EdgeType[Option, List, S, T]
+
+class ManyToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
+  extends EdgeType[List, Option, S, T]
+
+class OneToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
+  extends EdgeType[Option, Option, S, T]
+
+
+/* Arrows "DSL" */
+
+sealed trait AnyArityVertex { 
+  type VType <: AnyVertexType
+  val  vType: VType
+}
+sealed trait ArityVertex[VT <: AnyVertexType] extends AnyArityVertex { type VType = VT }
+case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V] {
+  def --(label: String) = OneToSmth(vType, label)
+}
+case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V] {
+  def --(label: String) = ManyToSmth(vType, label)
+}
+
+case class OneToSmth[ST <: AnyVertexType](st: ST, l: String) {
+  def -->[T <: AnyArityVertex](t: T) = t match {
+    case one(tt)  => new OneToOne(st,tt)  { override val label = l }
+    case many(tt) => new OneToMany(st,tt) { override val label = l }
+  }
+}
+case class ManyToSmth[ST <: AnyVertexType](st: ST, l: String) {
+  def -->[TT <: AnyVertexType](t: one[TT]) = t match {
+    case one(tt)  => new ManyToOne(st,tt)  { override val label = l }
+  }
+  def -->[TT <: AnyVertexType](t: many[TT]) = t match {
+    case many(tt) => new ManyToMany(st,tt) { override val label = l }
+  }
+}
+
+/* Properties */
+
 case class EdgeTypeOps[ET <: AnyEdgeType](val edgeType: ET) {
-
   def has[P <: AnyProperty](property: P) = EdgeTypeHasProperty(edgeType, property)
-
 }
 
 /* Witness for an Edge of type E having a property of type P */
