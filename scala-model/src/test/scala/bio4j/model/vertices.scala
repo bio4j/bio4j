@@ -19,10 +19,10 @@ object vertices {
     type Rep = UserImpl
 
     /* Provide implicits here (or elsewhere) for all (or some) properties */
-    implicit object readId extends ReadProperty(id) {
-      def apply(rep: self.TaggedRep): id.Rep = (rep: self.Rep).id
+    implicit object readId extends GetProperty(id) {
+      def apply(rep: user.TaggedRep): id.Rep = (rep: user.Rep).id
     }
-    implicit object readSince extends ReadProperty(since) {
+    implicit object readSince extends GetProperty(since) {
       def apply(rep: self.TaggedRep): since.Rep = (rep: self.Rep).since
     }
   }
@@ -34,7 +34,7 @@ object vertices {
     */
     type Rep = UserImpl
 
-    implicit object readName extends ReadProperty(name) {
+    implicit object readName extends GetProperty(name) {
       def apply(rep: self.TaggedRep) = rep.name
     }
   }
@@ -63,7 +63,7 @@ class VertexSuite extends org.scalatest.FunSuite {
     /* 
       We can also add a retriever for the `name` property externally:
     */
-    implicit object readUserName extends user.ReadProperty(name) {
+    implicit object readUserName extends GetProperty(name) {
       def apply(rep: user.TaggedRep) = rep.name
     }
 
@@ -87,7 +87,7 @@ class VertexSuite extends org.scalatest.FunSuite {
       representation of org so we just implement it in place:
     */
     implicit val orgFounded = Org has since
-    implicit object readOrgSince extends org.ReadProperty(since) {
+    implicit object readOrgSince extends org.GetProperty(since) {
       def apply(rep: org.TaggedRep) = rep.since
     }
     assert((o get since) === 1977)

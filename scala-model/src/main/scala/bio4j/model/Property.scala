@@ -18,52 +18,20 @@ class Property[V]() extends AnyProperty with FieldOf[V] {
   type Rep = V
 }
 
-/* Witness for an Edge of type E having a property of type P */
-trait AnyEdgeTypeHasProperty {
-  type EdgeType <: AnyEdgeType
-  val edgeType: EdgeType
+/* Evidence that an arbitrary type `Smth` has property `Property` */
+trait SmthHasProperty {
+  type Smth
+  val smth: Smth
 
   type Property <: AnyProperty
   val property: Property
 }
 
-case class EdgeTypeHasProperty [
-  E <: AnyEdgeType,
-  P <: AnyProperty
-](val edgeType: E,
-  val property: P) extends AnyEdgeTypeHasProperty {
-  type EdgeType = E
-  type Property = P
-}
-
-object AnyEdgeTypeHasProperty {
-  type PropertyOf[E <: AnyEdgeType] = { 
-    type is[P <: AnyProperty] = AnyEdgeTypeHasProperty { type EdgeType = E; type Property = P }
+object SmthHasProperty {
+  type Property[P <: AnyProperty] = { 
+    type has[S] = SmthHasProperty { type Smth = S; type Property = P }
   }
-}
-
-/*
-  witness for a vertex type declaring a property of the given type
-*/
-trait AnyVertexTypeHasProperty {
-  type VertexType <: AnyVertexType
-  val vertexType: VertexType
-
-  type Property <: AnyProperty
-  val property: Property
-}
-
-case class VertexTypeHasProperty[
-  V <: AnyVertexType,
-  P <: AnyProperty
-](val vertexType: V,
-  val property: P) extends AnyVertexTypeHasProperty {
-  type VertexType = V
-  type Property = P
-}
-
-object AnyVertexTypeHasProperty {
-  type PropertyOf[V <: AnyVertexType] = { 
-    type is[P <: AnyProperty] = AnyVertexTypeHasProperty { type VertexType = V; type Property = P }
+  type PropertyOf[S] = { 
+    type is[P <: AnyProperty] = SmthHasProperty { type Smth = S; type Property = P }
   }
 }

@@ -65,3 +65,13 @@ case class EdgeTypeOps[ET <: AnyEdgeType](val edgeType: ET) {
   def has[P <: AnyProperty](property: P) = EdgeTypeHasProperty(edgeType, property)
 
 }
+
+/* Witness for an Edge of type E having a property of type P */
+case class EdgeTypeHasProperty [
+  E <: AnyEdgeType,
+  P <: AnyProperty
+](val smth: E,
+  val property: P) extends SmthHasProperty {
+  type Smth = E
+  type Property = P
+}

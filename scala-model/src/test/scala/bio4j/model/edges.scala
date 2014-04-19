@@ -25,10 +25,10 @@ object edges {
       def apply(rep: self.TaggedRep) = rep.source
     }
 
-    implicit object readSince extends ReadProperty(since) {
+    implicit object readSince extends GetProperty(since) {
       def apply(rep: self.TaggedRep) = rep.since
     }
-    implicit object readValidUntil extends ReadProperty(validUntil) {
+    implicit object readValidUntil extends GetProperty(validUntil) {
       def apply(rep: self.TaggedRep) = rep.validUntil
     }
   }
@@ -73,8 +73,8 @@ class EdgeSuite extends org.scalatest.FunSuite {
     assert(r.get(since) === 2349965)
     assert(r.get(validUntil) === 38724987)
 
-    implicit val weForgotToImportIt = memberOf.edgeType has isPublic
-    implicit object readIsPublic extends ReadProperty(isPublic) {
+    implicit val weForgotToImportIt = memberOf.tpe has isPublic
+    implicit object readIsPublic extends GetProperty(isPublic) {
       def apply(rep: memberOf.TaggedRep) = rep.isPublic
     }
     assert(r.get(isPublic) === true)
