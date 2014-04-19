@@ -18,27 +18,27 @@ class Property[V]() extends AnyProperty with FieldOf[V] {
   type Rep = V
 }
 
-/* Witness for an Rel of type R having a property of type P */
-trait AnyRelTypeHasProperty {
-  type RelType <: AnyRelType
-  val edgeType: RelType
+/* Witness for an Edge of type E having a property of type P */
+trait AnyEdgeTypeHasProperty {
+  type EdgeType <: AnyEdgeType
+  val edgeType: EdgeType
 
   type Property <: AnyProperty
   val property: Property
 }
 
-case class RelTypeHasProperty [
-  R <: AnyRelType,
+case class EdgeTypeHasProperty [
+  E <: AnyEdgeType,
   P <: AnyProperty
-](val edgeType: R,
-  val property: P) extends AnyRelTypeHasProperty {
-  type RelType = R
+](val edgeType: E,
+  val property: P) extends AnyEdgeTypeHasProperty {
+  type EdgeType = E
   type Property = P
 }
 
-object AnyRelTypeHasProperty {
-  type PropertyOf[R <: AnyRelType] = { 
-    type is[P <: AnyProperty] = AnyRelTypeHasProperty { type RelType = R; type Property = P }
+object AnyEdgeTypeHasProperty {
+  type PropertyOf[E <: AnyEdgeType] = { 
+    type is[P <: AnyProperty] = AnyEdgeTypeHasProperty { type EdgeType = E; type Property = P }
   }
 }
 

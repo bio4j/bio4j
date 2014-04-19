@@ -2,10 +2,7 @@ package bio4j.model
 
 import shapeless.record._
 
-trait Tagged {
-
-  self =>
-
+trait Tagged { self =>
   type Rep
   
   type TaggedRep = FieldType[self.type, Rep]

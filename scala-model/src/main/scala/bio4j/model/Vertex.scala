@@ -34,17 +34,17 @@ trait AnyVertex extends Tagged {
   
   ///////////////////////////////////////////
 
-  // abstract case class RetrieveRel[R <: AnyRel](val r: R) {
+  // abstract case class RetrieveEdge[R <: AnyEdge](val r: R) {
   //   def apply(vRep: TaggedRep): r.Rep
   // }
 
-  // implicit class RelOps(val vRep: TaggedRep) {
+  // implicit class EdgeOps(val vRep: TaggedRep) {
   //   def out[
   //     E <: AnyEdgeType, 
   //     T <: AnyVertexType,
-  //     RT <: RelType[ArityVertex[VertexType], E, ArityVertex[T]],
-  //     R <: Rel[RT]
-  //   ](r: R)(implicit retrieve: RetrieveRel[R]) = retrieve(vRep)
+  //     RT <: EdgeType[ArityVertex[VertexType], E, ArityVertex[T]],
+  //     R <: Edge[RT]
+  //   ](r: R)(implicit retrieve: RetrieveEdge[R]) = retrieve(vRep)
   // }
 }
 

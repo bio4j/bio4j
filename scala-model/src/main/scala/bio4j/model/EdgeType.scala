@@ -13,21 +13,21 @@ case class  one[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 case class many[V <: AnyVertexType](vType: V) extends ArityVertex[V]
 
 case class SourceAndEdgeType[S <: AnyArityVertex](s: S) {
-  def -->[T <: AnyArityVertex](t: T) = new RelType[S,T](s,t)
+  def -->[T <: AnyArityVertex](t: T) = new EdgeType[S,T](s,t)
 }
 
 /*
   Witnesses of a sourceType/type adscription to an edge type are called rels. It's not that I love this name, but...
 */
-trait AnyRelType {
+trait AnyEdgeType {
+
+  val label: String
 
   type InArity <: AnyArityVertex
   val inArity: InArity
 
   type SourceType = InArity#VType
   val sourceType: SourceType = inArity.vType
-
-  val label: String
 
   type OutArity <: AnyArityVertex
   val outArity: OutArity
@@ -37,14 +37,10 @@ trait AnyRelType {
 
 }
 
-// object AnyRelType {
-  // implicit def relTypeOps[R <: AnyRelType](rel: R): RelOps[R] = RelOps(rel)
-// }
-
-class RelType[
+class EdgeType[
   X <: AnyArityVertex, 
   Y <: AnyArityVertex
-](val inArity: X, val outArity: Y) extends AnyRelType {
+](val inArity: X, val outArity: Y) extends AnyEdgeType {
 
   type InArity = X
   type OutArity = Y
@@ -53,19 +49,19 @@ class RelType[
   val label = this.toString 
 }
 
-object AnyRelType {
-  // type SourceOf[RT <: AnyRelType] = { 
-  //   type is[VT <: AnyVertexType] = AnyRelType { type SourceType = VT }
+object AnyEdgeType {
+  // type SourceOf[RT <: AnyEdgeType] = { 
+  //   type is[VT <: AnyVertexType] = AnyEdgeType { type SourceType = VT }
   // }
-  // type TargetOf[RT <: AnyRelType] = { 
-  //   type is[VT <: AnyVertexType] = AnyRelType { type TargetType = VT }
+  // type TargetOf[RT <: AnyEdgeType] = { 
+  //   type is[VT <: AnyVertexType] = AnyEdgeType { type TargetType = VT }
   // }
 
-  implicit def relTypeOps[R <: AnyRelType](r: R) = RelTypeOps(r)
+  implicit def edgeTypeOps[ET <: AnyEdgeType](et: ET) = EdgeTypeOps(et)
 }
 
-case class RelTypeOps[R <: AnyRelType](val relType: R) {
+case class EdgeTypeOps[ET <: AnyEdgeType](val edgeType: ET) {
 
-  def has[P <: AnyProperty](property: P) = RelTypeHasProperty(relType, property)
+  def has[P <: AnyProperty](property: P) = EdgeTypeHasProperty(edgeType, property)
 
 }
