@@ -5,7 +5,7 @@ import shapeless.record._
 trait AnyEdge extends Tagged { self =>
 
   type Tpe <: AnyEdgeType
-  val tpe: Tpe
+  val  tpe: Tpe
 
   /* Source-Edge-Target types */
   type SourceType = tpe.SourceType
@@ -14,7 +14,7 @@ trait AnyEdge extends Tagged { self =>
   type TargetType = tpe.TargetType
   val targetType: TargetType = tpe.targetType
 
-  /* Get source-edge-target from this representation */
+  /* Get source/target from this representation */
   abstract case class GetSource[V <: AnyVertex.ofType[SourceType]](val v: V) {
     def apply(rep: TaggedRep): v.TaggedRep
   }
@@ -22,29 +22,38 @@ trait AnyEdge extends Tagged { self =>
     def apply(rep: TaggedRep): v.TaggedRep
   }
 
-  implicit class EdgeOps(val rep: TaggedRep) {
-    import AnyEdgeType._
+  implicit def edgeOps(rep: self.TaggedRep) = EdgeOps(rep)
+  case class   EdgeOps(rep: self.TaggedRep) {
+
     def source[V <: AnyVertex.ofType[SourceType]](implicit getter: GetSource[V]) = getter(rep)
+
     def target[V <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[V]) = getter(rep)
+
   }
 
-  abstract case class GetProperty[P <: AnyProperty](val p: P) {
+  /* Read a property from this representation */
+  import SmthHasProperty._
+
+  abstract class GetProperty[P <: AnyProperty](val p: P) {
     def apply(rep: self.TaggedRep): p.Rep
   }
 
-  case class PropertyOps(rep: self.TaggedRep) {
-    import SmthHasProperty._
+  implicit def propertyOps(rep: self.TaggedRep) = PropertyOps(rep)
+  case class   PropertyOps(rep: self.TaggedRep) {
+
     def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit getter: GetProperty[P]) = getter(rep)
+      (implicit mkGetter: P => GetProperty[P]) = mkGetter(p).apply(rep)
+
   }
 
-  implicit def getProperty(rep: self.TaggedRep) = PropertyOps(rep)
+  /* If have just an independent getter for a particular property: */
+  implicit def idGetter[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
+      (implicit getter: GetProperty[P]) = getter
 
 }
 
-case class Edge[ET <: AnyEdgeType](val tpe: ET) extends AnyEdge { self =>
-  type Tpe = ET
-}
+case class Edge[ET <: AnyEdgeType](val tpe: ET) 
+  extends AnyEdge { type Tpe = ET }
 
 object AnyEdge {
   type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }

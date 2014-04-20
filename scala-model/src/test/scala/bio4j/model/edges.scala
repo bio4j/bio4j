@@ -113,7 +113,7 @@ class EdgeSuite extends org.scalatest.FunSuite {
     )
 
     /* Retrieving edge */
-    implicit object retrieveMemberOf extends user.RetrieveEdge(memberOf) {
+    implicit object retrieveMemberOf extends user.RetrieveOutEdge(memberOf) {
       def apply(rep: user.TaggedRep) = members filter { _.source == rep }
     }
     assert(bob.out(memberOf).map(_.target) === List(oracle, typesafe))
@@ -125,7 +125,7 @@ class EdgeSuite extends org.scalatest.FunSuite {
       owns ->> OwnsImpl(martin, typesafe)
     )
 
-    implicit object retrieveOwns extends user.RetrieveEdge(owns) {
+    implicit object retrieveOwns extends user.RetrieveOutEdge(owns) {
       def apply(rep: user.TaggedRep) = owners find { _.source == rep }
     }
     assert(

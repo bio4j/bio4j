@@ -19,15 +19,15 @@ object AnyVertexType {
   implicit class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
 
     def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = VertexTypeHasProperty(vertexType, property)
+
   }
+
 }
 
 /* Witness for an Vertex of type V having a property of type P */
 case class VertexTypeHasProperty[
   V <: AnyVertexType,
   P <: AnyProperty
-](val smth: V,
-  val property: P) extends SmthHasProperty {
-  type Smth = V
-  type Property = P
+]( val smth:  V,  val property:  P) extends SmthHasProperty {
+  type Smth = V; type Property = P
 }

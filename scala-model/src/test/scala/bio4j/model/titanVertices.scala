@@ -6,15 +6,11 @@ import vertexTypes._
 import properties._
 import bio4j.model._
 import shapeless.record.FieldType
+import SmthHasProperty._
 
-trait TitanBacked extends AnyVertex { self =>
+class TVertex[VT <: AnyVertexType](tpe: VT) extends Vertex(tpe) { self =>
 
   type Rep = TitanVertex
-}
-
-class TVertex[VT <: AnyVertexType](val tpe: VT) extends TitanBacked {
-
-  type Tpe = VT
 
   import SmthHasProperty._
   implicit def unsafeGetProperty[P <: AnyProperty: PropertyOf[this.Tpe]#is](p0: P): this.GetProperty[P] = new GetProperty[P](p0) {
@@ -22,15 +18,7 @@ class TVertex[VT <: AnyVertexType](val tpe: VT) extends TitanBacked {
   }
 }
 
-object TitanBacked {
-
-  
-}
-
-case object titanUser extends TVertex[User.type](User) {
-
-
-}
+case object titanUser extends TVertex[User.type](User)
 
 abstract class stupidTest {
 
@@ -39,9 +27,6 @@ abstract class stupidTest {
   import titanUser._
 
   val uh: titanUser.TaggedRep
-
-  // why??? why I need this??
-  implicit val asdf = unsafeGetProperty(id)
 
   val z = uh get id
   def getId(u: titanUser.TaggedRep) = u.get(id)

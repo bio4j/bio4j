@@ -8,43 +8,54 @@ package bio4j.model
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
 trait AnyVertex extends Tagged { self =>
-
-  type Tpe <: AnyVertexType
-  val tpe: Tpe
   
+  type Tpe <: AnyVertexType
+  val  tpe: Tpe
+
   /* Read a property from this representation */
+  import SmthHasProperty._
+
   abstract class GetProperty[P <: AnyProperty](val p: P) {
     def apply(rep: self.TaggedRep): p.Rep
   }
 
-  case class PropertyOps(rep: self.TaggedRep) {
-    import SmthHasProperty._
-    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is, GP <: GetProperty[P]](p: P)
-      (implicit getter: GP) = getter(rep)
-  }
-
   implicit def propertyOps(rep: self.TaggedRep) = PropertyOps(rep)
+  case class   PropertyOps(rep: self.TaggedRep) {
 
+    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
+      (implicit mkGetter: P => GetProperty[P]) = mkGetter(p).apply(rep)
 
-  abstract case class RetrieveEdge[E <: AnyEdge](val r: E) {
-    def apply(vRep: TaggedRep): r.tpe.Out[r.Rep]
   }
 
-  implicit class EdgeOps(val vRep: TaggedRep) {
+  /* If have just an independent getter for a particular property: */
+  implicit def idGetter[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
+      (implicit getter: GetProperty[P]) = getter
+
+
+  /* Getters for incoming/outgoing edges */
+  abstract case class RetrieveOutEdge[E <: AnyEdge](val r: E) {
+    def apply(rep: self.TaggedRep): r.tpe.Out[r.Rep]
+  }
+  abstract case class RetrieveInEdge[E <: AnyEdge](val r: E) {
+    def apply(rep: self.TaggedRep): r.tpe.In[r.Rep]
+  }
+
+  implicit def vertexOps(rep: self.TaggedRep) = VertexOps(rep)
+  case class   VertexOps(rep: self.TaggedRep) {
+
     def out[E <: AnyEdge.withSourceType[self.Tpe]]
-      (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
+      (e: E)(implicit retrieve: RetrieveOutEdge[E]) = retrieve(rep)
 
     def in[E <: AnyEdge.withTargetType[self.Tpe]]
-      (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
+      (e: E)(implicit retrieve: RetrieveInEdge[E]) = retrieve(rep)
+
   }
 
 }
+
+abstract class Vertex[VT <: AnyVertexType](val tpe: VT) 
+  extends AnyVertex { type Tpe = VT }
 
 object AnyVertex {
   type ofType[VT <: AnyVertexType] = AnyVertex { type Tpe = VT }
-}
-
-abstract class Vertex[VT <: AnyVertexType](val tpe: VT) extends AnyVertex {
-
-  type Tpe = VT
 }
