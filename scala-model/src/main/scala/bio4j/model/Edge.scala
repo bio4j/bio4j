@@ -34,15 +34,26 @@ trait AnyEdge extends Tagged { self =>
   /* Read a property from this representation */
   import SmthHasProperty._
 
-  abstract class GetProperty[P <: AnyProperty](val p: P) {
-    def apply(rep: self.TaggedRep): p.Rep
+  trait AnyGetProperty {
+    type Property <: AnyProperty
+    val p: Property
+
+    def apply(rep: self.TaggedRep): Property#Rep
+  }
+  abstract class GetProperty[P <: AnyProperty](val p: P) extends AnyGetProperty {
+
+    type Property = P
   }
 
-  implicit def propertyOps(rep: self.TaggedRep) = PropertyOps(rep)
+  implicit def propertyOps(rep: self.TaggedRep): PropertyOps = PropertyOps(rep)
   case class   PropertyOps(rep: self.TaggedRep) {
 
     def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit mkGetter: P => GetProperty[P]) = mkGetter(p).apply(rep)
+      (implicit mkGetter: P => GetProperty[P]): P#Rep = {
+
+        val g: GetProperty[P] = mkGetter(p)
+        g(rep)
+      }
 
   }
 

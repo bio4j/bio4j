@@ -19,5 +19,7 @@ libraryDependencies ++= Seq(
 
 bucketSuffix := "era7.com"
 
+// scalaVersion := "2.11.0-M4"
+
 // the new cool option for super-fast recompiling from sbt-0.13.2
 // incOptions := incOptions.value.withNameHashing(true)
