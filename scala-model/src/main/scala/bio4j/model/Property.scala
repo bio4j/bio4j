@@ -4,7 +4,6 @@ package bio4j.model
   Properties
 */
 import shapeless.FieldOf
-import vertexTags._
 
 /*
   This has a label!
@@ -22,13 +21,15 @@ class Property[V]() extends AnyProperty with FieldOf[V] {
 object AnyProperty {
 
   import SmthHasProperty._
+  import denotations._
 
+  type VertexTag = AnyDenotationTag { type Denotation <: AnyVertex;  }
 
   implicit class PropertyOps[P <: AnyProperty](val p: P) {
 
-    def %:[VT <: AnyVertexTag](vr: VT)(
+    def %:[VT <: VertexTag](vr: VT)(
       implicit
-      ev: PropertyOf[vr.Vertex#Tpe]#is[P],
+      ev: PropertyOf[vr.DenotedType]#is[P],
       mkGetter: VT => ReadFrom[VT]
     ): p.Rep = {
 
@@ -37,7 +38,7 @@ object AnyProperty {
     }
   }
 
-  abstract class ReadFrom[VT <: AnyVertexTag](val vt: VT) {
+  abstract class ReadFrom[VT <: VertexTag](val vt: VT) {
 
     def apply[P <: AnyProperty](p: P): p.Rep
   }

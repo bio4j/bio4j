@@ -7,18 +7,11 @@ package bio4j.model
   
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
-trait AnyVertex { self =>
-  
-  type Tpe <: AnyVertexType
-  val  tpe: Tpe
 
-  type Rep
+import denotations._
 
-  import vertexTags._
-  // TODO add to TaggedRep the vertex type
-  type TaggedRep = VertexRepType[self.type]
-  def ->>(r: Rep): VertexRepType[self.type] = vrep[self.type](r)
-
+trait AnyVertex extends Denote[AnyVertexType] { self =>
+ 
   /* Read a property from this representation */
   import SmthHasProperty._
 
@@ -52,14 +45,14 @@ trait AnyVertex { self =>
 
   /* Getters for incoming/outgoing edges */
   abstract case class RetrieveOutEdge[E <: AnyEdge](val r: E) {
-    def apply(rep: self.TaggedRep): r.tpe.Out[r.Rep]
+    def apply(rep: TaggedRep): r.tpe.Out[r.Rep]
   }
   abstract case class RetrieveInEdge[E <: AnyEdge](val r: E) {
-    def apply(rep: self.TaggedRep): r.tpe.In[r.Rep]
+    def apply(rep: TaggedRep): r.tpe.In[r.Rep]
   }
 
-  implicit def vertexOps(rep: self.TaggedRep) = VertexOps(rep)
-  case class   VertexOps(rep: self.TaggedRep) {
+  implicit def vertexOps(rep: TaggedRep) = VertexOps(rep)
+  case class   VertexOps(rep: TaggedRep) {
 
     def out[E <: AnyEdge.withSourceType[self.Tpe]]
       (e: E)(implicit retrieve: RetrieveOutEdge[E]) = retrieve(rep)

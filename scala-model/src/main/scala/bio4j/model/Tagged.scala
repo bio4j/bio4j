@@ -19,12 +19,11 @@ object vertexTags  {
   
   trait VertexTag[V <: AnyVertex] extends AnyVertexTag with KeyTag[V,V#Rep] { type Vertex = V }
 
-  type VertexRepType[V <: AnyVertex] = V#Rep with VertexTag[V]
+  type TaggedWithVertex[V <: AnyVertex] = V#Rep with VertexTag[V]
 
   def vrep[V <: AnyVertex] = new VertexBuilder[V]
 
   class VertexBuilder[V <: AnyVertex] {
-    def apply(vr : V#Rep): VertexRepType[V] = vr.asInstanceOf[VertexRepType[V]]
+    def apply(vr : V#Rep): TaggedWithVertex[V] = vr.asInstanceOf[TaggedWithVertex[V]]
   }
 }
-

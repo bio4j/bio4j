@@ -1,11 +1,13 @@
 package bio4j.model
 
 import shapeless.record._
+import denotations._
 
-trait AnyEdge extends Tagged { self =>
+trait AnyEdge extends Denote[AnyEdgeType] { self =>
 
+  // it doesn't make any sense, but if I remove this from here type inference fails in tests
   type Tpe <: AnyEdgeType
-  val  tpe: Tpe
+  val tpe: Tpe
 
   /* Source-Edge-Target types */
   type SourceType = tpe.SourceType
@@ -63,7 +65,7 @@ trait AnyEdge extends Tagged { self =>
 
 }
 
-case class Edge[ET <: AnyEdgeType](val tpe: ET) 
+class Edge[ET <: AnyEdgeType](val tpe: ET) 
   extends AnyEdge { type Tpe = ET }
 
 object AnyEdge {
