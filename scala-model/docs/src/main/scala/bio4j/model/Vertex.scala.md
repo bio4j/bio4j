@@ -12,46 +12,37 @@ They are designed to be compatible with shapeless records (maybe, we'll see).
 
 
 ```scala
-trait AnyVertex extends Tagged { self =>
-
-  type Tpe <: AnyVertexType
-  val tpe: Tpe
+trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
 ```
 
-Read a property from this representation
+Getters for incoming/outgoing edges
 
 ```scala
-  abstract case class GetProperty[P <: AnyProperty](val p: P) {
-    def apply(rep: self.TaggedRep): p.Rep
+  abstract case class RetrieveOutEdge[E <: AnyEdge](val e: E) {
+    def apply(rep: vertex.TaggedRep): e.Out[e.Rep]
+  }
+  abstract case class RetrieveInEdge[E <: AnyEdge](val e: E) {
+    def apply(rep: vertex.TaggedRep): e.In[e.Rep]
   }
 
-  case class PropertyOps(rep: self.TaggedRep) {
-    import SmthHasProperty._
-    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit getter: GetProperty[P]) = getter(rep)
-  }
+  implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
+  case class   VertexOps(rep: vertex.TaggedRep) {
 
-  implicit def getProperty(rep: self.TaggedRep) = PropertyOps(rep)
+    def out[E <: AnyEdge.withSourceType[vertex.Tpe]]
+      (e: E)(implicit retrieve: RetrieveOutEdge[E]) = retrieve(rep)
 
+    def in[E <: AnyEdge.withTargetType[vertex.Tpe]]
+      (e: E)(implicit retrieve: RetrieveInEdge[E]) = retrieve(rep)
 
-  abstract case class RetrieveEdge[E <: AnyEdge](val r: E) {
-    def apply(vRep: TaggedRep): r.tpe.Out[r.Rep]
-  }
-
-  implicit class EdgeOps(val vRep: TaggedRep) {
-    def out[E <: AnyEdge.withSourceType[self.Tpe]]
-      (e: E)(implicit retrieve: RetrieveEdge[E]) = retrieve(vRep)
   }
 
 }
+
+abstract class Vertex[VT <: AnyVertexType](val tpe: VT) 
+  extends AnyVertex { type Tpe = VT }
 
 object AnyVertex {
   type ofType[VT <: AnyVertexType] = AnyVertex { type Tpe = VT }
-}
-
-abstract class Vertex[VT <: AnyVertexType](val tpe: VT) extends AnyVertex {
-
-  type Tpe = VT
 }
 
 ```
@@ -62,34 +53,45 @@ abstract class Vertex[VT <: AnyVertexType](val tpe: VT) extends AnyVertex {
 ### Index
 
 + src
-  + main
-    + scala
-      + bio4j
-        + model
-          + [Edge.scala][main/scala/bio4j/model/Edge.scala]
-          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
-          + [Property.scala][main/scala/bio4j/model/Property.scala]
-          + [Tagged.scala][main/scala/bio4j/model/Tagged.scala]
-          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
-          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
   + test
     + scala
       + bio4j
         + model
-          + [edges.scala][test/scala/bio4j/model/edges.scala]
-          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
           + [properties.scala][test/scala/bio4j/model/properties.scala]
-          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [edges.scala][test/scala/bio4j/model/edges.scala]
           + [vertices.scala][test/scala/bio4j/model/vertices.scala]
+          + titan
+            + [TitanGodsTest.scala][test/scala/bio4j/model/titan/TitanGodsTest.scala]
+            + [TEdge.scala][test/scala/bio4j/model/titan/TEdge.scala]
+            + [TVertex.scala][test/scala/bio4j/model/titan/TVertex.scala]
+            + [godsImplementation.scala][test/scala/bio4j/model/titan/godsImplementation.scala]
+            + [godsSchema.scala][test/scala/bio4j/model/titan/godsSchema.scala]
+          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
+  + main
+    + scala
+      + bio4j
+        + model
+          + [Denotation.scala][main/scala/bio4j/model/Denotation.scala]
+          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
+          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
+          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
+          + [Edge.scala][main/scala/bio4j/model/Edge.scala]
+          + [Property.scala][main/scala/bio4j/model/Property.scala]
 
-[main/scala/bio4j/model/Edge.scala]: Edge.scala.md
-[main/scala/bio4j/model/EdgeType.scala]: EdgeType.scala.md
-[main/scala/bio4j/model/Property.scala]: Property.scala.md
-[main/scala/bio4j/model/Tagged.scala]: Tagged.scala.md
-[main/scala/bio4j/model/Vertex.scala]: Vertex.scala.md
-[main/scala/bio4j/model/VertexType.scala]: VertexType.scala.md
-[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
-[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
 [test/scala/bio4j/model/properties.scala]: ../../../../test/scala/bio4j/model/properties.scala.md
-[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
+[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
 [test/scala/bio4j/model/vertices.scala]: ../../../../test/scala/bio4j/model/vertices.scala.md
+[test/scala/bio4j/model/titan/TitanGodsTest.scala]: ../../../../test/scala/bio4j/model/titan/TitanGodsTest.scala.md
+[test/scala/bio4j/model/titan/TEdge.scala]: ../../../../test/scala/bio4j/model/titan/TEdge.scala.md
+[test/scala/bio4j/model/titan/TVertex.scala]: ../../../../test/scala/bio4j/model/titan/TVertex.scala.md
+[test/scala/bio4j/model/titan/godsImplementation.scala]: ../../../../test/scala/bio4j/model/titan/godsImplementation.scala.md
+[test/scala/bio4j/model/titan/godsSchema.scala]: ../../../../test/scala/bio4j/model/titan/godsSchema.scala.md
+[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
+[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
+[main/scala/bio4j/model/Denotation.scala]: Denotation.scala.md
+[main/scala/bio4j/model/EdgeType.scala]: EdgeType.scala.md
+[main/scala/bio4j/model/VertexType.scala]: VertexType.scala.md
+[main/scala/bio4j/model/Vertex.scala]: Vertex.scala.md
+[main/scala/bio4j/model/Edge.scala]: Edge.scala.md
+[main/scala/bio4j/model/Property.scala]: Property.scala.md
