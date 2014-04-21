@@ -1,11 +1,11 @@
 package bio4j.model.test.titan
 
-import godsSchema._
+import GodsSchema._
 
-object godsImplementation {
+object GodsImplementation {
 
   /*
-    #### vertices
+    ### Vertices
   */
   case object titan    extends TVertex(Titan)
   case object god      extends TVertex(God)
@@ -13,8 +13,9 @@ object godsImplementation {
   case object human    extends TVertex(Human)
   case object monster  extends TVertex(Monster)
   case object location extends TVertex(Location)
+
   /*
-    #### edges
+    ### Edges
   */
   case object titanFather  extends TEdge(TitanFather)
   case object godFather    extends TEdge(GodFather)

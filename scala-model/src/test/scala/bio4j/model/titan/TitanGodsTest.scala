@@ -4,8 +4,8 @@ import com.thinkaurelius.titan.example.GraphOfTheGodsFactory
 import com.thinkaurelius.titan.core._
 import java.io.File
 
-import godsSchema._
-import godsImplementation._
+import GodsSchema._
+import GodsImplementation._
 
 import bio4j.model._
 
@@ -29,6 +29,8 @@ class titanSuite extends org.scalatest.FunSuite {
     // Taking it into account, maybe it's better to declare 
     // all has-property outside (in the GodsVertexTypes object)
     val saturn = titan ->> (g.getVertices("name", "saturn").iterator().next().asInstanceOf[TitanVertex])
+
+    assert(titan.tpe.label === "titan")
 
     /* pure blueprints with string keys and casting: */
     assert(saturn.getProperty[Int]("age") === 10000)
