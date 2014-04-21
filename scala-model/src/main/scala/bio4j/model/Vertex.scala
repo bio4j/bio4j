@@ -11,11 +11,11 @@ package bio4j.model
 trait AnyVertex extends Denotation[AnyVertexType] { self =>
 
   /* Getters for incoming/outgoing edges */
-  abstract case class RetrieveOutEdge[E <: AnyEdge](val r: E) {
-    def apply(rep: TaggedRep): r.tpe.Out[r.Rep]
+  abstract case class RetrieveOutEdge[E <: AnyEdge](val e: E) {
+    def apply(rep: TaggedRep): e.tpe.Out[e.Rep]
   }
-  abstract case class RetrieveInEdge[E <: AnyEdge](val r: E) {
-    def apply(rep: TaggedRep): r.tpe.In[r.Rep]
+  abstract case class RetrieveInEdge[E <: AnyEdge](val e: E) {
+    def apply(rep: TaggedRep): e.tpe.In[e.Rep]
   }
 
   implicit def vertexOps(rep: TaggedRep) = VertexOps(rep)

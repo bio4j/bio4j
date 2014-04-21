@@ -1,12 +1,7 @@
-package bio4j.model.test
+package bio4j.model.test.titan
 
-import com.thinkaurelius.titan.core.TitanVertex
-
-import vertexTypes._
-import properties._
 import bio4j.model._
-import shapeless.record.FieldType
-import SmthHasProperty._
+import com.thinkaurelius.titan.core.TitanVertex
 
 trait AnyTVertex extends AnyVertex {
 
@@ -26,23 +21,20 @@ trait AnyTVertex extends AnyVertex {
       def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
     }
 
+  /* Retrieving edges */
+  // import com.tinkerpop.blueprints.Direction
+  // import scala.collection.JavaConversions._
+  // implicit def iterableToOption[T](i: Iterable[T]): Option[T] = i.headOption
+  // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
+
+  // import AnyEdge._
+  // implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E) = 
+  //   new RetrieveOutEdge(e) {
+  //     def apply(rep: TaggedRep): e.Out[e.Rep] = {
+  //       rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[TaggedRep]]
+  //     }
+  //   }
 }
 
 class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }
 
-
-case object titanUser extends TVertex[User.type](User)
-
-abstract class stupidTest {
-
-  import vertexTypes._
-  import User._
-  import titanUser._
-  import AnyProperty._
-
-  val uh: titanUser.TaggedRep
-
-  val z = uh get id
-  val ohoh = uh %: id
-  def getId(u: titanUser.TaggedRep) = u.get(id)
-}

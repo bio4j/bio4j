@@ -38,7 +38,6 @@ case class Id[T](val t: T)
 
 object AnyEdgeType {
   implicit def edgeTypeOps[ET <: AnyEdgeType](et: ET) = EdgeTypeOps(et)
-  implicit def elimId[T](idt: Id[T]) = idt.t
 }
 
 /* Arities */
