@@ -1,11 +1,8 @@
 package bio4j.model
 
-import shapeless.record._
-import denotations._
+trait AnyEdge extends Denotation[AnyEdgeType] { self =>
 
-trait AnyEdge extends Denote[AnyEdgeType] { self =>
-
-  // it doesn't make any sense, but if I remove this from here type inference fails in tests
+  // NOTE: It doesn't make any sense, but if I remove this from here type inference fails in tests
   type Tpe <: AnyEdgeType
   val tpe: Tpe
 
@@ -32,36 +29,6 @@ trait AnyEdge extends Denote[AnyEdgeType] { self =>
     def target[V <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[V]) = getter(rep)
 
   }
-
-  /* Read a property from this representation */
-  import SmthHasProperty._
-
-  trait AnyGetProperty {
-    type Property <: AnyProperty
-    val p: Property
-
-    def apply(rep: self.TaggedRep): Property#Rep
-  }
-  abstract class GetProperty[P <: AnyProperty](val p: P) extends AnyGetProperty {
-
-    type Property = P
-  }
-
-  implicit def propertyOps(rep: self.TaggedRep): PropertyOps = PropertyOps(rep)
-  case class   PropertyOps(rep: self.TaggedRep) {
-
-    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit mkGetter: P => GetProperty[P]): P#Rep = {
-
-        val g: GetProperty[P] = mkGetter(p)
-        g(rep)
-      }
-
-  }
-
-  /* If have just an independent getter for a particular property: */
-  implicit def idGetter[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit getter: GetProperty[P]) = getter
 
 }
 

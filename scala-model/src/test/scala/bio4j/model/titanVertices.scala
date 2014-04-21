@@ -12,25 +12,24 @@ trait AnyTVertex extends AnyVertex {
 
   type Rep = TitanVertex
 
+  /* Reading any property from a TitanVertex */
   import AnyProperty._
+  implicit def readFromTitanVertex(vr: TaggedRep) = 
+    new ReadFrom[TaggedRep](vr) {
+      def apply[P <: AnyProperty](p: P): p.Rep = vr.getProperty[p.Rep](p.label)
+    }
 
-  case class ReadFromTitanVertex(vr: TaggedRep) extends ReadFrom[TaggedRep](vr) {
+  /* Getting a property from any TitanVertex */
+  import SmthHasProperty._
+  implicit def unsafeGetProperty[P <: AnyProperty: PropertyOf[this.Tpe]#is](p: P) = 
+    new GetProperty[P](p) {
+      def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
+    }
 
-    def apply[P <: AnyProperty](p: P): p.Rep = vr.getProperty[p.Rep](p.label)
-
-  }
-  implicit def buh(vr: TaggedRep): ReadFrom[TaggedRep] = 
-    ReadFromTitanVertex(vr)
-
-   import SmthHasProperty._
-  implicit def unsafeGetProperty[P <: AnyProperty: PropertyOf[this.Tpe]#is](p0: P): this.GetProperty[P] = new GetProperty[P](p0) {
-    def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
-  }
 }
-class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex {
 
-  type Tpe = VT
-}
+class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }
+
 
 case object titanUser extends TVertex[User.type](User)
 

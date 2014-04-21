@@ -8,40 +8,7 @@ package bio4j.model
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
 
-import denotations._
-
-trait AnyVertex extends Denote[AnyVertexType] { self =>
- 
-  /* Read a property from this representation */
-  import SmthHasProperty._
-
-  trait AnyGetProperty {
-    type Property <: AnyProperty
-    val p: Property
-
-    def apply(rep: self.TaggedRep): Property#Rep
-  }
-  abstract class GetProperty[P <: AnyProperty](val p: P) extends AnyGetProperty {
-
-    type Property = P
-  }
-
-  implicit def propertyOps(rep: self.TaggedRep): PropertyOps = PropertyOps(rep)
-  case class   PropertyOps(rep: self.TaggedRep) {
-
-    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit mkGetter: P => GetProperty[P]): P#Rep = {
-
-        val g: GetProperty[P] = mkGetter(p)
-        g(rep)
-      }
-
-  }
-
-  /* If have just an independent getter for a particular property: */
-  implicit def idGetter[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
-      (implicit getter: GetProperty[P]) = getter
-
+trait AnyVertex extends Denotation[AnyVertexType] { self =>
 
   /* Getters for incoming/outgoing edges */
   abstract case class RetrieveOutEdge[E <: AnyEdge](val r: E) {

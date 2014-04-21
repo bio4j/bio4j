@@ -3,46 +3,37 @@ package bio4j.model
 /*
   Properties
 */
-import shapeless.FieldOf
 
-/*
-  This has a label!
-*/
+
+// LiteralType has a label!
 trait AnyProperty extends LiteralType {
-
-  // should this go somewhere else?
+  // NOTE: should this go somewhere else?
   type Rep
 }
-class Property[V]() extends AnyProperty with FieldOf[V] {
-
-  type Rep = V
-}
+class Property[V]() extends AnyProperty with shapeless.FieldOf[V] { type Rep = V }
 
 object AnyProperty {
 
   import SmthHasProperty._
-  import denotations._
 
-  type VertexTag = AnyDenotationTag { type Denotation <: AnyVertex;  }
+  type VertexTag = AnyDenotationTag { type Denotation <: AnyVertex }
 
+  /* Right associative property getter for vertices */
   implicit class PropertyOps[P <: AnyProperty](val p: P) {
 
-    def %:[VT <: VertexTag](vr: VT)(
-      implicit
-      ev: PropertyOf[vr.DenotedType]#is[P],
-      mkGetter: VT => ReadFrom[VT]
-    ): p.Rep = {
+    def %:[VT <: VertexTag](vr: VT)
+      (implicit
+        ev: PropertyOf[vr.DenotedType]#is[P],
+        mkReader: VT => ReadFrom[VT]
+      ): p.Rep = mkReader(vr).apply(p)
 
-      val g = mkGetter(vr)
-      g(p)
-    }
   }
 
+  /* For using `%:` you have to provide an implicit val of `ReadFrom` */
   abstract class ReadFrom[VT <: VertexTag](val vt: VT) {
-
+    // NOTE: can't add `PropertyOf[vt.DenotedType]#is` requirement here
     def apply[P <: AnyProperty](p: P): p.Rep
   }
-
 
 }
 
