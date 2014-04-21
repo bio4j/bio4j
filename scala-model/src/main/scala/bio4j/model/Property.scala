@@ -6,6 +6,7 @@ package bio4j.model
 
 
 // LiteralType has a label!
+// TODO move to AnyDenotation
 trait AnyProperty extends LiteralType {
   // NOTE: should this go somewhere else?
   type Rep

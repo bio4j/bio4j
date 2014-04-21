@@ -12,7 +12,6 @@ trait AnyTEdge extends AnyEdge {
     new GetProperty[P](p) {
       def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
     }
-
 }
 
 class TEdge[VT <: AnyEdgeType](val tpe: VT) extends AnyTEdge { type Tpe = VT }

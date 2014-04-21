@@ -1,10 +1,21 @@
 package bio4j.model.test.titan
 
-import bio4j.model._
-import GodsEdgeTypes._
+import godsSchema._
 
-object GodsEdges {
+object godsImplementation {
 
+  /*
+    #### vertices
+  */
+  case object titan    extends TVertex(Titan)
+  case object god      extends TVertex(God)
+  case object demigod  extends TVertex(Demigod)
+  case object human    extends TVertex(Human)
+  case object monster  extends TVertex(Monster)
+  case object location extends TVertex(Location)
+  /*
+    #### edges
+  */
   case object titanFather  extends TEdge(TitanFather)
   case object godFather    extends TEdge(GodFather)
   case object humanMother  extends TEdge(HumanMother)
@@ -13,5 +24,4 @@ object GodsEdges {
   case object battled      extends TEdge(Battled) 
   case object godLives     extends TEdge(GodLives) 
   case object monsterLives extends TEdge(MonsterLives) 
-
 }

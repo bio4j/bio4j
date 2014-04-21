@@ -1,12 +1,13 @@
 package bio4j.model
 
 /*
-  Witnesses of a sourceType/type adscription to an edge type are called rels. It's not that I love this name, but...
+  Witnesses of a sourceType/type adscription to an edge type.
 */
 trait AnyEdgeType {
 
   val label: String
 
+  // TODO add an applicative/monad requirement here
   type In[_]
   type Out[_]
 
@@ -30,10 +31,11 @@ abstract class EdgeType[
   type SourceType = S
   type TargetType = T
 
-  // for this thing to work, you should extend this class by a _case_ class/object
+  /* for this thing to work, you should extend this class by a _case_ class/object */
   val label = this.toString 
 }
 
+// TODO move to scalaz Id etc
 case class Id[T](val t: T)
 
 object AnyEdgeType {
@@ -54,9 +56,9 @@ class ManyToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val t
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
   extends EdgeType[Option, Option, S, T]
 
-
 /* Arrows "DSL" */
 
+// NOTE what's the point of all this once we have included arities in edge types?
 sealed trait AnyArityVertex { 
   type VType <: AnyVertexType
   val  vType: VType

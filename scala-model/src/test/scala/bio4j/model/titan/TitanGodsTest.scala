@@ -4,12 +4,10 @@ import com.thinkaurelius.titan.example.GraphOfTheGodsFactory
 import com.thinkaurelius.titan.core._
 import java.io.File
 
+import godsSchema._
+import godsImplementation._
+
 import bio4j.model._
-import GodsProperties._
-import GodsVertexTypes._
-import GodsVertices._
-import GodsEdgeTypes._
-import GodsEdges._
 
 class titanSuite extends org.scalatest.FunSuite {
 
@@ -30,7 +28,6 @@ class titanSuite extends org.scalatest.FunSuite {
     // NOTE: this import shouldn't be needed, but it is
     // Taking it into account, maybe it's better to declare 
     // all has-property outside (in the GodsVertexTypes object)
-    import GodsVertexTypes.Titan._
     val saturn = titan ->> (g.getVertices("name", "saturn").iterator().next().asInstanceOf[TitanVertex])
 
     /* pure blueprints with string keys and casting: */

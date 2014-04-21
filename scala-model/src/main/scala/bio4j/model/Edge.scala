@@ -1,35 +1,29 @@
 package bio4j.model
 
-trait AnyEdge extends Denotation[AnyEdgeType] { self =>
+trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
 
-  // NOTE: It doesn't make any sense, but if I remove this from here type inference fails in tests
+  // NOTE: if I remove this from here type inference fails in tests. Most likely a bug
   type Tpe <: AnyEdgeType
-  val tpe: Tpe
 
-  /* Source-Edge-Target types */
+  /* Source-Edge-Target types. Looks like we need to add them here to guide type inference; tests fail otherwise  */
   type SourceType = tpe.SourceType
-  val sourceType: SourceType = tpe.sourceType
-
   type TargetType = tpe.TargetType
-  val targetType: TargetType = tpe.targetType
 
   /* Get source/target from this representation */
-  abstract case class GetSource[V <: AnyVertex.ofType[SourceType]](val v: V) {
-    def apply(rep: TaggedRep): v.TaggedRep
+  abstract class GetSource[S <: AnyVertex.ofType[SourceType]](val source: S) {
+    def apply(edgeRep: edge.TaggedRep): source.TaggedRep
   }
-  abstract case class GetTarget[V <: AnyVertex.ofType[TargetType]](val v: V) {
-    def apply(rep: TaggedRep): v.TaggedRep
-  }
-
-  implicit def edgeOps(rep: self.TaggedRep) = EdgeOps(rep)
-  case class   EdgeOps(rep: self.TaggedRep) {
-
-    def source[V <: AnyVertex.ofType[SourceType]](implicit getter: GetSource[V]) = getter(rep)
-
-    def target[V <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[V]) = getter(rep)
-
+  abstract class GetTarget[T <: AnyVertex.ofType[TargetType]](val target: T) {
+    def apply(edgeRep: edge.TaggedRep): target.TaggedRep
   }
 
+  implicit def edgeOps(edgeRep: edge.TaggedRep) = EdgeOps(edgeRep)
+  case class   EdgeOps(edgeRep: edge.TaggedRep) {
+
+    def source[S <: AnyVertex.ofType[SourceType]](implicit getter: GetSource[S]) = getter(edgeRep)
+
+    def target[T <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[T]) = getter(edgeRep)
+  }
 }
 
 class Edge[ET <: AnyEdgeType](val tpe: ET) 

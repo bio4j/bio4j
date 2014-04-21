@@ -2,6 +2,14 @@ package bio4j.model
 
 import shapeless.record._
 
+/*
+  This trait represents a mapping between 
+
+  - members `Tpe` of a universe of types `TYPE`
+  - and `Rep` a type meant to be a denotation of `Tpe` thus the name
+
+  Tagging is used for being able to operate on `Rep` values knowing what they are denotating.
+*/
 trait AnyDenotation { self =>
 
   /* The base type for the types that this thing denotes */
@@ -16,6 +24,15 @@ trait AnyDenotation { self =>
   def ->>(r: Rep): TaggedWith[self.type] = tagWith[self.type](r)
 
 
+
+  /*
+    
+    #### properties
+
+    As we are using this for edges and vertices, we have here the corresponding property logic. It would be good to split this into a different trait, maybe with a self bound on `AnyDenotation`; note that properties themselves should be instances of `AnyDenotation` but we don't want them to have properties.
+
+  */
+
   /* Read a property from this representation */
   import SmthHasProperty._
 
@@ -23,8 +40,7 @@ trait AnyDenotation { self =>
     type Property <: AnyProperty
     val p: Property
 
-    // NOTE: Why `self.TaggedRep`, but not `p.Rep`? (it compiles fine and passes tests, btw)
-    def apply(rep: self.TaggedRep): Property#Rep
+    def apply(rep: self.TaggedRep): p.Rep
   }
 
   abstract class GetProperty[P <: AnyProperty](val p: P) 
@@ -46,7 +62,6 @@ trait AnyDenotation { self =>
 
 trait Denotation[T] extends AnyDenotation { type TYPE = T }
 
-
 trait AnyDenotationTag {
   type Denotation <: AnyDenotation
   type DenotedType = Denotation#Tpe
@@ -56,7 +71,9 @@ trait DenotationTag[D <: AnyDenotation] extends AnyDenotationTag with KeyTag[D, 
   type Denotation = D
 }
 
-
+/*
+  tagging functionality
+*/
 object Tagged {
 
   type TaggedWith[D <: AnyDenotation] = D#Rep with DenotationTag[D]
