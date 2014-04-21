@@ -8,23 +8,23 @@ package bio4j.model
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
 
-trait AnyVertex extends Denotation[AnyVertexType] { self =>
+trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
 
   /* Getters for incoming/outgoing edges */
   abstract case class RetrieveOutEdge[E <: AnyEdge](val e: E) {
-    def apply(rep: TaggedRep): e.tpe.Out[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.tpe.Out[e.Rep]
   }
   abstract case class RetrieveInEdge[E <: AnyEdge](val e: E) {
-    def apply(rep: TaggedRep): e.tpe.In[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.tpe.In[e.Rep]
   }
 
-  implicit def vertexOps(rep: TaggedRep) = VertexOps(rep)
-  case class   VertexOps(rep: TaggedRep) {
+  implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
+  case class   VertexOps(rep: vertex.TaggedRep) {
 
-    def out[E <: AnyEdge.withSourceType[self.Tpe]]
+    def out[E <: AnyEdge.withSourceType[vertex.Tpe]]
       (e: E)(implicit retrieve: RetrieveOutEdge[E]) = retrieve(rep)
 
-    def in[E <: AnyEdge.withTargetType[self.Tpe]]
+    def in[E <: AnyEdge.withTargetType[vertex.Tpe]]
       (e: E)(implicit retrieve: RetrieveInEdge[E]) = retrieve(rep)
 
   }

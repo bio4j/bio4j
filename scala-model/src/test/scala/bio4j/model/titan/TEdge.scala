@@ -14,5 +14,16 @@ trait AnyTEdge extends AnyEdge {
     }
 }
 
-class TEdge[VT <: AnyEdgeType](val tpe: VT) extends AnyTEdge { type Tpe = VT }
+class TEdge[VT <: AnyEdgeType](val tpe: VT) extends AnyTEdge { edge =>
+
+  type Tpe = VT
+  // add a conversion from Iterable[this.Rep]
+
+  // implicit def fromIterToList(iterRep: Iterable[edge.TaggedRep])
+  //   (implicit outList: ListOutType[edge.tpe]): edge.tpe.Out[edge.Rep] = {
+
+  //   // transform using whatever conversion you might have
+  // }
+
+}
 
