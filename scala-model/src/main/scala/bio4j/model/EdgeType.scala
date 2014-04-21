@@ -8,8 +8,8 @@ trait AnyEdgeType {
   val label: String
 
   // TODO add an applicative/monad requirement here
-  type In[_]
-  type Out[_]
+  type In[X]
+  type Out[X]
 
   type SourceType <: AnyVertexType
   val sourceType: SourceType

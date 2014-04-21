@@ -28,11 +28,13 @@ trait AnyTVertex extends AnyVertex {
   // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
   
   import AnyEdge._
-  implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E)(implicit conv: Iterable[e.TaggedRep] => e.tpe.Out[e.Rep]):
+  implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E)(implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]):
   RetrieveOutEdge[e.type] = new RetrieveOutEdge[e.type](e) {
-      def apply(rep: TaggedRep): e.tpe.Out[e.Rep] = {
+
+      def apply(rep: TaggedRep): e.Out[e.Rep] = {
+
         val uh = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[e.TaggedRep]]
-        val hey: e.tpe.Out[e.Rep] = conv(uh)
+        val hey: e.Out[e.Rep] = conv(uh)
         hey
       }
     }

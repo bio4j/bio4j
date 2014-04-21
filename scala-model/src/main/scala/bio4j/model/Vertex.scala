@@ -12,10 +12,10 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
 
   /* Getters for incoming/outgoing edges */
   abstract case class RetrieveOutEdge[E <: AnyEdge](val e: E) {
-    def apply(rep: vertex.TaggedRep): e.tpe.Out[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.Out[e.Rep]
   }
   abstract case class RetrieveInEdge[E <: AnyEdge](val e: E) {
-    def apply(rep: vertex.TaggedRep): e.tpe.In[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.In[e.Rep]
   }
 
   implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)

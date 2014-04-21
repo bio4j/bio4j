@@ -20,7 +20,7 @@ class TEdge[VT <: AnyEdgeType](val tpe: VT) extends AnyTEdge { edge =>
   // add a conversion from Iterable[this.Rep]
 
   // implicit def fromIterToList(iterRep: Iterable[edge.TaggedRep])
-  //   (implicit outList: ListOutType[edge.tpe]): edge.tpe.Out[edge.Rep] = {
+  //   (implicit outList: ListOutType[edge.tpe]): edge.Out[edge.Rep] = {
 
   //   // transform using whatever conversion you might have
   // }
