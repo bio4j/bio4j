@@ -30,7 +30,9 @@ class Edge[ET <: AnyEdgeType](val tpe: ET)
   extends AnyEdge { type Tpe = ET }
 
 object AnyEdge {
-  // type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
+  
+  type ofTypeSmthToMany = AnyEdge { type Tpe <: SmthToMany }
+  type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
   // type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
 
   // type withManyIn = AnyEdge { type In[X] = List[X] }

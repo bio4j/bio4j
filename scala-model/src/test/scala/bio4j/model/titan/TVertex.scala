@@ -26,20 +26,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
   // implicit def iterableToOption[T](i: Iterable[T]): Option[T] = i.headOption
   // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
 
-  
-  import AnyEdge._
-  implicit def unsafeRetrieveManyOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }](e: E) =
-      new RetrieveManyOutEdge(e) {
-
-      def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
-        import scala.collection.JavaConversions._
-        // FIXME: here the (e ->> _) tag is lost. This `.asInstanceOf` doesn't work.
-        val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
-        // it.map(i => e ->> i.asInstanceOf[e.Rep]).toList
-        it.toList
-      }
-    }
-  implicit def unsafeRetrieveOneOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToOne }](e: E) =
+  implicit def unsafeRetrieveOneOutEdge[E <: AnyEdge { type Tpe <: SmthToOne with EdgeFrom[tvertex.Tpe] }](e: E) =
       new RetrieveOneOutEdge(e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
@@ -50,5 +37,28 @@ trait AnyTVertex extends AnyVertex { tvertex =>
     }
 }
 
-class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }
+class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { tvertex =>
 
+  type Tpe = VT 
+
+   import com.tinkerpop.blueprints.Direction
+  import AnyEdge._
+  implicit def unsafeRetrieveManyOutEdge[
+    E <: Singleton with ofTypeSmthToMany with withSourceType[this.Tpe]
+  ](e: E): RetrieveManyOutEdge[E] = new RetrieveManyOutEdge(e) {
+
+      def apply(rep: tvertex.TaggedRep): E#Tpe#Out[E#TaggedRep] = {
+        import scala.collection.JavaConversions._
+        // FIXME: here the (e ->> _) tag is lost. This `.asInstanceOf` doesn't work.
+        val it: java.lang.Iterable[E#TaggedRep] = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[E#TaggedRep]]
+        // it.map(i => e ->> i.asInstanceOf[e.Rep]).toList
+        (it.toList: List[E#TaggedRep])
+      }
+    }
+}
+
+object TVertex {
+
+  
+
+}

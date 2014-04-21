@@ -37,8 +37,10 @@ class titanSuite extends org.scalatest.FunSuite {
     /* same thing */
     assert(hercules.getProperty[Int]("age") === (hercules get age))
 
+    // import demigod._
     // FIXME: it should be `List[battled.TaggedRep]`, but tags are lost...
-    val es: List[battled.Rep] = hercules out battled
+    val es = hercules out battled
+    val uh: List[battled.TaggedRep] = es
     assert((es map { e => (battled ->> e).get(time) }) === List(1, 2, 12))
 
     /* Don't forget to turn the light off: */
