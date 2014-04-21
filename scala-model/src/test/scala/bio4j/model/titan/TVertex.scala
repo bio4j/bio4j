@@ -23,21 +23,20 @@ trait AnyTVertex extends AnyVertex {
 
   /* Retrieving edges */
   import com.tinkerpop.blueprints.Direction
-  // import scala.collection.JavaConversions._
-  // implicit def iterableToOption[T](i: Iterable[T]): Option[T] = i.headOption
-  // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
   
   import AnyEdge._
-  implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E)(implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]):
-  RetrieveOutEdge[e.type] = new RetrieveOutEdge[e.type](e) {
+  implicit def unsafeRetrieveOutEdge[E <: AnyEdge.withSourceType[this.Tpe]](e: E)
+    (implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]): RetrieveOutEdge[e.type] = 
+      new RetrieveOutEdge[e.type](e) {
 
-    def apply(rep: TaggedRep): e.Out[e.Rep] = {
+      def apply(rep: TaggedRep): e.Out[e.Rep] = {
 
-      val uh = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[e.TaggedRep]]
-      val hey: e.Out[e.Rep] = conv(uh)
-      hey
+        import scala.collection.JavaConversions._
+        val uh = iterableAsScalaIterable(rep.getEdges(Direction.OUT, e.tpe.label)).asInstanceOf[Iterable[e.TaggedRep]]
+        val hey: e.Out[e.Rep] = conv(uh)
+        hey
+      }
     }
-  }
 }
 
 class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }

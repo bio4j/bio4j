@@ -25,4 +25,6 @@ object GodsImplementation {
   case object battled      extends TEdge(Battled) 
   case object godLives     extends TEdge(GodLives) 
   case object monsterLives extends TEdge(MonsterLives) 
+
+  // TODO: get vertex by the `type` property
 }
