@@ -19,14 +19,10 @@ trait AnyEdgeType {
 
 }
 
-abstract class EdgeType[
-  I[_], O[_],
+trait EdgeType[
   S <: AnyVertexType, 
   T <: AnyVertexType
 ] extends AnyEdgeType {
-
-  type In[X] = I[X]
-  type Out[X] = O[X]
 
   type SourceType = S
   type TargetType = T
@@ -43,18 +39,34 @@ object AnyEdgeType {
 }
 
 /* Arities */
+sealed trait AnyManyToMany[S <: AnyVertexType, T <: AnyVertexType] extends EdgeType[S,T] {
 
+    type In[X] = List[X]
+    type Out[X] = List[X]
+}
 class ManyToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeType[List, List, S, T]
+  extends AnyManyToMany[S, T] {}
 
 class OneToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeType[Option, List, S, T]
+  extends EdgeType[S, T] {
+
+    type In[X] = Option[X]
+    type Out[X] = List[X]
+  }
 
 class ManyToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeType[List, Option, S, T]
+  extends EdgeType[S, T] {
+
+    type In[X] = List[X]
+    type Out[X] = Option[X]
+  }
 
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeType[Option, Option, S, T]
+  extends EdgeType[S, T] {
+
+    type In[X] = Option[X]
+    type Out[X] = Option[X]
+  }
 
 /* Arrows "DSL" */
 

@@ -31,13 +31,13 @@ trait AnyTVertex extends AnyVertex {
   implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E)(implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]):
   RetrieveOutEdge[e.type] = new RetrieveOutEdge[e.type](e) {
 
-      def apply(rep: TaggedRep): e.Out[e.Rep] = {
+    def apply(rep: TaggedRep): e.Out[e.Rep] = {
 
-        val uh = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[e.TaggedRep]]
-        val hey: e.Out[e.Rep] = conv(uh)
-        hey
-      }
+      val uh = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[e.TaggedRep]]
+      val hey: e.Out[e.Rep] = conv(uh)
+      hey
     }
+  }
 }
 
 class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }
