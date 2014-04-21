@@ -15,7 +15,7 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
     type Edge <: AnyEdge
     val e: Edge
 
-    def apply(rep: vertex.TaggedRep): e.Out[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.tpe.Out[e.TaggedRep]
   }
 
   abstract class RetrieveOutEdge[E <: AnyEdge](val e: E) 
@@ -23,7 +23,7 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
 
   // TODO: same as for Out
   abstract case class RetrieveInEdge[E <: AnyEdge](val e: E) {
-    def apply(rep: vertex.TaggedRep): e.In[e.Rep]
+    def apply(rep: vertex.TaggedRep): e.tpe.In[e.TaggedRep]
   }
 
   implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
@@ -31,8 +31,11 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
 
     // FIXME: existential warnings here again
     def out[E <: AnyEdge.withSourceType[vertex.Tpe]]
-      (e: E)(implicit mkRetriever: E => RetrieveOutEdge[E]) = //: e.Out[e.Rep] = 
-        mkRetriever(e).apply(rep)
+      (e: E)(implicit mkRetriever: E => RetrieveOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {//: e.Out[e.Rep] = 
+      
+      val uh: RetrieveOutEdge[E] = mkRetriever(e)
+      uh.apply(rep)
+    }
 
     // TODO: same as for Out
     def in[E <: AnyEdge.withTargetType[vertex.Tpe]]

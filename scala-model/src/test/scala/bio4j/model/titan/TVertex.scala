@@ -26,14 +26,14 @@ trait AnyTVertex extends AnyVertex {
   
   import AnyEdge._
   implicit def unsafeRetrieveOutEdge[E <: AnyEdge.withSourceType[this.Tpe]](e: E)
-    (implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]): RetrieveOutEdge[e.type] = 
+    (implicit conv: Iterable[e.TaggedRep] => e.tpe.Out[e.TaggedRep]): RetrieveOutEdge[e.type] = 
       new RetrieveOutEdge[e.type](e) {
 
-      def apply(rep: TaggedRep): e.Out[e.Rep] = {
+      def apply(rep: TaggedRep): e.tpe.Out[e.TaggedRep] = {
 
         import scala.collection.JavaConversions._
         val uh = iterableAsScalaIterable(rep.getEdges(Direction.OUT, e.tpe.label)).asInstanceOf[Iterable[e.TaggedRep]]
-        val hey: e.Out[e.Rep] = conv(uh)
+        val hey: e.tpe.Out[e.TaggedRep] = conv(uh)
         hey
       }
     }

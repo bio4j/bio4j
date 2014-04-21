@@ -9,7 +9,7 @@ trait AnyEdgeType {
 
   // TODO add an applicative/monad requirement here
   type In[X]
-  type Out[X]
+  type Out[+X]
 
   type SourceType <: AnyVertexType
   val sourceType: SourceType
@@ -41,28 +41,28 @@ object AnyEdgeType {
 /* Arities */
 sealed trait AnyManyToMany[S <: AnyVertexType, T <: AnyVertexType] extends EdgeType[S,T] {
     type In[X] = List[X]
-    type Out[X] = List[X]
+    type Out[+X] = List[X]
 }
 class ManyToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
   extends AnyManyToMany[S, T]
 
 sealed trait AnyOneToMany[S <: AnyVertexType, T <: AnyVertexType] extends EdgeType[S, T] {
     type In[X] = Option[X]
-    type Out[X] = List[X]
+    type Out[+X] = List[X]
   }
 class OneToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
   extends AnyOneToMany[S, T]
 
 sealed trait AnyManyToOne[S <: AnyVertexType, T <: AnyVertexType] extends EdgeType[S, T] {
     type In[X] = List[X]
-    type Out[X] = Option[X]
+    type Out[+X] = Option[X]
   }
 class ManyToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
   extends AnyManyToOne[S, T]
 
 sealed trait AnyOneToOne[S <: AnyVertexType, T <: AnyVertexType] extends EdgeType[S, T] {
     type In[X] = Option[X]
-    type Out[X] = Option[X]
+    type Out[+X] = Option[X]
   }
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
   extends AnyOneToOne[S, T]
