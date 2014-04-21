@@ -3,7 +3,7 @@ package bio4j.model.test.titan
 import bio4j.model._
 import com.thinkaurelius.titan.core.TitanVertex
 
-trait AnyTVertex extends AnyVertex {
+trait AnyTVertex extends AnyVertex { tvertex =>
 
   type Rep = TitanVertex
 
@@ -23,18 +23,29 @@ trait AnyTVertex extends AnyVertex {
 
   /* Retrieving edges */
   import com.tinkerpop.blueprints.Direction
+  // implicit def iterableToOption[T](i: Iterable[T]): Option[T] = i.headOption
+  // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
+
   
   import AnyEdge._
-  implicit def unsafeRetrieveOutEdge[E <: AnyEdge.withSourceType[this.Tpe]](e: E)
-    (implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]): RetrieveOutEdge[e.type] = 
-      new RetrieveOutEdge[e.type](e) {
+  implicit def unsafeRetrieveManyOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }](e: E) =
+      new RetrieveManyOutEdge(e) {
 
-      def apply(rep: TaggedRep): e.Out[e.Rep] = {
+      def apply(rep: tvertex.TaggedRep): e.Out[e.TaggedRep] = {
+        import scala.collection.JavaConversions._
+        // FIXME: here the (e ->> _) tag is lost. This `.asInstanceOf` doesn't work.
+        val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
+        // it.map(i => e ->> i.asInstanceOf[e.Rep]).toList
+        it.toList
+      }
+    }
+  implicit def unsafeRetrieveOneOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToOne }](e: E) =
+      new RetrieveOneOutEdge(e) {
 
+      def apply(rep: tvertex.TaggedRep): e.Out[e.TaggedRep] = {
         import scala.collection.JavaConversions._
         val uh = iterableAsScalaIterable(rep.getEdges(Direction.OUT, e.tpe.label)).asInstanceOf[Iterable[e.TaggedRep]]
-        val hey: e.Out[e.Rep] = conv(uh)
-        hey
+        uh.headOption
       }
     }
 }

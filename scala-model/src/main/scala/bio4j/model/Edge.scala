@@ -9,8 +9,8 @@ trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
   type SourceType = tpe.SourceType
   type TargetType = tpe.TargetType
 
-  type Out[X] = tpe.Out[X]
-  type In[X] = tpe.In[X]
+  type Out[+X] = tpe.Out[X]
+  type In[+X] = tpe.In[X]
 
   /* Get source/target from this representation */
   abstract class GetSource[S <: AnyVertex.ofType[SourceType]](val source: S) {
@@ -33,6 +33,12 @@ class Edge[ET <: AnyEdgeType](val tpe: ET)
   extends AnyEdge { type Tpe = ET }
 
 object AnyEdge {
-  type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
-  type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
+  // type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
+  // type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
+
+  // type withManyIn = AnyEdge { type In[X] = List[X] }
+  // type  withOneIn = AnyEdge { type In[X] = Option[X] }
+
+  // type withManyOut = AnyEdge { type Out[X] = List[X] }
+  // type  withOneOut = AnyEdge { type Out[X] = Option[X] }
 }

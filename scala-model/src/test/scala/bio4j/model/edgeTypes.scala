@@ -19,8 +19,4 @@ object edgeTypes {
     implicit val y = this has validUntil
   }
 
-  // pretty cool DSL
-  implicit val thisIsSoCoolItScaresMe = many(User) -- "owns" --> one(Org)
-  implicit val manymanymany = many(User) -- "member of" --> many(Org)
-
 }

@@ -82,10 +82,10 @@ object GodsSchema {
   */
 
   /* a God can have moster pets */
-  case object Pet extends OneToMany(God, Monster) // no need to change the label here
+  case object Pet extends OneToMany(God, Monster) { override val label = "pet" }
 
   /* Demigods battle with Monsters */
-  case object Battled extends ManyToMany(Demigod, Monster)
+  case object Battled extends ManyToMany(Demigod, Monster) { override val label = "battled" }
   implicit val Battled_time  = Battled has time
   implicit val Battled_place = Battled has place
  
