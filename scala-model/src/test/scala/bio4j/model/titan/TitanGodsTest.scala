@@ -39,7 +39,7 @@ class titanSuite extends org.scalatest.FunSuite {
 
     // FIXME: it should be `List[battled.TaggedRep]`, but tags are lost...
     val es: List[battled.Rep] = hercules out battled
-    println(es map { e => (battled ->> e).get(time) })
+    assert((es map { e => (battled ->> e).get(time) }) === List(1, 2, 12))
 
     /* Don't forget to turn the light off: */
     g.shutdown

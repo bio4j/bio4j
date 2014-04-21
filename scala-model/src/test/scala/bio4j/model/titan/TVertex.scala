@@ -31,7 +31,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
   implicit def unsafeRetrieveManyOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }](e: E) =
       new RetrieveManyOutEdge(e) {
 
-      def apply(rep: tvertex.TaggedRep): e.Out[e.TaggedRep] = {
+      def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
         import scala.collection.JavaConversions._
         // FIXME: here the (e ->> _) tag is lost. This `.asInstanceOf` doesn't work.
         val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
@@ -42,7 +42,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
   implicit def unsafeRetrieveOneOutEdge[E <: AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToOne }](e: E) =
       new RetrieveOneOutEdge(e) {
 
-      def apply(rep: tvertex.TaggedRep): e.Out[e.TaggedRep] = {
+      def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
         import scala.collection.JavaConversions._
         val uh = iterableAsScalaIterable(rep.getEdges(Direction.OUT, e.tpe.label)).asInstanceOf[Iterable[e.TaggedRep]]
         uh.headOption

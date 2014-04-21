@@ -9,9 +9,6 @@ trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
   type SourceType = tpe.SourceType
   type TargetType = tpe.TargetType
 
-  type Out[+X] = tpe.Out[X]
-  type In[+X] = tpe.In[X]
-
   /* Get source/target from this representation */
   abstract class GetSource[S <: AnyVertex.ofType[SourceType]](val source: S) {
     def apply(edgeRep: edge.TaggedRep): source.TaggedRep
