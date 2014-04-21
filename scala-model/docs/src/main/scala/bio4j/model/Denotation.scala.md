@@ -2,47 +2,102 @@
 ```scala
 package bio4j.model
 
-trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
-
-  // NOTE: if I remove this from here type inference fails in tests. Most likely a bug
-  type Tpe <: AnyEdgeType
+import shapeless.record._
 ```
 
-Source-Edge-Target types. Looks like we need to add them here to guide type inference; tests fail otherwise
+
+This trait represents a mapping between 
+
+- members `Tpe` of a universe of types `TYPE`
+- and `Rep` a type meant to be a denotation of `Tpe` thus the name
+
+Tagging is used for being able to operate on `Rep` values knowing what they are denotating.
+
 
 ```scala
-  type SourceType = tpe.SourceType
-  type TargetType = tpe.TargetType
-
-  type Out[X] = tpe.Out[X]
-  type In[X] = tpe.In[X]
+trait AnyDenotation { self =>
 ```
 
-Get source/target from this representation
+The base type for the types that this thing denotes
 
 ```scala
-  abstract class GetSource[S <: AnyVertex.ofType[SourceType]](val source: S) {
-    def apply(edgeRep: edge.TaggedRep): source.TaggedRep
-  }
-  abstract class GetTarget[T <: AnyVertex.ofType[TargetType]](val target: T) {
-    def apply(edgeRep: edge.TaggedRep): target.TaggedRep
+  type TYPE
+  type Tpe <: TYPE
+  val tpe: Tpe
+
+  type Rep
+
+  import Tagged._
+  type TaggedRep = TaggedWith[self.type]
+  def ->>(r: Rep): TaggedWith[self.type] = tagWith[self.type](r)
+```
+
+
+
+#### properties
+
+As we are using this for edges and vertices, we have here the corresponding property logic. It would be good to split this into a different trait, maybe with a self bound on `AnyDenotation`; note that properties themselves should be instances of `AnyDenotation` but we don't want them to have properties.
+
+
+Read a property from this representation
+
+```scala
+  import SmthHasProperty._
+
+  trait AnyGetProperty {
+    type Property <: AnyProperty
+    val p: Property
+
+    def apply(rep: self.TaggedRep): p.Rep
   }
 
-  implicit def edgeOps(edgeRep: edge.TaggedRep) = EdgeOps(edgeRep)
-  case class   EdgeOps(edgeRep: edge.TaggedRep) {
+  abstract class GetProperty[P <: AnyProperty](val p: P) 
+      extends AnyGetProperty { type Property = P }
 
-    def source[S <: AnyVertex.ofType[SourceType]](implicit getter: GetSource[S]) = getter(edgeRep)
+  implicit def propertyOps(rep: self.TaggedRep): PropertyOps = PropertyOps(rep)
+  case class   PropertyOps(rep: self.TaggedRep) {
 
-    def target[T <: AnyVertex.ofType[TargetType]](implicit getter: GetTarget[T]) = getter(edgeRep)
+    def get[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
+      (implicit mkGetter: P => GetProperty[P]): P#Rep = mkGetter(p).apply(rep)
+
   }
+```
+
+If have just an independent getter for a particular property:
+
+```scala
+  implicit def idGetter[P <: AnyProperty: PropertyOf[self.Tpe]#is](p: P)
+      (implicit getter: GetProperty[P]) = getter
+
 }
 
-class Edge[ET <: AnyEdgeType](val tpe: ET) 
-  extends AnyEdge { type Tpe = ET }
+trait Denotation[T] extends AnyDenotation { type TYPE = T }
 
-object AnyEdge {
-  type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
-  type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
+trait AnyDenotationTag {
+  type Denotation <: AnyDenotation
+  type DenotedType = Denotation#Tpe
+}
+
+trait DenotationTag[D <: AnyDenotation] extends AnyDenotationTag with KeyTag[D, D#Rep] {
+  type Denotation = D
+}
+```
+
+
+tagging functionality
+
+
+```scala
+object Tagged {
+
+  type TaggedWith[D <: AnyDenotation] = D#Rep with DenotationTag[D]
+
+  def tagWith[D <: AnyDenotation] = new TagBuilder[D]
+
+  class TagBuilder[D <: AnyDenotation] {
+    def apply(dr : D#Rep): TaggedWith[D] = dr.asInstanceOf[TaggedWith[D]]
+  }
+
 }
 
 ```
