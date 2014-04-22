@@ -3,11 +3,10 @@
 package bio4j.model.test.titan
 
 import bio4j.model._
-import com.thinkaurelius.titan.core.TitanVertex
 
-trait AnyTVertex extends AnyVertex {
+trait AnyTVertex extends AnyVertex { tvertex =>
 
-  type Rep = TitanVertex
+  type Rep = com.thinkaurelius.titan.core.TitanVertex
 ```
 
 Reading any property from a TitanVertex
@@ -28,31 +27,72 @@ Getting a property from any TitanVertex
     new GetProperty[P](p) {
       def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
     }
+
+  // TODO: provide ReadFrom for %:
+
 ```
 
 Retrieving edges
 
 ```scala
   import com.tinkerpop.blueprints.Direction
-  // import scala.collection.JavaConversions._
-  // implicit def iterableToOption[T](i: Iterable[T]): Option[T] = i.headOption
-  // implicit def   iterableToList[T](i: Iterable[T]): List[T] = i.toList
-  
-  import AnyEdge._
-  implicit def unsafeRetrieveOutEdge[E <: AnyEdge](e: E)(implicit conv: Iterable[e.TaggedRep] => e.Out[e.Rep]):
-  RetrieveOutEdge[e.type] = new RetrieveOutEdge[e.type](e) {
+  import scala.collection.JavaConversions._
 
-    def apply(rep: TaggedRep): e.Out[e.Rep] = {
+  // TODO: when we get all edges with the given label, they can come from vertices with the wrong type
 
-      val uh = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[Iterable[e.TaggedRep]]
-      val hey: e.Out[e.Rep] = conv(uh)
-      hey
+```
+
+OUT
+
+```scala
+  implicit def unsafeRetrieveOneOutEdge[
+    E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToOne }
+  ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
+
+      def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
+        val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
+        it.headOption: Option[e.TaggedRep]
+      }
     }
-  }
+
+  implicit def unsafeRetrieveManyOutEdge[
+    E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }
+  ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
+
+      def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
+        val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
+        it.toList: List[e.TaggedRep]
+      }
+    }
+```
+
+IN
+
+```scala
+  implicit def unsafeRetrieveOneInEdge[
+    E <: Singleton with AnyEdge { type Tpe <: EdgeTo[tvertex.Tpe] with OneToSmth }
+  ](e: E): RetrieveInEdge[E] = new RetrieveInEdge[E](e) {
+
+      def apply(rep: tvertex.TaggedRep): e.tpe.In[e.TaggedRep] = {
+        val it = rep.getEdges(Direction.IN, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
+        it.headOption: Option[e.TaggedRep]
+      }
+    }
+
+  implicit def unsafeRetrieveManyInEdge[
+    E <: Singleton with AnyEdge { type Tpe <: EdgeTo[tvertex.Tpe] with ManyToSmth }
+  ](e: E): RetrieveInEdge[E] = new RetrieveInEdge[E](e) {
+
+      def apply(rep: tvertex.TaggedRep): e.tpe.In[e.TaggedRep] = {
+        val it = rep.getEdges(Direction.IN, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
+        it.toList: List[e.TaggedRep]
+      }
+    }
+
 }
 
-class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = VT }
-
+class TVertex[VT <: AnyVertexType](val tpe: VT) 
+  extends AnyTVertex { type Tpe = VT }
 
 ```
 
@@ -62,45 +102,45 @@ class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { type Tpe = 
 ### Index
 
 + src
-  + test
-    + scala
-      + bio4j
-        + model
-          + [properties.scala][test/scala/bio4j/model/properties.scala]
-          + [edges.scala][test/scala/bio4j/model/edges.scala]
-          + [vertices.scala][test/scala/bio4j/model/vertices.scala]
-          + titan
-            + [TitanGodsTest.scala][test/scala/bio4j/model/titan/TitanGodsTest.scala]
-            + [TEdge.scala][test/scala/bio4j/model/titan/TEdge.scala]
-            + [TVertex.scala][test/scala/bio4j/model/titan/TVertex.scala]
-            + [godsImplementation.scala][test/scala/bio4j/model/titan/godsImplementation.scala]
-            + [godsSchema.scala][test/scala/bio4j/model/titan/godsSchema.scala]
-          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
-          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
   + main
     + scala
       + bio4j
         + model
           + [Denotation.scala][main/scala/bio4j/model/Denotation.scala]
-          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
-          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
-          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
           + [Edge.scala][main/scala/bio4j/model/Edge.scala]
+          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
           + [Property.scala][main/scala/bio4j/model/Property.scala]
+          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
+          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
+  + test
+    + scala
+      + bio4j
+        + model
+          + [edges.scala][test/scala/bio4j/model/edges.scala]
+          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
+          + [properties.scala][test/scala/bio4j/model/properties.scala]
+          + titan
+            + [godsImplementation.scala][test/scala/bio4j/model/titan/godsImplementation.scala]
+            + [GodsSchema.scala][test/scala/bio4j/model/titan/GodsSchema.scala]
+            + [TEdge.scala][test/scala/bio4j/model/titan/TEdge.scala]
+            + [TitanGodsTest.scala][test/scala/bio4j/model/titan/TitanGodsTest.scala]
+            + [TVertex.scala][test/scala/bio4j/model/titan/TVertex.scala]
+          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [vertices.scala][test/scala/bio4j/model/vertices.scala]
 
-[test/scala/bio4j/model/properties.scala]: ../properties.scala.md
-[test/scala/bio4j/model/edges.scala]: ../edges.scala.md
-[test/scala/bio4j/model/vertices.scala]: ../vertices.scala.md
-[test/scala/bio4j/model/titan/TitanGodsTest.scala]: TitanGodsTest.scala.md
-[test/scala/bio4j/model/titan/TEdge.scala]: TEdge.scala.md
-[test/scala/bio4j/model/titan/TVertex.scala]: TVertex.scala.md
-[test/scala/bio4j/model/titan/godsImplementation.scala]: godsImplementation.scala.md
-[test/scala/bio4j/model/titan/godsSchema.scala]: godsSchema.scala.md
-[test/scala/bio4j/model/vertexTypes.scala]: ../vertexTypes.scala.md
-[test/scala/bio4j/model/edgeTypes.scala]: ../edgeTypes.scala.md
 [main/scala/bio4j/model/Denotation.scala]: ../../../../../main/scala/bio4j/model/Denotation.scala.md
-[main/scala/bio4j/model/EdgeType.scala]: ../../../../../main/scala/bio4j/model/EdgeType.scala.md
-[main/scala/bio4j/model/VertexType.scala]: ../../../../../main/scala/bio4j/model/VertexType.scala.md
-[main/scala/bio4j/model/Vertex.scala]: ../../../../../main/scala/bio4j/model/Vertex.scala.md
 [main/scala/bio4j/model/Edge.scala]: ../../../../../main/scala/bio4j/model/Edge.scala.md
+[main/scala/bio4j/model/EdgeType.scala]: ../../../../../main/scala/bio4j/model/EdgeType.scala.md
 [main/scala/bio4j/model/Property.scala]: ../../../../../main/scala/bio4j/model/Property.scala.md
+[main/scala/bio4j/model/Vertex.scala]: ../../../../../main/scala/bio4j/model/Vertex.scala.md
+[main/scala/bio4j/model/VertexType.scala]: ../../../../../main/scala/bio4j/model/VertexType.scala.md
+[test/scala/bio4j/model/edges.scala]: ../edges.scala.md
+[test/scala/bio4j/model/edgeTypes.scala]: ../edgeTypes.scala.md
+[test/scala/bio4j/model/properties.scala]: ../properties.scala.md
+[test/scala/bio4j/model/titan/godsImplementation.scala]: godsImplementation.scala.md
+[test/scala/bio4j/model/titan/GodsSchema.scala]: GodsSchema.scala.md
+[test/scala/bio4j/model/titan/TEdge.scala]: TEdge.scala.md
+[test/scala/bio4j/model/titan/TitanGodsTest.scala]: TitanGodsTest.scala.md
+[test/scala/bio4j/model/titan/TVertex.scala]: TVertex.scala.md
+[test/scala/bio4j/model/vertexTypes.scala]: ../vertexTypes.scala.md
+[test/scala/bio4j/model/vertices.scala]: ../vertices.scala.md

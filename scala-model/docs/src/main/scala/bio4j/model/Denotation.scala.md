@@ -108,45 +108,45 @@ object Tagged {
 ### Index
 
 + src
-  + test
-    + scala
-      + bio4j
-        + model
-          + [properties.scala][test/scala/bio4j/model/properties.scala]
-          + [edges.scala][test/scala/bio4j/model/edges.scala]
-          + [vertices.scala][test/scala/bio4j/model/vertices.scala]
-          + titan
-            + [TitanGodsTest.scala][test/scala/bio4j/model/titan/TitanGodsTest.scala]
-            + [TEdge.scala][test/scala/bio4j/model/titan/TEdge.scala]
-            + [TVertex.scala][test/scala/bio4j/model/titan/TVertex.scala]
-            + [godsImplementation.scala][test/scala/bio4j/model/titan/godsImplementation.scala]
-            + [godsSchema.scala][test/scala/bio4j/model/titan/godsSchema.scala]
-          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
-          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
   + main
     + scala
       + bio4j
         + model
           + [Denotation.scala][main/scala/bio4j/model/Denotation.scala]
-          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
-          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
-          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
           + [Edge.scala][main/scala/bio4j/model/Edge.scala]
+          + [EdgeType.scala][main/scala/bio4j/model/EdgeType.scala]
           + [Property.scala][main/scala/bio4j/model/Property.scala]
+          + [Vertex.scala][main/scala/bio4j/model/Vertex.scala]
+          + [VertexType.scala][main/scala/bio4j/model/VertexType.scala]
+  + test
+    + scala
+      + bio4j
+        + model
+          + [edges.scala][test/scala/bio4j/model/edges.scala]
+          + [edgeTypes.scala][test/scala/bio4j/model/edgeTypes.scala]
+          + [properties.scala][test/scala/bio4j/model/properties.scala]
+          + titan
+            + [godsImplementation.scala][test/scala/bio4j/model/titan/godsImplementation.scala]
+            + [GodsSchema.scala][test/scala/bio4j/model/titan/GodsSchema.scala]
+            + [TEdge.scala][test/scala/bio4j/model/titan/TEdge.scala]
+            + [TitanGodsTest.scala][test/scala/bio4j/model/titan/TitanGodsTest.scala]
+            + [TVertex.scala][test/scala/bio4j/model/titan/TVertex.scala]
+          + [vertexTypes.scala][test/scala/bio4j/model/vertexTypes.scala]
+          + [vertices.scala][test/scala/bio4j/model/vertices.scala]
 
-[test/scala/bio4j/model/properties.scala]: ../../../../test/scala/bio4j/model/properties.scala.md
-[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
-[test/scala/bio4j/model/vertices.scala]: ../../../../test/scala/bio4j/model/vertices.scala.md
-[test/scala/bio4j/model/titan/TitanGodsTest.scala]: ../../../../test/scala/bio4j/model/titan/TitanGodsTest.scala.md
-[test/scala/bio4j/model/titan/TEdge.scala]: ../../../../test/scala/bio4j/model/titan/TEdge.scala.md
-[test/scala/bio4j/model/titan/TVertex.scala]: ../../../../test/scala/bio4j/model/titan/TVertex.scala.md
-[test/scala/bio4j/model/titan/godsImplementation.scala]: ../../../../test/scala/bio4j/model/titan/godsImplementation.scala.md
-[test/scala/bio4j/model/titan/godsSchema.scala]: ../../../../test/scala/bio4j/model/titan/godsSchema.scala.md
-[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
-[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
 [main/scala/bio4j/model/Denotation.scala]: Denotation.scala.md
-[main/scala/bio4j/model/EdgeType.scala]: EdgeType.scala.md
-[main/scala/bio4j/model/VertexType.scala]: VertexType.scala.md
-[main/scala/bio4j/model/Vertex.scala]: Vertex.scala.md
 [main/scala/bio4j/model/Edge.scala]: Edge.scala.md
+[main/scala/bio4j/model/EdgeType.scala]: EdgeType.scala.md
 [main/scala/bio4j/model/Property.scala]: Property.scala.md
+[main/scala/bio4j/model/Vertex.scala]: Vertex.scala.md
+[main/scala/bio4j/model/VertexType.scala]: VertexType.scala.md
+[test/scala/bio4j/model/edges.scala]: ../../../../test/scala/bio4j/model/edges.scala.md
+[test/scala/bio4j/model/edgeTypes.scala]: ../../../../test/scala/bio4j/model/edgeTypes.scala.md
+[test/scala/bio4j/model/properties.scala]: ../../../../test/scala/bio4j/model/properties.scala.md
+[test/scala/bio4j/model/titan/godsImplementation.scala]: ../../../../test/scala/bio4j/model/titan/godsImplementation.scala.md
+[test/scala/bio4j/model/titan/GodsSchema.scala]: ../../../../test/scala/bio4j/model/titan/GodsSchema.scala.md
+[test/scala/bio4j/model/titan/TEdge.scala]: ../../../../test/scala/bio4j/model/titan/TEdge.scala.md
+[test/scala/bio4j/model/titan/TitanGodsTest.scala]: ../../../../test/scala/bio4j/model/titan/TitanGodsTest.scala.md
+[test/scala/bio4j/model/titan/TVertex.scala]: ../../../../test/scala/bio4j/model/titan/TVertex.scala.md
+[test/scala/bio4j/model/vertexTypes.scala]: ../../../../test/scala/bio4j/model/vertexTypes.scala.md
+[test/scala/bio4j/model/vertices.scala]: ../../../../test/scala/bio4j/model/vertices.scala.md
