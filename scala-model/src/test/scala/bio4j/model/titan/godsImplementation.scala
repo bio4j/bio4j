@@ -17,14 +17,13 @@ object GodsImplementation {
   /*
     ### Edges
   */
-  case object titanFather  extends TEdge(TitanFather)
-  case object godFather    extends TEdge(GodFather)
-  case object humanMother  extends TEdge(HumanMother)
-  case object godBrother   extends TEdge(GodBrother)
-  case object pet          extends TEdge(Pet)
-  case object battled      extends TEdge(Battled) 
-  case object godLives     extends TEdge(GodLives) 
-  case object monsterLives extends TEdge(MonsterLives) 
+  case object titanFather  extends TEdge(god,     TitanFather,  titan)
+  case object godFather    extends TEdge(demigod, GodFather,    god)
+  case object humanMother  extends TEdge(demigod, HumanMother,  human)
+  case object brother      extends TEdge(god,     Brother,      god)
+  case object pet          extends TEdge(god,     Pet,          monster)
+  case object battled      extends TEdge(demigod, Battled,      monster)
+  case object godLives     extends TEdge(god,     GodLives,     location)
+  case object monsterLives extends TEdge(monster, MonsterLives, location)
 
-  // TODO: get vertex by the `type` property
 }

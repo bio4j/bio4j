@@ -8,11 +8,11 @@ trait AnyVertexType {  val label: String  }
   A convenience class for declaring types as case objects; just do
 
   ``` scala
-  case object User extends VertexType
+  case object User extends LiteralType
   ```
 */
-class VertexType  extends AnyVertexType { val label = this.toString }
 class LiteralType extends AnyVertexType { val label = this.toString }
+class VertexType(val label: String) extends AnyVertexType
 
 object AnyVertexType {
 

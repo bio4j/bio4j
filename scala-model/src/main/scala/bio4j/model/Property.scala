@@ -38,8 +38,6 @@ object AnyProperty {
 
 }
 
-
-
 /* Evidence that an arbitrary type `Smth` has property `Property` */
 trait SmthHasProperty {
   type Smth

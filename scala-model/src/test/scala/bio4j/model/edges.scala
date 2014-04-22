@@ -88,7 +88,12 @@ class EdgeSuite extends org.scalatest.FunSuite {
     assert(m.get(since) === 2349965)
     assert(m.get(validUntil) === 38724987)
 
-    implicit val weForgotToImportIt = memberOf.tpe has isPublic
+    // NOTE: this works in scala-2.10, but not in scala-2.11:
+    // implicit val weForgotToImportIt = memberOf.tpe has isPublic
+    // these two work in both:
+    // implicit val weForgotToImportIt = (memberOf.tpe: memberOf.Tpe) has isPublic
+    implicit val weForgotToImportIt = MemberOf has isPublic
+
     implicit object readIsPublic extends GetProperty(isPublic) {
       def apply(rep: memberOf.TaggedRep) = rep.isPublic
     }

@@ -29,7 +29,7 @@ object AnyEdgeType {
 trait EdgeFrom[S <: AnyVertexType] extends AnyEdgeType { type SourceType = S }
 trait   EdgeTo[T <: AnyVertexType] extends AnyEdgeType { type TargetType = T }
 
-trait EdgeType[S <: AnyVertexType, T <: AnyVertexType] extends EdgeFrom[S] with EdgeTo[T]
+// trait EdgeType[S <: AnyVertexType, T <: AnyVertexType] extends EdgeFrom[S] with EdgeTo[T]
 
 /* Arities */
 trait SmthToMany extends AnyEdgeType { type Out[+X] = List[X] }
@@ -37,17 +37,21 @@ trait  SmthToOne extends AnyEdgeType { type Out[+X] = Option[X] }
 trait ManyToSmth extends AnyEdgeType { type  In[+X] = List[X] }
 trait  OneToSmth extends AnyEdgeType { type  In[+X] = Option[X] }
 
-class ManyToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToMany { val label = this.toString }
+class ManyToMany[S <: AnyVertexType, T <: AnyVertexType]
+  (val sourceType: S, val label: String, val targetType: T) 
+    extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToMany
 
-class OneToMany[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToMany { val label = this.toString }
+class OneToMany[S <: AnyVertexType, T <: AnyVertexType]
+  (val sourceType: S, val label: String, val targetType: T) 
+    extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToMany
 
-class ManyToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToOne { val label = this.toString }
+class ManyToOne[S <: AnyVertexType, T <: AnyVertexType]
+  (val sourceType: S, val label: String, val targetType: T) 
+    extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToOne
 
-class OneToOne[S <: AnyVertexType, T <: AnyVertexType](val sourceType: S, val targetType: T) 
-  extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToOne { val label = this.toString }
+class OneToOne[S <: AnyVertexType, T <: AnyVertexType]
+  (val sourceType: S, val label: String, val targetType: T) 
+    extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToOne
 
 
 /* Properties */
