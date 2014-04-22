@@ -12,22 +12,13 @@ trait AnyVertexType {  val label: String  }
   ```
 */
 class LiteralType extends AnyVertexType { val label = this.toString }
+
 class VertexType(val label: String) extends AnyVertexType
 
 object AnyVertexType {
-
-  implicit class VertexTypeOps[E <: AnyVertexType](val vertexType: E) {
-
-    def has[P <: AnyProperty](property: P): (E VertexTypeHasProperty P) = VertexTypeHasProperty(vertexType, property)
-
-  }
-
+  implicit def vertexTypeOps[VT <: AnyVertexType](et: VT) = VertexTypeOps(et)
 }
 
-/* Witness for an Vertex of type V having a property of type P */
-case class VertexTypeHasProperty[
-  V <: AnyVertexType,
-  P <: AnyProperty
-]( val smth:  V,  val property:  P) extends SmthHasProperty {
-  type Smth = V; type Property = P
+case class VertexTypeOps[VT <: AnyVertexType](val vt: VT) {
+  def has[P <: AnyProperty](p: P) = HasProperty[VT, P](vt, p)
 }

@@ -37,7 +37,6 @@ trait AnyVertex extends Denotation[AnyVertexType] with HasProperties { vertex =>
   case class   VertexOps(rep: vertex.TaggedRep) {
 
     def out[E <: Singleton with AnyEdge { type Tpe <: From[vertex.Tpe] }]
-    // def out[E <: Singleton with AnyEdge.withSourceType[vertex.Tpe]]
       (e: E)(implicit mkRetriever: E => RetrieveOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {
         val retriever = mkRetriever(e)
         retriever(rep)
@@ -59,3 +58,4 @@ abstract class Vertex[VT <: AnyVertexType](val tpe: VT)
 object AnyVertex {
   type ofType[VT <: AnyVertexType] = AnyVertex { type Tpe = VT }
 }
+

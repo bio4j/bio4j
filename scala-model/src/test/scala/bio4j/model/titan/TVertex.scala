@@ -30,7 +30,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
 
   /* OUT */
   implicit def unsafeRetrieveOneOutEdge[
-    E <: Singleton with AnyEdge { type Tpe <: From[tvertex.Tpe] with SmthToOne }
+    E <: Singleton with AnyEdge { type Tpe <: From[tvertex.Tpe] with OneOut }
   ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
@@ -41,7 +41,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
     }
 
   implicit def unsafeRetrieveManyOutEdge[
-    E <: Singleton with AnyEdge { type Tpe <: From[tvertex.Tpe] with SmthToMany }
+    E <: Singleton with AnyEdge { type Tpe <: From[tvertex.Tpe] with ManyOut }
   ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
@@ -52,7 +52,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
 
   /* IN */
   implicit def unsafeRetrieveOneInEdge[
-    E <: Singleton with AnyEdge { type Tpe <: To[tvertex.Tpe] with OneToSmth }
+    E <: Singleton with AnyEdge { type Tpe <: To[tvertex.Tpe] with OneIn }
   ](e: E): RetrieveInEdge[E] = new RetrieveInEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.In[e.TaggedRep] = {
@@ -62,7 +62,7 @@ trait AnyTVertex extends AnyVertex { tvertex =>
     }
 
   implicit def unsafeRetrieveManyInEdge[
-    E <: Singleton with AnyEdge { type Tpe <: To[tvertex.Tpe] with ManyToSmth }
+    E <: Singleton with AnyEdge { type Tpe <: To[tvertex.Tpe] with ManyIn }
   ](e: E): RetrieveInEdge[E] = new RetrieveInEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.In[e.TaggedRep] = {

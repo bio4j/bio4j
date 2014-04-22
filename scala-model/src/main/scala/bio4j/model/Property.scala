@@ -47,6 +47,12 @@ trait SmthHasProperty {
   val property: Property
 }
 
+case class HasProperty[S, P <: AnyProperty]
+  (val smth: S, val property: P) extends SmthHasProperty {
+    type Smth = S
+    type Property = P
+}
+
 object SmthHasProperty {
   type PropertyOf[S] = { 
     type is[P <: AnyProperty] = SmthHasProperty { type Smth = S; type Property = P }

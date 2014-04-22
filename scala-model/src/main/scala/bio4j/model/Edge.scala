@@ -25,3 +25,9 @@ trait AnyEdge extends Denotation[AnyEdgeType] with HasProperties { edge =>
 
 class Edge[ET <: AnyEdgeType](val tpe: ET) 
   extends AnyEdge { type Tpe = ET }
+
+object AnyEdge {
+  import AnyEdgeType._
+
+  type -->[S <: AnyVertexType, T <: AnyVertexType] = AnyEdge { type Tpe <: S ==> T }
+}
