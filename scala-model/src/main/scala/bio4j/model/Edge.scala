@@ -31,8 +31,12 @@ class Edge[ET <: AnyEdgeType](val tpe: ET)
 
 object AnyEdge {
   
-  type ofTypeSmthToMany = AnyEdge { type Tpe <: SmthToMany }
-  type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
+  // NOTE: Sorry, I try to avoid these synonims if possible, 
+  // because they are not very flexible and there are a lot of them for each case.
+  // So far everything works with [E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }]
+
+  // type ofTypeSmthToMany = AnyEdge { type Tpe <: SmthToMany }
+  // type withSourceType[VT <: AnyVertexType] = AnyEdge { type SourceType = VT }
   // type withTargetType[VT <: AnyVertexType] = AnyEdge { type TargetType = VT }
 
   // type withManyIn = AnyEdge { type In[X] = List[X] }

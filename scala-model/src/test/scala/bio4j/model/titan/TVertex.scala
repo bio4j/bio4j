@@ -21,12 +21,6 @@ trait AnyTVertex extends AnyVertex { tvertex =>
       def apply(rep: TaggedRep): p.Rep = rep.getProperty[p.Rep](p.label)
     }
 
-}
-
-class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { tvertex =>
-
-  type Tpe = VT 
-
   /* Retrieving edges */
   import AnyEdge._
   import com.tinkerpop.blueprints.Direction
@@ -34,7 +28,7 @@ class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { tvertex =>
 
   implicit def unsafeRetrieveOneOutEdge[
     E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToOne }
-  ](e: E) = new RetrieveOneOutEdge[E](e) {
+  ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
         val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
@@ -43,8 +37,8 @@ class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { tvertex =>
     }
 
   implicit def unsafeRetrieveManyOutEdge[
-    E <: Singleton with ofTypeSmthToMany with withSourceType[this.Tpe]
-  ](e: E) = new RetrieveManyOutEdge[E](e) {
+    E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[tvertex.Tpe] with SmthToMany }
+  ](e: E): RetrieveOutEdge[E] = new RetrieveOutEdge[E](e) {
 
       def apply(rep: tvertex.TaggedRep): e.tpe.Out[e.TaggedRep] = {
         val it = rep.getEdges(Direction.OUT, e.tpe.label).asInstanceOf[java.lang.Iterable[e.TaggedRep]]
@@ -52,3 +46,6 @@ class TVertex[VT <: AnyVertexType](val tpe: VT) extends AnyTVertex { tvertex =>
       }
     }
 }
+
+class TVertex[VT <: AnyVertexType](val tpe: VT) 
+  extends AnyTVertex { type Tpe = VT }

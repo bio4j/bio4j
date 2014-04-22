@@ -18,10 +18,7 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
     def apply(rep: vertex.TaggedRep): e.tpe.Out[e.TaggedRep]
   }
 
-  abstract class RetrieveManyOutEdge[E <: Singleton with AnyEdge { type Tpe <: SmthToMany }](val e: E) 
-      extends AnyRetrieveOutEdge { type Edge = E }
-
-  abstract class RetrieveOneOutEdge[E <: Singleton with AnyEdge { type Tpe <: SmthToOne }](val e: E) 
+  abstract class RetrieveOutEdge[E <: Singleton with AnyEdge](val e: E) 
       extends AnyRetrieveOutEdge { type Edge = E }
 
   // TODO: same as for Out
@@ -32,22 +29,10 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
   implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
   case class   VertexOps(rep: vertex.TaggedRep) {
 
-    def out[E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[vertex.Tpe] with SmthToMany }]
-      (e: E)(implicit mkRetriever: E => RetrieveManyOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {
-
-        val uh = mkRetriever(e)
-
-        val hey = uh(rep)
-        hey
-      }
-
-    def out[E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[vertex.Tpe] with SmthToOne }]
-      (e: E)(implicit mkRetriever: E => RetrieveOneOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {
-
-        val uh = mkRetriever(e)
-
-        val hey = uh(rep)
-        hey
+    def out[E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[vertex.Tpe] }]
+      (e: E)(implicit mkRetriever: E => RetrieveOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {
+        val retriever = mkRetriever(e)
+        retriever(rep)
       }
 
     // TODO: same as for Out
