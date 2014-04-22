@@ -31,6 +31,18 @@ object GodsSchema {
   implicit val Titan_name = Titan has name
   implicit val Titan_age  = Titan has age
 
+  // example
+  // force the user to provide the right set of implicits for this schema
+  abstract class TitanImpl extends Vertex[Titan.type](Titan) {
+
+    implicit val _name: GetProperty[name.type]
+    implicit val _age:  GetProperty[age.type]
+
+    implicit def fatherIn[
+      E <: Singleton with AnyEdge {type Tpe = TitanFather.type }
+    ](e: E): RetrieveInEdge[E]
+  }
+
   case object God extends VertexType("god")
   implicit val God_name = God has name
   implicit val God_age  = God has age

@@ -33,26 +33,26 @@ trait   To[T <: AnyVertexType] extends AnyEdgeType { type TargetType = T }
 // trait EdgeType[S <: AnyVertexType, T <: AnyVertexType] extends From[S] with To[T]
 
 /* Arities */
-trait SmthToMany extends AnyEdgeType { type Out[+X] = List[X] }
-trait  SmthToOne extends AnyEdgeType { type Out[+X] = Option[X] }
-trait ManyToSmth extends AnyEdgeType { type  In[+X] = List[X] }
-trait  OneToSmth extends AnyEdgeType { type  In[+X] = Option[X] }
+trait ManyOut extends AnyEdgeType { type Out[+X] = List[X] }
+trait  OneOut extends AnyEdgeType { type Out[+X] = Option[X] }
+trait  ManyIn extends AnyEdgeType { type  In[+X] = List[X] }
+trait   OneIn extends AnyEdgeType { type  In[+X] = Option[X] }
 
 class ManyToMany[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends From[S] with To[T] with ManyToSmth with SmthToMany
+    extends From[S] with To[T] with ManyOut with ManyIn
 
 class OneToMany[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends From[S] with To[T] with OneToSmth with SmthToMany
+    extends From[S] with To[T] with ManyOut with OneIn
 
 class ManyToOne[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends From[S] with To[T] with ManyToSmth with SmthToOne
+    extends From[S] with To[T] with OneOut with ManyIn
 
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends From[S] with To[T] with OneToSmth with SmthToOne
+    extends From[S] with To[T] with OneOut with OneIn
 
 
 /* Properties */
