@@ -14,7 +14,7 @@ object vertices {
     val since: Int
   )
   
-  case object user extends Vertex[User.type](User) { self =>
+  case object user extends Vertex(User) { self =>
     /* Now users can be created with `user ->> UserImpl(...)`  */
     type Rep = UserImpl
 
@@ -27,7 +27,7 @@ object vertices {
     }
   }
 
-  case object org extends Vertex[Org.type](Org) { self =>
+  case object org extends Vertex(Org) { self =>
     /*
       We are lazy, so we will use the same representation for orgs
       even though we care only about the `name` property

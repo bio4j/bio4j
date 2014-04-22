@@ -1,6 +1,6 @@
 package bio4j.model
 
-trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
+trait AnyEdge extends Denotation[AnyEdgeType] with HasProperties { edge =>
 
   // NOTE: if I remove this from here type inference fails. Most likely a bug
   type Tpe <: AnyEdgeType
@@ -16,10 +16,9 @@ trait AnyEdge extends Denotation[AnyEdgeType] { edge =>
   implicit def edgeOps(edgeRep: edge.TaggedRep) = EdgeOps(edgeRep)
   case class   EdgeOps(edgeRep: edge.TaggedRep) {
 
-    def source[S <: AnyVertex.ofType[Tpe#SourceType]](implicit getter: GetSource[S]) = getter(edgeRep)
+    def source[S <: Singleton with AnyVertex.ofType[Tpe#SourceType]](implicit getter: GetSource[S]) = getter(edgeRep)
 
-    def target[T <: AnyVertex.ofType[Tpe#TargetType]](implicit getter: GetTarget[T]) = getter(edgeRep)
-
+    def target[T <: Singleton with AnyVertex.ofType[Tpe#TargetType]](implicit getter: GetTarget[T]) = getter(edgeRep)
   }
 
 }

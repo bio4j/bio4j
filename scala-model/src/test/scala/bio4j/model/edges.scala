@@ -6,6 +6,7 @@ object edges {
 
   import edgeTypes._
   import vertexTypes._
+  
   import vertices._
   import properties._
 
@@ -18,20 +19,25 @@ object edges {
     val validUntil: Int
   )
 
-  object memberOf extends Edge(MemberOf) { self =>
+  case object memberOf extends Edge(MemberOf) {
+    
     type Rep = MemberOfImpl
 
-    implicit object sourceGetter extends GetSource[user.type](user) {
-      def apply(rep: self.TaggedRep) = rep.source
-    }
+    // implicit case object sourceGetter extends GetSource[user.type](user) {
+    //   def apply(rep: memberOf.TaggedRep) = rep.source
+    // }
 
     implicit object readSince extends GetProperty(since) {
-      def apply(rep: self.TaggedRep) = rep.since
+      def apply(rep: TaggedRep) = rep.since
     }
     implicit object readValidUntil extends GetProperty(validUntil) {
-      def apply(rep: self.TaggedRep) = rep.validUntil
+      def apply(rep: TaggedRep) = rep.validUntil
     }
   }
+
+  implicit case object memberSourceGetter extends memberOf.GetSource[user.type](user) {
+      def apply(rep: memberOf.TaggedRep) = rep.source
+    }
 
   case class OwnsImpl(
     val source: user.TaggedRep,

@@ -23,13 +23,14 @@ trait AnyEdgeType {
 case class Id[T](val t: T)
 
 object AnyEdgeType {
+  
   implicit def edgeTypeOps[ET <: AnyEdgeType](et: ET) = EdgeTypeOps(et)
 }
 
-trait EdgeFrom[S <: AnyVertexType] extends AnyEdgeType { type SourceType = S }
-trait   EdgeTo[T <: AnyVertexType] extends AnyEdgeType { type TargetType = T }
+trait From[S <: AnyVertexType] extends AnyEdgeType { type SourceType = S }
+trait   To[T <: AnyVertexType] extends AnyEdgeType { type TargetType = T }
 
-// trait EdgeType[S <: AnyVertexType, T <: AnyVertexType] extends EdgeFrom[S] with EdgeTo[T]
+// trait EdgeType[S <: AnyVertexType, T <: AnyVertexType] extends From[S] with To[T]
 
 /* Arities */
 trait SmthToMany extends AnyEdgeType { type Out[+X] = List[X] }
@@ -39,19 +40,19 @@ trait  OneToSmth extends AnyEdgeType { type  In[+X] = Option[X] }
 
 class ManyToMany[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToMany
+    extends From[S] with To[T] with ManyToSmth with SmthToMany
 
 class OneToMany[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToMany
+    extends From[S] with To[T] with OneToSmth with SmthToMany
 
 class ManyToOne[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends EdgeFrom[S] with EdgeTo[T] with ManyToSmth with SmthToOne
+    extends From[S] with To[T] with ManyToSmth with SmthToOne
 
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
-    extends EdgeFrom[S] with EdgeTo[T] with OneToSmth with SmthToOne
+    extends From[S] with To[T] with OneToSmth with SmthToOne
 
 
 /* Properties */

@@ -8,19 +8,22 @@ package bio4j.model
   They are designed to be compatible with shapeless records (maybe, we'll see).
 */
 
-trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
+trait AnyVertex extends Denotation[AnyVertexType] with HasProperties { vertex =>
 
   /* Getters for incoming/outgoing edges */
   trait AnyRetrieveOutEdge {
+
     type Edge <: AnyEdge
     val e: Edge
 
     def apply(rep: vertex.TaggedRep): e.tpe.Out[e.TaggedRep]
   }
+
   abstract class RetrieveOutEdge[E <: Singleton with AnyEdge](val e: E) 
-      extends AnyRetrieveOutEdge { type Edge = E }
+    extends AnyRetrieveOutEdge { type Edge = E }
 
   trait AnyRetrieveInEdge {
+
     type Edge <: AnyEdge
     val e: Edge
 
@@ -33,13 +36,14 @@ trait AnyVertex extends Denotation[AnyVertexType] { vertex =>
   implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
   case class   VertexOps(rep: vertex.TaggedRep) {
 
-    def out[E <: Singleton with AnyEdge { type Tpe <: EdgeFrom[vertex.Tpe] }]
+    def out[E <: Singleton with AnyEdge { type Tpe <: From[vertex.Tpe] }]
+    // def out[E <: Singleton with AnyEdge.withSourceType[vertex.Tpe]]
       (e: E)(implicit mkRetriever: E => RetrieveOutEdge[E]): E#Tpe#Out[E#TaggedRep] = {
         val retriever = mkRetriever(e)
         retriever(rep)
       }
 
-    def in[E <: Singleton with AnyEdge { type Tpe <: EdgeTo[vertex.Tpe] }]
+    def in[E <: Singleton with AnyEdge { type Tpe <: To[vertex.Tpe] }]
       (e: E)(implicit mkRetriever: E => RetrieveInEdge[E]): E#Tpe#In[E#TaggedRep] = {
         val retriever = mkRetriever(e)
         retriever(rep)
