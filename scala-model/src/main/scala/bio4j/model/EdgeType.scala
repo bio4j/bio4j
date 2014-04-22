@@ -20,14 +20,16 @@ trait AnyEdgeType {
 }
 
 object AnyEdgeType {
-  
   implicit def edgeTypeOps[ET <: AnyEdgeType](et: ET) = EdgeTypeOps(et)
 
   type ==>[S <: AnyVertexType, T <: AnyVertexType] = AnyEdgeType {
     type SourceType = S
     type TargetType = T
   }
+}
 
+case class EdgeTypeOps[ET <: AnyEdgeType](val et: ET) {
+  def has[P <: AnyProperty](p: P) = HasProperty[ET, P](et, p)
 }
 
 /* Source/Target */
@@ -55,8 +57,3 @@ class ManyToOne[S <: AnyVertexType, T <: AnyVertexType]
 class OneToOne[S <: AnyVertexType, T <: AnyVertexType]
   (val sourceType: S, val label: String, val targetType: T) 
     extends From[S] with To[T] with OneIn with OneOut
-
-
-case class EdgeTypeOps[ET <: AnyEdgeType](val et: ET) {
-  def has[P <: AnyProperty](p: P) = HasProperty[ET, P](et, p)
-}

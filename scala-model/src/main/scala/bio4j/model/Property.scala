@@ -54,6 +54,7 @@ case class HasProperty[S, P <: AnyProperty]
 }
 
 object SmthHasProperty {
+
   type PropertyOf[S] = { 
     type is[P <: AnyProperty] = SmthHasProperty { type Smth = S; type Property = P }
   }
