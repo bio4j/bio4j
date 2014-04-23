@@ -11,7 +11,7 @@ trait AnyProperty extends LiteralType {
   // NOTE: should this go somewhere else?
   type Rep
 
-  val clazz: Class[Rep]
+  // val clazz: Class[Rep]
 }
 
 import scala.reflect._
@@ -21,7 +21,7 @@ class Property[V](implicit c: ClassTag[V]) extends AnyProperty with shapeless.Fi
 
   type Rep = V 
 
-  val clazz: Class[Rep] = c.runtimeClass.asInstanceOf[Class[V]]
+  // val clazz: Class[Rep] = c.runtimeClass.asInstanceOf[Class[V]]
 }
 
 object AnyProperty {
