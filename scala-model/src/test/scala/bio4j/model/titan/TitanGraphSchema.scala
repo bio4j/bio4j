@@ -27,9 +27,10 @@ object MakeKeys {
     import scala.reflect.runtime.universe._
 
     // TODO: add uniqueness and indexing parameters
-    def addPropertyKey[P <: AnyProperty](p: P)(implicit repTag: TypeTag[p.Rep]): TitanKey = {
+    def addPropertyKey[P <: AnyProperty](p: P)(implicit c: ClassTag[p.Rep]): TitanKey = {
       // FIXME: this compiles, but is not what we want (see the test)
-      g.makeKey(p.label).dataType(repTag.getClass).single.make
+      val clazz = c.runtimeClass.asInstanceOf[Class[p.Rep]]
+      g.makeKey(p.label).dataType(clazz).single.make
     }
 
     // TODO: add sortKey/signature parameters
