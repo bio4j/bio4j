@@ -13,7 +13,7 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "com.chuusai"               % "shapeless"   % "2.0.0"  cross CrossVersion.full,
-  "com.thinkaurelius.titan"   % "titan-all"   % "0.4.3"     % "test",
+  "com.thinkaurelius.titan"   % "titan-all"   % "0.4.4"     % "test",
   "org.scalatest"            %% "scalatest"   % "2.1.3"     % "test"
 )
 
