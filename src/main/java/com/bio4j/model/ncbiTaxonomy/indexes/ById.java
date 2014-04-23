@@ -1,6 +1,6 @@
 package com.bio4j.model.ncbiTaxonomy.indexes;
 
-import com.bio4j.model.NodeUniqueIndex;
+// import com.bio4j.model.NodeUniqueIndex;
 
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.properties.Id;
