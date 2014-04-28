@@ -10,18 +10,13 @@ package bio4j.model
 trait AnyProperty extends LiteralType {
   // NOTE: should this go somewhere else?
   type Rep
-
-  // val clazz: Class[Rep]
 }
 
 import scala.reflect._
-// import scala.reflect.runtime.universe._
 
 class Property[V](implicit c: ClassTag[V]) extends AnyProperty with shapeless.FieldOf[V] { 
 
   type Rep = V 
-
-  // val clazz: Class[Rep] = c.runtimeClass.asInstanceOf[Class[V]]
 }
 
 object AnyProperty {

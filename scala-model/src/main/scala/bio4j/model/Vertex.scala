@@ -32,6 +32,7 @@ trait AnyVertex extends Denotation[AnyVertexType] with HasProperties { vertex =>
   abstract class RetrieveInEdge[E <: Singleton with AnyEdge](val e: E) 
       extends AnyRetrieveInEdge { type Edge = E }
 
+  abstract class Out[E <: Singleton with AnyEdge](edge: E) extends RetrieveOutEdge[E](edge)
 
   implicit def vertexOps(rep: vertex.TaggedRep) = VertexOps(rep)
   case class   VertexOps(rep: vertex.TaggedRep) {

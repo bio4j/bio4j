@@ -17,21 +17,39 @@ trait AnyDenotation { self =>
   type Tpe <: TYPE
   val tpe: Tpe
 
+  /*
+    Why not `Raw` or something like that?
+  */
   type Rep
 
   import Tagged._
-  type TaggedRep = TaggedWith[self.type]
-  def ->>(r: Rep): TaggedWith[self.type] = tagWith[self.type](r)
+  /*
+    This could be called just `Rep` instead; then you'd do for `buh` extending `Buh` something like 
+
+    - `buh ->> buh.Raw(args)` for building it
+    - `buh.Rep` for requiring it
+  */
+  final type TaggedRep = TaggedWith[self.type]
+  /*
+    `Raw` enters, `Rep` leaves
+  */
+  final def ->>(r: Rep): TaggedWith[self.type] = tagWith[self.type](r)
+  // def ->>(r: Raw): self.Rep = tagWith[self.type](r)
 }
 
-trait Denotation[T] extends AnyDenotation { type TYPE = T }
+trait Denotation[T] extends AnyDenotation { 
+
+  type TYPE = T
+}
 
 trait AnyDenotationTag {
+
   type Denotation <: AnyDenotation
   type DenotedType = Denotation#Tpe
 }
 
 trait DenotationTag[D <: AnyDenotation] extends AnyDenotationTag with KeyTag[D, D#Rep] {
+
   type Denotation = D
 }
 

@@ -7,7 +7,7 @@ import shapeless.record.FieldType
 
 object vertices {
 
-  /* A representation of the `User` vertex type */
+  /* A representation of the `User` vertex type; note how it is external to `User`, and it doesn't mention the corresponding type at all */
   case class UserImpl(
     val id: String,
     val name: String,
