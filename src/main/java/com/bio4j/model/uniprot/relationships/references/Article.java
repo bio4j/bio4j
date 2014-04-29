@@ -1,7 +1,5 @@
 package com.bio4j.model.uniprot.relationships.references;
 
-import java.util.List;
-
 import com.bio4j.model.Relationship;
 import com.bio4j.model.RelationshipType;
 
@@ -23,10 +21,11 @@ public interface Article extends Relationship<
 Reference, Reference.Type, Article, Article.Type, Articles, Articles.Type
 
 	>,
-
 		// properties
-		Title<Article, Article.Type>, PubmedId<Article, Article.Type>,
-		MedlineId<Article, Article.Type>, DoId<Article, Article.Type> {
+		Title<Article, Article.Type>, 
+		PubmedId<Article, Article.Type>,
+		MedlineId<Article, Article.Type>, 
+		DoId<Article, Article.Type> {
 
 	public static Type TYPE = Type.article;
 
