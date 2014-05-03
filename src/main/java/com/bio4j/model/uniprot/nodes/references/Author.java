@@ -4,7 +4,10 @@ import com.bio4j.model.Node;
 import com.bio4j.model.NodeType;
 
 /*
-  This node represents an author of a reference.
+* This node represents an author of a reference. Properties are accessible through the corresponding outgoing relationships.
+* 
+* @author Pablo Pareja Tobes <ppareja@era7.com>
+* @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
 */
 public interface Author extends Node<Author, Author.Type> {
   

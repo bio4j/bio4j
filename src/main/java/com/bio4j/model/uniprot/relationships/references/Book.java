@@ -16,14 +16,16 @@ import com.bio4j.model.uniprot.nodes.references.Books;
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Book extends Relationship<
-
-Reference, Reference.Type, Book, Book.Type, Books, Books.Type
-
-	>,
+	Reference, Reference.Type,
+	Book, Book.Type, 
+	Books, Books.Type
+>,
 
 	// properties
-	Name<Book, Book.Type>,
-	Date<Book, Book.Type> {
+	Name<Book, Book.Type>, // TODO Title?
+	Date<Book, Book.Type> // TODO this is already in `CitedIn` ??
+
+{
 
 	public static Type TYPE = Type.book;
 

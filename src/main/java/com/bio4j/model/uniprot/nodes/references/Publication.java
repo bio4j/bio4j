@@ -1,0 +1,19 @@
+package com.bio4j.model.uniprot.nodes.references;
+
+import com.bio4j.model.Node;
+import com.bio4j.model.NodeType;
+
+/*
+  This node represents a publication; its properties (which depend on the particular type) are accessible through relationships pointing to the corresponding Publication Type, like `Journal`.
+*/
+public interface Publication extends Node<Publication, Publication.Type> {
+  
+  public static Type TYPE = Type.reference;
+  
+  public static enum Type implements NodeType<Publication, Publication.Type> {
+    
+    reference;
+    
+    public Type value() { return reference; }
+  }
+}

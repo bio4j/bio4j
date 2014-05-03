@@ -16,10 +16,12 @@ import com.bio4j.model.uniprot.nodes.references.Submissions;
  */
 public interface Submission extends Relationship<
 
-	Reference, Reference.Type, Submission, Submission.Type, Submissions, Submissions.Type
+	Reference, Reference.Type, 
+	Submission, Submission.Type, 
+	Submissions, Submissions.Type
 
-	>,
-		// properties
+>,
+	// properties
 	Title<Submission, Submission.Type>, 
 	Date<Submission, Submission.Type>
 	{

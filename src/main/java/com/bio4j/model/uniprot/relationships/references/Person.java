@@ -17,7 +17,7 @@ import com.bio4j.model.uniprot.nodes.references.Author;
  */
 public interface Person extends Relationship <
 
-  Author, Author.Type,
+  Author, Author.Type, // TODO why Author? it can be anything actually. We should leave the source free here
   Person, Person.Type,
   Persons, Persons.Type
 

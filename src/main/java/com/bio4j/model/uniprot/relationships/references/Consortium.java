@@ -34,6 +34,7 @@ public interface Consortium extends Relationship <
     Author, Author.Type,
     Consortium, Consortium.Type,
     Consortiums, Consortiums.Type
+    
   >
   {
 

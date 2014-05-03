@@ -14,18 +14,26 @@ import com.bio4j.model.uniprot.nodes.references.Reference;
  */
 public interface OnlineArticle extends Relationship<
 
-Reference, Reference.Type, OnlineArticle, OnlineArticle.Type, OnlineArticles, OnlineArticles.Type
+	Reference, Reference.Type, 
+	OnlineArticle, OnlineArticle.Type,
+	OnlineArticles, OnlineArticles.Type
 
-	>,
+>,
 
-		// properties
-	Title<OnlineArticle, OnlineArticle.Type>  {
+	// properties
+	Title<OnlineArticle, OnlineArticle.Type>  
+{
 
 	public static Type TYPE = Type.onlineArticle;
 
 	public static enum Type implements RelationshipType<
 
-	Reference, Reference.Type, OnlineArticle, OnlineArticle.Type, OnlineArticles, OnlineArticles.Type> {
+		Reference, Reference.Type, 
+		OnlineArticle, OnlineArticle.Type, 
+		OnlineArticles, OnlineArticles.Type
+
+	>
+	{
 		onlineArticle;
 
 		// there is only one OnlineArticles node => many to one.

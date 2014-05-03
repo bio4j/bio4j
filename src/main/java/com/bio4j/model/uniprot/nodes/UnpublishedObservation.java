@@ -14,18 +14,21 @@ import com.bio4j.model.properties.Date;
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface UnpublishedObservation extends
-	Node<UnpublishedObservation, UnpublishedObservation.Type>,
+public interface UnpublishedObservation extends Node<UnpublishedObservation, UnpublishedObservation.Type>,
+	
 	// properties
-	Date<UnpublishedObservation, UnpublishedObservation.Type> {
+	Date<UnpublishedObservation, UnpublishedObservation.Type> 
+
+{
 
 	public static Type TYPE = Type.unpublishedObservation;
 
-	public static enum Type implements
-			NodeType<UnpublishedObservation, UnpublishedObservation.Type> {
+	public static enum Type implements NodeType<UnpublishedObservation, UnpublishedObservation.Type> {
 
 		unpublishedObservation;
+
 		public Type value() {
+			
 			return unpublishedObservation;
 		}
 	}

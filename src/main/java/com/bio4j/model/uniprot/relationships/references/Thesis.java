@@ -25,7 +25,7 @@ public interface Thesis extends Relationship <
 >,
   
   // properties
-  Institute<Thesis, Thesis.Type>,
+  Institute<Thesis, Thesis.Type>, // TODO I think it is OK to leave these as properties
   Country<Thesis, Thesis.Type>
 {
   

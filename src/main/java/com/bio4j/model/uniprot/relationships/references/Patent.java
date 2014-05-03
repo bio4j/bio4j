@@ -9,25 +9,22 @@ import com.bio4j.model.properties.MedlineId;
 import com.bio4j.model.properties.PubmedId;
 import com.bio4j.model.properties.Title;
 
-import com.bio4j.model.uniprot.nodes.references.Articles;
+import com.bio4j.model.uniprot.nodes.references.Patents;
 import com.bio4j.model.uniprot.nodes.references.Reference;
 
 /**
  * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
-public interface Article extends Relationship <
+public interface Patent extends Relationship <
 
   Reference, Reference.Type,
-  Article, Article.Type,
-  Articles, Articles.Type
+  Patent, Patent.Type,
+  Patents, Patents.Type
 
 >,
   // properties
-  Title<Article, Article.Type>, // TODO maybe common to all references?
-  PubmedId<Article, Article.Type>,
-  MedlineId<Article, Article.Type>, 
-  DoId<Article, Article.Type>
+  Title<Patent, Patent.Type> // TODO maybe common to all references?
 
 {
 
@@ -36,22 +33,22 @@ public interface Article extends Relationship <
   public static enum Type implements RelationshipType<
 
     Reference, Reference.Type, 
-    Article, Article.Type, 
-    Articles, Articles.Type
+    Patent, Patent.Type, 
+    Patents, Patents.Type
     
   >
   {
 
     article;
 
-    // there is only one Articles node => many to one.
+    // there is only one Patents node => many to one.
     public Arity arity() {
 
       return Arity.manyToOne;
     }
 
     public Reference.Type sourceType()  { return Reference.TYPE;  }
-    public Articles.Type targetType()   { return Articles.TYPE;   }
+    public Patents.Type targetType()   { return Patents.TYPE;   }
 
     public Type value() { return article; }
   }
