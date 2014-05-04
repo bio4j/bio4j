@@ -2,11 +2,10 @@
 
 ## team
 
-- [@eparejatobes](https://github.com/)
+- [@eparejatobes](https://github.com/eparejatobes)
     + project direction
         * strategic decisions
-        * GSoC admin
-        * ...
+        * GSoC admin and mentor
     + technical lead
     + leads Scala development
     + leads Idris and dependent types development
@@ -16,8 +15,7 @@
 - [@pablopareja](https://github.com/pablopareja)
     + project direction
         * strategic decisions
-        * GSoC admin
-        * ...
+        * GSoC admin and mentor
     + leads Java development
     + communication:
         * responsible for all Java-related things
@@ -26,7 +24,6 @@
         * data sources
         * conformance to biological semantics
         * applications
-        * ...
     + Scala developer
 - [@epareja](https://github.com/epareja)
     + biology -> cancer genomics applications
@@ -35,26 +32,23 @@
     + Scala developer
     + Idris and dependent types developer
     + release process and infrastructure
+    + GSoC mentor
 - [@evdokim](https://github.com/evdokim)
     + Scala developer
-    + (depending on the intercrossing project, other things)
+    + GSoC mentor
 - [@marina-manrique](https://github.com/marina-manrique)
     + Scala developer
     + biology and bioinformatics applications
 
 ## Bio4j 1.0 Java version
 
-- **Deadline** 2014-04-18
+- **Deadline** 2014-06-01
 - **Who**
     + @eparejatobes
     + @pablopareja
     + @rtobes
     + @marina-manrique
-
-_assumptions_
-
-- I will be working full-time the next 2 weeks
-- same for @pablopareja
+    + @epareja
 
 It is about time to have a stable, solid 1.0 Java version for Bio4j. And we can have a release candidate in two weeks! the timing is just perfect to match this with the GSoC community bonding phase.
 
@@ -62,7 +56,7 @@ I will create issues for all the following items, with milestones.
 
 ### stable 1.0 model API
 
-With respect to the code, we are going to finish with the migration to new, more expressive API.
+With respect to the code, we are going to finish with the migration to new, more expressive API. This will 
 
 At the data model level, I want to review **all** nodes, relationships and properties to see if something should be changed; in particular
 
@@ -75,7 +69,7 @@ At the data model level, I want to review **all** nodes, relationships and prope
 
 Documentation for the code should reflect all this, linking each module to the corresponding data source. It is also important to have a reasonably detailed description of the design (funny F-bounded stuff, node and relationship types, etc).
 
-### stable 1.0 Neo4j implementation
+### stable 1.0 Titan implementation
 
 The single most disruptive change here would be to adapt the existing code to the new model. While we're at it, we will update to Neo4j 2.0.
 
