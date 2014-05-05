@@ -24,7 +24,7 @@ public interface UniRef50Member extends Relationship <
     UniRef50Member, UniRef50Member.Type,
     Protein, Protein.Type
 
-  > {
+    > {
 
     uniRef50Member;
 
