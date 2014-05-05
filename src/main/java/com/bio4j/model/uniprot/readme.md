@@ -7,16 +7,22 @@ Let's try to explain why. For that, we will start reflecting on for _what_ do we
 1. to store data local to some entity
 2. to link entities with each other
 
-1. is of course not so well-defined, but anyway I think it is more or less clear at an intuitive level. 2. is maybe not so obvious, but it is pretty widespread. In a lot of situations where you think an index is needed, this is caused by properties used as links. 
+1. is of course not so well-defined, but anyway I think it is more or less clear at an intuitive level. 2. is maybe not so obvious, but it is pretty widespread. In a lot of situations where you think an index is needed, this is caused by properties used as links.
 
 ### why only edges
 
 1. **dependent types** edges introduce different contexts depending on...
-2. clear and simple categorical model (cats enriched in a monoidal category of records)
+2. clear and simple categorical model (cats enriched in a monoidal category of records?)
 
 ### then, what about node types?
 
-With our approach, they serve essentially as contexts. The same node at the data level can be the subject of different contexts, and its function is to determine *which* edges can have this node as source or target.
+With our approach, they serve essentially as contexts. The same node at the data level can be the subject of different contexts, and its function is to determine *which* edges can have this node as source or target. Let's see an example.
+
+``` java
+publication --[Author]--> author --[Person]--> Persons
+```
+
+From the `publication` context we can take `Author`. Once we know it, we can get `Person`, which would be there _if_ the author is a person.
 
 ## standard translation techniques
 
