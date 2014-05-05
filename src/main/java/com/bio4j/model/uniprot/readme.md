@@ -11,8 +11,12 @@ Let's try to explain why. For that, we will start reflecting on for _what_ do we
 
 ### why only edges
 
-1. dependent types
-2. 
+1. **dependent types** edges introduce different contexts depending on...
+2. clear and simple categorical model (cats enriched in a monoidal category of records)
+
+### then, what about node types?
+
+With our approach, they serve essentially as contexts. The same node at the data level can be the subject of different contexts, and its function is to determine *which* edges can have this node as source or target.
 
 ## standard translation techniques
 
@@ -72,27 +76,16 @@ Now, where do generic `Publication` data (if any) should go? from the point of v
 x --[Publication]--> publication --[Book]--> book
 ```
 
-Then `Publication` could include things such as a date or a title. Another example could be authors:
+Then `Publication` could include things such as a date or a title.
+
+Another example could be authors:
 
 ``` java
 x --[Publication]--> publication --[Author]--> author --[Person]--> person
 ```
 
+
+
 ## queries
 
-Queries need to look OK. Given a node `x` we can
-
-``` scala
-val e = x out Buh 
-```
-
-### query operators
-
-I think that we are working with the free wscc category on a graph or something like that. This means that a query (a path, traversal, whatever) is essentially a morphism. The idea would be to declare a base `Morphism` trait, and do a shapeless-style implementation of all cases. We would have
-
-- `Edge` for a simple edge
-- `Compose(F,G)` where `F` and `G` should match
-- `Par(F,G)` for the product-like par
-- `Or(F,G)` for ...
-
-Maybe it is possible to do this in Scala.
+Queries need to look OK. Given a node `x` 
