@@ -5,7 +5,6 @@ import com.bio4j.model.NodeType;
 import com.bio4j.model.enums.UniprotDBXref;
 
 // nodes
-import com.bio4j.model.uniprot.nodes.Article;
 import com.bio4j.model.uniprot.nodes.Book;
 import com.bio4j.model.uniprot.nodes.OnlineArticle;
 import com.bio4j.model.uniprot.nodes.Patent;
