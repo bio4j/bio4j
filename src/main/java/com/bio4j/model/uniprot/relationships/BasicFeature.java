@@ -8,8 +8,8 @@ import com.bio4j.model.uniprot.nodes.Protein;
 /**
  * Base Relationship class for features. The source is bounded by this to be a Protein; same for the target: FeatureType.
  * 
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 
 public interface BasicFeature <

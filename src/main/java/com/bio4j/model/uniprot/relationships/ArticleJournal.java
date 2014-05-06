@@ -11,7 +11,7 @@ import com.bio4j.model.uniprot.nodes.references.Reference;
 
 /**
  *
- * @author Pablo Pareja <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 // inJournal
 public interface ArticleJournal extends Relationship <

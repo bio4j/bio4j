@@ -9,7 +9,7 @@ import com.bio4j.model.uniprot.relationships.references.Person;
 
 /**
  *  This Node has just one instance per graph. Relationships of type `Person` to this node blahblahblah
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface Persons extends Node<Persons, Persons.Type> {
   

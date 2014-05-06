@@ -9,7 +9,7 @@ import com.bio4j.model.uniprot.relationships.references.Submission;
 
 /**
  *  This Node has just one instance per graph. Relationships of type `Submission` to this node blahblahblah
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface Submissions extends Node<Submissions, Submissions.Type> {
   

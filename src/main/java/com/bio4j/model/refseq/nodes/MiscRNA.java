@@ -5,7 +5,7 @@ import com.bio4j.model.refseq.relationships.HasMiscRNA;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface MiscRNA extends RNA<MiscRNA, MiscRNA.Type> {
 

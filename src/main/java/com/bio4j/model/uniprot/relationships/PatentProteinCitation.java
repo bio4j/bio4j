@@ -7,7 +7,7 @@ import com.bio4j.model.RelationshipType;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 // patentCitesProtein
 public interface PatentProteinCitation extends Relationship <

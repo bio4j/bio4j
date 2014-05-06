@@ -10,8 +10,8 @@ import com.bio4j.model.uniprot.relationships.references.Article;
 /**
  *  This Node has just one instance. A `Reference` node is an article if it has a relationship of type `Article` pointing to the unique `Articles` node.
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface Articles extends Node<Articles, Articles.Type> {
   

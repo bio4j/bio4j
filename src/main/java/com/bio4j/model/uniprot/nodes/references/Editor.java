@@ -6,8 +6,8 @@ import com.bio4j.model.NodeType;
 /*
 * This node represents an editor of a reference. Properties are accessible through the corresponding outgoing relationships.
 * 
-* @author Pablo Pareja Tobes <ppareja@era7.com>
-* @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+* @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+* @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
 */
 public interface Editor extends Node<Editor, Editor.Type> {
   

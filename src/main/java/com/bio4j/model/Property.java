@@ -3,7 +3,7 @@ package com.bio4j.model;
 /*
   A Property. Just a marker.
 
-  @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+  @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
 */
 public interface Property <
   N extends Element<N,T>, 

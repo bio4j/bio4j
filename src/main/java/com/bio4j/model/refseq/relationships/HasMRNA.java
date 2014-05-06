@@ -9,8 +9,8 @@ import com.bio4j.model.refseq.nodes.MRNA;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
- * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface HasMRNA extends HasGenomicFeature <
   HasMRNA,  HasMRNA.Type,

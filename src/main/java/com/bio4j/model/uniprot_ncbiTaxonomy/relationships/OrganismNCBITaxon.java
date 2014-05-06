@@ -8,7 +8,7 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 
 /**
  *
- * @author Pablo Pareja <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface OrganismNCBITaxon extends Relationship <
   Organism, Organism.Type,

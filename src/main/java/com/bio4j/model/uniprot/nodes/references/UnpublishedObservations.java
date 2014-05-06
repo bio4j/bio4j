@@ -9,7 +9,7 @@ import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 
 /**
  *  This Node has just one instance per graph. Relationships of type `UnpublishedObservation` to this node blahblahblah
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface UnpublishedObservations extends Node<UnpublishedObservations, UnpublishedObservations.Type> {
   

@@ -10,7 +10,7 @@ package com.bio4j.model;
   - `T` the target Node
   - `TT` the target Node type
 
-  @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+  @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
 */
 public interface Relationship <
   S extends Node<S,ST>,

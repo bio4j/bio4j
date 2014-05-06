@@ -7,7 +7,7 @@ import com.bio4j.model.properties.Id;
 
 /**
  *
- * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 // public interface ById extends NodeUniqueIndex<NCBITaxon, NCBITaxon.Type, id.Type, String> {
   

@@ -14,7 +14,7 @@ import com.bio4j.model.properties.Title;
 
 /**
  * 
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface OnlineArticle extends Node<OnlineArticle, OnlineArticle.Type>,
 

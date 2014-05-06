@@ -6,7 +6,7 @@ import com.bio4j.model.uniprot.nodes.SubcellularLocation;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface SubcellularLocationParent extends Relationship <
   SubcellularLocation, SubcellularLocation.Type,

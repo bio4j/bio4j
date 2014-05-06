@@ -3,7 +3,7 @@ package com.bio4j.model;
 /*
   A Relationship type. Implementing **concrete** classes should be singleton `Enum`s.
 
-  @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+  @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
 */
 public interface RelationshipType <
   S extends Node<S,ST>,

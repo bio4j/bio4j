@@ -6,7 +6,7 @@ import com.bio4j.model.refseq.relationships.HasTmRNA;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface TmRNA extends RNA<TmRNA, TmRNA.Type> { 
 

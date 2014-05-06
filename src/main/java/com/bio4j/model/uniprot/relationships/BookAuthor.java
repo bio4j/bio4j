@@ -7,7 +7,7 @@ import com.bio4j.model.uniprot.nodes.Book;
 
 /**
  *
- * @author Pablo Pareja <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 // bookAuthor
 public interface BookAuthor extends Relationship <

@@ -7,8 +7,8 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 
 /**
  *
- * @author Pablo Pareja <ppareja@era7.com>
- * @author Eduardo Pareja-Tobes <eparejatobes@ohnosequences.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface Parent extends Relationship <
   NCBITaxon, NCBITaxon.Type,

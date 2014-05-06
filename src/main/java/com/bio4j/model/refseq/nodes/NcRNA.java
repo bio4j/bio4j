@@ -6,7 +6,7 @@ import com.bio4j.model.refseq.relationships.HasNcRNA;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface NcRNA extends RNA<NcRNA, NcRNA.Type> { 
 
