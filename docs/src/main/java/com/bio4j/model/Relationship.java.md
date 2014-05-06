@@ -1,14 +1,54 @@
 
 ```java
 package com.bio4j.model;
+```
 
-/**
- *
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
-public interface Relationship {
-    
-  public String getType();   
+
+A typed relationship with typed source and target. 
+
+- `S` the source Node
+- `ST` the source Node type
+- `R` the relationship
+- `RT` the relationship type
+- `T` the target Node
+- `TT` the target Node type
+
+@author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
+
+
+```java
+public interface Relationship <
+  S extends Node<S,ST>,
+  ST extends Enum<ST> & NodeType<S,ST>,
+  R extends Relationship<S,ST,R,RT,T,TT>, 
+  RT extends Enum<RT> & RelationshipType<S,ST,R,RT,T,TT>,
+  T extends Node<T,TT>,
+  TT extends Enum<TT> & NodeType<T,TT>
+> extends Element<R,RT> {
+```
+
+
+Its type
+
+
+```java
+  public RT getType();
+```
+
+
+source node
+
+
+```java
+  public S source();
+```
+
+
+target node
+
+
+```java
+  public T target();
 }
 
 ```
@@ -24,404 +64,692 @@ public interface Relationship {
       + com
         + bio4j
           + model
+            + [Element.java][main/java/com/bio4j/model/Element.java]
+            + [ElementType.java][main/java/com/bio4j/model/ElementType.java]
             + enums
               + [UniprotDBXref.java][main/java/com/bio4j/model/enums/UniprotDBXref.java]
+            + enzymedb
+              + [EnzymeDBModule.java][main/java/com/bio4j/model/enzymedb/EnzymeDBModule.java]
+              + indexes
+                + [ById.java][main/java/com/bio4j/model/enzymedb/indexes/ById.java]
+              + nodes
+                + [Enzyme.java][main/java/com/bio4j/model/enzymedb/nodes/Enzyme.java]
+              + relationships
+                + [EnzymaticActivity.java][main/java/com/bio4j/model/enzymedb/relationships/EnzymaticActivity.java]
+            + go
+              + [GoModule.java][main/java/com/bio4j/model/go/GoModule.java]
+              + indexes
+                + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
+              + nodes
+                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
+              + relationships
+                + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
+                + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
+                + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
+                + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
+                + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
+                + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
+            + isoforms
+              + [IsoformsModule.java][main/java/com/bio4j/model/isoforms/IsoformsModule.java]
+              + nodes
+                + [AlternativeProduct.java][main/java/com/bio4j/model/isoforms/nodes/AlternativeProduct.java]
+                + [Isoform.java][main/java/com/bio4j/model/isoforms/nodes/Isoform.java]
+              + relationships
+                + [AlternativeProductInitiation.java][main/java/com/bio4j/model/isoforms/relationships/AlternativeProductInitiation.java]
+                + [AlternativeProductPromoter.java][main/java/com/bio4j/model/isoforms/relationships/AlternativeProductPromoter.java]
+                + [AlternativeProductRibosomalFrameshifting.java][main/java/com/bio4j/model/isoforms/relationships/AlternativeProductRibosomalFrameshifting.java]
+                + [AlternativeProductSplicing.java][main/java/com/bio4j/model/isoforms/relationships/AlternativeProductSplicing.java]
+                + [IsoformEventGenerator.java][main/java/com/bio4j/model/isoforms/relationships/IsoformEventGenerator.java]
+            + [Module.java][main/java/com/bio4j/model/Module.java]
+            + [modules.java][main/java/com/bio4j/model/modules.java]
+            + ncbiTaxonomy
+              + indexes
+                + [ById.java][main/java/com/bio4j/model/ncbiTaxonomy/indexes/ById.java]
+              + [NcbiTaxonomyModule.java][main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]
+              + nodes
+                + [NCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy/nodes/NCBITaxon.java]
+              + relationships
+                + [Parent.java][main/java/com/bio4j/model/ncbiTaxonomy/relationships/Parent.java]
             + [Node.java][main/java/com/bio4j/model/Node.java]
-            + nodes
-              + [AlternativeProduct.java][main/java/com/bio4j/model/nodes/AlternativeProduct.java]
-              + citation
-                + [Article.java][main/java/com/bio4j/model/nodes/citation/Article.java]
-                + [Book.java][main/java/com/bio4j/model/nodes/citation/Book.java]
-                + [DB.java][main/java/com/bio4j/model/nodes/citation/DB.java]
-                + [Journal.java][main/java/com/bio4j/model/nodes/citation/Journal.java]
-                + [OnlineArticle.java][main/java/com/bio4j/model/nodes/citation/OnlineArticle.java]
-                + [OnlineJournal.java][main/java/com/bio4j/model/nodes/citation/OnlineJournal.java]
-                + [Patent.java][main/java/com/bio4j/model/nodes/citation/Patent.java]
-                + [Publisher.java][main/java/com/bio4j/model/nodes/citation/Publisher.java]
-                + [Submission.java][main/java/com/bio4j/model/nodes/citation/Submission.java]
-                + [Thesis.java][main/java/com/bio4j/model/nodes/citation/Thesis.java]
-                + [UnpublishedObservation.java][main/java/com/bio4j/model/nodes/citation/UnpublishedObservation.java]
-              + [City.java][main/java/com/bio4j/model/nodes/City.java]
-              + [CommentType.java][main/java/com/bio4j/model/nodes/CommentType.java]
-              + [Consortium.java][main/java/com/bio4j/model/nodes/Consortium.java]
-              + [Country.java][main/java/com/bio4j/model/nodes/Country.java]
-              + [Dataset.java][main/java/com/bio4j/model/nodes/Dataset.java]
-              + [Enzyme.java][main/java/com/bio4j/model/nodes/Enzyme.java]
-              + [FeatureType.java][main/java/com/bio4j/model/nodes/FeatureType.java]
-              + [GoTerm.java][main/java/com/bio4j/model/nodes/GoTerm.java]
-              + [Institute.java][main/java/com/bio4j/model/nodes/Institute.java]
-              + [Interpro.java][main/java/com/bio4j/model/nodes/Interpro.java]
-              + [Isoform.java][main/java/com/bio4j/model/nodes/Isoform.java]
-              + [Keyword.java][main/java/com/bio4j/model/nodes/Keyword.java]
-              + ncbi
-                + [NCBITaxon.java][main/java/com/bio4j/model/nodes/ncbi/NCBITaxon.java]
-              + [Organism.java][main/java/com/bio4j/model/nodes/Organism.java]
-              + [Person.java][main/java/com/bio4j/model/nodes/Person.java]
-              + [Pfam.java][main/java/com/bio4j/model/nodes/Pfam.java]
-              + [Protein.java][main/java/com/bio4j/model/nodes/Protein.java]
-              + reactome
-                + [ReactomeTerm.java][main/java/com/bio4j/model/nodes/reactome/ReactomeTerm.java]
-              + refseq
-                + [CDS.java][main/java/com/bio4j/model/nodes/refseq/CDS.java]
-                + [Gene.java][main/java/com/bio4j/model/nodes/refseq/Gene.java]
-                + [GenomeElement.java][main/java/com/bio4j/model/nodes/refseq/GenomeElement.java]
-                + rna
-                  + [MiscRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/MiscRNA.java]
-                  + [MRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/MRNA.java]
-                  + [NcRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/NcRNA.java]
-                  + [RNA.java][main/java/com/bio4j/model/nodes/refseq/rna/RNA.java]
-                  + [RRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/RRNA.java]
-                  + [TmRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/TmRNA.java]
-                  + [TRNA.java][main/java/com/bio4j/model/nodes/refseq/rna/TRNA.java]
-              + [SequenceCaution.java][main/java/com/bio4j/model/nodes/SequenceCaution.java]
-              + [SubcellularLocation.java][main/java/com/bio4j/model/nodes/SubcellularLocation.java]
-              + [Taxon.java][main/java/com/bio4j/model/nodes/Taxon.java]
+            + [NodeIndex.java][main/java/com/bio4j/model/NodeIndex.java]
+            + [NodeListIndex.java][main/java/com/bio4j/model/NodeListIndex.java]
+            + [NodeType.java][main/java/com/bio4j/model/NodeType.java]
+            + [NodeUniqueIndex.java][main/java/com/bio4j/model/NodeUniqueIndex.java]
+            + properties
+              + [Accession.java][main/java/com/bio4j/model/properties/Accession.java]
+              + [AlternateNames.java][main/java/com/bio4j/model/properties/AlternateNames.java]
+              + [AlternativeAccessions.java][main/java/com/bio4j/model/properties/AlternativeAccessions.java]
+              + [AlternativeIds.java][main/java/com/bio4j/model/properties/AlternativeIds.java]
+              + [CatalyticActivity.java][main/java/com/bio4j/model/properties/CatalyticActivity.java]
+              + [Cofactors.java][main/java/com/bio4j/model/properties/Cofactors.java]
+              + [Comment.java][main/java/com/bio4j/model/properties/Comment.java]
+              + [CommonName.java][main/java/com/bio4j/model/properties/CommonName.java]
+              + [Country.java][main/java/com/bio4j/model/properties/Country.java]
+              + [Date.java][main/java/com/bio4j/model/properties/Date.java]
+              + [Definition.java][main/java/com/bio4j/model/properties/Definition.java]
+              + [DoId.java][main/java/com/bio4j/model/properties/DoId.java]
+              + [EmblCode.java][main/java/com/bio4j/model/properties/EmblCode.java]
+              + [Evidence.java][main/java/com/bio4j/model/properties/Evidence.java]
+              + [Experiments.java][main/java/com/bio4j/model/properties/Experiments.java]
+              + [First.java][main/java/com/bio4j/model/properties/First.java]
+              + [FullName.java][main/java/com/bio4j/model/properties/FullName.java]
+              + [GeneNames.java][main/java/com/bio4j/model/properties/GeneNames.java]
+              + [Id.java][main/java/com/bio4j/model/properties/Id.java]
+              + [Institute.java][main/java/com/bio4j/model/properties/Institute.java]
+              + [Last.java][main/java/com/bio4j/model/properties/Last.java]
+              + [Length.java][main/java/com/bio4j/model/properties/Length.java]
+              + [Locator.java][main/java/com/bio4j/model/properties/Locator.java]
+              + [Mass.java][main/java/com/bio4j/model/properties/Mass.java]
+              + [MedlineId.java][main/java/com/bio4j/model/properties/MedlineId.java]
+              + [ModifiedDate.java][main/java/com/bio4j/model/properties/ModifiedDate.java]
+              + [Name.java][main/java/com/bio4j/model/properties/Name.java]
+              + [NCBITaxonomyId.java][main/java/com/bio4j/model/properties/NCBITaxonomyId.java]
+              + [Note.java][main/java/com/bio4j/model/properties/Note.java]
+              + [Number.java][main/java/com/bio4j/model/properties/Number.java]
+              + [Obsolete.java][main/java/com/bio4j/model/properties/Obsolete.java]
+              + [OfficialName.java][main/java/com/bio4j/model/properties/OfficialName.java]
+              + [PathwayName.java][main/java/com/bio4j/model/properties/PathwayName.java]
+              + [Positions.java][main/java/com/bio4j/model/properties/Positions.java]
+              + [PrositeCrossReferences.java][main/java/com/bio4j/model/properties/PrositeCrossReferences.java]
+              + [PubmedId.java][main/java/com/bio4j/model/properties/PubmedId.java]
+              + [ScientificName.java][main/java/com/bio4j/model/properties/ScientificName.java]
+              + [Sequence.java][main/java/com/bio4j/model/properties/Sequence.java]
+              + [ShortName.java][main/java/com/bio4j/model/properties/ShortName.java]
+              + [Status.java][main/java/com/bio4j/model/properties/Status.java]
+              + [SynonymName.java][main/java/com/bio4j/model/properties/SynonymName.java]
+              + [TaxId.java][main/java/com/bio4j/model/properties/TaxId.java]
+              + [TaxonomicRank.java][main/java/com/bio4j/model/properties/TaxonomicRank.java]
+              + [Title.java][main/java/com/bio4j/model/properties/Title.java]
+              + [Version.java][main/java/com/bio4j/model/properties/Version.java]
+              + [Volume.java][main/java/com/bio4j/model/properties/Volume.java]
+            + [Property.java][main/java/com/bio4j/model/Property.java]
+            + [PropertyType.java][main/java/com/bio4j/model/PropertyType.java]
+            + proteinInteractions
+              + [ProteinInteractionsModule.java][main/java/com/bio4j/model/proteinInteractions/ProteinInteractionsModule.java]
+              + relationships
+                + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/proteinInteractions/relationships/ProteinIsoformInteraction.java]
+                + [ProteinProteinInteraction.java][main/java/com/bio4j/model/proteinInteractions/relationships/ProteinProteinInteraction.java]
+            + refseq
+              + nodes
+                + [CDS.java][main/java/com/bio4j/model/refseq/nodes/CDS.java]
+                + [Gene.java][main/java/com/bio4j/model/refseq/nodes/Gene.java]
+                + [GenomeElement.java][main/java/com/bio4j/model/refseq/nodes/GenomeElement.java]
+                + [GenomicFeature.java][main/java/com/bio4j/model/refseq/nodes/GenomicFeature.java]
+                + [GenomicFeatureType.java][main/java/com/bio4j/model/refseq/nodes/GenomicFeatureType.java]
+                + [MiscRNA.java][main/java/com/bio4j/model/refseq/nodes/MiscRNA.java]
+                + [MRNA.java][main/java/com/bio4j/model/refseq/nodes/MRNA.java]
+                + [NcRNA.java][main/java/com/bio4j/model/refseq/nodes/NcRNA.java]
+                + [RNA.java][main/java/com/bio4j/model/refseq/nodes/RNA.java]
+                + [RNAType.java][main/java/com/bio4j/model/refseq/nodes/RNAType.java]
+                + [RRNA.java][main/java/com/bio4j/model/refseq/nodes/RRNA.java]
+                + [TmRNA.java][main/java/com/bio4j/model/refseq/nodes/TmRNA.java]
+                + [TRNA.java][main/java/com/bio4j/model/refseq/nodes/TRNA.java]
+              + [RefSeqModule.java][main/java/com/bio4j/model/refseq/RefSeqModule.java]
+              + relationships
+                + [HasCDS.java][main/java/com/bio4j/model/refseq/relationships/HasCDS.java]
+                + [HasGene.java][main/java/com/bio4j/model/refseq/relationships/HasGene.java]
+                + [HasGenomicFeature.java][main/java/com/bio4j/model/refseq/relationships/HasGenomicFeature.java]
+                + [HasGenomicFeatureType.java][main/java/com/bio4j/model/refseq/relationships/HasGenomicFeatureType.java]
+                + [HasMiscRNA.java][main/java/com/bio4j/model/refseq/relationships/HasMiscRNA.java]
+                + [HasMRNA.java][main/java/com/bio4j/model/refseq/relationships/HasMRNA.java]
+                + [HasNcRNA.java][main/java/com/bio4j/model/refseq/relationships/HasNcRNA.java]
+                + [HasRRNA.java][main/java/com/bio4j/model/refseq/relationships/HasRRNA.java]
+                + [HasTmRNA.java][main/java/com/bio4j/model/refseq/relationships/HasTmRNA.java]
+                + [HasTRNA.java][main/java/com/bio4j/model/refseq/relationships/HasTRNA.java]
             + [Relationship.java][main/java/com/bio4j/model/Relationship.java]
-            + relationships
-              + aproducts
-                + [AlternativeProductInitiation.java][main/java/com/bio4j/model/relationships/aproducts/AlternativeProductInitiation.java]
-                + [AlternativeProductPromoter.java][main/java/com/bio4j/model/relationships/aproducts/AlternativeProductPromoter.java]
-                + [AlternativeProductRibosomalFrameshifting.java][main/java/com/bio4j/model/relationships/aproducts/AlternativeProductRibosomalFrameshifting.java]
-                + [AlternativeProductSplicing.java][main/java/com/bio4j/model/relationships/aproducts/AlternativeProductSplicing.java]
-              + citation
-                + article
-                  + [ArticleAuthor.java][main/java/com/bio4j/model/relationships/citation/article/ArticleAuthor.java]
-                  + [ArticleJournal.java][main/java/com/bio4j/model/relationships/citation/article/ArticleJournal.java]
-                  + [ArticleProteinCitation.java][main/java/com/bio4j/model/relationships/citation/article/ArticleProteinCitation.java]
-                + book
-                  + [BookAuthor.java][main/java/com/bio4j/model/relationships/citation/book/BookAuthor.java]
-                  + [BookCity.java][main/java/com/bio4j/model/relationships/citation/book/BookCity.java]
-                  + [BookEditor.java][main/java/com/bio4j/model/relationships/citation/book/BookEditor.java]
-                  + [BookProteinCitation.java][main/java/com/bio4j/model/relationships/citation/book/BookProteinCitation.java]
-                  + [BookPublisher.java][main/java/com/bio4j/model/relationships/citation/book/BookPublisher.java]
-                + onarticle
-                  + [OnlineArticleAuthor.java][main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleAuthor.java]
-                  + [OnlineArticleJournal.java][main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleJournal.java]
-                  + [OnlineArticleProteinCitation.java][main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleProteinCitation.java]
-                + patent
-                  + [PatentAuthor.java][main/java/com/bio4j/model/relationships/citation/patent/PatentAuthor.java]
-                  + [PatentProteinCitation.java][main/java/com/bio4j/model/relationships/citation/patent/PatentProteinCitation.java]
-                + submission
-                  + [SubmissionAuthor.java][main/java/com/bio4j/model/relationships/citation/submission/SubmissionAuthor.java]
-                  + [SubmissionDb.java][main/java/com/bio4j/model/relationships/citation/submission/SubmissionDb.java]
-                  + [SubmissionProteinCitation.java][main/java/com/bio4j/model/relationships/citation/submission/SubmissionProteinCitation.java]
-                + thesis
-                  + [ThesisAuthor.java][main/java/com/bio4j/model/relationships/citation/thesis/ThesisAuthor.java]
-                  + [ThesisInstitute.java][main/java/com/bio4j/model/relationships/citation/thesis/ThesisInstitute.java]
-                  + [ThesisProteinCitation.java][main/java/com/bio4j/model/relationships/citation/thesis/ThesisProteinCitation.java]
-                + uo
-                  + [UnpublishedObservationAuthor.java][main/java/com/bio4j/model/relationships/citation/uo/UnpublishedObservationAuthor.java]
-                  + [UnpublishedObservationProteinCitation.java][main/java/com/bio4j/model/relationships/citation/uo/UnpublishedObservationProteinCitation.java]
-              + comment
-                + [AllergenComment.java][main/java/com/bio4j/model/relationships/comment/AllergenComment.java]
-                + [BasicComment.java][main/java/com/bio4j/model/relationships/comment/BasicComment.java]
-                + [BioPhysicoChemicalPropertiesComment.java][main/java/com/bio4j/model/relationships/comment/BioPhysicoChemicalPropertiesComment.java]
-                + [BiotechnologyComment.java][main/java/com/bio4j/model/relationships/comment/BiotechnologyComment.java]
-                + [CatalyticActivityComment.java][main/java/com/bio4j/model/relationships/comment/CatalyticActivityComment.java]
-                + [CautionComment.java][main/java/com/bio4j/model/relationships/comment/CautionComment.java]
-                + [CofactorComment.java][main/java/com/bio4j/model/relationships/comment/CofactorComment.java]
-                + [DevelopmentalStageComment.java][main/java/com/bio4j/model/relationships/comment/DevelopmentalStageComment.java]
-                + [DiseaseComment.java][main/java/com/bio4j/model/relationships/comment/DiseaseComment.java]
-                + [DisruptionPhenotypeComment.java][main/java/com/bio4j/model/relationships/comment/DisruptionPhenotypeComment.java]
-                + [DomainComment.java][main/java/com/bio4j/model/relationships/comment/DomainComment.java]
-                + [EnzymeRegulationComment.java][main/java/com/bio4j/model/relationships/comment/EnzymeRegulationComment.java]
-                + [FunctionComment.java][main/java/com/bio4j/model/relationships/comment/FunctionComment.java]
-                + [InductionComment.java][main/java/com/bio4j/model/relationships/comment/InductionComment.java]
-                + [MassSpectometryComment.java][main/java/com/bio4j/model/relationships/comment/MassSpectometryComment.java]
-                + [MiscellaneousComment.java][main/java/com/bio4j/model/relationships/comment/MiscellaneousComment.java]
-                + [OnlineInformationComment.java][main/java/com/bio4j/model/relationships/comment/OnlineInformationComment.java]
-                + [PathwayComment.java][main/java/com/bio4j/model/relationships/comment/PathwayComment.java]
-                + [PharmaceuticalComment.java][main/java/com/bio4j/model/relationships/comment/PharmaceuticalComment.java]
-                + [PolymorphismComment.java][main/java/com/bio4j/model/relationships/comment/PolymorphismComment.java]
-                + [PostTransactionalModificationComment.java][main/java/com/bio4j/model/relationships/comment/PostTransactionalModificationComment.java]
-                + [RnaEditingComment.java][main/java/com/bio4j/model/relationships/comment/RnaEditingComment.java]
-                + [SimilarityComment.java][main/java/com/bio4j/model/relationships/comment/SimilarityComment.java]
-                + [SubunitComment.java][main/java/com/bio4j/model/relationships/comment/SubunitComment.java]
-                + [TissueSpecificityComment.java][main/java/com/bio4j/model/relationships/comment/TissueSpecificityComment.java]
-                + [ToxicDoseComment.java][main/java/com/bio4j/model/relationships/comment/ToxicDoseComment.java]
-              + features
-                + [ActiveSiteFeature.java][main/java/com/bio4j/model/relationships/features/ActiveSiteFeature.java]
-                + [BasicFeature.java][main/java/com/bio4j/model/relationships/features/BasicFeature.java]
-                + [BindingSiteFeature.java][main/java/com/bio4j/model/relationships/features/BindingSiteFeature.java]
-                + [CalciumBindingRegionFeature.java][main/java/com/bio4j/model/relationships/features/CalciumBindingRegionFeature.java]
-                + [ChainFeature.java][main/java/com/bio4j/model/relationships/features/ChainFeature.java]
-                + [CoiledCoilRegionFeature.java][main/java/com/bio4j/model/relationships/features/CoiledCoilRegionFeature.java]
-                + [CompositionallyBiasedRegionFeature.java][main/java/com/bio4j/model/relationships/features/CompositionallyBiasedRegionFeature.java]
-                + [CrossLinkFeature.java][main/java/com/bio4j/model/relationships/features/CrossLinkFeature.java]
-                + [DisulfideBondFeature.java][main/java/com/bio4j/model/relationships/features/DisulfideBondFeature.java]
-                + [DnaBindingFeature.java][main/java/com/bio4j/model/relationships/features/DnaBindingFeature.java]
-                + [DomainFeature.java][main/java/com/bio4j/model/relationships/features/DomainFeature.java]
-                + [GlycosylationSiteFeature.java][main/java/com/bio4j/model/relationships/features/GlycosylationSiteFeature.java]
-                + [HelixFeature.java][main/java/com/bio4j/model/relationships/features/HelixFeature.java]
-                + [InitiatorMethionineFeature.java][main/java/com/bio4j/model/relationships/features/InitiatorMethionineFeature.java]
-                + [IntramembraneRegionFeature.java][main/java/com/bio4j/model/relationships/features/IntramembraneRegionFeature.java]
-                + [LipidMoietyBindingRegionFeature.java][main/java/com/bio4j/model/relationships/features/LipidMoietyBindingRegionFeature.java]
-                + [MetalIonBindingSiteFeature.java][main/java/com/bio4j/model/relationships/features/MetalIonBindingSiteFeature.java]
-                + [ModifiedResidueFeature.java][main/java/com/bio4j/model/relationships/features/ModifiedResidueFeature.java]
-                + [MutagenesisSiteFeature.java][main/java/com/bio4j/model/relationships/features/MutagenesisSiteFeature.java]
-                + [NonConsecutiveResiduesFeature.java][main/java/com/bio4j/model/relationships/features/NonConsecutiveResiduesFeature.java]
-                + [NonStandardAminoAcidFeature.java][main/java/com/bio4j/model/relationships/features/NonStandardAminoAcidFeature.java]
-                + [NonTerminalResidueFeature.java][main/java/com/bio4j/model/relationships/features/NonTerminalResidueFeature.java]
-                + [NucleotidePhosphateBindingRegionFeature.java][main/java/com/bio4j/model/relationships/features/NucleotidePhosphateBindingRegionFeature.java]
-                + [PeptideFeature.java][main/java/com/bio4j/model/relationships/features/PeptideFeature.java]
-                + [PropeptideFeature.java][main/java/com/bio4j/model/relationships/features/PropeptideFeature.java]
-                + [RegionOfInterestFeature.java][main/java/com/bio4j/model/relationships/features/RegionOfInterestFeature.java]
-                + [RepeatFeature.java][main/java/com/bio4j/model/relationships/features/RepeatFeature.java]
-                + [SequenceConflictFeature.java][main/java/com/bio4j/model/relationships/features/SequenceConflictFeature.java]
-                + [SequenceVariantFeature.java][main/java/com/bio4j/model/relationships/features/SequenceVariantFeature.java]
-                + [ShortSequenceMotifFeature.java][main/java/com/bio4j/model/relationships/features/ShortSequenceMotifFeature.java]
-                + [SignalPeptideFeature.java][main/java/com/bio4j/model/relationships/features/SignalPeptideFeature.java]
-                + [SiteFeature.java][main/java/com/bio4j/model/relationships/features/SiteFeature.java]
-                + [SpliceVariantFeature.java][main/java/com/bio4j/model/relationships/features/SpliceVariantFeature.java]
-                + [StrandFeature.java][main/java/com/bio4j/model/relationships/features/StrandFeature.java]
-                + [TopologicalDomainFeature.java][main/java/com/bio4j/model/relationships/features/TopologicalDomainFeature.java]
-                + [TransitPeptideFeature.java][main/java/com/bio4j/model/relationships/features/TransitPeptideFeature.java]
-                + [TransmembraneRegionFeature.java][main/java/com/bio4j/model/relationships/features/TransmembraneRegionFeature.java]
-                + [TurnFeature.java][main/java/com/bio4j/model/relationships/features/TurnFeature.java]
-                + [UnsureResidueFeature.java][main/java/com/bio4j/model/relationships/features/UnsureResidueFeature.java]
-                + [ZincFingerRegionFeature.java][main/java/com/bio4j/model/relationships/features/ZincFingerRegionFeature.java]
-              + go
-                + [HasPartOfGo.java][main/java/com/bio4j/model/relationships/go/HasPartOfGo.java]
-                + [IsAGo.java][main/java/com/bio4j/model/relationships/go/IsAGo.java]
-                + [NegativelyRegulatesGo.java][main/java/com/bio4j/model/relationships/go/NegativelyRegulatesGo.java]
-                + [PartOfGo.java][main/java/com/bio4j/model/relationships/go/PartOfGo.java]
-                + [PositivelyRegulatesGo.java][main/java/com/bio4j/model/relationships/go/PositivelyRegulatesGo.java]
-                + [RegulatesGo.java][main/java/com/bio4j/model/relationships/go/RegulatesGo.java]
-              + [InstituteCountry.java][main/java/com/bio4j/model/relationships/InstituteCountry.java]
-              + [IsoformEventGenerator.java][main/java/com/bio4j/model/relationships/IsoformEventGenerator.java]
-              + ncbi
-                + [NCBITaxon.java][main/java/com/bio4j/model/relationships/ncbi/NCBITaxon.java]
-                + [NCBITaxonParent.java][main/java/com/bio4j/model/relationships/ncbi/NCBITaxonParent.java]
-              + protein
-                + [BasicProteinSequenceCaution.java][main/java/com/bio4j/model/relationships/protein/BasicProteinSequenceCaution.java]
-                + [ProteinDataset.java][main/java/com/bio4j/model/relationships/protein/ProteinDataset.java]
-                + [ProteinEnzymaticActivity.java][main/java/com/bio4j/model/relationships/protein/ProteinEnzymaticActivity.java]
-                + [ProteinErroneousGeneModelPrediction.java][main/java/com/bio4j/model/relationships/protein/ProteinErroneousGeneModelPrediction.java]
-                + [ProteinErroneousInitiation.java][main/java/com/bio4j/model/relationships/protein/ProteinErroneousInitiation.java]
-                + [ProteinErroneousTermination.java][main/java/com/bio4j/model/relationships/protein/ProteinErroneousTermination.java]
-                + [ProteinErroneousTranslation.java][main/java/com/bio4j/model/relationships/protein/ProteinErroneousTranslation.java]
-                + [ProteinFrameshift.java][main/java/com/bio4j/model/relationships/protein/ProteinFrameshift.java]
-                + [ProteinGenomeElement.java][main/java/com/bio4j/model/relationships/protein/ProteinGenomeElement.java]
-                + [ProteinGo.java][main/java/com/bio4j/model/relationships/protein/ProteinGo.java]
-                + [ProteinInterpro.java][main/java/com/bio4j/model/relationships/protein/ProteinInterpro.java]
-                + [ProteinIsoform.java][main/java/com/bio4j/model/relationships/protein/ProteinIsoform.java]
-                + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/relationships/protein/ProteinIsoformInteraction.java]
-                + [ProteinKeyword.java][main/java/com/bio4j/model/relationships/protein/ProteinKeyword.java]
-                + [ProteinMiscellaneousDiscrepancy.java][main/java/com/bio4j/model/relationships/protein/ProteinMiscellaneousDiscrepancy.java]
-                + [ProteinOrganism.java][main/java/com/bio4j/model/relationships/protein/ProteinOrganism.java]
-                + [ProteinPfam.java][main/java/com/bio4j/model/relationships/protein/ProteinPfam.java]
-                + [ProteinProteinInteraction.java][main/java/com/bio4j/model/relationships/protein/ProteinProteinInteraction.java]
-                + [ProteinReactome.java][main/java/com/bio4j/model/relationships/protein/ProteinReactome.java]
-                + [ProteinSubcellularLocation.java][main/java/com/bio4j/model/relationships/protein/ProteinSubcellularLocation.java]
-              + refseq
-                + [GenomeElementCDS.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementCDS.java]
-                + [GenomeElementGene.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementGene.java]
-                + [GenomeElementMiscRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementMiscRna.java]
-                + [GenomeElementMRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementMRna.java]
-                + [GenomeElementNcRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementNcRna.java]
-                + [GenomeElementRRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementRRna.java]
-                + [GenomeElementTmRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementTmRna.java]
-                + [GenomeElementTRna.java][main/java/com/bio4j/model/relationships/refseq/GenomeElementTRna.java]
-              + sc
-                + [ErroneousGeneModelPrediction.java][main/java/com/bio4j/model/relationships/sc/ErroneousGeneModelPrediction.java]
-                + [ErroneousInitiation.java][main/java/com/bio4j/model/relationships/sc/ErroneousInitiation.java]
-                + [ErroneousTermination.java][main/java/com/bio4j/model/relationships/sc/ErroneousTermination.java]
-                + [ErroneousTranslation.java][main/java/com/bio4j/model/relationships/sc/ErroneousTranslation.java]
-                + [Frameshift.java][main/java/com/bio4j/model/relationships/sc/Frameshift.java]
-                + [MiscellaneousDiscrepancy.java][main/java/com/bio4j/model/relationships/sc/MiscellaneousDiscrepancy.java]
-              + [SubcellularLocationParent.java][main/java/com/bio4j/model/relationships/SubcellularLocationParent.java]
-              + [TaxonParent.java][main/java/com/bio4j/model/relationships/TaxonParent.java]
-              + uniref
-                + [UniRef100Member.java][main/java/com/bio4j/model/relationships/uniref/UniRef100Member.java]
-                + [Uniref50Member.java][main/java/com/bio4j/model/relationships/uniref/Uniref50Member.java]
-                + [UniRef90Member.java][main/java/com/bio4j/model/relationships/uniref/UniRef90Member.java]
+            + [RelationshipType.java][main/java/com/bio4j/model/RelationshipType.java]
+            + [Retriever.java][main/java/com/bio4j/model/Retriever.java]
+            + uniprot
+              + nodes
+                + [Book.java][main/java/com/bio4j/model/uniprot/nodes/Book.java]
+                + [City.java][main/java/com/bio4j/model/uniprot/nodes/City.java]
+                + [CommentType.java][main/java/com/bio4j/model/uniprot/nodes/CommentType.java]
+                + [Consortium.java][main/java/com/bio4j/model/uniprot/nodes/Consortium.java]
+                + [Country.java][main/java/com/bio4j/model/uniprot/nodes/Country.java]
+                + [Dataset.java][main/java/com/bio4j/model/uniprot/nodes/Dataset.java]
+                + [DB.java][main/java/com/bio4j/model/uniprot/nodes/DB.java]
+                + [FeatureType.java][main/java/com/bio4j/model/uniprot/nodes/FeatureType.java]
+                + [Institute.java][main/java/com/bio4j/model/uniprot/nodes/Institute.java]
+                + [Interpro.java][main/java/com/bio4j/model/uniprot/nodes/Interpro.java]
+                + [Journal.java][main/java/com/bio4j/model/uniprot/nodes/Journal.java]
+                + [Keyword.java][main/java/com/bio4j/model/uniprot/nodes/Keyword.java]
+                + [OnlineArticle.java][main/java/com/bio4j/model/uniprot/nodes/OnlineArticle.java]
+                + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/nodes/OnlineJournal.java]
+                + [Organism.java][main/java/com/bio4j/model/uniprot/nodes/Organism.java]
+                + [Patent.java][main/java/com/bio4j/model/uniprot/nodes/Patent.java]
+                + [Person.java][main/java/com/bio4j/model/uniprot/nodes/Person.java]
+                + [Pfam.java][main/java/com/bio4j/model/uniprot/nodes/Pfam.java]
+                + [Protein.java][main/java/com/bio4j/model/uniprot/nodes/Protein.java]
+                + [Publisher.java][main/java/com/bio4j/model/uniprot/nodes/Publisher.java]
+                + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/nodes/ReactomeTerm.java]
+                + references
+                  + [Articles.java][main/java/com/bio4j/model/uniprot/nodes/references/Articles.java]
+                  + [Author.java][main/java/com/bio4j/model/uniprot/nodes/references/Author.java]
+                  + [Books.java][main/java/com/bio4j/model/uniprot/nodes/references/Books.java]
+                  + [Consortiums.java][main/java/com/bio4j/model/uniprot/nodes/references/Consortiums.java]
+                  + [Editor.java][main/java/com/bio4j/model/uniprot/nodes/references/Editor.java]
+                  + [Journals.java][main/java/com/bio4j/model/uniprot/nodes/references/Journals.java]
+                  + [OnlineArticles.java][main/java/com/bio4j/model/uniprot/nodes/references/OnlineArticles.java]
+                  + [Patents.java][main/java/com/bio4j/model/uniprot/nodes/references/Patents.java]
+                  + [Persons.java][main/java/com/bio4j/model/uniprot/nodes/references/Persons.java]
+                  + [Publication.java][main/java/com/bio4j/model/uniprot/nodes/references/Publication.java]
+                  + [Reference.java][main/java/com/bio4j/model/uniprot/nodes/references/Reference.java]
+                  + [Submissions.java][main/java/com/bio4j/model/uniprot/nodes/references/Submissions.java]
+                  + [Theses.java][main/java/com/bio4j/model/uniprot/nodes/references/Theses.java]
+                  + [UnpublishedObservations.java][main/java/com/bio4j/model/uniprot/nodes/references/UnpublishedObservations.java]
+                + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/nodes/SequenceCaution.java]
+                + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/nodes/SubcellularLocation.java]
+                + [Submission.java][main/java/com/bio4j/model/uniprot/nodes/Submission.java]
+                + [Taxon.java][main/java/com/bio4j/model/uniprot/nodes/Taxon.java]
+                + [Thesis.java][main/java/com/bio4j/model/uniprot/nodes/Thesis.java]
+                + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/nodes/UnpublishedObservation.java]
+              + relationships
+                + [ActiveSiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/ActiveSiteFeature.java]
+                + [AllergenComment.java][main/java/com/bio4j/model/uniprot/relationships/AllergenComment.java]
+                + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/relationships/ArticleJournal.java]
+                + [ArticleProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/ArticleProteinCitation.java]
+                + [BasicComment.java][main/java/com/bio4j/model/uniprot/relationships/BasicComment.java]
+                + [BasicCommentType.java][main/java/com/bio4j/model/uniprot/relationships/BasicCommentType.java]
+                + [BasicFeature.java][main/java/com/bio4j/model/uniprot/relationships/BasicFeature.java]
+                + [BasicFeatureType.java][main/java/com/bio4j/model/uniprot/relationships/BasicFeatureType.java]
+                + [BasicProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/relationships/BasicProteinSequenceCaution.java]
+                + [BindingSiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/BindingSiteFeature.java]
+                + [BioPhysicoChemicalPropertiesComment.java][main/java/com/bio4j/model/uniprot/relationships/BioPhysicoChemicalPropertiesComment.java]
+                + [BiotechnologyComment.java][main/java/com/bio4j/model/uniprot/relationships/BiotechnologyComment.java]
+                + [BookAuthor.java][main/java/com/bio4j/model/uniprot/relationships/BookAuthor.java]
+                + [BookCity.java][main/java/com/bio4j/model/uniprot/relationships/BookCity.java]
+                + [BookEditor.java][main/java/com/bio4j/model/uniprot/relationships/BookEditor.java]
+                + [BookProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/BookProteinCitation.java]
+                + [BookPublisher.java][main/java/com/bio4j/model/uniprot/relationships/BookPublisher.java]
+                + [CalciumBindingRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/CalciumBindingRegionFeature.java]
+                + [CatalyticActivityComment.java][main/java/com/bio4j/model/uniprot/relationships/CatalyticActivityComment.java]
+                + [CautionComment.java][main/java/com/bio4j/model/uniprot/relationships/CautionComment.java]
+                + [ChainFeature.java][main/java/com/bio4j/model/uniprot/relationships/ChainFeature.java]
+                + [CofactorComment.java][main/java/com/bio4j/model/uniprot/relationships/CofactorComment.java]
+                + [CoiledCoilRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/CoiledCoilRegionFeature.java]
+                + [CompositionallyBiasedRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/CompositionallyBiasedRegionFeature.java]
+                + [CrossLinkFeature.java][main/java/com/bio4j/model/uniprot/relationships/CrossLinkFeature.java]
+                + [DevelopmentalStageComment.java][main/java/com/bio4j/model/uniprot/relationships/DevelopmentalStageComment.java]
+                + [DiseaseComment.java][main/java/com/bio4j/model/uniprot/relationships/DiseaseComment.java]
+                + [DisruptionPhenotypeComment.java][main/java/com/bio4j/model/uniprot/relationships/DisruptionPhenotypeComment.java]
+                + [DisulfideBondFeature.java][main/java/com/bio4j/model/uniprot/relationships/DisulfideBondFeature.java]
+                + [DnaBindingFeature.java][main/java/com/bio4j/model/uniprot/relationships/DnaBindingFeature.java]
+                + [DomainComment.java][main/java/com/bio4j/model/uniprot/relationships/DomainComment.java]
+                + [DomainFeature.java][main/java/com/bio4j/model/uniprot/relationships/DomainFeature.java]
+                + [EnzymeRegulationComment.java][main/java/com/bio4j/model/uniprot/relationships/EnzymeRegulationComment.java]
+                + [ErroneousGeneModelPrediction.java][main/java/com/bio4j/model/uniprot/relationships/ErroneousGeneModelPrediction.java]
+                + [ErroneousInitiation.java][main/java/com/bio4j/model/uniprot/relationships/ErroneousInitiation.java]
+                + [ErroneousTermination.java][main/java/com/bio4j/model/uniprot/relationships/ErroneousTermination.java]
+                + [ErroneousTranslation.java][main/java/com/bio4j/model/uniprot/relationships/ErroneousTranslation.java]
+                + [Frameshift.java][main/java/com/bio4j/model/uniprot/relationships/Frameshift.java]
+                + [FunctionComment.java][main/java/com/bio4j/model/uniprot/relationships/FunctionComment.java]
+                + [GlycosylationSiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/GlycosylationSiteFeature.java]
+                + [HelixFeature.java][main/java/com/bio4j/model/uniprot/relationships/HelixFeature.java]
+                + [InductionComment.java][main/java/com/bio4j/model/uniprot/relationships/InductionComment.java]
+                + [InitiatorMethionineFeature.java][main/java/com/bio4j/model/uniprot/relationships/InitiatorMethionineFeature.java]
+                + [InstituteCountry.java][main/java/com/bio4j/model/uniprot/relationships/InstituteCountry.java]
+                + [IntramembraneRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/IntramembraneRegionFeature.java]
+                + [LipidMoietyBindingRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/LipidMoietyBindingRegionFeature.java]
+                + [MassSpectometryComment.java][main/java/com/bio4j/model/uniprot/relationships/MassSpectometryComment.java]
+                + [MetalIonBindingSiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/MetalIonBindingSiteFeature.java]
+                + [MiscellaneousComment.java][main/java/com/bio4j/model/uniprot/relationships/MiscellaneousComment.java]
+                + [MiscellaneousDiscrepancy.java][main/java/com/bio4j/model/uniprot/relationships/MiscellaneousDiscrepancy.java]
+                + [ModifiedResidueFeature.java][main/java/com/bio4j/model/uniprot/relationships/ModifiedResidueFeature.java]
+                + [MutagenesisSiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/MutagenesisSiteFeature.java]
+                + [NonConsecutiveResiduesFeature.java][main/java/com/bio4j/model/uniprot/relationships/NonConsecutiveResiduesFeature.java]
+                + [NonStandardAminoAcidFeature.java][main/java/com/bio4j/model/uniprot/relationships/NonStandardAminoAcidFeature.java]
+                + [NonTerminalResidueFeature.java][main/java/com/bio4j/model/uniprot/relationships/NonTerminalResidueFeature.java]
+                + [NucleotidePhosphateBindingRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/NucleotidePhosphateBindingRegionFeature.java]
+                + [OnlineArticleAuthor.java][main/java/com/bio4j/model/uniprot/relationships/OnlineArticleAuthor.java]
+                + [OnlineArticleJournal.java][main/java/com/bio4j/model/uniprot/relationships/OnlineArticleJournal.java]
+                + [OnlineArticleProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/OnlineArticleProteinCitation.java]
+                + [OnlineInformationComment.java][main/java/com/bio4j/model/uniprot/relationships/OnlineInformationComment.java]
+                + [PatentAuthor.java][main/java/com/bio4j/model/uniprot/relationships/PatentAuthor.java]
+                + [PatentProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/PatentProteinCitation.java]
+                + [PathwayComment.java][main/java/com/bio4j/model/uniprot/relationships/PathwayComment.java]
+                + [PeptideFeature.java][main/java/com/bio4j/model/uniprot/relationships/PeptideFeature.java]
+                + [PharmaceuticalComment.java][main/java/com/bio4j/model/uniprot/relationships/PharmaceuticalComment.java]
+                + [PolymorphismComment.java][main/java/com/bio4j/model/uniprot/relationships/PolymorphismComment.java]
+                + [PostTransactionalModificationComment.java][main/java/com/bio4j/model/uniprot/relationships/PostTransactionalModificationComment.java]
+                + [PropeptideFeature.java][main/java/com/bio4j/model/uniprot/relationships/PropeptideFeature.java]
+                + [ProteinDataset.java][main/java/com/bio4j/model/uniprot/relationships/ProteinDataset.java]
+                + [ProteinEnzymaticActivity.java][main/java/com/bio4j/model/uniprot/relationships/ProteinEnzymaticActivity.java]
+                + [ProteinErroneousGeneModelPrediction.java][main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousGeneModelPrediction.java]
+                + [ProteinErroneousInitiation.java][main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousInitiation.java]
+                + [ProteinErroneousTermination.java][main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousTermination.java]
+                + [ProteinErroneousTranslation.java][main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousTranslation.java]
+                + [ProteinFrameshift.java][main/java/com/bio4j/model/uniprot/relationships/ProteinFrameshift.java]
+                + [ProteinGenomeElement.java][main/java/com/bio4j/model/uniprot/relationships/ProteinGenomeElement.java]
+                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/relationships/ProteinInterpro.java]
+                + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/relationships/ProteinKeyword.java]
+                + [ProteinMiscellaneousDiscrepancy.java][main/java/com/bio4j/model/uniprot/relationships/ProteinMiscellaneousDiscrepancy.java]
+                + [ProteinOrganism.java][main/java/com/bio4j/model/uniprot/relationships/ProteinOrganism.java]
+                + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/relationships/ProteinPfam.java]
+                + [ProteinReactome.java][main/java/com/bio4j/model/uniprot/relationships/ProteinReactome.java]
+                + [ProteinSubcellularLocation.java][main/java/com/bio4j/model/uniprot/relationships/ProteinSubcellularLocation.java]
+                + references
+                  + [Article.java][main/java/com/bio4j/model/uniprot/relationships/references/Article.java]
+                  + [Book.java][main/java/com/bio4j/model/uniprot/relationships/references/Book.java]
+                  + [Cited.java][main/java/com/bio4j/model/uniprot/relationships/references/Cited.java]
+                  + [Consortium.java][main/java/com/bio4j/model/uniprot/relationships/references/Consortium.java]
+                  + [Journal.java][main/java/com/bio4j/model/uniprot/relationships/references/Journal.java]
+                  + [OnlineArticle.java][main/java/com/bio4j/model/uniprot/relationships/references/OnlineArticle.java]
+                  + [Patent.java][main/java/com/bio4j/model/uniprot/relationships/references/Patent.java]
+                  + [Person.java][main/java/com/bio4j/model/uniprot/relationships/references/Person.java]
+                  + [Published.java][main/java/com/bio4j/model/uniprot/relationships/references/Published.java]
+                  + [Submission.java][main/java/com/bio4j/model/uniprot/relationships/references/Submission.java]
+                  + [Thesis.java][main/java/com/bio4j/model/uniprot/relationships/references/Thesis.java]
+                  + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/relationships/references/UnpublishedObservation.java]
+                + [RegionOfInterestFeature.java][main/java/com/bio4j/model/uniprot/relationships/RegionOfInterestFeature.java]
+                + [RepeatFeature.java][main/java/com/bio4j/model/uniprot/relationships/RepeatFeature.java]
+                + [RnaEditingComment.java][main/java/com/bio4j/model/uniprot/relationships/RnaEditingComment.java]
+                + [SequenceConflictFeature.java][main/java/com/bio4j/model/uniprot/relationships/SequenceConflictFeature.java]
+                + [SequenceVariantFeature.java][main/java/com/bio4j/model/uniprot/relationships/SequenceVariantFeature.java]
+                + [ShortSequenceMotifFeature.java][main/java/com/bio4j/model/uniprot/relationships/ShortSequenceMotifFeature.java]
+                + [SignalPeptideFeature.java][main/java/com/bio4j/model/uniprot/relationships/SignalPeptideFeature.java]
+                + [SimilarityComment.java][main/java/com/bio4j/model/uniprot/relationships/SimilarityComment.java]
+                + [SiteFeature.java][main/java/com/bio4j/model/uniprot/relationships/SiteFeature.java]
+                + [SpliceVariantFeature.java][main/java/com/bio4j/model/uniprot/relationships/SpliceVariantFeature.java]
+                + [StrandFeature.java][main/java/com/bio4j/model/uniprot/relationships/StrandFeature.java]
+                + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/relationships/SubcellularLocationParent.java]
+                + [SubmissionAuthor.java][main/java/com/bio4j/model/uniprot/relationships/SubmissionAuthor.java]
+                + [SubmissionDb.java][main/java/com/bio4j/model/uniprot/relationships/SubmissionDb.java]
+                + [SubmissionProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/SubmissionProteinCitation.java]
+                + [SubunitComment.java][main/java/com/bio4j/model/uniprot/relationships/SubunitComment.java]
+                + [TaxonParent.java][main/java/com/bio4j/model/uniprot/relationships/TaxonParent.java]
+                + [ThesisAuthor.java][main/java/com/bio4j/model/uniprot/relationships/ThesisAuthor.java]
+                + [ThesisInstitute.java][main/java/com/bio4j/model/uniprot/relationships/ThesisInstitute.java]
+                + [ThesisProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/ThesisProteinCitation.java]
+                + [TissueSpecificityComment.java][main/java/com/bio4j/model/uniprot/relationships/TissueSpecificityComment.java]
+                + [TopologicalDomainFeature.java][main/java/com/bio4j/model/uniprot/relationships/TopologicalDomainFeature.java]
+                + [ToxicDoseComment.java][main/java/com/bio4j/model/uniprot/relationships/ToxicDoseComment.java]
+                + [TransitPeptideFeature.java][main/java/com/bio4j/model/uniprot/relationships/TransitPeptideFeature.java]
+                + [TransmembraneRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/TransmembraneRegionFeature.java]
+                + [TurnFeature.java][main/java/com/bio4j/model/uniprot/relationships/TurnFeature.java]
+                + [UnpublishedObservationAuthor.java][main/java/com/bio4j/model/uniprot/relationships/UnpublishedObservationAuthor.java]
+                + [UnpublishedObservationProteinCitation.java][main/java/com/bio4j/model/uniprot/relationships/UnpublishedObservationProteinCitation.java]
+                + [UnsureResidueFeature.java][main/java/com/bio4j/model/uniprot/relationships/UnsureResidueFeature.java]
+                + [ZincFingerRegionFeature.java][main/java/com/bio4j/model/uniprot/relationships/ZincFingerRegionFeature.java]
+              + [UniProtModule.java][main/java/com/bio4j/model/uniprot/UniProtModule.java]
+            + uniprot_go
+              + relationships
+                + [GoAnnotation.java][main/java/com/bio4j/model/uniprot_go/relationships/GoAnnotation.java]
+              + [UniProt_GoModule.java][main/java/com/bio4j/model/uniprot_go/UniProt_GoModule.java]
+            + uniprot_isoforms
+              + relationships
+                + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot_isoforms/relationships/ProteinIsoform.java]
+            + uniprot_ncbiTaxonomy
+              + relationships
+                + [OrganismNCBITaxon.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/relationships/OrganismNCBITaxon.java]
+              + [UniProt_NcbiTaxonomyModule.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProt_NcbiTaxonomyModule.java]
+            + uniref
+              + relationships
+                + [UniRef100Member.java][main/java/com/bio4j/model/uniref/relationships/UniRef100Member.java]
+                + [UniRef50Member.java][main/java/com/bio4j/model/uniref/relationships/UniRef50Member.java]
+                + [UniRef90Member.java][main/java/com/bio4j/model/uniref/relationships/UniRef90Member.java]
+              + [UniRefModule.java][main/java/com/bio4j/model/uniref/UniRefModule.java]
             + util
+              + [AlternativeProductRetriever.java][main/java/com/bio4j/model/util/AlternativeProductRetriever.java]
+              + [ArticleRetriever.java][main/java/com/bio4j/model/util/ArticleRetriever.java]
+              + [BookRetriever.java][main/java/com/bio4j/model/util/BookRetriever.java]
+              + [ByTaxId.java][main/java/com/bio4j/model/util/ByTaxId.java]
+              + [CityRetriever.java][main/java/com/bio4j/model/util/CityRetriever.java]
+              + [CommentTypeRetriever.java][main/java/com/bio4j/model/util/CommentTypeRetriever.java]
+              + [ConsortiumRetriever.java][main/java/com/bio4j/model/util/ConsortiumRetriever.java]
+              + [CountryRetriever.java][main/java/com/bio4j/model/util/CountryRetriever.java]
+              + [DatasetRetriever.java][main/java/com/bio4j/model/util/DatasetRetriever.java]
+              + [DBRetriever.java][main/java/com/bio4j/model/util/DBRetriever.java]
+              + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [FeatureTypeRetriever.java][main/java/com/bio4j/model/util/FeatureTypeRetriever.java]
+              + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
+              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
+              + [InstituteRetriever.java][main/java/com/bio4j/model/util/InstituteRetriever.java]
+              + [InterproRetriever.java][main/java/com/bio4j/model/util/InterproRetriever.java]
+              + [IsoformRetriever.java][main/java/com/bio4j/model/util/IsoformRetriever.java]
+              + [JournalRetriever.java][main/java/com/bio4j/model/util/JournalRetriever.java]
+              + [KeywordRetriever.java][main/java/com/bio4j/model/util/KeywordRetriever.java]
+              + [NCBITaxonRetriever.java][main/java/com/bio4j/model/util/NCBITaxonRetriever.java]
+              + [NodeIndex.java][main/java/com/bio4j/model/util/NodeIndex.java]
               + [NodeRetriever.java][main/java/com/bio4j/model/util/NodeRetriever.java]
+              + [OnlineArticleRetriever.java][main/java/com/bio4j/model/util/OnlineArticleRetriever.java]
+              + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
+              + [OrganismRetriever.java][main/java/com/bio4j/model/util/OrganismRetriever.java]
+              + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
+              + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
+              + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
+              + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
+              + [PublisherRetriever.java][main/java/com/bio4j/model/util/PublisherRetriever.java]
+              + [ReactomeTermRetriever.java][main/java/com/bio4j/model/util/ReactomeTermRetriever.java]
+              + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
+              + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
+              + [SubcellularLocationRetriever.java][main/java/com/bio4j/model/util/SubcellularLocationRetriever.java]
+              + [SubmissionRetriever.java][main/java/com/bio4j/model/util/SubmissionRetriever.java]
+              + [TaxonRetriever.java][main/java/com/bio4j/model/util/TaxonRetriever.java]
+              + [ThesisRetriever.java][main/java/com/bio4j/model/util/ThesisRetriever.java]
 
+[main/java/com/bio4j/model/Element.java]: Element.java.md
+[main/java/com/bio4j/model/ElementType.java]: ElementType.java.md
 [main/java/com/bio4j/model/enums/UniprotDBXref.java]: enums/UniprotDBXref.java.md
+[main/java/com/bio4j/model/enzymedb/EnzymeDBModule.java]: enzymedb/EnzymeDBModule.java.md
+[main/java/com/bio4j/model/enzymedb/indexes/ById.java]: enzymedb/indexes/ById.java.md
+[main/java/com/bio4j/model/enzymedb/nodes/Enzyme.java]: enzymedb/nodes/Enzyme.java.md
+[main/java/com/bio4j/model/enzymedb/relationships/EnzymaticActivity.java]: enzymedb/relationships/EnzymaticActivity.java.md
+[main/java/com/bio4j/model/go/GoModule.java]: go/GoModule.java.md
+[main/java/com/bio4j/model/go/indexes/ById.java]: go/indexes/ById.java.md
+[main/java/com/bio4j/model/go/nodes/GoTerm.java]: go/nodes/GoTerm.java.md
+[main/java/com/bio4j/model/go/relationships/HasPartOf.java]: go/relationships/HasPartOf.java.md
+[main/java/com/bio4j/model/go/relationships/IsA.java]: go/relationships/IsA.java.md
+[main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: go/relationships/NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/relationships/PartOf.java]: go/relationships/PartOf.java.md
+[main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: go/relationships/PositivelyRegulates.java.md
+[main/java/com/bio4j/model/go/relationships/Regulates.java]: go/relationships/Regulates.java.md
+[main/java/com/bio4j/model/isoforms/IsoformsModule.java]: isoforms/IsoformsModule.java.md
+[main/java/com/bio4j/model/isoforms/nodes/AlternativeProduct.java]: isoforms/nodes/AlternativeProduct.java.md
+[main/java/com/bio4j/model/isoforms/nodes/Isoform.java]: isoforms/nodes/Isoform.java.md
+[main/java/com/bio4j/model/isoforms/relationships/AlternativeProductInitiation.java]: isoforms/relationships/AlternativeProductInitiation.java.md
+[main/java/com/bio4j/model/isoforms/relationships/AlternativeProductPromoter.java]: isoforms/relationships/AlternativeProductPromoter.java.md
+[main/java/com/bio4j/model/isoforms/relationships/AlternativeProductRibosomalFrameshifting.java]: isoforms/relationships/AlternativeProductRibosomalFrameshifting.java.md
+[main/java/com/bio4j/model/isoforms/relationships/AlternativeProductSplicing.java]: isoforms/relationships/AlternativeProductSplicing.java.md
+[main/java/com/bio4j/model/isoforms/relationships/IsoformEventGenerator.java]: isoforms/relationships/IsoformEventGenerator.java.md
+[main/java/com/bio4j/model/Module.java]: Module.java.md
+[main/java/com/bio4j/model/modules.java]: modules.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/indexes/ById.java]: ncbiTaxonomy/indexes/ById.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]: ncbiTaxonomy/NcbiTaxonomyModule.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/nodes/NCBITaxon.java]: ncbiTaxonomy/nodes/NCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/relationships/Parent.java]: ncbiTaxonomy/relationships/Parent.java.md
 [main/java/com/bio4j/model/Node.java]: Node.java.md
-[main/java/com/bio4j/model/nodes/AlternativeProduct.java]: nodes/AlternativeProduct.java.md
-[main/java/com/bio4j/model/nodes/citation/Article.java]: nodes/citation/Article.java.md
-[main/java/com/bio4j/model/nodes/citation/Book.java]: nodes/citation/Book.java.md
-[main/java/com/bio4j/model/nodes/citation/DB.java]: nodes/citation/DB.java.md
-[main/java/com/bio4j/model/nodes/citation/Journal.java]: nodes/citation/Journal.java.md
-[main/java/com/bio4j/model/nodes/citation/OnlineArticle.java]: nodes/citation/OnlineArticle.java.md
-[main/java/com/bio4j/model/nodes/citation/OnlineJournal.java]: nodes/citation/OnlineJournal.java.md
-[main/java/com/bio4j/model/nodes/citation/Patent.java]: nodes/citation/Patent.java.md
-[main/java/com/bio4j/model/nodes/citation/Publisher.java]: nodes/citation/Publisher.java.md
-[main/java/com/bio4j/model/nodes/citation/Submission.java]: nodes/citation/Submission.java.md
-[main/java/com/bio4j/model/nodes/citation/Thesis.java]: nodes/citation/Thesis.java.md
-[main/java/com/bio4j/model/nodes/citation/UnpublishedObservation.java]: nodes/citation/UnpublishedObservation.java.md
-[main/java/com/bio4j/model/nodes/City.java]: nodes/City.java.md
-[main/java/com/bio4j/model/nodes/CommentType.java]: nodes/CommentType.java.md
-[main/java/com/bio4j/model/nodes/Consortium.java]: nodes/Consortium.java.md
-[main/java/com/bio4j/model/nodes/Country.java]: nodes/Country.java.md
-[main/java/com/bio4j/model/nodes/Dataset.java]: nodes/Dataset.java.md
-[main/java/com/bio4j/model/nodes/Enzyme.java]: nodes/Enzyme.java.md
-[main/java/com/bio4j/model/nodes/FeatureType.java]: nodes/FeatureType.java.md
-[main/java/com/bio4j/model/nodes/GoTerm.java]: nodes/GoTerm.java.md
-[main/java/com/bio4j/model/nodes/Institute.java]: nodes/Institute.java.md
-[main/java/com/bio4j/model/nodes/Interpro.java]: nodes/Interpro.java.md
-[main/java/com/bio4j/model/nodes/Isoform.java]: nodes/Isoform.java.md
-[main/java/com/bio4j/model/nodes/Keyword.java]: nodes/Keyword.java.md
-[main/java/com/bio4j/model/nodes/ncbi/NCBITaxon.java]: nodes/ncbi/NCBITaxon.java.md
-[main/java/com/bio4j/model/nodes/Organism.java]: nodes/Organism.java.md
-[main/java/com/bio4j/model/nodes/Person.java]: nodes/Person.java.md
-[main/java/com/bio4j/model/nodes/Pfam.java]: nodes/Pfam.java.md
-[main/java/com/bio4j/model/nodes/Protein.java]: nodes/Protein.java.md
-[main/java/com/bio4j/model/nodes/reactome/ReactomeTerm.java]: nodes/reactome/ReactomeTerm.java.md
-[main/java/com/bio4j/model/nodes/refseq/CDS.java]: nodes/refseq/CDS.java.md
-[main/java/com/bio4j/model/nodes/refseq/Gene.java]: nodes/refseq/Gene.java.md
-[main/java/com/bio4j/model/nodes/refseq/GenomeElement.java]: nodes/refseq/GenomeElement.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/MiscRNA.java]: nodes/refseq/rna/MiscRNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/MRNA.java]: nodes/refseq/rna/MRNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/NcRNA.java]: nodes/refseq/rna/NcRNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/RNA.java]: nodes/refseq/rna/RNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/RRNA.java]: nodes/refseq/rna/RRNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/TmRNA.java]: nodes/refseq/rna/TmRNA.java.md
-[main/java/com/bio4j/model/nodes/refseq/rna/TRNA.java]: nodes/refseq/rna/TRNA.java.md
-[main/java/com/bio4j/model/nodes/SequenceCaution.java]: nodes/SequenceCaution.java.md
-[main/java/com/bio4j/model/nodes/SubcellularLocation.java]: nodes/SubcellularLocation.java.md
-[main/java/com/bio4j/model/nodes/Taxon.java]: nodes/Taxon.java.md
+[main/java/com/bio4j/model/NodeIndex.java]: NodeIndex.java.md
+[main/java/com/bio4j/model/NodeListIndex.java]: NodeListIndex.java.md
+[main/java/com/bio4j/model/NodeType.java]: NodeType.java.md
+[main/java/com/bio4j/model/NodeUniqueIndex.java]: NodeUniqueIndex.java.md
+[main/java/com/bio4j/model/properties/Accession.java]: properties/Accession.java.md
+[main/java/com/bio4j/model/properties/AlternateNames.java]: properties/AlternateNames.java.md
+[main/java/com/bio4j/model/properties/AlternativeAccessions.java]: properties/AlternativeAccessions.java.md
+[main/java/com/bio4j/model/properties/AlternativeIds.java]: properties/AlternativeIds.java.md
+[main/java/com/bio4j/model/properties/CatalyticActivity.java]: properties/CatalyticActivity.java.md
+[main/java/com/bio4j/model/properties/Cofactors.java]: properties/Cofactors.java.md
+[main/java/com/bio4j/model/properties/Comment.java]: properties/Comment.java.md
+[main/java/com/bio4j/model/properties/CommonName.java]: properties/CommonName.java.md
+[main/java/com/bio4j/model/properties/Country.java]: properties/Country.java.md
+[main/java/com/bio4j/model/properties/Date.java]: properties/Date.java.md
+[main/java/com/bio4j/model/properties/Definition.java]: properties/Definition.java.md
+[main/java/com/bio4j/model/properties/DoId.java]: properties/DoId.java.md
+[main/java/com/bio4j/model/properties/EmblCode.java]: properties/EmblCode.java.md
+[main/java/com/bio4j/model/properties/Evidence.java]: properties/Evidence.java.md
+[main/java/com/bio4j/model/properties/Experiments.java]: properties/Experiments.java.md
+[main/java/com/bio4j/model/properties/First.java]: properties/First.java.md
+[main/java/com/bio4j/model/properties/FullName.java]: properties/FullName.java.md
+[main/java/com/bio4j/model/properties/GeneNames.java]: properties/GeneNames.java.md
+[main/java/com/bio4j/model/properties/Id.java]: properties/Id.java.md
+[main/java/com/bio4j/model/properties/Institute.java]: properties/Institute.java.md
+[main/java/com/bio4j/model/properties/Last.java]: properties/Last.java.md
+[main/java/com/bio4j/model/properties/Length.java]: properties/Length.java.md
+[main/java/com/bio4j/model/properties/Locator.java]: properties/Locator.java.md
+[main/java/com/bio4j/model/properties/Mass.java]: properties/Mass.java.md
+[main/java/com/bio4j/model/properties/MedlineId.java]: properties/MedlineId.java.md
+[main/java/com/bio4j/model/properties/ModifiedDate.java]: properties/ModifiedDate.java.md
+[main/java/com/bio4j/model/properties/Name.java]: properties/Name.java.md
+[main/java/com/bio4j/model/properties/NCBITaxonomyId.java]: properties/NCBITaxonomyId.java.md
+[main/java/com/bio4j/model/properties/Note.java]: properties/Note.java.md
+[main/java/com/bio4j/model/properties/Number.java]: properties/Number.java.md
+[main/java/com/bio4j/model/properties/Obsolete.java]: properties/Obsolete.java.md
+[main/java/com/bio4j/model/properties/OfficialName.java]: properties/OfficialName.java.md
+[main/java/com/bio4j/model/properties/PathwayName.java]: properties/PathwayName.java.md
+[main/java/com/bio4j/model/properties/Positions.java]: properties/Positions.java.md
+[main/java/com/bio4j/model/properties/PrositeCrossReferences.java]: properties/PrositeCrossReferences.java.md
+[main/java/com/bio4j/model/properties/PubmedId.java]: properties/PubmedId.java.md
+[main/java/com/bio4j/model/properties/ScientificName.java]: properties/ScientificName.java.md
+[main/java/com/bio4j/model/properties/Sequence.java]: properties/Sequence.java.md
+[main/java/com/bio4j/model/properties/ShortName.java]: properties/ShortName.java.md
+[main/java/com/bio4j/model/properties/Status.java]: properties/Status.java.md
+[main/java/com/bio4j/model/properties/SynonymName.java]: properties/SynonymName.java.md
+[main/java/com/bio4j/model/properties/TaxId.java]: properties/TaxId.java.md
+[main/java/com/bio4j/model/properties/TaxonomicRank.java]: properties/TaxonomicRank.java.md
+[main/java/com/bio4j/model/properties/Title.java]: properties/Title.java.md
+[main/java/com/bio4j/model/properties/Version.java]: properties/Version.java.md
+[main/java/com/bio4j/model/properties/Volume.java]: properties/Volume.java.md
+[main/java/com/bio4j/model/Property.java]: Property.java.md
+[main/java/com/bio4j/model/PropertyType.java]: PropertyType.java.md
+[main/java/com/bio4j/model/proteinInteractions/ProteinInteractionsModule.java]: proteinInteractions/ProteinInteractionsModule.java.md
+[main/java/com/bio4j/model/proteinInteractions/relationships/ProteinIsoformInteraction.java]: proteinInteractions/relationships/ProteinIsoformInteraction.java.md
+[main/java/com/bio4j/model/proteinInteractions/relationships/ProteinProteinInteraction.java]: proteinInteractions/relationships/ProteinProteinInteraction.java.md
+[main/java/com/bio4j/model/refseq/nodes/CDS.java]: refseq/nodes/CDS.java.md
+[main/java/com/bio4j/model/refseq/nodes/Gene.java]: refseq/nodes/Gene.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomeElement.java]: refseq/nodes/GenomeElement.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomicFeature.java]: refseq/nodes/GenomicFeature.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomicFeatureType.java]: refseq/nodes/GenomicFeatureType.java.md
+[main/java/com/bio4j/model/refseq/nodes/MiscRNA.java]: refseq/nodes/MiscRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/MRNA.java]: refseq/nodes/MRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/NcRNA.java]: refseq/nodes/NcRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/RNA.java]: refseq/nodes/RNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/RNAType.java]: refseq/nodes/RNAType.java.md
+[main/java/com/bio4j/model/refseq/nodes/RRNA.java]: refseq/nodes/RRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/TmRNA.java]: refseq/nodes/TmRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/TRNA.java]: refseq/nodes/TRNA.java.md
+[main/java/com/bio4j/model/refseq/RefSeqModule.java]: refseq/RefSeqModule.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasCDS.java]: refseq/relationships/HasCDS.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGene.java]: refseq/relationships/HasGene.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeature.java]: refseq/relationships/HasGenomicFeature.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeatureType.java]: refseq/relationships/HasGenomicFeatureType.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasMiscRNA.java]: refseq/relationships/HasMiscRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasMRNA.java]: refseq/relationships/HasMRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasNcRNA.java]: refseq/relationships/HasNcRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasRRNA.java]: refseq/relationships/HasRRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasTmRNA.java]: refseq/relationships/HasTmRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasTRNA.java]: refseq/relationships/HasTRNA.java.md
 [main/java/com/bio4j/model/Relationship.java]: Relationship.java.md
-[main/java/com/bio4j/model/relationships/aproducts/AlternativeProductInitiation.java]: relationships/aproducts/AlternativeProductInitiation.java.md
-[main/java/com/bio4j/model/relationships/aproducts/AlternativeProductPromoter.java]: relationships/aproducts/AlternativeProductPromoter.java.md
-[main/java/com/bio4j/model/relationships/aproducts/AlternativeProductRibosomalFrameshifting.java]: relationships/aproducts/AlternativeProductRibosomalFrameshifting.java.md
-[main/java/com/bio4j/model/relationships/aproducts/AlternativeProductSplicing.java]: relationships/aproducts/AlternativeProductSplicing.java.md
-[main/java/com/bio4j/model/relationships/citation/article/ArticleAuthor.java]: relationships/citation/article/ArticleAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/article/ArticleJournal.java]: relationships/citation/article/ArticleJournal.java.md
-[main/java/com/bio4j/model/relationships/citation/article/ArticleProteinCitation.java]: relationships/citation/article/ArticleProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/book/BookAuthor.java]: relationships/citation/book/BookAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/book/BookCity.java]: relationships/citation/book/BookCity.java.md
-[main/java/com/bio4j/model/relationships/citation/book/BookEditor.java]: relationships/citation/book/BookEditor.java.md
-[main/java/com/bio4j/model/relationships/citation/book/BookProteinCitation.java]: relationships/citation/book/BookProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/book/BookPublisher.java]: relationships/citation/book/BookPublisher.java.md
-[main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleAuthor.java]: relationships/citation/onarticle/OnlineArticleAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleJournal.java]: relationships/citation/onarticle/OnlineArticleJournal.java.md
-[main/java/com/bio4j/model/relationships/citation/onarticle/OnlineArticleProteinCitation.java]: relationships/citation/onarticle/OnlineArticleProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/patent/PatentAuthor.java]: relationships/citation/patent/PatentAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/patent/PatentProteinCitation.java]: relationships/citation/patent/PatentProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/submission/SubmissionAuthor.java]: relationships/citation/submission/SubmissionAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/submission/SubmissionDb.java]: relationships/citation/submission/SubmissionDb.java.md
-[main/java/com/bio4j/model/relationships/citation/submission/SubmissionProteinCitation.java]: relationships/citation/submission/SubmissionProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/thesis/ThesisAuthor.java]: relationships/citation/thesis/ThesisAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/thesis/ThesisInstitute.java]: relationships/citation/thesis/ThesisInstitute.java.md
-[main/java/com/bio4j/model/relationships/citation/thesis/ThesisProteinCitation.java]: relationships/citation/thesis/ThesisProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/citation/uo/UnpublishedObservationAuthor.java]: relationships/citation/uo/UnpublishedObservationAuthor.java.md
-[main/java/com/bio4j/model/relationships/citation/uo/UnpublishedObservationProteinCitation.java]: relationships/citation/uo/UnpublishedObservationProteinCitation.java.md
-[main/java/com/bio4j/model/relationships/comment/AllergenComment.java]: relationships/comment/AllergenComment.java.md
-[main/java/com/bio4j/model/relationships/comment/BasicComment.java]: relationships/comment/BasicComment.java.md
-[main/java/com/bio4j/model/relationships/comment/BioPhysicoChemicalPropertiesComment.java]: relationships/comment/BioPhysicoChemicalPropertiesComment.java.md
-[main/java/com/bio4j/model/relationships/comment/BiotechnologyComment.java]: relationships/comment/BiotechnologyComment.java.md
-[main/java/com/bio4j/model/relationships/comment/CatalyticActivityComment.java]: relationships/comment/CatalyticActivityComment.java.md
-[main/java/com/bio4j/model/relationships/comment/CautionComment.java]: relationships/comment/CautionComment.java.md
-[main/java/com/bio4j/model/relationships/comment/CofactorComment.java]: relationships/comment/CofactorComment.java.md
-[main/java/com/bio4j/model/relationships/comment/DevelopmentalStageComment.java]: relationships/comment/DevelopmentalStageComment.java.md
-[main/java/com/bio4j/model/relationships/comment/DiseaseComment.java]: relationships/comment/DiseaseComment.java.md
-[main/java/com/bio4j/model/relationships/comment/DisruptionPhenotypeComment.java]: relationships/comment/DisruptionPhenotypeComment.java.md
-[main/java/com/bio4j/model/relationships/comment/DomainComment.java]: relationships/comment/DomainComment.java.md
-[main/java/com/bio4j/model/relationships/comment/EnzymeRegulationComment.java]: relationships/comment/EnzymeRegulationComment.java.md
-[main/java/com/bio4j/model/relationships/comment/FunctionComment.java]: relationships/comment/FunctionComment.java.md
-[main/java/com/bio4j/model/relationships/comment/InductionComment.java]: relationships/comment/InductionComment.java.md
-[main/java/com/bio4j/model/relationships/comment/MassSpectometryComment.java]: relationships/comment/MassSpectometryComment.java.md
-[main/java/com/bio4j/model/relationships/comment/MiscellaneousComment.java]: relationships/comment/MiscellaneousComment.java.md
-[main/java/com/bio4j/model/relationships/comment/OnlineInformationComment.java]: relationships/comment/OnlineInformationComment.java.md
-[main/java/com/bio4j/model/relationships/comment/PathwayComment.java]: relationships/comment/PathwayComment.java.md
-[main/java/com/bio4j/model/relationships/comment/PharmaceuticalComment.java]: relationships/comment/PharmaceuticalComment.java.md
-[main/java/com/bio4j/model/relationships/comment/PolymorphismComment.java]: relationships/comment/PolymorphismComment.java.md
-[main/java/com/bio4j/model/relationships/comment/PostTransactionalModificationComment.java]: relationships/comment/PostTransactionalModificationComment.java.md
-[main/java/com/bio4j/model/relationships/comment/RnaEditingComment.java]: relationships/comment/RnaEditingComment.java.md
-[main/java/com/bio4j/model/relationships/comment/SimilarityComment.java]: relationships/comment/SimilarityComment.java.md
-[main/java/com/bio4j/model/relationships/comment/SubunitComment.java]: relationships/comment/SubunitComment.java.md
-[main/java/com/bio4j/model/relationships/comment/TissueSpecificityComment.java]: relationships/comment/TissueSpecificityComment.java.md
-[main/java/com/bio4j/model/relationships/comment/ToxicDoseComment.java]: relationships/comment/ToxicDoseComment.java.md
-[main/java/com/bio4j/model/relationships/features/ActiveSiteFeature.java]: relationships/features/ActiveSiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/BasicFeature.java]: relationships/features/BasicFeature.java.md
-[main/java/com/bio4j/model/relationships/features/BindingSiteFeature.java]: relationships/features/BindingSiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/CalciumBindingRegionFeature.java]: relationships/features/CalciumBindingRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/ChainFeature.java]: relationships/features/ChainFeature.java.md
-[main/java/com/bio4j/model/relationships/features/CoiledCoilRegionFeature.java]: relationships/features/CoiledCoilRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/CompositionallyBiasedRegionFeature.java]: relationships/features/CompositionallyBiasedRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/CrossLinkFeature.java]: relationships/features/CrossLinkFeature.java.md
-[main/java/com/bio4j/model/relationships/features/DisulfideBondFeature.java]: relationships/features/DisulfideBondFeature.java.md
-[main/java/com/bio4j/model/relationships/features/DnaBindingFeature.java]: relationships/features/DnaBindingFeature.java.md
-[main/java/com/bio4j/model/relationships/features/DomainFeature.java]: relationships/features/DomainFeature.java.md
-[main/java/com/bio4j/model/relationships/features/GlycosylationSiteFeature.java]: relationships/features/GlycosylationSiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/HelixFeature.java]: relationships/features/HelixFeature.java.md
-[main/java/com/bio4j/model/relationships/features/InitiatorMethionineFeature.java]: relationships/features/InitiatorMethionineFeature.java.md
-[main/java/com/bio4j/model/relationships/features/IntramembraneRegionFeature.java]: relationships/features/IntramembraneRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/LipidMoietyBindingRegionFeature.java]: relationships/features/LipidMoietyBindingRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/MetalIonBindingSiteFeature.java]: relationships/features/MetalIonBindingSiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/ModifiedResidueFeature.java]: relationships/features/ModifiedResidueFeature.java.md
-[main/java/com/bio4j/model/relationships/features/MutagenesisSiteFeature.java]: relationships/features/MutagenesisSiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/NonConsecutiveResiduesFeature.java]: relationships/features/NonConsecutiveResiduesFeature.java.md
-[main/java/com/bio4j/model/relationships/features/NonStandardAminoAcidFeature.java]: relationships/features/NonStandardAminoAcidFeature.java.md
-[main/java/com/bio4j/model/relationships/features/NonTerminalResidueFeature.java]: relationships/features/NonTerminalResidueFeature.java.md
-[main/java/com/bio4j/model/relationships/features/NucleotidePhosphateBindingRegionFeature.java]: relationships/features/NucleotidePhosphateBindingRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/PeptideFeature.java]: relationships/features/PeptideFeature.java.md
-[main/java/com/bio4j/model/relationships/features/PropeptideFeature.java]: relationships/features/PropeptideFeature.java.md
-[main/java/com/bio4j/model/relationships/features/RegionOfInterestFeature.java]: relationships/features/RegionOfInterestFeature.java.md
-[main/java/com/bio4j/model/relationships/features/RepeatFeature.java]: relationships/features/RepeatFeature.java.md
-[main/java/com/bio4j/model/relationships/features/SequenceConflictFeature.java]: relationships/features/SequenceConflictFeature.java.md
-[main/java/com/bio4j/model/relationships/features/SequenceVariantFeature.java]: relationships/features/SequenceVariantFeature.java.md
-[main/java/com/bio4j/model/relationships/features/ShortSequenceMotifFeature.java]: relationships/features/ShortSequenceMotifFeature.java.md
-[main/java/com/bio4j/model/relationships/features/SignalPeptideFeature.java]: relationships/features/SignalPeptideFeature.java.md
-[main/java/com/bio4j/model/relationships/features/SiteFeature.java]: relationships/features/SiteFeature.java.md
-[main/java/com/bio4j/model/relationships/features/SpliceVariantFeature.java]: relationships/features/SpliceVariantFeature.java.md
-[main/java/com/bio4j/model/relationships/features/StrandFeature.java]: relationships/features/StrandFeature.java.md
-[main/java/com/bio4j/model/relationships/features/TopologicalDomainFeature.java]: relationships/features/TopologicalDomainFeature.java.md
-[main/java/com/bio4j/model/relationships/features/TransitPeptideFeature.java]: relationships/features/TransitPeptideFeature.java.md
-[main/java/com/bio4j/model/relationships/features/TransmembraneRegionFeature.java]: relationships/features/TransmembraneRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/features/TurnFeature.java]: relationships/features/TurnFeature.java.md
-[main/java/com/bio4j/model/relationships/features/UnsureResidueFeature.java]: relationships/features/UnsureResidueFeature.java.md
-[main/java/com/bio4j/model/relationships/features/ZincFingerRegionFeature.java]: relationships/features/ZincFingerRegionFeature.java.md
-[main/java/com/bio4j/model/relationships/go/HasPartOfGo.java]: relationships/go/HasPartOfGo.java.md
-[main/java/com/bio4j/model/relationships/go/IsAGo.java]: relationships/go/IsAGo.java.md
-[main/java/com/bio4j/model/relationships/go/NegativelyRegulatesGo.java]: relationships/go/NegativelyRegulatesGo.java.md
-[main/java/com/bio4j/model/relationships/go/PartOfGo.java]: relationships/go/PartOfGo.java.md
-[main/java/com/bio4j/model/relationships/go/PositivelyRegulatesGo.java]: relationships/go/PositivelyRegulatesGo.java.md
-[main/java/com/bio4j/model/relationships/go/RegulatesGo.java]: relationships/go/RegulatesGo.java.md
-[main/java/com/bio4j/model/relationships/InstituteCountry.java]: relationships/InstituteCountry.java.md
-[main/java/com/bio4j/model/relationships/IsoformEventGenerator.java]: relationships/IsoformEventGenerator.java.md
-[main/java/com/bio4j/model/relationships/ncbi/NCBITaxon.java]: relationships/ncbi/NCBITaxon.java.md
-[main/java/com/bio4j/model/relationships/ncbi/NCBITaxonParent.java]: relationships/ncbi/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/relationships/protein/BasicProteinSequenceCaution.java]: relationships/protein/BasicProteinSequenceCaution.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinDataset.java]: relationships/protein/ProteinDataset.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinEnzymaticActivity.java]: relationships/protein/ProteinEnzymaticActivity.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinErroneousGeneModelPrediction.java]: relationships/protein/ProteinErroneousGeneModelPrediction.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinErroneousInitiation.java]: relationships/protein/ProteinErroneousInitiation.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinErroneousTermination.java]: relationships/protein/ProteinErroneousTermination.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinErroneousTranslation.java]: relationships/protein/ProteinErroneousTranslation.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinFrameshift.java]: relationships/protein/ProteinFrameshift.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinGenomeElement.java]: relationships/protein/ProteinGenomeElement.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinGo.java]: relationships/protein/ProteinGo.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinInterpro.java]: relationships/protein/ProteinInterpro.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinIsoform.java]: relationships/protein/ProteinIsoform.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinIsoformInteraction.java]: relationships/protein/ProteinIsoformInteraction.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinKeyword.java]: relationships/protein/ProteinKeyword.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinMiscellaneousDiscrepancy.java]: relationships/protein/ProteinMiscellaneousDiscrepancy.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinOrganism.java]: relationships/protein/ProteinOrganism.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinPfam.java]: relationships/protein/ProteinPfam.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinProteinInteraction.java]: relationships/protein/ProteinProteinInteraction.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinReactome.java]: relationships/protein/ProteinReactome.java.md
-[main/java/com/bio4j/model/relationships/protein/ProteinSubcellularLocation.java]: relationships/protein/ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementCDS.java]: relationships/refseq/GenomeElementCDS.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementGene.java]: relationships/refseq/GenomeElementGene.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementMiscRna.java]: relationships/refseq/GenomeElementMiscRna.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementMRna.java]: relationships/refseq/GenomeElementMRna.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementNcRna.java]: relationships/refseq/GenomeElementNcRna.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementRRna.java]: relationships/refseq/GenomeElementRRna.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementTmRna.java]: relationships/refseq/GenomeElementTmRna.java.md
-[main/java/com/bio4j/model/relationships/refseq/GenomeElementTRna.java]: relationships/refseq/GenomeElementTRna.java.md
-[main/java/com/bio4j/model/relationships/sc/ErroneousGeneModelPrediction.java]: relationships/sc/ErroneousGeneModelPrediction.java.md
-[main/java/com/bio4j/model/relationships/sc/ErroneousInitiation.java]: relationships/sc/ErroneousInitiation.java.md
-[main/java/com/bio4j/model/relationships/sc/ErroneousTermination.java]: relationships/sc/ErroneousTermination.java.md
-[main/java/com/bio4j/model/relationships/sc/ErroneousTranslation.java]: relationships/sc/ErroneousTranslation.java.md
-[main/java/com/bio4j/model/relationships/sc/Frameshift.java]: relationships/sc/Frameshift.java.md
-[main/java/com/bio4j/model/relationships/sc/MiscellaneousDiscrepancy.java]: relationships/sc/MiscellaneousDiscrepancy.java.md
-[main/java/com/bio4j/model/relationships/SubcellularLocationParent.java]: relationships/SubcellularLocationParent.java.md
-[main/java/com/bio4j/model/relationships/TaxonParent.java]: relationships/TaxonParent.java.md
-[main/java/com/bio4j/model/relationships/uniref/UniRef100Member.java]: relationships/uniref/UniRef100Member.java.md
-[main/java/com/bio4j/model/relationships/uniref/Uniref50Member.java]: relationships/uniref/Uniref50Member.java.md
-[main/java/com/bio4j/model/relationships/uniref/UniRef90Member.java]: relationships/uniref/UniRef90Member.java.md
+[main/java/com/bio4j/model/RelationshipType.java]: RelationshipType.java.md
+[main/java/com/bio4j/model/Retriever.java]: Retriever.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Book.java]: uniprot/nodes/Book.java.md
+[main/java/com/bio4j/model/uniprot/nodes/City.java]: uniprot/nodes/City.java.md
+[main/java/com/bio4j/model/uniprot/nodes/CommentType.java]: uniprot/nodes/CommentType.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Consortium.java]: uniprot/nodes/Consortium.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Country.java]: uniprot/nodes/Country.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Dataset.java]: uniprot/nodes/Dataset.java.md
+[main/java/com/bio4j/model/uniprot/nodes/DB.java]: uniprot/nodes/DB.java.md
+[main/java/com/bio4j/model/uniprot/nodes/FeatureType.java]: uniprot/nodes/FeatureType.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Institute.java]: uniprot/nodes/Institute.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Interpro.java]: uniprot/nodes/Interpro.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Journal.java]: uniprot/nodes/Journal.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Keyword.java]: uniprot/nodes/Keyword.java.md
+[main/java/com/bio4j/model/uniprot/nodes/OnlineArticle.java]: uniprot/nodes/OnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/nodes/OnlineJournal.java]: uniprot/nodes/OnlineJournal.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Organism.java]: uniprot/nodes/Organism.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Patent.java]: uniprot/nodes/Patent.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Person.java]: uniprot/nodes/Person.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Pfam.java]: uniprot/nodes/Pfam.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Protein.java]: uniprot/nodes/Protein.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Publisher.java]: uniprot/nodes/Publisher.java.md
+[main/java/com/bio4j/model/uniprot/nodes/ReactomeTerm.java]: uniprot/nodes/ReactomeTerm.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Articles.java]: uniprot/nodes/references/Articles.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Author.java]: uniprot/nodes/references/Author.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Books.java]: uniprot/nodes/references/Books.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Consortiums.java]: uniprot/nodes/references/Consortiums.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Editor.java]: uniprot/nodes/references/Editor.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Journals.java]: uniprot/nodes/references/Journals.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/OnlineArticles.java]: uniprot/nodes/references/OnlineArticles.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Patents.java]: uniprot/nodes/references/Patents.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Persons.java]: uniprot/nodes/references/Persons.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Publication.java]: uniprot/nodes/references/Publication.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Reference.java]: uniprot/nodes/references/Reference.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Submissions.java]: uniprot/nodes/references/Submissions.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/Theses.java]: uniprot/nodes/references/Theses.java.md
+[main/java/com/bio4j/model/uniprot/nodes/references/UnpublishedObservations.java]: uniprot/nodes/references/UnpublishedObservations.java.md
+[main/java/com/bio4j/model/uniprot/nodes/SequenceCaution.java]: uniprot/nodes/SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/nodes/SubcellularLocation.java]: uniprot/nodes/SubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Submission.java]: uniprot/nodes/Submission.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Taxon.java]: uniprot/nodes/Taxon.java.md
+[main/java/com/bio4j/model/uniprot/nodes/Thesis.java]: uniprot/nodes/Thesis.java.md
+[main/java/com/bio4j/model/uniprot/nodes/UnpublishedObservation.java]: uniprot/nodes/UnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ActiveSiteFeature.java]: uniprot/relationships/ActiveSiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/AllergenComment.java]: uniprot/relationships/AllergenComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ArticleJournal.java]: uniprot/relationships/ArticleJournal.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ArticleProteinCitation.java]: uniprot/relationships/ArticleProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BasicComment.java]: uniprot/relationships/BasicComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BasicCommentType.java]: uniprot/relationships/BasicCommentType.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BasicFeature.java]: uniprot/relationships/BasicFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BasicFeatureType.java]: uniprot/relationships/BasicFeatureType.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BasicProteinSequenceCaution.java]: uniprot/relationships/BasicProteinSequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BindingSiteFeature.java]: uniprot/relationships/BindingSiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BioPhysicoChemicalPropertiesComment.java]: uniprot/relationships/BioPhysicoChemicalPropertiesComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BiotechnologyComment.java]: uniprot/relationships/BiotechnologyComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BookAuthor.java]: uniprot/relationships/BookAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BookCity.java]: uniprot/relationships/BookCity.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BookEditor.java]: uniprot/relationships/BookEditor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BookProteinCitation.java]: uniprot/relationships/BookProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/BookPublisher.java]: uniprot/relationships/BookPublisher.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CalciumBindingRegionFeature.java]: uniprot/relationships/CalciumBindingRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CatalyticActivityComment.java]: uniprot/relationships/CatalyticActivityComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CautionComment.java]: uniprot/relationships/CautionComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ChainFeature.java]: uniprot/relationships/ChainFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CofactorComment.java]: uniprot/relationships/CofactorComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CoiledCoilRegionFeature.java]: uniprot/relationships/CoiledCoilRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CompositionallyBiasedRegionFeature.java]: uniprot/relationships/CompositionallyBiasedRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/CrossLinkFeature.java]: uniprot/relationships/CrossLinkFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DevelopmentalStageComment.java]: uniprot/relationships/DevelopmentalStageComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DiseaseComment.java]: uniprot/relationships/DiseaseComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DisruptionPhenotypeComment.java]: uniprot/relationships/DisruptionPhenotypeComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DisulfideBondFeature.java]: uniprot/relationships/DisulfideBondFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DnaBindingFeature.java]: uniprot/relationships/DnaBindingFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DomainComment.java]: uniprot/relationships/DomainComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/DomainFeature.java]: uniprot/relationships/DomainFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/EnzymeRegulationComment.java]: uniprot/relationships/EnzymeRegulationComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ErroneousGeneModelPrediction.java]: uniprot/relationships/ErroneousGeneModelPrediction.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ErroneousInitiation.java]: uniprot/relationships/ErroneousInitiation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ErroneousTermination.java]: uniprot/relationships/ErroneousTermination.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ErroneousTranslation.java]: uniprot/relationships/ErroneousTranslation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/Frameshift.java]: uniprot/relationships/Frameshift.java.md
+[main/java/com/bio4j/model/uniprot/relationships/FunctionComment.java]: uniprot/relationships/FunctionComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/GlycosylationSiteFeature.java]: uniprot/relationships/GlycosylationSiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/HelixFeature.java]: uniprot/relationships/HelixFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/InductionComment.java]: uniprot/relationships/InductionComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/InitiatorMethionineFeature.java]: uniprot/relationships/InitiatorMethionineFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/InstituteCountry.java]: uniprot/relationships/InstituteCountry.java.md
+[main/java/com/bio4j/model/uniprot/relationships/IntramembraneRegionFeature.java]: uniprot/relationships/IntramembraneRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/LipidMoietyBindingRegionFeature.java]: uniprot/relationships/LipidMoietyBindingRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/MassSpectometryComment.java]: uniprot/relationships/MassSpectometryComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/MetalIonBindingSiteFeature.java]: uniprot/relationships/MetalIonBindingSiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/MiscellaneousComment.java]: uniprot/relationships/MiscellaneousComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/MiscellaneousDiscrepancy.java]: uniprot/relationships/MiscellaneousDiscrepancy.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ModifiedResidueFeature.java]: uniprot/relationships/ModifiedResidueFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/MutagenesisSiteFeature.java]: uniprot/relationships/MutagenesisSiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/NonConsecutiveResiduesFeature.java]: uniprot/relationships/NonConsecutiveResiduesFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/NonStandardAminoAcidFeature.java]: uniprot/relationships/NonStandardAminoAcidFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/NonTerminalResidueFeature.java]: uniprot/relationships/NonTerminalResidueFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/NucleotidePhosphateBindingRegionFeature.java]: uniprot/relationships/NucleotidePhosphateBindingRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/OnlineArticleAuthor.java]: uniprot/relationships/OnlineArticleAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/OnlineArticleJournal.java]: uniprot/relationships/OnlineArticleJournal.java.md
+[main/java/com/bio4j/model/uniprot/relationships/OnlineArticleProteinCitation.java]: uniprot/relationships/OnlineArticleProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/OnlineInformationComment.java]: uniprot/relationships/OnlineInformationComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PatentAuthor.java]: uniprot/relationships/PatentAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PatentProteinCitation.java]: uniprot/relationships/PatentProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PathwayComment.java]: uniprot/relationships/PathwayComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PeptideFeature.java]: uniprot/relationships/PeptideFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PharmaceuticalComment.java]: uniprot/relationships/PharmaceuticalComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PolymorphismComment.java]: uniprot/relationships/PolymorphismComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PostTransactionalModificationComment.java]: uniprot/relationships/PostTransactionalModificationComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/PropeptideFeature.java]: uniprot/relationships/PropeptideFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinDataset.java]: uniprot/relationships/ProteinDataset.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinEnzymaticActivity.java]: uniprot/relationships/ProteinEnzymaticActivity.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousGeneModelPrediction.java]: uniprot/relationships/ProteinErroneousGeneModelPrediction.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousInitiation.java]: uniprot/relationships/ProteinErroneousInitiation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousTermination.java]: uniprot/relationships/ProteinErroneousTermination.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinErroneousTranslation.java]: uniprot/relationships/ProteinErroneousTranslation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinFrameshift.java]: uniprot/relationships/ProteinFrameshift.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinGenomeElement.java]: uniprot/relationships/ProteinGenomeElement.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinInterpro.java]: uniprot/relationships/ProteinInterpro.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinKeyword.java]: uniprot/relationships/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinMiscellaneousDiscrepancy.java]: uniprot/relationships/ProteinMiscellaneousDiscrepancy.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinOrganism.java]: uniprot/relationships/ProteinOrganism.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinPfam.java]: uniprot/relationships/ProteinPfam.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinReactome.java]: uniprot/relationships/ProteinReactome.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ProteinSubcellularLocation.java]: uniprot/relationships/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Article.java]: uniprot/relationships/references/Article.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Book.java]: uniprot/relationships/references/Book.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Cited.java]: uniprot/relationships/references/Cited.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Consortium.java]: uniprot/relationships/references/Consortium.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Journal.java]: uniprot/relationships/references/Journal.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/OnlineArticle.java]: uniprot/relationships/references/OnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Patent.java]: uniprot/relationships/references/Patent.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Person.java]: uniprot/relationships/references/Person.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Published.java]: uniprot/relationships/references/Published.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Submission.java]: uniprot/relationships/references/Submission.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/Thesis.java]: uniprot/relationships/references/Thesis.java.md
+[main/java/com/bio4j/model/uniprot/relationships/references/UnpublishedObservation.java]: uniprot/relationships/references/UnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/RegionOfInterestFeature.java]: uniprot/relationships/RegionOfInterestFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/RepeatFeature.java]: uniprot/relationships/RepeatFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/RnaEditingComment.java]: uniprot/relationships/RnaEditingComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SequenceConflictFeature.java]: uniprot/relationships/SequenceConflictFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SequenceVariantFeature.java]: uniprot/relationships/SequenceVariantFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ShortSequenceMotifFeature.java]: uniprot/relationships/ShortSequenceMotifFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SignalPeptideFeature.java]: uniprot/relationships/SignalPeptideFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SimilarityComment.java]: uniprot/relationships/SimilarityComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SiteFeature.java]: uniprot/relationships/SiteFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SpliceVariantFeature.java]: uniprot/relationships/SpliceVariantFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/StrandFeature.java]: uniprot/relationships/StrandFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SubcellularLocationParent.java]: uniprot/relationships/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SubmissionAuthor.java]: uniprot/relationships/SubmissionAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SubmissionDb.java]: uniprot/relationships/SubmissionDb.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SubmissionProteinCitation.java]: uniprot/relationships/SubmissionProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/SubunitComment.java]: uniprot/relationships/SubunitComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TaxonParent.java]: uniprot/relationships/TaxonParent.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ThesisAuthor.java]: uniprot/relationships/ThesisAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ThesisInstitute.java]: uniprot/relationships/ThesisInstitute.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ThesisProteinCitation.java]: uniprot/relationships/ThesisProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TissueSpecificityComment.java]: uniprot/relationships/TissueSpecificityComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TopologicalDomainFeature.java]: uniprot/relationships/TopologicalDomainFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ToxicDoseComment.java]: uniprot/relationships/ToxicDoseComment.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TransitPeptideFeature.java]: uniprot/relationships/TransitPeptideFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TransmembraneRegionFeature.java]: uniprot/relationships/TransmembraneRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/TurnFeature.java]: uniprot/relationships/TurnFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/UnpublishedObservationAuthor.java]: uniprot/relationships/UnpublishedObservationAuthor.java.md
+[main/java/com/bio4j/model/uniprot/relationships/UnpublishedObservationProteinCitation.java]: uniprot/relationships/UnpublishedObservationProteinCitation.java.md
+[main/java/com/bio4j/model/uniprot/relationships/UnsureResidueFeature.java]: uniprot/relationships/UnsureResidueFeature.java.md
+[main/java/com/bio4j/model/uniprot/relationships/ZincFingerRegionFeature.java]: uniprot/relationships/ZincFingerRegionFeature.java.md
+[main/java/com/bio4j/model/uniprot/UniProtModule.java]: uniprot/UniProtModule.java.md
+[main/java/com/bio4j/model/uniprot_go/relationships/GoAnnotation.java]: uniprot_go/relationships/GoAnnotation.java.md
+[main/java/com/bio4j/model/uniprot_go/UniProt_GoModule.java]: uniprot_go/UniProt_GoModule.java.md
+[main/java/com/bio4j/model/uniprot_isoforms/relationships/ProteinIsoform.java]: uniprot_isoforms/relationships/ProteinIsoform.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/relationships/OrganismNCBITaxon.java]: uniprot_ncbiTaxonomy/relationships/OrganismNCBITaxon.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProt_NcbiTaxonomyModule.java]: uniprot_ncbiTaxonomy/UniProt_NcbiTaxonomyModule.java.md
+[main/java/com/bio4j/model/uniref/relationships/UniRef100Member.java]: uniref/relationships/UniRef100Member.java.md
+[main/java/com/bio4j/model/uniref/relationships/UniRef50Member.java]: uniref/relationships/UniRef50Member.java.md
+[main/java/com/bio4j/model/uniref/relationships/UniRef90Member.java]: uniref/relationships/UniRef90Member.java.md
+[main/java/com/bio4j/model/uniref/UniRefModule.java]: uniref/UniRefModule.java.md
+[main/java/com/bio4j/model/util/AlternativeProductRetriever.java]: util/AlternativeProductRetriever.java.md
+[main/java/com/bio4j/model/util/ArticleRetriever.java]: util/ArticleRetriever.java.md
+[main/java/com/bio4j/model/util/BookRetriever.java]: util/BookRetriever.java.md
+[main/java/com/bio4j/model/util/ByTaxId.java]: util/ByTaxId.java.md
+[main/java/com/bio4j/model/util/CityRetriever.java]: util/CityRetriever.java.md
+[main/java/com/bio4j/model/util/CommentTypeRetriever.java]: util/CommentTypeRetriever.java.md
+[main/java/com/bio4j/model/util/ConsortiumRetriever.java]: util/ConsortiumRetriever.java.md
+[main/java/com/bio4j/model/util/CountryRetriever.java]: util/CountryRetriever.java.md
+[main/java/com/bio4j/model/util/DatasetRetriever.java]: util/DatasetRetriever.java.md
+[main/java/com/bio4j/model/util/DBRetriever.java]: util/DBRetriever.java.md
+[main/java/com/bio4j/model/util/EnzymeRetriever.java]: util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/FeatureTypeRetriever.java]: util/FeatureTypeRetriever.java.md
+[main/java/com/bio4j/model/util/GenomeElementRetriever.java]: util/GenomeElementRetriever.java.md
+[main/java/com/bio4j/model/util/GoTermRetriever.java]: util/GoTermRetriever.java.md
+[main/java/com/bio4j/model/util/InstituteRetriever.java]: util/InstituteRetriever.java.md
+[main/java/com/bio4j/model/util/InterproRetriever.java]: util/InterproRetriever.java.md
+[main/java/com/bio4j/model/util/IsoformRetriever.java]: util/IsoformRetriever.java.md
+[main/java/com/bio4j/model/util/JournalRetriever.java]: util/JournalRetriever.java.md
+[main/java/com/bio4j/model/util/KeywordRetriever.java]: util/KeywordRetriever.java.md
+[main/java/com/bio4j/model/util/NCBITaxonRetriever.java]: util/NCBITaxonRetriever.java.md
+[main/java/com/bio4j/model/util/NodeIndex.java]: util/NodeIndex.java.md
 [main/java/com/bio4j/model/util/NodeRetriever.java]: util/NodeRetriever.java.md
+[main/java/com/bio4j/model/util/OnlineArticleRetriever.java]: util/OnlineArticleRetriever.java.md
+[main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: util/OnlineJournalRetriever.java.md
+[main/java/com/bio4j/model/util/OrganismRetriever.java]: util/OrganismRetriever.java.md
+[main/java/com/bio4j/model/util/PatentRetriever.java]: util/PatentRetriever.java.md
+[main/java/com/bio4j/model/util/PersonRetriever.java]: util/PersonRetriever.java.md
+[main/java/com/bio4j/model/util/PfamRetriever.java]: util/PfamRetriever.java.md
+[main/java/com/bio4j/model/util/ProteinRetriever.java]: util/ProteinRetriever.java.md
+[main/java/com/bio4j/model/util/PublisherRetriever.java]: util/PublisherRetriever.java.md
+[main/java/com/bio4j/model/util/ReactomeTermRetriever.java]: util/ReactomeTermRetriever.java.md
+[main/java/com/bio4j/model/util/RelationshipRetriever.java]: util/RelationshipRetriever.java.md
+[main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: util/SequenceCautionRetriever.java.md
+[main/java/com/bio4j/model/util/SubcellularLocationRetriever.java]: util/SubcellularLocationRetriever.java.md
+[main/java/com/bio4j/model/util/SubmissionRetriever.java]: util/SubmissionRetriever.java.md
+[main/java/com/bio4j/model/util/TaxonRetriever.java]: util/TaxonRetriever.java.md
+[main/java/com/bio4j/model/util/ThesisRetriever.java]: util/ThesisRetriever.java.md
