@@ -22,7 +22,7 @@ With our approach, they serve essentially as contexts. The same node at the data
 publication --[Author]--> author --[Person]--> Persons
 ```
 
-From the `publication` context we can take `Author`. Once we know it, we can get `Person`, which would be there _if_ the author is a person.
+From the `publication` context we can take `Author`. Once we know it, we can get `Person`, which would be there _if_ the author is a person. What about those authors which are persons
 
 ## standard translation techniques
 
