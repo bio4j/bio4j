@@ -9,27 +9,27 @@ import com.bio4j.model.properties.Name;
 import com.bio4j.model.uniprot.relationships.ProteinInterpro;
 
 /**
- *
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Interpro extends Node<Interpro, Interpro.Type>,
-	
+
 	// properties
-	Id<Interpro, Interpro.Type>,
-	Name<Interpro, Interpro.Type>
-{
-    
+		Id<Interpro, Interpro.Type>, Name<Interpro, Interpro.Type> {
+
 	public static Type TYPE = Type.interpro;
+
 	public static enum Type implements NodeType<Interpro, Interpro.Type> {
-	
-	    interpro;
-	    public Type value() { return interpro; }
+
+		interpro;
+		public Type value() {
+			return interpro;
+		}
 	}
-  
+
 	// proteinInterpro
 	// ingoing
-	public List<ProteinInterpro> proteinInterpro_in(); 
+	public List<ProteinInterpro> proteinInterpro_in();
 	public List<Protein> proteinInterpro_inNodes();
-    
-    
+
 }

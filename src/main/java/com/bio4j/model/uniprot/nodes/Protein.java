@@ -13,11 +13,9 @@ import com.bio4j.model.uniprot.nodes.Submission;
 import com.bio4j.model.uniprot.nodes.Thesis;
 import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
 import com.bio4j.model.uniprot.nodes.ReactomeTerm;
-
+import com.bio4j.model.uniprot.nodes.references.Reference;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
-
 import com.bio4j.model.go.nodes.GoTerm;
-
 import com.bio4j.model.refseq.nodes.GenomeElement;
 
 
@@ -40,9 +38,8 @@ import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
 import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
 import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
 import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
-
+import com.bio4j.model.uniprot.relationships.references.Cited;
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
-
 import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
 import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
 
@@ -139,10 +136,10 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<ProteinKeyword> proteinKeyword_out(); 
     public List<Keyword> proteinKeyword_outNodes();
     
-    // articleProteinCitation
+    // cited
     // outgoing
-    public List<ArticleProteinCitation> articleProteinCitation_out(); 
-    public List<Article> articleProteinCitation_outNodes();
+    public List<Cited> cited_out(); 
+    public List<Reference> cited_outNodes();
     
     // submissionProteinCitation
     // outgoing

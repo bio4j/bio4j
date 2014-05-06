@@ -1,4 +1,4 @@
-package com.bio4j.model.relationships.sc;
+package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.Relationship;
 
