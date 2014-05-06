@@ -1,9 +1,10 @@
 package com.bio4j.model.util;
 
 import java.util.List;
-import com.bio4j.model.uniprot.nodes.Article;
 
-public interface ArticleRetriever extends NodeRetriever<Article> {
+import com.bio4j.model.uniprot.relationships.references.Article;
+
+public interface ArticleRetriever extends RelationshipRetriever<Article> {
 
   public List<? extends Article> getArticlesByTitle(String articleTitle);    
   public Article getArticleByMedlineId(String articleMedlineId);

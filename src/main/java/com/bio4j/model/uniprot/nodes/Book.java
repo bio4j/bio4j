@@ -1,4 +1,3 @@
-
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.Node;
@@ -13,30 +12,32 @@ import java.util.List;
 import com.bio4j.model.NodeType;
 
 /**
- *
+ * 
  * @author Pablo Pareja Tobes <ppareja@era7.com>
  */
 public interface Book extends Node<Book, Book.Type>,
-	
-  // properties
-  Name<Book, Book.Type>,
-	Date<Book, Book.Type>
-{
-	   
 
-  public List<Protein> proteinCitations();
-  public Publisher getPublisher();
-  public City getCity();
-  public List<Person> getAuthors();
-  public List<Person> getEditors();
+// properties
+		Name<Book, Book.Type>, Date<Book, Book.Type> {
+
+	public List<Protein> proteinCitations();
+
+	public Publisher getPublisher();
+
+	public City getCity();
+
+	public List<Person> getAuthors();
+
+	public List<Person> getEditors();
 
 	public static Type TYPE = Type.book;
+
 	public static enum Type implements NodeType<Book, Book.Type> {
-	
-	    book;
-	    public Type value() { return book; }
-	}   
-    
-    
+
+		book;
+		public Type value() {
+			return book;
+		}
+	}
 
 }
