@@ -95,3 +95,63 @@ x --[Publication]--> publication --[Author]--> author --[Person]--> person
 ## queries
 
 Queries need to look OK. Given a node `x` 
+
+
+## example model
+
+``` scala
+
+// vertex types are more like contexts than types
+object Protein      extends VertexType
+object Publication  extends VertexType
+
+object Author       extends VertexType
+object Person       extends VertexType
+object Consortium   extends VertexType
+
+// "types" of publications
+object Article      extends VertexType
+object Book         extends VertexType
+object Editor       extends VertexType
+object Thesis       extends VertexType
+
+object Institution  extends VertexType // ??
+object Journal      extends VertexType
+    
+// TODO introduce an abstract CitedLike rel with the corresponding properties
+object cited extends Rel(Protein, "cited", Publication) {
+
+  implicit val _date  = this has date
+  implicit val _title = this has title
+}
+
+object author extends Rel(Publication, "author", Author) {
+
+  // TODO something else?
+  implicit val _position = this has position
+}
+
+object person extends Rel(Author, "person", Person) {
+
+  implicit val _name = this has name
+}
+object consortium extends Rel(Author, "consortium", Consortium) {
+
+  implicit val _name = this has name
+}
+
+object editor extends Rel(Book, "editor", Editor)
+
+object article extends Rel(Publication, "article", Article) {}
+object book extends Rel(publication, "book", Book) {}
+object thesis extends Rel(publication, "thesis", Thesis) {}
+
+```
+
+## Titan impl
+
+### local indexes
+
+You need to specify at the same time
+
+1. a property which will be used 
