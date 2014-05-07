@@ -1,13 +1,13 @@
 package com.bio4j.model.uniprot.nodes;
 
-import com.bio4j.model.Node;
+import com.ohnosequences.typedGraphs.Node;
 import com.bio4j.model.uniprot.nodes.Person;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.relationships.UnpublishedObservationAuthor;
 
 import java.util.List;
 
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.NodeType;
 import com.bio4j.model.properties.Date;
 
 /**

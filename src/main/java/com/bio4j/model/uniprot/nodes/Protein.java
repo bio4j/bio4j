@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
-import com.bio4j.model.Node;
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.NodeType;
 import com.bio4j.model.enums.UniprotDBXref;
 
 // nodes

@@ -2,8 +2,8 @@ package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Patent;
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
 
 /**
  *

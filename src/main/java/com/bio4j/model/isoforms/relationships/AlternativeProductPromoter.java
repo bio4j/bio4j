@@ -1,6 +1,6 @@
 package com.bio4j.model.isoforms.relationships;
 
-import com.bio4j.model.Relationship;
+import com.ohnosequences.typedGraphs.Relationship;
 
 /**
  * 

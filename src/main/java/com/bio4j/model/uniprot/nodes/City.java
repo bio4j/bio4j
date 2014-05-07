@@ -1,13 +1,13 @@
 package com.bio4j.model.uniprot.nodes;
 
-import com.bio4j.model.Node;
+import com.ohnosequences.typedGraphs.Node;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.uniprot.nodes.Book;
 import com.bio4j.model.uniprot.relationships.BookCity;
 
 import java.util.List;
 
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.NodeType;
 
 /**
  *

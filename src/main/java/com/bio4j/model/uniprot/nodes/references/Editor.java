@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot.nodes.references;
 
-import com.bio4j.model.Node;
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.NodeType;
 
 /*
 * This node represents an editor of a reference. Properties are accessible through the corresponding outgoing relationships.

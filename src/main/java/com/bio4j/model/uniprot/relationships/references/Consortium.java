@@ -2,8 +2,8 @@ package com.bio4j.model.uniprot.relationships.references;
 
 import java.util.List;
 
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
 
 // properties
 import com.bio4j.model.properties.Name;

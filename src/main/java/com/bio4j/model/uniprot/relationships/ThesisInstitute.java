@@ -3,8 +3,8 @@ package com.bio4j.model.uniprot.relationships;
 import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Institute;
 import com.bio4j.model.uniprot.nodes.Thesis;
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
 
 /**
  *

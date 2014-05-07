@@ -1,6 +1,6 @@
 package com.bio4j.model.refseq.nodes;
 
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.NodeType;
 
 public interface RNAType <
   R extends RNA<R,T>,

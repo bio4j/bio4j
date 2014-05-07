@@ -1,6 +1,6 @@
 package com.bio4j.model.refseq.nodes;
 
-import com.bio4j.model.NodeType;
+import com.ohnosequences.typedGraphs.NodeType;
 
 public interface GenomicFeatureType <
   GF extends GenomicFeature<GF,GFT>,

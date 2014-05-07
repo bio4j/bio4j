@@ -3,10 +3,10 @@ package com.bio4j.model.isoforms;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.bio4j.model.Module;
-import com.bio4j.model.NodeType;
-import com.bio4j.model.RelationshipType;
-import com.bio4j.model.PropertyType;
+import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.NodeType;
+import com.ohnosequences.typedGraphs.RelationshipType;
+import com.ohnosequences.typedGraphs.PropertyType;
 
 import com.bio4j.model.isoforms.nodes.*;
 import com.bio4j.model.isoforms.relationships.*;

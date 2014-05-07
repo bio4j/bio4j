@@ -1,10 +1,10 @@
 
 package com.bio4j.model.uniprot.relationships;
 
-import com.bio4j.model.Node;
-import com.bio4j.model.NodeType;
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
+import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.NodeType;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
 import com.bio4j.model.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.CommentType;
 import com.bio4j.model.uniprot.nodes.Protein;

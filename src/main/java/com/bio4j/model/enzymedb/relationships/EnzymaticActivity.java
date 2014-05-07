@@ -1,7 +1,7 @@
 package com.bio4j.model.enzymedb.relationships;
 
-import com.bio4j.model.Relationship;
-import com.bio4j.model.RelationshipType;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
 
 // source and target
 import com.bio4j.model.uniprot.nodes.Protein;

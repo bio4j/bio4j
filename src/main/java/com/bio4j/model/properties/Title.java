@@ -1,9 +1,9 @@
 package com.bio4j.model.properties;
 
-import com.bio4j.model.Element;
-import com.bio4j.model.ElementType;
-import com.bio4j.model.Property;
-import com.bio4j.model.PropertyType;
+import com.ohnosequences.typedGraphs.Element;
+import com.ohnosequences.typedGraphs.ElementType;
+import com.ohnosequences.typedGraphs.Property;
+import com.ohnosequences.typedGraphs.PropertyType;
 
 public interface Title <N extends Element<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
 	extends Property<N, NT> {
