@@ -8,6 +8,7 @@ import com.bio4j.model.uniprot.relationships.PatentAuthor;
 import java.util.List;
 
 import com.ohnosequences.typedGraphs.NodeType;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Date;
 import com.bio4j.model.properties.Number;
 import com.bio4j.model.properties.Title;
@@ -25,6 +26,7 @@ public interface Patent extends Node<Patent, Patent.Type>,
 {
     
 	public static Type TYPE = Type.patent; 
+	public default Type type() { return TYPE; }
 	public static enum Type implements NodeType<Patent, Patent.Type> {
 	
 	    patent;

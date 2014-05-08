@@ -1,6 +1,8 @@
 package com.bio4j.model.refseq.nodes;
 
 import java.util.List;
+
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.refseq.relationships.HasMiscRNA;
 
 /**
@@ -15,6 +17,7 @@ public interface MiscRNA extends RNA<MiscRNA, MiscRNA.Type> {
   public List<? extends GenomeElement> hasMiscRNA_inNodes();
 
   public static Type TYPE = Type.miscRNA;
+  public default Type type() { return TYPE; }
   enum Type implements RNAType<MiscRNA, MiscRNA.Type> {
 
     miscRNA;

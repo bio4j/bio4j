@@ -46,7 +46,7 @@ public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
   // WARNING: moved to rel method
   // public List<Protein> associatedProteins();
 
-  public default Type getType() { return Enzyme.TYPE; }
+  public default Type type() { return Enzyme.TYPE; }
 
   public static Type TYPE = Type.enzyme;
   public static enum Type implements NodeType<Enzyme, Enzyme.Type> {

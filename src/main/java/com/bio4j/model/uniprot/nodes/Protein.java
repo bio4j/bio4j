@@ -1,48 +1,12 @@
 package com.bio4j.model.uniprot.nodes;
 
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.NodeType;
+import java.util.List;
+
 import com.bio4j.model.enums.UniprotDBXref;
-
-// nodes
-import com.bio4j.model.uniprot.nodes.Book;
-import com.bio4j.model.uniprot.nodes.OnlineArticle;
-import com.bio4j.model.uniprot.nodes.Patent;
-import com.bio4j.model.uniprot.nodes.Submission;
-import com.bio4j.model.uniprot.nodes.Thesis;
-import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
-import com.bio4j.model.uniprot.nodes.ReactomeTerm;
-import com.bio4j.model.uniprot.nodes.references.Reference;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
-import com.bio4j.model.go.nodes.GoTerm;
-import com.bio4j.model.refseq.nodes.GenomeElement;
-
-
-// relationships
-import com.bio4j.model.uniprot.relationships.SubmissionProteinCitation;
-import com.bio4j.model.uniprot.relationships.ArticleProteinCitation;
-import com.bio4j.model.uniprot.relationships.DomainComment;
-import com.bio4j.model.uniprot.relationships.FunctionComment;
-import com.bio4j.model.uniprot.relationships.PathwayComment;
-import com.bio4j.model.uniprot.relationships.SimilarityComment;
-import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
-import com.bio4j.model.uniprot.relationships.ProteinDataset;
-import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
-import com.bio4j.model.uniprot.relationships.ProteinInterpro;
-import com.bio4j.model.uniprot.relationships.ProteinKeyword;
-import com.bio4j.model.uniprot.relationships.ProteinOrganism;
-import com.bio4j.model.uniprot.relationships.ProteinPfam;
-import com.bio4j.model.uniprot.relationships.ProteinReactome;
-import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
-import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
-import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
-import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
-import com.bio4j.model.uniprot.relationships.references.Cited;
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
-import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
-import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
-
-
+import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 // properties
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
@@ -54,8 +18,32 @@ import com.bio4j.model.properties.ModifiedDate;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Sequence;
 import com.bio4j.model.properties.ShortName;
-
-import java.util.List;
+import com.bio4j.model.proteinInteractions.relationships.ProteinIsoformInteraction;
+import com.bio4j.model.proteinInteractions.relationships.ProteinProteinInteraction;
+import com.bio4j.model.refseq.nodes.GenomeElement;
+import com.bio4j.model.uniprot.nodes.references.Reference;
+import com.bio4j.model.uniprot.relationships.ActiveSiteFeature;
+import com.bio4j.model.uniprot.relationships.DomainComment;
+import com.bio4j.model.uniprot.relationships.FunctionComment;
+import com.bio4j.model.uniprot.relationships.PathwayComment;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
+import com.bio4j.model.uniprot.relationships.ProteinGenomeElement;
+import com.bio4j.model.uniprot.relationships.ProteinInterpro;
+import com.bio4j.model.uniprot.relationships.ProteinKeyword;
+import com.bio4j.model.uniprot.relationships.ProteinOrganism;
+import com.bio4j.model.uniprot.relationships.ProteinPfam;
+import com.bio4j.model.uniprot.relationships.ProteinReactome;
+import com.bio4j.model.uniprot.relationships.ProteinSubcellularLocation;
+import com.bio4j.model.uniprot.relationships.SignalPeptideFeature;
+import com.bio4j.model.uniprot.relationships.SimilarityComment;
+import com.bio4j.model.uniprot.relationships.SpliceVariantFeature;
+// relationships
+import com.bio4j.model.uniprot.relationships.SubmissionProteinCitation;
+import com.bio4j.model.uniprot.relationships.TransmembraneRegionFeature;
+import com.bio4j.model.uniprot.relationships.references.Cited;
+import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.NodeType;
+// nodes
 
 public interface Protein extends Node<Protein, Protein.Type>,
 
@@ -72,6 +60,7 @@ public interface Protein extends Node<Protein, Protein.Type>,
 	{
   
 	public static Type TYPE = Type.protein; 
+	public default Type type() { return TYPE; }
 	public static enum Type implements NodeType<Protein, Protein.Type> {
 	
 	    protein;

@@ -1,6 +1,8 @@
 package com.bio4j.model.refseq.nodes;
 
 import java.util.List;
+
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.refseq.relationships.HasMRNA;
 
 /**
@@ -15,6 +17,7 @@ public interface MRNA extends RNA<MRNA, MRNA.Type> {
   public List<? extends GenomeElement> hasMRNA_inNodes();
 
   public static Type TYPE = Type.mRNA;
+  public default Type type() { return TYPE; }
   public static enum Type implements RNAType<MRNA, MRNA.Type> {
 
     mRNA;

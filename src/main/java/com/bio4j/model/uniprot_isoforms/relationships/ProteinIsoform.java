@@ -1,8 +1,8 @@
-package com.bio4j.model.proteinInteractions.relationships;
+package com.bio4j.model.uniprot_isoforms.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.isoforms.nodes.Isoform;
 import com.bio4j.model.uniprot.nodes.Protein;
 
@@ -23,6 +23,7 @@ public interface ProteinIsoform extends Relationship <
 
 
   public static Type TYPE = Type.proteinIsoform;
+  public default Type type() { return TYPE; }
 
   public static enum Type implements RelationshipType <
 

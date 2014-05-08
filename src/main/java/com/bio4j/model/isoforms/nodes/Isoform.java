@@ -3,6 +3,7 @@ package com.bio4j.model.isoforms.nodes;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 
+import com.bio4j.model.go.nodes.GoTerm.Type;
 // properties
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Id;
@@ -23,8 +24,10 @@ public interface Isoform extends Node<Isoform, Isoform.Type>,
   
 { 
   
+	
   // TODO most likely rel methods missing here
   public static Type TYPE = Type.isoform;  
+  public default Type type() { return TYPE; }
   public static enum Type implements NodeType<Isoform, Isoform.Type> {
     isoform;
     public Type value() { return isoform; }

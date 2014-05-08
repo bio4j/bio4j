@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
-
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.uniprot.relationships.references.Consortium;
 
 /**
@@ -17,6 +17,7 @@ public interface Consortiums extends Node<Consortiums, Consortiums.Type> {
   public List<? extends Author> consortium_inNodes();
 
   public static Type TYPE = Type.consortiums;
+  public default Type type() { return TYPE; }
 
   public static enum Type implements NodeType<Consortiums, Consortiums.Type> {
     

@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.ohnosequences.typedGraphs.Node;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Date;
 import com.bio4j.model.properties.Title;
 import com.bio4j.model.uniprot.relationships.SubmissionDb;
@@ -22,6 +23,7 @@ public interface Submission extends Node<Submission, Submission.Type>,
 	Title<Submission, Submission.Type>, Date<Submission, Submission.Type> {
 
 	public static Type TYPE = Type.submission;
+	public default Type type() { return TYPE; }
 
 	public static enum Type implements NodeType<Submission, Submission.Type> {
 

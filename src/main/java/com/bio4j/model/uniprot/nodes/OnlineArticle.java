@@ -10,6 +10,7 @@ import com.bio4j.model.uniprot.relationships.OnlineArticleProteinCitation;
 import java.util.List;
 
 import com.ohnosequences.typedGraphs.NodeType;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Title;
 
 /**
@@ -22,6 +23,7 @@ public interface OnlineArticle extends Node<OnlineArticle, OnlineArticle.Type>,
 	Title<OnlineArticle, OnlineArticle.Type> {
 
 	public static Type TYPE = Type.onlineArticle;
+	public default Type type() { return TYPE; }
 
 	public static enum Type implements
 			NodeType<OnlineArticle, OnlineArticle.Type> {

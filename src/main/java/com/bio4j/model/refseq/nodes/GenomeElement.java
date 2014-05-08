@@ -2,10 +2,12 @@ package com.bio4j.model.refseq.nodes;
 
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
-
 import com.bio4j.model.uniprot.nodes.Protein;
+
 import java.util.List;
 
+
+import com.bio4j.model.go.nodes.GoTerm.Type;
 // properties
 import com.bio4j.model.properties.Comment;
 import com.bio4j.model.properties.Definition;
@@ -18,7 +20,6 @@ import com.bio4j.model.refseq.relationships.HasNcRNA;
 import com.bio4j.model.refseq.relationships.HasTRNA;
 import com.bio4j.model.refseq.relationships.HasTmRNA;
 import com.bio4j.model.refseq.relationships.HasRRNA;
-
 import com.bio4j.model.refseq.relationships.HasGene;
 import com.bio4j.model.refseq.relationships.HasCDS;
 
@@ -82,6 +83,7 @@ public interface GenomeElement extends Node<GenomeElement, GenomeElement.Type>,
 
 
   public static Type TYPE = Type.genomeElement;
+  public default Type type() { return TYPE; }
   public static enum Type implements NodeType<GenomeElement, GenomeElement.Type> {
 
     genomeElement;

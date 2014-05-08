@@ -91,7 +91,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
   public List<HasPartOf> hasPartOf_out();
   public List<GoTerm> hasPartOf_outNodes();
 
-  public default Type getType() { return TYPE; }
+  public default Type type() { return TYPE; }
   public static Type TYPE = Type.goTerm;
   public static enum Type implements NodeType<GoTerm, GoTerm.Type> {
     goTerm;

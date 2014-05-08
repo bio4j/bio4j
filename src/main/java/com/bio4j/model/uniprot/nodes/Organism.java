@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.NCBITaxonomyId;
 import com.bio4j.model.properties.ScientificName;
 import com.bio4j.model.properties.CommonName;
@@ -24,6 +25,7 @@ public interface Organism extends
 		NCBITaxonomyId<Organism, Organism.Type>{
 
 	public static Type TYPE = Type.organism;
+	public default Type type() { return TYPE; }
 
 	public static enum Type implements NodeType<Organism, Organism.Type> {
 

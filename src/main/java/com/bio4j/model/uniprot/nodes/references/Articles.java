@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
-
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.uniprot.relationships.references.Article;
 
 /**
@@ -19,6 +19,7 @@ public interface Articles extends Node<Articles, Articles.Type> {
   public List<? extends Reference> article_inNodes();
 
   public static Type TYPE = Type.articles;
+  public default Type type() { return TYPE; }
 
   public static enum Type implements NodeType<Articles, Articles.Type> {
     

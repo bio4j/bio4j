@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
-
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Name;
 
 /**
@@ -22,5 +22,6 @@ public interface Person extends Node<Person, Person.Type>,
 	}
 
 	public static Person.Type TYPE = Type.person;
+	public default Type type() { return TYPE; }
 
 }

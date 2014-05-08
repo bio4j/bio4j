@@ -6,6 +6,7 @@ import com.bio4j.model.uniprot.relationships.ProteinReactome;
 import java.util.List;
 
 import com.ohnosequences.typedGraphs.NodeType;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Id;
 import com.bio4j.model.properties.PathwayName;
 
@@ -20,6 +21,7 @@ public interface ReactomeTerm extends Node<ReactomeTerm, ReactomeTerm.Type>,
 	PathwayName<ReactomeTerm, ReactomeTerm.Type> {
 
 	public static Type TYPE = Type.reactomeTerm;
+	public default Type type() { return TYPE; }
 
 	public static enum Type implements
 			NodeType<ReactomeTerm, ReactomeTerm.Type> {

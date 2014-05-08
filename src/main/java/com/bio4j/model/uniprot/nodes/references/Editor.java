@@ -1,5 +1,6 @@
 package com.bio4j.model.uniprot.nodes.references;
 
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 
@@ -12,6 +13,7 @@ import com.ohnosequences.typedGraphs.NodeType;
 public interface Editor extends Node<Editor, Editor.Type> {
   
   public static Type TYPE = Type.editor;
+  public default Type type() { return TYPE; }
   
   public static enum Type implements NodeType<Editor, Editor.Type> {
     

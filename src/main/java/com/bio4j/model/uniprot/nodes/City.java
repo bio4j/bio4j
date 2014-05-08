@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.ohnosequences.typedGraphs.Node;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.uniprot.nodes.Book;
 import com.bio4j.model.uniprot.relationships.BookCity;
@@ -20,6 +21,7 @@ public interface City extends Node<City, City.Type>,
 {
   
 	  public static Type TYPE = Type.city;
+	  public default Type type() { return TYPE; }
 	  
 	  public static enum Type implements NodeType<City, City.Type> {
 	    city;

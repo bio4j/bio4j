@@ -13,6 +13,7 @@ import com.bio4j.model.properties.ScientificName;
 import com.bio4j.model.properties.TaxonomicRank;
 import com.bio4j.model.properties.EmblCode;
 
+import com.bio4j.model.go.nodes.GoTerm.Type;
 // relationships
 import com.bio4j.model.ncbiTaxonomy.relationships.Parent;
 
@@ -48,6 +49,7 @@ public interface NCBITaxon extends Node<NCBITaxon, NCBITaxon.Type>,
   public Taxon taxon(); // TODO what is this??
 
   public static Type TYPE = Type.ncbiTaxon;
+  public default Type type() { return TYPE; }
   
   public static enum Type implements NodeType<NCBITaxon, NCBITaxon.Type> {
     ncbiTaxon;

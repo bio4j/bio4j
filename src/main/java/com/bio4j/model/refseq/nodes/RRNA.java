@@ -2,6 +2,7 @@ package com.bio4j.model.refseq.nodes;
 
 import java.util.List;
 
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.refseq.relationships.HasRRNA;
 
 /**
@@ -16,6 +17,7 @@ public interface RRNA extends RNA<RRNA, RRNA.Type> {
   public List<? extends GenomeElement> hasRRNA_inNodes();
 
   public static Type TYPE = Type.rRNA;
+  public default Type type() { return TYPE; }
   public static enum Type implements RNAType<RRNA, RRNA.Type> {
 
     rRNA;

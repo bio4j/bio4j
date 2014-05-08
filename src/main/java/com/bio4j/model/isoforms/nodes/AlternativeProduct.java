@@ -5,6 +5,7 @@ import java.util.List;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 
+import com.bio4j.model.go.nodes.GoTerm.Type;
 // properties
 import com.bio4j.model.properties.Name;
 
@@ -21,6 +22,8 @@ public interface AlternativeProduct extends Node<AlternativeProduct, Alternative
 
   // TODO what is this
   public List<Isoform> getIsoforms();
+  
+  public default Type type() { return TYPE; }
 
   public static Type TYPE = Type.alternativeProduct;
   public static enum Type implements NodeType<AlternativeProduct, AlternativeProduct.Type> {

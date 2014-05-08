@@ -2,15 +2,9 @@ package com.bio4j.model.refseq.nodes;
 
 import java.util.List;
 
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.NodeType;
-
-// properties
-import com.bio4j.model.properties.Positions;
-import com.bio4j.model.properties.Note;
-
 // relationships
 import com.bio4j.model.refseq.relationships.HasCDS;
+// properties
 
 /**
  *
@@ -24,6 +18,7 @@ public interface CDS extends GenomicFeature<CDS, CDS.Type> {
   public List<? extends GenomeElement> hasCDS_inNodes();
 
   public static Type TYPE = Type.cds;
+  public default Type type() { return TYPE; }
   public static enum Type implements GenomicFeatureType<CDS, CDS.Type> {
     cds;
     public Type value() { return cds; }

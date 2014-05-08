@@ -11,6 +11,7 @@ import com.bio4j.model.uniprot.relationships.ThesisProteinCitation;
 import java.util.List;
 
 import com.ohnosequences.typedGraphs.NodeType;
+import com.bio4j.model.go.nodes.GoTerm.Type;
 import com.bio4j.model.properties.Title;
 import com.bio4j.model.properties.Date;
 
@@ -24,6 +25,7 @@ public interface Thesis extends Node<Thesis, Thesis.Type>,
 	Title<Thesis, Thesis.Type>, Date<Thesis, Thesis.Type> {
 
 	public static Type TYPE = Type.thesis;
+	public default Type type() { return TYPE; }
 
 	public static enum Type implements NodeType<Thesis, Thesis.Type> {
 

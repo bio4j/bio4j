@@ -1,10 +1,8 @@
 package com.bio4j.model.refseq.nodes;
 
-import com.ohnosequences.typedGraphs.Node;
-import com.bio4j.model.refseq.nodes.GenomeElement;
-
 import com.bio4j.model.properties.Note;
 import com.bio4j.model.properties.Positions;
+import com.ohnosequences.typedGraphs.Node;
 
 /**
  * A base node for genomic features: Genes, RNAs, CDSs.
