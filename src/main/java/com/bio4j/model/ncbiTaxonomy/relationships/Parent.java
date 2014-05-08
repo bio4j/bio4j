@@ -2,6 +2,7 @@ package com.bio4j.model.ncbiTaxonomy.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
+import com.ohnosequences.typedGraphs.RelTypes;
 
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 
@@ -21,15 +22,14 @@ public interface Parent extends Relationship <
   public NCBITaxon target();
 
   public static Type TYPE = Type.parent;
-  public static enum Type implements RelationshipType <
+
+  public static enum Type implements RelTypes.ManyToOne <
     NCBITaxon, NCBITaxon.Type,
     Parent, Parent.Type,
     NCBITaxon, NCBITaxon.Type
   > {
 
     parent;
-
-    public Arity arity() { return Arity.manyToOne; }
     
     public Type value() { return parent; }
     public NCBITaxon.Type sourceType() { return NCBITaxon.TYPE; }

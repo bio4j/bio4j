@@ -19,8 +19,10 @@ public interface AlternateNames <N extends Element<N,NT>, NT extends Enum<NT> & 
   > Type<N,NT> TYPE(NT elementType) { return new Type<N,NT>(elementType); }
 
   // convenience type
-  public class Type <N extends Element<N,NT> & AlternateNames<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
-    extends PropertyType<N, NT, AlternateNames<N,NT>, Type<N,NT>, String[]> {
+  public class Type <
+    N extends Element<N,NT> & AlternateNames<N,NT>,
+    NT extends Enum<NT> & ElementType<N,NT>
+  > extends PropertyType<N, NT, AlternateNames<N,NT>, Type<N,NT>, String[]> {
 
     public Type(NT elementType) {
       super(elementType, "alternateNames");
