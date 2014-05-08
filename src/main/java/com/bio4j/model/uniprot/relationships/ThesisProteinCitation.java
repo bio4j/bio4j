@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.relationships;
 
-import com.bio4j.model.RelationshipType.Arity;
+import com.ohnosequences.typedGraphs.RelationshipType.Arity;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot.nodes.Thesis;
 import com.ohnosequences.typedGraphs.Relationship;

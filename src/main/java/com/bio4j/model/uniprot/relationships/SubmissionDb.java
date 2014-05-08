@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.bio4j.model.RelationshipType.Arity;
+import com.ohnosequences.typedGraphs.RelationshipType.Arity;
 import com.bio4j.model.properties.Date;
 import com.bio4j.model.uniprot.nodes.DB;
 import com.bio4j.model.uniprot.nodes.Person;
