@@ -46,6 +46,7 @@ public interface Enzyme extends Node<Enzyme, Enzyme.Type>,
   // WARNING: moved to rel method
   // public List<Protein> associatedProteins();
 
+  @Override
   public default Type type() { return Enzyme.TYPE; }
 
   public static Type TYPE = Type.enzyme;
