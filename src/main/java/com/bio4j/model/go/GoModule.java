@@ -34,7 +34,7 @@ import com.bio4j.model.go.relationships.*;
   - `name`
   - `definition`
 
-  The `namespace` is encoded as the target node of the `Term` edge; there are three of them
+  The `namespace` is encoded as the target node of the `Term` edge. There are three of them, with labels
 
   - cellular component
   - biological process
