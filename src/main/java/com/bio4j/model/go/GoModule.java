@@ -12,6 +12,54 @@ import com.bio4j.model.go.nodes.*;
 import com.bio4j.model.properties.*;
 import com.bio4j.model.go.relationships.*;
 
+
+/*
+  # Gene Ontology module
+
+  This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
+
+  - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
+
+  ## data model
+
+  Taking into account our data-in-edges approach, the modeling is completely straightforward. 
+
+  ### Terms
+
+  We have a `Term` relationship which contains all the data present for each term. 
+
+  ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
+
+  - `id`
+  - `name`
+  - `definition`
+
+  The `namespace` is encoded as the target node of the `Term` edge; there are three of them
+
+  - cellular component
+  - biological process
+  - molecular function
+
+  ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
+
+  - `secondary_ids`
+  - `synonyms` ?? _maybe we could encode the types as rels?_
+  - `cross_ref` I don't know what to do with this, maybe it is integrated already somewhere?
+  - `comment`
+  - `subset` this should be a rel to a node representing the corresponding [GO Slim](http://www.geneontology.org/GO.slims.shtml)
+  - `obsolete` why not just drop them?
+
+  ### GO Relationships
+
+  See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
+
+  - is a
+  - part of
+  - has part of
+  - regulates
+      - negatively regulates 
+      - positively regulates
+*/
 public enum GoModule implements Module {
 
   go;
