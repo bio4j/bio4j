@@ -111,6 +111,7 @@ public interface DisulfideBondFeature extends BasicFeature{
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
+                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
@@ -118,7 +119,9 @@ public interface DisulfideBondFeature extends BasicFeature{
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
               + nodes
+                + [MolecularFunction.java][main/java/com/bio4j/model/go/nodes/MolecularFunction.java]
                 + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
+                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -442,13 +445,16 @@ public interface DisulfideBondFeature extends BasicFeature{
 [main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]: ../../ncbiTaxonomy/NcbiTaxonomyModule.java.md
 [main/java/com/bio4j/model/go/GoModule.java]: ../../go/GoModule.java.md
 [main/java/com/bio4j/model/go/indexes/ById.java]: ../../go/indexes/ById.java.md
+[main/java/com/bio4j/model/go/relationships/Term.java]: ../../go/relationships/Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../../go/relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../../go/relationships/HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: ../../go/relationships/Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../../go/relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../../go/relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../../go/relationships/NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/nodes/MolecularFunction.java]: ../../go/nodes/MolecularFunction.java.md
 [main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../../go/nodes/GoTerm.java.md
+[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../../go/nodes/GoNamespace.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md

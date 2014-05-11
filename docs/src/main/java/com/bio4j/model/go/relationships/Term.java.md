@@ -1,32 +1,46 @@
 
 ```java
-package com.bio4j.model.refseq.nodes;
+package com.bio4j.model.go.relationships;
 
 import java.util.List;
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
-import com.bio4j.model.refseq.relationships.HasRRNA;
+import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.RelationshipType;
+
+import com.bio4j.model.go.nodes.*;
+
+// properties
+import com.bio4j.model.properties.Name;
+import com.bio4j.model.properties.Id;
+import com.bio4j.model.properties.Comment;
+import com.bio4j.model.properties.Obsolete;
+import com.bio4j.model.properties.Definition;
+import com.bio4j.model.properties.AlternativeIds;
 
 /**
  *
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface RRNA extends RNA<RRNA, RRNA.Type> { 
+// public interface Term extends Relationship <GoTerm,GoTerm.Type, Term<NS,NST>, Term.Type<NS,NST>, NS,NST>,
 
-  // hasRRNA
-  // in
-  public List<? extends HasRRNA> hasRRNA_in();
-  public List<? extends GenomeElement> hasRRNA_inNodes();
+//   // properties
+//   Id<GoTerm, GoTerm.Type>,
+//   Name<GoTerm, GoTerm.Type>,
+//   Definition<GoTerm, GoTerm.Type>,
+//   Comment<GoTerm, GoTerm.Type>,
+//   Obsolete<GoTerm, GoTerm.Type>,
+//   AlternativeIds<GoTerm, GoTerm.Type>
 
-  public static Type TYPE = Type.rRNA;
-  public default Type type() { return TYPE; }
-  public static enum Type implements RNAType<RRNA, RRNA.Type> {
+// {
 
-    rRNA;
-    public Type value() { return rRNA; }
-  }   
-}
 
+//   public interface Type<
+//     NS extends GoNamespace<NS,NST>,
+//     NST extends GoNamespace.Type<NS,NST>
+//   > extends Relationship <GoTerm,GoTerm.Type, Term<NS,NST>,Term.Type<NS,NST>, NS,NST>
+
+// }
 ```
 
 
@@ -460,18 +474,18 @@ public interface RRNA extends RNA<RRNA, RRNA.Type> {
 [main/java/com/bio4j/model/ncbiTaxonomy/relationships/Parent.java]: ../../ncbiTaxonomy/relationships/Parent.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/nodes/NCBITaxon.java]: ../../ncbiTaxonomy/nodes/NCBITaxon.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]: ../../ncbiTaxonomy/NcbiTaxonomyModule.java.md
-[main/java/com/bio4j/model/go/GoModule.java]: ../../go/GoModule.java.md
-[main/java/com/bio4j/model/go/indexes/ById.java]: ../../go/indexes/ById.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: ../../go/relationships/Term.java.md
-[main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../../go/relationships/PositivelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../../go/relationships/HasPartOf.java.md
-[main/java/com/bio4j/model/go/relationships/Regulates.java]: ../../go/relationships/Regulates.java.md
-[main/java/com/bio4j/model/go/relationships/PartOf.java]: ../../go/relationships/PartOf.java.md
-[main/java/com/bio4j/model/go/relationships/IsA.java]: ../../go/relationships/IsA.java.md
-[main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../../go/relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/nodes/MolecularFunction.java]: ../../go/nodes/MolecularFunction.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../../go/nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../../go/nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/GoModule.java]: ../GoModule.java.md
+[main/java/com/bio4j/model/go/indexes/ById.java]: ../indexes/ById.java.md
+[main/java/com/bio4j/model/go/relationships/Term.java]: Term.java.md
+[main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: PositivelyRegulates.java.md
+[main/java/com/bio4j/model/go/relationships/HasPartOf.java]: HasPartOf.java.md
+[main/java/com/bio4j/model/go/relationships/Regulates.java]: Regulates.java.md
+[main/java/com/bio4j/model/go/relationships/PartOf.java]: PartOf.java.md
+[main/java/com/bio4j/model/go/relationships/IsA.java]: IsA.java.md
+[main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/nodes/MolecularFunction.java]: ../nodes/MolecularFunction.java.md
+[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
+[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../nodes/GoNamespace.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md
@@ -681,30 +695,30 @@ public interface RRNA extends RNA<RRNA, RRNA.Type> {
 [main/java/com/bio4j/model/proteinInteractions/relationships/ProteinIsoformInteraction.java]: ../../proteinInteractions/relationships/ProteinIsoformInteraction.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProt_NcbiTaxonomyModule.java]: ../../uniprot_ncbiTaxonomy/UniProt_NcbiTaxonomyModule.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/relationships/OrganismNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/relationships/OrganismNCBITaxon.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasGene.java]: ../relationships/HasGene.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasMRNA.java]: ../relationships/HasMRNA.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeatureType.java]: ../relationships/HasGenomicFeatureType.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasNcRNA.java]: ../relationships/HasNcRNA.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeature.java]: ../relationships/HasGenomicFeature.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasTmRNA.java]: ../relationships/HasTmRNA.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasTRNA.java]: ../relationships/HasTRNA.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasMiscRNA.java]: ../relationships/HasMiscRNA.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasCDS.java]: ../relationships/HasCDS.java.md
-[main/java/com/bio4j/model/refseq/relationships/HasRRNA.java]: ../relationships/HasRRNA.java.md
-[main/java/com/bio4j/model/refseq/RefSeqModule.java]: ../RefSeqModule.java.md
-[main/java/com/bio4j/model/refseq/nodes/GenomicFeature.java]: GenomicFeature.java.md
-[main/java/com/bio4j/model/refseq/nodes/MRNA.java]: MRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/Gene.java]: Gene.java.md
-[main/java/com/bio4j/model/refseq/nodes/RNAType.java]: RNAType.java.md
-[main/java/com/bio4j/model/refseq/nodes/RRNA.java]: RRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/CDS.java]: CDS.java.md
-[main/java/com/bio4j/model/refseq/nodes/NcRNA.java]: NcRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/MiscRNA.java]: MiscRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/TmRNA.java]: TmRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/GenomeElement.java]: GenomeElement.java.md
-[main/java/com/bio4j/model/refseq/nodes/TRNA.java]: TRNA.java.md
-[main/java/com/bio4j/model/refseq/nodes/GenomicFeatureType.java]: GenomicFeatureType.java.md
-[main/java/com/bio4j/model/refseq/nodes/RNA.java]: RNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGene.java]: ../../refseq/relationships/HasGene.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasMRNA.java]: ../../refseq/relationships/HasMRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeatureType.java]: ../../refseq/relationships/HasGenomicFeatureType.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasNcRNA.java]: ../../refseq/relationships/HasNcRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasGenomicFeature.java]: ../../refseq/relationships/HasGenomicFeature.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasTmRNA.java]: ../../refseq/relationships/HasTmRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasTRNA.java]: ../../refseq/relationships/HasTRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasMiscRNA.java]: ../../refseq/relationships/HasMiscRNA.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasCDS.java]: ../../refseq/relationships/HasCDS.java.md
+[main/java/com/bio4j/model/refseq/relationships/HasRRNA.java]: ../../refseq/relationships/HasRRNA.java.md
+[main/java/com/bio4j/model/refseq/RefSeqModule.java]: ../../refseq/RefSeqModule.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomicFeature.java]: ../../refseq/nodes/GenomicFeature.java.md
+[main/java/com/bio4j/model/refseq/nodes/MRNA.java]: ../../refseq/nodes/MRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/Gene.java]: ../../refseq/nodes/Gene.java.md
+[main/java/com/bio4j/model/refseq/nodes/RNAType.java]: ../../refseq/nodes/RNAType.java.md
+[main/java/com/bio4j/model/refseq/nodes/RRNA.java]: ../../refseq/nodes/RRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/CDS.java]: ../../refseq/nodes/CDS.java.md
+[main/java/com/bio4j/model/refseq/nodes/NcRNA.java]: ../../refseq/nodes/NcRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/MiscRNA.java]: ../../refseq/nodes/MiscRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/TmRNA.java]: ../../refseq/nodes/TmRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomeElement.java]: ../../refseq/nodes/GenomeElement.java.md
+[main/java/com/bio4j/model/refseq/nodes/TRNA.java]: ../../refseq/nodes/TRNA.java.md
+[main/java/com/bio4j/model/refseq/nodes/GenomicFeatureType.java]: ../../refseq/nodes/GenomicFeatureType.java.md
+[main/java/com/bio4j/model/refseq/nodes/RNA.java]: ../../refseq/nodes/RNA.java.md
 [main/java/com/bio4j/model/uniprot_go/relationships/GoAnnotation.java]: ../../uniprot_go/relationships/GoAnnotation.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProt_GoModule.java]: ../../uniprot_go/UniProt_GoModule.java.md
 [main/java/com/bio4j/model/uniprot_isoforms/relationships/ProteinIsoform.java]: ../../uniprot_isoforms/relationships/ProteinIsoform.java.md

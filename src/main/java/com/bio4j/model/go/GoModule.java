@@ -14,7 +14,7 @@ import com.bio4j.model.go.relationships.*;
 
 
 /*
-  # Gene Ontology module
+# Gene Ontology module
 
   This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
 
@@ -22,19 +22,19 @@ import com.bio4j.model.go.relationships.*;
 
   ## data model
 
-  Taking into account our data-in-edges approach, the modeling is completely straightforward. 
+  Taking into account our data-in-edges approach, the modeling is completely straightforward.
 
   ### Terms
 
-  We have a `Term` relationship which contains all the data present for each term. 
+  We have a `Term` relationship which contains property data present for each term. Note that some of these properties are represented as edges.
 
   ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
 
-  - `id`
-  - `name`
-  - `definition`
+  - `id` property of the `Term` rel
+  - `name` property of the `Term` rel
+  - `definition` property of the `Term` rel
 
-  The `namespace` is encoded as the target node of the `Term` edge. There are three of them, with labels
+  The `namespace` can be determined once you are in a `term` context. It is represented by relationships (one type per namespace) going out of the term context. There are three of them:
 
   - cellular component
   - biological process
@@ -42,12 +42,12 @@ import com.bio4j.model.go.relationships.*;
 
   ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
 
-  - `secondary_ids`
+  - `secondary_ids` property of the `Term` rel, an array.
   - `synonyms` ?? _maybe we could encode the types as rels?_
-  - `cross_ref` I don't know what to do with this, maybe it is integrated already somewhere?
+  - `cross_ref` an array of strings, property of the `Term` rel. _TODO improve this_
   - `comment`
-  - `subset` this should be a rel to a node representing the corresponding [GO Slim](http://www.geneontology.org/GO.slims.shtml)
-  - `obsolete` why not just drop them?
+  - `subset` an array of strings. _TODO this should be a rel to a node representing the corresponding [GO Slim](http://www.geneontology.org/GO.slims.shtml)_
+  - `obsolete` a relationship from the term context.
 
   ### GO Relationships
 
