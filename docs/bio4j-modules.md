@@ -51,7 +51,9 @@ Properties such as:
 * Prosite cross-references
 
 are included in the Enzyme nodes as well as the associations to proteins if there is any.
-Data is imported from the file **_enzyme.dat _**which is located here: ftp://ftp.expasy.org/databases/enzyme/enzyme.dat
+Data is imported from the file **`enzyme.dat`** which is located here: 
+
+- ftp://ftp.expasy.org/databases/enzyme/enzyme.dat
 
 You can use this _executionsBio4j.xml_ file to import Enzyme DB:
 

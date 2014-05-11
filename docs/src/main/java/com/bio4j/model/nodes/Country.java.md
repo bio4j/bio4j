@@ -6,7 +6,7 @@ import com.bio4j.model.Node;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface Country extends Node {
     
