@@ -113,6 +113,8 @@ import com.bio4j.model.properties.Id;
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
+                + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
+                + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
                 + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
@@ -120,10 +122,12 @@ import com.bio4j.model.properties.Id;
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
+                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [MolecularFunction.java][main/java/com/bio4j/model/go/nodes/MolecularFunction.java]
                 + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
+                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -447,6 +451,8 @@ import com.bio4j.model.properties.Id;
 [main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]: ../../ncbiTaxonomy/NcbiTaxonomyModule.java.md
 [main/java/com/bio4j/model/go/GoModule.java]: ../GoModule.java.md
 [main/java/com/bio4j/model/go/indexes/ById.java]: ById.java.md
+[main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: ../relationships/BiologicalProcess.java.md
+[main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: ../relationships/MolecularFunction.java.md
 [main/java/com/bio4j/model/go/relationships/Term.java]: ../relationships/Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../relationships/HasPartOf.java.md
@@ -454,9 +460,11 @@ import com.bio4j.model.properties.Id;
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/nodes/MolecularFunction.java]: ../nodes/MolecularFunction.java.md
+[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: ../relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/CellularComponent.java]: ../relationships/CellularComponent.java.md
 [main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../nodes/GoRoot.java.md
+[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: ../nodes/GoTermNamespace.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md

@@ -71,25 +71,31 @@ public enum GoModule implements Module {
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
     add(GoTerm.TYPE);
+    add(GoTermNamespace.TYPE);
+    add(GoRoot.TYPE);
   }};
   // relationship types
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
+    add(Term.TYPE);
     add(IsA.TYPE); 
     add(PartOf.TYPE); 
     add(HasPartOf.TYPE); 
     add(NegativelyRegulates.TYPE); 
     add(PositivelyRegulates.TYPE); 
     add(Regulates.TYPE);
+    add(BiologicalProcess.TYPE);
+    add(MolecularFunction.TYPE);
+    add(CellularComponent.TYPE);
   }};
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
     // GoTerm
-    add(Id.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE)); 
-    add(Definition.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
-    add(Comment.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
-    add(Obsolete.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
-    add(Name.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
-    add(AlternativeIds.<GoTerm, GoTerm.Type>TYPE(GoTerm.TYPE));
+    add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
+    add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
+    add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
+    add(Obsolete.<Term, Term.Type>TYPE(Term.TYPE));
+    add(Name.<Term, Term.Type>TYPE(Term.TYPE));
+    add(AlternativeIds.<Term, Term.Type>TYPE(Term.TYPE));
   }};
 
 

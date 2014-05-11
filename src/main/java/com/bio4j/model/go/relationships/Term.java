@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
+import com.ohnosequences.typedGraphs.RelTypes;
 
 import com.bio4j.model.go.nodes.*;
 
@@ -20,22 +21,34 @@ import com.bio4j.model.properties.AlternativeIds;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-// public interface Term extends Relationship <GoTerm,GoTerm.Type, Term<NS,NST>, Term.Type<NS,NST>, NS,NST>,
+public interface Term extends Relationship <
+  GoTerm, GoTerm.Type,
+  Term, Term.Type,
+  GoTermNamespace, GoTermNamespace.Type
+>,
+  // properties
+  Id<Term, Term.Type>,
+  Name<Term, Term.Type>,
+  Definition<Term, Term.Type>,
+  Comment<Term, Term.Type>,
+  Obsolete<Term, Term.Type>,
+  AlternativeIds<Term, Term.Type>
+{
 
-//   // properties
-//   Id<GoTerm, GoTerm.Type>,
-//   Name<GoTerm, GoTerm.Type>,
-//   Definition<GoTerm, GoTerm.Type>,
-//   Comment<GoTerm, GoTerm.Type>,
-//   Obsolete<GoTerm, GoTerm.Type>,
-//   AlternativeIds<GoTerm, GoTerm.Type>
+  public static Type TYPE = Type.term;
+  @Override public default Type type() { return TYPE; }
+  
+  public static enum Type implements RelTypes.ManyToOne <
+    GoTerm, GoTerm.Type,
+    Term, Term.Type,
+    GoTermNamespace, GoTermNamespace.Type
+  >
+  {
 
-// {
+    term;
 
-
-//   public interface Type<
-//     NS extends GoNamespace<NS,NST>,
-//     NST extends GoNamespace.Type<NS,NST>
-//   > extends Relationship <GoTerm,GoTerm.Type, Term<NS,NST>,Term.Type<NS,NST>, NS,NST>
-
-// }
+    @Override public Type value() { return term; }
+    @Override public GoTerm.Type sourceType() { return GoTerm.TYPE; }
+    @Override public GoTermNamespace.Type targetType() { return GoTermNamespace.TYPE; }
+  }
+}

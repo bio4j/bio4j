@@ -22,6 +22,8 @@ import com.bio4j.model.go.relationships.PartOf;
 import com.bio4j.model.go.relationships.NegativelyRegulates;
 import com.bio4j.model.go.relationships.PositivelyRegulates;
 import com.bio4j.model.go.relationships.Regulates;
+import com.bio4j.model.go.relationships.Term;
+
 
 // goAnnotation
 import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
@@ -32,18 +34,10 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
+public interface GoTerm extends Node<GoTerm, GoTerm.Type> {
 
-  // properties
-  Id<GoTerm, GoTerm.Type>,
-  Name<GoTerm, GoTerm.Type>,
-  Definition<GoTerm, GoTerm.Type>,
-  Comment<GoTerm, GoTerm.Type>,
-  Obsolete<GoTerm, GoTerm.Type>,
-  AlternativeIds<GoTerm, GoTerm.Type>
-
-{
-
+  public Term term_out();
+  public GoTermNamespace term_outNodes();
   // isA
   // incoming
   public List<IsA> isA_in();
@@ -218,6 +212,8 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
+                + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
+                + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
                 + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
@@ -225,10 +221,12 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
+                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [MolecularFunction.java][main/java/com/bio4j/model/go/nodes/MolecularFunction.java]
                 + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
+                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -552,6 +550,8 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 [main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]: ../../ncbiTaxonomy/NcbiTaxonomyModule.java.md
 [main/java/com/bio4j/model/go/GoModule.java]: ../GoModule.java.md
 [main/java/com/bio4j/model/go/indexes/ById.java]: ../indexes/ById.java.md
+[main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: ../relationships/BiologicalProcess.java.md
+[main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: ../relationships/MolecularFunction.java.md
 [main/java/com/bio4j/model/go/relationships/Term.java]: ../relationships/Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../relationships/HasPartOf.java.md
@@ -559,9 +559,11 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type>,
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/nodes/MolecularFunction.java]: MolecularFunction.java.md
+[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: ../relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/CellularComponent.java]: ../relationships/CellularComponent.java.md
 [main/java/com/bio4j/model/go/nodes/GoTerm.java]: GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/GoRoot.java]: GoRoot.java.md
+[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: GoTermNamespace.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md
