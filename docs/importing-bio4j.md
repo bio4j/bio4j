@@ -24,11 +24,11 @@ mount /dev/sdh /mnt/bio4j_volume
 #### 6. Download and install official Java 7 JDK
 Here's the link to the official website describing how to [install JDK 7 for Linux platforms](http://docs.oracle.com/javase/7/docs/webnotes/install/linux/linux-jdk.html)
 
-#### 7. Get the last versions of the following files:
+#### 7. Get these files:
 - [ExecuteBio4jTool.jar](https://s3-eu-west-1.amazonaws.com/bio4j-public/releases/0.9/ExecuteBio4jTool.jar)
-- [executionsBio4j.xml](https://github.com/bio4j/Bio4j/blob/master/executionsBio4j.xml) _(this file can be customized in order to just import a sub-set of the data available)_
-- [batchInserter.properties](https://github.com/bio4j/Bio4j/blob/master/batchInserter.properties)  _**IMPORTANT** -->(this file should be changed according to the amount of RAM memory available in your machine)_
-- [uniprotData.xml](https://github.com/bio4j/Bio4j/blob/master/uniprotData.xml) _This file will only be used in the case where you want to import Uniprot module. (Set the boolean flags included in the XML file to true/false depending on your choice of data you want to import from Uniprot)_
+- [executionsBio4j.xml](https://github.com/bio4j/neo4jdb/blob/master/executionsBio4j.xml) _(this file can be customized in order to just import a sub-set of the data available, see for example [this one](https://github.com/bio4j/bio4j/blob/v0.7.0/executionsBio4j.xml))_
+- [batchInserter.properties](https://github.com/bio4j/neo4jdb/blob/master/batchInserter.properties)  _**IMPORTANT** -->(this file should be changed according to the amount of RAM memory available in your machine)_
+- [uniprotData.xml](https://github.com/bio4j/neo4jdb/blob/master/uniprotData.xml) _This file will only be used in the case where you want to import Uniprot module. (Set the boolean flags included in the XML file to true/false depending on your choice of data you want to import from Uniprot)_
 
 #### 8. Import data
 
