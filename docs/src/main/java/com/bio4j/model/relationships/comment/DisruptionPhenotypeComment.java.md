@@ -4,7 +4,7 @@ package com.bio4j.model.relationships.comment;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface DisruptionPhenotypeComment extends BasicComment{
     

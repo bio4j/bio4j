@@ -9,7 +9,7 @@ import com.bio4j.model.nodes.Institute;
 
 /**
  *
- * @author Pablo Pareja Tobes <ppareja@era7.com>
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public interface InstituteCountry extends Relationship {
     
