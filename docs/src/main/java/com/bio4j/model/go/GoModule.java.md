@@ -51,7 +51,8 @@ The `namespace` can be determined once you are in a `term` context. It is repres
   + `broad`
   + `narrow`
   + `related`
-What I think we should do is promote them to relationships and link to the corresponding GO terms for which the synonym matches its `name`. If there's none, just create a loop :) Note that there are no guarantees of acyclicity for this set of rels.
+  
+  What I think we should do is promote them to relationships and link to the corresponding GO terms for which the synonym matches its `name`. If there's none, just create a loop :) Note that there are no guarantees of acyclicity for this set of rels.
 - `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
 - `comment` a standard text field
 - `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
