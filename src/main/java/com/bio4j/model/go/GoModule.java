@@ -12,53 +12,78 @@ import com.bio4j.model.go.nodes.*;
 import com.bio4j.model.properties.*;
 import com.bio4j.model.go.relationships.*;
 
-
 /*
+
 # Gene Ontology module
 
-  This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
+This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
 
-  - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
+- [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
 
-  ## data model
+## data model
 
-  Taking into account our data-in-edges approach, the modeling is completely straightforward.
+Taking into account our data-in-edges approach, the modeling is completely straightforward.
 
-  ### Terms
+### Terms
 
-  We have a `Term` relationship which contains property data present for each term. Note that some of these properties are represented as edges.
+We have a `Term` relationship which contains property data present for each term. Note that some of these properties are represented as edges.
 
-  ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
+##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
 
-  - `id` property of the `Term` rel
-  - `name` property of the `Term` rel
-  - `definition` property of the `Term` rel
+- `id` property of the `Term` rel
+- `name` property of the `Term` rel
+- `definition` property of the `Term` rel
 
-  The `namespace` can be determined once you are in a `term` context. It is represented by relationships (one type per namespace) going out of the term context. There are three of them:
+The `namespace` can be determined once you are in a `term` context. It is represented by relationships (one type per namespace) going out of the term context. There are three of them:
 
-  - cellular component
-  - biological process
-  - molecular function
+- cellular component
+- biological process
+- molecular function
 
-  ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
+##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
 
-  - `secondary_ids` property of the `Term` rel, an array.
-  - `synonyms` ?? _maybe we could encode the types as rels?_
-  - `cross_ref` an array of strings, property of the `Term` rel. _TODO improve this_
-  - `comment`
-  - `subset` an array of strings. _TODO this should be a rel to a node representing the corresponding [GO Slim](http://www.geneontology.org/GO.slims.shtml)_
-  - `obsolete` a relationship from the term context.
+- `secondary_ids` property of the `Term` rel, an array. I don't see the point of this.
+- `synonyms` This is more interesting. They are split into
+    + `exact`
+    + `broad`
+    + `narrow`
+    + `related`
+  What I think we should do is promote them to relationships and link to the corresponding GO terms for which the synonym matches its `name`. If there's none, just create a loop :) Note that there are no guarantees of acyclicity for this set of rels.
+- `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
+- `comment` a standard text field
+- `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
+- `obsolete` a relationship from the term context to a .
 
-  ### GO Relationships
+### GO Relationships
 
-  See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
+See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
 
-  - is a
-  - part of
-  - has part of
-  - regulates
-      - negatively regulates 
-      - positively regulates
+- is a
+- part of
+- has part of
+- regulates
+    - negatively regulates 
+    - positively regulates
+
+## examples
+
+#### all terms from Biological Process
+
+Take the `GoRoot` node, `CellularComponent` rel and then the `Term` relationship.
+
+**Before**, you'd need to either 
+
+- iterate over all terms, retrieve a property, filter
+- create an index based on the value of that property
+
+#### terms from two different GoSlims
+
+From `GoRoot` take `GoSlims` then the rel for each GoSlim that you want to pick, then `Term` out of them.
+
+**Before**, you'd need to
+
+- iterate over all terms, retrieve a property, filter
+- create a property per GoSlim that you might want to get, index them (independently of any term index that you might have)
 */
 public enum GoModule implements Module {
 
