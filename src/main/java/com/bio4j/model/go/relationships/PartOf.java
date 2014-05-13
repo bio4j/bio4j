@@ -14,10 +14,11 @@ public interface PartOf extends Relationship <
   GoTerm, GoTerm.Type,
   PartOf,  PartOf.Type,
   GoTerm, GoTerm.Type
-> {
+>
+{
 
-  public GoTerm source();
-  public GoTerm target();
+  @Override public GoTerm source();
+  @Override public GoTerm target();
 
   public static Type TYPE = Type.partOfGo;
   public static enum Type implements RelationshipType <

@@ -36,6 +36,7 @@ public interface GoTerm extends Node<GoTerm, GoTerm.Type> {
 
   public Term term_out();
   public GoTermNamespace term_outNodes();
+  
   // isA
   // incoming
   public List<IsA> isA_in();

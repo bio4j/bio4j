@@ -53,6 +53,7 @@ The `namespace` can be determined once you are in a `term` context. It is repres
   + `related`
 
 We drop all of them but `exact`, and add an index over it.
+  
 - `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
 - `comment` a standard text field.
 - `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
