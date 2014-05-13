@@ -97,7 +97,7 @@ public enum GoModule implements Module {
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
     add(GoTerm.TYPE);
-    add(GoTermNamespace.TYPE);
+    add(GoNamespace.TYPE);
     add(GoRoot.TYPE);
   }};
   // relationship types

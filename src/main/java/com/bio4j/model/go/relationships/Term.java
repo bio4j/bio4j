@@ -24,7 +24,7 @@ import com.bio4j.model.properties.AlternativeIds;
 public interface Term extends Relationship <
   GoTerm, GoTerm.Type,
   Term, Term.Type,
-  GoTermNamespace, GoTermNamespace.Type
+  GoNamespace, GoNamespace.Type
 >,
   // properties
   Id<Term, Term.Type>,
@@ -41,7 +41,7 @@ public interface Term extends Relationship <
   public static enum Type implements RelTypes.ManyToOne <
     GoTerm, GoTerm.Type,
     Term, Term.Type,
-    GoTermNamespace, GoTermNamespace.Type
+    GoNamespace, GoNamespace.Type
   >
   {
 
@@ -49,6 +49,6 @@ public interface Term extends Relationship <
 
     @Override public Type value() { return term; }
     @Override public GoTerm.Type sourceType() { return GoTerm.TYPE; }
-    @Override public GoTermNamespace.Type targetType() { return GoTermNamespace.TYPE; }
+    @Override public GoNamespace.Type targetType() { return GoNamespace.TYPE; }
   }
 }

@@ -4,7 +4,7 @@ import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.RelTypes;
 
-import com.bio4j.model.go.nodes.GoTermNamespace;
+import com.bio4j.model.go.nodes.GoNamespace;
 import com.bio4j.model.go.nodes.GoRoot;
 
 /**

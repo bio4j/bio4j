@@ -20,7 +20,7 @@ public interface GoRoot extends Node<GoRoot,GoRoot.Type> {
   // MolecularFunction
   // incoming
   public MolecularFunction molecularFunction_in();
-  public GoTermNamespace molecularFunction_inNodes();
+  public GoNamespace molecularFunction_inNodes();
 
   // same for the other namespaces
 

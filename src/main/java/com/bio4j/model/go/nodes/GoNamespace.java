@@ -17,7 +17,7 @@ import com.bio4j.model.go.relationships.CellularComponent;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface GoTermNamespace extends Node<GoTermNamespace,GoTermNamespace.Type> {
+public interface GoNamespace extends Node<GoNamespace,GoNamespace.Type> {
 
   // Term
   // incoming
@@ -40,12 +40,12 @@ public interface GoTermNamespace extends Node<GoTermNamespace,GoTermNamespace.Ty
 
   public default Type type() { return TYPE; }
 
-  public static Type TYPE = Type.goTermNamespace;
+  public static Type TYPE = Type.goNamespace;
 
-  public static enum Type implements NodeType<GoTermNamespace, GoTermNamespace.Type> {
+  public static enum Type implements NodeType<GoNamespace, GoNamespace.Type> {
     
-    goTermNamespace;
+    goNamespace;
 
-    public Type value() { return goTermNamespace; }
+    public Type value() { return goNamespace; }
   }
 }

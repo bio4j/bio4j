@@ -35,7 +35,7 @@ import com.bio4j.model.uniprot.nodes.Protein;
 public interface GoTerm extends Node<GoTerm, GoTerm.Type> {
 
   public Term term_out();
-  public GoTermNamespace term_outNodes();
+  public GoNamespace term_outNodes();
   
   // isA
   // incoming

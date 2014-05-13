@@ -2,6 +2,7 @@ package com.bio4j.model.go.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
+import com.ohnosequences.typedGraphs.RelTypes;
 
 import com.bio4j.model.go.nodes.GoTerm;
 
@@ -16,25 +17,23 @@ public interface Regulates extends Relationship <
   GoTerm, GoTerm.Type
 > {
 
-  public GoTerm source();
-  public GoTerm target();
+  @Override public GoTerm source();
+  @Override public GoTerm target();
 
   public static Type TYPE = Type.regulates; 
-  public static enum Type implements RelationshipType <
+
+  @Override public default Type type() { return TYPE; }
+
+  public static enum Type implements RelTypes.ManyToMany <
     GoTerm, GoTerm.Type,
     Regulates,  Regulates.Type,
     GoTerm, GoTerm.Type
-  > {
-    
+  >
+  {    
     regulates;
-
-    public Arity arity() { return Arity.manyToMany; } // TODO review arity
 
     public Type value() { return regulates; }
     public GoTerm.Type sourceType() { return GoTerm.TYPE; }
     public GoTerm.Type targetType() { return GoTerm.TYPE; }
-
   }
-
-  
 }
