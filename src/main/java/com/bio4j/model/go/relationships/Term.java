@@ -6,15 +6,15 @@ import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.RelTypes;
 
-import com.bio4j.model.go.nodes.*;
+import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.GoNamespace;
 
 // properties
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Id;
 import com.bio4j.model.properties.Comment;
-import com.bio4j.model.properties.Obsolete;
+import com.bio4j.model.properties.Synonym;
 import com.bio4j.model.properties.Definition;
-import com.bio4j.model.properties.AlternativeIds;
 
 /**
  *
@@ -27,15 +27,15 @@ public interface Term extends Relationship <
   GoNamespace, GoNamespace.Type
 >,
   // properties
-  Id<Term, Term.Type>,
-  Name<Term, Term.Type>,
-  Definition<Term, Term.Type>,
-  Comment<Term, Term.Type>,
-  Obsolete<Term, Term.Type>,
-  AlternativeIds<Term, Term.Type>
+  Id<Term,Term.Type>,
+  Name<Term,Term.Type>,
+  Synonym<Term,Term.Type>,
+  Definition<Term,Term.Type>,
+  Comment<Term,Term.Type>
 {
 
   public static Type TYPE = Type.term;
+
   @Override public default Type type() { return TYPE; }
   
   public static enum Type implements RelTypes.ManyToOne <
@@ -44,7 +44,6 @@ public interface Term extends Relationship <
     GoNamespace, GoNamespace.Type
   >
   {
-
     term;
 
     @Override public Type value() { return term; }

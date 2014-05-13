@@ -119,9 +119,8 @@ public enum GoModule implements Module {
     add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
     add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
     add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
-    add(Obsolete.<Term, Term.Type>TYPE(Term.TYPE));
+    add(Synonym.<Term, Term.Type>TYPE(Term.TYPE));
     add(Name.<Term, Term.Type>TYPE(Term.TYPE));
-    add(AlternativeIds.<Term, Term.Type>TYPE(Term.TYPE));
   }};
 
 
