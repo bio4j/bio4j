@@ -46,16 +46,17 @@ The `namespace` can be determined once you are in a `term` context. It is repres
 ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
 
 - `secondary_ids` property of the `Term` rel, an array. I don't see the point of this.
-- `synonyms` This is more interesting. They are split into
+- `synonyms` They are split into
   + `exact`
   + `broad`
   + `narrow`
   + `related`
-What I think we should do is promote them to relationships and link to the corresponding GO terms for which the synonym matches its `name`. If there's none, just create a loop :) Note that there are no guarantees of acyclicity for this set of rels.
+
+We drop all of them but `exact`, and add an index over it.
 - `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
-- `comment` a standard text field
+- `comment` a standard text field.
 - `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
-- `obsolete` a relationship from the term context to a .
+- `obsolete` Terms marked as obsolete are dropped.
 
 ### GO Relationships
 
