@@ -42,7 +42,7 @@ The `namespace` can be determined once you are in a `term` context. It is repres
 
 ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
 
-- `secondary_ids` property of the `Term` rel, an array. I don't see the point of this.
+- `secondary_ids` We drop this. It is just legacy data with no meaning.
 - `synonyms` They are split into
     + `exact`
     + `broad`
