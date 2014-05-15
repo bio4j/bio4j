@@ -3,7 +3,7 @@ package com.bio4j.model.go;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -86,14 +86,14 @@ From `GoRoot` take `GoSlims` then the rel for each GoSlim that you want to pick,
 - iterate over all terms, retrieve a property, filter
 - create a property per GoSlim that you might want to get, index them (independently of any term index that you might have)
 */
-public enum GoModule implements Module {
+public enum GoModule implements TypedGraph {
 
   go;
   
   // package name
   public static String PKG = "com.bio4j.model.go";
   // dependencies
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>();
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
     add(GoTerm.TYPE);
@@ -125,7 +125,7 @@ public enum GoModule implements Module {
 
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return DEPENDENCIES; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

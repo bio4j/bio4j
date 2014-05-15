@@ -3,7 +3,7 @@ package com.bio4j.model.proteinInteractions;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -15,13 +15,13 @@ import com.bio4j.model.proteinInteractions.relationships.*;
 import com.bio4j.model.uniprot.UniProtModule;
 import com.bio4j.model.isoforms.IsoformsModule;
 
-public enum ProteinInteractionsModule implements Module {
+public enum ProteinInteractionsModule implements TypedGraph {
 
   proteinInteractions;
   
   public static String PKG = "com.bio4j.model.proteinInteractions";
   // dependencies
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{ 
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{ 
     add(UniProtModule.uniprot);
     add(IsoformsModule.isoforms);
   }}; 
@@ -39,7 +39,7 @@ public enum ProteinInteractionsModule implements Module {
   }};
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return new HashSet<Module>() {{ 
+  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ 
 
       add(UniProtModule.uniprot);
       // add(IsoformsModule.isoforms);

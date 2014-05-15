@@ -3,7 +3,7 @@ package com.bio4j.model.uniref;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -14,7 +14,7 @@ import com.bio4j.model.uniref.relationships.*;
 // deps
 import com.bio4j.model.uniprot.UniProtModule;
 
-public enum UniRefModule implements Module {
+public enum UniRefModule implements TypedGraph {
 
   uniref;
   
@@ -37,7 +37,7 @@ public enum UniRefModule implements Module {
 
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return new HashSet<Module>() {{ add(UniProtModule.uniprot); }}; }
+  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ add(UniProtModule.uniprot); }}; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

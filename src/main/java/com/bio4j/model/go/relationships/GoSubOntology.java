@@ -2,7 +2,7 @@ package com.bio4j.model.go.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.ohnosequences.typedGraphs.RelTypes;
+
 
 import com.bio4j.model.go.nodes.GoNamespace;
 import com.bio4j.model.go.nodes.GoRoot;
@@ -28,7 +28,7 @@ public interface GoSubOntology<
     GSO extends Relationship<GoNamespace,GoNamespace.Type, GSO,GSOT, GoRoot,GoRoot.Type>,
     GSOT extends Enum<GSOT> & RelationshipType<GoNamespace,GoNamespace.Type, GSO,GSOT, GoRoot,GoRoot.Type>
   > 
-  extends RelTypes.OneToOne <
+  extends RelationshipType.OneToOne <
     GoNamespace, GoNamespace.Type,
     GSO, GSOT,
     GoRoot, GoRoot.Type

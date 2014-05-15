@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot_go;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -15,12 +15,12 @@ import com.bio4j.model.uniprot_go.relationships.*;
 import com.bio4j.model.uniprot.UniProtModule;
 import com.bio4j.model.go.GoModule;
 
-public enum UniProt_GoModule implements Module {
+public enum UniProt_GoModule implements TypedGraph {
 
   uniprot_go;
   
   public static String PKG = "com.bio4j.model.uniprot_go";
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{   
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{   
     add(UniProtModule.uniprot);
     add(GoModule.go);
   }}; 
@@ -33,7 +33,7 @@ public enum UniProt_GoModule implements Module {
   }};
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return DEPENDENCIES; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

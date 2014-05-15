@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot_ncbiTaxonomy;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -15,7 +15,7 @@ import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.*;
 import com.bio4j.model.uniprot.UniProtModule;
 // import com.bio4j.model.ncbiTaxonomy.NcbiTaxonomyModule;
 
-public enum UniProt_NcbiTaxonomyModule implements Module {
+public enum UniProt_NcbiTaxonomyModule implements TypedGraph {
 
   uniprot_ncbiTaxonomy;
   
@@ -34,7 +34,7 @@ public enum UniProt_NcbiTaxonomyModule implements Module {
 
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return new HashSet<Module>() {{ 
+  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ 
     
       add(UniProtModule.uniprot);
       // add(NcbiTaxonomyModule.ncbiTaxonomy);

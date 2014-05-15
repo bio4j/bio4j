@@ -3,7 +3,7 @@ package com.bio4j.model.isoforms;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -15,14 +15,14 @@ import com.bio4j.model.properties.*;
 import com.bio4j.model.uniprot.UniProtModule;
 
 
-public enum IsoformsModule implements Module {
+public enum IsoformsModule implements TypedGraph {
 
   isoforms;
   
   // package name
   public static String PKG = "com.bio4j.model.isoforms";
   // dependencies
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{
     add(UniProtModule.uniprot);
     // TODO something else?
   }};
@@ -48,7 +48,7 @@ public enum IsoformsModule implements Module {
   }};
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return DEPENDENCIES; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.ohnosequences.typedGraphs.RelTypes;
 
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.nodes.GoNamespace;
@@ -38,7 +37,7 @@ public interface Term extends Relationship <
 
   @Override public default Type type() { return TYPE; }
   
-  public static enum Type implements RelTypes.ManyToOne <
+  public static enum Type implements RelationshipType.ManyToOne <
     GoTerm, GoTerm.Type,
     Term, Term.Type,
     GoNamespace, GoNamespace.Type

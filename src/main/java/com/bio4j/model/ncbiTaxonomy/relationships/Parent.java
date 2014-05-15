@@ -2,7 +2,7 @@ package com.bio4j.model.ncbiTaxonomy.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.ohnosequences.typedGraphs.RelTypes;
+
 
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 
@@ -23,7 +23,7 @@ public interface Parent extends Relationship <
 
   public static Type TYPE = Type.parent;
 
-  public static enum Type implements RelTypes.ManyToOne <
+  public static enum Type implements RelationshipType.ManyToOne <
     NCBITaxon, NCBITaxon.Type,
     Parent, Parent.Type,
     NCBITaxon, NCBITaxon.Type
