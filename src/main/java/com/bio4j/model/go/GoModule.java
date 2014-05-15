@@ -86,9 +86,7 @@ From `GoRoot` take `GoSlims` then the rel for each GoSlim that you want to pick,
 - iterate over all terms, retrieve a property, filter
 - create a property per GoSlim that you might want to get, index them (independently of any term index that you might have)
 */
-public enum GoModule implements TypedGraph {
-
-  go;
+public class GoModule implements TypedGraph {
   
   // package name
   public static String PKG = "com.bio4j.model.go";
@@ -96,26 +94,27 @@ public enum GoModule implements TypedGraph {
   public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
-    add(GoTerm.TYPE);
-    add(GoNamespace.TYPE);
-    add(GoRoot.TYPE);
+    add(Term.TYPE);
+    add(SubOntologies.TYPE);
+    add(GoSlims.TYPE);
   }};
   // relationship types
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
-    add(Term.TYPE);
     add(IsA.TYPE); 
     add(PartOf.TYPE); 
     add(HasPartOf.TYPE); 
     add(NegativelyRegulates.TYPE); 
     add(PositivelyRegulates.TYPE); 
     add(Regulates.TYPE);
+    // subontologies
     add(BiologicalProcess.TYPE);
     add(MolecularFunction.TYPE);
     add(CellularComponent.TYPE);
+    // TODO GoSlims
   }};
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // GoTerm
+    // Term
     add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
     add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
     add(Comment.<Term, Term.Type>TYPE(Term.TYPE));

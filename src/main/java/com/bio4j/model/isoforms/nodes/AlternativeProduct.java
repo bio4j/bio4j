@@ -5,7 +5,7 @@ import java.util.List;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 // properties
 import com.bio4j.model.properties.Name;
 

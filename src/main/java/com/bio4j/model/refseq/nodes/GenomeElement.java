@@ -7,7 +7,7 @@ import com.bio4j.model.uniprot.nodes.Protein;
 import java.util.List;
 
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 // properties
 import com.bio4j.model.properties.Comment;
 import com.bio4j.model.properties.Definition;

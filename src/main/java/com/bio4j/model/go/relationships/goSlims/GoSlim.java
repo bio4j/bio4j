@@ -4,7 +4,7 @@ import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 
 
-import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.Term;
 import com.bio4j.model.go.nodes.GoSlims;
 
 /**
@@ -13,29 +13,29 @@ import com.bio4j.model.go.nodes.GoSlims;
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface GoSlim <
-  GSO extends Relationship<GoTerm,GoTerm.Type, GSO,GSOT, GoSlims, GoSlims.Type>,
-  GSOT extends Enum<GSOT> & RelationshipType<GoTerm,GoTerm.Type, GSO,GSOT, GoSlims, GoSlims.Type>
+  GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>,
+  GSOT extends Enum<GSOT> & RelationshipType<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>
 > extends Relationship <
-  GoTerm, GoTerm.Type,
+  Term, Term.Type,
   GSO, GSOT,
   GoSlims, GoSlims.Type
 > {
 
-  @Override public GoTerm source();
+  @Override public Term source();
   @Override public GoSlims target();
 
   public interface Type <
-    GSO extends Relationship<GoTerm,GoTerm.Type, GSO,GSOT, GoSlims,GoSlims.Type>,
-    GSOT extends Enum<GSOT> & RelationshipType<GoTerm,GoTerm.Type, GSO,GSOT, GoSlims,GoSlims.Type>
+    GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>,
+    GSOT extends Enum<GSOT> & RelationshipType<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>
   > 
   extends RelationshipType.ManyToOne <
-    GoTerm, GoTerm.Type,
+    Term, Term.Type,
     GSO, GSOT,
     GoSlims, GoSlims.Type
   >
   {
 
-    @Override public default GoTerm.Type sourceType() { return GoTerm.TYPE; }
+    @Override public default Term.Type sourceType() { return Term.TYPE; }
     @Override public default GoSlims.Type targetType() { return GoSlims.TYPE; }
   }
 }

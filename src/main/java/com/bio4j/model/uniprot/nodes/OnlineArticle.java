@@ -10,7 +10,7 @@ import com.bio4j.model.uniprot.relationships.OnlineArticleProteinCitation;
 import java.util.List;
 
 import com.ohnosequences.typedGraphs.NodeType;
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 import com.bio4j.model.properties.Title;
 
 /**

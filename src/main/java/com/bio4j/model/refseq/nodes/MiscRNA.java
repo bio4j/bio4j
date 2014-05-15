@@ -2,7 +2,7 @@ package com.bio4j.model.refseq.nodes;
 
 import java.util.List;
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 import com.bio4j.model.refseq.relationships.HasMiscRNA;
 
 /**

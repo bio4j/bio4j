@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.nodes.references;
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 

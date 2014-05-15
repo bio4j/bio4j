@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.ohnosequences.typedGraphs.Node;
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 import com.bio4j.model.properties.Date;
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.uniprot.nodes.City;

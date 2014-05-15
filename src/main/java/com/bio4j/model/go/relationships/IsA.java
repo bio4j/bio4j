@@ -4,7 +4,7 @@ import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 
 
-import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.Term;
 
 /**
  *
@@ -12,30 +12,30 @@ import com.bio4j.model.go.nodes.GoTerm;
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface IsA extends Relationship <
-  GoTerm, GoTerm.Type,
+  Term, Term.Type,
   IsA, IsA.Type,
-  GoTerm, GoTerm.Type
+  Term, Term.Type
 >
 {
 
-  @Override public GoTerm source();
-  @Override public GoTerm target();
+  @Override public Term source();
+  @Override public Term target();
 
   public static Type TYPE = Type.isA;
 
   @Override public default Type type() { return TYPE; }
 
   public static enum Type implements RelationshipType.ManyToMany <
-    GoTerm, GoTerm.Type,
+    Term, Term.Type,
     IsA,  IsA.Type,
-    GoTerm, GoTerm.Type
+    Term, Term.Type
   >
   {
 
     isA;
 
     public Type value() { return isA; }
-    public GoTerm.Type sourceType() { return GoTerm.TYPE; }
-    public GoTerm.Type targetType() { return GoTerm.TYPE; }
+    public Term.Type sourceType() { return Term.TYPE; }
+    public Term.Type targetType() { return Term.TYPE; }
   }
 }

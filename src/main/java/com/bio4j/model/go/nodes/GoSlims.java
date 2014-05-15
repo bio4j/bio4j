@@ -5,12 +5,11 @@ import java.util.List;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.NodeType;
 
-import com.bio4j.model.go.relationships.Term;
 import com.bio4j.model.go.relationships.goSlims.*;
 
 
 /**
- *
+ * Relationships into this singleton node represent GO Slims.
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */

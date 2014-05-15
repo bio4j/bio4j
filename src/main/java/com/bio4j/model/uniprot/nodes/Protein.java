@@ -5,8 +5,8 @@ import java.util.List;
 import com.bio4j.model.enums.UniprotDBXref;
 import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
-import com.bio4j.model.go.nodes.GoTerm;
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term;
+import com.bio4j.model.go.nodes.Term.Type;
 // properties
 import com.bio4j.model.properties.Accession;
 import com.bio4j.model.properties.AlternativeAccessions;
@@ -152,7 +152,7 @@ public interface Protein extends Node<Protein, Protein.Type>,
     public List<Patent> getPatentCitations();
     public List<Thesis> getThesisCitations();
     public List<UnpublishedObservation> getUnpublishedObservationsCitations();
-    public List<GoTerm> getGOAnnotations();
+    public List<Term> getGOAnnotations();
     
     
     //---------------------------------------------------------------------------------------------

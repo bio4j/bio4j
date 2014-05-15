@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot_isoforms.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 import com.bio4j.model.isoforms.nodes.Isoform;
 import com.bio4j.model.uniprot.nodes.Protein;
 

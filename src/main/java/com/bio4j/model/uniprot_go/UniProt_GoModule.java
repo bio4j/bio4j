@@ -22,7 +22,7 @@ public enum UniProt_GoModule implements TypedGraph {
   public static String PKG = "com.bio4j.model.uniprot_go";
   public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{   
     add(UniProtModule.uniprot);
-    add(GoModule.go);
+    // add(GoModule.go);
   }}; 
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{}};
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{

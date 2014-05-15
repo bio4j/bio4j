@@ -13,7 +13,7 @@ import com.bio4j.model.properties.ScientificName;
 import com.bio4j.model.properties.TaxonomicRank;
 import com.bio4j.model.properties.EmblCode;
 
-import com.bio4j.model.go.nodes.GoTerm.Type;
+import com.bio4j.model.go.nodes.Term.Type;
 // relationships
 import com.bio4j.model.ncbiTaxonomy.relationships.Parent;
 
