@@ -21,25 +21,22 @@ public enum UniProt_NcbiTaxonomyModule implements TypedGraph {
   
   public static String PKG = "com.bio4j.model.uniprot_ncbiTaxonomy";
 
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{
+    add(UniProtModule.uniprot);
+    // add(NcbiTaxonomyModule.ncbiTaxonomy);
+  }};
+
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{}};
 
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
-
-    add(
-      OrganismNCBITaxon.TYPE                    
-    );
+    add(OrganismNCBITaxon.TYPE);
   }};
 
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{}};
 
 
   public String pkg() { return PKG; }
-  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ 
-    
-      add(UniProtModule.uniprot);
-      // add(NcbiTaxonomyModule.ncbiTaxonomy);
-    }}; 
-  }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

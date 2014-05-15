@@ -22,22 +22,21 @@ public enum UniRefModule implements TypedGraph {
 
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{}};
 
-  public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{
+    add(UniProtModule.uniprot); 
+  }};
 
-    add(
-      UniRef100Member.TYPE                    
-    ); add(
-      UniRef90Member.TYPE                
-    ); add(
-      UniRef50Member.TYPE
-    );
+  public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
+    add(UniRef100Member.TYPE); 
+    add(UniRef90Member.TYPE); 
+    add(UniRef50Member.TYPE);
   }};
 
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{}};
 
 
   public String pkg() { return PKG; }
-  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ add(UniProtModule.uniprot); }}; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

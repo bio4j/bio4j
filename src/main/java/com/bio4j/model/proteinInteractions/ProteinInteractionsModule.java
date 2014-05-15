@@ -39,12 +39,7 @@ public enum ProteinInteractionsModule implements TypedGraph {
   }};
 
   public String pkg() { return PKG; }
-  public Set<TypedGraph> dependencies() { return new HashSet<TypedGraph>() {{ 
-
-      add(UniProtModule.uniprot);
-      // add(IsoformsModule.isoforms);
-    }}; 
-  }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }

@@ -14,7 +14,7 @@ public enum UniProtModule implements TypedGraph {
 
   public static String PKG = "com.bio4j.model.uniprot";
 
-  public String pkg() { return null; }
+  public String pkg() { return PKG; }
   public Set<TypedGraph> dependencies() { return null; }
   public Set<PropertyType> propertyTypes() { return null; }
   public Set<NodeType> nodeTypes() { return null; }
