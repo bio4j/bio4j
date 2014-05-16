@@ -110,7 +110,7 @@ public interface Term extends Node<Term, Term.Type>,
   public List<HasPartOf> hasPartOf_out();
   public List<Term> hasPartOf_outNodes();
 
-  public default Type type() { return TYPE; }
+  @Override public default Type type() { return TYPE; }
 
   public static Type TYPE = Type.term;
 

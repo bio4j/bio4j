@@ -70,7 +70,7 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
 
 _TODO_
 */
-public class GoModule implements TypedGraph {
+public abstract class GoGraph implements TypedGraph {
   
   // package name
   public static String PKG = "com.bio4j.model.go";
