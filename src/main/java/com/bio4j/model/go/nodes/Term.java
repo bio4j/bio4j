@@ -63,52 +63,52 @@ public interface Term extends Node<Term, Term.Type>,
 
   // isA
   // incoming
-  public List<IsA> isA_in();
-  public List<Term> isA_inNodes();
+  public List<? extends IsA> isA_in();
+  public List<? extends Term> isA_inNodes();
   // outgoing
-  public List<IsA> isA_out(); 
-  public List<Term> isA_outNodes();
+  public List<? extends IsA> isA_out(); 
+  public List<? extends Term> isA_outNodes();
 
   // regulates
   // incoming
-  public List<Regulates> regulates_in();
-  public List<Term> regulates_inNodes();
+  public List<? extends Regulates> regulates_in();
+  public List<? extends Term> regulates_inNodes();
   // outgoing
-  public List<Regulates> regulates_out(); 
-  public List<Term> regulates_outNodes();
+  public List<? extends Regulates> regulates_out(); 
+  public List<? extends Term> regulates_outNodes();
 
   // negativelyRegulates
   // incoming
-  public List<NegativelyRegulates> negativelyRegulates_in();
-  public List<Term> negativelyRegulates_inNodes();
+  public List<? extends NegativelyRegulates> negativelyRegulates_in();
+  public List<? extends Term> negativelyRegulates_inNodes();
   // outgoing
-  public List<NegativelyRegulates> negativelyRegulates_out(); 
-  public List<Term> negativelyRegulates_outNodes();
+  public List<? extends NegativelyRegulates> negativelyRegulates_out(); 
+  public List<? extends Term> negativelyRegulates_outNodes();
     
 
   // positivelyRegulates
   // incoming
-  public List<PositivelyRegulates> positivelyRegulates_in();
-  public List<Term> positivelyRegulates_inNodes();
+  public List<? extends PositivelyRegulates> positivelyRegulates_in();
+  public List<? extends Term> positivelyRegulates_inNodes();
   // outgoing
-  public List<PositivelyRegulates> positivelyRegulates_out(); 
-  public List<Term> positivelyRegulates_outNodes();  
+  public List<? extends PositivelyRegulates> positivelyRegulates_out(); 
+  public List<? extends Term> positivelyRegulates_outNodes();  
   
   // partOf
   // incoming
-  public List<PartOf> partOf_in();
-  public List<Term> partOf_inNodes();
+  public List<? extends PartOf> partOf_in();
+  public List<? extends Term> partOf_inNodes();
   // outgoing
-  public List<PartOf> partOf_out();
-  public List<Term> partOf_outNodes();
+  public List<? extends PartOf> partOf_out();
+  public List<? extends Term> partOf_outNodes();
 
   // hasPartOf
   // incoming
-  public List<HasPartOf> hasPartOf_in();
-  public List<Term> hasPartOf_inNodes();
+  public List<? extends HasPartOf> hasPartOf_in();
+  public List<? extends Term> hasPartOf_inNodes();
   // outgoing
-  public List<HasPartOf> hasPartOf_out();
-  public List<Term> hasPartOf_outNodes();
+  public List<? extends HasPartOf> hasPartOf_out();
+  public List<? extends Term> hasPartOf_outNodes();
 
   @Override public default Type type() { return TYPE; }
 
@@ -125,6 +125,6 @@ public interface Term extends Node<Term, Term.Type>,
 
   // goAnnotation
   // incoming
-  public List<GoAnnotation> goAnnotation_in();
-  public List<Protein> goAnnotation_inNodes();
+  public List<? extends GoAnnotation> goAnnotation_in();
+  public List<? extends Protein> goAnnotation_inNodes();
 }

@@ -17,8 +17,8 @@ public interface GoSlims extends Node<GoSlims,GoSlims.Type> {
 
   // plantSlim
   // incoming
-  public List<PlantSlim> plantSlim_in();
-  public List<Term> plantSlim_inNodes();
+  // public List<? extends PlantSlim> plantSlim_in();
+  // public List<? extends Term> plantSlim_inNodes();
   // TODO same for the other GoSlims
 
   public default Type type() { return TYPE; }

@@ -17,9 +17,6 @@ public interface Regulates extends Relationship <
   Term, Term.Type
 > {
 
-  @Override public Term source();
-  @Override public Term target();
-
   public static Type TYPE = Type.regulates; 
 
   @Override public default Type type() { return TYPE; }

@@ -13,7 +13,6 @@ import com.bio4j.model.uniprot_go.relationships.*;
 
 // deps
 import com.bio4j.model.uniprot.UniProtModule;
-import com.bio4j.model.go.GoModule;
 
 public enum UniProt_GoModule implements TypedGraph {
 

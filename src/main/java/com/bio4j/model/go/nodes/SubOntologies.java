@@ -19,18 +19,18 @@ public interface SubOntologies extends Node<SubOntologies, SubOntologies.Type> {
 
   // MolecularFunction
   // incoming
-  public List<MolecularFunction> molecularFunction_in();
-  public List<Term> term_inNodes();
+  public List<? extends MolecularFunction> molecularFunction_in();
+  public List<? extends Term> term_inNodes();
   
   // BiologicalProcess
   // incoming
-  public List<BiologicalProcess> biologicalProcess_in(); 
-  public List<Term> biologicalProcess_inNodes();
+  public List<? extends BiologicalProcess> biologicalProcess_in(); 
+  public List<? extends Term> biologicalProcess_inNodes();
 
   // CellularComponent
   // incoming
-  public List<CellularComponent> cellularComponent_in(); 
-  public List<Term> cellularComponent_inNodes();
+  public List<? extends CellularComponent> cellularComponent_in(); 
+  public List<? extends Term> cellularComponent_inNodes();
 
 
   // type
