@@ -160,20 +160,18 @@ public interface Thesis extends Relationship <
                 + goSlims
                   + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
                   + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
                 + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -194,8 +192,8 @@ public interface Thesis extends Relationship <
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -502,19 +500,17 @@ public interface Thesis extends Relationship <
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: ../../../go/relationships/MolecularFunction.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: ../../../go/relationships/goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: ../../../go/relationships/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: ../../../go/relationships/Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../../../go/relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../../../go/relationships/HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: ../../../go/relationships/Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../../../go/relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../../../go/relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../../../go/relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: ../../../go/relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: ../../../go/relationships/SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: ../../../go/relationships/CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../../../go/nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../../../go/nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: ../../../go/nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: ../../../go/nodes/SubOntologies.java.md
 [main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../../../go/nodes/GoSlims.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../../../go/nodes/GoRoot.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../../util/SubmissionRetriever.java.md
@@ -534,8 +530,8 @@ public interface Thesis extends Relationship <
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../../../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../../../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../../../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../../../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../../../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../../../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../../../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../../../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../../../util/GenomeElementRetriever.java.md

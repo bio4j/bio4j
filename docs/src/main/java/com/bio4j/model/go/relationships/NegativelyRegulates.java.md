@@ -4,9 +4,9 @@ package com.bio4j.model.go.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
-import com.ohnosequences.typedGraphs.RelTypes;
 
-import com.bio4j.model.go.nodes.GoTerm;
+
+import com.bio4j.model.go.nodes.Term;
 
 /**
  *
@@ -14,31 +14,31 @@ import com.bio4j.model.go.nodes.GoTerm;
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface NegativelyRegulates extends Relationship <
-  GoTerm, GoTerm.Type,
+  Term, Term.Type,
   NegativelyRegulates, NegativelyRegulates.Type,
-  GoTerm, GoTerm.Type
+  Term, Term.Type
 >
 {
 
-  @Override public GoTerm source();
-  @Override public GoTerm target();
+  @Override public Term source();
+  @Override public Term target();
 
   public static Type TYPE = Type.negativelyRegulates;
 
   @Override public default Type type() { return TYPE; }
 
-  public static enum Type implements RelTypes.ManyToMany <
-    GoTerm, GoTerm.Type,
+  public static enum Type implements RelationshipType.ManyToMany <
+    Term, Term.Type,
     NegativelyRegulates, NegativelyRegulates.Type,
-    GoTerm, GoTerm.Type
+    Term, Term.Type
   >
   {
     
     negativelyRegulates;
 
     public Type value() { return negativelyRegulates; }
-    public GoTerm.Type sourceType() { return GoTerm.TYPE; }
-    public GoTerm.Type targetType() { return GoTerm.TYPE; }
+    public Term.Type sourceType() { return Term.TYPE; }
+    public Term.Type targetType() { return Term.TYPE; }
   }
 }
 
@@ -150,20 +150,18 @@ public interface NegativelyRegulates extends Relationship <
                 + goSlims
                   + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
                   + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
                 + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -184,8 +182,8 @@ public interface NegativelyRegulates extends Relationship <
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -492,19 +490,17 @@ public interface NegativelyRegulates extends Relationship <
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: MolecularFunction.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: ../nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: ../nodes/SubOntologies.java.md
 [main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../nodes/GoSlims.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../nodes/GoRoot.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md
@@ -524,8 +520,8 @@ public interface NegativelyRegulates extends Relationship <
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../../util/GenomeElementRetriever.java.md

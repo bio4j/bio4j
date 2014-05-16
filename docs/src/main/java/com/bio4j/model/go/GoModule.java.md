@@ -5,7 +5,7 @@ package com.bio4j.model.go;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -17,19 +17,19 @@ import com.bio4j.model.go.relationships.*;
 
 
 
-# Gene Ontology module
+# Gene Ontology graph
 
-This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
+This graph includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
 
 - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
 
 ## data model
 
-Taking into account our data-in-edges approach, the modeling is completely straightforward.
+Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
 
 ### Terms
 
-We have a `Term` relationship which contains property data present for each term. Note that some of these properties are represented as edges.
+We have a `Term` node which contains property data present for each term. Do note though that some of these properties are represented as edges.
 
 ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
 
@@ -37,7 +37,7 @@ We have a `Term` relationship which contains property data present for each term
 - `name` property of the `Term` rel
 - `definition` property of the `Term` rel
 
-The `namespace` can be determined once you are in a `term` context. It is represented by relationships (one type per namespace) going out of the term context. There are three of them:
+The `namespace` is represented by relationships (one type per namespace) going out of the term node. There are three of them:
 
 - cellular component
 - biological process
@@ -45,18 +45,18 @@ The `namespace` can be determined once you are in a `term` context. It is repres
 
 ##### [Optional extras](http://www.geneontology.org/GO.ontology.structure.shtml#opt)
 
-- `secondary_ids` property of the `Term` rel, an array. I don't see the point of this.
+- `secondary_ids` We drop this. It is just legacy data with no meaning.
 - `synonyms` They are split into
   + `exact`
   + `broad`
   + `narrow`
   + `related`
 
-We drop all of them but `exact`, and add an index over it.
+We drop **all** of them **but** `exact`, and add an index over it.
 - `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
 - `comment` a standard text field.
-- `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
-- `obsolete` Terms marked as obsolete are dropped.
+- `subset` an array of strings. Each of them corresponds to a particular GoSlim. As with namespaces, this is modeled as relations going from each term node to a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
+- `obsolete` Terms marked as obsolete are **dropped**.
 
 ### GO Relationships
 
@@ -71,56 +71,39 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
 
 ## examples
 
-#### all terms from Biological Process
-
-Take the `GoRoot` node, `CellularComponent` rel and then the `Term` relationship.
-
-**Before**, you'd need to either 
-
-- iterate over all terms, retrieve a property, filter
-- create an index based on the value of that property
-
-#### terms from two different GoSlims
-
-From `GoRoot` take `GoSlims` then the rel for each GoSlim that you want to pick, then `Term` out of them.
-
-**Before**, you'd need to
-
-- iterate over all terms, retrieve a property, filter
-- create a property per GoSlim that you might want to get, index them (independently of any term index that you might have)
+_TODO_
 
 
 ```java
-public enum GoModule implements Module {
-
-  go;
+public class GoModule implements TypedGraph {
   
   // package name
   public static String PKG = "com.bio4j.model.go";
   // dependencies
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>();
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
   // node types
   public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
-    add(GoTerm.TYPE);
-    add(GoNamespace.TYPE);
-    add(GoRoot.TYPE);
+    add(Term.TYPE);
+    add(SubOntologies.TYPE);
+    add(GoSlims.TYPE);
   }};
   // relationship types
   public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
-    add(Term.TYPE);
     add(IsA.TYPE); 
     add(PartOf.TYPE); 
     add(HasPartOf.TYPE); 
     add(NegativelyRegulates.TYPE); 
     add(PositivelyRegulates.TYPE); 
     add(Regulates.TYPE);
+    // subontologies
     add(BiologicalProcess.TYPE);
     add(MolecularFunction.TYPE);
     add(CellularComponent.TYPE);
+    // TODO GoSlims
   }};
   // property types
   public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // GoTerm
+    // Term
     add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
     add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
     add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
@@ -130,11 +113,12 @@ public enum GoModule implements Module {
 
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return DEPENDENCIES; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }
 }
+
 ```
 
 
@@ -243,20 +227,18 @@ public enum GoModule implements Module {
                 + goSlims
                   + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
                   + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
                 + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -277,8 +259,8 @@ public enum GoModule implements Module {
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -585,19 +567,17 @@ public enum GoModule implements Module {
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: relationships/MolecularFunction.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: relationships/goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: relationships/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: relationships/Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: relationships/HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: relationships/Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: relationships/SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: relationships/CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: nodes/SubOntologies.java.md
 [main/java/com/bio4j/model/go/nodes/GoSlims.java]: nodes/GoSlims.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: nodes/GoRoot.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../util/SubmissionRetriever.java.md
@@ -617,8 +597,8 @@ public enum GoModule implements Module {
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../util/GenomeElementRetriever.java.md

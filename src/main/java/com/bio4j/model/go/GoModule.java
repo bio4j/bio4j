@@ -14,19 +14,19 @@ import com.bio4j.model.go.relationships.*;
 
 /*
 
-# Gene Ontology module
+# Gene Ontology graph
 
-This includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
+This graph includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
 
 - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
 
 ## data model
 
-Taking into account our data-in-edges approach, the modeling is completely straightforward.
+Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
 
 ### Terms
 
-We have a `Term` relationship which contains property data present for each term. Note that some of these properties are represented as edges.
+We have a `Term` node which contains property data present for each term. Do note though that some of these properties are represented as edges.
 
 ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
 
@@ -34,7 +34,7 @@ We have a `Term` relationship which contains property data present for each term
 - `name` property of the `Term` rel
 - `definition` property of the `Term` rel
 
-The `namespace` can be determined once you are in a `term` context. It is represented by relationships (one type per namespace) going out of the term context. There are three of them:
+The `namespace` is represented by relationships (one type per namespace) going out of the term node. There are three of them:
 
 - cellular component
 - biological process
@@ -49,11 +49,11 @@ The `namespace` can be determined once you are in a `term` context. It is repres
     + `narrow`
     + `related`
 
-  We drop all of them but `exact`, and add an index over it.
+  We drop **all** of them **but** `exact`, and add an index over it.
 - `cross_ref` an array of strings, property of the `Term` rel. _TODO is this connected with the corresponding DBs?_
 - `comment` a standard text field.
-- `subset` an array of strings. Each of them corresponds to a particular GoSlim. Again, this is modeled as relations going to the term context. GoSlims themselves are modeled as rels going out of a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
-- `obsolete` Terms marked as obsolete are dropped.
+- `subset` an array of strings. Each of them corresponds to a particular GoSlim. As with namespaces, this is modeled as relations going from each term node to a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
+- `obsolete` Terms marked as obsolete are **dropped**.
 
 ### GO Relationships
 
@@ -68,23 +68,7 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
 
 ## examples
 
-#### all terms from Biological Process
-
-Take the `GoRoot` node, `CellularComponent` rel and then the `Term` relationship.
-
-**Before**, you'd need to either 
-
-- iterate over all terms, retrieve a property, filter
-- create an index based on the value of that property
-
-#### terms from two different GoSlims
-
-From `GoRoot` take `GoSlims` then the rel for each GoSlim that you want to pick, then `Term` out of them.
-
-**Before**, you'd need to
-
-- iterate over all terms, retrieve a property, filter
-- create a property per GoSlim that you might want to get, index them (independently of any term index that you might have)
+_TODO_
 */
 public class GoModule implements TypedGraph {
   
