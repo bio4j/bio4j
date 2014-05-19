@@ -2,6 +2,8 @@ package com.bio4j.model.go.relationships;
 
 import com.ohnosequences.typedGraphs.Relationship;
 
+import com.bio4j.model.go.nodes.Term;
+import com.bio4j.model.go.nodes.SubOntologies;
 
 /**
  *
@@ -21,6 +23,6 @@ public interface BiologicalProcess <
     R extends BiologicalProcess<S,ST,R,RT,T,TT>, RT extends BiologicalProcess.Type<S,ST,R,RT,T,TT>,
     T extends SubOntologies<T,TT>, TT extends SubOntologies.Type<T,TT>
   >
-    extends Relationship.Type<S,ST,R,RT,T,TT>
+    extends Relationship.Type.ManyToOne<S,ST,R,RT,T,TT>
   {}
 }

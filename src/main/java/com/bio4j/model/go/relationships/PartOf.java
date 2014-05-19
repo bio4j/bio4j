@@ -24,6 +24,6 @@ public interface PartOf <
     R extends PartOf<S,ST,R,RT,T,TT>, RT extends PartOf.Type<S,ST,R,RT,T,TT>,
     T extends Term<T,TT>, TT extends Term.Type<T,TT>
   >
-    extends Relationship.Type<S,ST,R,RT,T,TT>
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
   {}
 }

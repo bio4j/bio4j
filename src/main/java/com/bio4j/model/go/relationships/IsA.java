@@ -21,6 +21,6 @@ public interface IsA <
     R extends IsA<S,ST,R,RT,T,TT>, RT extends IsA.Type<S,ST,R,RT,T,TT>,
     T extends Term<T,TT>, TT extends Term.Type<T,TT>
   >
-    extends Relationship.Type<S,ST,R,RT,T,TT>
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
   {}
 }

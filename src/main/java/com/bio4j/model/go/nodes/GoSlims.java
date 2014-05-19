@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Node;
 
-import com.bio4j.model.go.relationships.goSlims.*;
+// import com.bio4j.model.go.relationships.goSlims.*;
 
 
 /**

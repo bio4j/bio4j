@@ -17,8 +17,8 @@ import com.bio4j.model.go.relationships.BiologicalProcess;
 import com.bio4j.model.go.relationships.CellularComponent;
 
 // goAnnotation
-import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
-import com.bio4j.model.uniprot.nodes.Protein;
+// import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
+// import com.bio4j.model.uniprot.nodes.Protein;
 
 /**
  *
@@ -32,63 +32,74 @@ public interface Term <
   extends Node<N,NT>
 {
 
-  // the node type
+  // term type
   public static interface Type <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>
   > 
     extends Node.Type<N,NT>
   {}
+
+  // properties
   
-  public static abstract class id <
+  public static interface id <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>,
     P extends id<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.class;
+    @Override public default String name() { return "id"; } 
+    @Override public default Class<String> valueClass() { return String.class; }
   }
 
-  public static abstract class name <
+  public static interface name <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>,
     P extends name<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.class;
+    @Override public default String name() { return "name"; } 
+    @Override public default Class<String> valueClass() { return String.class; }
   }
 
-  public static abstract class synonym <
+  public static interface synonym <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>,
     P extends synonym<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.class;
+    @Override public default String name() { return "id"; } 
+    @Override public default Class<String> valueClass() { return String.class; }
   }
 
-  public static abstract class definition <
+  public static interface definition <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>,
     P extends definition<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.class;
+    @Override public default String name() { return "id"; } 
+    @Override public default Class<String> valueClass() { return String.class; }
   }
 
-  public static abstract class comment <
+  public static interface comment <
     N extends Term<N,NT>,
     NT extends Term.Type<N,NT>,
     P extends comment<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.class;
+    @Override public default String name() { return "id"; } 
+    @Override public default Class<String> valueClass() { return String.class; }
   }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////
+
+  // relationships
   
   // SubOntologies
     
@@ -162,6 +173,6 @@ public interface Term <
 
   // goAnnotation
   // incoming
-  public List<? extends GoAnnotation> goAnnotation_in();
-  public List<? extends Protein> goAnnotation_inNodes();
+  // public List<? extends GoAnnotation> goAnnotation_in();
+  // public List<? extends Protein> goAnnotation_inNodes();
 }

@@ -5,11 +5,9 @@ import java.util.HashSet;
 
 import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.Node;
-
 import com.ohnosequences.typedGraphs.Property;
 
 import com.bio4j.model.go.nodes.*;
-import com.bio4j.model.properties.*;
 import com.bio4j.model.go.relationships.*;
 
 /*
