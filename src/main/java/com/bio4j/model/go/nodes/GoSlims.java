@@ -2,8 +2,8 @@ package com.bio4j.model.go.nodes;
 
 import java.util.List;
 
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.NodeType;
+
+import com.ohnosequences.typedGraphs.Node.Type;
 
 import com.bio4j.model.go.relationships.goSlims.*;
 
@@ -13,22 +13,23 @@ import com.bio4j.model.go.relationships.goSlims.*;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface GoSlims extends Node<GoSlims,GoSlims.Type> {
+public interface GoSlims <
+  N extends GoSlims<N,NT>,
+  NT extends GoSlims.Type<N,NT>
+> 
+  extends Node<N,NT>
+{
+
+  public static interface Type <
+    N extends GoSlims<N,NT>,
+    NT extends GoSlims.Type<N,NT>
+  > 
+    extends Node.Type<N,NT>
+  {}
 
   // plantSlim
   // incoming
   // public List<? extends PlantSlim> plantSlim_in();
   // public List<? extends Term> plantSlim_inNodes();
   // TODO same for the other GoSlims
-
-  public default Type type() { return TYPE; }
-
-  public static Type TYPE = Type.goSlims;
-
-  public static enum Type implements NodeType<GoSlims,GoSlims.Type> {
-    
-    goSlims;
-
-    public Type value() { return goSlims; }
-  }
 }

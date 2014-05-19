@@ -4,8 +4,8 @@ import java.util.Set;
 import java.util.HashSet;
 
 import com.ohnosequences.typedGraphs.TypedGraph;
-import com.ohnosequences.typedGraphs.NodeType;
-import com.ohnosequences.typedGraphs.RelationshipType;
+import com.ohnosequences.typedGraphs.Node.Type;
+
 import com.ohnosequences.typedGraphs.PropertyType;
 
 import com.bio4j.model.go.nodes.*;
@@ -77,13 +77,13 @@ public abstract class GoGraph implements TypedGraph {
   // dependencies
   public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
   // node types
-  public static Set<NodeType> NODE_TYPES = new HashSet<NodeType>() {{
+  public static Set<Node.Type> NODE_TYPES = new HashSet<Node.Type>() {{
     add(Term.TYPE);
     add(SubOntologies.TYPE);
     add(GoSlims.TYPE);
   }};
   // relationship types
-  public static Set<RelationshipType> RELATIONSHIP_TYPES = new HashSet<RelationshipType>() {{
+  public static Set<Relationship.Type> RELATIONSHIP_TYPES = new HashSet<Relationship.Type>() {{
     add(IsA.TYPE); 
     add(PartOf.TYPE); 
     add(HasPartOf.TYPE); 
@@ -110,6 +110,6 @@ public abstract class GoGraph implements TypedGraph {
   public String pkg() { return PKG; }
   public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
-  public Set<NodeType> nodeTypes() { return NODE_TYPES; }
-  public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }
+  public Set<Node.Type> nodeTypes() { return NODE_TYPES; }
+  public Set<Relationship.Type> relationshipTypes() { return RELATIONSHIP_TYPES; }
 }

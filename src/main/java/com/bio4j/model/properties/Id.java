@@ -6,7 +6,7 @@ import com.ohnosequences.typedGraphs.PropertyType;
 import com.ohnosequences.typedGraphs.Element;
 import com.ohnosequences.typedGraphs.ElementType;
 
-public interface Id <N extends Element<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
+public interface Id <N extends Element<N,NT>, NT extends ElementType<N,NT>> 
   extends Property<N, NT> {
 
   // the property method
@@ -15,11 +15,11 @@ public interface Id <N extends Element<N,NT>, NT extends Enum<NT> & ElementType<
   // static type method
   public static <
     N extends Element<N,NT> & Id<N,NT>, 
-    NT extends Enum<NT> & ElementType<N,NT>
+    NT extends ElementType<N,NT>
   > Type<N,NT> TYPE(NT elementType) { return new Type<N,NT>(elementType); }
 
   // convenience type
-  public class Type <N extends Element<N,NT> & Id<N,NT>, NT extends Enum<NT> & ElementType<N,NT>> 
+  public class Type <N extends Element<N,NT> & Id<N,NT>, NT extends ElementType<N,NT>> 
     extends PropertyType<N, NT, Id<N,NT>, Type<N,NT>, String> {
 
     public Type(NT elementType) {

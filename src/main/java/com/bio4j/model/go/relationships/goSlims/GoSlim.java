@@ -1,7 +1,7 @@
 package com.bio4j.model.go.relationships.goSlims;
 
 import com.ohnosequences.typedGraphs.Relationship;
-import com.ohnosequences.typedGraphs.RelationshipType;
+
 
 
 import com.bio4j.model.go.nodes.Term;
@@ -14,7 +14,7 @@ import com.bio4j.model.go.nodes.GoSlims;
  */
 public interface GoSlim <
   GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>,
-  GSOT extends Enum<GSOT> & RelationshipType<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>
+  GSOT extends Enum<GSOT> & Relationship.Type<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>
 > extends Relationship <
   Term, Term.Type,
   GSO, GSOT,
@@ -26,9 +26,9 @@ public interface GoSlim <
 
   public interface Type <
     GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>,
-    GSOT extends Enum<GSOT> & RelationshipType<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>
+    GSOT extends Enum<GSOT> & Relationship.Type<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>
   > 
-  extends RelationshipType.ManyToOne <
+  extends Relationship.Type.ManyToOne <
     Term, Term.Type,
     GSO, GSOT,
     GoSlims, GoSlims.Type

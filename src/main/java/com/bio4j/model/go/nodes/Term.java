@@ -4,15 +4,6 @@ import java.util.List;
 
 // base types
 import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.NodeType;
-
-// properties
-import com.bio4j.model.properties.Name;
-import com.bio4j.model.properties.Synonym;
-import com.bio4j.model.properties.Id;
-import com.bio4j.model.properties.Comment;
-import com.bio4j.model.properties.Definition;
-
 // relationships
 import com.bio4j.model.go.relationships.IsA;
 import com.bio4j.model.go.relationships.HasPartOf;
@@ -33,16 +24,77 @@ import com.bio4j.model.uniprot.nodes.Protein;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface Term extends Node<Term, Term.Type>,
-
-  // properties
-  Id<Term,Term.Type>,
-  Name<Term,Term.Type>,
-  Synonym<Term,Term.Type>,
-  Definition<Term,Term.Type>,
-  Comment<Term,Term.Type>
-  
+public interface Term <
+  N extends Term<N,NT>,
+  NT extends Term.Type<N,NT>
+> 
+  extends Node<N,NT>
 {
+
+  // the node type
+  public static interface Type <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>
+  > 
+    extends Node.Type<N,NT>
+  {}
+  
+  public static abstract class id <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>,
+    P extends id<N,NT,P>
+  > 
+    extends Property<N,NT,P,String> 
+  {
+    Class<String> clazz = String.Class;
+  }
+
+  public static abstract class name <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>,
+    P extends name<N,NT,P>
+  > 
+    extends Property<N,NT,P,String> 
+  {
+    Class<String> clazz = String.Class;
+  }
+
+  public static abstract class synonym <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>,
+    P extends synonym<N,NT,P>
+  > 
+    extends Property<N,NT,P,String> 
+  {
+    Class<String> clazz = String.Class;
+  }
+
+  public static abstract class definition <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>,
+    P extends definition<N,NT,P>
+  > 
+    extends Property<N,NT,P,String> 
+  {
+    Class<String> clazz = String.Class;
+  }
+
+  public static abstract class comment <
+    N extends Term<N,NT>,
+    NT extends Term.Type<N,NT>,
+    P extends comment<N,NT,P>
+  > 
+    extends Property<N,NT,P,String> 
+  {
+    Class<String> clazz = String.Class;
+  }
+
+  // all this is optional now
+  @Override public default String id() { return get(Id.TYPE(type())); }
+  @Override public default String name() { return get(Name.TYPE(type())); }
+  @Override public default String synonym() { return get(Synonym.TYPE(type())); }
+  @Override public default String definition() { return get(Definition.TYPE(type())); }
+  @Override public default String comment() { return get(Comment.TYPE(type())); }
   
   // SubOntologies
     
@@ -110,16 +162,7 @@ public interface Term extends Node<Term, Term.Type>,
   public List<? extends HasPartOf> hasPartOf_out();
   public List<? extends Term> hasPartOf_outNodes();
 
-  @Override public default Type type() { return TYPE; }
-
-  public static Type TYPE = Type.term;
-
-  public static enum Type implements NodeType<Term, Term.Type> {
-
-    term;
-
-    public Type value() { return term; }
-  }
+  
 
   ///////////////////////// extras ////////////////////////////////////
 
