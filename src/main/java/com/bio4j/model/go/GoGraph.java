@@ -4,9 +4,9 @@ import java.util.Set;
 import java.util.HashSet;
 
 import com.ohnosequences.typedGraphs.TypedGraph;
-import com.ohnosequences.typedGraphs.Node.Type;
+import com.ohnosequences.typedGraphs.Node;
 
-import com.ohnosequences.typedGraphs.PropertyType;
+import com.ohnosequences.typedGraphs.Property;
 
 import com.bio4j.model.go.nodes.*;
 import com.bio4j.model.properties.*;
@@ -72,44 +72,44 @@ _TODO_
 */
 public abstract class GoGraph implements TypedGraph {
   
-  // package name
-  public static String PKG = "com.bio4j.model.go";
-  // dependencies
-  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
-  // node types
-  public static Set<Node.Type> NODE_TYPES = new HashSet<Node.Type>() {{
-    add(Term.TYPE);
-    add(SubOntologies.TYPE);
-    add(GoSlims.TYPE);
-  }};
-  // relationship types
-  public static Set<Relationship.Type> RELATIONSHIP_TYPES = new HashSet<Relationship.Type>() {{
-    add(IsA.TYPE); 
-    add(PartOf.TYPE); 
-    add(HasPartOf.TYPE); 
-    add(NegativelyRegulates.TYPE); 
-    add(PositivelyRegulates.TYPE); 
-    add(Regulates.TYPE);
-    // subontologies
-    add(BiologicalProcess.TYPE);
-    add(MolecularFunction.TYPE);
-    add(CellularComponent.TYPE);
-    // TODO GoSlims
-  }};
-  // property types
-  public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    // Term
-    add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
-    add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
-    add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
-    add(Synonym.<Term, Term.Type>TYPE(Term.TYPE));
-    add(Name.<Term, Term.Type>TYPE(Term.TYPE));
-  }};
+  // // package name
+  // public static String PKG = "com.bio4j.model.go";
+  // // dependencies
+  // public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
+  // // node types
+  // public static Set<Node.Type> NODE_TYPES = new HashSet<Node.Type>() {{
+  //   add(Term.TYPE);
+  //   add(SubOntologies.TYPE);
+  //   add(GoSlims.TYPE);
+  // }};
+  // // relationship types
+  // public static Set<Relationship.Type> RELATIONSHIP_TYPES = new HashSet<Relationship.Type>() {{
+  //   add(IsA.TYPE); 
+  //   add(PartOf.TYPE); 
+  //   add(HasPartOf.TYPE); 
+  //   add(NegativelyRegulates.TYPE); 
+  //   add(PositivelyRegulates.TYPE); 
+  //   add(Regulates.TYPE);
+  //   // subontologies
+  //   add(BiologicalProcess.TYPE);
+  //   add(MolecularFunction.TYPE);
+  //   add(CellularComponent.TYPE);
+  //   // TODO GoSlims
+  // }};
+  // // property types
+  // public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
+  //   // Term
+  //   add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
+  //   add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
+  //   add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
+  //   add(Synonym.<Term, Term.Type>TYPE(Term.TYPE));
+  //   add(Name.<Term, Term.Type>TYPE(Term.TYPE));
+  // }};
 
 
-  public String pkg() { return PKG; }
-  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
-  public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
-  public Set<Node.Type> nodeTypes() { return NODE_TYPES; }
-  public Set<Relationship.Type> relationshipTypes() { return RELATIONSHIP_TYPES; }
+  // public String pkg() { return PKG; }
+  // public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
+  // public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
+  // public Set<Node.Type> nodeTypes() { return NODE_TYPES; }
+  // public Set<Relationship.Type> relationshipTypes() { return RELATIONSHIP_TYPES; }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 // base types
 import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.Property;
 // relationships
 import com.bio4j.model.go.relationships.IsA;
 import com.bio4j.model.go.relationships.HasPartOf;
@@ -46,7 +47,7 @@ public interface Term <
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.Class;
+    Class<String> clazz = String.class;
   }
 
   public static abstract class name <
@@ -56,7 +57,7 @@ public interface Term <
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.Class;
+    Class<String> clazz = String.class;
   }
 
   public static abstract class synonym <
@@ -66,7 +67,7 @@ public interface Term <
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.Class;
+    Class<String> clazz = String.class;
   }
 
   public static abstract class definition <
@@ -76,7 +77,7 @@ public interface Term <
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.Class;
+    Class<String> clazz = String.class;
   }
 
   public static abstract class comment <
@@ -86,15 +87,8 @@ public interface Term <
   > 
     extends Property<N,NT,P,String> 
   {
-    Class<String> clazz = String.Class;
+    Class<String> clazz = String.class;
   }
-
-  // all this is optional now
-  @Override public default String id() { return get(Id.TYPE(type())); }
-  @Override public default String name() { return get(Name.TYPE(type())); }
-  @Override public default String synonym() { return get(Synonym.TYPE(type())); }
-  @Override public default String definition() { return get(Definition.TYPE(type())); }
-  @Override public default String comment() { return get(Comment.TYPE(type())); }
   
   // SubOntologies
     

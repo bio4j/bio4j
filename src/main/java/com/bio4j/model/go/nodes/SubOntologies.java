@@ -3,7 +3,7 @@ package com.bio4j.model.go.nodes;
 import java.util.List;
 
 
-import com.ohnosequences.typedGraphs.Node.Type;
+import com.ohnosequences.typedGraphs.Node;
 
 import com.bio4j.model.go.relationships.MolecularFunction;
 import com.bio4j.model.go.relationships.BiologicalProcess;
