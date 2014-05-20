@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.ohnosequences.typedGraphs.Node;
 
-// import com.bio4j.model.go.relationships.goSlims.*;
+import com.bio4j.model.go.GoGraph.GoSlimsType;
 
 
 /**
@@ -15,17 +15,10 @@ import com.ohnosequences.typedGraphs.Node;
  */
 public interface GoSlims <
   N extends GoSlims<N,NT>,
-  NT extends GoSlims.Type<N,NT>
+  NT extends GoSlimsType<N,NT>
 > 
   extends Node<N,NT>
 {
-
-  public static interface Type <
-    N extends GoSlims<N,NT>,
-    NT extends GoSlims.Type<N,NT>
-  > 
-    extends Node.Type<N,NT>
-  {}
 
   // plantSlim
   // incoming

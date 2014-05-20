@@ -9,6 +9,8 @@ import com.bio4j.model.go.relationships.MolecularFunction;
 import com.bio4j.model.go.relationships.BiologicalProcess;
 import com.bio4j.model.go.relationships.CellularComponent;
 
+import com.bio4j.model.go.GoGraph.SubOntologiesType;
+
 /**
  * Rels into this singleton node represent subontologies.
  *
@@ -17,17 +19,10 @@ import com.bio4j.model.go.relationships.CellularComponent;
  */
 public interface SubOntologies<
   N extends SubOntologies<N,NT>,
-  NT extends SubOntologies.Type<N,NT>
+  NT extends SubOntologiesType<N,NT>
 > 
   extends Node<N,NT>
 {
-
-  public static interface Type <
-    N extends SubOntologies<N,NT>,
-    NT extends SubOntologies.Type<N,NT>
-  > 
-    extends Node.Type<N,NT>
-  {}
 
   // MolecularFunction
   // incoming

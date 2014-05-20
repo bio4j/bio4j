@@ -16,6 +16,8 @@ import com.bio4j.model.go.relationships.MolecularFunction;
 import com.bio4j.model.go.relationships.BiologicalProcess;
 import com.bio4j.model.go.relationships.CellularComponent;
 
+import com.bio4j.model.go.GoGraph.TermType;
+
 // goAnnotation
 // import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
 // import com.bio4j.model.uniprot.nodes.Protein;
@@ -27,24 +29,15 @@ import com.bio4j.model.go.relationships.CellularComponent;
  */
 public interface Term <
   N extends Term<N,NT>,
-  NT extends Term.Type<N,NT>
+  NT extends TermType<N,NT>
 > 
   extends Node<N,NT>
 {
 
-  // term type
-  public static interface Type <
-    N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>
-  > 
-    extends Node.Type<N,NT>
-  {}
-
-  // properties
-  
+  // properties  
   public static interface id <
     N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>,
+    NT extends TermType<N,NT>,
     P extends id<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
@@ -55,7 +48,7 @@ public interface Term <
 
   public static interface name <
     N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>,
+    NT extends TermType<N,NT>,
     P extends name<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
@@ -66,7 +59,7 @@ public interface Term <
 
   public static interface synonym <
     N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>,
+    NT extends TermType<N,NT>,
     P extends synonym<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
@@ -77,7 +70,7 @@ public interface Term <
 
   public static interface definition <
     N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>,
+    NT extends TermType<N,NT>,
     P extends definition<N,NT,P>
   > 
     extends Property<N,NT,P,String> 
@@ -88,7 +81,7 @@ public interface Term <
 
   public static interface comment <
     N extends Term<N,NT>,
-    NT extends Term.Type<N,NT>,
+    NT extends TermType<N,NT>,
     P extends comment<N,NT,P>
   > 
     extends Property<N,NT,P,String> 

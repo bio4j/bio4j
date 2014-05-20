@@ -68,8 +68,28 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
 
 _TODO_
 */
-public abstract class GoGraph implements TypedGraph {
-  
+public interface GoGraph {
+
+  // Node types
+  public static interface GoSlimsType <
+    N extends GoSlims<N,NT>,
+    NT extends GoSlimsType<N,NT>
+  > 
+    extends Node.Type<N,NT>
+  {}
+  public static interface TermType <
+    N extends Term<N,NT>,
+    NT extends TermType<N,NT>
+  > 
+    extends Node.Type<N,NT>
+  {}
+  public static interface SubOntologiesType <
+    N extends SubOntologies<N,NT>,
+    NT extends SubOntologiesType<N,NT>
+  > 
+    extends Node.Type<N,NT>
+  {}
+
   // // package name
   // public static String PKG = "com.bio4j.model.go";
   // // dependencies
