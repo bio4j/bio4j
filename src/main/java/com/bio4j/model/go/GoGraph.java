@@ -6,6 +6,7 @@ import java.util.HashSet;
 import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
+import com.ohnosequences.typedGraphs.Relationship;
 
 import com.bio4j.model.go.nodes.*;
 import com.bio4j.model.go.relationships.*;
@@ -70,6 +71,8 @@ _TODO_
 */
 public interface GoGraph {
 
+  // Override to a precise type
+  // public GoSlimsType<N,NT> GoSlims();
   // Node types
   public static interface GoSlimsType <
     N extends GoSlims<N,NT>,
@@ -77,6 +80,7 @@ public interface GoGraph {
   > 
     extends Node.Type<N,NT>
   {}
+
   public static interface TermType <
     N extends Term<N,NT>,
     NT extends TermType<N,NT>
@@ -88,6 +92,72 @@ public interface GoGraph {
     NT extends SubOntologiesType<N,NT>
   > 
     extends Node.Type<N,NT>
+  {}
+
+
+  // relationship types
+  public static interface BiologicalProcessType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends BiologicalProcess<S,ST,R,RT,T,TT>, RT extends BiologicalProcessType<S,ST,R,RT,T,TT>,
+    T extends SubOntologies<T,TT>, TT extends SubOntologiesType<T,TT>
+  >
+    extends Relationship.Type.ManyToOne<S,ST,R,RT,T,TT>
+  {}
+  public static interface MolecularFunctionType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends MolecularFunction<S,ST,R,RT,T,TT>, RT extends MolecularFunctionType<S,ST,R,RT,T,TT>,
+    T extends SubOntologies<T,TT>, TT extends SubOntologiesType<T,TT>
+  >
+    extends Relationship.Type.ManyToOne<S,ST,R,RT,T,TT>
+  {}
+  public static interface CellularComponentType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends CellularComponent<S,ST,R,RT,T,TT>, RT extends CellularComponentType<S,ST,R,RT,T,TT>,
+    T extends SubOntologies<T,TT>, TT extends SubOntologiesType<T,TT>
+  >
+    extends Relationship.Type.ManyToOne<S,ST,R,RT,T,TT>
+  {}
+  interface HasPartOfType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends HasPartOf<S,ST,R,RT,T,TT>, RT extends HasPartOfType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
+  {}
+  public static interface IsAType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends IsA<S,ST,R,RT,T,TT>, RT extends IsAType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
+  {}
+  interface NegativelyRegulatesType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends NegativelyRegulates<S,ST,R,RT,T,TT>, RT extends NegativelyRegulatesType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
+  {}
+  interface PartOfType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends PartOf<S,ST,R,RT,T,TT>, RT extends PartOfType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
+  {}
+  interface RegulatesType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends Regulates<S,ST,R,RT,T,TT>, RT extends RegulatesType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
+  {}
+  interface PositivelyRegulatesType <
+    S extends Term<S,ST>, ST extends TermType<S,ST>,
+    R extends PositivelyRegulates<S,ST,R,RT,T,TT>, RT extends PositivelyRegulatesType<S,ST,R,RT,T,TT>,
+    T extends Term<T,TT>, TT extends TermType<T,TT>
+  >
+    extends Relationship.Type.ManyToMany<S,ST,R,RT,T,TT>
   {}
 
   // // package name
@@ -117,11 +187,11 @@ public interface GoGraph {
   // // property types
   // public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
   //   // Term
-  //   add(Id.<Term, Term.Type>TYPE(Term.TYPE)); 
-  //   add(Definition.<Term, Term.Type>TYPE(Term.TYPE));
-  //   add(Comment.<Term, Term.Type>TYPE(Term.TYPE));
-  //   add(Synonym.<Term, Term.Type>TYPE(Term.TYPE));
-  //   add(Name.<Term, Term.Type>TYPE(Term.TYPE));
+  //   add(Id.<Term, TermType>TYPE(Term.TYPE)); 
+  //   add(Definition.<Term, TermType>TYPE(Term.TYPE));
+  //   add(Comment.<Term, TermType>TYPE(Term.TYPE));
+  //   add(Synonym.<Term, TermType>TYPE(Term.TYPE));
+  //   add(Name.<Term, TermType>TYPE(Term.TYPE));
   // }};
 
 

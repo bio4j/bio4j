@@ -13,29 +13,29 @@ import com.bio4j.model.go.nodes.GoSlims;
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 // public interface GoSlim <
-//   GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>,
-//   GSOT extends Relationship.Type<Term,Term.Type, GSO,GSOT, GoSlims, GoSlims.Type>
+//   GSO extends Relationship<Term,TermType, GSO,GSOT, GoSlims, GoSlimsType>,
+//   GSOT extends Relationship.Type<Term,TermType, GSO,GSOT, GoSlims, GoSlimsType>
 // > extends Relationship <
-//   Term, Term.Type,
+//   Term, TermType,
 //   GSO, GSOT,
-//   GoSlims, GoSlims.Type
+//   GoSlims, GoSlimsType
 // > {
 
 //   @Override public Term source();
 //   @Override public GoSlims target();
 
 //   public interface Type <
-//     GSO extends Relationship<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>,
-//     GSOT extends Enum<GSOT> & Relationship.Type<Term,Term.Type, GSO,GSOT, GoSlims,GoSlims.Type>
+//     GSO extends Relationship<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>,
+//     GSOT extends Enum<GSOT> & Relationship.Type<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>
 //   > 
 //   extends Relationship.Type.ManyToOne <
-//     Term, Term.Type,
+//     Term, TermType,
 //     GSO, GSOT,
-//     GoSlims, GoSlims.Type
+//     GoSlims, GoSlimsType
 //   >
 //   {
 
-//     @Override public default Term.Type sourceType() { return Term.TYPE; }
-//     @Override public default GoSlims.Type targetType() { return GoSlims.TYPE; }
+//     @Override public default TermType sourceType() { return Term.TYPE; }
+//     @Override public default GoSlimsType targetType() { return GoSlims.TYPE; }
 //   }
 // }
