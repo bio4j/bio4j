@@ -9,7 +9,7 @@ On the contrary, traditional relational databases must flatten the data they rep
 
 ### Scalability
 
-* First of all, Bio4j has an [**Abstract Domain Model**](https://github.com/bio4j/bio4j), which allows you to use it without binding to a particular backend implementation.
+* First of all, Bio4j has an [**Abstract Domain Model**](docs/domain-model.md), which allows you to use it without binding to a particular backend implementation.
 
 * Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/blueprints), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
 
