@@ -3,18 +3,10 @@ package com.bio4j.model.go.nodes;
 import java.util.List;
 
 // base types
+import com.bio4j.model.go.relationships.*;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 // relationships
-import com.bio4j.model.go.relationships.IsA;
-import com.bio4j.model.go.relationships.HasPartOf;
-import com.bio4j.model.go.relationships.PartOf;
-import com.bio4j.model.go.relationships.NegativelyRegulates;
-import com.bio4j.model.go.relationships.PositivelyRegulates;
-import com.bio4j.model.go.relationships.Regulates;
-import com.bio4j.model.go.relationships.MolecularFunction;
-import com.bio4j.model.go.relationships.BiologicalProcess;
-import com.bio4j.model.go.relationships.CellularComponent;
 
 import com.bio4j.model.go.GoGraph.TermType;
 
@@ -98,17 +90,17 @@ public interface Term <
     
   // MolecularFunction
   // outgoing
-  public MolecularFunction molecularFunction_out(); 
+  public SubOntology molecularFunction_out();
   public SubOntologies molecularFunction_outNodes();
 
   // BiologicalProcess
   // outgoing
-  public BiologicalProcess biologicalProcess_out(); 
+  public SubOntology biologicalProcess_out();
   public SubOntologies biologicalProcess_outNodes();
 
   // CellularComponent
   // outgoing
-  public CellularComponent cellularComponent_out(); 
+  public SubOntology cellularComponent_out();
   public SubOntologies cellularComponent_outNodes();
 
   // isA
