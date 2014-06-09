@@ -7,10 +7,6 @@ import com.bio4j.model.go.relationships.SubOntology;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
-import com.bio4j.model.go.relationships.MolecularFunction;
-import com.bio4j.model.go.relationships.BiologicalProcess;
-import com.bio4j.model.go.relationships.CellularComponent;
-
 import com.bio4j.model.go.GoGraph.SubOntologiesType;
 
 /**
