@@ -3,6 +3,7 @@ package com.bio4j.model.go.nodes;
 import java.util.List;
 
 // base types
+import com.bio4j.model.go.relationships.SubOntology;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -35,21 +36,10 @@ public interface SubOntologies<
         @Override public default Class<String> valueClass() { return String.class; }
     }
 
-    // MolecularFunction
+    // SubOntology
     // incoming
-    public List<? extends MolecularFunction> molecularFunction_in();
+    public List<? extends SubOntology> subOntology_in();
 
     public List<? extends Term> term_inNodes();
 
-    // BiologicalProcess
-    // incoming
-    public List<? extends BiologicalProcess> biologicalProcess_in();
-
-    public List<? extends Term> biologicalProcess_inNodes();
-
-    // CellularComponent
-    // incoming
-    public List<? extends CellularComponent> cellularComponent_in();
-
-    public List<? extends Term> cellularComponent_inNodes();
 }

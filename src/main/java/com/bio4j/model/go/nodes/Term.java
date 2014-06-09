@@ -88,20 +88,10 @@ public interface Term <
   
   // SubOntologies
     
-  // MolecularFunction
+  // SubOntology
   // outgoing
-  public SubOntology molecularFunction_out();
-  public SubOntologies molecularFunction_outNodes();
-
-  // BiologicalProcess
-  // outgoing
-  public SubOntology biologicalProcess_out();
-  public SubOntologies biologicalProcess_outNodes();
-
-  // CellularComponent
-  // outgoing
-  public SubOntology cellularComponent_out();
-  public SubOntologies cellularComponent_outNodes();
+  public SubOntology subOntology_out();
+  public SubOntologies subOntology_outNodes();
 
   // isA
   // incoming
