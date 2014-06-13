@@ -95,32 +95,6 @@ public interface GoGraph {
             extends Node.Type<N, NT> {
     }
 
-
-    // relationship types
-    public static interface BiologicalProcessType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
-            R extends BiologicalProcess<S, ST, R, RT, T, TT>, RT extends BiologicalProcessType<S, ST, R, RT, T, TT>,
-            T extends SubOntologies<T, TT>, TT extends SubOntologiesType<T, TT>
-            >
-            extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
-    }
-
-    public static interface MolecularFunctionType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
-            R extends MolecularFunction<S, ST, R, RT, T, TT>, RT extends MolecularFunctionType<S, ST, R, RT, T, TT>,
-            T extends SubOntologies<T, TT>, TT extends SubOntologiesType<T, TT>
-            >
-            extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
-    }
-
-    public static interface CellularComponentType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
-            R extends CellularComponent<S, ST, R, RT, T, TT>, RT extends CellularComponentType<S, ST, R, RT, T, TT>,
-            T extends SubOntologies<T, TT>, TT extends SubOntologiesType<T, TT>
-            >
-            extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
-    }
-
     interface HasPartOfType<
             S extends Term<S, ST>, ST extends TermType<S, ST>,
             R extends HasPartOf<S, ST, R, RT, T, TT>, RT extends HasPartOfType<S, ST, R, RT, T, TT>,
