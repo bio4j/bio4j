@@ -150,45 +150,4 @@ public interface GoGraph {
             >
             extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
     }
-
-    // // package name
-    // public static String PKG = "com.bio4j.model.go";
-    // // dependencies
-    // public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>();
-    // // node types
-    // public static Set<Node.Type> NODE_TYPES = new HashSet<Node.Type>() {{
-    //   add(Term.TYPE);
-    //   add(SubOntologies.TYPE);
-    //   add(GoSlims.TYPE);
-    // }};
-    // // relationship types
-    // public static Set<Relationship.Type> RELATIONSHIP_TYPES = new HashSet<Relationship.Type>() {{
-    //   add(IsA.TYPE);
-    //   add(PartOf.TYPE);
-    //   add(HasPartOf.TYPE);
-    //   add(NegativelyRegulates.TYPE);
-    //   add(PositivelyRegulates.TYPE);
-    //   add(Regulates.TYPE);
-    //   // subontologies
-    //   add(BiologicalProcess.TYPE);
-    //   add(MolecularFunction.TYPE);
-    //   add(CellularComponent.TYPE);
-    //   // TODO GoSlims
-    // }};
-    // // property types
-    // public static Set<PropertyType> PROPERTY_TYPES = new HashSet<PropertyType>() {{
-    //   // Term
-    //   add(Id.<Term, TermType>TYPE(Term.TYPE));
-    //   add(Definition.<Term, TermType>TYPE(Term.TYPE));
-    //   add(Comment.<Term, TermType>TYPE(Term.TYPE));
-    //   add(Synonym.<Term, TermType>TYPE(Term.TYPE));
-    //   add(Name.<Term, TermType>TYPE(Term.TYPE));
-    // }};
-
-
-    // public String pkg() { return PKG; }
-    // public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
-    // public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
-    // public Set<Node.Type> nodeTypes() { return NODE_TYPES; }
-    // public Set<Relationship.Type> relationshipTypes() { return RELATIONSHIP_TYPES; }
 }

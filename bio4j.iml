@@ -520,7 +520,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="org.scala-ide.sdt.launching.SCALA_CONTAINER" level="application" />
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
   </component>
 </module>
 
