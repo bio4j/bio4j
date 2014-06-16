@@ -24,6 +24,13 @@ public interface Term<
 		>
 		extends Node<N, NT> {
 
+	public String id();
+	public String name();
+	public String comment();
+	public String obsolete();
+	public String definition();
+	public String synonym();
+
 	// properties
 	public static interface id<
 			N extends Term<N, NT>,
