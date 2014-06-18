@@ -1,9 +1,12 @@
 package com.bio4j.model.enzymedb.nodes;
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph.EnzymeType;
+import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
 import com.bio4j.model.go.relationships.*;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 6/17/2014.
@@ -17,7 +20,7 @@ public interface Enzyme<
 	public String id();
 	public String cofactors();
 	public String officialName();
-	public String alternateNames();
+	//public String alternateNames();
 	public String catalyticActivity();
 	public String comment();
 	public String prositeCrossReferences();
@@ -74,22 +77,22 @@ public interface Enzyme<
 		}
 	}
 
-	public static interface alternateNames<
-			N extends Enzyme<N, NT>,
-			NT extends EnzymeType<N, NT>,
-			P extends alternateNames<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "alternateNames";
-		}
-
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
-	}
+//	public static interface alternateNames<
+//			N extends Enzyme<N, NT>,
+//			NT extends EnzymeType<N, NT>,
+//			P extends alternateNames<N, NT, P>
+//			>
+//			extends Property<N, NT, P, String> {
+//		@Override
+//		public default String name() {
+//			return "alternateNames";
+//		}
+//
+//		@Override
+//		public default Class<String> valueClass() {
+//			return String.class;
+//		}
+//	}
 
 	public static interface catalyticActivity<
 			N extends Enzyme<N, NT>,
@@ -141,6 +144,15 @@ public interface Enzyme<
 			return String.class;
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// relationships
+
+	// enzymaticActivity
+    // incoming
+    public List<? extends EnzymaticActivity> enzymaticActivity_in();
+    public List<? extends Protein> enzymaticActivity_inNodes();
 
 
 }
