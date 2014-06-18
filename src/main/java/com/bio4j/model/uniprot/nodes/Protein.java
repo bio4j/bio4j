@@ -1,6 +1,8 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
+import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -164,8 +166,8 @@ public interface Protein<
 
 	// proteinDataset
 	// outgoing
-	public <? extends ProteinDataset> proteinDataset_out();
-	public <? extends Dataset> proteinDataset_outNodes();
+	public <T extends ProteinDataset> T  proteinDataset_out();
+	public <T extends Dataset> T proteinDataset_outNodes();
 
 
 }
