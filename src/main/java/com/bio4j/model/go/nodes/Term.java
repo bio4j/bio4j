@@ -138,8 +138,6 @@ public interface Term<
 
 	// relationships
 
-	// SubOntologies
-
 	// SubOntology
 	// outgoing
 	public SubOntology subOntology_out();

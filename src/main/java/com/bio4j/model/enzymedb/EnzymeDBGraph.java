@@ -1,6 +1,8 @@
 package com.bio4j.model.enzymedb;
 
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
+import com.bio4j.model.uniprot.nodes.Protein;
 import com.ohnosequences.typedGraphs.Node;
 
 import com.bio4j.model.enzymedb.nodes.Enzyme;

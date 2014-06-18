@@ -1,13 +1,171 @@
 package com.bio4j.model.uniprot.nodes;
 
+import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
 import com.ohnosequences.typedGraphs.Node;
+import com.ohnosequences.typedGraphs.Property;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 6/18/2014.
  */
-public class Protein<
+public interface Protein<
 		N extends Protein<N, NT>,
 		NT extends ProteinType<N, NT>
 		>
 		extends Node<N, NT>  {
+
+	public String name();
+	public String sequence();
+	public String fullName();
+	public String shortName();
+	public String accession();
+	public String modifiedDate();
+	public String mass();
+	public int length();
+
+	// properties
+	public static interface name<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends name<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "name";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface sequence<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends sequence<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "sequence";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface fullName<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends fullName<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "fullName";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface shortName<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends shortName<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "shortName";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface acession<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends acession<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "acession";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface modifiedDate<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends modifiedDate<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "modifiedDate";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface mass<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends mass<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "mass";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface length<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends length<N, NT, P>
+			>
+			extends Property<N, NT, P, Integer> {
+		@Override
+		public default String name() {
+			return "length";
+		}
+		@Override
+		public default Class<Integer> valueClass() {
+			return Integer.class;
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// relationships
+
+	// proteinOrganism
+	// outgoing
+	public List<? extends ProteinOrganism> proteinOrganism_out();
+	public List<? extends Organism> proteinOrganism_outNodes();
+
+	// proteinDataset
+	// outgoing
+	public <? extends ProteinDataset> proteinDataset_out();
+	public <? extends Dataset> proteinDataset_outNodes();
+
+
 }

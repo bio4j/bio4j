@@ -3,6 +3,7 @@ package com.bio4j.model.enzymedb.nodes;
 import com.bio4j.model.enzymedb.EnzymeDBGraph.EnzymeType;
 import com.bio4j.model.enzymedb.relationships.EnzymaticActivity;
 import com.bio4j.model.go.relationships.*;
+import com.bio4j.model.uniprot.nodes.Protein;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
