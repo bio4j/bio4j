@@ -21,6 +21,8 @@ public interface SubOntologies<
         >
         extends Node<N, NT> {
 
+	public String name();
+
     public static interface name <
             N extends SubOntologies<N,NT>,
             NT extends SubOntologiesType<N,NT>,
