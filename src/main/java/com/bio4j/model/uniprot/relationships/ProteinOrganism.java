@@ -15,5 +15,5 @@ public interface ProteinOrganism<
 		R extends ProteinOrganism<S, ST, R, RT, T, TT>, RT extends ProteinOrganismType<S, ST, R, RT, T, TT>,
 		T extends Organism<T, TT>, TT extends OrganismType<T, TT>
 >
-		extends Relationship<S, ST, R, RT, T, TT> { {
+		extends Relationship<S, ST, R, RT, T, TT> {
 }
