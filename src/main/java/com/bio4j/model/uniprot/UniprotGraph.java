@@ -11,7 +11,7 @@ import com.ohnosequences.typedGraphs.Relationship;
 /**
  * Created by ppareja on 6/18/2014.
  */
-public class UniprotGraph {
+public interface UniprotGraph {
 
 	public static interface ProteinType<
 			N extends Protein<N, NT>,
