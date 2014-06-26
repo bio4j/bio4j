@@ -91,15 +91,15 @@ public interface Protein<
 		}
 	}
 
-	public static interface acession<
+	public static interface accession<
 			N extends Protein<N, NT>,
 			NT extends ProteinType<N, NT>,
-			P extends acession<N, NT, P>
+			P extends accession<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
 		@Override
 		public default String name() {
-			return "acession";
+			return "accession";
 		}
 		@Override
 		public default Class<String> valueClass() {
