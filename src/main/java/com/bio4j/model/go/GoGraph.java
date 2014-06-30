@@ -1,11 +1,6 @@
 package com.bio4j.model.go;
 
-import java.util.Set;
-import java.util.HashSet;
-
-import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
 import com.ohnosequences.typedGraphs.Relationship;
 
 import com.bio4j.model.go.nodes.*;
@@ -82,7 +77,7 @@ public interface GoGraph {
     }
 
     public static interface TermType<
-            N extends Term<N, NT>,
+            N extends GoTerm<N, NT>,
             NT extends TermType<N, NT>
             >
             extends Node.Type<N, NT> {
@@ -96,55 +91,55 @@ public interface GoGraph {
     }
 
     interface HasPartOfType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends HasPartOf<S, ST, R, RT, T, TT>, RT extends HasPartOfType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     public static interface IsAType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends IsA<S, ST, R, RT, T, TT>, RT extends IsAType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     interface NegativelyRegulatesType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends NegativelyRegulates<S, ST, R, RT, T, TT>, RT extends NegativelyRegulatesType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     interface PartOfType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends PartOf<S, ST, R, RT, T, TT>, RT extends PartOfType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     interface RegulatesType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends Regulates<S, ST, R, RT, T, TT>, RT extends RegulatesType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     interface PositivelyRegulatesType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends PositivelyRegulates<S, ST, R, RT, T, TT>, RT extends PositivelyRegulatesType<S, ST, R, RT, T, TT>,
-            T extends Term<T, TT>, TT extends TermType<T, TT>
+            T extends GoTerm<T, TT>, TT extends TermType<T, TT>
             >
             extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
     }
 
     interface SubOntologyType<
-            S extends Term<S, ST>, ST extends TermType<S, ST>,
+            S extends GoTerm<S, ST>, ST extends TermType<S, ST>,
             R extends SubOntology<S, ST, R, RT, T, TT>, RT extends SubOntologyType<S, ST, R, RT, T, TT>,
             T extends SubOntologies<T, TT>, TT extends SubOntologiesType<T, TT>
             >

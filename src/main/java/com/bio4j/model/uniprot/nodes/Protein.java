@@ -1,8 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
-import com.bio4j.model.uniprot.relationships.ProteinDataset;
-import com.bio4j.model.uniprot.relationships.ProteinOrganism;
+import com.bio4j.model.uniprot.relationships.*;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -161,13 +160,28 @@ public interface Protein<
 
 	// proteinOrganism
 	// outgoing
-	public List<? extends ProteinOrganism> proteinOrganism_out();
-	public List<? extends Organism> proteinOrganism_outNodes();
+	public <T extends ProteinOrganism> T proteinOrganism_out();
+	public <T extends Organism> T proteinOrganism_outNodes();
 
 	// proteinDataset
 	// outgoing
 	public <T extends ProteinDataset> T  proteinDataset_out();
 	public <T extends Dataset> T proteinDataset_outNodes();
+
+	// proteinInterpro
+	// outgoing
+	public List<? extends ProteinInterpro>  proteinIntepro_out();
+	public List<? extends Interpro> proteinInterpro_outNodes();
+
+	// proteinReactomeTerm
+	// outgoing
+	public List<? extends ProteinReactomeTerm>  proteinReactomeTerm_out();
+	public List<? extends ReactomeTerm> proteinReactomeTerm_outNodes();
+
+	// proteinKeyword
+	// outgoing
+	public List<? extends ProteinKeyword>  proteinKeyword_out();
+	public List<? extends Keyword> proteinKeyword_outNodes();
 
 
 }

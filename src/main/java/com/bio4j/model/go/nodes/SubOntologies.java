@@ -38,6 +38,6 @@ public interface SubOntologies<
     // incoming
     public List<? extends SubOntology> subOntology_in();
 
-    public List<? extends Term> term_inNodes();
+    public List<? extends GoTerm> term_inNodes();
 
 }
