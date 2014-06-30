@@ -59,7 +59,7 @@ public interface Keyword <
 	// proteinKeyword
 	// outgoing
 	public List<? extends ProteinKeyword> proteinKeyword_out();
-	public List<? extends Organism> proteinKeyword_outNodes();
+	public List<? extends Keyword> proteinKeyword_outNodes();
 
 
 }
