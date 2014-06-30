@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ProteinReactomeTerm;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -57,6 +58,6 @@ public interface ReactomeTerm<
 
 	// proteinReactome
 	// outgoing
-	public List<? extends ProteinReactome> proteinReactome_out();
+	public List<? extends ProteinReactomeTerm> proteinReactome_out();
 	public List<? extends Organism> proteinReactome_outNodes();
 }

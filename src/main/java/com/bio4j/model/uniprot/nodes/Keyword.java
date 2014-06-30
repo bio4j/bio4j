@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ProteinKeyword;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
