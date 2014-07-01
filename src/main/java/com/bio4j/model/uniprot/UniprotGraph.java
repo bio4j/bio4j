@@ -24,6 +24,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface PfamType<
+			N extends Pfam<N, NT>,
+			NT extends PfamType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface ReactomeTermType<
 			N extends ReactomeTerm<N, NT>,
 			NT extends ReactomeTermType<N, NT>
@@ -80,6 +87,14 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinInterpro<S, ST, R, RT, T, TT>, RT extends ProteinInterproType<S, ST, R, RT, T, TT>,
 			T extends Interpro<T, TT>, TT extends InterproType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinPfamType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinPfam<S, ST, R, RT, T, TT>, RT extends ProteinPfamType<S, ST, R, RT, T, TT>,
+			T extends Pfam<T, TT>, TT extends PfamType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
