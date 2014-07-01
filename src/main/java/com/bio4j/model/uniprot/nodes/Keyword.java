@@ -57,9 +57,9 @@ public interface Keyword <
 	// relationships
 
 	// proteinKeyword
-	// outgoing
-	public List<? extends ProteinKeyword> proteinKeyword_out();
-	public List<? extends Keyword> proteinKeyword_outNodes();
+	// ingoing
+	public List<? extends ProteinKeyword> proteinKeyword_in();
+	public List<? extends Protein> proteinKeyword_inNodes();
 
 
 }

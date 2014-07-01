@@ -2,8 +2,11 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.UniprotGraph.OrganismType;
+import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 6/18/2014.
@@ -32,4 +35,13 @@ public interface Organism<
 			return String.class;
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// relationships
+
+	// proteinOrganism
+	// ingoing
+	public List<? extends ProteinOrganism> proteinOrganism_in();
+	public List<? extends Protein> proteinOrganism_inNodes();
 }

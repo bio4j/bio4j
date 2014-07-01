@@ -57,7 +57,7 @@ public interface Interpro<
 	// relationships
 
 	// proteinInterpro
-	// outgoing
-	public List<? extends ProteinInterpro> proteinInterpro_out();
-	public List<? extends Organism> proteinInterpro_outNodes();
+	// ingoing
+	public List<? extends ProteinInterpro> proteinInterpro_in();
+	public List<? extends Protein> proteinInterpro_inNodes();
 }

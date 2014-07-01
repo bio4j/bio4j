@@ -1,9 +1,12 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph.DatasetType;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 6/18/2014.
@@ -32,4 +35,13 @@ public interface Dataset<
 			return String.class;
 		}
 	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// relationships
+
+	// proteinDataset
+	// ingoing
+	public List<? extends ProteinDataset> proteinDataset_in();
+	public List<? extends Protein> proteinDataset_inNodes();
 }

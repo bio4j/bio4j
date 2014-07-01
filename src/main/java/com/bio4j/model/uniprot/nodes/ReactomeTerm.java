@@ -57,7 +57,7 @@ public interface ReactomeTerm<
 	// relationships
 
 	// proteinReactome
-	// outgoing
-	public List<? extends ProteinReactomeTerm> proteinReactome_out();
-	public List<? extends Organism> proteinReactome_outNodes();
+	// ingoing
+	public List<? extends ProteinReactomeTerm> proteinReactomeTerm_in();
+	public List<? extends Protein> proteinReactomeTerm_inNodes();
 }
