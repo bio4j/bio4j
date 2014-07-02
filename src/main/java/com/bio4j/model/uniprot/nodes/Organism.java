@@ -17,18 +17,52 @@ public interface Organism<
 		>
 		extends Node<N, NT> {
 
-	public String name();
+	public String scientificName();
+	public String commonName();
+	public String synonymName();
 
 	// properties
-	public static interface name<
+	public static interface scientificName<
 			N extends Organism<N, NT>,
 			NT extends UniprotGraph.OrganismType<N, NT>,
-			P extends name<N, NT, P>
+			P extends scientificName<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
 		@Override
 		public default String name() {
-			return "name";
+			return "scientificName";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface commonName<
+			N extends Organism<N, NT>,
+			NT extends UniprotGraph.OrganismType<N, NT>,
+			P extends commonName<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "commonName";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
+	public static interface synonymName<
+			N extends Organism<N, NT>,
+			NT extends UniprotGraph.OrganismType<N, NT>,
+			P extends synonymName<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "synonymName";
 		}
 		@Override
 		public default Class<String> valueClass() {
