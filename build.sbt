@@ -11,3 +11,7 @@ description := "Bio4j abstract model"
 libraryDependencies += "ohnosequences" % "typed-graphs" % "0.2.1-SNAPSHOT"
 
 bucketSuffix := "era7.com"
+
+dependencyOverrides ++= Set(
+	"net.sf.opencsv" % "opencsv" % "2.3"
+)
