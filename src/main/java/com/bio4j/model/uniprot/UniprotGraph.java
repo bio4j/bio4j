@@ -24,6 +24,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface EMBLType<
+			N extends EMBL<N, NT>,
+			NT extends EMBLType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface PfamType<
 			N extends Pfam<N, NT>,
 			NT extends PfamType<N, NT>
@@ -79,6 +86,14 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinKeyword<S, ST, R, RT, T, TT>, RT extends ProteinKeywordType<S, ST, R, RT, T, TT>,
 			T extends Keyword<T, TT>, TT extends KeywordType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinEMBLType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinEMBL<S, ST, R, RT, T, TT>, RT extends ProteinEMBLType<S, ST, R, RT, T, TT>,
+			T extends EMBL<T, TT>, TT extends EMBLType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
