@@ -38,6 +38,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface PIRType<
+			N extends PIR<N, NT>,
+			NT extends PIRType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface UniGeneType<
 			N extends UniGene<N, NT>,
 			NT extends UniGeneType<N, NT>
@@ -94,6 +101,14 @@ public interface UniprotGraph {
 			T extends Organism<T, TT>, TT extends OrganismType<T, TT>
 			>
 			extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinPIRType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinPIR<S, ST, R, RT, T, TT>, RT extends ProteinPIRType<S, ST, R, RT, T, TT>,
+			T extends PIR<T, TT>, TT extends PIRType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
 
 	public static interface ProteinKeywordType<
