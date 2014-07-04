@@ -31,6 +31,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface EnsemblType<
+			N extends Ensembl<N, NT>,
+			NT extends EnsemblType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface KeggType<
 			N extends Kegg<N, NT>,
 			NT extends KeggType<N, NT>
@@ -139,6 +146,14 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinEMBL<S, ST, R, RT, T, TT>, RT extends ProteinEMBLType<S, ST, R, RT, T, TT>,
 			T extends EMBL<T, TT>, TT extends EMBLType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinEnsemblType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinEnsembl<S, ST, R, RT, T, TT>, RT extends ProteinEnsemblType<S, ST, R, RT, T, TT>,
+			T extends Ensembl<T, TT>, TT extends EnsemblType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
