@@ -31,6 +31,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface KeggType<
+			N extends Kegg<N, NT>,
+			NT extends KeggType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface PfamType<
 			N extends Pfam<N, NT>,
 			NT extends PfamType<N, NT>
@@ -86,6 +93,14 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinKeyword<S, ST, R, RT, T, TT>, RT extends ProteinKeywordType<S, ST, R, RT, T, TT>,
 			T extends Keyword<T, TT>, TT extends KeywordType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinKeggType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinKegg<S, ST, R, RT, T, TT>, RT extends ProteinKeggType<S, ST, R, RT, T, TT>,
+			T extends Kegg<T, TT>, TT extends KeggType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
