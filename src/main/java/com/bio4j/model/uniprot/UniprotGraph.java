@@ -94,6 +94,13 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface TaxonType<
+			N extends Taxon<N, NT>,
+			NT extends TaxonType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface ProteinDatasetType<
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinDataset<S, ST, R, RT, T, TT>, RT extends ProteinDatasetType<S, ST, R, RT, T, TT>,
@@ -180,5 +187,13 @@ public interface UniprotGraph {
 			T extends ReactomeTerm<T, TT>, TT extends ReactomeTermType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface TaxonParentType<
+			S extends Taxon<S, ST>, ST extends TaxonType<S, ST>,
+			R extends TaxonParent<S, ST, R, RT, T, TT>, RT extends TaxonParentType<S, ST, R, RT, T, TT>,
+			T extends Taxon<T, TT>, TT extends TaxonType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
 	}
 }
