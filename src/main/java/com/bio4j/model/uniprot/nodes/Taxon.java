@@ -40,10 +40,10 @@ public interface Taxon <
 	// taxonParent
 	// ingoing
 	public <T extends TaxonParent> T taxonParent_in();
-	public <T extends Taxon> T taxonParent_inNodes();
+	public <T extends Taxon> T taxonParent_inNode();
 
 	// taxonParent
 	// outgoing
 	public <T extends TaxonParent> T taxonParent_out();
-	public <T extends Taxon> T taxonParent_outNodes();
+	public <T extends Taxon> T taxonParent_outNode();
 }
