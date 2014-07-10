@@ -196,4 +196,12 @@ public interface UniprotGraph {
 			>
 			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
 	}
+
+	public static interface OrganismTaxonType<
+			S extends Organism<S, ST>, ST extends OrganismType<S, ST>,
+			R extends OrganismTaxon<S, ST, R, RT, T, TT>, RT extends OrganismTaxonType<S, ST, R, RT, T, TT>,
+			T extends Taxon<T, TT>, TT extends TaxonType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
 }
