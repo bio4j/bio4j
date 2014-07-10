@@ -2,6 +2,7 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.UniprotGraph.OrganismType;
+import com.bio4j.model.uniprot.relationships.OrganismTaxon;
 import com.bio4j.model.uniprot.relationships.ProteinOrganism;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
@@ -78,4 +79,9 @@ public interface Organism<
 	// ingoing
 	public List<? extends ProteinOrganism> proteinOrganism_in();
 	public List<? extends Protein> proteinOrganism_inNodes();
+
+	// organismTaxon
+	// outgoing
+	public <T extends OrganismTaxon> T organismTaxon_out();
+	public <T extends Taxon> T organismTaxon_outNode();
 }

@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.OrganismTaxon;
 import com.bio4j.model.uniprot.relationships.TaxonParent;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
@@ -46,4 +47,9 @@ public interface Taxon <
 	// outgoing
 	public <T extends TaxonParent> T taxonParent_out();
 	public <T extends Taxon> T taxonParent_outNode();
+
+	// organismTaxon
+	// ingoing
+	public <T extends OrganismTaxon> T organismTaxon_in();
+	public <T extends Organism> T organismTaxon_inNode();
 }
