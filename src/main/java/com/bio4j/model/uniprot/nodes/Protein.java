@@ -1,7 +1,9 @@
 package com.bio4j.model.uniprot.nodes;
 
+import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
 import com.bio4j.model.uniprot.relationships.*;
+import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -182,6 +184,11 @@ public interface Protein<
 	// outgoing
 	public List<? extends ProteinKeyword>  proteinKeyword_out();
 	public List<? extends Keyword> proteinKeyword_outNodes();
+
+	// enzymaticActivity
+	// outgoing
+	public List<? extends EnzymaticActivity>  enzymaticActivity_out();
+	public List<? extends Enzyme>  enzymaticActivity_outNodes();
 
 
 }

@@ -2,6 +2,8 @@ package com.bio4j.model.go.nodes;
 
 import com.bio4j.model.go.GoGraph.TermType;
 import com.bio4j.model.go.relationships.*;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -216,6 +218,6 @@ public interface GoTerm<
 
 	// goAnnotation
 	// incoming
-	// public List<? extends GoAnnotation> goAnnotation_in();
-	// public List<? extends Protein> goAnnotation_inNodes();
+	public List<? extends GoAnnotation> goAnnotation_in();
+	public List<? extends Protein> goAnnotation_inNodes();
 }
