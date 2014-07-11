@@ -19,12 +19,12 @@ public interface Enzyme<
 		extends Node<N, NT>  {
 
 	public String id();
-	public String cofactors();
+	public String[] cofactors();
 	public String officialName();
 	//public String alternateNames();
 	public String catalyticActivity();
 	public String comment();
-	public String prositeCrossReferences();
+	public String[] prositeCrossReferences();
 
 	// properties
 	public static interface id<
