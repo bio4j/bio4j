@@ -49,15 +49,15 @@ public interface Enzyme<
 			NT extends EnzymeType<N, NT>,
 			P extends cofactors<N, NT, P>
 			>
-			extends Property<N, NT, P, String> {
+			extends Property<N, NT, P, String[]> {
 		@Override
 		public default String name() {
 			return "cofactors";
 		}
 
 		@Override
-		public default Class<String> valueClass() {
-			return String.class;
+		public default Class<String[]> valueClass() {
+			return String[].class;
 		}
 	}
 
@@ -134,15 +134,15 @@ public interface Enzyme<
 			NT extends EnzymeType<N, NT>,
 			P extends prositeCrossReferences<N, NT, P>
 			>
-			extends Property<N, NT, P, String> {
+			extends Property<N, NT, P, String[]> {
 		@Override
 		public default String name() {
 			return "prositeCrossReferences";
 		}
 
 		@Override
-		public default Class<String> valueClass() {
-			return String.class;
+		public default Class<String[]> valueClass() {
+			return String[].class;
 		}
 	}
 
