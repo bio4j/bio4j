@@ -217,6 +217,6 @@ public interface UniprotGraph {
 			R extends ProteinRefSeq<S, ST, R, RT, T, TT>, RT extends ProteinRefSeqType<S, ST, R, RT, T, TT>,
 			T extends RefSeq<T, TT>, TT extends RefSeqType<T, TT>
 			>
-			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
 }
