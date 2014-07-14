@@ -4,9 +4,7 @@ import com.ohnosequences.typedGraphs.*;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.enzymedb.edges.Friend;
 
-public abstract class EnzymeDBGraph <
-  I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
-> 
+public abstract class EnzymeDBGraph <I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET> 
 implements 
   TypedGraph<EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET>
 {
@@ -22,7 +20,6 @@ implements
 
     return raw;
   }
-
 
   // Enzyme /////////////////////////////////////////////////////////////////////////////////////////////////////
   public abstract EnzymeType enzymeT();
@@ -64,33 +61,39 @@ implements
       return new Enzyme<I,RV,RVT,RE,RET>(vertex, this);
     }
 
+    public final id id = new id();
 
+    // properties
+    public final class id
+    implements 
+      Property <
+        Enzyme<I,RV,RVT,RE,RET>, 
+        EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType, 
+        id, String, 
+        EnzymeDBGraph<I,RV,RVT,RE,RET>,
+        I,RV,RVT,RE,RET
+      >
+    {
 
-    // public abstract id<G,I,RV,RVT,RE,RET> id();
-    // // properties
-    // public interface id <
-    //   G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
-    //   I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
-    // >
-    // extends 
-    //   Property<
-    //     Enzyme<G, I,RV,RVT,RE,RET>, EnzymeType<G, I,RV,RVT,RE,RET>, 
-    //     id<G, I,RV,RVT,RE,RET>,
-    //     String, G,I,RV,RVT,RE,RET
-    //   > 
-    // {
-    //   @Override
-    //   public default String name() {
+      public id() {}
 
-    //     return "id";
-    //   }
+      @Override
+      public String name() {
 
-    //   @Override
-    //   public default Class<String> valueClass() {
+        return "id";
+      }
+
+      public EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType elementType() {
+
+        return EnzymeType.this;
+      }
+
+      @Override
+      public Class<String> valueClass() {
         
-    //     return String.class;
-    //   }
-    // }
+        return String.class;
+      }
+    }
   }
 
 

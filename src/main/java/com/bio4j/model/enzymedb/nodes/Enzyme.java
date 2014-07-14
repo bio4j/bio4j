@@ -9,7 +9,7 @@ import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.enzymedb.EnzymeDBGraph.*;
 import com.bio4j.model.enzymedb.EnzymeDBGraph.EnzymeType.*;
 
-// import com.bio4j.model.enzymedb.edges.Friend;
+import com.bio4j.model.enzymedb.edges.Friend;
 
 import java.util.List;
 
@@ -52,10 +52,10 @@ implements
   }
 
 
-  // public String id() { 
+  public String id() { 
 
-  //   return get(type().id());
-  // }
+    return get(type().id);
+  }
   // public String cofactors();
   // public String officialName();
   // //public String alternateNames();
@@ -63,27 +63,15 @@ implements
   // public String comment();
   // public String prositeCrossReferences();
 
-  // public <
-  //   // rel
-  //   E extends Friend<V,VT,E,ET,G,I,RV,RVT,RE,RET>,
-  //   ET extends FriendType<V,VT,E,ET,G,I,RV,RVT,RE,RET>
-  // >
-  // List<E> friend_out() {
+  public List<Friend<I,RV,RVT,RE,RET>> friend_out() {
 
-  //   // I need explicit params here. Why?
-  //   return outMany(graph().<V,VT,E,ET>friendT());
-  // }
+    return outMany( graph().friendT() );
+  }
 
-  // default <
-  //   // rel
-  //   E extends Friend<V,VT,E,ET,G,I,RV,RVT,RE,RET>,
-  //   ET extends FriendType<V,VT,E,ET,G,I,RV,RVT,RE,RET>
-  // >
-  // List<V> friend_outV() {
+  public List<Enzyme<I,RV,RVT,RE,RET>> friend_outV() {
 
-  //   // I need explicit params here. Why?
-  //   return outManyV(graph().<V,VT,E,ET>friendT());
-  // }
+    return outManyV( graph().friendT() );
+  }
 
   
 
