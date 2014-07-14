@@ -13,36 +13,49 @@ import com.bio4j.model.enzymedb.EnzymeDBGraph.EnzymeType.*;
 
 import java.util.List;
 
-public class Enzyme <
-  G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
-  I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
->
+public final class Enzyme<I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET>
 implements
-  TypedVertex<Enzyme<G,I,RV,RVT,RE,RET>, EnzymeType<G,I,RV,RVT,RE,RET>, G, I,RV,RVT,RE,RET>  
+  TypedVertex <
+    Enzyme<I,RV,RVT,RE,RET>,
+    EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType,
+    EnzymeDBGraph<I,RV,RVT,RE,RET>,
+    I,RV,RVT,RE,RET
+  >  
 {
 
-  public Enzyme(G graph, RV vertex, EnzymeType<G,I,RV,RVT,RE,RET> type) {
+  public Enzyme(RV vertex, EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType type) {
 
-    this.graph = graph;
     this.vertex = vertex;
     this.type = type;
   }
 
-  private G graph;
   private RV vertex;
-  private EnzymeType<G,I,RV,RVT,RE,RET> type;
+  private EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType type;
 
-  public G graph() { return this.graph; }
-  public RV raw() { return this.vertex; }
-  public EnzymeType<G,I,RV,RVT,RE,RET> type() { return type; } 
+  public EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { 
 
-  public Enzyme<G,I,RV,RVT,RE,RET> self() { return this; }
-
-
-  public String id() { 
-
-    return get(type().id());
+    return type().graph(); 
   }
+  public RV raw() { 
+
+    return this.vertex; 
+  }
+
+  public EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType type() { 
+
+    return type; 
+  } 
+
+  public Enzyme<I,RV,RVT,RE,RET> self() { 
+
+    return this; 
+  }
+
+
+  // public String id() { 
+
+  //   return get(type().id());
+  // }
   // public String cofactors();
   // public String officialName();
   // //public String alternateNames();

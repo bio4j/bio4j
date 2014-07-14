@@ -2,96 +2,157 @@ package com.bio4j.model.enzymedb;
 
 import com.ohnosequences.typedGraphs.*;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
-// import com.bio4j.model.enzymedb.edges.Friend;
+import com.bio4j.model.enzymedb.edges.Friend;
 
-public interface EnzymeDBGraph <
-  G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
+public abstract class EnzymeDBGraph <
   I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
 > 
-extends 
-  TypedGraph<G,I,RV,RVT,RE,RET>
+implements 
+  TypedGraph<EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET>
 {
+
+  EnzymeDBGraph(I raw) {
+
+    this.raw = raw;
+  }
+
+  protected I raw;
+
+  public I raw() {
+
+    return raw;
+  }
 
 
   // Enzyme /////////////////////////////////////////////////////////////////////////////////////////////////////
-  EnzymeType<G,I,RV,RVT,RE,RET> enzymeT();
+  public abstract EnzymeType enzymeT();
 
-  public static abstract class EnzymeType <
-    G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
-    I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
-  >
+  public final class EnzymeType
   implements 
-    TypedVertex.Type<Enzyme<G, I,RV,RVT,RE,RET>,EnzymeType<G, I,RV,RVT,RE,RET>, G, I,RV,RVT,RE,RET> 
+    TypedVertex.Type <
+      Enzyme<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>,
+      I,RV,RVT,RE,RET
+    > 
   {
 
-    EnzymeType(G graph, RVT raw) {
+    EnzymeType(RVT raw) {
 
-      this.graph = graph;
       this.raw = raw;
     }
 
-    G graph;
-    public G graph() { return graph; }
     RVT raw;
-    public RVT raw() { return raw; }
+
+    public RVT raw() { 
+
+      return raw;
+    }
+
+    public EnzymeType value() { 
+
+      return graph().enzymeT();
+    }
+
+    public EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { 
+
+      return EnzymeDBGraph.this; 
+    }
+
+    public Enzyme<I,RV,RVT,RE,RET> from(RV vertex) {
+
+      return new Enzyme<I,RV,RVT,RE,RET>(vertex, this);
+    }
 
 
 
-    public abstract id<G,I,RV,RVT,RE,RET> id();
-    // properties
-    public interface id <
-      G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
-      I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
-    >
-    extends 
-      Property<
-        Enzyme<G, I,RV,RVT,RE,RET>, EnzymeType<G, I,RV,RVT,RE,RET>, 
-        id<G, I,RV,RVT,RE,RET>,
-        String, G,I,RV,RVT,RE,RET
-      > 
-    {
-      @Override
-      public default String name() {
+    // public abstract id<G,I,RV,RVT,RE,RET> id();
+    // // properties
+    // public interface id <
+    //   G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>,
+    //   I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
+    // >
+    // extends 
+    //   Property<
+    //     Enzyme<G, I,RV,RVT,RE,RET>, EnzymeType<G, I,RV,RVT,RE,RET>, 
+    //     id<G, I,RV,RVT,RE,RET>,
+    //     String, G,I,RV,RVT,RE,RET
+    //   > 
+    // {
+    //   @Override
+    //   public default String name() {
 
-        return "id";
-      }
+    //     return "id";
+    //   }
 
-      @Override
-      public default Class<String> valueClass() {
+    //   @Override
+    //   public default Class<String> valueClass() {
         
-        return String.class;
-      }
-    }
-
-    public Enzyme<G,I,RV,RVT,RE,RET> from(RV vertex) {
-
-      return new Enzyme<G,I,RV,RVT,RE,RET>(graph(), vertex, this);
-    }
+    //     return String.class;
+    //   }
+    // }
   }
 
 
   // Friend /////////////////////////////////////////////////////////////////////////////////////////
-  // <
-  //   V extends Enzyme<V,VT,G,I,RV,RVT,RE,RET>,
-  //   VT extends EnzymeType<V,VT,G,I,RV,RVT,RE,RET>,
-  //   E extends Friend<V,VT,E,ET,G,I,RV,RVT,RE,RET>,
-  //   ET extends FriendType<V,VT,E,ET,G,I,RV,RVT,RE,RET>
-  // > 
-  // ET friendT();
+  public abstract FriendType friendT();
 
-  // public interface FriendType <
-  //   // src and tgt
-  //   S extends Enzyme<S,ST,G,I,RV,RVT,RE,RET>, 
-  //   ST extends EnzymeType<S,ST,G,I,RV,RVT,RE,RET>, 
-  //   // rel
-  //   E extends Friend<S,ST,E,ET,G,I,RV,RVT,RE,RET>,
-  //   ET extends FriendType<S,ST,E,ET,G,I,RV,RVT,RE,RET>, 
-  //   G extends EnzymeDBGraph<G,I,RV,RVT,RE,RET>, 
-  //   I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT, RE,RET
-  // >
-  // extends
-  //   TypedEdge.Type.OneToMany<S,ST,G, E,ET, G,I,RV,RVT,RE,RET, S,ST,G> 
-  // {}
+  public final class FriendType
+  implements
+    TypedEdge.Type.OneToMany <
+      Enzyme<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>,
+
+      Friend<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.FriendType,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>,
+      I,RV,RVT,RE,RET,
+
+      Enzyme<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>      
+    > 
+  {
+
+    FriendType(RET raw) {
+
+      this.raw = raw;
+    }
+
+    RET raw;
+
+    public RET raw() { 
+
+      return raw;
+    }
+
+    public FriendType value() { 
+
+      return graph().friendT();
+    }
+
+    public EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType targetType() {
+
+      return graph().enzymeT();
+    }
+
+    public EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType sourceType() {
+
+      return graph().enzymeT();
+    }
+
+    public EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { 
+
+      return EnzymeDBGraph.this; 
+    }
+
+    public Friend<I,RV,RVT,RE,RET> from(RE edge) {
+
+      return new Friend<I,RV,RVT,RE,RET>(edge, this);
+    }
+
+  }
 
 
 
