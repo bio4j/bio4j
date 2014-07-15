@@ -40,6 +40,70 @@ public interface NCBITaxon <
 			return String.class;
 		}
 	}
+	public static interface name<
+			N extends NCBITaxon<N, NT>,
+			NT extends NCBITaxonType<N, NT>,
+			P extends name<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "name";
+		}
+
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+	public static interface comment<
+			N extends NCBITaxon<N, NT>,
+			NT extends NCBITaxonType<N, NT>,
+			P extends comment<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "comment";
+		}
+
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+	public static interface scientificName<
+			N extends NCBITaxon<N, NT>,
+			NT extends NCBITaxonType<N, NT>,
+			P extends scientificName<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "scientificName";
+		}
+
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+	public static interface taxonomicRank<
+			N extends NCBITaxon<N, NT>,
+			NT extends NCBITaxonType<N, NT>,
+			P extends taxonomicRank<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "taxonomicRank";
+		}
+
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
