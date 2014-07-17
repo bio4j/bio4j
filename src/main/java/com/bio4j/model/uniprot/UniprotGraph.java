@@ -38,6 +38,20 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface FeatureTypeType<
+			N extends FeatureType<N, NT>,
+			NT extends FeatureTypeType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface CommentTypeType<
+			N extends CommentType<N, NT>,
+			NT extends CommentTypeType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface EnsemblType<
 			N extends Ensembl<N, NT>,
 			NT extends EnsemblType<N, NT>
@@ -216,6 +230,22 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinRefSeq<S, ST, R, RT, T, TT>, RT extends ProteinRefSeqType<S, ST, R, RT, T, TT>,
 			T extends RefSeq<T, TT>, TT extends RefSeqType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinFeatureType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinFeature<S, ST, R, RT, T, TT>, RT extends ProteinFeatureType<S, ST, R, RT, T, TT>,
+			T extends FeatureType<T, TT>, TT extends FeatureTypeType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinCommentType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinComment<S, ST, R, RT, T, TT>, RT extends ProteinCommentType<S, ST, R, RT, T, TT>,
+			T extends CommentType<T, TT>, TT extends CommentTypeType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
