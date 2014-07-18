@@ -16,6 +16,16 @@ public interface ProteinFeature <
 		>
 		extends Relationship<S, ST, R, RT, T, TT> {
 
+	public String id();
+	public String description();
+	public String evidence();
+	public String status();
+	public Integer begin();
+	public Integer end();
+	public String original();
+	public String variation();
+	public String ref();
+
 	public static interface id<
 			S extends Protein<S, ST>, ST extends UniprotGraph.ProteinType<S, ST>,
 			R extends ProteinFeature<S, ST, R, RT, T, TT>, RT extends UniprotGraph.ProteinFeatureType<S, ST, R, RT, T, TT>,
