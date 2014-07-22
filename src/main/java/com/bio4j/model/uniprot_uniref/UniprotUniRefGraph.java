@@ -40,20 +40,20 @@ public interface UniprotUniRefGraph {
 			R extends UniRef50Member<S, ST, R, RT, T, TT>, RT extends UniRef50MemberType<S, ST, R, RT, T, TT>,
 			T extends Protein<T, TT>, TT extends UniprotGraph.ProteinType<T, TT>
 			>
-			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+			extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
 	}
 	public static interface UniRef90MemberType<
 			S extends UniRef90Cluster<S, ST>, ST extends UniRefGraph.UniRef90ClusterType<S, ST>,
 			R extends UniRef90Member<S, ST, R, RT, T, TT>, RT extends UniRef90MemberType<S, ST, R, RT, T, TT>,
 			T extends Protein<T, TT>, TT extends UniprotGraph.ProteinType<T, TT>
 			>
-			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+			extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
 	}
 	public static interface UniRef100MemberType<
 			S extends UniRef100Cluster<S, ST>, ST extends UniRefGraph.UniRef100ClusterType<S, ST>,
 			R extends UniRef100Member<S, ST, R, RT, T, TT>, RT extends UniRef100MemberType<S, ST, R, RT, T, TT>,
 			T extends Protein<T, TT>, TT extends UniprotGraph.ProteinType<T, TT>
 			>
-			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+			extends Relationship.Type.ManyToOne<S, ST, R, RT, T, TT> {
 	}
 }
