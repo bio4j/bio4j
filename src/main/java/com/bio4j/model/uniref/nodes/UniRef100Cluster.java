@@ -44,7 +44,7 @@ public interface UniRef100Cluster <
 	// uniRef90Representant
 	// outgoing
 	public <T extends UniRef100Representant> T  uniRef100Representant_out();
-	public <T extends Protein> T uniRef100Representant_outNodes();
+	public <T extends Protein> T uniRef100Representant_outNode();
 
 	// uniRef90Member
 	// outgoing
