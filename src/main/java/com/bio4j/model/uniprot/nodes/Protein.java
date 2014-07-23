@@ -4,10 +4,7 @@ import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
 import com.bio4j.model.uniprot.relationships.*;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
-import com.bio4j.model.uniprot_uniref.relationships.UniRef100Representant;
-import com.bio4j.model.uniprot_uniref.relationships.UniRef50Member;
-import com.bio4j.model.uniprot_uniref.relationships.UniRef50Representant;
-import com.bio4j.model.uniprot_uniref.relationships.UniRef90Member;
+import com.bio4j.model.uniprot_uniref.relationships.*;
 import com.bio4j.model.uniref.nodes.UniRef100Cluster;
 import com.bio4j.model.uniref.nodes.UniRef50Cluster;
 import com.bio4j.model.uniref.nodes.UniRef90Cluster;
@@ -246,7 +243,17 @@ public interface Protein<
 	public <T extends UniRef90Member> T  uniref90Member_in();
 	public <T extends UniRef90Cluster> T uniref90Member_inNode();
 
-	// uniref100Representant
+	// uniref90Representant
+	// ingoing
+	public <T extends UniRef90Representant> T  uniref90Representant_in();
+	public <T extends UniRef90Cluster> T uniref90Representant_inNode();
+
+	// uniref100Member
+	// ingoing
+	public <T extends UniRef100Member> T  uniref100Member_in();
+	public <T extends UniRef100Cluster> T uniref100Member_inNode();
+
+	// uniref90Representant
 	// ingoing
 	public <T extends UniRef100Representant> T  uniref100Representant_in();
 	public <T extends UniRef100Cluster> T uniref100Representant_inNode();
