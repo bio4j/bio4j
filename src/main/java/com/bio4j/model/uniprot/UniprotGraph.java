@@ -17,6 +17,48 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface BookType<
+			N extends Book<N, NT>,
+			NT extends BookType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface PatentType<
+			N extends Patent<N, NT>,
+			NT extends PatentType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface JournalType<
+			N extends Journal<N, NT>,
+			NT extends JournalType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface InstituteType<
+			N extends Institute<N, NT>,
+			NT extends InstituteType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface CountryType<
+			N extends Country<N, NT>,
+			NT extends CountryType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface CityType<
+			N extends City<N, NT>,
+			NT extends CityType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface RefSeqType<
 			N extends RefSeq<N, NT>,
 			NT extends RefSeqType<N, NT>
