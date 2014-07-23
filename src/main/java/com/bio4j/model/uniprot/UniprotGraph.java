@@ -24,9 +24,23 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface ThesisType<
+			N extends Thesis<N, NT>,
+			NT extends ThesisType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface ArticleType<
 			N extends Article<N, NT>,
 			NT extends ArticleType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface OnlineArticleType<
+			N extends OnlineArticle<N, NT>,
+			NT extends OnlineArticleType<N, NT>
 			>
 			extends Node.Type<N, NT> {
 	}

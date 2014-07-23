@@ -8,20 +8,20 @@ import com.ohnosequences.typedGraphs.Property;
 /**
  * Created by ppareja on 7/23/2014.
  */
-public interface Article <
-		N extends Article<N, NT>,
-		NT extends UniprotGraph.ArticleType<N, NT>
+public interface Thesis <
+		N extends Thesis<N, NT>,
+		NT extends UniprotGraph.ThesisType<N, NT>
 		>
 		extends Node<N, NT> {
 
 	public String title();
-	public String doiId();
+	public String date();
 
 	// properties
 
-		public static interface title<
-			N extends Article<N, NT>,
-			NT extends UniprotGraph.ArticleType<N, NT>,
+	public static interface title<
+			N extends Thesis<N, NT>,
+			NT extends UniprotGraph.ThesisType<N, NT>,
 			P extends title<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
@@ -35,15 +35,15 @@ public interface Article <
 		}
 	}
 
-	public static interface doiId<
-			N extends Article<N, NT>,
-			NT extends UniprotGraph.ArticleType<N, NT>,
-			P extends doiId<N, NT, P>
+	public static interface date<
+			N extends Thesis<N, NT>,
+			NT extends UniprotGraph.ThesisType<N, NT>,
+			P extends date<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
 		@Override
 		public default String name() {
-			return "doiId";
+			return "date";
 		}
 		@Override
 		public default Class<String> valueClass() {
