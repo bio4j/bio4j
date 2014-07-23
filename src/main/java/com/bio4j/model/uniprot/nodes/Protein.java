@@ -4,6 +4,13 @@ import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.uniprot.UniprotGraph.ProteinType;
 import com.bio4j.model.uniprot.relationships.*;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef100Representant;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef50Member;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef50Representant;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef90Member;
+import com.bio4j.model.uniref.nodes.UniRef100Cluster;
+import com.bio4j.model.uniref.nodes.UniRef50Cluster;
+import com.bio4j.model.uniref.nodes.UniRef90Cluster;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
@@ -24,6 +31,8 @@ public interface Protein<
 	public String shortName();
 	public String accession();
 	public String modifiedDate();
+	public String createdDate();
+	public int version();
 	public String mass();
 	public int length();
 
@@ -124,6 +133,22 @@ public interface Protein<
 		}
 	}
 
+	public static interface createdDate<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends createdDate<N, NT, P>
+			>
+			extends Property<N, NT, P, String> {
+		@Override
+		public default String name() {
+			return "createdDate";
+		}
+		@Override
+		public default Class<String> valueClass() {
+			return String.class;
+		}
+	}
+
 	public static interface mass<
 			N extends Protein<N, NT>,
 			NT extends ProteinType<N, NT>,
@@ -149,6 +174,22 @@ public interface Protein<
 		@Override
 		public default String name() {
 			return "length";
+		}
+		@Override
+		public default Class<Integer> valueClass() {
+			return Integer.class;
+		}
+	}
+
+	public static interface version<
+			N extends Protein<N, NT>,
+			NT extends ProteinType<N, NT>,
+			P extends version<N, NT, P>
+			>
+			extends Property<N, NT, P, Integer> {
+		@Override
+		public default String name() {
+			return "version";
 		}
 		@Override
 		public default Class<Integer> valueClass() {
@@ -189,6 +230,26 @@ public interface Protein<
 	// outgoing
 	public List<? extends EnzymaticActivity>  enzymaticActivity_out();
 	public List<? extends Enzyme>  enzymaticActivity_outNodes();
+
+	// uniref50Member
+	// ingoing
+	public <T extends UniRef50Member> T  uniref50Member_in();
+	public <T extends UniRef50Cluster> T uniref50Member_inNode();
+
+	// uniref50Representant
+	// ingoing
+	public <T extends UniRef50Representant> T  uniref50Representant_in();
+	public <T extends UniRef50Cluster> T uniref50Representant_inNode();
+
+	// uniref90Member
+	// ingoing
+	public <T extends UniRef90Member> T  uniref90Member_in();
+	public <T extends UniRef90Cluster> T uniref90Member_inNode();
+
+	// uniref100Representant
+	// ingoing
+	public <T extends UniRef100Representant> T  uniref100Representant_in();
+	public <T extends UniRef100Cluster> T uniref100Representant_inNode();
 
 
 }
