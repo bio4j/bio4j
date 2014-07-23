@@ -24,6 +24,27 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface ArticleType<
+			N extends Article<N, NT>,
+			NT extends ArticleType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface PubmedType<
+			N extends Pubmed<N, NT>,
+			NT extends PubmedType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface PublisherType<
+			N extends Publisher<N, NT>,
+			NT extends PublisherType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface PatentType<
 			N extends Patent<N, NT>,
 			NT extends PatentType<N, NT>
@@ -288,6 +309,14 @@ public interface UniprotGraph {
 			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
 			R extends ProteinComment<S, ST, R, RT, T, TT>, RT extends ProteinCommentType<S, ST, R, RT, T, TT>,
 			T extends CommentType<T, TT>, TT extends CommentTypeType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ArticlePubmedType<
+			S extends Article<S, ST>, ST extends ArticleType<S, ST>,
+			R extends ArticlePubmed<S, ST, R, RT, T, TT>, RT extends ArticlePubmedType<S, ST, R, RT, T, TT>,
+			T extends Pubmed<T, TT>, TT extends PubmedType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
 	}
