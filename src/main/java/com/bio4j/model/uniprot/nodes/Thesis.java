@@ -1,32 +1,33 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ArticlePubmed;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
 /**
- * Created by ppareja on 7/22/2014.
+ * Created by ppareja on 7/23/2014.
  */
-public interface Book <
-		N extends Book<N, NT>,
-		NT extends UniprotGraph.BookType<N, NT>
+public interface Thesis <
+		N extends Thesis<N, NT>,
+		NT extends UniprotGraph.ThesisType<N, NT>
 		>
 		extends Node<N, NT> {
 
-	public String name();
+	public String title();
 	public String date();
 
 	// properties
 
-	public static interface name<
-			N extends Book<N, NT>,
-			NT extends UniprotGraph.BookType<N, NT>,
-			P extends name<N, NT, P>
+	public static interface title<
+			N extends Thesis<N, NT>,
+			NT extends UniprotGraph.ThesisType<N, NT>,
+			P extends title<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
 		@Override
 		public default String name() {
-			return "name";
+			return "title";
 		}
 		@Override
 		public default Class<String> valueClass() {
@@ -35,8 +36,8 @@ public interface Book <
 	}
 
 	public static interface date<
-			N extends Book<N, NT>,
-			NT extends UniprotGraph.BookType<N, NT>,
+			N extends Thesis<N, NT>,
+			NT extends UniprotGraph.ThesisType<N, NT>,
 			P extends date<N, NT, P>
 			>
 			extends Property<N, NT, P, String> {
@@ -50,14 +51,13 @@ public interface Book <
 		}
 	}
 
+
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// relationships
 
-	// proteinComment
+	// articlePubmed
 	// ingoing
-//	public List<? extends ProteinComment> proteinComment_in();
-//	public List<? extends Protein> proteinComment_inNodes();
-
-
+	public <T extends ArticlePubmed> T articlePubmed_out();
+	public <T extends Pubmed> T articlePubmed_outNode();
 }
