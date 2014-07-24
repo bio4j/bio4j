@@ -3,11 +3,8 @@ package com.bio4j.model.go.nodes;
 import java.util.List;
 
 // base types
-import com.bio4j.model.go.relationships.SubOntology;
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
-
-import com.bio4j.model.go.GoGraph.SubOntologiesType;
+import com.bio4j.model.go.GoGraph;
+import com.ohnosequences.typedGraphs.*;
 
 /**
  * Rels into this singleton node represent subontologies.
@@ -15,29 +12,19 @@ import com.bio4j.model.go.GoGraph.SubOntologiesType;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
-public interface SubOntologies<
-        N extends SubOntologies<N, NT>,
-        NT extends SubOntologiesType<N, NT>
-        >
-        extends Node<N, NT> {
+public final class SubOntologies<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET>
+extends GoGraph.GoVertex<
+  SubOntologies<I,RV,RVT,RE,RET>,
+  GoGraph<I,RV,RVT,RE,RET>.SubOntologiesType,
+  I,RV,RVT,RE,RET
+> 
+{
 
-	public String name();
+  public SubOntologies(RV vertex, GoGraph<I,RV,RVT,RE,RET>.SubOntologiesType type) {
 
-    public static interface name <
-            N extends SubOntologies<N,NT>,
-            NT extends SubOntologiesType<N,NT>,
-            P extends name<N,NT,P>
-            >
-            extends Property<N,NT,P,String>
-    {
-        @Override public default String name() { return "name"; }
-        @Override public default Class<String> valueClass() { return String.class; }
-    }
+    super(vertex, type);
+  }
 
-    // SubOntology
-    // incoming
-    public List<? extends SubOntology> subOntology_in();
-
-    public List<? extends GoTerm> term_inNodes();
-
+  @Override
+  public SubOntologies<I,RV,RVT,RE,RET> self() { return this; }
 }
