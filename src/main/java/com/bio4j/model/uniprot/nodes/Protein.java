@@ -258,5 +258,10 @@ public interface Protein<
 	public <T extends UniRef100Representant> T  uniref100Representant_in();
 	public <T extends UniRef100Cluster> T uniref100Representant_inNode();
 
+	// proteinReference
+	// outgoing
+	public List<? extends ProteinReference>  proteinReference_out();
+	public List<? extends Reference> proteinReference_outNodes();
+
 
 }
