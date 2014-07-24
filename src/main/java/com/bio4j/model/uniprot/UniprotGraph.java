@@ -24,9 +24,23 @@ public interface UniprotGraph {
 			extends Node.Type<N, NT> {
 	}
 
+	public static interface ReferenceType<
+			N extends Reference<N, NT>,
+			NT extends ReferenceType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
 	public static interface ThesisType<
 			N extends Thesis<N, NT>,
 			NT extends ThesisType<N, NT>
+			>
+			extends Node.Type<N, NT> {
+	}
+
+	public static interface UnpublishedObservationType<
+			N extends UnpublishedObservation<N, NT>,
+			NT extends UnpublishedObservationType<N, NT>
 			>
 			extends Node.Type<N, NT> {
 	}
@@ -333,5 +347,61 @@ public interface UniprotGraph {
 			T extends Pubmed<T, TT>, TT extends PubmedType<T, TT>
 			>
 			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ProteinReferenceType<
+			S extends Protein<S, ST>, ST extends ProteinType<S, ST>,
+			R extends ProteinReference<S, ST, R, RT, T, TT>, RT extends ProteinReferenceType<S, ST, R, RT, T, TT>,
+			T extends Reference<T, TT>, TT extends ReferenceType<T, TT>
+			>
+			extends Relationship.Type.ManyToMany<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferenceBookType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferenceBook<S, ST, R, RT, T, TT>, RT extends ReferenceBookType<S, ST, R, RT, T, TT>,
+			T extends Book<T, TT>, TT extends BookType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferenceArticleType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferenceArticle<S, ST, R, RT, T, TT>, RT extends ReferenceArticleType<S, ST, R, RT, T, TT>,
+			T extends Article<T, TT>, TT extends ArticleType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferencePatentType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferencePatent<S, ST, R, RT, T, TT>, RT extends ReferencePatentType<S, ST, R, RT, T, TT>,
+			T extends Patent<T, TT>, TT extends PatentType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferenceOnlineArticleType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferenceOnlineArticle<S, ST, R, RT, T, TT>, RT extends ReferenceOnlineArticleType<S, ST, R, RT, T, TT>,
+			T extends OnlineArticle<T, TT>, TT extends OnlineArticleType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferenceThesisType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferenceThesis<S, ST, R, RT, T, TT>, RT extends ReferenceThesisType<S, ST, R, RT, T, TT>,
+			T extends Thesis<T, TT>, TT extends ThesisType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
+	}
+
+	public static interface ReferenceUnpublishedObservationType<
+			S extends Reference<S, ST>, ST extends ReferenceType<S, ST>,
+			R extends ReferenceUnpublishedObservation<S, ST, R, RT, T, TT>, RT extends ReferenceUnpublishedObservationType<S, ST, R, RT, T, TT>,
+			T extends UnpublishedObservation<T, TT>, TT extends UnpublishedObservationType<T, TT>
+			>
+			extends Relationship.Type.OneToOne<S, ST, R, RT, T, TT> {
 	}
 }
