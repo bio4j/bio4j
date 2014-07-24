@@ -1,6 +1,6 @@
 package com.bio4j.model.go.relationships.goSlims;
 
-import com.ohnosequences.typedGraphs.Relationship;
+// import com.ohnosequences.typedGraphs.Relationship;
 
 
 // public interface PlantSlim extends GoSlim<PlantSlim, PlantSlim.Type> {
