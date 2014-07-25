@@ -138,6 +138,16 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 		return outOneV(graph().IsA());
 	}
 
+	//-----subontology-----
+	public SubOntology<I, RV, RVT, RE, RET> subontoloty_out(){
+		return outOne(graph().SubOntology());
+	}
+	//-----subontology-----
+	public SubOntologies<I, RV, RVT, RE, RET> subontoloty_outV(){
+		return outOneV(graph().SubOntology());
+	}
+
+
 
 }
 
