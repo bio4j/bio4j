@@ -5,6 +5,8 @@ import com.bio4j.model.uniprot.relationships.ArticlePubmed;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 
+import java.util.Date;
+
 /**
  * Created by ppareja on 7/23/2014.
  */
@@ -15,6 +17,7 @@ public interface Article <
 		extends Node<N, NT> {
 
 	public String title();
+	public String date();
 	public String doiId();
 
 	// properties
