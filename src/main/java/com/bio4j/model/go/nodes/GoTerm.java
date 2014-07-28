@@ -126,16 +126,15 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	public List<IsA<I, RV, RVT, RE, RET>> isA_in(){
 		return inMany(graph().IsA());
 	}
-
 	public List<GoTerm<I, RV, RVT, RE, RET>> isA_inV(){
 		return inManyV(graph().IsA());
 	}
-	public IsA<I, RV, RVT, RE, RET> isA_out(){
-		return outOne(graph().IsA());
-	}
 
-	public GoTerm<I, RV, RVT, RE, RET> isA_outV(){
-		return outOneV(graph().IsA());
+	public List<IsA<I, RV, RVT, RE, RET>> isA_out(){
+		return outMany(graph().IsA());
+	}
+	public List<GoTerm<I, RV, RVT, RE, RET>> isA_outV(){
+		return outManyV(graph().IsA());
 	}
 
 	//-----subontology-----
