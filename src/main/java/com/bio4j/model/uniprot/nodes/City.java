@@ -1,36 +1,33 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.BookCity;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
-public interface City <
-		N extends City<N, NT>,
-		NT extends UniprotGraph.CityType<N, NT>
-		>
-		extends Node<N, NT> {
+public final class City <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends UniprotGraph.UniprotVertex<
+		City<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.CityType,
+		I, RV, RVT, RE, RET
+		> {
 
-	public String name();
+	public City(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.CityType type) {
+		super(vertex, type);
+	}
+
+	@Override
+	public City<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 
 	// properties
-
-	public static interface name<
-			N extends City<N, NT>,
-			NT extends UniprotGraph.CityType<N, NT>,
-			P extends name<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "name";
-		}
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public String name() {
+		return get(type().name);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,8 +36,8 @@ public interface City <
 
 	// proteinComment
 	// ingoing
-//	public List<? extends ProteinComment> proteinComment_in();
-//	public List<? extends Protein> proteinComment_inNodes();
+	public BookCity<I, RV, RVT, RE, RET> bookCity_in();
+	public Book<I, RV, RVT, RE, RET> bookCity_inNode();
 
 
 }

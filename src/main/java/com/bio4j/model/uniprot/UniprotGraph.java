@@ -1,6 +1,9 @@
 package com.bio4j.model.uniprot;
 
 import com.bio4j.model.uniprot.nodes.Article;
+import com.bio4j.model.uniprot.nodes.Book;
+import com.bio4j.model.uniprot.nodes.City;
+import com.bio4j.model.uniprot.relationships.BookCity;
 import com.ohnosequences.typedGraphs.*;
 
 /**
@@ -121,6 +124,22 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinEnsemblType ProteinEnsembl();
 
+	public abstract ProteinInterproType ProteinInterpro();
+
+	public abstract ProteinKeggType ProteinKegg();
+
+	public abstract ProteinKeywordType ProteinKeyword();
+
+	public abstract ProteinInterproType ProteinOrganism();
+
+	public abstract ProteinReactomeTermType ProteinReactomeTerm();
+
+	public abstract ProteinSubcellularLocationType ProteinSubcellularLocation();
+
+	public abstract ProteinUniGeneType ProteinUniGene();
+
+	public abstract ProteinRefSeqType ProteinRefSeq();
+
 	public abstract ProteinReferenceType ProteinReference();
 
 	public abstract ReferenceArticleType ReferenceArticle();
@@ -135,8 +154,86 @@ public abstract class UniprotGraph<
 
 	public abstract ReferenceUnpublishedObservationType ReferenceUnpublishedObservation();
 
+	public abstract TaxonParentType TaxonParent();
+
+	public abstract ThesisInstituteType ThesisInstitute();
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Vertex types
+
+	public final class BookType
+			extends
+			UniprotVertexType<
+					Book<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.BookType
+					> {
+
+		public final name name = new name();
+
+		protected BookType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public BookType value() {
+			return graph().Book();
+		}
+
+		@Override
+		public Book<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Book<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Book<I, RV, RVT, RE, RET>, BookType, name, String> {
+			public name() {
+				super(BookType.this.graph().Book());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class CityType
+			extends
+			UniprotVertexType<
+					City<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.CityType
+					> {
+
+		public final name name = new name();
+
+		protected CityType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public CityType value() {
+			return graph().City();
+		}
+
+		@Override
+		public City<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new City<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
+			public name() {
+				super(CityType.this.graph().City());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
 
 	public final class ArticleType
 			extends
@@ -186,6 +283,34 @@ public abstract class UniprotGraph<
 			}
 		}
 
+	}
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Edge types
+
+	public final class BookCityType
+			extends
+			UniprotEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
+					BookCity<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookCityType,
+					City<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CityType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected BookCityType(RET raw) {
+			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.City());
+		}
+
+		@Override
+		public BookCityType value() {
+			return graph().BookCity();
+		}
+
+		@Override
+		public BookCity<I, RV, RVT, RE, RET> from(RE edge) {
+			return new BookCity<I, RV, RVT, RE, RET>(edge, this);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
