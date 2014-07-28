@@ -6,19 +6,19 @@ import com.ohnosequences.typedGraphs.UntypedGraph;
 /**
  * Created by ppareja on 7/23/2014.
  */
-public final class Country <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class Dataset <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniprotGraph.UniprotVertex<
-		Country<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.CountryType,
+		Dataset<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.DatasetType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Country(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.CountryType type) {
+	public Dataset(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.DatasetType type) {
 		super(vertex, type);
 	}
 
 	@Override
-	public Country<I, RV, RVT, RE, RET> self() {
+	public Dataset<I, RV, RVT, RE, RET> self() {
 		return this;
 	}
 
@@ -31,10 +31,10 @@ public final class Country <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// relationships
 
-	// instituteCountry
+	// proteinDataset
 	// ingoing
-	public InstituteCountry<I, RV, RVT, RE, RET> instituteCountry_in();
-	public Institute<I, RV, RVT, RE, RET> instituteCountry_inNode();
+	public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_in();
+	public Dataset<I, RV, RVT, RE, RET> proteinDataset_inNode();
 
 
 }

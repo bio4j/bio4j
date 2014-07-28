@@ -2,26 +2,27 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.BookCity;
+import com.bio4j.model.uniprot.relationships.ProteinReference;
 import com.ohnosequences.typedGraphs.Node;
 import com.ohnosequences.typedGraphs.Property;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/23/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public final class City <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class CommentType <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniprotGraph.UniprotVertex<
-		City<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.CityType,
+		CommentType<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public City(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.CityType type) {
+	public CommentType(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType type) {
 		super(vertex, type);
 	}
 
 	@Override
-	public City<I, RV, RVT, RE, RET> self() {
+	public CommentType<I, RV, RVT, RE, RET> self() {
 		return this;
 	}
 
@@ -34,10 +35,10 @@ public final class City <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, 
 
 	// relationships
 
-	// bookCity
+	// proteinComment
 	// ingoing
-	public BookCity<I, RV, RVT, RE, RET> bookCity_in();
-	public Book<I, RV, RVT, RE, RET> bookCity_inNode();
+	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_in();
+	public List<Protein<I, RV, RVT, RE, RET>> proteinComment_inNodes();
 
 
 }

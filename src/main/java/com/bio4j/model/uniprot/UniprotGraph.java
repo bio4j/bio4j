@@ -1,13 +1,14 @@
 package com.bio4j.model.uniprot;
 
-import com.bio4j.model.uniprot.nodes.Article;
-import com.bio4j.model.uniprot.nodes.Book;
-import com.bio4j.model.uniprot.nodes.City;
+import com.bio4j.model.uniprot.nodes.*;
 import com.bio4j.model.uniprot.relationships.BookCity;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.ohnosequences.typedGraphs.*;
 
+import java.util.Date;
+
 /**
- * Created by ppareja on 7/28/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public abstract class UniprotGraph<
 		// untyped graph
@@ -161,6 +162,57 @@ public abstract class UniprotGraph<
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Vertex types
 
+	public final class ArticleType
+			extends
+			UniprotVertexType<
+					Article<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ArticleType
+					> {
+
+		public final doId doId = new doId();
+		public final title title = new title();
+
+		protected ArticleType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ArticleType value() {
+			return graph().Article();
+		}
+
+		@Override
+		public Article<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Article<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class doId
+				extends
+				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
+			public doId() {
+				super(ArticleType.this.graph().Article());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+		public final class title
+				extends
+				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
+			public title() {
+				super(ArticleType.this.graph().Article());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+
 	public final class BookType
 			extends
 			UniprotVertexType<
@@ -235,47 +287,34 @@ public abstract class UniprotGraph<
 
 	}
 
-	public final class ArticleType
+	public final class CommentTypeType
 			extends
 			UniprotVertexType<
-					Article<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ArticleType
+					CommentType<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType
 					> {
 
-		public final doId doId = new doId();
-		public final title title = new title();
+		public final name name = new name();
 
-		protected ArticleType(RVT raw) {
+		protected CommentTypeType(RVT raw) {
 			super(raw);
 		}
 
 		@Override
-		public ArticleType value() {
-			return graph().Article();
+		public CommentTypeType value() {
+			return graph().CommentType();
 		}
 
 		@Override
-		public Article<I, RV, RVT, RE, RET> from(RV vertex) {
-			return new Article<I, RV, RVT, RE, RET>(vertex, this);
+		public CommentType<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new CommentType<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
-		public final class doId
+		public final class name
 				extends
-				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
-			public doId() {
-				super(ArticleType.this.graph().Article());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
-		}
-
-		public final class title
-				extends
-				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
-			public title() {
-				super(ArticleType.this.graph().Article());
+				UniprotVertexProperty<CommentType<I, RV, RVT, RE, RET>, CommentTypeType, name, String> {
+			public name() {
+				super(CommentTypeType.this.graph().CommentType());
 			}
 
 			public Class<String> valueClass() {
@@ -284,6 +323,215 @@ public abstract class UniprotGraph<
 		}
 
 	}
+
+	public final class CountryType
+			extends
+			UniprotVertexType<
+					Country<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.CountryType
+					> {
+
+		public final name name = new name();
+
+		protected CountryType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public CountryType value() {
+			return graph().Country();
+		}
+
+		@Override
+		public Country<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Country<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Country<I, RV, RVT, RE, RET>, CountryType, name, String> {
+			public name() {
+				super(CountryType.this.graph().Country());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class DatasetType
+			extends
+			UniprotVertexType<
+					Dataset<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.DatasetType
+					> {
+
+		public final name name = new name();
+
+		protected DatasetType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public DatasetType value() {
+			return graph().Dataset();
+		}
+
+		@Override
+		public Dataset<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Dataset<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Dataset<I, RV, RVT, RE, RET>, DatasetType, name, String> {
+			public name() {
+				super(DatasetType.this.graph().Dataset());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class ProteinType
+			extends
+			UniprotVertexType<
+					Protein<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+					> {
+
+		public final accession accession = new accession();
+		public final shortName shortName = new shortName();
+		public final sequence sequence = new sequence();
+		public final fullname fullname = new fullname();
+		public final modifiedDate modifiedDate = new modifiedDate();
+		public final createdDate createdDate = new createdDate();
+		public final mass mass = new mass();
+		public final version version = new version();
+		public final length length = new length();
+
+
+		protected ProteinType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ProteinType value() {
+			return graph().Protein();
+		}
+
+		@Override
+		public Protein<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Protein<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class accession
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String> {
+			public accession() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class shortName
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
+			public shortName() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class sequence
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, sequence, String> {
+			public sequence() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class fullname
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullname, String> {
+			public fullname() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class modifiedDate
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {
+			public modifiedDate() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<Date> valueClass() {
+				return Date.class;
+			}
+		}
+		public final class createdDate
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, createdDate, Date> {
+			public createdDate() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<Date> valueClass() {
+				return Date.class;
+			}
+		}
+		public final class mass
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, String> {
+			public mass() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class version
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, version, Integer> {
+			public version() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+		public final class length
+				extends
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, length, Integer> {
+			public length() {
+				super(ProteinType.this.graph().Protein());
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
@@ -296,7 +544,7 @@ public abstract class UniprotGraph<
 					City<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CityType
 					>
 			implements
-			TypedEdge.Type.ManyToMany {
+			TypedEdge.Type.OneToOne {
 
 		protected BookCityType(RET raw) {
 			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.City());
@@ -310,6 +558,31 @@ public abstract class UniprotGraph<
 		@Override
 		public BookCity<I, RV, RVT, RE, RET> from(RE edge) {
 			return new BookCity<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinDatasetType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinDataset<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinDatasetType,
+					Dataset<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DatasetType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ProteinDatasetType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Dataset());
+		}
+
+		@Override
+		public ProteinDatasetType value() {
+			return graph().ProteinDataset();
+		}
+
+		@Override
+		public ProteinDataset<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinDataset<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

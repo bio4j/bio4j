@@ -5,7 +5,7 @@ import com.bio4j.model.uniprot.relationships.ReferenceBook;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/28/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniprotGraph.UniprotVertex<
