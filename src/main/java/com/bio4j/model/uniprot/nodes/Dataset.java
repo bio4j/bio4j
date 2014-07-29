@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ProteinDataset;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
@@ -33,8 +34,12 @@ public final class Dataset <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinDataset
 	// ingoing
-	public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_in();
-	public Dataset<I, RV, RVT, RE, RET> proteinDataset_inNode();
+	public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_in(){
+		return inOne(graph().ProteinDataset());
+	}
+	public Dataset<I, RV, RVT, RE, RET> proteinDataset_inNode(){
+		return inOneV(graph().ProteinDataset());
+	}
 
 
 }
