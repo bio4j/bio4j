@@ -18,6 +18,7 @@ project/plugins/project/
 # IntelliJ Idea specific
 .idea/
 bin/
+*.iml
 
 # st2
 *.sublime-project
