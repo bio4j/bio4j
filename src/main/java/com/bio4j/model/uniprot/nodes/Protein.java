@@ -26,10 +26,10 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// properties
 	public String accession() {
-		return get(type().shortName);
+		return get(type().accession);
 	}
 	public String shortName() {
-		return get(type().accession);
+		return get(type().shortName);
 	}
 	public String sequence() {
 		return get(type().sequence);
