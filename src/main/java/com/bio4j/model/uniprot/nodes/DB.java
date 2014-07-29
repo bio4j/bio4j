@@ -2,7 +2,10 @@ package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.ProteinDataset;
+import com.bio4j.model.uniprot.relationships.SubmissionDB;
 import com.ohnosequences.typedGraphs.UntypedGraph;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 7/23/2014.
