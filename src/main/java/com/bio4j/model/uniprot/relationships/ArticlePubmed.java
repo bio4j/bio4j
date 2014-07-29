@@ -1,17 +1,28 @@
 package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Article;
-import com.bio4j.model.uniprot.nodes.Pubmed;
-import com.ohnosequences.typedGraphs.Relationship;
+import com.bio4j.model.uniprot.nodes.*;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/23/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public interface ArticlePubmed <
-		S extends Article<S, ST>, ST extends UniprotGraph.ArticleType<S, ST>,
-		R extends ArticlePubmed<S, ST, R, RT, T, TT>, RT extends UniprotGraph.ArticlePubmedType<S, ST, R, RT, T, TT>,
-		T extends Pubmed<T, TT>, TT extends UniprotGraph.PubmedType<T, TT>
-		>
-		extends Relationship<S, ST, R, RT, T, TT> {
+public final class ArticlePubmed<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends
+		UniprotGraph.UniprotEdge<
+				Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
+				ArticlePubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
+				Pubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PubmedType,
+				I, RV, RVT, RE, RET
+				> {
+
+	public ArticlePubmed(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ArticlePubmedType type) {
+
+		super(edge, type);
+	}
+
+	@Override
+	public ArticlePubmed<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 }

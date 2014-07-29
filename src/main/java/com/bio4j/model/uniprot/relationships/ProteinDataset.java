@@ -8,7 +8,7 @@ import com.ohnosequences.typedGraphs.UntypedGraph;
 /**
  * Created by ppareja on 7/28/2014.
  */
-public class ProteinDataset <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class ProteinDataset <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
 		UniprotGraph.UniprotEdge<
 				Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,

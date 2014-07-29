@@ -1,9 +1,7 @@
 package com.bio4j.model.uniprot;
 
 import com.bio4j.model.uniprot.nodes.*;
-import com.bio4j.model.uniprot.relationships.BookCity;
-import com.bio4j.model.uniprot.relationships.ProteinDataset;
-import com.bio4j.model.uniprot.relationships.ProteinEMBL;
+import com.bio4j.model.uniprot.relationships.*;
 import com.ohnosequences.typedGraphs.*;
 
 import java.util.Date;
@@ -49,7 +47,7 @@ public abstract class UniprotGraph<
 
 	public abstract EnsemblType Ensembl();
 
-	public abstract FeatureType FeatureType();
+	public abstract FeatureTypeType FeatureType();
 
 	public abstract InstituteType Institute();
 
@@ -104,6 +102,8 @@ public abstract class UniprotGraph<
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges
 
+	public abstract ArticleJournalType ArticleJournal();
+
 	public abstract ArticlePubmedType ArticlePubmed();
 
 	public abstract ArticleJournalType ArticleJournalType();
@@ -125,6 +125,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinEMBLType ProteinEMBL();
 
 	public abstract ProteinEnsemblType ProteinEnsembl();
+
+	public abstract ProteinFeatureType ProteinFeature();
 
 	public abstract ProteinInterproType ProteinInterpro();
 
@@ -497,6 +499,234 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class EnsemblType
+			extends
+			UniprotVertexType<
+					Ensembl<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType
+					> {
+
+		public final id id = new id();
+		public final proteinSequenceId proteinSequenceId = new proteinSequenceId();
+		public final moleculeId moleculeId = new moleculeId();
+		public final geneId geneId = new geneId();
+
+		protected EnsemblType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public EnsemblType value() {
+			return graph().Ensembl();
+		}
+
+		@Override
+		public Ensembl<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Ensembl<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, id, String> {
+			public id() {
+				super(EnsemblType.this.graph().Ensembl());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class proteinSequenceId
+				extends
+				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, proteinSequenceId, String> {
+			public proteinSequenceId() {
+				super(EnsemblType.this.graph().Ensembl());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class moleculeId
+				extends
+				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, moleculeId, String> {
+			public moleculeId() {
+				super(EnsemblType.this.graph().Ensembl());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class geneId
+				extends
+				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, geneId, String> {
+			public geneId() {
+				super(EnsemblType.this.graph().Ensembl());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class FeatureTypeType
+			extends
+			UniprotVertexType<
+					FeatureType<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+					> {
+
+		public final name name = new name();
+
+		protected FeatureTypeType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public FeatureTypeType value() {
+			return graph().FeatureType();
+		}
+
+		@Override
+		public FeatureType<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new FeatureType<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType, name, String> {
+			public name() {
+				super(FeatureTypeType.this.graph().FeatureType());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class InterproType
+			extends
+			UniprotVertexType<
+					Interpro<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.InterproType
+					> {
+
+		public final name name = new name();
+		public final id id = new id();
+
+		protected InterproType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public InterproType value() {
+			return graph().Interpro();
+		}
+
+		@Override
+		public Interpro<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Interpro<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
+			public name() {
+				super(InterproType.this.graph().Interpro());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
+			public id() {
+				super(InterproType.this.graph().Interpro());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class JournalType
+			extends
+			UniprotVertexType<
+					Journal<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.JournalType
+					> {
+
+		public final name name = new name();
+
+		protected JournalType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public JournalType value() {
+			return graph().Journal();
+		}
+
+		@Override
+		public Journal<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Journal<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Journal<I, RV, RVT, RE, RET>, JournalType, name, String> {
+			public name() {
+				super(JournalType.this.graph().Journal());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class PubmedType
+			extends
+			UniprotVertexType<
+					Pubmed<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PubmedType
+					> {
+
+		public final id id = new id();
+
+		protected PubmedType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PubmedType value() {
+			return graph().Pubmed();
+		}
+
+		@Override
+		public Pubmed<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Pubmed<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<Pubmed<I, RV, RVT, RE, RET>, PubmedType, id, String> {
+			public id() {
+				super(PubmedType.this.graph().Pubmed());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class ProteinType
 			extends
 			UniprotVertexType<
@@ -704,6 +934,56 @@ public abstract class UniprotGraph<
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
 
+	public final class ArticleJournalType
+			extends
+			UniprotEdgeType<
+					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
+					ArticleJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
+					Journal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.JournalType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected ArticleJournalType(RET raw) {
+			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Journal());
+		}
+
+		@Override
+		public ArticleJournalType value() {
+			return graph().ArticleJournal();
+		}
+
+		@Override
+		public ArticleJournal<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ArticleJournal<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ArticlePubmedType
+			extends
+			UniprotEdgeType<
+					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
+					ArticlePubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
+					Pubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PubmedType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ArticlePubmedType(RET raw) {
+			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Pubmed());
+		}
+
+		@Override
+		public ArticlePubmedType value() {
+			return graph().ArticlePubmed();
+		}
+
+		@Override
+		public ArticlePubmed<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ArticlePubmed<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class BookCityType
 			extends
 			UniprotEdgeType<
@@ -762,7 +1042,7 @@ public abstract class UniprotGraph<
 					EMBL<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EMBLType
 					>
 			implements
-			TypedEdge.Type.OneToOne {
+			TypedEdge.Type.ManyToMany {
 
 		protected ProteinEMBLType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.EMBL());
@@ -776,6 +1056,81 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinEMBL<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinEMBL<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinEnsemblType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinEnsembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinEnsemblType,
+					Ensembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinEnsemblType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Ensembl());
+		}
+
+		@Override
+		public ProteinEnsemblType value() {
+			return graph().ProteinEnsembl();
+		}
+
+		@Override
+		public ProteinEnsembl<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinEnsembl<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinFeatureType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinFeature<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinFeatureType,
+					FeatureType<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinFeatureType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.FeatureType());
+		}
+
+		@Override
+		public ProteinFeatureType value() {
+			return graph().ProteinFeature();
+		}
+
+		@Override
+		public ProteinFeature<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinFeature<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinInterproType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinInterpro<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinInterproType,
+					Interpro<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InterproType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinInterproType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Interpro());
+		}
+
+		@Override
+		public ProteinInterproType value() {
+			return graph().ProteinInterpro();
+		}
+
+		@Override
+		public ProteinInterpro<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinInterpro<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
