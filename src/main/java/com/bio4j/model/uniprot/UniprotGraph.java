@@ -3,6 +3,7 @@ package com.bio4j.model.uniprot;
 import com.bio4j.model.uniprot.nodes.*;
 import com.bio4j.model.uniprot.relationships.BookCity;
 import com.bio4j.model.uniprot.relationships.ProteinDataset;
+import com.bio4j.model.uniprot.relationships.ProteinEMBL;
 import com.ohnosequences.typedGraphs.*;
 
 import java.util.Date;
@@ -398,6 +399,104 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class DBType
+			extends
+			UniprotVertexType<
+					DB<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.DBType
+					> {
+
+		public final name name = new name();
+
+		protected DBType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public DBType value() {
+			return graph().DB();
+		}
+
+		@Override
+		public DB<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new DB<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
+			public name() {
+				super(DBType.this.graph().DB());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class EMBLType
+			extends
+			UniprotVertexType<
+					EMBL<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.EMBLType
+					> {
+
+		public final id id = new id();
+		public final proteinSequenceId proteinSequenceId = new proteinSequenceId();
+		public final moleculeType moleculeType = new moleculeType();
+
+		protected EMBLType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public EMBLType value() {
+			return graph().EMBL();
+		}
+
+		@Override
+		public EMBL<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new EMBL<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, id, String> {
+			public id() {
+				super(EMBLType.this.graph().EMBL());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class proteinSequenceId
+				extends
+				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, proteinSequenceId, String> {
+			public proteinSequenceId() {
+				super(EMBLType.this.graph().EMBL());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class moleculeType
+				extends
+				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, moleculeType, String> {
+			public moleculeType() {
+				super(EMBLType.this.graph().EMBL());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 	public final class ProteinType
 			extends
 			UniprotVertexType<
@@ -652,6 +751,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinDataset<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinDataset<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinEMBLType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinEMBL<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinEMBLType,
+					EMBL<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EMBLType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ProteinEMBLType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.EMBL());
+		}
+
+		@Override
+		public ProteinEMBLType value() {
+			return graph().ProteinEMBL();
+		}
+
+		@Override
+		public ProteinEMBL<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinEMBL<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
