@@ -693,6 +693,90 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class KeggType
+			extends
+			UniprotVertexType<
+					Kegg<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.KeggType
+					> {
+
+		public final id id = new id();
+
+		protected KeggType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public KeggType value() {
+			return graph().Kegg();
+		}
+
+		@Override
+		public Kegg<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Kegg<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<Kegg<I, RV, RVT, RE, RET>, KeggType, id, String> {
+			public id() {
+				super(KeggType.this.graph().Kegg());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class KeywordType
+			extends
+			UniprotVertexType<
+					Keyword<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.KeywordType
+					> {
+
+		public final name name = new name();
+		public final id id = new id();
+
+		protected KeywordType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public KeywordType value() {
+			return graph().Keyword();
+		}
+
+		@Override
+		public Keyword<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Keyword<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, name, String> {
+			public name() {
+				super(KeywordType.this.graph().Keyword());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, id, String> {
+			public id() {
+				super(KeywordType.this.graph().Keyword());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class PubmedType
 			extends
 			UniprotVertexType<
@@ -1169,6 +1253,56 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinInterpro<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinInterpro<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinKeggType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinKegg<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinKeggType,
+					Kegg<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.KeggType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinKeggType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Kegg());
+		}
+
+		@Override
+		public ProteinKeggType value() {
+			return graph().ProteinKegg();
+		}
+
+		@Override
+		public ProteinKegg<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinKegg<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinKeywordType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinKeyword<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinKeywordType,
+					Keyword<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.KeywordType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinKeywordType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Keyword());
+		}
+
+		@Override
+		public ProteinKeywordType value() {
+			return graph().ProteinKeyword();
+		}
+
+		@Override
+		public ProteinKeyword<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinKeyword<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
