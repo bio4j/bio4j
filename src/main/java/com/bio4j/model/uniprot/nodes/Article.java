@@ -50,11 +50,11 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		outOneV(graph().ArticlePubmed());
 	}
 	// referenceArticle
-	// outgoing
+	// ingoing
 	public ReferenceArticle<I, RV, RVT, RE, RET> referenceArticle_in(){
-		outOne(graph().ReferenceArticle());
+		inOne(graph().ReferenceArticle());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceArticle_inNode(){
-		outOneV(graph().ReferenceArticle());
+		inOne(graph().ReferenceArticle());
 	}
 }

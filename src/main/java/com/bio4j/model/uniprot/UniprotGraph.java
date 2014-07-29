@@ -777,6 +777,42 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class OnlineArticleType
+			extends
+			UniprotVertexType<
+					OnlineArticle<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+					> {
+
+		public final title id = new title();
+
+		protected OnlineArticleType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public OnlineArticleType value() {
+			return graph().OnlineArticle();
+		}
+
+		@Override
+		public OnlineArticle<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new OnlineArticle<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class title
+				extends
+				UniprotVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
+			public title() {
+				super(OnlineArticleType.this.graph().OnlineArticle());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class PubmedType
 			extends
 			UniprotVertexType<
@@ -1014,6 +1050,42 @@ public abstract class UniprotGraph<
 		public ProteinReference<I, RV, RVT, RE, RET> proteinReference_out();
 		public Reference<I, RV, RVT, RE, RET> proteinReference_outNodes();
 
+	}
+
+	public final class ReferenceType
+			extends
+			UniprotVertexType<
+					Reference<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType
+					> {
+
+		public final name name = new name();
+
+		protected ReferenceType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ReferenceType value() {
+			return graph().Reference();
+		}
+
+		@Override
+		public Reference<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Reference<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, name, String> {
+			public name() {
+				super(ReferenceType.this.graph().Reference());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 	}
 
 	public final class SubmissionType
@@ -1303,6 +1375,56 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinKeyword<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinKeyword<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinReferenceType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinReference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinReferenceType,
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinReferenceType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Reference());
+		}
+
+		@Override
+		public ProteinReferenceType value() {
+			return graph().ProteinReference();
+		}
+
+		@Override
+		public ProteinReference<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinReference<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceArticleType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceArticleType,
+					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceArticleType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Article());
+		}
+
+		@Override
+		public ReferenceArticleType value() {
+			return graph().ReferenceArticle();
+		}
+
+		@Override
+		public ReferenceArticle<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceArticle<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

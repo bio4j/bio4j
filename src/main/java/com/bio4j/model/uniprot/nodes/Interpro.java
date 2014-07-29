@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by ppareja on 7/29/2014.
  */
-public class Interpro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class Interpro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniprotGraph.UniprotVertex<
 		Interpro<I, RV, RVT, RE, RET>,
 		UniprotGraph<I, RV, RVT, RE, RET>.InterproType,
