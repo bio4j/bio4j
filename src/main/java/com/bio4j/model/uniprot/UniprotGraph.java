@@ -158,6 +158,8 @@ public abstract class UniprotGraph<
 
 	public abstract ReferenceUnpublishedObservationType ReferenceUnpublishedObservation();
 
+	public abstract SubmissionDBType SubmissionDB();
+
 	public abstract TaxonParentType TaxonParent();
 
 	public abstract ThesisInstituteType ThesisInstitute();
@@ -930,6 +932,42 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class SubmissionType
+			extends
+			UniprotVertexType<
+					Submission<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType
+					> {
+
+		public final title title = new title();
+
+		protected SubmissionType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public SubmissionType value() {
+			return graph().Submission();
+		}
+
+		@Override
+		public Submission<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Submission<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class title
+				extends
+				UniprotVertexProperty<Submission<I, RV, RVT, RE, RET>, SubmissionType, title, String> {
+			public title() {
+				super(SubmissionType.this.graph().Submission());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
@@ -1131,6 +1169,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinInterpro<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinInterpro<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class SubmissionDBType
+			extends
+			UniprotEdgeType<
+					Submission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType,
+					SubmissionDB<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionDBType,
+					DB<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DBType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected SubmissionDBType(RET raw) {
+			super(UniprotGraph.this.Submission(), raw, UniprotGraph.this.DB());
+		}
+
+		@Override
+		public SubmissionDBType value() {
+			return graph().SubmissionDB();
+		}
+
+		@Override
+		public SubmissionDB<I, RV, RVT, RE, RET> from(RE edge) {
+			return new SubmissionDB<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
