@@ -1357,6 +1357,43 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class TaxonType
+			extends
+			UniprotVertexType<
+					Taxon<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+					> {
+
+		public final name name = new name();
+
+		protected TaxonType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public TaxonType value() {
+			return graph().Taxon();
+		}
+
+		@Override
+		public Taxon<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Taxon<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Taxon<I, RV, RVT, RE, RET>, TaxonType, name, String> {
+			public name() {
+				super(TaxonType.this.graph().Taxon());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 	public final class ThesisType
 			extends
 			UniprotVertexType<
@@ -1519,6 +1556,31 @@ public abstract class UniprotGraph<
 		@Override
 		public BookPublisher<I, RV, RVT, RE, RET> from(RE edge) {
 			return new BookPublisher<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class OrganismTaxonType
+			extends
+			UniprotEdgeType<
+					Organism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismType,
+					OrganismTaxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismTaxonType,
+					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected OrganismTaxonType(RET raw) {
+			super(UniprotGraph.this.Organism(), raw, UniprotGraph.this.Taxon());
+		}
+
+		@Override
+		public OrganismTaxonType value() {
+			return graph().OrganismTaxon();
+		}
+
+		@Override
+		public OrganismTaxon<I, RV, RVT, RE, RET> from(RE edge) {
+			return new OrganismTaxon<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
@@ -1694,6 +1756,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinKeyword<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinKeyword<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinReactomeTermType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinReactomeTerm<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinReactomeTermType,
+					ReactomeTerm<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinReactomeTermType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.ReactomeTerm());
+		}
+
+		@Override
+		public ProteinReactomeTermType value() {
+			return graph().ProteinReactomeTerm();
+		}
+
+		@Override
+		public ProteinReactomeTerm<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinReactomeTerm<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
@@ -1919,6 +2006,56 @@ public abstract class UniprotGraph<
 		@Override
 		public SubmissionDB<I, RV, RVT, RE, RET> from(RE edge) {
 			return new SubmissionDB<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class TaxonParentType
+			extends
+			UniprotEdgeType<
+					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType,
+					TaxonParent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonParentType,
+					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected TaxonParentType(RET raw) {
+			super(UniprotGraph.this.Taxon(), raw, UniprotGraph.this.Taxon());
+		}
+
+		@Override
+		public TaxonParentType value() {
+			return graph().TaxonParent();
+		}
+
+		@Override
+		public TaxonParent<I, RV, RVT, RE, RET> from(RE edge) {
+			return new TaxonParent<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ThesisInstituteType
+			extends
+			UniprotEdgeType<
+					Thesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisType,
+					ThesisInstitute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisInstituteType,
+					Institute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected ThesisInstituteType(RET raw) {
+			super(UniprotGraph.this.Thesis(), raw, UniprotGraph.this.Institute());
+		}
+
+		@Override
+		public ThesisInstituteType value() {
+			return graph().ThesisInstitute();
+		}
+
+		@Override
+		public ThesisInstitute<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ThesisInstitute<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

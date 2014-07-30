@@ -1,11 +1,14 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.relationships.ProteinTaxon;
+import com.bio4j.model.uniprot.relationships.OrganismTaxon;
+import com.bio4j.model.uniprot.relationships.TaxonParent;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
+import java.util.List;
+
 /**
- * Created by ppareja on 7/23/2014.
+ * Created by ppareja on 7/29/2014.
  */
 public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniprotGraph.UniprotVertex<
@@ -32,13 +35,31 @@ public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
 	// relationships
 
+	// organismTaxon
+	// ingoing
+	public List<OrganismTaxon<I, RV, RVT, RE, RET>> organismTaxon_in(){
+		return inMany(graph().OrganismTaxon());
+	}
+	public List<Organism<I, RV, RVT, RE, RET>> organismTaxon_inNodes(){
+		return inManyV(graph().OrganismTaxon());
+	}
+
 	// taxonParent
 	// ingoing
-	public ProteinTaxon<I, RV, RVT, RE, RET> proteinTaxon_in(){
-		return inOne(graph().ProteinTaxon());
+	public List<TaxonParent<I, RV, RVT, RE, RET>> taxonParent_in(){
+		return inMany(graph().TaxonParent());
 	}
-	public Taxon<I, RV, RVT, RE, RET> proteinTaxon_inNode(){
-		return inOneV(graph().ProteinTaxon());
+	public List<Taxon<I, RV, RVT, RE, RET>> taxonParent_inNodes(){
+		return inManyV(graph().TaxonParent());
+	}
+
+	// taxonParent
+	// outgoing
+	public TaxonParent<I, RV, RVT, RE, RET> taxonParent_out(){
+		return outOne(graph().TaxonParent());
+	}
+	public Taxon<I, RV, RVT, RE, RET> taxonParent_outNode(){
+		return outOneV(graph().TaxonParent());
 	}
 
 
