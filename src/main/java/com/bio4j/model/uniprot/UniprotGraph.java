@@ -134,7 +134,7 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinKeywordType ProteinKeyword();
 
-	public abstract ProteinInterproType ProteinOrganism();
+	public abstract ProteinOrganismType ProteinOrganism();
 
 	public abstract ProteinReactomeTermType ProteinReactomeTerm();
 
@@ -1431,6 +1431,42 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class UniGeneType
+			extends
+			UniprotVertexType<
+					UniGene<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.UniGeneType
+					> {
+
+		public final id id = new id();
+
+		protected UniGeneType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public UniGeneType value() {
+			return graph().UniGene();
+		}
+
+		@Override
+		public UniGene<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new UniGene<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<UniGene<I, RV, RVT, RE, RET>, UniGeneType, id, String> {
+			public id() {
+				super(UniGeneType.this.graph().UniGene());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class UnpublishedObservationType
 			extends
 			UniprotVertexType<
@@ -1451,8 +1487,6 @@ public abstract class UniprotGraph<
 		public UnpublishedObservation<I, RV, RVT, RE, RET> from(RV vertex) {
 			return new UnpublishedObservation<I, RV, RVT, RE, RET>(vertex, this);
 		}
-
-
 	}
 
 
@@ -1759,6 +1793,31 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class ProteinOrganismType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinOrganism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinOrganismType,
+					Organism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected ProteinOrganismType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Organism());
+		}
+
+		@Override
+		public ProteinOrganismType value() {
+			return graph().ProteinOrganism();
+		}
+
+		@Override
+		public ProteinOrganism<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinOrganism<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class ProteinReactomeTermType
 			extends
 			UniprotEdgeType<
@@ -1806,6 +1865,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinReference<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinReference<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinUniGeneType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinUniGene<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinUniGeneType,
+					UniGene<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.UniGeneType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinUniGeneType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.UniGene());
+		}
+
+		@Override
+		public ProteinUniGeneType value() {
+			return graph().ProteinUniGene();
+		}
+
+		@Override
+		public ProteinUniGene<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinUniGene<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
