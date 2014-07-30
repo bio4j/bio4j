@@ -115,6 +115,24 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outManyV(graph().ProteinKegg());
 	}
 
+	// proteinPfam
+	// outgoing
+	public List<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_out(){
+		return outMany(graph().ProteinPfam());
+	}
+	public List<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outNodes(){
+		return outManyV(graph().ProteinPfam());
+	}
+
+	// proteinUniGene
+	// outgoing
+	public List<ProteinUniGene<I, RV, RVT, RE, RET>> proteinUniGene_out(){
+		return outMany(graph().ProteinUniGene());
+	}
+	public List<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outNodes(){
+		return outManyV(graph().ProteinUniGene());
+	}
+
 	// enzymaticActivity
 	// outgoing
 	public EnzymaticActivity<I, RV, RVT, RE, RET>   enzymaticActivity_out();

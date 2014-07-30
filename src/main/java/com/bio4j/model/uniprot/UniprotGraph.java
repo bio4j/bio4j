@@ -1302,6 +1302,54 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class RefSeqType
+			extends
+			UniprotVertexType<
+					RefSeq<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.RefSeqType
+					> {
+
+		public final id id = new id();
+		public final nucleotideSequenceId nucleotideSequenceId = new nucleotideSequenceId();
+
+		protected RefSeqType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public RefSeqType value() {
+			return graph().RefSeq();
+		}
+
+		@Override
+		public RefSeq<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new RefSeq<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, id, String> {
+			public id() {
+				super(RefSeqType.this.graph().RefSeq());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class nucleotideSequenceId
+				extends
+				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, nucleotideSequenceId, String> {
+			public nucleotideSequenceId() {
+				super(RefSeqType.this.graph().RefSeq());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class SubmissionType
 			extends
 			UniprotVertexType<
@@ -1896,6 +1944,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinReference<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinReference<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinRefSeqType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinRefSeq<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinRefSeqType,
+					RefSeq<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.RefSeqType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinRefSeqType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.RefSeq());
+		}
+
+		@Override
+		public ProteinRefSeqType value() {
+			return graph().ProteinRefSeq();
+		}
+
+		@Override
+		public ProteinRefSeq<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinRefSeq<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
