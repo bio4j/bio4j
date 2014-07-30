@@ -1,47 +1,47 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
+import com.bio4j.model.uniprot.relationships.BookPublisher;
+import com.ohnosequences.typedGraphs.UntypedGraph;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
-public interface Publisher <
-		N extends Publisher<N, NT>,
-		NT extends UniprotGraph.PublisherType<N, NT>
-		>
-		extends Node<N, NT> {
+public final class Publisher <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends UniprotGraph.UniprotVertex<
+		Publisher<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.PublisherType,
+		I, RV, RVT, RE, RET
+		> {
 
-	public String name();
-
-	// properties
-
-	public static interface name<
-			N extends Publisher<N, NT>,
-			NT extends UniprotGraph.PublisherType<N, NT>,
-			P extends name<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "name";
-		}
-
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public Publisher(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.PublisherType type) {
+		super(vertex, type);
 	}
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+	@Override
+	public Publisher<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 
-// relationships
+	// properties
+	public String name() {
+		return get(type().name);
+	}
 
-// proteinComment
-// ingoing
-//	public List<? extends ProteinComment> proteinComment_in();
-//	public List<? extends Protein> proteinComment_inNodes();
+	//////////////////////////////////////////////////////////////////////////////////////////////
+
+	// relationships
+
+	// bookPublisher
+	// ingoing
+	public List<BookPublisher<I, RV, RVT, RE, RET>> bookPublisher_in(){
+		return inMany(graph().BookPublisher());
+	}
+	public List<Book<I, RV, RVT, RE, RET>> bookPublisher_inNodes(){
+		return inManyV(graph().BookPublisher());
+	}
 
 
 }

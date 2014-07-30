@@ -823,7 +823,7 @@ public abstract class UniprotGraph<
 					UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType
 					> {
 
-		public final title id = new title();
+		public final title title = new title();
 
 		protected OnlineArticleType(RVT raw) {
 			super(raw);
@@ -844,6 +844,66 @@ public abstract class UniprotGraph<
 				UniprotVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
 			public title() {
 				super(OnlineArticleType.this.graph().OnlineArticle());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class OrganismType
+			extends
+			UniprotVertexType<
+					Organism<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.OrganismType
+					> {
+
+		public final scientificName scientificName = new scientificName();
+		public final commonName commonName = new commonName();
+		public final synonymName synonymName = new synonymName();
+
+		protected OrganismType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public OrganismType value() {
+			return graph().Organism();
+		}
+
+		@Override
+		public Organism<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Organism<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class scientificName
+				extends
+				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, scientificName, String> {
+			public scientificName() {
+				super(OrganismType.this.graph().Organism());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class commonName
+				extends
+				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, commonName, String> {
+			public commonName() {
+				super(OrganismType.this.graph().Organism());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class synonymName
+				extends
+				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, synonymName, String> {
+			public synonymName() {
+				super(OrganismType.this.graph().Organism());
 			}
 
 			public Class<String> valueClass() {
@@ -1141,6 +1201,90 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class PublisherType
+			extends
+			UniprotVertexType<
+					Publisher<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PublisherType
+					> {
+
+		public final name name = new name();
+
+		protected PublisherType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PublisherType value() {
+			return graph().Publisher();
+		}
+
+		@Override
+		public Publisher<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Publisher<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Publisher<I, RV, RVT, RE, RET>, PublisherType, name, String> {
+			public name() {
+				super(PublisherType.this.graph().Publisher());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class ReactomeTermType
+			extends
+			UniprotVertexType<
+					ReactomeTerm<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+					> {
+
+		public final id id = new id();
+		public final pathwayName pathwayName = new pathwayName();
+
+		protected ReactomeTermType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ReactomeTermType value() {
+			return graph().ReactomeTerm();
+		}
+
+		@Override
+		public ReactomeTerm<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new ReactomeTerm<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, id, String> {
+			public id() {
+				super(ReactomeTermType.this.graph().ReactomeTerm());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class pathwayName
+				extends
+				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, pathwayName, String> {
+			public pathwayName() {
+				super(ReactomeTermType.this.graph().ReactomeTerm());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class ReferenceType
 			extends
 			UniprotVertexType<
@@ -1250,6 +1394,30 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class UnpublishedObservationType
+			extends
+			UniprotVertexType<
+					UnpublishedObservation<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+					> {
+
+		protected UnpublishedObservationType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public UnpublishedObservationType value() {
+			return graph().UnpublishedObservation();
+		}
+
+		@Override
+		public UnpublishedObservation<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new UnpublishedObservation<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
@@ -1312,7 +1480,7 @@ public abstract class UniprotGraph<
 					City<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CityType
 					>
 			implements
-			TypedEdge.Type.OneToOne {
+			TypedEdge.Type.ManyToOne {
 
 		protected BookCityType(RET raw) {
 			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.City());
@@ -1326,6 +1494,31 @@ public abstract class UniprotGraph<
 		@Override
 		public BookCity<I, RV, RVT, RE, RET> from(RE edge) {
 			return new BookCity<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class BookPublisherType
+			extends
+			UniprotEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
+					BookPublisher<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookPublisherType,
+					Publisher<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PublisherType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected BookPublisherType(RET raw) {
+			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.Publisher());
+		}
+
+		@Override
+		public BookPublisherType value() {
+			return graph().BookPublisher();
+		}
+
+		@Override
+		public BookPublisher<I, RV, RVT, RE, RET> from(RE edge) {
+			return new BookPublisher<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
@@ -1626,6 +1819,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ReferenceThesis<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ReferenceThesis<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceSubmissionType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceSubmission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceSubmissionType,
+					Submission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceSubmissionType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Submission());
+		}
+
+		@Override
+		public ReferenceSubmissionType value() {
+			return graph().ReferenceSubmission();
+		}
+
+		@Override
+		public ReferenceSubmission<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceSubmission<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

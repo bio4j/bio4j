@@ -1,40 +1,38 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.relationships.ArticlePubmed;
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
+import com.bio4j.model.uniprot.relationships.ReferenceUnpublishedObservation;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/23/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public interface UnpublishedObservation <
-		N extends UnpublishedObservation<N, NT>,
-		NT extends UniprotGraph.UnpublishedObservationType<N, NT>
-		>
-		extends Node<N, NT> {
+public final class UnpublishedObservation<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends UniprotGraph.UniprotVertex<
+		UnpublishedObservation<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,
+		I, RV, RVT, RE, RET
+		>  {
 
-	public String date();
-
-	// properties
-
-	public static interface date<
-			N extends UnpublishedObservation<N, NT>,
-			NT extends UniprotGraph.UnpublishedObservationType<N, NT>,
-			P extends date<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "date";
-		}
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public UnpublishedObservation(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType type) {
+		super(vertex, type);
 	}
 
+	@Override
+	public UnpublishedObservation<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
+	// relationships
+
+	// referenceUnpublishedObservation
+	// ingoing
+	public ReferenceUnpublishedObservation<I, RV, RVT, RE, RET> referenceUnpublishedObservation_in(){
+		inOne(graph().ReferenceUnpublishedObservation());
+	}
+	public Reference<I, RV, RVT, RE, RET> referenceUnpublishedObservation_inNode(){
+		inOneV(graph().ReferenceUnpublishedObservation());
+	}
 }

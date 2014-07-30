@@ -3,15 +3,27 @@ package com.bio4j.model.uniprot.relationships;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Reference;
 import com.bio4j.model.uniprot.nodes.UnpublishedObservation;
-import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/24/2014.
+ * Created by ppareja on 7/28/2014.
  */
-public interface ReferenceUnpublishedObservation <
-		S extends Reference<S, ST>, ST extends UniprotGraph.ReferenceType<S, ST>,
-		R extends ReferenceUnpublishedObservation<S, ST, R, RT, T, TT>, RT extends UniprotGraph.ReferenceUnpublishedObservationType<S, ST, R, RT, T, TT>,
-		T extends UnpublishedObservation<T, TT>, TT extends UniprotGraph.UnpublishedObservationType<T, TT>
-		>
-		extends Relationship<S, ST, R, RT, T, TT> {
+public final class ReferenceUnpublishedObservation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends
+		UniprotGraph.UniprotEdge<
+				Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+				ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
+				UnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,
+				I, RV, RVT, RE, RET
+				> {
+
+	public ReferenceUnpublishedObservation(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType type) {
+
+		super(edge, type);
+	}
+
+	@Override
+	public ReferenceUnpublishedObservation<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 }
