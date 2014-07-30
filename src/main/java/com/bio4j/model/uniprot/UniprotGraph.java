@@ -136,6 +136,8 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinOrganismType ProteinOrganism();
 
+	public abstract ProteinPfamType ProteinPfam();
+
 	public abstract ProteinReactomeTermType ProteinReactomeTerm();
 
 	public abstract ProteinSubcellularLocationType ProteinSubcellularLocation();
@@ -962,6 +964,54 @@ public abstract class UniprotGraph<
 
 	}
 
+	public final class PfamType
+			extends
+			UniprotVertexType<
+					Pfam<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PfamType
+					> {
+
+		public final name name = new name();
+		public final id id = new id();
+
+		protected PfamType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PfamType value() {
+			return graph().Pfam();
+		}
+
+		@Override
+		public Pfam<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Pfam<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, name, String> {
+			public name() {
+				super(PfamType.this.graph().Pfam());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, id, String> {
+			public id() {
+				super(PfamType.this.graph().Pfam());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class PubmedType
 			extends
 			UniprotVertexType<
@@ -1129,75 +1179,6 @@ public abstract class UniprotGraph<
 				return Integer.class;
 			}
 		}
-
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// relationships
-		////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		// proteinOrganism
-		// outgoing
-		public ProteinOrganism<I, RV, RVT, RE, RET> proteinOrganism_out();
-		public Organism<I, RV, RVT, RE, RET>  proteinOrganism_outNodes();
-
-		// proteinDataset
-		// outgoing
-		public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_out();
-		public Dataset<I, RV, RVT, RE, RET>  proteinDataset_outNodes();
-
-		// proteinInterpro
-		// outgoing
-		public ProteinInterpro<I, RV, RVT, RE, RET>   proteinIntepro_out();
-		public Interpro<I, RV, RVT, RE, RET>  proteinInterpro_outNodes();
-
-		// proteinReactomeTerm
-		// outgoing
-		public ProteinReactomeTerm<I, RV, RVT, RE, RET>   proteinReactomeTerm_out();
-		public ReactomeTerm<I, RV, RVT, RE, RET>  proteinReactomeTerm_outNodes();
-
-		// proteinKeyword
-		// outgoing
-		public ProteinKeyword<I, RV, RVT, RE, RET>   proteinKeyword_out();
-		public Keyword<I, RV, RVT, RE, RET>  proteinKeyword_outNodes();
-
-		// enzymaticActivity
-		// outgoing
-		public EnzymaticActivity<I, RV, RVT, RE, RET>   enzymaticActivity_out();
-		public Enzyme<I, RV, RVT, RE, RET>   enzymaticActivity_outNodes();
-
-		// uniref50Member
-		// ingoing
-		public UniRef50Member<I, RV, RVT, RE, RET>   uniref50Member_in();
-		public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Member_inNode();
-
-		// uniref50Representant
-		// ingoing
-		public UniRef50Representant<I, RV, RVT, RE, RET>   uniref50Representant_in();
-		public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_inNode();
-
-		// uniref90Member
-		// ingoing
-		public UniRef90Member<I, RV, RVT, RE, RET>   uniref90Member_in();
-		public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Member_inNode();
-
-		// uniref90Representant
-		// ingoing
-		public UniRef90Representant<I, RV, RVT, RE, RET>  uniref90Representant_in();
-		public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Representant_inNode();
-
-		// uniref100Member
-		// ingoing
-		public UniRef100Member<I, RV, RVT, RE, RET>   uniref100Member_in();
-		public UniRef100Cluster<I, RV, RVT, RE, RET>  uniref100Member_inNode();
-
-		// uniref90Representant
-		// ingoing
-		public UniRef100Representant<I, RV, RVT, RE, RET> uniref100Representant_in();
-		public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Representant_inNode();
-
-		// proteinReference
-		// outgoing
-		public ProteinReference<I, RV, RVT, RE, RET> proteinReference_out();
-		public Reference<I, RV, RVT, RE, RET> proteinReference_outNodes();
 
 	}
 
@@ -1618,6 +1599,31 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class ProteinCommentType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinComment<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinCommentType,
+					CommentType<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinCommentType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.CommentType());
+		}
+
+		@Override
+		public ProteinCommentType value() {
+			return graph().ProteinComment();
+		}
+
+		@Override
+		public ProteinComment<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinComment<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class ProteinDatasetType
 			extends
 			UniprotEdgeType<
@@ -1815,6 +1821,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinOrganism<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinOrganism<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinPfamType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinPfam<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPfamType,
+					Pfam<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PfamType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinPfamType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Pfam());
+		}
+
+		@Override
+		public ProteinPfamType value() {
+			return graph().ProteinPfam();
+		}
+
+		@Override
+		public ProteinPfam<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinPfam<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
