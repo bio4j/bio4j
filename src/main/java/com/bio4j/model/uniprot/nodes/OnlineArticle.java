@@ -35,11 +35,11 @@ public final class OnlineArticle <I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 	// relationships
 
 	// referenceOnlineArticle
-	// outgoing
+	// ingoing
 	public ReferenceOnlineArticle<I, RV, RVT, RE, RET> referenceOnlineArticle_in(){
-		outOne(graph().ReferenceOnlineArticle());
+		inOne(graph().ReferenceOnlineArticle());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceOnlineArticle_inNode(){
-		outOneV(graph().ReferenceOnlineArticle());
+		inOneV(graph().ReferenceOnlineArticle());
 	}
 }

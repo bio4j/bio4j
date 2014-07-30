@@ -1,46 +1,46 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
+import com.ohnosequences.typedGraphs.UntypedGraph;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
-public interface Institute <
-		N extends Institute<N, NT>,
-		NT extends UniprotGraph.InstituteType<N, NT>
-		>
-		extends Node<N, NT> {
+public final class Institute <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends UniprotGraph.UniprotVertex<
+		Institute<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.InstituteType,
+		I, RV, RVT, RE, RET
+		> {
 
-	public String name();
+	public Institute(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType type) {
+		super(vertex, type);
+	}
+
+	@Override
+	public Institute<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 
 	// properties
-
-	public static interface name<
-			N extends Institute<N, NT>,
-			NT extends UniprotGraph.InstituteType<N, NT>,
-			P extends name<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "name";
-		}
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public String name() {
+		return get(type().name);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// relationships
 
-	// proteinComment
+	// thesisInstitute
 	// ingoing
-//	public List<? extends ProteinComment> proteinComment_in();
-//	public List<? extends Protein> proteinComment_inNodes();
+	public List<ThesisInstitute<I, RV, RVT, RE, RET>> thesisInstitute_in(){
+		return inMany(graph().ThesisInstitute());
+	}
+	public List<Thesis<I, RV, RVT, RE, RET>> thesisInstitute_inNodes(){
+		return inManyV(graph().ThesisInstitute());
+	}
 
 
 }

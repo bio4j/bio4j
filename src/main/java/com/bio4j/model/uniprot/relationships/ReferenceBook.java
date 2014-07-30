@@ -3,15 +3,27 @@ package com.bio4j.model.uniprot.relationships;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Book;
 import com.bio4j.model.uniprot.nodes.Reference;
-import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/24/2014.
+ * Created by ppareja on 7/28/2014.
  */
-public interface ReferenceBook <
-		S extends Reference<S, ST>, ST extends UniprotGraph.ReferenceType<S, ST>,
-		R extends ReferenceBook<S, ST, R, RT, T, TT>, RT extends UniprotGraph.ReferenceBookType<S, ST, R, RT, T, TT>,
-		T extends Book<T, TT>, TT extends UniprotGraph.BookType<T, TT>
-		>
-		extends Relationship<S, ST, R, RT, T, TT> {
+public final class ReferenceBook <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends
+		UniprotGraph.UniprotEdge<
+				Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+				ReferenceBook<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceBookType,
+				Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
+				I, RV, RVT, RE, RET
+				> {
+
+	public ReferenceBook(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceBookType type) {
+
+		super(edge, type);
+	}
+
+	@Override
+	public ReferenceBook<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 }

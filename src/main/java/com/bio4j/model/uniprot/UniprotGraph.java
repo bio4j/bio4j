@@ -152,6 +152,8 @@ public abstract class UniprotGraph<
 
 	public abstract ReferenceOnlineArticleType ReferenceOnlineArticle();
 
+	public abstract ReferencePatentType ReferencePatent();
+
 	public abstract ReferenceThesisType ReferenceThesis();
 
 	public abstract ReferenceSubmissionType ReferenceSubmission();
@@ -657,6 +659,43 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class InstituteType
+			extends
+			UniprotVertexType<
+					Institute<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.InstituteType
+					> {
+
+		public final name name = new name();
+
+		protected InstituteType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public InstituteType value() {
+			return graph().Institute();
+		}
+
+		@Override
+		public Institute<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Institute<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
+			public name() {
+				super(InstituteType.this.graph().Institute());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 	public final class JournalType
 			extends
 			UniprotVertexType<
@@ -811,6 +850,56 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+	}
+
+	public final class PatentType
+			extends
+			UniprotVertexType<
+					Patent<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PatentType
+					> {
+
+		public final title title = new title();
+		public final number number = new number();
+
+		protected PatentType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PatentType value() {
+			return graph().Patent();
+		}
+
+		@Override
+		public Patent<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Patent<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class title
+				extends
+				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, title, String> {
+			public title() {
+				super(PatentType.this.graph().Patent());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+		public final class number
+				extends
+				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
+			public number() {
+				super(PatentType.this.graph().Patent());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
 	}
 
 	public final class PubmedType
@@ -1124,6 +1213,43 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class ThesisType
+			extends
+			UniprotVertexType<
+					Thesis<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ThesisType
+					> {
+
+		public final title title = new title();
+
+		protected ThesisType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ThesisType value() {
+			return graph().Thesis();
+		}
+
+		@Override
+		public Thesis<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Thesis<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class title
+				extends
+				UniprotVertexProperty<Thesis<I, RV, RVT, RE, RET>, ThesisType, title, String> {
+			public title() {
+				super(ThesisType.this.graph().Thesis());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
@@ -1425,6 +1551,131 @@ public abstract class UniprotGraph<
 		@Override
 		public ReferenceArticle<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ReferenceArticle<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceBookType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceBook<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceBookType,
+					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceBookType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Book());
+		}
+
+		@Override
+		public ReferenceBookType value() {
+			return graph().ReferenceBook();
+		}
+
+		@Override
+		public ReferenceBook<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceBook<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferencePatentType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferencePatent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferencePatentType,
+					Patent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PatentType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferencePatentType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Patent());
+		}
+
+		@Override
+		public ReferencePatentType value() {
+			return graph().ReferencePatent();
+		}
+
+		@Override
+		public ReferencePatent<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferencePatent<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceThesisType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceThesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceThesisType,
+					Thesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceThesisType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Thesis());
+		}
+
+		@Override
+		public ReferenceThesisType value() {
+			return graph().ReferenceThesis();
+		}
+
+		@Override
+		public ReferenceThesis<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceThesis<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceUnpublishedObservationType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
+					UnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceUnpublishedObservationType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.UnpublishedObservation());
+		}
+
+		@Override
+		public ReferenceUnpublishedObservationType value() {
+			return graph().ReferenceUnpublishedObservation();
+		}
+
+		@Override
+		public ReferenceUnpublishedObservation<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceOnlineArticleType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceOnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceOnlineArticleType,
+					OnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+					>
+			implements
+			TypedEdge.Type.OneToOne {
+
+		protected ReferenceOnlineArticleType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.OnlineArticle());
+		}
+
+		@Override
+		public ReferenceOnlineArticleType value() {
+			return graph().ReferenceOnlineArticle();
+		}
+
+		@Override
+		public ReferenceOnlineArticle<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceOnlineArticle<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

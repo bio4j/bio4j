@@ -33,11 +33,11 @@ public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, R
 	// relationships
 
 	//referenceBook
-	// outgoing
+	// ingoing
 	public ReferenceBook<I, RV, RVT, RE, RET> referenceBook_in(){
-		outOne(graph().ReferenceBook());
+		inOne(graph().ReferenceBook());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceBook_inNode(){
-		outOneV(graph().ReferenceBook());
+		inOneV(graph().ReferenceBook());
 	}
 }

@@ -3,15 +3,27 @@ package com.bio4j.model.uniprot.relationships;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Reference;
 import com.bio4j.model.uniprot.nodes.Thesis;
-import com.ohnosequences.typedGraphs.Relationship;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/24/2014.
+ * Created by ppareja on 7/28/2014.
  */
-public interface ReferenceThesis <
-		S extends Reference<S, ST>, ST extends UniprotGraph.ReferenceType<S, ST>,
-		R extends ReferenceThesis<S, ST, R, RT, T, TT>, RT extends UniprotGraph.ReferenceThesisType<S, ST, R, RT, T, TT>,
-		T extends Thesis<T, TT>, TT extends UniprotGraph.ThesisType<T, TT>
-		>
-		extends Relationship<S, ST, R, RT, T, TT> {
+public final class ReferenceThesis <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends
+		UniprotGraph.UniprotEdge<
+				Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+				ReferenceThesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceThesisType,
+				Thesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisType,
+				I, RV, RVT, RE, RET
+				> {
+
+	public ReferenceThesis(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceThesisType type) {
+
+		super(edge, type);
+	}
+
+	@Override
+	public ReferenceThesis<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 }

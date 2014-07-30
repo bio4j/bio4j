@@ -1,86 +1,46 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.ohnosequences.typedGraphs.Node;
-import com.ohnosequences.typedGraphs.Property;
+import com.bio4j.model.uniprot.relationships.ReferencePatent;
+import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
- * Created by ppareja on 7/23/2014.
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public interface Patent<
-		N extends Patent<N, NT>,
-		NT extends UniprotGraph.PatentType<N, NT>
-		>
-		extends Node<N, NT> {
+public final class Patent<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+		extends UniprotGraph.UniprotVertex<
+		Patent<I, RV, RVT, RE, RET>,
+		UniprotGraph<I, RV, RVT, RE, RET>.PatentType,
+		I, RV, RVT, RE, RET
+		>  {
 
-	public String number();
+	public Patent(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.PatentType type) {
+		super(vertex, type);
+	}
 
-	public String title();
-
-	public String date();
-
+	@Override
+	public Patent<I, RV, RVT, RE, RET> self() {
+		return this;
+	}
 
 	// properties
-
-	public static interface number<
-			N extends Patent<N, NT>,
-			NT extends UniprotGraph.PatentType<N, NT>,
-			P extends number<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "number";
-		}
-
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public String title() {
+		return get(type().title);
+	}
+	public String number() {
+		return get(type().number);
 	}
 
-	public static interface title<
-			N extends Patent<N, NT>,
-			NT extends UniprotGraph.PatentType<N, NT>,
-			P extends title<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "title";
-		}
+	//////////////////////////////////////////////////////////////////////////////////////////////
 
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	// relationships
+
+	// referencePatent
+	// ingoing
+	public ReferencePatent<I, RV, RVT, RE, RET> referencePatent_in(){
+		inOne(graph().ReferencePatent());
 	}
-
-	public static interface date<
-			N extends Patent<N, NT>,
-			NT extends UniprotGraph.PatentType<N, NT>,
-			P extends date<N, NT, P>
-			>
-			extends Property<N, NT, P, String> {
-		@Override
-		public default String name() {
-			return "date";
-		}
-
-		@Override
-		public default Class<String> valueClass() {
-			return String.class;
-		}
+	public Reference<I, RV, RVT, RE, RET> referencePatent_inNode(){
+		inOneV(graph().ReferencePatent());
 	}
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-// relationships
-
-// proteinComment
-// ingoing
-//	public List<? extends ProteinComment> proteinComment_in();
-//	public List<? extends Protein> proteinComment_inNodes();
-
-
 }
