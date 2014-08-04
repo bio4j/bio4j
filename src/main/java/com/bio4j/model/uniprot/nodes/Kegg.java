@@ -1,8 +1,6 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.relationships.ProteinDataset;
-import com.bio4j.model.uniprot.relationships.ProteinEMBL;
 import com.bio4j.model.uniprot.relationships.ProteinKegg;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 

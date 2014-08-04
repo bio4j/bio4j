@@ -35,7 +35,7 @@ public abstract class UniprotGraph<
 
 	public abstract CommentTypeType CommentType();
 
-	public abstract ConsortiumType Consortium();
+	//public abstract ConsortiumType Consortium();
 
 	public abstract DatasetType Dataset();
 
@@ -67,7 +67,7 @@ public abstract class UniprotGraph<
 
 	public abstract PatentType Patent();
 
-	public abstract PersonType Person();
+	//public abstract PersonType Person();
 
 	public abstract PfamType Pfam();
 
@@ -85,9 +85,9 @@ public abstract class UniprotGraph<
 
 	public abstract RefSeqType RefSeq();
 
-	public abstract SequenceCautionType SequenceCaution();
+	//public abstract SequenceCautionType SequenceCaution();
 
-	public abstract SubcellularLocationType SubcellularLocation();
+	//public abstract SubcellularLocationType SubcellularLocation();
 
 	public abstract SubmissionType Submission();
 
@@ -114,7 +114,7 @@ public abstract class UniprotGraph<
 
 	public abstract InstituteCountryType InstituteCountry();
 
-	public abstract OnlineArticleJournalType OnlineArticleJournal();
+	public abstract OnlineArticleOnlineJournalType OnlineArticleOnlineJournal();
 
 	public abstract OrganismTaxonType OrganismTaxon();
 
@@ -137,6 +137,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinOrganismType ProteinOrganism();
 
 	public abstract ProteinPfamType ProteinPfam();
+
+	public abstract ProteinPIRType ProteinPIR();
 
 	public abstract ProteinReactomeTermType ProteinReactomeTerm();
 
@@ -854,6 +856,42 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class OnlineJournalType
+			extends
+			UniprotVertexType<
+					OnlineJournal<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+					> {
+
+		public final name name = new name();
+
+		protected OnlineJournalType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public OnlineJournalType value() {
+			return graph().OnlineJournal();
+		}
+
+		@Override
+		public OnlineJournal<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new OnlineJournal<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType, name, String> {
+			public name() {
+				super(OnlineJournalType.this.graph().OnlineJournal());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class OrganismType
 			extends
 			UniprotVertexType<
@@ -1047,6 +1085,43 @@ public abstract class UniprotGraph<
 			}
 		}
 	}
+
+	public final class PIRType
+			extends
+			UniprotVertexType<
+					PIR<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PIRType
+					> {
+
+		public final id id = new id();
+
+		protected PIRType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PIRType value() {
+			return graph().PIR();
+		}
+
+		@Override
+		public PIR<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new PIR<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class id
+				extends
+				UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, id, String> {
+			public id() {
+				super(PIRType.this.graph().PIR());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 
 	public final class ProteinType
 			extends
@@ -1622,6 +1697,56 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class InstituteCountryType
+			extends
+			UniprotEdgeType<
+					Institute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType,
+					InstituteCountry<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
+					Country<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CountryType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected InstituteCountryType(RET raw) {
+			super(UniprotGraph.this.Institute(), raw, UniprotGraph.this.Country());
+		}
+
+		@Override
+		public InstituteCountryType value() {
+			return graph().InstituteCountry();
+		}
+
+		@Override
+		public InstituteCountry<I, RV, RVT, RE, RET> from(RE edge) {
+			return new InstituteCountry<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class OnlineArticleOnlineJournalType
+			extends
+			UniprotEdgeType<
+					OnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType,
+					OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleOnlineJournalType,
+					OnlineJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected OnlineArticleOnlineJournalType(RET raw) {
+			super(UniprotGraph.this.OnlineArticle(), raw, UniprotGraph.this.OnlineJournal());
+		}
+
+		@Override
+		public OnlineArticleOnlineJournalType value() {
+			return graph().OnlineArticleOnlineJournal();
+		}
+
+		@Override
+		public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> from(RE edge) {
+			return new OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class OrganismTaxonType
 			extends
 			UniprotEdgeType<
@@ -1894,6 +2019,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinPfam<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinPfam<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinPIRType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinPIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
+					PIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PIRType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinPIRType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.PIR());
+		}
+
+		@Override
+		public ProteinPIRType value() {
+			return graph().ProteinPIR();
+		}
+
+		@Override
+		public ProteinPIR<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinPIR<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

@@ -2,8 +2,6 @@ package com.bio4j.model.uniprot.relationships;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Article;
-import com.bio4j.model.uniprot.nodes.Book;
-import com.bio4j.model.uniprot.nodes.City;
 import com.bio4j.model.uniprot.nodes.Journal;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
