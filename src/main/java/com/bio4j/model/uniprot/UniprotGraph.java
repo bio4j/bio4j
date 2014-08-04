@@ -1843,7 +1843,7 @@ public abstract class UniprotGraph<
 					Dataset<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DatasetType
 					>
 			implements
-			TypedEdge.Type.OneToOne {
+			TypedEdge.Type.ManyToOne {
 
 		protected ProteinDatasetType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Dataset());
