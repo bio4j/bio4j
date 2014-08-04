@@ -135,38 +135,66 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// enzymaticActivity
 	// outgoing
-	public EnzymaticActivity<I, RV, RVT, RE, RET>   enzymaticActivity_out();
-	public Enzyme<I, RV, RVT, RE, RET>   enzymaticActivity_outNodes();
+	public EnzymaticActivity<I, RV, RVT, RE, RET>   enzymaticActivity_out(){
+
+	}
+	public Enzyme<I, RV, RVT, RE, RET>   enzymaticActivity_outNodes(){
+
+	}
 
 	// uniref50Member
 	// ingoing
-	public UniRef50Member<I, RV, RVT, RE, RET>   uniref50Member_in();
-	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Member_inNode();
+	public UniRef50Member<I, RV, RVT, RE, RET>   uniref50Member_in(){
+
+	}
+	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Member_inNode(){
+
+	}
 
 	// uniref50Representant
 	// ingoing
-	public UniRef50Representant<I, RV, RVT, RE, RET>   uniref50Representant_in();
-	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_inNode();
+	public UniRef50Representant<I, RV, RVT, RE, RET>   uniref50Representant_in(){
+
+	}
+	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_inNode(){
+
+	}
 
 	// uniref90Member
 	// ingoing
-	public UniRef90Member<I, RV, RVT, RE, RET>   uniref90Member_in();
-	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Member_inNode();
+	public UniRef90Member<I, RV, RVT, RE, RET>   uniref90Member_in(){
+
+	}
+	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Member_inNode(){
+
+	}
 
 	// uniref90Representant
 	// ingoing
-	public UniRef90Representant<I, RV, RVT, RE, RET>  uniref90Representant_in();
-	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Representant_inNode();
+	public UniRef90Representant<I, RV, RVT, RE, RET>  uniref90Representant_in(){
+
+	}
+	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Representant_inNode(){
+
+	}
 
 	// uniref100Member
 	// ingoing
-	public UniRef100Member<I, RV, RVT, RE, RET>   uniref100Member_in();
-	public UniRef100Cluster<I, RV, RVT, RE, RET>  uniref100Member_inNode();
+	public UniRef100Member<I, RV, RVT, RE, RET>   uniref100Member_in(){
+
+	}
+	public UniRef100Cluster<I, RV, RVT, RE, RET>  uniref100Member_inNode(){
+
+	}
 
 	// uniref90Representant
 	// ingoing
-	public UniRef100Representant<I, RV, RVT, RE, RET> uniref100Representant_in();
-	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Representant_inNode();
+	public UniRef100Representant<I, RV, RVT, RE, RET> uniref100Representant_in(){
+
+	}
+	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Representant_inNode(){
+		
+	}
 
 	// proteinReference
 	// outgoing

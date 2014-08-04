@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ProteinComment;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
@@ -35,8 +36,12 @@ public final class CommentType <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RV
 
 	// proteinComment
 	// ingoing
-	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_in();
-	public List<Protein<I, RV, RVT, RE, RET>> proteinComment_inNodes();
+	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_in(){
+		return inMany(graph().ProteinComment());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> proteinComment_inNodes(){
+		return inManyV(graph().ProteinComment());
+	}
 
 
 }

@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ThesisInstitute;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
