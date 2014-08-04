@@ -87,7 +87,7 @@ public abstract class UniprotGraph<
 
 	//public abstract SequenceCautionType SequenceCaution();
 
-	//public abstract SubcellularLocationType SubcellularLocation();
+	public abstract SubcellularLocationType SubcellularLocation();
 
 	public abstract SubmissionType Submission();
 
@@ -165,6 +165,8 @@ public abstract class UniprotGraph<
 	public abstract ReferenceUnpublishedObservationType ReferenceUnpublishedObservation();
 
 	public abstract SubmissionDBType SubmissionDB();
+
+	public abstract SubcellularLocationParentType SubcellularLocationParent();
 
 	public abstract TaxonParentType TaxonParent();
 
@@ -1425,6 +1427,42 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class SubcellularLocationType
+			extends
+			UniprotVertexType<
+					SubcellularLocation<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+					> {
+
+		public final name name = new name();
+
+		protected SubcellularLocationType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public SubcellularLocationType value() {
+			return graph().SubcellularLocation();
+		}
+
+		@Override
+		public SubcellularLocation<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new SubcellularLocation<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType, name, String> {
+			public name() {
+				super(SubcellularLocationType.this.graph().SubcellularLocation());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class SubmissionType
 			extends
 			UniprotVertexType<
@@ -2122,6 +2160,31 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class ProteinSubcellularLocationType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinSubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType,
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		protected ProteinSubcellularLocationType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SubcellularLocation());
+		}
+
+		@Override
+		public ProteinSubcellularLocationType value() {
+			return graph().ProteinSubcellularLocation();
+		}
+
+		@Override
+		public ProteinSubcellularLocation<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinSubcellularLocation<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class ProteinUniGeneType
 			extends
 			UniprotEdgeType<
@@ -2319,6 +2382,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ReferenceOnlineArticle<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ReferenceOnlineArticle<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class SubcellularLocationParentType
+			extends
+			UniprotEdgeType<
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
+					SubcellularLocationParent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationParentType,
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		protected SubcellularLocationParentType(RET raw) {
+			super(UniprotGraph.this.SubcellularLocation(), raw, UniprotGraph.this.SubcellularLocation());
+		}
+
+		@Override
+		public SubcellularLocationParentType value() {
+			return graph().SubcellularLocationParent();
+		}
+
+		@Override
+		public SubcellularLocationParent<I, RV, RVT, RE, RET> from(RE edge) {
+			return new SubcellularLocationParent<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
