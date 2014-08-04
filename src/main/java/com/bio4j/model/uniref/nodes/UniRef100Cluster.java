@@ -9,19 +9,19 @@ import java.util.List;
 /**
  * Created by ppareja on 7/23/2014.
  */
-public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class UniRef100Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniRefGraph.UniRefVertex<
-		UniRef50Cluster<I, RV, RVT, RE, RET>,
-		UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
+		UniRef100Cluster<I, RV, RVT, RE, RET>,
+		UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public UniRef50Cluster(RV vertex, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType type) {
+	public UniRef100Cluster(RV vertex, UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType type) {
 		super(vertex, type);
 	}
 
 	@Override
-	public UniRef50Cluster<I, RV, RVT, RE, RET> self() {
+	public UniRef100Cluster<I, RV, RVT, RE, RET> self() {
 		return this;
 	}
 
