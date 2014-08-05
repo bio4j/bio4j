@@ -1,6 +1,9 @@
 package com.bio4j.model.uniref.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef90Member;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef90Representant;
 import com.bio4j.model.uniref.UniRefGraph;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
@@ -33,6 +36,23 @@ public final class UniRef90Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// relationships
+	//uniRef90Representant
+	// ingoing
+	public UniRef90Representant<I, RV, RVT, RE, RET> uniRef90Representant_in(){
+		return inOne(graph().uniprotUniRefGraph().UniRef90Representant());
+	}
+	public Protein<I, RV, RVT, RE, RET> uniRef90Representant_inNode(){
+		return inOneV(graph().uniprotUniRefGraph().UniRef90Representant());
+	}
+
+	//uniRef90Member
+	// ingoing
+	public List<UniRef90Member<I, RV, RVT, RE, RET>> uniRef90Member_in(){
+		return inMany(graph().uniprotUniRefGraph().UniRef90Member());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> uniRef90Member_inNode(){
+		return inManyV(graph().uniprotUniRefGraph().UniRef90Member());
+	}
 
 
 
