@@ -5,13 +5,13 @@ import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.UniRefGraph;
-import com.bio4j.model.uniref.nodes.UniRef50Cluster;
+import com.bio4j.model.uniref.nodes.UniRef90Cluster;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public final class UniRef50Member<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class UniRef90Member<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
 		UniprotUniRefGraph.UniprotUniRefEdge<
 				// src
@@ -19,23 +19,23 @@ public final class UniRef50Member<I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 				UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
 				UniprotGraph<I, RV, RVT, RE, RET>,
 				// edge
-				UniRef50Member<I, RV, RVT, RE, RET>,
-				UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,
+				UniRef90Member<I, RV, RVT, RE, RET>,
+				UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef90MemberType,
 				//tgt
-				UniRef50Cluster<I, RV, RVT, RE, RET>,
-				UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
+				UniRef90Cluster<I, RV, RVT, RE, RET>,
+				UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType,
 				UniRefGraph<I, RV, RVT, RE, RET>,
 				// raw stuff
 				I, RV, RVT, RE, RET
 				> {
 
-	public UniRef50Member(RE edge, UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType type) {
+	public UniRef90Member(RE edge, UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef90MemberType type) {
 
 		super(edge, type);
 	}
 
 	@Override
-	public UniRef50Member<I, RV, RVT, RE, RET> self() {
+	public UniRef90Member<I, RV, RVT, RE, RET> self() {
 		return this;
 	}
 }
