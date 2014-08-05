@@ -25,8 +25,8 @@ public abstract class UniprotGoGraph<
 				I, RV, RVT, RE, RET
 				> {
 
-	public abstract UniprotGraph uniprotGraph();
-	public abstract GoGraph goGraph();
+	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract GoGraph<I, RV, RVT, RE, RET> goGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges
@@ -35,17 +35,31 @@ public abstract class UniprotGoGraph<
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
 	public final class GoAnnotationType
-			extends
-			UniprotGoEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					GoAnnotation<I, RV, RVT, RE, RET>, UniprotGoGraph<I, RV, RVT, RE, RET>.GoAnnotationType,
-					GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType
-					>
-			implements
-			TypedEdge.Type.ManyToMany {
+	extends
+		UniprotGoEdgeType <
+			// src
+			Protein<I, RV, RVT, RE, RET>, 
+			UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			// edge
+			GoAnnotation<I, RV, RVT, RE, RET>, 
+			UniprotGoGraph<I, RV, RVT, RE, RET>.GoAnnotationType,
+			// tgt
+			GoTerm<I, RV, RVT, RE, RET>,
+			GoGraph<I, RV, RVT, RE, RET>.GoTermType,
+			GoGraph<I, RV, RVT, RE, RET>
+		>
+	implements
+		TypedEdge.Type.ManyToMany 
+	{
 
 		protected GoAnnotationType(RET raw) {
-			super(UniprotGraph.Protein(), raw, GoGraph.GoTermType());
+
+			super(
+				UniprotGoGraph.this.uniprotGraph().Protein(), 
+				raw, 
+				UniprotGoGraph.this.goGraph().GoTerm()
+			);
 		}
 
 		@Override
@@ -63,7 +77,7 @@ public abstract class UniprotGoGraph<
 	// helper classes
 
 	public abstract class UniprotGoVertexProperty<
-			V extends TypedVertex<V, VT, I, RV, RVT, RE, RET>,
+			V extends UniprotGoVertex<V, VT, I, RV, RVT, RE, RET>,
 			VT extends UniprotGoGraph<I, RV, RVT, RE, RET>.UniprotGoVertexType<V, VT>,
 			P extends UniprotGoVertexProperty<V, VT, P, PV>,
 			PV
@@ -142,20 +156,26 @@ public abstract class UniprotGoGraph<
 	}
 
 	public abstract static class UniprotGoEdge<
-			S extends TypedVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends TypedGraph<I, RV, RVT, RE, RET>.TypedVertexType<S, ST>,
-			E extends UniprotGoEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends UniprotGoGraph<I, RV, RVT, RE, RET>.UniprotGoEdgeType<S, ST, E, ET, T, TT>,
-			T extends TypedVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends TypedGraph<I, RV, RVT, RE, RET>.TypedVertexType<T, TT>,
-			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
-			TypedEdge<
-					S, ST, UniprotGoGraph<I, RV, RVT, RE, RET>,
-					E, ET, UniprotGoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, UniprotGoGraph<I, RV, RVT, RE, RET>
-					> {
+		// src
+		S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
+		ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
+		SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
+		// edge
+		E extends UniprotGoEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+		ET extends UniprotGoGraph<I, RV, RVT, RE, RET>.UniprotGoEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+		// tgt
+		T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
+		TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
+		TG extends TypedGraph<TG, I, RV, RVT, RE, RET>,
+		I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
+	>
+	implements
+		TypedEdge<
+			S, ST, SG,
+			E, ET, UniprotGoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+			T, TT, TG
+		> 
+	{
 
 		private RE edge;
 		private ET type;
@@ -183,19 +203,25 @@ public abstract class UniprotGoGraph<
 	}
 
 	abstract class UniprotGoEdgeType<
-			S extends TypedVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends TypedGraph<I, RV, RVT, RE, RET>.TypedVertexType<S, ST>,
-			E extends UniprotGoEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends UniprotGoGraph<I, RV, RVT, RE, RET>.UniprotGoEdgeType<S, ST, E, ET, T, TT>,
-			T extends TypedVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends TypedGraph<I, RV, RVT, RE, RET>.TypedVertexType<T, TT>
-			>
-			implements
-			TypedEdge.Type<
-					S, ST, UniprotGoGraph<I, RV, RVT, RE, RET>,
-					E, ET, UniprotGoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, UniprotGoGraph<I, RV, RVT, RE, RET>
-					> {
+		// src
+		S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
+		ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
+		SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
+		// edge
+		E extends UniprotGoEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+		ET extends UniprotGoGraph<I, RV, RVT, RE, RET>.UniprotGoEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+		// tgt
+		T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
+		TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
+		TG extends TypedGraph<TG, I, RV, RVT, RE, RET>
+	>
+	implements
+		TypedEdge.Type<
+			S, ST, SG,
+			E, ET, UniprotGoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+			T, TT, TG
+		>
+	{
 
 		private RET raw;
 		private ST srcT;
