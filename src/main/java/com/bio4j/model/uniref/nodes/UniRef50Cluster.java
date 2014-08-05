@@ -1,6 +1,9 @@
 package com.bio4j.model.uniref.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef50Member;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef50Representant;
 import com.bio4j.model.uniref.UniRefGraph;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
@@ -33,7 +36,23 @@ public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// relationships
+	//uniRef50Representant
+	// ingoing
+	public UniRef50Representant<I, RV, RVT, RE, RET> uniRef50Representant_in(){
+		return inOne(graph().uniprotUniRefGraph().UniRef50Representant());
+	}
+	public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inNode(){
+		return inOneV(graph().uniprotUniRefGraph().UniRef50Representant());
+	}
 
+	//uniRef50Member
+	// ingoing
+	public List<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
+		return inMany(graph().uniprotUniRefGraph().UniRef50Member());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inNode(){
+		return inManyV(graph().uniprotUniRefGraph().UniRef50Member());
+	}
 
 
 

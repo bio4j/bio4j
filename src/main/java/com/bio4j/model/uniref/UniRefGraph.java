@@ -2,6 +2,7 @@ package com.bio4j.model.uniref;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.nodes.UniRef100Cluster;
 import com.bio4j.model.uniref.nodes.UniRef50Cluster;
 import com.bio4j.model.uniref.nodes.UniRef90Cluster;
@@ -23,6 +24,8 @@ public abstract class UniRefGraph<
 				UniRefGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
+
+	public abstract UniprotUniRefGraph uniprotUniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types
