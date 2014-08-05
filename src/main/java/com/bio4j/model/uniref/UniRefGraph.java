@@ -34,10 +34,7 @@ public abstract class UniRefGraph<
 
 	public abstract UniRef100ClusterType UniRef100Cluster();
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// edges
 
-	public abstract UniRef50MemberType UniRef50Member();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Vertex types
@@ -154,32 +151,7 @@ public abstract class UniRefGraph<
 
 	}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Edge types
-	public final class UniRef50MemberType
-			extends
-			UniRefEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniRef50Member<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,
-					UniRef50Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType
-					>
-			implements
-			TypedEdge.Type.ManyToOne {
 
-		protected UniRef50MemberType(RET raw) {
-			super(UniprotGraph.Protein(), raw, UniRefGraph.this.UniRef50Cluster());
-		}
-
-		@Override
-		public UniRef50MemberType value() {
-			return graph().UniRef50Member();
-		}
-
-		@Override
-		public UniRef50Member<I, RV, RVT, RE, RET> from(RE edge) {
-			return new UniRef50Member<I, RV, RVT, RE, RET>(edge, this);
-		}
-	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes

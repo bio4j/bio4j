@@ -1,4 +1,4 @@
-package com.bio4j.model.uniref.relationships;
+package com.bio4j.model.uniprot_uniref.relationships;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
@@ -11,14 +11,14 @@ import com.ohnosequences.typedGraphs.UntypedGraph;
  */
 public final class UniRef50Member<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniRefGraph.UniRefEdge<
+		UniprotUniRefGraph.UniprotUniRefEdge<
 				Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-				UniRef50Member<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,
+				UniRef50Member<I, RV, RVT, RE, RET>, UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,
 				UniRef50Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
 				I, RV, RVT, RE, RET
 				> {
 
-	public UniRef50Member(RE edge, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType type) {
+	public UniRef50Member(RE edge, UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType type) {
 
 		super(edge, type);
 	}
