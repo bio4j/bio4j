@@ -35,7 +35,7 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 		return get(type().officialName);
 	}
 
-	public String alternateNames() {
+	public String[] alternateNames() {
 		return get(type().alternateNames);
 	}
 
@@ -47,7 +47,7 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 		return get(type().catalyticActivity);
 	}
 
-	public String prositeCrossReferences() {
+	public String[] prositeCrossReferences() {
 		return get(type().prositeCrossReferences);
 	}
 
