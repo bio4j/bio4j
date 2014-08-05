@@ -25,6 +25,9 @@ public abstract class UniprotUniRefGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+	public UniprotGraph uniprotGraph;
+	public UniRefGraph uniRefGraph;
+
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges
 
@@ -43,7 +46,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.ManyToOne {
 
 		protected UniRef50MemberType(RET raw) {
-			super(UniprotGraph.Protein(), raw, UniRefGraph.this.UniRef50Cluster());
+			super(UniprotGraph.Protein(), raw, uniRefGraph.UniRef50Cluster());
 		}
 
 		@Override
