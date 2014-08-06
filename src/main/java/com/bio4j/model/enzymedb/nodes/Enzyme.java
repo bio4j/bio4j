@@ -2,6 +2,8 @@ package com.bio4j.model.enzymedb.nodes;
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.go.relationships.*;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
@@ -52,6 +54,11 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	}
 
 
+
+	//-----enzymaticActivity----
+	// ingoing
+	public List<EnzymaticActivity<I, RV, RVT, RE, RET>> enzymaticActivity_in(){   return inMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
+	public List<Protein<I, RV, RVT, RE, RET>> enzymaticActivity_inV(){   return inManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
 
 
 }

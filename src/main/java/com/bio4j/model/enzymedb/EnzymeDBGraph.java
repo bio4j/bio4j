@@ -1,6 +1,7 @@
 package com.bio4j.model.enzymedb;
 
 import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.ohnosequences.typedGraphs.*;
 
 /**
@@ -19,6 +20,9 @@ public abstract class EnzymeDBGraph<
 				EnzymeDBGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
+
+
+	public abstract UniprotEnzymeDBGraph uniprotEnzymeDBGraph();
 
 	// types
 	// vertices
