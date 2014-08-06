@@ -3,19 +3,6 @@ package com.bio4j.titan.programs;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.nodes.SubOntologies;
-import com.bio4j.titan.model.go.TitanGoGraphImpl;
-import com.bio4j.titan.model.go.nodes.TitanGoTerm;
-import com.bio4j.titan.model.go.nodes.TitanSubOntologies;
-import com.ohnosequences.typedGraphs.TypedGraph;
-import com.ohnosequences.util.Executable;
-import com.ohnosequences.xml.api.model.XMLElement;
-import com.thinkaurelius.titan.core.TitanFactory;
-import com.thinkaurelius.titan.core.TitanGraph;
-import com.tinkerpop.blueprints.Vertex;
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
-import org.jdom2.Element;
-
 import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;

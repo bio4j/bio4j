@@ -8,7 +8,10 @@ name := "bio4j"
 
 description := "Bio4j abstract model"
 
-libraryDependencies += "ohnosequences" % "typed-graphs" % "0.3.0-SNAPSHOT"
+libraryDependencies ++= Seq(
+  "ohnosequences" % "typed-graphs" % "0.3.0-SNAPSHOT",
+  "ohnosequences" % "bioinfo-util" % "1.4.0-SNAPSHOT"
+)
 
 bucketSuffix := "era7.com"
 
