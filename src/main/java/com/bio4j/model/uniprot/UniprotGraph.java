@@ -2,6 +2,10 @@ package com.bio4j.model.uniprot;
 
 import com.bio4j.model.uniprot.nodes.*;
 import com.bio4j.model.uniprot.relationships.*;
+import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
+import com.bio4j.model.uniprot_go.UniprotGoGraph;
+import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
+import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.ohnosequences.typedGraphs.*;
 
 import java.util.Date;
@@ -22,6 +26,12 @@ public abstract class UniprotGraph<
 				UniprotGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
+
+
+	public abstract UniprotUniRefGraph uniprotUniRefGraph();
+	public abstract UniprotGoGraph uniprotGoGraph();
+	public abstract UniprotEnzymeDBGraph uniprotEnzymeDBGraph();
+	public abstract UniprotNCBITaxonomyGraph uniprotNCBITaxonomyGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types
