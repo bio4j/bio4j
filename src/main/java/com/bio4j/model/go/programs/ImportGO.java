@@ -2,6 +2,7 @@
 package com.bio4j.titan.programs;
 
 import com.bio4j.model.go.GoGraph;
+import com.bio4j.model.go.nodes.SubOntologies;
 import com.bio4j.titan.model.go.TitanGoGraphImpl;
 import com.bio4j.titan.model.go.nodes.TitanGoTerm;
 import com.bio4j.titan.model.go.nodes.TitanSubOntologies;
@@ -95,12 +96,11 @@ public abstract class ImportGO {
 
 				logger.log(Level.INFO, "inserting subontologies nodes....");
 				//---biological process---
-				
-				TitanSubOntologies subOntologiesBP = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
+				SubOntologies subOntologiesBP = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
 				subOntologiesBP.set(graph.subOntologiesT.name, "biological_process");
-				TitanSubOntologies subOntologiesCC = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
+				SubOntologies subOntologiesCC = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
 				subOntologiesCC.set(graph.subOntologiesT.name, "cellular_component");
-				TitanSubOntologies subOntologiesMM = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
+				SubOntologies subOntologiesMM = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
 				subOntologiesMM.set(graph.subOntologiesT.name, "molecular_function");
 
 				logger.log(Level.INFO, "inserting term nodes....");
