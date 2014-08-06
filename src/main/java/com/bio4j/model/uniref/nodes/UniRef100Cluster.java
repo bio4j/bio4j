@@ -2,6 +2,7 @@ package com.bio4j.model.uniref.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_uniref.relationships.UniRef100Member;
 import com.bio4j.model.uniprot_uniref.relationships.UniRef100Representant;
 import com.bio4j.model.uniref.UniRefGraph;
 import com.ohnosequences.typedGraphs.UntypedGraph;

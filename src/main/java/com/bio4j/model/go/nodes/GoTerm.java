@@ -2,6 +2,8 @@ package com.bio4j.model.go.nodes;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.relationships.*;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
@@ -145,6 +147,10 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	public SubOntologies<I, RV, RVT, RE, RET> subontoloty_outV(){
 		return outOneV(graph().SubOntology());
 	}
+
+	//-----goAnnotation----
+	public List<GoAnnotation<I, RV, RVT, RE, RET>> goAnnotation_in(){   return inMany(graph().uniprotGoGraph().GoAnnotation());}
+	public List<Protein<I, RV, RVT, RE, RET>> goAnnotation_inV(){   return inManyV(graph().uniprotGoGraph().GoAnnotation());}
 
 
 

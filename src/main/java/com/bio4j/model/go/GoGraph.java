@@ -4,6 +4,7 @@ import com.bio4j.model.go.nodes.GoSlims;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.nodes.SubOntologies;
 import com.bio4j.model.go.relationships.*;
+import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.ohnosequences.typedGraphs.*;
 
 /*
@@ -77,6 +78,9 @@ public abstract class GoGraph<
 				GoGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
+
+
+	public abstract UniprotGoGraph uniprotGoGraph();
 
 	// types
 	// vertices
