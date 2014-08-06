@@ -80,7 +80,7 @@ public abstract class GoGraph<
 				> {
 
 
-	public abstract UniprotGoGraph uniprotGoGraph();
+	public abstract UniprotGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
 
 	// types
 	// vertices

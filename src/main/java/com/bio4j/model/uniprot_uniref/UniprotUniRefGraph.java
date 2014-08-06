@@ -27,8 +27,8 @@ public abstract class UniprotUniRefGraph<
 				I, RV, RVT, RE, RET
 				> {
 
-	public abstract UniprotGraph uniprotGraph();
-	public abstract UniRefGraph uniRefGraph();
+	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniRefGraph<I, RV, RVT, RE, RET> uniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges

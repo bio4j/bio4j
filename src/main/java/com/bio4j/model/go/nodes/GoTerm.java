@@ -149,7 +149,10 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	}
 
 	//-----goAnnotation----
-	public List<GoAnnotation<I, RV, RVT, RE, RET>> goAnnotation_in(){   return inMany(graph().uniprotGoGraph().GoAnnotation());}
+	public List<GoAnnotation<I, RV, RVT, RE, RET>> goAnnotation_in() {   
+
+		return inMany( graph().uniprotGoGraph().GoAnnotation() );
+	}
 	public List<Protein<I, RV, RVT, RE, RET>> goAnnotation_inV(){   return inManyV(graph().uniprotGoGraph().GoAnnotation());}
 
 

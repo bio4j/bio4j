@@ -22,7 +22,7 @@ public abstract class EnzymeDBGraph<
 				> {
 
 
-	public abstract UniprotEnzymeDBGraph uniprotEnzymeDBGraph();
+	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
 
 	// types
 	// vertices

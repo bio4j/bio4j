@@ -25,7 +25,7 @@ public abstract class UniRefGraph<
 				I, RV, RVT, RE, RET
 				> {
 
-	public abstract UniprotUniRefGraph uniprotUniRefGraph();
+	public abstract UniprotUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types
