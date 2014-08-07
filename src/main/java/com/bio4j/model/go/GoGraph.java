@@ -82,6 +82,9 @@ public abstract class GoGraph<
 
 	public abstract UniprotGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
 
+	// indices
+	public abstract TypedVertexIndex<N,NT, P, V, G, I, RV, RVT, RE, RET>  goTermIdIndex();
+
 	// types
 	// vertices
 	public abstract GoSlimsType GoSlims();
