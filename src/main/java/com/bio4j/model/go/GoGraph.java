@@ -83,8 +83,24 @@ public abstract class GoGraph<
 	public abstract UniprotGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
 
 	// indices
-	public abstract TypedVertexIndex<GoTerm<I, RV, RVT, RE, RET>,GoTermType, GoTermType.id, String, GoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET>  goTermIdIndex();
-	public abstract TypedVertexIndex<SubOntologies<I, RV, RVT, RE, RET>,SubOntologiesType, SubOntologiesType.name, String, GoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET>  subontologiesNameIndex();
+	public abstract TypedVertexIndex.Unique <
+		// vertex
+		GoTerm<I, RV, RVT, RE, RET>, GoTermType, 
+		// property
+		GoTermType.id, String, 
+		// graph
+		GoGraph<I, RV, RVT, RE, RET>, 
+		I, RV, RVT, RE, RET
+	>  
+	goTermIdIndex();
+
+	public abstract TypedVertexIndex.Unique <
+		SubOntologies<I, RV, RVT, RE, RET>, SubOntologiesType,
+		SubOntologiesType.name, String, 
+		GoGraph<I, RV, RVT, RE, RET>, 
+		I, RV, RVT, RE, RET
+	>
+	subontologiesNameIndex();
 
 
 	// types
@@ -217,6 +233,8 @@ public abstract class GoGraph<
 					SubOntologies<I, RV, RVT, RE, RET>,
 					GoGraph<I, RV, RVT, RE, RET>.SubOntologiesType
 					> {
+
+		public final name name = new name();
 
 		protected SubOntologiesType(RVT raw) {
 			super(raw);

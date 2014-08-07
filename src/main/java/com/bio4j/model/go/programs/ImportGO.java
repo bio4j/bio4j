@@ -7,6 +7,8 @@ import com.bio4j.model.go.nodes.SubOntologies;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
+import com.ohnosequences.typedGraphs.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
@@ -17,8 +19,9 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportGO {
+public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
+	// XML constants
 	public static final String TERM_TAG_NAME = "term";
 	public static final String ID_TAG_NAME = "id";
 	public static final String NAME_TAG_NAME = "name";
@@ -41,7 +44,7 @@ public abstract class ImportGO {
 	private static FileHandler fh;
 
 
-	protected abstract GoGraph config();
+	protected abstract GoGraph<I,RV,RVT,RE,RET> config();
 
 	protected void importGO(String[] args){
 		if (args.length != 2) {
@@ -59,7 +62,7 @@ public abstract class ImportGO {
 
 			BufferedWriter statsBuff = null;
 
-			GoGraph goGraph = config();
+			GoGraph<I,RV,RVT,RE,RET> goGraph = config();
 
 			try {
 
@@ -87,12 +90,20 @@ public abstract class ImportGO {
 
 				logger.log(Level.INFO, "inserting subontologies nodes....");
 				//---biological process---
-				SubOntologies subOntologiesBP = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
-				subOntologiesBP.set(graph.subOntologiesT.name, "biological_process");
-				SubOntologies subOntologiesCC = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
-				subOntologiesCC.set(graph.subOntologiesT.name, "cellular_component");
-				SubOntologies subOntologiesMM = graph.subOntologiesT.from(graph.rawGraph().addVertex(null));
-				subOntologiesMM.set(graph.subOntologiesT.name, "molecular_function");
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.SubOntologies().from(
+					goGraph.raw().addVertex(null)
+				);
+				subOntologiesBP.set(goGraph.SubOntologies().name, "biological_process");
+
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.SubOntologies().from(
+					goGraph.raw().addVertex(null)
+				);
+				subOntologiesCC.set(goGraph.SubOntologies().name, "cellular_component");
+
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesMM = goGraph.SubOntologies().from(
+					goGraph.raw().addVertex(goGraph.SubOntologies().raw())
+				);
+				subOntologiesMM.set(goGraph.SubOntologies().name, "molecular_function");
 
 				logger.log(Level.INFO, "inserting term nodes....");
 
@@ -210,7 +221,9 @@ public abstract class ImportGO {
 						//-------------------------------------
 
 
-						GoTerm term = goGraph.GoTerm().from(goGraph.raw().addVertex(goGraph.GoTerm()));
+						GoTerm<I,RV,RVT,RE,RET> term = goGraph.GoTerm().from(
+							goGraph.raw().addVertex( goGraph.GoTerm().raw() )
+						);
 
 						term.set(goGraph.GoTerm().id, goId);
 						term.set(goGraph.GoTerm().name, goName);
@@ -223,9 +236,9 @@ public abstract class ImportGO {
 
 						//----namespace---
 
-						GoTerm tempGoTerm = goGraph.goTermIdIndex().getVertex(goId).get();
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(goId);
 						//SubOntologies subOntologies = goGraph.
-						TitanSubOntologies titanSubontologies = graph.subOntologiesNameIndex.getNode(goNamespace).get();
+						SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subOntologiesNameIndex.getVertex(goNamespace);
 						tempGoTerm.addOut(graph.subOntologyT, titanSubontologies);
 
 
