@@ -2,6 +2,7 @@
 package com.bio4j.model.go.programs;
 
 import com.bio4j.model.go.GoGraph;
+import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.nodes.SubOntologies;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
@@ -141,12 +142,6 @@ public abstract class ImportGO {
 							}
 						}
 
-//                         List<Element> altIdElems = termXMLElement.asJDomElement().getChildren("alt_id");
-//                         String[] alternativeIds = new String[altIdElems.size()];
-//                         for (int i = 0; i < altIdElems.size(); i++) {
-//                             alternativeIds[i] = altIdElems.get(i).getText();
-//                         }
-
 
 						//----term parents----
 						List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_OBOXML_RELATIONSHIP_NAME);
@@ -216,14 +211,16 @@ public abstract class ImportGO {
 
 						TitanGoTerm term = graph.goTermT.from(graph.rawGraph().addVertex(null));
 
-						term.set(graph.goTermT.id, goId);
-						term.set(graph.goTermT.name, goName);
-						term.set(graph.goTermT.definition, goDefinition);
-						term.set(graph.goTermT.obsolete, goIsObsolete);
-						term.set(graph.goTermT.comment, goComment);
+						GoTerm term = null;
+
+						term.set(goGraph.GoTerm().id, goId);
+						term.set(goGraph.GoTerm().name, goName);
+						term.set(goGraph.GoTerm().definition, goDefinition);
+						//term.set(goGraph.GoTerm().obso, goIsObsolete);
+						term.set(goGraph.GoTerm().comment, goComment);
 						//----------------------
 
-						g.commit();
+						//g.commit();
 
 						//----namespace---
 						TitanGoTerm tempGoTerm = graph.goTermIdIndex.getNode(goId).get();
