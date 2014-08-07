@@ -209,9 +209,8 @@ public abstract class ImportGO {
 						}
 						//-------------------------------------
 
-						TitanGoTerm term = graph.goTermT.from(graph.rawGraph().addVertex(null));
 
-						GoTerm term = null;
+						GoTerm term = goGraph.GoTerm().from(goGraph.raw().addVertex(goGraph.GoTerm()));
 
 						term.set(goGraph.GoTerm().id, goId);
 						term.set(goGraph.GoTerm().name, goName);
@@ -223,6 +222,7 @@ public abstract class ImportGO {
 						//g.commit();
 
 						//----namespace---
+
 						TitanGoTerm tempGoTerm = graph.goTermIdIndex.getNode(goId).get();
 						TitanSubOntologies titanSubontologies = graph.subOntologiesNameIndex.getNode(goNamespace).get();
 						tempGoTerm.addOut(graph.subOntologyT, titanSubontologies);
@@ -237,7 +237,7 @@ public abstract class ImportGO {
 				reader.close();
 
 				//----committing transaction---
-				graph.rawGraph().commit();
+				goGraph.raw().commit();
 
 				//-----------------------------------------------------------------------
 
