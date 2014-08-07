@@ -83,7 +83,7 @@ public abstract class GoGraph<
 	public abstract UniprotGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
 
 	// indices
-	public abstract TypedVertexIndex<N,NT, P, V, G, I, RV, RVT, RE, RET>  goTermIdIndex();
+	public abstract TypedVertexIndex<GoTerm<I, RV, RVT, RE, RET>,GoTermType, GoTermType.id, String, GoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET>  goTermIdIndex();
 
 	// types
 	// vertices
