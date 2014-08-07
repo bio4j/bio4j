@@ -1,8 +1,11 @@
 
-package com.bio4j.titan.programs;
+package com.bio4j.model.go.programs;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.nodes.SubOntologies;
+import com.ohnosequences.xml.api.model.XMLElement;
+import org.jdom2.Element;
+
 import java.io.*;
 import java.util.*;
 import java.util.logging.FileHandler;
@@ -67,7 +70,7 @@ public abstract class ImportGO {
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportGeneOntologyBPStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportGOStats.txt")));
 
 				Map<String, ArrayList<String>> termParentsMap = new HashMap<>();
 				Map<String, ArrayList<String>> regulatesMap = new HashMap<>();
