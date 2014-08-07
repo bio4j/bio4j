@@ -84,6 +84,8 @@ public abstract class GoGraph<
 
 	// indices
 	public abstract TypedVertexIndex<GoTerm<I, RV, RVT, RE, RET>,GoTermType, GoTermType.id, String, GoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET>  goTermIdIndex();
+	public abstract TypedVertexIndex<SubOntologies<I, RV, RVT, RE, RET>,SubOntologiesType, SubOntologiesType.name, String, GoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET>  subontologiesNameIndex();
+
 
 	// types
 	// vertices
@@ -228,6 +230,18 @@ public abstract class GoGraph<
 		@Override
 		public SubOntologies<I, RV, RVT, RE, RET> from(RV vertex) {
 			return new SubOntologies<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				GoVertexProperty<SubOntologies<I, RV, RVT, RE, RET>, SubOntologiesType, name, String> {
+			public name() {
+				super(SubOntologiesType.this.graph().SubOntologies());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 

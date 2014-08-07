@@ -224,6 +224,7 @@ public abstract class ImportGO {
 						//----namespace---
 
 						GoTerm tempGoTerm = goGraph.goTermIdIndex().getVertex(goId).get();
+						//SubOntologies subOntologies = goGraph.
 						TitanSubOntologies titanSubontologies = graph.subOntologiesNameIndex.getNode(goNamespace).get();
 						tempGoTerm.addOut(graph.subOntologyT, titanSubontologies);
 
