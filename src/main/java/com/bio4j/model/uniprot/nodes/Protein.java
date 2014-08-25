@@ -142,10 +142,10 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	// enzymaticActivity
 	// outgoing
 	public List<EnzymaticActivity<I, RV, RVT, RE, RET>>   enzymaticActivity_out(){
-
+        return outMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
 	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outNodes(){
-
+        return outManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
 
 	// uniref50Member

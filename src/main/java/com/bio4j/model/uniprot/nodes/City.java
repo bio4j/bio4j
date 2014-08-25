@@ -4,6 +4,8 @@ import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.BookCity;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
+import java.util.List;
+
 /**
  * Created by ppareja on 7/23/2014.
  */
@@ -34,8 +36,12 @@ public final class City <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, 
 
 	// bookCity
 	// ingoing
-	public BookCity<I, RV, RVT, RE, RET> bookCity_in();
-	public Book<I, RV, RVT, RE, RET> bookCity_inNode();
+	public List<BookCity<I, RV, RVT, RE, RET>> bookCity_in(){
+        return inMany(graph().BookCity());
+    }
+	public List<Book<I, RV, RVT, RE, RET>> bookCity_inNode(){
+        return inManyV(graph().BookCity());
+    }
 
 
 }

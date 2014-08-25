@@ -28,10 +28,10 @@ public abstract class UniprotGraph<
 				> {
 
 
-	public abstract UniprotUniRefGraph uniprotUniRefGraph();
-	public abstract UniprotGoGraph uniprotGoGraph();
-	public abstract UniprotEnzymeDBGraph uniprotEnzymeDBGraph();
-	public abstract UniprotNCBITaxonomyGraph uniprotNCBITaxonomyGraph();
+	public abstract UniprotUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
+	public abstract UniprotGoGraph<I, RV, RVT, RE, RET> uniprotGoGraph();
+	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types

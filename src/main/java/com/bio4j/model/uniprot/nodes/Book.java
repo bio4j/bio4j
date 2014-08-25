@@ -35,9 +35,9 @@ public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, R
 	//referenceBook
 	// ingoing
 	public ReferenceBook<I, RV, RVT, RE, RET> referenceBook_in(){
-		inOne(graph().ReferenceBook());
+		return inOne(graph().ReferenceBook());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceBook_inNode(){
-		inOneV(graph().ReferenceBook());
+		return inOneV(graph().ReferenceBook());
 	}
 }

@@ -38,9 +38,9 @@ public final class Patent<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	// referencePatent
 	// ingoing
 	public ReferencePatent<I, RV, RVT, RE, RET> referencePatent_in(){
-		inOne(graph().ReferencePatent());
+		return inOne(graph().ReferencePatent());
 	}
 	public Reference<I, RV, RVT, RE, RET> referencePatent_inNode(){
-		inOneV(graph().ReferencePatent());
+		return inOneV(graph().ReferencePatent());
 	}
 }

@@ -42,17 +42,17 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	// articlePubmed
 	// outgoing
 	public ArticlePubmed<I, RV, RVT, RE, RET>  articlePubmed_out(){
-		outOne(graph().ArticlePubmed());
+		return outOne(graph().ArticlePubmed());
 	}
 	public Pubmed<I, RV, RVT, RE, RET> articlePubmed_outNode(){
-		outOneV(graph().ArticlePubmed());
+		return outOneV(graph().ArticlePubmed());
 	}
 	// referenceArticle
 	// ingoing
 	public ReferenceArticle<I, RV, RVT, RE, RET> referenceArticle_in(){
-		inOne(graph().ReferenceArticle());
+		return inOne(graph().ReferenceArticle());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceArticle_inNode(){
-		inOne(graph().ReferenceArticle());
+		return inOneV(graph().ReferenceArticle());
 	}
 }

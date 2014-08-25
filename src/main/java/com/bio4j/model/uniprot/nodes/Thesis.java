@@ -35,9 +35,9 @@ public final class Thesis<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	// referenceThesis
 	// ingoing
 	public ReferenceThesis<I, RV, RVT, RE, RET> referenceThesis_in(){
-		inOne(graph().ReferenceThesis());
+		return inOne(graph().ReferenceThesis());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceThesis_inNode(){
-		inOneV(graph().ReferenceThesis());
+        return inOneV(graph().ReferenceThesis());
 	}
 }

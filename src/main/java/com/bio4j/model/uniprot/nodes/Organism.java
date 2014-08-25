@@ -44,10 +44,10 @@ public final class Organism <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 	// organismTaxon
 	// outgoing
 	public OrganismTaxon<I, RV, RVT, RE, RET> organismTaxon_out(){
-		return inMany(graph().OrganismTaxon());
+		return outOne(graph().OrganismTaxon());
 	}
 	public Taxon<I, RV, RVT, RE, RET> organismTaxon_outNode(){
-		return inManyV(graph().OrganismTaxon());
+		return outOneV(graph().OrganismTaxon());
 	}
 
 	// proteinOrganism

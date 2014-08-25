@@ -37,9 +37,9 @@ public final class OnlineArticle <I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 	// referenceOnlineArticle
 	// ingoing
 	public ReferenceOnlineArticle<I, RV, RVT, RE, RET> referenceOnlineArticle_in(){
-		inOne(graph().ReferenceOnlineArticle());
+		return inOne(graph().ReferenceOnlineArticle());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceOnlineArticle_inNode(){
-		inOneV(graph().ReferenceOnlineArticle());
+		return inOneV(graph().ReferenceOnlineArticle());
 	}
 }

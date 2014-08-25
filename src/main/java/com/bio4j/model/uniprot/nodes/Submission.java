@@ -37,9 +37,9 @@ public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
 	// submissionDB
 	// outgoing
 	public SubmissionDB<I, RV, RVT, RE, RET> submissionDB_out(){
-		outOne(graph().SubmissionDB());
+		return outOne(graph().SubmissionDB());
 	}
 	public DB<I, RV, RVT, RE, RET> submissionDB_outNode(){
-		outOneV(graph().SubmissionDB());
+		return outOneV(graph().SubmissionDB());
 	}
 }

@@ -30,9 +30,9 @@ public final class UnpublishedObservation<I extends UntypedGraph<RV, RVT, RE, RE
 	// referenceUnpublishedObservation
 	// ingoing
 	public ReferenceUnpublishedObservation<I, RV, RVT, RE, RET> referenceUnpublishedObservation_in(){
-		inOne(graph().ReferenceUnpublishedObservation());
+        return inOne(graph().ReferenceUnpublishedObservation());
 	}
 	public Reference<I, RV, RVT, RE, RET> referenceUnpublishedObservation_inNode(){
-		inOneV(graph().ReferenceUnpublishedObservation());
+        return inOneV(graph().ReferenceUnpublishedObservation());
 	}
 }
