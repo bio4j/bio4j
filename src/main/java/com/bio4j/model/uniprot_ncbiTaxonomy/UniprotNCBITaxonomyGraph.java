@@ -4,6 +4,7 @@ import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_go.relationships.ProteinNCBITaxon;
 import com.ohnosequences.typedGraphs.*;
 
 /**
@@ -40,7 +41,7 @@ public abstract class UniprotNCBITaxonomyGraph<
 					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
 					UniprotGraph<I, RV, RVT, RE, RET>,
 					// edge
-					ProteinNCBITaxon<I, RV, RVT, RE, RET>,
+                    ProteinNCBITaxon<I, RV, RVT, RE, RET>,
 					UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.ProteinNCBITaxonType,
 					// tgt
 					NCBITaxon<I, RV, RVT, RE, RET>,
