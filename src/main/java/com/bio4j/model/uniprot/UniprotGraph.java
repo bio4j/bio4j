@@ -33,7 +33,53 @@ public abstract class UniprotGraph<
 	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
 	public abstract UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // indices
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Ensembl<I, RV, RVT, RE, RET>, EnsemblType,
+            // property
+            EnsemblType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    ensemblIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            PIR<I, RV, RVT, RE, RET>, PIRType,
+            // property
+            PIRType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    pIRIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            UniGene<I, RV, RVT, RE, RET>, UniGeneType,
+            // property
+            UniGeneType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    uniGeneIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Kegg<I, RV, RVT, RE, RET>, KeggType,
+            // property
+            KeggType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    keggIdIndex();
+
+
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// vertices
@@ -1106,6 +1152,7 @@ public abstract class UniprotGraph<
 					> {
 
 		public final id id = new id();
+        public final entryName entryName = new entryName();
 
 		protected PIRType(RVT raw) {
 			super(raw);
@@ -1132,6 +1179,17 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+        public final class entryName
+                extends
+                UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, entryName, String> {
+            public entryName() {
+                super(PIRType.this.graph().PIR());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
 	}
 
 
@@ -1145,7 +1203,8 @@ public abstract class UniprotGraph<
 		public final accession accession = new accession();
 		public final shortName shortName = new shortName();
 		public final sequence sequence = new sequence();
-		public final fullname fullname = new fullname();
+        public final name name = new name();
+		public final fullName fullName = new fullName();
 		public final modifiedDate modifiedDate = new modifiedDate();
 		public final createdDate createdDate = new createdDate();
 		public final mass mass = new mass();
@@ -1200,10 +1259,10 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
-		public final class fullname
+		public final class fullName
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullname, String> {
-			public fullname() {
+				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
+			public fullName() {
 				super(ProteinType.this.graph().Protein());
 			}
 
@@ -1211,6 +1270,17 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+        public final class name
+                extends
+                UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, name, String> {
+            public name() {
+                super(ProteinType.this.graph().Protein());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
 		public final class modifiedDate
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {

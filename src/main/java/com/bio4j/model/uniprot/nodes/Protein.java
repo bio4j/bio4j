@@ -39,11 +39,12 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public String shortName() {
 		return get(type().shortName);
 	}
+    public String name() { return get(type().name); }
 	public String sequence() {
 		return get(type().sequence);
 	}
-	public String fullname() {
-		return get(type().fullname);
+	public String fullName() {
+	return get(type().fullName);
 	}
 	public Date modifiedDate() {
 		return get(type().modifiedDate);

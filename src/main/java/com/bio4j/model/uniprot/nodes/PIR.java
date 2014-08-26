@@ -29,6 +29,7 @@ public final class PIR <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, R
 	public String id() {
 		return get(type().id);
 	}
+    public String entryName() { return get(type().entryName);}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
