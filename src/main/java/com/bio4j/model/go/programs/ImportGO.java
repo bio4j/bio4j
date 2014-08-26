@@ -4,6 +4,7 @@ package com.bio4j.model.go.programs;
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.go.nodes.SubOntologies;
+import com.ohnosequences.util.Executable;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
@@ -45,6 +46,7 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 
 
 	protected abstract GoGraph<I,RV,RVT,RE,RET> config();
+
 
 	protected void importGO(String[] args){
 		if (args.length != 2) {
