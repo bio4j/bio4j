@@ -186,8 +186,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
                         Protein<I,RV,RVT,RE,RET> protein = graph.Protein().from(graph.raw().addVertex(null));
 
-                        protein.set(graph.Protein().modifiedDate, new Date(modifiedDateSt));
-                        protein.set(graph.Protein().createdDate, new Date(createdDateSt));
+                        protein.set(graph.Protein().modifiedDate, DateFormat.parse(modifiedDateSt));
+                        protein.set(graph.Protein().createdDate, DateFormat.parse(createdDateSt));
                         protein.set(graph.Protein().accession, accessionSt);
                         protein.set(graph.Protein().name, nameSt);
                         protein.set(graph.Protein().fullName, fullNameSt);
