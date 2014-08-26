@@ -76,6 +76,76 @@ public abstract class UniprotGraph<
             I, RV, RVT, RE, RET
             >
     keggIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            EMBL<I, RV, RVT, RE, RET>, EMBLType,
+            // property
+            EMBLType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    eMBLIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            RefSeq<I, RV, RVT, RE, RET>, RefSeqType,
+            // property
+            RefSeqType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    refSeqIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType,
+            // property
+            ReactomeTermType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    reactomeTermIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Dataset<I, RV, RVT, RE, RET>, DatasetType,
+            // property
+            DatasetType.name, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    datasetNameIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Keyword<I, RV, RVT, RE, RET>, KeywordType,
+            // property
+            KeywordType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    keywordIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Interpro<I, RV, RVT, RE, RET>, InterproType,
+            // property
+            InterproType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    interproIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Pfam<I, RV, RVT, RE, RET>, PfamType,
+            // property
+            PfamType.id, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    pfamIdIndex();
 
 
 
