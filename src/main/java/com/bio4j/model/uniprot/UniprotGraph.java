@@ -146,6 +146,36 @@ public abstract class UniprotGraph<
             I, RV, RVT, RE, RET
             >
     pfamIdIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Organism<I, RV, RVT, RE, RET>, OrganismType,
+            // property
+            OrganismType.scientificName, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    organismScientificNameIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            Taxon<I, RV, RVT, RE, RET>, TaxonType,
+            // property
+            TaxonType.name, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    taxonNameIndex();
+    public abstract TypedVertexIndex.Unique <
+            // vertex
+            FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+            // property
+            FeatureTypeType.name, String,
+            // graph
+            UniprotGraph<I, RV, RVT, RE, RET>,
+            I, RV, RVT, RE, RET
+            >
+    featureTypeNameIndex();
 
 
 
@@ -2070,6 +2100,16 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
+        public final description description = new description();
+        public final id id = new id();
+        public final evidence evidence = new evidence();
+        public final status status = new status();
+        public final begin begin = new begin();
+        public final end end = new end();
+        public final original original = new original();
+        public final variation variation = new variation();
+        public final ref ref = new ref();
+
 		protected ProteinFeatureType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.FeatureType());
 		}
@@ -2083,6 +2123,160 @@ public abstract class UniprotGraph<
 		public ProteinFeature<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinFeature<I, RV, RVT, RE, RET>(edge, this);
 		}
+
+        public final class description
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        description, String
+                >
+        {
+            public description() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class id
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        id, String
+                        >
+        {
+            public id() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class evidence
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        evidence, String
+                        >
+        {
+            public evidence() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class status
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        status, String
+                        >
+        {
+            public status() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class begin
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        begin, Integer
+                        >
+        {
+            public begin() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<Integer> valueClass() {
+                return Integer.class;
+            }
+        }
+        public final class end
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        end, Integer
+                        >
+        {
+            public end() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<Integer> valueClass() {
+                return Integer.class;
+            }
+        }
+        public final class original
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        original, String
+                        >
+        {
+            public original() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class variation
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        variation, String
+                        >
+        {
+            public variation() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+        public final class ref
+                extends
+                UniprotEdgeProperty<
+                        Protein<I, RV, RVT, RE, RET>, ProteinType,
+                        ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
+                        FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+                        ref, String
+                        >
+        {
+            public ref() {
+                super(ProteinFeatureType.this.graph().ProteinFeature());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
 	}
 
 	public final class ProteinInterproType
@@ -2660,6 +2854,38 @@ public abstract class UniprotGraph<
 			return type;
 		}
 	}
+
+    public abstract class UniprotEdgeProperty<
+            S extends UniprotVertex<S, ST, I, RV, RVT, RE, RET>,
+            ST extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<S, ST>,
+            E extends UniprotEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
+            ET extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotEdgeType<S, ST, E, ET, T, TT>,
+            T extends UniprotVertex<T, TT, I, RV, RVT, RE, RET>,
+            TT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<T, TT>,
+            P extends UniprotEdgeProperty <
+                S, ST,
+                E, ET,
+                T, TT,
+                P, PV
+            >,
+            PV
+           >
+            implements
+            Property<E, ET, P, PV, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+
+        protected UniprotEdgeProperty(ET type) {
+
+            this.type = type;
+        }
+
+        private ET type;
+
+        @Override
+        public final ET elementType() {
+            return type;
+        }
+    }
+
 
 	public abstract static class UniprotVertex<
 			V extends UniprotVertex<V, VT, I, RV, RVT, RE, RET>,
