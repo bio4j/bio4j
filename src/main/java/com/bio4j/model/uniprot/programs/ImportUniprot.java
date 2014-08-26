@@ -9,6 +9,7 @@ import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
 import org.jdom2.Element;
 
 import java.io.*;
+import java.text.DateFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -186,8 +187,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
                         Protein<I,RV,RVT,RE,RET> protein = graph.Protein().from(graph.raw().addVertex(null));
 
-                        protein.set(graph.Protein().modifiedDate, DateFormat.parse(modifiedDateSt));
-                        protein.set(graph.Protein().createdDate, DateFormat.parse(createdDateSt));
+                        protein.set(graph.Protein().modifiedDate, DateFormat.getDateInstance().parse(modifiedDateSt));
+                        protein.set(graph.Protein().createdDate, DateFormat.getDateInstance().parse(createdDateSt));
                         protein.set(graph.Protein().accession, accessionSt);
                         protein.set(graph.Protein().name, nameSt);
                         protein.set(graph.Protein().fullName, fullNameSt);
