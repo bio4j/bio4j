@@ -341,7 +341,7 @@ public abstract class UniprotGraph<
 		public final doId doId = new doId();
 		public final title title = new title();
 
-		protected ArticleType(RVT raw) {
+        public ArticleType(RVT raw) {
 			super(raw);
 		}
 
@@ -391,7 +391,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected BookType(RVT raw) {
+        public BookType(RVT raw) {
 			super(raw);
 		}
 
@@ -428,7 +428,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected CityType(RVT raw) {
+        public CityType(RVT raw) {
 			super(raw);
 		}
 
@@ -465,7 +465,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected CommentTypeType(RVT raw) {
+        public CommentTypeType(RVT raw) {
 			super(raw);
 		}
 
@@ -502,7 +502,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected CountryType(RVT raw) {
+        public CountryType(RVT raw) {
 			super(raw);
 		}
 
@@ -539,7 +539,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected DatasetType(RVT raw) {
+        public DatasetType(RVT raw) {
 			super(raw);
 		}
 
@@ -576,7 +576,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected DBType(RVT raw) {
+        public DBType(RVT raw) {
 			super(raw);
 		}
 
@@ -615,7 +615,7 @@ public abstract class UniprotGraph<
 		public final proteinSequenceId proteinSequenceId = new proteinSequenceId();
 		public final moleculeType moleculeType = new moleculeType();
 
-		protected EMBLType(RVT raw) {
+        public EMBLType(RVT raw) {
 			super(raw);
 		}
 
@@ -677,7 +677,7 @@ public abstract class UniprotGraph<
 		public final moleculeId moleculeId = new moleculeId();
 		public final geneId geneId = new geneId();
 
-		protected EnsemblType(RVT raw) {
+        public EnsemblType(RVT raw) {
 			super(raw);
 		}
 
@@ -746,7 +746,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected FeatureTypeType(RVT raw) {
+        public FeatureTypeType(RVT raw) {
 			super(raw);
 		}
 
@@ -783,7 +783,7 @@ public abstract class UniprotGraph<
 		public final name name = new name();
 		public final id id = new id();
 
-		protected InterproType(RVT raw) {
+        public InterproType(RVT raw) {
 			super(raw);
 		}
 
@@ -830,7 +830,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected InstituteType(RVT raw) {
+        public InstituteType(RVT raw) {
 			super(raw);
 		}
 
@@ -867,7 +867,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected JournalType(RVT raw) {
+        public JournalType(RVT raw) {
 			super(raw);
 		}
 
@@ -903,7 +903,7 @@ public abstract class UniprotGraph<
 
 		public final id id = new id();
 
-		protected KeggType(RVT raw) {
+        public KeggType(RVT raw) {
 			super(raw);
 		}
 
@@ -940,7 +940,7 @@ public abstract class UniprotGraph<
 		public final name name = new name();
 		public final id id = new id();
 
-		protected KeywordType(RVT raw) {
+        public KeywordType(RVT raw) {
 			super(raw);
 		}
 
@@ -987,7 +987,7 @@ public abstract class UniprotGraph<
 
 		public final title title = new title();
 
-		protected OnlineArticleType(RVT raw) {
+        public OnlineArticleType(RVT raw) {
 			super(raw);
 		}
 
@@ -1023,7 +1023,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected OnlineJournalType(RVT raw) {
+        public OnlineJournalType(RVT raw) {
 			super(raw);
 		}
 
@@ -1061,7 +1061,7 @@ public abstract class UniprotGraph<
 		public final commonName commonName = new commonName();
 		public final synonymName synonymName = new synonymName();
 
-		protected OrganismType(RVT raw) {
+        public OrganismType(RVT raw) {
 			super(raw);
 		}
 
@@ -1120,7 +1120,7 @@ public abstract class UniprotGraph<
 		public final title title = new title();
 		public final number number = new number();
 
-		protected PatentType(RVT raw) {
+        public PatentType(RVT raw) {
 			super(raw);
 		}
 
@@ -1170,7 +1170,7 @@ public abstract class UniprotGraph<
 		public final name name = new name();
 		public final id id = new id();
 
-		protected PfamType(RVT raw) {
+        public PfamType(RVT raw) {
 			super(raw);
 		}
 
@@ -1217,7 +1217,7 @@ public abstract class UniprotGraph<
 
 		public final id id = new id();
 
-		protected PubmedType(RVT raw) {
+        public PubmedType(RVT raw) {
 			super(raw);
 		}
 
@@ -1254,7 +1254,7 @@ public abstract class UniprotGraph<
 		public final id id = new id();
         public final entryName entryName = new entryName();
 
-		protected PIRType(RVT raw) {
+        public PIRType(RVT raw) {
 			super(raw);
 		}
 
@@ -1312,7 +1312,7 @@ public abstract class UniprotGraph<
 		public final length length = new length();
 
 
-		protected ProteinType(RVT raw) {
+        public ProteinType(RVT raw) {
 			super(raw);
 		}
 
@@ -1448,7 +1448,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected PublisherType(RVT raw) {
+        public PublisherType(RVT raw) {
 			super(raw);
 		}
 
@@ -1485,7 +1485,7 @@ public abstract class UniprotGraph<
 		public final id id = new id();
 		public final pathwayName pathwayName = new pathwayName();
 
-		protected ReactomeTermType(RVT raw) {
+        public ReactomeTermType(RVT raw) {
 			super(raw);
 		}
 
@@ -1532,7 +1532,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected ReferenceType(RVT raw) {
+        public ReferenceType(RVT raw) {
 			super(raw);
 		}
 
@@ -1569,7 +1569,7 @@ public abstract class UniprotGraph<
 		public final id id = new id();
 		public final nucleotideSequenceId nucleotideSequenceId = new nucleotideSequenceId();
 
-		protected RefSeqType(RVT raw) {
+        public RefSeqType(RVT raw) {
 			super(raw);
 		}
 
@@ -1616,7 +1616,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected SubcellularLocationType(RVT raw) {
+        public SubcellularLocationType(RVT raw) {
 			super(raw);
 		}
 
@@ -1652,7 +1652,7 @@ public abstract class UniprotGraph<
 
 		public final title title = new title();
 
-		protected SubmissionType(RVT raw) {
+        public SubmissionType(RVT raw) {
 			super(raw);
 		}
 
@@ -1688,7 +1688,7 @@ public abstract class UniprotGraph<
 
 		public final name name = new name();
 
-		protected TaxonType(RVT raw) {
+        public TaxonType(RVT raw) {
 			super(raw);
 		}
 
@@ -1725,7 +1725,7 @@ public abstract class UniprotGraph<
 
 		public final title title = new title();
 
-		protected ThesisType(RVT raw) {
+        public ThesisType(RVT raw) {
 			super(raw);
 		}
 
@@ -1762,7 +1762,7 @@ public abstract class UniprotGraph<
 
 		public final id id = new id();
 
-		protected UniGeneType(RVT raw) {
+        public UniGeneType(RVT raw) {
 			super(raw);
 		}
 
@@ -1796,7 +1796,7 @@ public abstract class UniprotGraph<
 					UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
 					> {
 
-		protected UnpublishedObservationType(RVT raw) {
+        public UnpublishedObservationType(RVT raw) {
 			super(raw);
 		}
 
@@ -1825,7 +1825,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected ArticleJournalType(RET raw) {
+        public ArticleJournalType(RET raw) {
 			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Journal());
 		}
 
@@ -1850,7 +1850,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ArticlePubmedType(RET raw) {
+        public ArticlePubmedType(RET raw) {
 			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Pubmed());
 		}
 
@@ -1875,7 +1875,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected BookCityType(RET raw) {
+        public BookCityType(RET raw) {
 			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.City());
 		}
 
@@ -1900,7 +1900,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected BookPublisherType(RET raw) {
+		public BookPublisherType(RET raw) {
 			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.Publisher());
 		}
 
@@ -1925,7 +1925,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected InstituteCountryType(RET raw) {
+		public InstituteCountryType(RET raw) {
 			super(UniprotGraph.this.Institute(), raw, UniprotGraph.this.Country());
 		}
 
@@ -1950,7 +1950,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected OnlineArticleOnlineJournalType(RET raw) {
+		public OnlineArticleOnlineJournalType(RET raw) {
 			super(UniprotGraph.this.OnlineArticle(), raw, UniprotGraph.this.OnlineJournal());
 		}
 
@@ -1975,7 +1975,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected OrganismTaxonType(RET raw) {
+		public OrganismTaxonType(RET raw) {
 			super(UniprotGraph.this.Organism(), raw, UniprotGraph.this.Taxon());
 		}
 
@@ -2000,7 +2000,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinCommentType(RET raw) {
+		public ProteinCommentType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.CommentType());
 		}
 
@@ -2025,7 +2025,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected ProteinDatasetType(RET raw) {
+		public ProteinDatasetType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Dataset());
 		}
 
@@ -2050,7 +2050,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinEMBLType(RET raw) {
+		public ProteinEMBLType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.EMBL());
 		}
 
@@ -2075,7 +2075,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinEnsemblType(RET raw) {
+		public ProteinEnsemblType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Ensembl());
 		}
 
@@ -2110,7 +2110,7 @@ public abstract class UniprotGraph<
         public final variation variation = new variation();
         public final ref ref = new ref();
 
-		protected ProteinFeatureType(RET raw) {
+		public ProteinFeatureType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.FeatureType());
 		}
 
@@ -2289,7 +2289,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinInterproType(RET raw) {
+		public ProteinInterproType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Interpro());
 		}
 
@@ -2314,7 +2314,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinKeggType(RET raw) {
+		public ProteinKeggType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Kegg());
 		}
 
@@ -2339,7 +2339,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinKeywordType(RET raw) {
+		public ProteinKeywordType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Keyword());
 		}
 
@@ -2364,7 +2364,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected ProteinOrganismType(RET raw) {
+		public ProteinOrganismType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Organism());
 		}
 
@@ -2389,7 +2389,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinPfamType(RET raw) {
+		public ProteinPfamType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Pfam());
 		}
 
@@ -2414,7 +2414,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinPIRType(RET raw) {
+		public ProteinPIRType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.PIR());
 		}
 
@@ -2439,7 +2439,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinReactomeTermType(RET raw) {
+		public ProteinReactomeTermType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.ReactomeTerm());
 		}
 
@@ -2464,7 +2464,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinReferenceType(RET raw) {
+		public ProteinReferenceType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Reference());
 		}
 
@@ -2489,7 +2489,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinRefSeqType(RET raw) {
+		public ProteinRefSeqType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.RefSeq());
 		}
 
@@ -2514,7 +2514,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinSubcellularLocationType(RET raw) {
+		public ProteinSubcellularLocationType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SubcellularLocation());
 		}
 
@@ -2539,7 +2539,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected ProteinUniGeneType(RET raw) {
+		public ProteinUniGeneType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.UniGene());
 		}
 
@@ -2564,7 +2564,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceArticleType(RET raw) {
+		public ReferenceArticleType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Article());
 		}
 
@@ -2589,7 +2589,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceBookType(RET raw) {
+		public ReferenceBookType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Book());
 		}
 
@@ -2614,7 +2614,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferencePatentType(RET raw) {
+		public ReferencePatentType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Patent());
 		}
 
@@ -2639,7 +2639,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceThesisType(RET raw) {
+		public ReferenceThesisType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Thesis());
 		}
 
@@ -2664,7 +2664,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceSubmissionType(RET raw) {
+		public ReferenceSubmissionType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Submission());
 		}
 
@@ -2689,7 +2689,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceUnpublishedObservationType(RET raw) {
+		public ReferenceUnpublishedObservationType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.UnpublishedObservation());
 		}
 
@@ -2714,7 +2714,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
-		protected ReferenceOnlineArticleType(RET raw) {
+		public ReferenceOnlineArticleType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.OnlineArticle());
 		}
 
@@ -2739,7 +2739,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected SubcellularLocationParentType(RET raw) {
+		public SubcellularLocationParentType(RET raw) {
 			super(UniprotGraph.this.SubcellularLocation(), raw, UniprotGraph.this.SubcellularLocation());
 		}
 
@@ -2764,7 +2764,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected SubmissionDBType(RET raw) {
+		public SubmissionDBType(RET raw) {
 			super(UniprotGraph.this.Submission(), raw, UniprotGraph.this.DB());
 		}
 
@@ -2789,7 +2789,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected TaxonParentType(RET raw) {
+		public TaxonParentType(RET raw) {
 			super(UniprotGraph.this.Taxon(), raw, UniprotGraph.this.Taxon());
 		}
 
@@ -2814,7 +2814,7 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected ThesisInstituteType(RET raw) {
+		public ThesisInstituteType(RET raw) {
 			super(UniprotGraph.this.Thesis(), raw, UniprotGraph.this.Institute());
 		}
 

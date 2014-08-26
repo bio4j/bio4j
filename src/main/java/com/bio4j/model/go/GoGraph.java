@@ -146,7 +146,7 @@ public abstract class GoGraph<
 					GoGraph<I, RV, RVT, RE, RET>.GoSlimsType
 					> {
 
-		protected GoSlimsType(RVT raw) {
+        public GoSlimsType(RVT raw) {
 			super(raw);
 		}
 
@@ -173,7 +173,7 @@ public abstract class GoGraph<
 		public final comment comment = new comment();
 		public final definition definition = new definition();
 
-		protected GoTermType(RVT raw) {
+        public GoTermType(RVT raw) {
 			super(raw);
 		}
 
@@ -245,7 +245,7 @@ public abstract class GoGraph<
 
 		public final name name = new name();
 
-		protected SubOntologiesType(RVT raw) {
+        public SubOntologiesType(RVT raw) {
 			super(raw);
 		}
 
@@ -286,10 +286,9 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected PartOfType(RET raw) {
+        public PartOfType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
-		// protected PartOfType(RET raw) { super( this.graph().GoTerm(), raw, this.graph().GoTerm() ); }
 
 		@Override
 		public PartOfType value() {
@@ -312,7 +311,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected HasPartOfType(RET raw) {
+        public HasPartOfType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
 
@@ -337,7 +336,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected IsAType(RET raw) {
+		public IsAType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
 
@@ -362,7 +361,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected NegativelyRegulatesType(RET raw) {
+        public NegativelyRegulatesType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
 
@@ -387,7 +386,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected PositivelyRegulatesType(RET raw) {
+        public PositivelyRegulatesType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
 
@@ -413,7 +412,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		protected RegulatesType(RET raw) {
+        public RegulatesType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm());
 		}
 
@@ -439,7 +438,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected SubOntologyType(RET raw) {
+		SubOntologyType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.SubOntologies());
 		}
 
