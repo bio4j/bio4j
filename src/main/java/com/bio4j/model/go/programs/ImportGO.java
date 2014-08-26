@@ -238,9 +238,9 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 
 						//----namespace---
 
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(goId);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(goId).get();
 						//SubOntologies subOntologies = goGraph.
-						SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace);
+						SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace).get();
 						goGraph.addEdge(tempGoTerm,goGraph.SubOntology(), tmpSubontologies);
 
 
@@ -265,13 +265,13 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				Set<String> keys = termParentsMap.keySet();
 				for (String key : keys) {
 
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
 					//System.out.println("id: " + tempGoTerm.id() + " name: " + tempGoTerm.name());
 					ArrayList<String> tempArray = termParentsMap.get(key);
 
 					for (String string : tempArray) {
 						//System.out.println("string: " + string);
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
 						//System.out.println("id2: " + tempGoTerm2.id() + " name2: " + tempGoTerm2.name());
 						goGraph.addEdge(tempGoTerm,goGraph.IsA(), tempGoTerm2);
 					}
@@ -281,10 +281,10 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				//-------------------'regulates' relationships----------------------
 				keys = regulatesMap.keySet();
 				for (String key : keys) {
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
 					ArrayList<String> tempArray = regulatesMap.get(key);
 					for (String string : tempArray) {
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
 						goGraph.addEdge(tempGoTerm, goGraph.Regulates(), tempGoTerm2);
 					}
 				}
@@ -293,10 +293,10 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				//-------------------'negatively regulates' relationships----------------------
 				keys = negativelyRegulatesMap.keySet();
 				for (String key : keys) {
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
 					ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
 					for (String string : tempArray) {
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
 						goGraph.addEdge(tempGoTerm, goGraph.NegativelyRegulates(), tempGoTerm2);
 					}
 				}
@@ -305,10 +305,10 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				//-------------------'positively regulates' relationships----------------------
 				keys = positivelyRegulatesMap.keySet();
 				for (String key : keys) {
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm =  goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm =  goGraph.goTermIdIndex().getVertex(key).get();
 					ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
 					for (String string : tempArray) {
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 =  goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 =  goGraph.goTermIdIndex().getVertex(string).get();
 						goGraph.addEdge(tempGoTerm, goGraph.PositivelyRegulates(), tempGoTerm2);
 					}
 				}
@@ -317,10 +317,10 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				//-------------------'parf of' relationships----------------------
 				keys = partOfMap.keySet();
 				for (String key : keys) {
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
 					ArrayList<String> tempArray = partOfMap.get(key);
 					for (String string : tempArray) {
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
 						goGraph.addEdge(tempGoTerm, goGraph.PartOf(), tempGoTerm2);
 					}
 				}
@@ -329,10 +329,10 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 				//-------------------'has part of' relationships----------------------
 				keys = hasPartMap.keySet();
 				for (String key : keys) {
-					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key);
+					GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
 					ArrayList<String> tempArray = hasPartMap.get(key);
 					for (String string : tempArray) {
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string);
+						GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
 						goGraph.addEdge(tempGoTerm, goGraph.HasPartOf(), tempGoTerm2);
 					}
 				}

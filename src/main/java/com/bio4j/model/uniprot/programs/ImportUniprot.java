@@ -326,7 +326,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                 case "RefSeq":
                                     //looking for RefSeq node
                                     RefSeq<I,RV,RVT,RE,RET> refSeq = null;
-                                    Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getNode(refId);
+                                    Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getVertex(refId);
                                     if(!optionalRefSeq.isPresent()){
                                         String nucleotideSequenceIdSt = "";
                                         List<Element> children = dbReferenceElem.getChildren("property");
