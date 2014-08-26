@@ -45,7 +45,7 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 	private static FileHandler fh;
 
 
-	protected abstract GoGraph<I,RV,RVT,RE,RET> config();
+	protected abstract GoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 
 	protected void importGO(String[] args){
@@ -61,10 +61,11 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
+            String dbFolder = args[1];
 
 			BufferedWriter statsBuff = null;
 
-			GoGraph<I,RV,RVT,RE,RET> goGraph = config();
+			GoGraph<I,RV,RVT,RE,RET> goGraph = config(dbFolder);
 
 			try {
 
