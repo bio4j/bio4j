@@ -172,6 +172,7 @@ public abstract class GoGraph<
 		public final name name = new name();
 		public final comment comment = new comment();
 		public final definition definition = new definition();
+        public final obsolete obsolete = new obsolete();
 
         public GoTermType(RVT raw) {
 			super(raw);
@@ -234,6 +235,18 @@ public abstract class GoGraph<
 				return String.class;
 			}
 		}
+
+        public final class obsolete
+                extends
+                GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, obsolete, String> {
+            public obsolete() {
+                super(GoTermType.this.graph().GoTerm());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
 	}
 
 	public final class SubOntologiesType
