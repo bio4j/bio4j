@@ -105,11 +105,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
             File inFile = new File(args[0]);
             File configFile = new File(args[2]);
+            String dbFolder = args[1];
 
             String currentAccessionId = "";
 
             //-------creating graph handlers---------------------
-            UniprotGraph<I,RV,RVT,RE,RET> graph = config();
+            UniprotGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
 
             BufferedWriter enzymeIdsNotFoundBuff = null;
