@@ -92,7 +92,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
     protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
-    protected void ImportUniprot(String[] args) {
+    protected void importUniprot(String[] args) {
 
         if (args.length != 3) {
             System.out.println("This program expects the following parameters: \n"
