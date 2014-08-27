@@ -90,7 +90,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
 
 
-    protected abstract UniprotGraph<I,RV,RVT,RE,RET> config();
+    protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
     protected void ImportUniprot(String[] args) {
 

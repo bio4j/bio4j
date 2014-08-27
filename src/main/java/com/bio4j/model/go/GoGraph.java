@@ -438,7 +438,7 @@ public abstract class GoGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		SubOntologyType(RET raw) {
+		public SubOntologyType(RET raw) {
 			super(GoGraph.this.GoTerm(), raw, GoGraph.this.SubOntologies());
 		}
 
