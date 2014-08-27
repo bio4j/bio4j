@@ -173,6 +173,7 @@ public abstract class GoGraph<
 		public final comment comment = new comment();
 		public final definition definition = new definition();
         public final obsolete obsolete = new obsolete();
+        public final synonym synonym = new synonym();
 
         public GoTermType(RVT raw) {
 			super(raw);
@@ -240,6 +241,18 @@ public abstract class GoGraph<
                 extends
                 GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, obsolete, String> {
             public obsolete() {
+                super(GoTermType.this.graph().GoTerm());
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+
+        public final class synonym
+                extends
+                GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, synonym, String> {
+            public synonym() {
                 super(GoTermType.this.graph().GoTerm());
             }
 

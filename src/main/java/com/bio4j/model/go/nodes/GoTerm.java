@@ -43,6 +43,8 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
     public String obsolete() { return get(type().obsolete);}
 
+    public String synonym() { return get(type().synonym);}
+
 	// rels
 
 	//----part of---------
