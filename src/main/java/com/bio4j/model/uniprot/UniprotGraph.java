@@ -262,8 +262,6 @@ public abstract class UniprotGraph<
 
 	public abstract ArticlePubmedType ArticlePubmed();
 
-	public abstract ArticleJournalType ArticleJournalType();
-
 	public abstract BookCityType BookCity();
 
 	public abstract BookPublisherType BookPublisher();
@@ -327,6 +325,8 @@ public abstract class UniprotGraph<
 	public abstract TaxonParentType TaxonParent();
 
 	public abstract ThesisInstituteType ThesisInstitute();
+
+
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Vertex types
