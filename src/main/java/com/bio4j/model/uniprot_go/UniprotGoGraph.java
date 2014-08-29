@@ -63,7 +63,7 @@ public abstract class UniprotGoGraph<
 		TypedEdge.Type.ManyToMany 
 	{
 
-		protected GoAnnotationType(RET raw) {
+		public GoAnnotationType(RET raw) {
 
 			super(
 				UniprotGoGraph.this.uniprotGraph().Protein(), 
