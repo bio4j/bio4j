@@ -193,7 +193,7 @@ public abstract class GoGraph<
 				extends
 				GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, id, String> {
 			public id() {
-				super(GoTermType.this.graph().GoTerm());
+				super(GoTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -205,7 +205,7 @@ public abstract class GoGraph<
 				extends
 				GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, name, String> {
 			public name() {
-				super(GoTermType.this.graph().GoTerm());
+				super(GoTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -217,7 +217,7 @@ public abstract class GoGraph<
 				extends
 				GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, definition, String> {
 			public definition() {
-				super(GoTermType.this.graph().GoTerm());
+				super(GoTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -229,7 +229,7 @@ public abstract class GoGraph<
 				extends
 				GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, comment, String> {
 			public comment() {
-				super(GoTermType.this.graph().GoTerm());
+				super(GoTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -241,7 +241,7 @@ public abstract class GoGraph<
                 extends
                 GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, obsolete, String> {
             public obsolete() {
-                super(GoTermType.this.graph().GoTerm());
+                super(GoTermType.this);
             }
 
             public Class<String> valueClass() {
@@ -253,7 +253,7 @@ public abstract class GoGraph<
                 extends
                 GoVertexProperty<GoTerm<I, RV, RVT, RE, RET>, GoTermType, synonym, String> {
             public synonym() {
-                super(GoTermType.this.graph().GoTerm());
+                super(GoTermType.this);
             }
 
             public Class<String> valueClass() {
@@ -289,7 +289,7 @@ public abstract class GoGraph<
 				extends
 				GoVertexProperty<SubOntologies<I, RV, RVT, RE, RET>, SubOntologiesType, name, String> {
 			public name() {
-				super(SubOntologiesType.this.graph().SubOntologies());
+				super(SubOntologiesType.this);
 			}
 
 			public Class<String> valueClass() {

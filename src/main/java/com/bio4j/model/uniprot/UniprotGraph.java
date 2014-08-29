@@ -368,7 +368,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
 			public doId() {
-				super(ArticleType.this.graph().Article());
+				super(ArticleType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -380,7 +380,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
 			public title() {
-				super(ArticleType.this.graph().Article());
+				super(ArticleType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -418,7 +418,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Book<I, RV, RVT, RE, RET>, BookType, name, String> {
 			public name() {
-				super(BookType.this.graph().Book());
+				super(BookType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -455,7 +455,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
 			public name() {
-				super(CityType.this.graph().City());
+				super(CityType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -492,7 +492,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<CommentType<I, RV, RVT, RE, RET>, CommentTypeType, name, String> {
 			public name() {
-				super(CommentTypeType.this.graph().CommentType());
+				super(CommentTypeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -529,7 +529,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Country<I, RV, RVT, RE, RET>, CountryType, name, String> {
 			public name() {
-				super(CountryType.this.graph().Country());
+				super(CountryType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -566,7 +566,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Dataset<I, RV, RVT, RE, RET>, DatasetType, name, String> {
 			public name() {
-				super(DatasetType.this.graph().Dataset());
+				super(DatasetType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -603,7 +603,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
 			public name() {
-				super(DBType.this.graph().DB());
+				super(DBType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -642,7 +642,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, id, String> {
 			public id() {
-				super(EMBLType.this.graph().EMBL());
+				super(EMBLType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -653,7 +653,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, proteinSequenceId, String> {
 			public proteinSequenceId() {
-				super(EMBLType.this.graph().EMBL());
+				super(EMBLType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -664,7 +664,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, moleculeType, String> {
 			public moleculeType() {
-				super(EMBLType.this.graph().EMBL());
+				super(EMBLType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -704,7 +704,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, id, String> {
 			public id() {
-				super(EnsemblType.this.graph().Ensembl());
+				super(EnsemblType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -715,7 +715,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, proteinSequenceId, String> {
 			public proteinSequenceId() {
-				super(EnsemblType.this.graph().Ensembl());
+				super(EnsemblType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -726,7 +726,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, moleculeId, String> {
 			public moleculeId() {
-				super(EnsemblType.this.graph().Ensembl());
+				super(EnsemblType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -737,7 +737,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, geneId, String> {
 			public geneId() {
-				super(EnsemblType.this.graph().Ensembl());
+				super(EnsemblType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -773,7 +773,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType, name, String> {
 			public name() {
-				super(FeatureTypeType.this.graph().FeatureType());
+				super(FeatureTypeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -810,7 +810,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
 			public name() {
-				super(InterproType.this.graph().Interpro());
+				super(InterproType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -821,7 +821,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
 			public id() {
-				super(InterproType.this.graph().Interpro());
+				super(InterproType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -857,7 +857,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
 			public name() {
-				super(InstituteType.this.graph().Institute());
+				super(InstituteType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -894,7 +894,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Journal<I, RV, RVT, RE, RET>, JournalType, name, String> {
 			public name() {
-				super(JournalType.this.graph().Journal());
+				super(JournalType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -930,7 +930,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Kegg<I, RV, RVT, RE, RET>, KeggType, id, String> {
 			public id() {
-				super(KeggType.this.graph().Kegg());
+				super(KeggType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -967,7 +967,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, name, String> {
 			public name() {
-				super(KeywordType.this.graph().Keyword());
+				super(KeywordType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -978,7 +978,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, id, String> {
 			public id() {
-				super(KeywordType.this.graph().Keyword());
+				super(KeywordType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1014,7 +1014,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
 			public title() {
-				super(OnlineArticleType.this.graph().OnlineArticle());
+				super(OnlineArticleType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1050,7 +1050,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType, name, String> {
 			public name() {
-				super(OnlineJournalType.this.graph().OnlineJournal());
+				super(OnlineJournalType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1088,7 +1088,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, scientificName, String> {
 			public scientificName() {
-				super(OrganismType.this.graph().Organism());
+				super(OrganismType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1099,7 +1099,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, commonName, String> {
 			public commonName() {
-				super(OrganismType.this.graph().Organism());
+				super(OrganismType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1110,7 +1110,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, synonymName, String> {
 			public synonymName() {
-				super(OrganismType.this.graph().Organism());
+				super(OrganismType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1147,7 +1147,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, title, String> {
 			public title() {
-				super(PatentType.this.graph().Patent());
+				super(PatentType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1159,7 +1159,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
 			public number() {
-				super(PatentType.this.graph().Patent());
+				super(PatentType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1197,7 +1197,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, name, String> {
 			public name() {
-				super(PfamType.this.graph().Pfam());
+				super(PfamType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1208,7 +1208,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, id, String> {
 			public id() {
-				super(PfamType.this.graph().Pfam());
+				super(PfamType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1244,7 +1244,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Pubmed<I, RV, RVT, RE, RET>, PubmedType, id, String> {
 			public id() {
-				super(PubmedType.this.graph().Pubmed());
+				super(PubmedType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1281,7 +1281,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, id, String> {
 			public id() {
-				super(PIRType.this.graph().PIR());
+				super(PIRType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1292,7 +1292,7 @@ public abstract class UniprotGraph<
                 extends
                 UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, entryName, String> {
             public entryName() {
-                super(PIRType.this.graph().PIR());
+                super(PIRType.this);
             }
 
             public Class<String> valueClass() {
@@ -1339,7 +1339,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String> {
 			public accession() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1350,7 +1350,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
 			public shortName() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1361,7 +1361,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, sequence, String> {
 			public sequence() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1372,7 +1372,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
 			public fullName() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1383,7 +1383,7 @@ public abstract class UniprotGraph<
                 extends
                 UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, name, String> {
             public name() {
-                super(ProteinType.this.graph().Protein());
+                super(ProteinType.this);
             }
 
             public Class<String> valueClass() {
@@ -1394,7 +1394,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {
 			public modifiedDate() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<Date> valueClass() {
@@ -1405,7 +1405,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, createdDate, Date> {
 			public createdDate() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<Date> valueClass() {
@@ -1416,7 +1416,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, String> {
 			public mass() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1427,7 +1427,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, version, Integer> {
 			public version() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<Integer> valueClass() {
@@ -1438,7 +1438,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, length, Integer> {
 			public length() {
-				super(ProteinType.this.graph().Protein());
+				super(ProteinType.this);
 			}
 
 			public Class<Integer> valueClass() {
@@ -1475,7 +1475,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Publisher<I, RV, RVT, RE, RET>, PublisherType, name, String> {
 			public name() {
-				super(PublisherType.this.graph().Publisher());
+				super(PublisherType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1512,7 +1512,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, id, String> {
 			public id() {
-				super(ReactomeTermType.this.graph().ReactomeTerm());
+				super(ReactomeTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1523,7 +1523,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, pathwayName, String> {
 			public pathwayName() {
-				super(ReactomeTermType.this.graph().ReactomeTerm());
+				super(ReactomeTermType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1559,7 +1559,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, name, String> {
 			public name() {
-				super(ReferenceType.this.graph().Reference());
+				super(ReferenceType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1607,7 +1607,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, nucleotideSequenceId, String> {
 			public nucleotideSequenceId() {
-				super(RefSeqType.this.graph().RefSeq());
+				super(RefSeqType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1643,7 +1643,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType, name, String> {
 			public name() {
-				super(SubcellularLocationType.this.graph().SubcellularLocation());
+				super(SubcellularLocationType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1679,7 +1679,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Submission<I, RV, RVT, RE, RET>, SubmissionType, title, String> {
 			public title() {
-				super(SubmissionType.this.graph().Submission());
+				super(SubmissionType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1715,7 +1715,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Taxon<I, RV, RVT, RE, RET>, TaxonType, name, String> {
 			public name() {
-				super(TaxonType.this.graph().Taxon());
+				super(TaxonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1752,7 +1752,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Thesis<I, RV, RVT, RE, RET>, ThesisType, title, String> {
 			public title() {
-				super(ThesisType.this.graph().Thesis());
+				super(ThesisType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1789,7 +1789,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<UniGene<I, RV, RVT, RE, RET>, UniGeneType, id, String> {
 			public id() {
-				super(UniGeneType.this.graph().UniGene());
+				super(UniGeneType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -2143,7 +2143,7 @@ public abstract class UniprotGraph<
                 >
         {
             public description() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2160,7 +2160,7 @@ public abstract class UniprotGraph<
                         >
         {
             public id() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2177,7 +2177,7 @@ public abstract class UniprotGraph<
                         >
         {
             public evidence() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2194,7 +2194,7 @@ public abstract class UniprotGraph<
                         >
         {
             public status() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2211,7 +2211,7 @@ public abstract class UniprotGraph<
                         >
         {
             public begin() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<Integer> valueClass() {
@@ -2228,7 +2228,7 @@ public abstract class UniprotGraph<
                         >
         {
             public end() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<Integer> valueClass() {
@@ -2245,7 +2245,7 @@ public abstract class UniprotGraph<
                         >
         {
             public original() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2262,7 +2262,7 @@ public abstract class UniprotGraph<
                         >
         {
             public variation() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
@@ -2279,7 +2279,7 @@ public abstract class UniprotGraph<
                         >
         {
             public ref() {
-                super(ProteinFeatureType.this.graph().ProteinFeature());
+                super(ProteinFeatureType.this);
             }
 
             public Class<String> valueClass() {
