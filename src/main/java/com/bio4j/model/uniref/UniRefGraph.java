@@ -51,7 +51,7 @@ public abstract class UniRefGraph<
 
 		public final id id = new id();
 
-		protected UniRef50ClusterType(RVT raw) {
+		public UniRef50ClusterType(RVT raw) {
 			super(raw);
 		}
 
@@ -89,7 +89,7 @@ public abstract class UniRefGraph<
 
 		public final id id = new id();
 
-		protected UniRef90ClusterType(RVT raw) {
+		public UniRef90ClusterType(RVT raw) {
 			super(raw);
 		}
 
@@ -126,7 +126,7 @@ public abstract class UniRefGraph<
 
 		public final id id = new id();
 
-		protected UniRef100ClusterType(RVT raw) {
+		public UniRef100ClusterType(RVT raw) {
 			super(raw);
 		}
 
