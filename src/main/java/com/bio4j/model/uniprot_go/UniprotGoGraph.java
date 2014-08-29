@@ -25,6 +25,16 @@ public abstract class UniprotGoGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+    protected I raw = null;
+
+    public UniprotGoGraph(I graph){
+        raw = graph;
+    }
+
+    public I raw(){
+        return raw;
+    }
+
 	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
 	public abstract GoGraph<I, RV, RVT, RE, RET> goGraph();
 

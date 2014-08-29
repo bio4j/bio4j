@@ -24,6 +24,16 @@ public abstract class UniprotNCBITaxonomyGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+    protected I raw = null;
+
+    public UniprotNCBITaxonomyGraph(I graph){
+        raw = graph;
+    }
+
+    public I raw(){
+        return raw;
+    }
+
 	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
 	public abstract NCBITaxonomyGraph<I, RV, RVT, RE, RET> ncbiTaxonomyGraph();
 
@@ -52,7 +62,7 @@ public abstract class UniprotNCBITaxonomyGraph<
 			TypedEdge.Type.ManyToOne
 	{
 
-		protected ProteinNCBITaxonType(RET raw) {
+		public ProteinNCBITaxonType(RET raw) {
 
 			super(
 					UniprotNCBITaxonomyGraph.this.uniprotGraph().Protein(),
