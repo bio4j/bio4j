@@ -21,6 +21,16 @@ public abstract class NCBITaxonomyGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+    protected I raw = null;
+
+    public NCBITaxonomyGraph(I graph){
+        raw = graph;
+    }
+
+    public I raw(){
+        return raw;
+    }
+
 	// types
 	// vertices
 	public abstract NCBITaxonType NCBITaxon();
@@ -44,7 +54,7 @@ public abstract class NCBITaxonomyGraph<
 		public final scientificName scientificName = new scientificName();
 		public final taxonomicRank taxonomicRank = new taxonomicRank();
 
-		protected NCBITaxonType(RVT raw) {
+		public NCBITaxonType(RVT raw) {
 			super(raw);
 		}
 
@@ -134,7 +144,7 @@ public abstract class NCBITaxonomyGraph<
 			implements
 			TypedEdge.Type.ManyToOne {
 
-		protected NCBITaxonParentType(RET raw) {
+		public NCBITaxonParentType(RET raw) {
 			super(NCBITaxonomyGraph.this.NCBITaxon(), raw, NCBITaxonomyGraph.this.NCBITaxon());
 		}
 
