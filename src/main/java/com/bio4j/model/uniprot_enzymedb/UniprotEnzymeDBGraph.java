@@ -53,7 +53,7 @@ public abstract class UniprotEnzymeDBGraph<
 			TypedEdge.Type.ManyToMany
 	{
 
-		protected EnzymaticActivityType(RET raw) {
+		public EnzymaticActivityType(RET raw) {
 
 			super(
 					UniprotEnzymeDBGraph.this.uniprotGraph().Protein(),

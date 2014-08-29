@@ -66,7 +66,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.ManyToOne
 	{
 
-		protected UniRef50MemberType(RET raw) {
+		public UniRef50MemberType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -105,7 +105,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.ManyToOne
 	{
 
-		protected UniRef90MemberType(RET raw) {
+        public UniRef90MemberType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -144,7 +144,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.ManyToOne
 	{
 
-		protected UniRef100MemberType(RET raw) {
+        public UniRef100MemberType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -183,7 +183,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.OneToOne
 	{
 
-		protected UniRef100RepresentantType(RET raw) {
+        public UniRef100RepresentantType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -222,7 +222,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.OneToOne
 	{
 
-		protected UniRef50RepresentantType(RET raw) {
+        public UniRef50RepresentantType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -261,7 +261,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.OneToOne
 	{
 
-		protected UniRef90RepresentantType(RET raw) {
+        public UniRef90RepresentantType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),

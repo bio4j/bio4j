@@ -21,6 +21,15 @@ public abstract class EnzymeDBGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+    protected I raw = null;
+
+    public EnzymeDBGraph(I graph){
+        raw = graph;
+    }
+
+    public I raw(){
+        return raw;
+    }
 
 	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
 
@@ -47,7 +56,7 @@ public abstract class EnzymeDBGraph<
 		public final catalyticActivity catalyticActivity = new catalyticActivity();
 		public final prositeCrossReferences prositeCrossReferences = new prositeCrossReferences();
 
-		protected EnzymeType(RVT raw) {
+		public EnzymeType(RVT raw) {
 			super(raw);
 		}
 
