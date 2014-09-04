@@ -29,7 +29,7 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 		return get(type().id);
 	}
 
-	public String cofactors() {
+	public String[] cofactors() {
 		return get(type().cofactors);
 	}
 
