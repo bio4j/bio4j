@@ -31,6 +31,18 @@ public abstract class NCBITaxonomyGraph<
         return raw;
     }
 
+	// indices
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType,
+			// property
+			NCBITaxonType.id, String,
+			// graph
+			NCBITaxonomyGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	nCBITaxonIdIndex();
+
 	// types
 	// vertices
 	public abstract NCBITaxonType NCBITaxon();
