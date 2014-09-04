@@ -123,7 +123,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             int proteinCounter = 0;
             int limitForPrintingOut = 10000;
 
-	        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+	        dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
             try {
 
