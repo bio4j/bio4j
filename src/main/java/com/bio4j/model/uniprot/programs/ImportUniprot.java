@@ -10,6 +10,8 @@ import org.jdom2.Element;
 
 import java.io.*;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -89,6 +91,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     public static final String FEATURE_LOCATION_POSITION_ATTRIBUTE = "position";
     public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
 
+	protected SimpleDateFormat dateFormat;
+
 
     protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
@@ -118,6 +122,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
             int proteinCounter = 0;
             int limitForPrintingOut = 10000;
+
+	        dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 
             try {
 
@@ -188,8 +194,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
                         Protein<I,RV,RVT,RE,RET> protein = graph.Protein().from(graph.raw().addVertex(null));
 
-                        protein.set(graph.Protein().modifiedDate, DateFormat.getDateInstance().parse(modifiedDateSt));
-                        protein.set(graph.Protein().createdDate, DateFormat.getDateInstance().parse(createdDateSt));
+                        protein.set(graph.Protein().modifiedDate, parseDate(modifiedDateSt));
+                        protein.set(graph.Protein().createdDate, parseDate(createdDateSt));
                         protein.set(graph.Protein().accession, accessionSt);
                         protein.set(graph.Protein().name, nameSt);
                         protein.set(graph.Protein().fullName, fullNameSt);
@@ -2157,4 +2163,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 //
 //
 //	}
+
+	protected Date parseDate(String date) throws ParseException {
+		return dateFormat.parse(date);
+	}
 }

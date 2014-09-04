@@ -84,13 +84,13 @@ public abstract class EnzymeDBGraph<
 
 		public final class cofactors
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String> {
+				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
 			public cofactors() {
 				super(EnzymeType.this.graph().Enzyme());
 			}
 
-			public Class<String> valueClass() {
-				return String.class;
+			public Class<String[]> valueClass() {
+				return String[].class;
 			}
 		}
 
