@@ -57,9 +57,9 @@ public abstract class UniprotGraph<
     proteinAccessionIndex();
     public abstract TypedVertexIndex.Unique <
             // vertex
-            Ensembl<I, RV, RVT, RE, RET>, EnsemblType,
+            Ensembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType,
             // property
-            EnsemblType.id, String,
+            UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType.id, String,
             // graph
             UniprotGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET

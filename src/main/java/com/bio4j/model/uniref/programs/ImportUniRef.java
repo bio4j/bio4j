@@ -142,7 +142,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 		return result;
 	}
 
-	private int importUnirefFile(UniRefGraph uniRefGraph,
+	private int importUnirefFile(UniRefGraph<I,RV,RVT,RE,RET> uniRefGraph,
 	                                    File unirefFile,
 	                                    int unirefClusterNumber) throws Exception {
 

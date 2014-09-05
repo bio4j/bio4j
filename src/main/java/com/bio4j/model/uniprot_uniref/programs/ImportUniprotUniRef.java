@@ -145,7 +145,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 		return result;
 	}
 
-	private int importUniprotUniRefFile(UniprotUniRefGraph uniprotUniRefGraph,
+	private int importUniprotUniRefFile(UniprotUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph,
 	                                           File unirefFile,
 	                                           int unirefClusterNumber) throws Exception {
 
