@@ -46,6 +46,16 @@ public abstract class UniprotGraph<
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // indices
     public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Protein<I, RV, RVT, RE, RET>, ProteinType,
+		    // property
+		    ProteinType.accession, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    proteinAccessionIndex();
+    public abstract TypedVertexIndex.Unique <
             // vertex
             Ensembl<I, RV, RVT, RE, RET>, EnsemblType,
             // property
