@@ -38,6 +38,39 @@ public abstract class UniRefGraph<
 	public abstract UniprotUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// indices
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType,
+			// property
+			UniRef50ClusterType.id, String,
+			// graph
+			UniRefGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	uniRef50ClusterIdIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType,
+			// property
+			UniRef90ClusterType.id, String,
+			// graph
+			UniRefGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	uniRef90ClusterIdIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType,
+			// property
+			UniRef100ClusterType.id, String,
+			// graph
+			UniRefGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	uniRef100ClusterIdIndex();
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// types
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// vertices
