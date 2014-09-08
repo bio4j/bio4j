@@ -1606,7 +1606,7 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, id, String> {
 			public id() {
-				super(RefSeqType.this.graph().RefSeq());
+				super(RefSeqType.this);
 			}
 
 			public Class<String> valueClass() {
