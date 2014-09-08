@@ -334,6 +334,10 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                 case "RefSeq":
                                     //looking for RefSeq node
                                     RefSeq<I,RV,RVT,RE,RET> refSeq = null;
+//	                                System.out.println("refId: " + refId);
+//	                                System.out.println("graph.refSeqIdIndex() == null " + (graph.refSeqIdIndex() == null) );
+//	                                System.out.println(graph.RefSeq().id);
+//	                                System.out.println(graph.RefSeq());
                                     Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getVertex(refId);
                                     if(!optionalRefSeq.isPresent()){
                                         String nucleotideSequenceIdSt = "";
