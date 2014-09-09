@@ -55,6 +55,16 @@ public abstract class UniprotGraph<
 		    I, RV, RVT, RE, RET
 		    >
     countryNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Patent<I, RV, RVT, RE, RET>, PatentType,
+			// property
+			PatentType.number, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	patentNumberIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Institute<I, RV, RVT, RE, RET>, InstituteType,

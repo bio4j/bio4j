@@ -92,6 +92,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
 
 	public static final String THESIS_CITATION_TYPE = "thesis";
+	public static final String PATENT_CITATION_TYPE = "patent";
 
 	protected SimpleDateFormat dateFormat;
 
@@ -1438,7 +1439,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//-----------------------------PATENT-----------------------------------------
 						break;
-					case PatentNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case PATENT_CITATION_TYPE:
 						if (uniprotDataXML.getPatents()) {
 							String numberSt = citation.getAttributeValue("number");
 							String dateSt = citation.getAttributeValue("date");
@@ -1454,31 +1455,27 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							}
 
 							if (!numberSt.equals("")) {
-								long patentId = -1;
-								IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-								if (patentNumberIndexHits.hasNext()) {
-									patentId = patentNumberIndexHits.getSingle();
-								}
-								patentNumberIndexHits.close();
 
-								if (patentId < 0) {
-									patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
-									patentProperties.put(PatentNode.DATE_PROPERTY, dateSt);
-									patentProperties.put(PatentNode.TITLE_PROPERTY, titleSt);
-									//---patent node creation and indexing
-									patentId = inserter.createNode(patentProperties);
-									patentNumberIndex.add(patentId, MapUtil.map(PatentNode.PATENT_NUMBER_INDEX, numberSt));
-									nodeTypeIndex.add(patentId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PatentNode.NODE_TYPE));
-									//---flushing patent number index---
-									patentNumberIndex.flush();
-									//---authors association-----
-									for (long personId : authorsPersonNodesIds) {
-										inserter.createRelationship(patentId, personId, patentAuthorRel, null);
-									}
+								Patent<I,RV,RVT,RE,RET> patent = null;
+								Optional<Patent<I,RV,RVT,RE,RET>> optionalPatent = graph.patentNumberIndex().getVertex(numberSt);
+								if(!optionalPatent.isPresent()){
+									patent = graph.Patent().from(graph.raw().addVertex(null));
+									patent.set(graph.Patent().number, numberSt);
+									patent.set(graph.Patent().title, titleSt);
+								}else{
+									patent = optionalPatent.get();
+								}
+
+								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
+								reference.set(graph.Reference().date, dateSt);
+								//---authors association-----
+								for (Person person : authorsPerson) {
+									reference.addOutEdge(graph.ReferenceAuthor(), person);
 								}
 
 								//--protein citation relationship
-								inserter.createRelationship(patentId, currentProteinId, patentProteinCitationRel, null);
+								protein.addOutEdge(graph.ProteinReference(), reference);
+								reference.addOutEdge(graph.ReferencePatent(), patent);
 							}
 						}
 
