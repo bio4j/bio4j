@@ -26,8 +26,8 @@ public final class Reference <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT,
 	}
 
 	// properties
-	public String name() {
-		return get(type().name);
+	public String date() {
+		return get(type().date);
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////

@@ -47,6 +47,56 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    Country<I, RV, RVT, RE, RET>, CountryType,
+		    // property
+		    CountryType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    countryNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Institute<I, RV, RVT, RE, RET>, InstituteType,
+		    // property
+		    InstituteType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    instituteNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Consortium<I, RV, RVT, RE, RET>, ConsortiumType,
+		    // property
+		    ConsortiumType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    consortiumNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Thesis<I, RV, RVT, RE, RET>, ThesisType,
+			// property
+			ThesisType.title, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	thesisTitleIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Person<I, RV, RVT, RE, RET>, PersonType,
+		    // property
+		    PersonType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    personNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    Protein<I, RV, RVT, RE, RET>, ProteinType,
 		    // property
 		    ProteinType.accession, String,
@@ -1627,7 +1677,7 @@ public abstract class UniprotGraph<
 					UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType
 					> {
 
-		public final name name = new name();
+		public final date date = new date();
 
         public ReferenceType(RVT raw) {
 			super(raw);
@@ -1643,10 +1693,10 @@ public abstract class UniprotGraph<
 			return new Reference<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
-		public final class name
+		public final class date
 				extends
-				UniprotVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, name, String> {
-			public name() {
+				UniprotVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
+			public date() {
 				super(ReferenceType.this);
 			}
 

@@ -91,6 +91,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     public static final String FEATURE_LOCATION_POSITION_ATTRIBUTE = "position";
     public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
 
+	public static final String THESIS_CITATION_TYPE = "thesis";
+
 	protected SimpleDateFormat dateFormat;
 
 
@@ -334,10 +336,6 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                 case "RefSeq":
                                     //looking for RefSeq node
                                     RefSeq<I,RV,RVT,RE,RET> refSeq = null;
-//	                                System.out.println("refId: " + refId);
-//	                                System.out.println("graph.refSeqIdIndex() == null " + (graph.refSeqIdIndex() == null) );
-//	                                System.out.println(graph.RefSeq().id);
-//	                                System.out.println(graph.RefSeq());
                                     Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getVertex(refId);
                                     if(!optionalRefSeq.isPresent()){
                                         String nucleotideSequenceIdSt = "";
@@ -1328,54 +1326,47 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 		List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
 
-		for (Element reference : referenceList) {
-			List<Element> citationsList = reference.getChildren(CITATION_TAG_NAME);
+		for (Element referenceElement : referenceList) {
+			List<Element> citationsList = referenceElement.getChildren(CITATION_TAG_NAME);
 			for (Element citation : citationsList) {
 
 				String citationType = citation.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE);
 
-				List<Person> authorsPersonNodesIds = new ArrayList<>();
-				List<Long> authorsConsortiumNodesIds = new ArrayList<>();
+				List<Person<I,RV,RVT,RE,RET>> authorsPerson = new ArrayList<>();
+				List<Consortium<I,RV,RVT,RE,RET>> authorsConsortium = new ArrayList<>();
 
 				List<Element> authorPersonElems = citation.getChild("authorList").getChildren("person");
 				List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
 
-				for (Element person : authorPersonElems) {
-					long personId = -1;
-					IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-					if (personNameIndexHits.hasNext()) {
-						personId = personNameIndexHits.getSingle();
+				for (Element personElement : authorPersonElems) {
+
+					Person<I,RV,RVT,RE,RET> person = null;
+					String personName = personElement.getAttributeValue("name");
+					Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
+					if(!optionalPerson.isPresent()){
+						person = graph.Person().from(graph.raw().addVertex(null));
+						person.set(graph.Person().name, personName);
+					}else{
+						person = optionalPerson.get();
 					}
-					personNameIndexHits.close();
-					if (personId < 0) {
-						personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-						personId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
-						//flushing person name index
-						personNameIndex.flush();
-					}
-					authorsPersonNodesIds.add(personId);
 				}
 
-				for (Element consortium : authorConsortiumElems) {
+				for (Element consortiumElement : authorConsortiumElems) {
 
-					long consortiumId = -1;
-					IndexHits<Long> consortiumIdIndexHits = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
-					if (consortiumIdIndexHits.hasNext()) {
-						consortiumId = consortiumIdIndexHits.getSingle();
+					Consortium<I,RV,RVT,RE,RET> consortium = null;
+					String consortiumName = consortiumElement.getAttributeValue("name");
+					Optional<Consortium<I,RV,RVT,RE,RET>> optionalConsortium = graph.consortiumNameIndex().getVertex(consortiumName);
+					if(!optionalConsortium.isPresent()){
+						consortium = graph.Consortium().from(graph.raw().addVertex(null));
+						consortium.set(graph.Consortium().name, consortiumName);
+					}else{
+						consortium = optionalConsortium.get();
 					}
-					consortiumIdIndexHits.close();
-					if (consortiumId < 0) {
-						consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
-						consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex, nodeTypeIndex);
-						//---flushing consortium name index--
-						consortiumNameIndex.flush();
-					}
-					authorsConsortiumNodesIds.add(consortiumId);
 				}
 				//----------------------------------------------------------------------------
 				//-----------------------------THESIS-----------------------------------------
 				switch (citationType) {
-					case ThesisNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case THESIS_CITATION_TYPE:
 						if (uniprotDataXML.getThesis()) {
 							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
@@ -1384,67 +1375,63 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							}
 							if (titleSt == null) {
 								titleSt = "";
-							}
+							}else{
 
-							long thesisId = -1;
-							IndexHits<Long> thesisTitleIndexHits = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
-							if (thesisTitleIndexHits.hasNext()) {
-								thesisId = thesisTitleIndexHits.getSingle();
-							}
-							thesisTitleIndexHits.close();
-							if (thesisId < 0) {
-								thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
-								thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
-								//---thesis node creation and indexing
-								thesisId = inserter.createNode(thesisProperties);
-								nodeTypeIndex.add(thesisId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ThesisNode.NODE_TYPE));
-								thesisTitleIndex.add(thesisId, MapUtil.map(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt));
-								//flushing thesis title index
-								thesisTitleIndex.flush();
+								Thesis<I,RV,RVT,RE,RET> thesis = null;
+								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
+
+								if(!optionalThesis.isPresent()){
+
+									thesis = graph.Thesis().from(graph.raw().addVertex(null));
+									thesis.set(graph.Thesis().title, titleSt);
+
+									//-----------institute-----------------------------
+									String instituteSt = citation.getAttributeValue("institute");
+									String countrySt = citation.getAttributeValue("country");
+
+									if (instituteSt != null) {
+
+										Institute<I,RV,RVT,RE,RET> institute = null;
+										Optional<Institute<I,RV,RVT,RE,RET>> optionalInstitute = graph.instituteNameIndex().getVertex(instituteSt);
+										if(!optionalInstitute.isPresent()){
+											institute = graph.Institute().from(graph.raw().addVertex(null));
+											institute.set(graph.Institute().name, instituteSt);
+										}else{
+											institute = optionalInstitute.get();
+										}
+
+										if (countrySt != null) {
+
+											Country<I,RV,RVT,RE,RET> country = null;
+											Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
+											if(!optionalCountry.isPresent()){
+												country = graph.Country().from(graph.raw().addVertex(null));
+												country.set(graph.Country().name, countrySt);
+											}else{
+												country = optionalCountry.get();
+											}
+
+											institute.addOutEdge(graph.InstituteCountry(), country);
+										}
+										thesis.addOutEdge(graph.ThesisInstitute(), institute);
+									}
+
+								}else{
+									thesis = optionalThesis.get();
+								}
+
+								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
+								reference.set(graph.Reference().date, dateSt);
 								//---authors association-----
-								for (long personId : authorsPersonNodesIds) {
-									inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
+								for (Person person : authorsPerson) {
+									reference.addOutEdge(graph.ReferenceAuthor(), person);
 								}
 
-								//-----------institute-----------------------------
-								String instituteSt = citation.getAttributeValue("institute");
-								String countrySt = citation.getAttributeValue("country");
-								if (instituteSt != null) {
+								//--protein reference citation relationship
+								protein.addOutEdge(graph.ProteinReference(), reference);
+								reference.addOutEdge(graph.ReferenceThesis(), thesis);
 
-									long instituteId = -1;
-									IndexHits<Long> instituteNameIndexHits = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
-									if (instituteNameIndexHits.hasNext()) {
-										instituteId = instituteNameIndexHits.getSingle();
-									}
-									instituteNameIndexHits.close();
-									if (instituteId < 0) {
-										instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
-										instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex, nodeTypeIndex);
-										//flushing institute name index
-										instituteNameIndex.flush();
-									}
-									if (countrySt != null) {
-										//long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-										long countryId = -1;
-										IndexHits<Long> countryNameIndexHits = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-										if (countryNameIndexHits.hasNext()) {
-											countryId = countryNameIndexHits.getSingle();
-										}
-										countryNameIndexHits.close();
-										if (countryId < 0) {
-											countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
-											countryId = createCountryNode(countryProperties, inserter, countryNameIndex, nodeTypeIndex);
-											//flushing country name index
-											countryNameIndex.flush();
-										}
-										inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
-									}
-									inserter.createRelationship(thesisId, instituteId, thesisInstituteRel, null);
-								}
 							}
-
-							//--protein citation relationship
-							inserter.createRelationship(thesisId, currentProteinId, thesisProteinCitationRel, null);
 
 						}
 
