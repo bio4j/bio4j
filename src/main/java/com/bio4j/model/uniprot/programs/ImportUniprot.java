@@ -429,12 +429,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
                         //-----comments import---
                         if (uniprotDataXML.getComments()) {
-                            //importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
+                            importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
                         }
 
                         //-----features import----
                         if (uniprotDataXML.getFeatures()) {
-                            //importProteinFeatures(entryXMLElem, inserter, indexProvider, currentProteinId);
+                            importProteinFeatures(entryXMLElem, graph, protein);
                         }
 
                         //--------------------------------datasets--------------------------------------------------
@@ -792,573 +792,491 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             addPropertiesToProteinFeatureRelationship(graph, proteinFeature, featureIdSt, featureDescSt, featureEvidenceSt,
                     featureStatusSt, beginFeature, endFeature, originalSt, variationSt, featureRefSt);
 
-
-//			switch (featureTypeSt) {
-//				case FEATURE_ACTIVE_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_BINDING_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_CROSS_LINK_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_GLYCOSYLATION_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_INITIATOR_METHIONINE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_LIPID_MOIETY_BINDING_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_METAL_ION_BINDING_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_MODIFIED_RESIDUE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_NON_STANDARD_AMINOACID_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_NON_TERMINAL_RESIDUE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_PEPTIDE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_UNSURE_RESIDUE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_MUTAGENESIS_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SEQUENCE_VARIANT_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_CALCIUM_BINDING_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_CHAIN_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_COILED_COIL_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_COMPOSITONALLY_BIASED_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_DISULFIDE_BOND_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_DNA_BINDING_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_DOMAIN_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_HELIX_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_INTRAMEMBRANE_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_NON_CONSECUTIVE_RESIDUES_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_NUCLEOTIDE_PHOSPHATE_BINDING_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_PROPEPTIDE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_REGION_OF_INTEREST_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_REPEAT_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SHORT_SEQUENCE_MOTIF_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SIGNAL_PEPTIDE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SPLICE_VARIANT_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_STRAND_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_TOPOLOGICAL_DOMAIN_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_TRANSIT_PEPTIDE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_TRANSMEMBRANE_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_ZINC_FINGER_REGION_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SITE_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_TURN_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//				case FEATURE_SEQUENCE_CONFLICT_UNIPROT_ATTRIBUTE_VALUE:
-//					break;
-//			}
-
         }
 
     }
 
-//	private static void importProteinComments(XMLElement entryXMLElem,
-//	                                          TitanUniprotGraph graph,
-//	                                          TitanProtein currentProtein,
-//	                                          String proteinSequence,
-//	                                          UniprotDataXML uniprotDataXML) {
-//
-//
-//		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
-//
-//		for (Element commentElem : comments) {
-//
-//			String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
-//
-//			Element textElem = commentElem.getChild("text");
-//			String commentTextSt = "";
-//			String commentStatusSt = "";
-//			String commentEvidenceSt = "";
-//			if (textElem != null) {
-//				commentTextSt = textElem.getText();
-//				commentStatusSt = textElem.getAttributeValue("status");
-//				if (commentStatusSt == null) {
-//					commentStatusSt = "";
-//				}
-//				commentEvidenceSt = textElem.getAttributeValue("evidence");
-//				if (commentEvidenceSt == null) {
-//					commentEvidenceSt = "";
-//				}
-//			}
-//
-//
-//
-//			commentProperties.put(BasicCommentRel.TEXT_PROPERTY, commentTextSt);
-//			commentProperties.put(BasicCommentRel.STATUS_PROPERTY, commentStatusSt);
-//			commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//
-//			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
-//			Optional<TitanCommentType> commentOptional =  graph.commentTypeNameIndex.getNode(commentTypeSt);
-//			TitanCommentType comment = null;
-//
-//			if(!commentOptional.isPresent()){
-//				comment = graph.commentTypeT.from(graph.rawGraph().addVertex(null));
-//				comment.set(graph.commentTypeT.name, commentTypeSt);
-//				graph.rawGraph().commit();
-//			}else{
-//				comment = commentOptional.get();
-//			}
-//			//-----toxic dose----------------
-//			switch (commentTypeSt) {
-//				case ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, toxicDoseCommentRel, commentProperties);
-//					break;
-//				case CautionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, cautionCommentRel, commentProperties);
-//					break;
-//				case CofactorCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, cofactorCommentRel, commentProperties);
-//					break;
-//				case DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
-//					break;
-//				case OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.TEXT_PROPERTY, commentTextSt);
-//					String nameSt = commentElem.getAttributeValue("name");
-//					if (nameSt == null) {
-//						nameSt = "";
-//					}
-//					String linkSt = "";
-//					Element linkElem = commentElem.getChild("link");
-//					if (linkElem != null) {
-//						String uriSt = linkElem.getAttributeValue("uri");
-//						if (uriSt != null) {
-//							linkSt = uriSt;
-//						}
-//					}
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.NAME_PROPERTY, nameSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.LINK_PROPERTY, linkSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, onlineInformationCommentRel, onlineInformationCommentProperties);
-//					break;
-//				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
-//					break;
-//				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
-//					break;
-//				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
-//					break;
-//				case SubunitCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, subunitCommentRel, commentProperties);
-//					break;
-//				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
-//					break;
-//				case DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
-//					break;
-//				case PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
-//					break;
-//				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
-//					break;
-//				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
-//					break;
-//				case BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEXT_PROPERTY, commentTextSt);
-//					String phDependenceSt = commentElem.getChildText("phDependence");
-//					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
-//					if (phDependenceSt == null) {
-//						phDependenceSt = "";
-//					}
-//					if (temperatureDependenceSt == null) {
-//						temperatureDependenceSt = "";
-//					}
-//					String absorptionMaxSt = "";
-//					String absorptionTextSt = "";
-//					Element absorptionElem = commentElem.getChild("absorption");
-//					if (absorptionElem != null) {
-//						absorptionMaxSt = absorptionElem.getChildText("max");
-//						absorptionTextSt = absorptionElem.getChildText("text");
-//						if (absorptionMaxSt == null) {
-//							absorptionMaxSt = "";
-//						}
-//						if (absorptionTextSt == null) {
-//							absorptionTextSt = "";
-//						}
-//					}
-//					String kineticsSt = "";
-//					Element kineticsElem = commentElem.getChild("kinetics");
-//					if (kineticsElem != null) {
-//						kineticsSt = new XMLElement(kineticsElem).toString();
-//					}
-//					String redoxPotentialSt = "";
-//					String redoxPotentialEvidenceSt = "";
-//					Element redoxPotentialElem = commentElem.getChild("redoxPotential");
-//					if (redoxPotentialElem != null) {
-//						redoxPotentialSt = redoxPotentialElem.getText();
-//						redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
-//						if (redoxPotentialSt == null) {
-//							redoxPotentialSt = "";
-//						}
-//						if (redoxPotentialEvidenceSt == null) {
-//							redoxPotentialEvidenceSt = "";
-//						}
-//					}
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEMPERATURE_DEPENDENCE_PROPERTY, temperatureDependenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.PH_DEPENDENCE_PROPERTY, phDependenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.KINETICS_XML_PROPERTY, kineticsSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_MAX_PROPERTY, absorptionMaxSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_TEXT_PROPERTY, absorptionTextSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_EVIDENCE_PROPERTY, redoxPotentialEvidenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_PROPERTY, redoxPotentialSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, bioPhysicoChemicalPropertiesCommentRel, biophysicochemicalCommentProperties);
-//					break;
-//				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
-//					break;
-//				case PathwayCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, pathwayCommentRel, commentProperties);
-//					break;
-//				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
-//					break;
-//				case ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					if (uniprotDataXML.getSubcellularLocations()) {
-//						List<Element> subcLocations = commentElem.getChildren(UniprotStuff.SUBCELLULAR_LOCATION_TAG_NAME);
-//
-//						for (Element subcLocation : subcLocations) {
-//
-//							List<Element> locations = subcLocation.getChildren(UniprotStuff.LOCATION_TAG_NAME);
-//							Element firstLocation = locations.get(0);
-//							//long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-//							long firstLocationId = -1;
-//							IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-//							if (firstLocationIndexHits.hasNext()) {
-//								firstLocationId = firstLocationIndexHits.getSingle();
-//							}
-//							firstLocationIndexHits.close();
-//							long lastLocationId = firstLocationId;
-//
-//							if (firstLocationId < 0) {
-//								subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-//								lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-//								//---flushing subcellular location name index---
-//								subcellularLocationNameIndex.flush();
-//							}
-//
-//							for (int i = 1; i < locations.size(); i++) {
-//
-//								long tempLocationId;
-//								IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
-//								if (tempLocationIndexHits.hasNext()) {
-//									tempLocationId = tempLocationIndexHits.getSingle();
-//									tempLocationIndexHits.close();
-//								} else {
-//									subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-//									tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-//									subcellularLocationNameIndex.flush();
-//								}
-//
-//								inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
-//								lastLocationId = tempLocationId;
-//							}
-//							Element lastLocation = locations.get(locations.size() - 1);
-//							String evidenceSt = lastLocation.getAttributeValue(UniprotStuff.EVIDENCE_ATTRIBUTE);
-//							String statusSt = lastLocation.getAttributeValue(UniprotStuff.STATUS_ATTRIBUTE);
-//							String topologyStatusSt = "";
-//							String topologySt = "";
-//							Element topologyElem = subcLocation.getChild("topology");
-//							if (topologyElem != null) {
-//								topologySt = topologyElem.getText();
-//								topologyStatusSt = topologyElem.getAttributeValue("status");
-//							}
-//							if (topologyStatusSt == null) {
-//								topologyStatusSt = "";
-//							}
-//							if (topologySt == null) {
-//								topologySt = "";
-//							}
-//							if (evidenceSt == null) {
-//								evidenceSt = "";
-//							}
-//							if (statusSt == null) {
-//								statusSt = "";
-//							}
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
-//							inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
-//
-//						}
-//					}
-//					break;
-//				case UniprotStuff.COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
-//					if (uniprotDataXML.getIsoforms()) {
-//						List<Element> eventList = commentElem.getChildren("event");
-//						List<Element> isoformList = commentElem.getChildren("isoform");
-//
-//						for (Element isoformElem : isoformList) {
-//							String isoformIdSt = isoformElem.getChildText("id");
-//							String isoformNoteSt = isoformElem.getChildText("note");
-//							String isoformNameSt = isoformElem.getChildText("name");
-//							String isoformSeqSt = "";
-//							Element isoSeqElem = isoformElem.getChild("sequence");
-//							if (isoSeqElem != null) {
-//								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-//								if (isoSeqTypeSt.equals("displayed")) {
-//									isoformSeqSt = proteinSequence;
-//								}
-//							}
-//							if (isoformNoteSt == null) {
-//								isoformNoteSt = "";
-//							}
-//							if (isoformNameSt == null) {
-//								isoformNameSt = "";
-//							}
-//							isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
-//							isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-//							isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
-//							isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
-//							//--------------------------------------------------------
-//							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							long isoformId = -1;
-//							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							if (isoformIdIndexHits.hasNext()) {
-//								isoformId = isoformIdIndexHits.getSingle();
-//							}
-//							isoformIdIndexHits.close();
-//							if (isoformId < 0) {
-//								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
-//							}
-//
-//							for (Element eventElem : eventList) {
-//
-//								String eventTypeSt = eventElem.getAttributeValue("type");
-//								switch (eventTypeSt) {
-//									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
-//										break;
-//								}
-//							}
-//
-//							//protein isoform relationship
-//							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
-//
-//						}
-//					}
-//					break;
-//				case UniprotStuff.COMMENT_SEQUENCE_CAUTION_TYPE:
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
-//					Element conflictElem = commentElem.getChild("conflict");
-//					if (conflictElem != null) {
-//
-//						String conflictTypeSt = conflictElem.getAttributeValue("type");
-//						String resourceSt = "";
-//						String idSt = "";
-//						String versionSt = "";
-//
-//						ArrayList<String> positionsList = new ArrayList<>();
-//
-//						Element sequenceElem = conflictElem.getChild("sequence");
-//						if (sequenceElem != null) {
-//							resourceSt = sequenceElem.getAttributeValue("resource");
-//							if (resourceSt == null) {
-//								resourceSt = "";
-//							}
-//							idSt = sequenceElem.getAttributeValue("id");
-//							if (idSt == null) {
-//								idSt = "";
-//							}
-//							versionSt = sequenceElem.getAttributeValue("version");
-//							if (versionSt == null) {
-//								versionSt = "";
-//							}
-//						}
-//
-//						Element locationElem = commentElem.getChild("location");
-//						if (locationElem != null) {
-//							Element positionElem = locationElem.getChild("position");
-//							if (positionElem != null) {
-//								String tempPos = positionElem.getAttributeValue("position");
-//								if (tempPos != null) {
-//									positionsList.add(tempPos);
-//								}
-//							}
-//						}
-//
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
-//						switch (conflictTypeSt) {
-//							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//								}
-//								break;
-//						}
-//					}
-//					break;
-//				case DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
-//					break;
-//				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
-//					break;
-//				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
-//					break;
-//				case RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
-//					List<Element> locationsList = commentElem.getChildren("location");
-//					for (Element tempLoc : locationsList) {
-//						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
-//						rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
-//						inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
-//					}
-//					break;
-//				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
-//					break;
-//				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
-//					break;
-//				case MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					String methodSt = commentElem.getAttributeValue("method");
-//					String massSt = commentElem.getAttributeValue("mass");
-//					if (methodSt == null) {
-//						methodSt = "";
-//					}
-//					if (massSt == null) {
-//						massSt = "";
-//					}
-//					String beginSt = "";
-//					String endSt = "";
-//					Element locationElem = commentElem.getChild("location");
-//					if (locationElem != null) {
-//						Element beginElem = commentElem.getChild("begin");
-//						Element endElem = commentElem.getChild("end");
-//						if (beginElem != null) {
-//							beginSt = beginElem.getAttributeValue("position");
-//						}
-//
-//						if (endElem != null) {
-//							endSt = endElem.getAttributeValue("position");
-//						}
-//					}
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
-//					break;
-//			}
-//
-//		}
-//
-//
-//	}
+	private void importProteinComments(XMLElement entryXMLElem,
+	                                          UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                          Protein<I,RV,RVT,RE,RET> protein,
+	                                          String proteinSequence,
+	                                          UniprotDataXML uniprotDataXML) {
+
+
+		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+
+		for (Element commentElem : comments) {
+
+			String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
+
+			Element textElem = commentElem.getChild("text");
+			String commentTextSt = "";
+			String commentStatusSt = "";
+			String commentEvidenceSt = "";
+			if (textElem != null) {
+				commentTextSt = textElem.getText();
+				commentStatusSt = textElem.getAttributeValue("status");
+				if (commentStatusSt == null) {
+					commentStatusSt = "";
+				}
+				commentEvidenceSt = textElem.getAttributeValue("evidence");
+				if (commentEvidenceSt == null) {
+					commentEvidenceSt = "";
+				}
+			}
+
+
+
+			commentProperties.put(BasicCommentRel.TEXT_PROPERTY, commentTextSt);
+			commentProperties.put(BasicCommentRel.STATUS_PROPERTY, commentStatusSt);
+			commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+
+			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
+			Optional<TitanCommentType> commentOptional =  graph.commentTypeNameIndex.getNode(commentTypeSt);
+			TitanCommentType comment = null;
+
+			if(!commentOptional.isPresent()){
+				comment = graph.commentTypeT.from(graph.rawGraph().addVertex(null));
+				comment.set(graph.commentTypeT.name, commentTypeSt);
+				graph.rawGraph().commit();
+			}else{
+				comment = commentOptional.get();
+			}
+			//-----toxic dose----------------
+			switch (commentTypeSt) {
+				case ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, toxicDoseCommentRel, commentProperties);
+					break;
+				case CautionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, cautionCommentRel, commentProperties);
+					break;
+				case CofactorCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, cofactorCommentRel, commentProperties);
+					break;
+				case DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
+					break;
+				case OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.STATUS_PROPERTY, commentStatusSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.TEXT_PROPERTY, commentTextSt);
+					String nameSt = commentElem.getAttributeValue("name");
+					if (nameSt == null) {
+						nameSt = "";
+					}
+					String linkSt = "";
+					Element linkElem = commentElem.getChild("link");
+					if (linkElem != null) {
+						String uriSt = linkElem.getAttributeValue("uri");
+						if (uriSt != null) {
+							linkSt = uriSt;
+						}
+					}
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.NAME_PROPERTY, nameSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.LINK_PROPERTY, linkSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, onlineInformationCommentRel, onlineInformationCommentProperties);
+					break;
+				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
+					break;
+				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
+					break;
+				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
+					break;
+				case SubunitCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, subunitCommentRel, commentProperties);
+					break;
+				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
+					break;
+				case DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
+					break;
+				case PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
+					break;
+				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
+					break;
+				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
+					break;
+				case BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.STATUS_PROPERTY, commentStatusSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEXT_PROPERTY, commentTextSt);
+					String phDependenceSt = commentElem.getChildText("phDependence");
+					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
+					if (phDependenceSt == null) {
+						phDependenceSt = "";
+					}
+					if (temperatureDependenceSt == null) {
+						temperatureDependenceSt = "";
+					}
+					String absorptionMaxSt = "";
+					String absorptionTextSt = "";
+					Element absorptionElem = commentElem.getChild("absorption");
+					if (absorptionElem != null) {
+						absorptionMaxSt = absorptionElem.getChildText("max");
+						absorptionTextSt = absorptionElem.getChildText("text");
+						if (absorptionMaxSt == null) {
+							absorptionMaxSt = "";
+						}
+						if (absorptionTextSt == null) {
+							absorptionTextSt = "";
+						}
+					}
+					String kineticsSt = "";
+					Element kineticsElem = commentElem.getChild("kinetics");
+					if (kineticsElem != null) {
+						kineticsSt = new XMLElement(kineticsElem).toString();
+					}
+					String redoxPotentialSt = "";
+					String redoxPotentialEvidenceSt = "";
+					Element redoxPotentialElem = commentElem.getChild("redoxPotential");
+					if (redoxPotentialElem != null) {
+						redoxPotentialSt = redoxPotentialElem.getText();
+						redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
+						if (redoxPotentialSt == null) {
+							redoxPotentialSt = "";
+						}
+						if (redoxPotentialEvidenceSt == null) {
+							redoxPotentialEvidenceSt = "";
+						}
+					}
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEMPERATURE_DEPENDENCE_PROPERTY, temperatureDependenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.PH_DEPENDENCE_PROPERTY, phDependenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.KINETICS_XML_PROPERTY, kineticsSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_MAX_PROPERTY, absorptionMaxSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_TEXT_PROPERTY, absorptionTextSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_EVIDENCE_PROPERTY, redoxPotentialEvidenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_PROPERTY, redoxPotentialSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, bioPhysicoChemicalPropertiesCommentRel, biophysicochemicalCommentProperties);
+					break;
+				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
+					break;
+				case PathwayCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, pathwayCommentRel, commentProperties);
+					break;
+				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
+					break;
+				case ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					if (uniprotDataXML.getSubcellularLocations()) {
+						List<Element> subcLocations = commentElem.getChildren(UniprotStuff.SUBCELLULAR_LOCATION_TAG_NAME);
+
+						for (Element subcLocation : subcLocations) {
+
+							List<Element> locations = subcLocation.getChildren(UniprotStuff.LOCATION_TAG_NAME);
+							Element firstLocation = locations.get(0);
+							//long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+							long firstLocationId = -1;
+							IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+							if (firstLocationIndexHits.hasNext()) {
+								firstLocationId = firstLocationIndexHits.getSingle();
+							}
+							firstLocationIndexHits.close();
+							long lastLocationId = firstLocationId;
+
+							if (firstLocationId < 0) {
+								subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
+								lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
+								//---flushing subcellular location name index---
+								subcellularLocationNameIndex.flush();
+							}
+
+							for (int i = 1; i < locations.size(); i++) {
+
+								long tempLocationId;
+								IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
+								if (tempLocationIndexHits.hasNext()) {
+									tempLocationId = tempLocationIndexHits.getSingle();
+									tempLocationIndexHits.close();
+								} else {
+									subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
+									tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
+									subcellularLocationNameIndex.flush();
+								}
+
+								inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
+								lastLocationId = tempLocationId;
+							}
+							Element lastLocation = locations.get(locations.size() - 1);
+							String evidenceSt = lastLocation.getAttributeValue(UniprotStuff.EVIDENCE_ATTRIBUTE);
+							String statusSt = lastLocation.getAttributeValue(UniprotStuff.STATUS_ATTRIBUTE);
+							String topologyStatusSt = "";
+							String topologySt = "";
+							Element topologyElem = subcLocation.getChild("topology");
+							if (topologyElem != null) {
+								topologySt = topologyElem.getText();
+								topologyStatusSt = topologyElem.getAttributeValue("status");
+							}
+							if (topologyStatusSt == null) {
+								topologyStatusSt = "";
+							}
+							if (topologySt == null) {
+								topologySt = "";
+							}
+							if (evidenceSt == null) {
+								evidenceSt = "";
+							}
+							if (statusSt == null) {
+								statusSt = "";
+							}
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
+							inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
+
+						}
+					}
+					break;
+				case UniprotStuff.COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
+					if (uniprotDataXML.getIsoforms()) {
+						List<Element> eventList = commentElem.getChildren("event");
+						List<Element> isoformList = commentElem.getChildren("isoform");
+
+						for (Element isoformElem : isoformList) {
+							String isoformIdSt = isoformElem.getChildText("id");
+							String isoformNoteSt = isoformElem.getChildText("note");
+							String isoformNameSt = isoformElem.getChildText("name");
+							String isoformSeqSt = "";
+							Element isoSeqElem = isoformElem.getChild("sequence");
+							if (isoSeqElem != null) {
+								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
+								if (isoSeqTypeSt.equals("displayed")) {
+									isoformSeqSt = proteinSequence;
+								}
+							}
+							if (isoformNoteSt == null) {
+								isoformNoteSt = "";
+							}
+							if (isoformNameSt == null) {
+								isoformNameSt = "";
+							}
+							isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
+							isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
+							isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
+							isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
+							//--------------------------------------------------------
+							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							long isoformId = -1;
+							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							if (isoformIdIndexHits.hasNext()) {
+								isoformId = isoformIdIndexHits.getSingle();
+							}
+							isoformIdIndexHits.close();
+							if (isoformId < 0) {
+								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
+							}
+
+							for (Element eventElem : eventList) {
+
+								String eventTypeSt = eventElem.getAttributeValue("type");
+								switch (eventTypeSt) {
+									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
+										break;
+								}
+							}
+
+							//protein isoform relationship
+							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+
+						}
+					}
+					break;
+				case UniprotStuff.COMMENT_SEQUENCE_CAUTION_TYPE:
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
+					Element conflictElem = commentElem.getChild("conflict");
+					if (conflictElem != null) {
+
+						String conflictTypeSt = conflictElem.getAttributeValue("type");
+						String resourceSt = "";
+						String idSt = "";
+						String versionSt = "";
+
+						ArrayList<String> positionsList = new ArrayList<>();
+
+						Element sequenceElem = conflictElem.getChild("sequence");
+						if (sequenceElem != null) {
+							resourceSt = sequenceElem.getAttributeValue("resource");
+							if (resourceSt == null) {
+								resourceSt = "";
+							}
+							idSt = sequenceElem.getAttributeValue("id");
+							if (idSt == null) {
+								idSt = "";
+							}
+							versionSt = sequenceElem.getAttributeValue("version");
+							if (versionSt == null) {
+								versionSt = "";
+							}
+						}
+
+						Element locationElem = commentElem.getChild("location");
+						if (locationElem != null) {
+							Element positionElem = locationElem.getChild("position");
+							if (positionElem != null) {
+								String tempPos = positionElem.getAttributeValue("position");
+								if (tempPos != null) {
+									positionsList.add(tempPos);
+								}
+							}
+						}
+
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
+						switch (conflictTypeSt) {
+							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+								}
+								break;
+						}
+					}
+					break;
+				case DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
+					break;
+				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
+					break;
+				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
+					break;
+				case RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
+					List<Element> locationsList = commentElem.getChildren("location");
+					for (Element tempLoc : locationsList) {
+						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
+						rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
+						inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
+					}
+					break;
+				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
+					break;
+				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
+					break;
+				case MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					String methodSt = commentElem.getAttributeValue("method");
+					String massSt = commentElem.getAttributeValue("mass");
+					if (methodSt == null) {
+						methodSt = "";
+					}
+					if (massSt == null) {
+						massSt = "";
+					}
+					String beginSt = "";
+					String endSt = "";
+					Element locationElem = commentElem.getChild("location");
+					if (locationElem != null) {
+						Element beginElem = commentElem.getChild("begin");
+						Element endElem = commentElem.getChild("end");
+						if (beginElem != null) {
+							beginSt = beginElem.getAttributeValue("position");
+						}
+
+						if (endElem != null) {
+							endSt = endElem.getAttributeValue("position");
+						}
+					}
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
+					break;
+			}
+
+		}
+
+
+	}
 
     private void addPropertiesToProteinFeatureRelationship(UniprotGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
                                                                   String id, String description, String evidence, String status, int begin, int end,
@@ -1402,771 +1320,609 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
         }
     }
 
-//	private static long createIsoformNode(Map<String, Object> isoformProperties,
-//	                                      BatchInserter inserter,
-//	                                      BatchInserterIndex isoformIdIndex,
-//	                                      BatchInserterIndex nodeTypeIndex) {
-//
-//		long isoformId = inserter.createNode(isoformProperties);
-//		isoformIdIndex.add(isoformId, MapUtil.map(IsoformNode.ISOFORM_ID_INDEX, isoformProperties.get(IsoformNode.ID_PROPERTY)));
-//		//---adding isoform node to node_type index----
-//		nodeTypeIndex.add(isoformId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, IsoformNode.NODE_TYPE));
-//
-//		return isoformId;
-//	}
-//
-//	private static long createTaxonNode(Map<String, Object> taxonProperties,
-//	                                    BatchInserter inserter,
-//	                                    BatchInserterIndex taxonNameIndex,
-//	                                    BatchInserterIndex nodeTypeIndex) {
-//
-//		long taxonId = inserter.createNode(taxonProperties);
-//		taxonNameIndex.add(taxonId, MapUtil.map(TaxonNode.TAXON_NAME_INDEX, taxonProperties.get(TaxonNode.NAME_PROPERTY)));
-//		//---adding taxon node to node_type index----
-//		nodeTypeIndex.add(taxonId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, TaxonNode.NODE_TYPE));
-//
-//		return taxonId;
-//	}
-//
-//	private static long createPersonNode(Map<String, Object> personProperties,
-//	                                     BatchInserter inserter,
-//	                                     BatchInserterIndex index,
-//	                                     BatchInserterIndex nodeTypeIndex) {
-//
-//		long personId = inserter.createNode(personProperties);
-//		index.add(personId, MapUtil.map(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, personProperties.get(PersonNode.NAME_PROPERTY)));
-//		//---adding person node to node_type index----
-//		nodeTypeIndex.add(personId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PersonNode.NODE_TYPE));
-//
-//		return personId;
-//	}
-//
-//	private static long createConsortiumNode(Map<String, Object> consortiumProperties,
-//	                                         BatchInserter inserter,
-//	                                         BatchInserterIndex index,
-//	                                         BatchInserterIndex nodeTypeIndex) {
-//
-//		long consortiumId = inserter.createNode(consortiumProperties);
-//		index.add(consortiumId, MapUtil.map(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortiumProperties.get(ConsortiumNode.NAME_PROPERTY)));
-//		//---adding consortium node to node_type index----
-//		nodeTypeIndex.add(consortiumId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ConsortiumNode.NODE_TYPE));
-//
-//		return consortiumId;
-//	}
-//
-//	private static long createInstituteNode(Map<String, Object> instituteProperties,
-//	                                        BatchInserter inserter,
-//	                                        BatchInserterIndex index,
-//	                                        BatchInserterIndex nodeTypeIndex) {
-//
-//		long instituteId = inserter.createNode(instituteProperties);
-//		index.add(instituteId, MapUtil.map(InstituteNode.INSTITUTE_NAME_INDEX, instituteProperties.get(InstituteNode.NAME_PROPERTY)));
-//		//---adding institute node to node_type index----
-//		nodeTypeIndex.add(instituteId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, InstituteNode.NODE_TYPE));
-//
-//		return instituteId;
-//	}
-//
-//	private static long createCountryNode(Map<String, Object> countryProperties,
-//	                                      BatchInserter inserter,
-//	                                      BatchInserterIndex index,
-//	                                      BatchInserterIndex nodeTypeIndex) {
-//
-//		long countryId = inserter.createNode(countryProperties);
-//		index.add(countryId, MapUtil.map(CountryNode.COUNTRY_NAME_INDEX, countryProperties.get(CountryNode.NAME_PROPERTY)));
-//		//---adding country node to node_type index----
-//		nodeTypeIndex.add(countryId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CountryNode.NODE_TYPE));
-//
-//		return countryId;
-//	}
-//
-//	private static long createCityNode(Map<String, Object> cityProperties,
-//	                                   BatchInserter inserter,
-//	                                   BatchInserterIndex index,
-//	                                   BatchInserterIndex nodeTypeIndex) {
-//
-//		long cityId = inserter.createNode(cityProperties);
-//		index.add(cityId, MapUtil.map(CityNode.CITY_NAME_INDEX, cityProperties.get(CityNode.NAME_PROPERTY)));
-//		//---adding city node to node_type index----
-//		nodeTypeIndex.add(cityId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, CityNode.NODE_TYPE));
-//
-//		return cityId;
-//	}
-//
-//	private static long createDbNode(Map<String, Object> dbProperties,
-//	                                 BatchInserter inserter,
-//	                                 BatchInserterIndex index,
-//	                                 BatchInserterIndex nodeTypeIndex) {
-//
-//		long dbId = inserter.createNode(dbProperties);
-//		index.add(dbId, MapUtil.map(DBNode.DB_NAME_INDEX, dbProperties.get(DBNode.NAME_PROPERTY)));
-//		//---adding db node to node_type index----
-//		nodeTypeIndex.add(dbId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, DBNode.NODE_TYPE));
-//
-//		return dbId;
-//	}
-//
-//	private static long createSubcellularLocationNode(Map<String, Object> subcellularLocationProperties,
-//	                                                  BatchInserter inserter,
-//	                                                  BatchInserterIndex index,
-//	                                                  BatchInserterIndex nodeTypeIndex) {
-//
-//		long subcellularLocationId = inserter.createNode(subcellularLocationProperties);
-//		index.add(subcellularLocationId, MapUtil.map(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, subcellularLocationProperties.get(SubcellularLocationNode.NAME_PROPERTY)));
-//		//---adding subcellular location node to node_type index----
-//		nodeTypeIndex.add(subcellularLocationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubcellularLocationNode.NODE_TYPE));
-//
-//		return subcellularLocationId;
-//	}
-//
-//	private static void importProteinCitations(XMLElement entryXMLElem,
-//	                                           BatchInserter inserter,
-//	                                           BatchInserterIndexProvider indexProvider,
-//	                                           long currentProteinId,
-//	                                           UniprotDataXML uniprotDataXML) {
-//
-//		//-----------------create batch indexes----------------------------------
-//		//----------------------------------------------------------------------
-//		BatchInserterIndex personNameIndex = indexProvider.nodeIndex(PersonNode.PERSON_NAME_FULL_TEXT_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex consortiumNameIndex = indexProvider.nodeIndex(ConsortiumNode.CONSORTIUM_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex thesisTitleIndex = indexProvider.nodeIndex(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex instituteNameIndex = indexProvider.nodeIndex(InstituteNode.INSTITUTE_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex countryNameIndex = indexProvider.nodeIndex(CountryNode.COUNTRY_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex cityNameIndex = indexProvider.nodeIndex(CityNode.CITY_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex patentNumberIndex = indexProvider.nodeIndex(PatentNode.PATENT_NUMBER_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex bookNameIndex = indexProvider.nodeIndex(BookNode.BOOK_NAME_FULL_TEXT_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex publisherNameIndex = indexProvider.nodeIndex(PublisherNode.PUBLISHER_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex onlineArticleTitleIndex = indexProvider.nodeIndex(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex onlineJournalNameIndex = indexProvider.nodeIndex(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex submissionTitleIndex = indexProvider.nodeIndex(SubmissionNode.SUBMISSION_TITLE_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex articleTitleIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, FULL_TEXT_ST));
-//		BatchInserterIndex articleDoiIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_DOI_ID_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex articlePubmedIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_PUBMED_ID_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex articleMedlineIdIndex = indexProvider.nodeIndex(ArticleNode.ARTICLE_MEDLINE_ID_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex journalNameIndex = indexProvider.nodeIndex(JournalNode.JOURNAL_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex nodeTypeIndex = indexProvider.nodeIndex(Bio4jManager.NODE_TYPE_INDEX_NAME,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		BatchInserterIndex dbNameIndex = indexProvider.nodeIndex(DBNode.DB_NAME_INDEX,
-//				MapUtil.stringMap(PROVIDER_ST, LUCENE_ST, TYPE_ST, EXACT_ST));
-//		//----------------------------------------------------------------------
-//		//----------------------------------------------------------------------
-//
-//
-//		List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(UniprotStuff.REFERENCE_TAG_NAME);
-//
-//		for (Element reference : referenceList) {
-//			List<Element> citationsList = reference.getChildren(UniprotStuff.CITATION_TAG_NAME);
-//			for (Element citation : citationsList) {
-//
-//				String citationType = citation.getAttributeValue(UniprotStuff.DB_REFERENCE_TYPE_ATTRIBUTE);
-//
-//				List<Long> authorsPersonNodesIds = new ArrayList<>();
-//				List<Long> authorsConsortiumNodesIds = new ArrayList<>();
-//
-//				List<Element> authorPersonElems = citation.getChild("authorList").getChildren("person");
-//				List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
-//
-//				for (Element person : authorPersonElems) {
-//					//long personId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-//					long personId = -1;
-//					IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-//					if (personNameIndexHits.hasNext()) {
-//						personId = personNameIndexHits.getSingle();
-//					}
-//					personNameIndexHits.close();
-//					if (personId < 0) {
-//						personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-//						personId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
-//						//flushing person name index
-//						personNameIndex.flush();
-//					}
-//					authorsPersonNodesIds.add(personId);
-//				}
-//
-//				for (Element consortium : authorConsortiumElems) {
-//
-//					long consortiumId = -1;
-//					IndexHits<Long> consortiumIdIndexHits = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
-//					if (consortiumIdIndexHits.hasNext()) {
-//						consortiumId = consortiumIdIndexHits.getSingle();
-//					}
-//					consortiumIdIndexHits.close();
-//					if (consortiumId < 0) {
-//						consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
-//						consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex, nodeTypeIndex);
-//						//---flushing consortium name index--
-//						consortiumNameIndex.flush();
-//					}
-//					authorsConsortiumNodesIds.add(consortiumId);
-//				}
-//				//----------------------------------------------------------------------------
-//				//-----------------------------THESIS-----------------------------------------
-//				switch (citationType) {
-//					case ThesisNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getThesis()) {
-//							String dateSt = citation.getAttributeValue("date");
-//							String titleSt = citation.getChildText("title");
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//
-//							long thesisId = -1;
-//							IndexHits<Long> thesisTitleIndexHits = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
-//							if (thesisTitleIndexHits.hasNext()) {
-//								thesisId = thesisTitleIndexHits.getSingle();
-//							}
-//							thesisTitleIndexHits.close();
-//							if (thesisId < 0) {
-//								thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
-//								thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
-//								//---thesis node creation and indexing
-//								thesisId = inserter.createNode(thesisProperties);
-//								nodeTypeIndex.add(thesisId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ThesisNode.NODE_TYPE));
-//								thesisTitleIndex.add(thesisId, MapUtil.map(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt));
-//								//flushing thesis title index
-//								thesisTitleIndex.flush();
-//								//---authors association-----
-//								for (long personId : authorsPersonNodesIds) {
-//									inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
-//								}
-//
-//								//-----------institute-----------------------------
-//								String instituteSt = citation.getAttributeValue("institute");
-//								String countrySt = citation.getAttributeValue("country");
-//								if (instituteSt != null) {
-//
-//									long instituteId = -1;
-//									IndexHits<Long> instituteNameIndexHits = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
-//									if (instituteNameIndexHits.hasNext()) {
-//										instituteId = instituteNameIndexHits.getSingle();
-//									}
-//									instituteNameIndexHits.close();
-//									if (instituteId < 0) {
-//										instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
-//										instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex, nodeTypeIndex);
-//										//flushing institute name index
-//										instituteNameIndex.flush();
-//									}
-//									if (countrySt != null) {
-//										//long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-//										long countryId = -1;
-//										IndexHits<Long> countryNameIndexHits = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt);
-//										if (countryNameIndexHits.hasNext()) {
-//											countryId = countryNameIndexHits.getSingle();
-//										}
-//										countryNameIndexHits.close();
-//										if (countryId < 0) {
-//											countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
-//											countryId = createCountryNode(countryProperties, inserter, countryNameIndex, nodeTypeIndex);
-//											//flushing country name index
-//											countryNameIndex.flush();
-//										}
-//										inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
-//									}
-//									inserter.createRelationship(thesisId, instituteId, thesisInstituteRel, null);
-//								}
-//							}
-//
-//							//--protein citation relationship
-//							inserter.createRelationship(thesisId, currentProteinId, thesisProteinCitationRel, null);
-//
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//-----------------------------PATENT-----------------------------------------
-//						break;
-//					case PatentNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getPatents()) {
-//							String numberSt = citation.getAttributeValue("number");
-//							String dateSt = citation.getAttributeValue("date");
-//							String titleSt = citation.getChildText("title");
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//							if (numberSt == null) {
-//								numberSt = "";
-//							}
-//
-//							if (!numberSt.equals("")) {
-//								long patentId = -1;
-//								IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
-//								if (patentNumberIndexHits.hasNext()) {
-//									patentId = patentNumberIndexHits.getSingle();
-//								}
-//								patentNumberIndexHits.close();
-//
-//								if (patentId < 0) {
-//									patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
-//									patentProperties.put(PatentNode.DATE_PROPERTY, dateSt);
-//									patentProperties.put(PatentNode.TITLE_PROPERTY, titleSt);
-//									//---patent node creation and indexing
-//									patentId = inserter.createNode(patentProperties);
-//									patentNumberIndex.add(patentId, MapUtil.map(PatentNode.PATENT_NUMBER_INDEX, numberSt));
-//									nodeTypeIndex.add(patentId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PatentNode.NODE_TYPE));
-//									//---flushing patent number index---
-//									patentNumberIndex.flush();
-//									//---authors association-----
-//									for (long personId : authorsPersonNodesIds) {
-//										inserter.createRelationship(patentId, personId, patentAuthorRel, null);
-//									}
-//								}
-//
-//								//--protein citation relationship
-//								inserter.createRelationship(patentId, currentProteinId, patentProteinCitationRel, null);
-//							}
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//-----------------------------SUBMISSION-----------------------------------------
-//						break;
-//					case SubmissionNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getSubmissions()) {
-//							String dateSt = citation.getAttributeValue("date");
-//							String titleSt = citation.getChildText("title");
-//							String dbSt = citation.getAttributeValue("db");
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//
-//							submissionProperties.put(SubmissionNode.DATE_PROPERTY, dateSt);
-//							submissionProperties.put(SubmissionNode.TITLE_PROPERTY, titleSt);
-//
-//							long submissionId;
-//							IndexHits<Long> submissionTitleIndexHits = submissionTitleIndex.get(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt);
-//							if (submissionTitleIndexHits.hasNext()) {
-//								submissionId = submissionTitleIndexHits.getSingle();
-//								submissionTitleIndexHits.close();
-//							} else {
-//								//---submission node creation and indexing
-//								submissionId = inserter.createNode(submissionProperties);
-//								//--indexing node by type---
-//								nodeTypeIndex.add(submissionId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubmissionNode.NODE_TYPE));
-//								if (!titleSt.isEmpty()) {
-//									//--indexing node by title---
-//									submissionTitleIndex.add(submissionId, MapUtil.map(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt));
-//									submissionTitleIndex.flush();
-//								}
-//							}
-//
-//							//---authors association-----
-//							for (long personId : authorsPersonNodesIds) {
-//								inserter.createRelationship(submissionId, personId, submissionAuthorRel, null);
-//							}
-//							//---authors consortium association-----
-//							for (long consortiumId : authorsConsortiumNodesIds) {
-//								inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
-//							}
-//
-//							if (dbSt != null) {
-//								long dbId = -1;
-//								IndexHits<Long> dbNameIndexHits = dbNameIndex.get(DBNode.DB_NAME_INDEX, dbSt);
-//								if (dbNameIndexHits.hasNext()) {
-//									dbId = dbNameIndexHits.getSingle();
-//								}
-//								dbNameIndexHits.close();
-//								if (dbId < 0) {
-//									dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
-//									dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
-//									dbId = createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
-//									dbNameIndex.flush();
-//								}
-//								//-----submission db relationship-----
-//								inserter.createRelationship(submissionId, dbId, submissionDbRel, null);
-//							}
-//
-//							//--protein citation relationship
-//							inserter.createRelationship(submissionId, currentProteinId, submissionProteinCitationRel, null);
-//
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//-----------------------------BOOK-----------------------------------------
-//						break;
-//					case BookNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getBooks()) {
-//							String nameSt = citation.getAttributeValue("name");
-//							String dateSt = citation.getAttributeValue("date");
-//							String titleSt = citation.getChildText("title");
-//							String publisherSt = citation.getAttributeValue("publisher");
-//							String firstSt = citation.getAttributeValue("first");
-//							String lastSt = citation.getAttributeValue("last");
-//							String citySt = citation.getAttributeValue("city");
-//							String volumeSt = citation.getAttributeValue("volume");
-//							if (nameSt == null) {
-//								nameSt = "";
-//							}
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//							if (publisherSt == null) {
-//								publisherSt = "";
-//							}
-//							if (firstSt == null) {
-//								firstSt = "";
-//							}
-//							if (lastSt == null) {
-//								lastSt = "";
-//							}
-//							if (citySt == null) {
-//								citySt = "";
-//							}
-//							if (volumeSt == null) {
-//								volumeSt = "";
-//							}
-//
-//							long bookId = -1;
-//							IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-//							if (bookNameIndexHits.hasNext()) {
-//								bookId = bookNameIndexHits.getSingle();
-//							}
-//							bookNameIndexHits.close();
-//
-//							if (bookId < 0) {
-//								bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
-//								bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
-//								//---book node creation and indexing
-//								bookId = inserter.createNode(bookProperties);
-//
-//								bookNameIndex.add(bookId, MapUtil.map(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt));
-//								//--indexing node by type---
-//								nodeTypeIndex.add(bookId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, BookNode.NODE_TYPE));
-//
-//								//--flushing book name index---
-//								bookNameIndex.flush();
-//								//---authors association-----
-//								for (long personId : authorsPersonNodesIds) {
-//									inserter.createRelationship(bookId, personId, bookAuthorRel, null);
-//								}
-//
-//								//---editor association-----
-//								Element editorListElem = citation.getChild("editorList");
-//								if (editorListElem != null) {
-//									List<Element> editorsElems = editorListElem.getChildren("person");
-//									for (Element person : editorsElems) {
-//										//long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-//										long editorId = -1;
-//										IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-//										if (personNameIndexHits.hasNext()) {
-//											editorId = personNameIndexHits.getSingle();
-//										}
-//										personNameIndexHits.close();
-//										if (editorId < 0) {
-//											personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-//											editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
-//										}
-//										//---flushing person name index---
-//										personNameIndex.flush();
-//										//editor association
-//										inserter.createRelationship(bookId, editorId, bookEditorRel, null);
-//									}
-//								}
-//
-//
-//								//----publisher--
-//								if (!publisherSt.equals("")) {
-//									//long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-//									long publisherId = -1;
-//									IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-//									if (publisherNameIndexHits.hasNext()) {
-//										publisherId = publisherNameIndexHits.getSingle();
-//									}
-//									publisherNameIndexHits.close();
-//									if (publisherId < 0) {
-//										publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
-//										publisherId = inserter.createNode(publisherProperties);
-//										//--indexing node by type---
-//										nodeTypeIndex.add(publisherId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PublisherNode.NODE_TYPE));
-//										publisherNameIndex.add(publisherId, MapUtil.map(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt));
-//										//--flushing publisher name index--
-//										publisherNameIndex.flush();
-//									}
-//									inserter.createRelationship(bookId, publisherId, bookPublisherRel, null);
-//								}
-//
-//								//-----city-----
-//								if (!citySt.equals("")) {
-//									//long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
-//									long cityId = -1;
-//									IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
-//									if (cityNameIndexHits.hasNext()) {
-//										cityId = cityNameIndexHits.getSingle();
-//									}
-//									cityNameIndexHits.close();
-//									if (cityId < 0) {
-//										cityProperties.put(CityNode.NAME_PROPERTY, citySt);
-//										cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
-//										//-----flushing city name index---
-//										cityNameIndex.flush();
-//									}
-//									inserter.createRelationship(bookId, cityId, bookCityRel, null);
-//								}
-//							}
-//
-//							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
-//							//--protein citation relationship
-//							inserter.createRelationship(bookId, currentProteinId, bookProteinCitationRel, bookProteinCitationProperties);
-//
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//-----------------------------ONLINE ARTICLE-----------------------------------------
-//						break;
-//					case OnlineArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getOnlineArticles()) {
-//							String locatorSt = citation.getChildText("locator");
-//							String nameSt = citation.getAttributeValue("name");
-//							String titleSt = citation.getChildText("title");
-//
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//							if (nameSt == null) {
-//								nameSt = "";
-//							}
-//							if (locatorSt == null) {
-//								locatorSt = "";
-//							}
-//
-//							long onlineArticleId = -1;
-//							IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-//							if (onlineArticleTitleIndexHits.hasNext()) {
-//								onlineArticleId = onlineArticleTitleIndexHits.getSingle();
-//							}
-//							onlineArticleTitleIndexHits.close();
-//							if (onlineArticleId < 0) {
-//								onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
-//								onlineArticleId = inserter.createNode(onlineArticleProperties);
-//								//--indexing node by type---
-//								nodeTypeIndex.add(onlineArticleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineArticleNode.NODE_TYPE));
-//
-//								if (!titleSt.equals("")) {
-//									onlineArticleTitleIndex.add(onlineArticleId, MapUtil.map(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-//									//-----flushing online article title index---
-//									onlineArticleTitleIndex.flush();
-//								}
-//
-//								//---authors person association-----
-//								for (long personId : authorsPersonNodesIds) {
-//									inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorRel, null);
-//								}
-//								//---authors consortium association-----
-//								for (long consortiumId : authorsConsortiumNodesIds) {
-//									inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
-//								}
-//
-//								//------online journal-----------
-//								if (!nameSt.equals("")) {
-//
-//									long onlineJournalId = -1;
-//									IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-//									if (onlineJournalNameIndexHits.hasNext()) {
-//										onlineJournalId = onlineJournalNameIndexHits.getSingle();
-//									}
-//									onlineJournalNameIndexHits.close();
-//									if (onlineJournalId < 0) {
-//										onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
-//										onlineJournalId = inserter.createNode(onlineJournalProperties);
-//										//--indexing node by type---
-//										nodeTypeIndex.add(onlineJournalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineJournalNode.NODE_TYPE));
-//										onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
-//
-//										//---flushing online journal name index---
-//										onlineJournalNameIndex.flush();
-//									}
-//
-//									onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
-//									inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
-//								}
-//								//----------------------------
-//							}
-//							//protein citation
-//							inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
-//
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//-----------------------------ARTICLE-----------------------------------------
-//						break;
-//					case ArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getArticles()) {
-//							String journalNameSt = citation.getAttributeValue("name");
-//							String dateSt = citation.getAttributeValue("date");
-//							String titleSt = citation.getChildText("title");
-//							String firstSt = citation.getAttributeValue("first");
-//							String lastSt = citation.getAttributeValue("last");
-//							String volumeSt = citation.getAttributeValue("volume");
-//							String doiSt = "";
-//							String medlineSt = "";
-//							String pubmedSt = "";
-//
-//							if (journalNameSt == null) {
-//								journalNameSt = "";
-//							}
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//							if (firstSt == null) {
-//								firstSt = "";
-//							}
-//							if (lastSt == null) {
-//								lastSt = "";
-//							}
-//							if (volumeSt == null) {
-//								volumeSt = "";
-//							}
-//							if (titleSt == null) {
-//								titleSt = "";
-//							}
-//
-//							List<Element> dbReferences = citation.getChildren("dbReference");
-//							for (Element tempDbRef : dbReferences) {
-//								switch (tempDbRef.getAttributeValue("type")) {
-//									case "DOI":
-//										doiSt = tempDbRef.getAttributeValue("id");
-//										break;
-//									case "MEDLINE":
-//										medlineSt = tempDbRef.getAttributeValue("id");
-//										break;
-//									case "PubMed":
-//										pubmedSt = tempDbRef.getAttributeValue("id");
-//										break;
-//								}
-//							}
-//
-//							//long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-//							long articleId = -1;
-//							IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-//							if (articleTitleIndexHits.hasNext()) {
-//								articleId = articleTitleIndexHits.getSingle();
-//							}
-//							articleTitleIndexHits.close();
-//							if (articleId < 0) {
-//								articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
-//								articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
-//								articleProperties.put(ArticleNode.MEDLINE_ID_PROPERTY, medlineSt);
-//								articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
-//								articleId = inserter.createNode(articleProperties);
-//								//--indexing node by type---
-//								nodeTypeIndex.add(articleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ArticleNode.NODE_TYPE));
-//								if (!titleSt.equals("")) {
-//									articleTitleIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-//									//--flushing article title index---
-//									articleTitleIndex.flush();
-//								}
-//
-//								//---indexing by medline, doi and pubmed--
-//								if (!doiSt.isEmpty()) {
-//									articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
-//								}
-//								if (!medlineSt.isEmpty()) {
-//									articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
-//								}
-//								if (!pubmedSt.isEmpty()) {
-//									articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
-//								}
-//
-//								//---authors person association-----
-//								for (long personId : authorsPersonNodesIds) {
-//									inserter.createRelationship(articleId, personId, articleAuthorRel, null);
-//								}
-//								//---authors consortium association-----
-//								for (long consortiumId : authorsConsortiumNodesIds) {
-//									inserter.createRelationship(articleId, consortiumId, articleAuthorRel, null);
-//								}
-//
-//								//------journal-----------
-//								if (!journalNameSt.equals("")) {
-//									//long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-//									long journalId = -1;
-//									IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-//									if (journalNameIndexHits.hasNext()) {
-//										journalId = journalNameIndexHits.getSingle();
-//									}
-//									journalNameIndexHits.close();
-//									if (journalId < 0) {
-//										journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
-//										journalId = inserter.createNode(journalProperties);
-//										//--indexing node by type---
-//										nodeTypeIndex.add(journalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, JournalNode.NODE_TYPE));
-//										journalNameIndex.add(journalId, MapUtil.map(JournalNode.JOURNAL_NAME_INDEX, journalNameSt));
-//										//----flushing journal name index----
-//										journalNameIndex.flush();
-//									}
-//
-//									articleJournalProperties.put(ArticleJournalRel.DATE_PROPERTY, dateSt);
-//									articleJournalProperties.put(ArticleJournalRel.FIRST_PROPERTY, firstSt);
-//									articleJournalProperties.put(ArticleJournalRel.LAST_PROPERTY, lastSt);
-//									articleJournalProperties.put(ArticleJournalRel.VOLUME_PROPERTY, volumeSt);
-//									inserter.createRelationship(articleId, journalId, articleJournalRel, articleJournalProperties);
-//								}
-//								//----------------------------
-//							}
-//							//protein citation
-//							inserter.createRelationship(articleId, currentProteinId, articleProteinCitationRel, null);
-//
-//						}
-//
-//						//----------------------------------------------------------------------------
-//						//----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
-//						break;
-//					case UnpublishedObservationNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//						if (uniprotDataXML.getUnpublishedObservations()) {
-//							String dateSt = citation.getAttributeValue("date");
-//							if (dateSt == null) {
-//								dateSt = "";
-//							}
-//
-//							unpublishedObservationProperties.put(UnpublishedObservationNode.DATE_PROPERTY, dateSt);
-//							long unpublishedObservationId = inserter.createNode(unpublishedObservationProperties);
-//							//--indexing node by type---
-//							nodeTypeIndex.add(unpublishedObservationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, UnpublishedObservationNode.NODE_TYPE));
-//
-//							//---authors person association-----
-//							for (long personId : authorsPersonNodesIds) {
-//								inserter.createRelationship(unpublishedObservationId, personId, unpublishedObservationAuthorRel, null);
-//							}
-//
-//							inserter.createRelationship(unpublishedObservationId, currentProteinId, unpublishedObservationProteinCitationRel, null);
-//						}
-//						break;
-//				}
-//			}
-//		}
-//
-//
-//	}
+
+	private void importProteinCitations(XMLElement entryXMLElem,
+	                                           UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                           Protein<I,RV,RVT,RE,RET> protein,
+	                                           UniprotDataXML uniprotDataXML) {
+
+		List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
+
+		for (Element reference : referenceList) {
+			List<Element> citationsList = reference.getChildren(CITATION_TAG_NAME);
+			for (Element citation : citationsList) {
+
+				String citationType = citation.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE);
+
+				List<Person> authorsPersonNodesIds = new ArrayList<>();
+				List<Long> authorsConsortiumNodesIds = new ArrayList<>();
+
+				List<Element> authorPersonElems = citation.getChild("authorList").getChildren("person");
+				List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
+
+				for (Element person : authorPersonElems) {
+					long personId = -1;
+					IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
+					if (personNameIndexHits.hasNext()) {
+						personId = personNameIndexHits.getSingle();
+					}
+					personNameIndexHits.close();
+					if (personId < 0) {
+						personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
+						personId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
+						//flushing person name index
+						personNameIndex.flush();
+					}
+					authorsPersonNodesIds.add(personId);
+				}
+
+				for (Element consortium : authorConsortiumElems) {
+
+					long consortiumId = -1;
+					IndexHits<Long> consortiumIdIndexHits = consortiumNameIndex.get(ConsortiumNode.CONSORTIUM_NAME_INDEX, consortium.getAttributeValue("name"));
+					if (consortiumIdIndexHits.hasNext()) {
+						consortiumId = consortiumIdIndexHits.getSingle();
+					}
+					consortiumIdIndexHits.close();
+					if (consortiumId < 0) {
+						consortiumProperties.put(ConsortiumNode.NAME_PROPERTY, consortium.getAttributeValue("name"));
+						consortiumId = createConsortiumNode(consortiumProperties, inserter, consortiumNameIndex, nodeTypeIndex);
+						//---flushing consortium name index--
+						consortiumNameIndex.flush();
+					}
+					authorsConsortiumNodesIds.add(consortiumId);
+				}
+				//----------------------------------------------------------------------------
+				//-----------------------------THESIS-----------------------------------------
+				switch (citationType) {
+					case ThesisNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getThesis()) {
+							String dateSt = citation.getAttributeValue("date");
+							String titleSt = citation.getChildText("title");
+							if (dateSt == null) {
+								dateSt = "";
+							}
+							if (titleSt == null) {
+								titleSt = "";
+							}
+
+							long thesisId = -1;
+							IndexHits<Long> thesisTitleIndexHits = thesisTitleIndex.get(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt);
+							if (thesisTitleIndexHits.hasNext()) {
+								thesisId = thesisTitleIndexHits.getSingle();
+							}
+							thesisTitleIndexHits.close();
+							if (thesisId < 0) {
+								thesisProperties.put(ThesisNode.DATE_PROPERTY, dateSt);
+								thesisProperties.put(ThesisNode.TITLE_PROPERTY, titleSt);
+								//---thesis node creation and indexing
+								thesisId = inserter.createNode(thesisProperties);
+								nodeTypeIndex.add(thesisId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ThesisNode.NODE_TYPE));
+								thesisTitleIndex.add(thesisId, MapUtil.map(ThesisNode.THESIS_TITLE_FULL_TEXT_INDEX, titleSt));
+								//flushing thesis title index
+								thesisTitleIndex.flush();
+								//---authors association-----
+								for (long personId : authorsPersonNodesIds) {
+									inserter.createRelationship(thesisId, personId, thesisAuthorRel, null);
+								}
+
+								//-----------institute-----------------------------
+								String instituteSt = citation.getAttributeValue("institute");
+								String countrySt = citation.getAttributeValue("country");
+								if (instituteSt != null) {
+
+									long instituteId = -1;
+									IndexHits<Long> instituteNameIndexHits = instituteNameIndex.get(InstituteNode.INSTITUTE_NAME_INDEX, instituteSt);
+									if (instituteNameIndexHits.hasNext()) {
+										instituteId = instituteNameIndexHits.getSingle();
+									}
+									instituteNameIndexHits.close();
+									if (instituteId < 0) {
+										instituteProperties.put(InstituteNode.NAME_PROPERTY, instituteSt);
+										instituteId = createInstituteNode(instituteProperties, inserter, instituteNameIndex, nodeTypeIndex);
+										//flushing institute name index
+										instituteNameIndex.flush();
+									}
+									if (countrySt != null) {
+										//long countryId = indexService.getSingleNode(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+										long countryId = -1;
+										IndexHits<Long> countryNameIndexHits = countryNameIndex.get(CountryNode.COUNTRY_NAME_INDEX, countrySt);
+										if (countryNameIndexHits.hasNext()) {
+											countryId = countryNameIndexHits.getSingle();
+										}
+										countryNameIndexHits.close();
+										if (countryId < 0) {
+											countryProperties.put(CountryNode.NAME_PROPERTY, countrySt);
+											countryId = createCountryNode(countryProperties, inserter, countryNameIndex, nodeTypeIndex);
+											//flushing country name index
+											countryNameIndex.flush();
+										}
+										inserter.createRelationship(instituteId, countryId, instituteCountryRel, null);
+									}
+									inserter.createRelationship(thesisId, instituteId, thesisInstituteRel, null);
+								}
+							}
+
+							//--protein citation relationship
+							inserter.createRelationship(thesisId, currentProteinId, thesisProteinCitationRel, null);
+
+						}
+
+						//----------------------------------------------------------------------------
+						//-----------------------------PATENT-----------------------------------------
+						break;
+					case PatentNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getPatents()) {
+							String numberSt = citation.getAttributeValue("number");
+							String dateSt = citation.getAttributeValue("date");
+							String titleSt = citation.getChildText("title");
+							if (dateSt == null) {
+								dateSt = "";
+							}
+							if (titleSt == null) {
+								titleSt = "";
+							}
+							if (numberSt == null) {
+								numberSt = "";
+							}
+
+							if (!numberSt.equals("")) {
+								long patentId = -1;
+								IndexHits<Long> patentNumberIndexHits = patentNumberIndex.get(PatentNode.PATENT_NUMBER_INDEX, numberSt);
+								if (patentNumberIndexHits.hasNext()) {
+									patentId = patentNumberIndexHits.getSingle();
+								}
+								patentNumberIndexHits.close();
+
+								if (patentId < 0) {
+									patentProperties.put(PatentNode.NUMBER_PROPERTY, numberSt);
+									patentProperties.put(PatentNode.DATE_PROPERTY, dateSt);
+									patentProperties.put(PatentNode.TITLE_PROPERTY, titleSt);
+									//---patent node creation and indexing
+									patentId = inserter.createNode(patentProperties);
+									patentNumberIndex.add(patentId, MapUtil.map(PatentNode.PATENT_NUMBER_INDEX, numberSt));
+									nodeTypeIndex.add(patentId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PatentNode.NODE_TYPE));
+									//---flushing patent number index---
+									patentNumberIndex.flush();
+									//---authors association-----
+									for (long personId : authorsPersonNodesIds) {
+										inserter.createRelationship(patentId, personId, patentAuthorRel, null);
+									}
+								}
+
+								//--protein citation relationship
+								inserter.createRelationship(patentId, currentProteinId, patentProteinCitationRel, null);
+							}
+						}
+
+						//----------------------------------------------------------------------------
+						//-----------------------------SUBMISSION-----------------------------------------
+						break;
+					case SubmissionNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getSubmissions()) {
+							String dateSt = citation.getAttributeValue("date");
+							String titleSt = citation.getChildText("title");
+							String dbSt = citation.getAttributeValue("db");
+							if (dateSt == null) {
+								dateSt = "";
+							}
+							if (titleSt == null) {
+								titleSt = "";
+							}
+
+							submissionProperties.put(SubmissionNode.DATE_PROPERTY, dateSt);
+							submissionProperties.put(SubmissionNode.TITLE_PROPERTY, titleSt);
+
+							long submissionId;
+							IndexHits<Long> submissionTitleIndexHits = submissionTitleIndex.get(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt);
+							if (submissionTitleIndexHits.hasNext()) {
+								submissionId = submissionTitleIndexHits.getSingle();
+								submissionTitleIndexHits.close();
+							} else {
+								//---submission node creation and indexing
+								submissionId = inserter.createNode(submissionProperties);
+								//--indexing node by type---
+								nodeTypeIndex.add(submissionId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubmissionNode.NODE_TYPE));
+								if (!titleSt.isEmpty()) {
+									//--indexing node by title---
+									submissionTitleIndex.add(submissionId, MapUtil.map(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt));
+									submissionTitleIndex.flush();
+								}
+							}
+
+							//---authors association-----
+							for (long personId : authorsPersonNodesIds) {
+								inserter.createRelationship(submissionId, personId, submissionAuthorRel, null);
+							}
+							//---authors consortium association-----
+							for (long consortiumId : authorsConsortiumNodesIds) {
+								inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
+							}
+
+							if (dbSt != null) {
+								long dbId = -1;
+								IndexHits<Long> dbNameIndexHits = dbNameIndex.get(DBNode.DB_NAME_INDEX, dbSt);
+								if (dbNameIndexHits.hasNext()) {
+									dbId = dbNameIndexHits.getSingle();
+								}
+								dbNameIndexHits.close();
+								if (dbId < 0) {
+									dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
+									dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
+									dbId = createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
+									dbNameIndex.flush();
+								}
+								//-----submission db relationship-----
+								inserter.createRelationship(submissionId, dbId, submissionDbRel, null);
+							}
+
+							//--protein citation relationship
+							inserter.createRelationship(submissionId, currentProteinId, submissionProteinCitationRel, null);
+
+						}
+
+						//----------------------------------------------------------------------------
+						//-----------------------------BOOK-----------------------------------------
+						break;
+					case BookNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getBooks()) {
+							String nameSt = citation.getAttributeValue("name");
+							String dateSt = citation.getAttributeValue("date");
+							String titleSt = citation.getChildText("title");
+							String publisherSt = citation.getAttributeValue("publisher");
+							String firstSt = citation.getAttributeValue("first");
+							String lastSt = citation.getAttributeValue("last");
+							String citySt = citation.getAttributeValue("city");
+							String volumeSt = citation.getAttributeValue("volume");
+							if (nameSt == null) {
+								nameSt = "";
+							}
+							if (dateSt == null) {
+								dateSt = "";
+							}
+							if (titleSt == null) {
+								titleSt = "";
+							}
+							if (publisherSt == null) {
+								publisherSt = "";
+							}
+							if (firstSt == null) {
+								firstSt = "";
+							}
+							if (lastSt == null) {
+								lastSt = "";
+							}
+							if (citySt == null) {
+								citySt = "";
+							}
+							if (volumeSt == null) {
+								volumeSt = "";
+							}
+
+							long bookId = -1;
+							IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
+							if (bookNameIndexHits.hasNext()) {
+								bookId = bookNameIndexHits.getSingle();
+							}
+							bookNameIndexHits.close();
+
+							if (bookId < 0) {
+								bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
+								bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
+								//---book node creation and indexing
+								bookId = inserter.createNode(bookProperties);
+
+								bookNameIndex.add(bookId, MapUtil.map(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt));
+								//--indexing node by type---
+								nodeTypeIndex.add(bookId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, BookNode.NODE_TYPE));
+
+								//--flushing book name index---
+								bookNameIndex.flush();
+								//---authors association-----
+								for (long personId : authorsPersonNodesIds) {
+									inserter.createRelationship(bookId, personId, bookAuthorRel, null);
+								}
+
+								//---editor association-----
+								Element editorListElem = citation.getChild("editorList");
+								if (editorListElem != null) {
+									List<Element> editorsElems = editorListElem.getChildren("person");
+									for (Element person : editorsElems) {
+										//long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
+										long editorId = -1;
+										IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
+										if (personNameIndexHits.hasNext()) {
+											editorId = personNameIndexHits.getSingle();
+										}
+										personNameIndexHits.close();
+										if (editorId < 0) {
+											personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
+											editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
+										}
+										//---flushing person name index---
+										personNameIndex.flush();
+										//editor association
+										inserter.createRelationship(bookId, editorId, bookEditorRel, null);
+									}
+								}
+
+
+								//----publisher--
+								if (!publisherSt.equals("")) {
+									//long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+									long publisherId = -1;
+									IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+									if (publisherNameIndexHits.hasNext()) {
+										publisherId = publisherNameIndexHits.getSingle();
+									}
+									publisherNameIndexHits.close();
+									if (publisherId < 0) {
+										publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
+										publisherId = inserter.createNode(publisherProperties);
+										//--indexing node by type---
+										nodeTypeIndex.add(publisherId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PublisherNode.NODE_TYPE));
+										publisherNameIndex.add(publisherId, MapUtil.map(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt));
+										//--flushing publisher name index--
+										publisherNameIndex.flush();
+									}
+									inserter.createRelationship(bookId, publisherId, bookPublisherRel, null);
+								}
+
+								//-----city-----
+								if (!citySt.equals("")) {
+									//long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
+									long cityId = -1;
+									IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
+									if (cityNameIndexHits.hasNext()) {
+										cityId = cityNameIndexHits.getSingle();
+									}
+									cityNameIndexHits.close();
+									if (cityId < 0) {
+										cityProperties.put(CityNode.NAME_PROPERTY, citySt);
+										cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
+										//-----flushing city name index---
+										cityNameIndex.flush();
+									}
+									inserter.createRelationship(bookId, cityId, bookCityRel, null);
+								}
+							}
+
+							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
+							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
+							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
+							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
+							//--protein citation relationship
+							inserter.createRelationship(bookId, currentProteinId, bookProteinCitationRel, bookProteinCitationProperties);
+
+						}
+
+						//----------------------------------------------------------------------------
+						//-----------------------------ONLINE ARTICLE-----------------------------------------
+						break;
+					case OnlineArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getOnlineArticles()) {
+							String locatorSt = citation.getChildText("locator");
+							String nameSt = citation.getAttributeValue("name");
+							String titleSt = citation.getChildText("title");
+
+							if (titleSt == null) {
+								titleSt = "";
+							}
+							if (nameSt == null) {
+								nameSt = "";
+							}
+							if (locatorSt == null) {
+								locatorSt = "";
+							}
+
+							long onlineArticleId = -1;
+							IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+							if (onlineArticleTitleIndexHits.hasNext()) {
+								onlineArticleId = onlineArticleTitleIndexHits.getSingle();
+							}
+							onlineArticleTitleIndexHits.close();
+							if (onlineArticleId < 0) {
+								onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
+								onlineArticleId = inserter.createNode(onlineArticleProperties);
+								//--indexing node by type---
+								nodeTypeIndex.add(onlineArticleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineArticleNode.NODE_TYPE));
+
+								if (!titleSt.equals("")) {
+									onlineArticleTitleIndex.add(onlineArticleId, MapUtil.map(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
+									//-----flushing online article title index---
+									onlineArticleTitleIndex.flush();
+								}
+
+								//---authors person association-----
+								for (long personId : authorsPersonNodesIds) {
+									inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorRel, null);
+								}
+								//---authors consortium association-----
+								for (long consortiumId : authorsConsortiumNodesIds) {
+									inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
+								}
+
+								//------online journal-----------
+								if (!nameSt.equals("")) {
+
+									long onlineJournalId = -1;
+									IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+									if (onlineJournalNameIndexHits.hasNext()) {
+										onlineJournalId = onlineJournalNameIndexHits.getSingle();
+									}
+									onlineJournalNameIndexHits.close();
+									if (onlineJournalId < 0) {
+										onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
+										onlineJournalId = inserter.createNode(onlineJournalProperties);
+										//--indexing node by type---
+										nodeTypeIndex.add(onlineJournalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineJournalNode.NODE_TYPE));
+										onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
+
+										//---flushing online journal name index---
+										onlineJournalNameIndex.flush();
+									}
+
+									onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
+									inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
+								}
+								//----------------------------
+							}
+							//protein citation
+							inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
+
+						}
+
+						//----------------------------------------------------------------------------
+						//-----------------------------ARTICLE-----------------------------------------
+						break;
+					case ArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getArticles()) {
+							String journalNameSt = citation.getAttributeValue("name");
+							String dateSt = citation.getAttributeValue("date");
+							String titleSt = citation.getChildText("title");
+							String firstSt = citation.getAttributeValue("first");
+							String lastSt = citation.getAttributeValue("last");
+							String volumeSt = citation.getAttributeValue("volume");
+							String doiSt = "";
+							String medlineSt = "";
+							String pubmedSt = "";
+
+							if (journalNameSt == null) {
+								journalNameSt = "";
+							}
+							if (dateSt == null) {
+								dateSt = "";
+							}
+							if (firstSt == null) {
+								firstSt = "";
+							}
+							if (lastSt == null) {
+								lastSt = "";
+							}
+							if (volumeSt == null) {
+								volumeSt = "";
+							}
+							if (titleSt == null) {
+								titleSt = "";
+							}
+
+							List<Element> dbReferences = citation.getChildren("dbReference");
+							for (Element tempDbRef : dbReferences) {
+								switch (tempDbRef.getAttributeValue("type")) {
+									case "DOI":
+										doiSt = tempDbRef.getAttributeValue("id");
+										break;
+									case "MEDLINE":
+										medlineSt = tempDbRef.getAttributeValue("id");
+										break;
+									case "PubMed":
+										pubmedSt = tempDbRef.getAttributeValue("id");
+										break;
+								}
+							}
+
+							//long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+							long articleId = -1;
+							IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
+							if (articleTitleIndexHits.hasNext()) {
+								articleId = articleTitleIndexHits.getSingle();
+							}
+							articleTitleIndexHits.close();
+							if (articleId < 0) {
+								articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
+								articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
+								articleProperties.put(ArticleNode.MEDLINE_ID_PROPERTY, medlineSt);
+								articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
+								articleId = inserter.createNode(articleProperties);
+								//--indexing node by type---
+								nodeTypeIndex.add(articleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ArticleNode.NODE_TYPE));
+								if (!titleSt.equals("")) {
+									articleTitleIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
+									//--flushing article title index---
+									articleTitleIndex.flush();
+								}
+
+								//---indexing by medline, doi and pubmed--
+								if (!doiSt.isEmpty()) {
+									articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
+								}
+								if (!medlineSt.isEmpty()) {
+									articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
+								}
+								if (!pubmedSt.isEmpty()) {
+									articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
+								}
+
+								//---authors person association-----
+								for (long personId : authorsPersonNodesIds) {
+									inserter.createRelationship(articleId, personId, articleAuthorRel, null);
+								}
+								//---authors consortium association-----
+								for (long consortiumId : authorsConsortiumNodesIds) {
+									inserter.createRelationship(articleId, consortiumId, articleAuthorRel, null);
+								}
+
+								//------journal-----------
+								if (!journalNameSt.equals("")) {
+									//long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+									long journalId = -1;
+									IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
+									if (journalNameIndexHits.hasNext()) {
+										journalId = journalNameIndexHits.getSingle();
+									}
+									journalNameIndexHits.close();
+									if (journalId < 0) {
+										journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
+										journalId = inserter.createNode(journalProperties);
+										//--indexing node by type---
+										nodeTypeIndex.add(journalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, JournalNode.NODE_TYPE));
+										journalNameIndex.add(journalId, MapUtil.map(JournalNode.JOURNAL_NAME_INDEX, journalNameSt));
+										//----flushing journal name index----
+										journalNameIndex.flush();
+									}
+
+									articleJournalProperties.put(ArticleJournalRel.DATE_PROPERTY, dateSt);
+									articleJournalProperties.put(ArticleJournalRel.FIRST_PROPERTY, firstSt);
+									articleJournalProperties.put(ArticleJournalRel.LAST_PROPERTY, lastSt);
+									articleJournalProperties.put(ArticleJournalRel.VOLUME_PROPERTY, volumeSt);
+									inserter.createRelationship(articleId, journalId, articleJournalRel, articleJournalProperties);
+								}
+								//----------------------------
+							}
+							//protein citation
+							inserter.createRelationship(articleId, currentProteinId, articleProteinCitationRel, null);
+
+						}
+
+						//----------------------------------------------------------------------------
+						//----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
+						break;
+					case UnpublishedObservationNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+						if (uniprotDataXML.getUnpublishedObservations()) {
+							String dateSt = citation.getAttributeValue("date");
+							if (dateSt == null) {
+								dateSt = "";
+							}
+
+							unpublishedObservationProperties.put(UnpublishedObservationNode.DATE_PROPERTY, dateSt);
+							long unpublishedObservationId = inserter.createNode(unpublishedObservationProperties);
+							//--indexing node by type---
+							nodeTypeIndex.add(unpublishedObservationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, UnpublishedObservationNode.NODE_TYPE));
+
+							//---authors person association-----
+							for (long personId : authorsPersonNodesIds) {
+								inserter.createRelationship(unpublishedObservationId, personId, unpublishedObservationAuthorRel, null);
+							}
+
+							inserter.createRelationship(unpublishedObservationId, currentProteinId, unpublishedObservationProteinCitationRel, null);
+						}
+						break;
+				}
+			}
+		}
+
+
+	}
 
 	protected Date parseDate(String date) throws ParseException {
 		return dateFormat.parse(date);

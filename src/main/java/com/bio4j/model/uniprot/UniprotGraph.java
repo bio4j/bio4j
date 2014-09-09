@@ -210,7 +210,7 @@ public abstract class UniprotGraph<
 
 	public abstract CommentTypeType CommentType();
 
-	//public abstract ConsortiumType Consortium();
+	public abstract ConsortiumType Consortium();
 
 	public abstract DatasetType Dataset();
 
@@ -242,7 +242,7 @@ public abstract class UniprotGraph<
 
 	public abstract PatentType Patent();
 
-	//public abstract PersonType Person();
+	public abstract PersonType Person();
 
 	public abstract PfamType Pfam();
 
@@ -285,6 +285,8 @@ public abstract class UniprotGraph<
 
 	public abstract BookPublisherType BookPublisher();
 
+	public abstract BookEditorType BookEditor();
+
 	public abstract InstituteCountryType InstituteCountry();
 
 	public abstract OnlineArticleOnlineJournalType OnlineArticleOnlineJournal();
@@ -322,6 +324,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinRefSeqType ProteinRefSeq();
 
 	public abstract ProteinReferenceType ProteinReference();
+
+	public abstract ReferenceAuthorType ReferenceAuthor();
 
 	public abstract ReferenceArticleType ReferenceArticle();
 
@@ -466,6 +470,43 @@ public abstract class UniprotGraph<
 				UniprotVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
 			public name() {
 				super(CityType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class ConsortiumType
+			extends
+			UniprotVertexType<
+					Consortium<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.ConsortiumType
+					> {
+
+		public final name name = new name();
+
+		public ConsortiumType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public ConsortiumType value() {
+			return graph().Consortium();
+		}
+
+		@Override
+		public Consortium<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Consortium<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Consortium<I, RV, RVT, RE, RET>, ConsortiumType, name, String> {
+			public name() {
+				super(ConsortiumType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1170,6 +1211,43 @@ public abstract class UniprotGraph<
 				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
 			public number() {
 				super(PatentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class PersonType
+			extends
+			UniprotVertexType<
+					Person<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+					> {
+
+		public final name name = new name();
+
+		public PersonType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public PersonType value() {
+			return graph().Person();
+		}
+
+		@Override
+		public Person<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Person<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Person<I, RV, RVT, RE, RET>, PersonType, name, String> {
+			public name() {
+				super(PersonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1909,6 +1987,31 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class BookEditorType
+			extends
+			UniprotEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
+					BookEditor<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookEditorType,
+					Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+					>
+			implements
+			TypedEdge.Type.ManyToOne {
+
+		public BookEditorType(RET raw) {
+			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.Person());
+		}
+
+		@Override
+		public BookEditorType value() {
+			return graph().BookEditor();
+		}
+
+		@Override
+		public BookEditor<I, RV, RVT, RE, RET> from(RE edge) {
+			return new BookEditor<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
 	public final class BookPublisherType
 			extends
 			UniprotEdgeType<
@@ -2031,6 +2134,62 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinComment<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinComment<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final text text = new text();
+		public final status status = new status();
+		public final evidence evidence = new evidence();
+
+		public final class text
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						text, String
+						>
+		{
+			public text() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class status
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						status, String
+						>
+		{
+			public status() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class evidence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						evidence, String
+						>
+		{
+			public evidence() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 
@@ -2570,6 +2729,31 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinUniGene<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinUniGene<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceAuthorType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceAuthor<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorType,
+					Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ReferenceAuthorType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Person());
+		}
+
+		@Override
+		public ReferenceAuthorType value() {
+			return graph().ReferenceAuthor();
+		}
+
+		@Override
+		public ReferenceAuthor<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceAuthor<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
