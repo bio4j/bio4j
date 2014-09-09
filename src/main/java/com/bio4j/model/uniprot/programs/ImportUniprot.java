@@ -93,6 +93,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 	public static final String THESIS_CITATION_TYPE = "thesis";
 	public static final String PATENT_CITATION_TYPE = "patent";
+	public static final String SUBMISSION_CITATION_TYPE = "submission";
+	public static final String ARTICLE_CITATION_TYPE = "journal article";
+	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online article";
+	public static final String BOOK_CITATION_TYPE = "book";
+	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observation";
 
 	protected SimpleDateFormat dateFormat;
 
@@ -1482,7 +1487,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//-----------------------------SUBMISSION-----------------------------------------
 						break;
-					case SubmissionNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case SUBMISSION_CITATION_TYPE:
 						if (uniprotDataXML.getSubmissions()) {
 							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
@@ -1548,7 +1553,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//-----------------------------BOOK-----------------------------------------
 						break;
-					case BookNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case BOOK_CITATION_TYPE:
 						if (uniprotDataXML.getBooks()) {
 							String nameSt = citation.getAttributeValue("name");
 							String dateSt = citation.getAttributeValue("date");
@@ -1683,7 +1688,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//-----------------------------ONLINE ARTICLE-----------------------------------------
 						break;
-					case OnlineArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case ONLINE_ARTICLE_CITATION_TYPE:
 						if (uniprotDataXML.getOnlineArticles()) {
 							String locatorSt = citation.getChildText("locator");
 							String nameSt = citation.getAttributeValue("name");
@@ -1759,7 +1764,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//-----------------------------ARTICLE-----------------------------------------
 						break;
-					case ArticleNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case ARTICLE_CITATION_TYPE:
 						if (uniprotDataXML.getArticles()) {
 							String journalNameSt = citation.getAttributeValue("name");
 							String dateSt = citation.getAttributeValue("date");
@@ -1881,7 +1886,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//----------------------------------------------------------------------------
 						//----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
 						break;
-					case UnpublishedObservationNode.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					case UNPUBLISHED_OBSERVATION_CITATION_TYPE:
 						if (uniprotDataXML.getUnpublishedObservations()) {
 							String dateSt = citation.getAttributeValue("date");
 							if (dateSt == null) {
