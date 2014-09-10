@@ -95,7 +95,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String PATENT_CITATION_TYPE = "patent";
 	public static final String SUBMISSION_CITATION_TYPE = "submission";
 	public static final String ARTICLE_CITATION_TYPE = "journal article";
-	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online article";
+	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online journal article";
 	public static final String BOOK_CITATION_TYPE = "book";
 	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observation";
 
@@ -1700,6 +1700,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							String locatorSt = citation.getChildText("locator");
 							String nameSt = citation.getAttributeValue("name");
 							String titleSt = citation.getChildText("title");
+							String dateSt = citation.getAttributeValue("date");
 
 							if (titleSt == null) {
 								titleSt = "";
@@ -1710,61 +1711,76 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							if (locatorSt == null) {
 								locatorSt = "";
 							}
-
-							long onlineArticleId = -1;
-							IndexHits<Long> onlineArticleTitleIndexHits = onlineArticleTitleIndex.get(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-							if (onlineArticleTitleIndexHits.hasNext()) {
-								onlineArticleId = onlineArticleTitleIndexHits.getSingle();
+							if (dateSt == null) {
+								dateSt = "";
 							}
-							onlineArticleTitleIndexHits.close();
-							if (onlineArticleId < 0) {
-								onlineArticleProperties.put(OnlineArticleNode.TITLE_PROPERTY, titleSt);
-								onlineArticleId = inserter.createNode(onlineArticleProperties);
-								//--indexing node by type---
-								nodeTypeIndex.add(onlineArticleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineArticleNode.NODE_TYPE));
 
-								if (!titleSt.equals("")) {
-									onlineArticleTitleIndex.add(onlineArticleId, MapUtil.map(OnlineArticleNode.ONLINE_ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-									//-----flushing online article title index---
-									onlineArticleTitleIndex.flush();
-								}
+							if (!titleSt.equals("")) {
 
-								//---authors person association-----
-								for (long personId : authorsPersonNodesIds) {
-									inserter.createRelationship(onlineArticleId, personId, onlineArticleAuthorRel, null);
-								}
-								//---authors consortium association-----
-								for (long consortiumId : authorsConsortiumNodesIds) {
-									inserter.createRelationship(onlineArticleId, consortiumId, onlineArticleAuthorRel, null);
-								}
+								OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = null;
+								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(nameSt);
+								Reference<I,RV,RVT,RE,RET> reference = null;
 
-								//------online journal-----------
-								if (!nameSt.equals("")) {
+								if(!optionalOnlineArticle.isPresent()){
 
-									long onlineJournalId = -1;
-									IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-									if (onlineJournalNameIndexHits.hasNext()) {
-										onlineJournalId = onlineJournalNameIndexHits.getSingle();
-									}
-									onlineJournalNameIndexHits.close();
-									if (onlineJournalId < 0) {
-										onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
-										onlineJournalId = inserter.createNode(onlineJournalProperties);
-										//--indexing node by type---
-										nodeTypeIndex.add(onlineJournalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineJournalNode.NODE_TYPE));
-										onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
+									onlineArticle = graph.OnlineArticle().from(graph.raw().addVertex(null));
+									onlineArticle.set(graph.OnlineArticle().title, titleSt);
 
-										//---flushing online journal name index---
-										onlineJournalNameIndex.flush();
+									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+
+									//---authors association-----
+									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 									}
 
-									onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
-									inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
+									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
+										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
+									}
+
+									//------online journal-----------
+									if (!nameSt.equals("")) {
+
+										OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = null;
+										Optional<OnlineJournal<I,RV,RVT,RE,RET>> optionalOnlineJournal = graph.onlineJournalNameIndex().getVertex(nameSt);
+
+										if(!optionalOnlineJournal.isPresent()){
+											
+										}
+
+										long onlineJournalId = -1;
+										IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
+										if (onlineJournalNameIndexHits.hasNext()) {
+											onlineJournalId = onlineJournalNameIndexHits.getSingle();
+										}
+										onlineJournalNameIndexHits.close();
+										if (onlineJournalId < 0) {
+											onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
+											onlineJournalId = inserter.createNode(onlineJournalProperties);
+											//--indexing node by type---
+											nodeTypeIndex.add(onlineJournalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineJournalNode.NODE_TYPE));
+											onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
+
+											//---flushing online journal name index---
+											onlineJournalNameIndex.flush();
+										}
+
+										onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
+										inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
+									}
+									//----------------------------
+
+								}else{
+									onlineArticle = optionalOnlineArticle.get();
 								}
-								//----------------------------
+
+								if (onlineArticleId < 0) {
+
+								}
+								//protein citation
+								inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
 							}
-							//protein citation
-							inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
 
 						}
 

@@ -47,6 +47,26 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
+		    // property
+		    OnlineJournalType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    onlineJournalNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType,
+		    // property
+		    OnlineArticleType.title, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    onlineArticleTitleIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    City<I, RV, RVT, RE, RET>, CityType,
 		    // property
 		    CityType.name, String,
