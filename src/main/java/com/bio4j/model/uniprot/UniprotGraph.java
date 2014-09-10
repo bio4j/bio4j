@@ -2217,6 +2217,26 @@ public abstract class UniprotGraph<
 		public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> from(RE edge) {
 			return new OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>(edge, this);
 		}
+
+		public final locator locator = new locator();
+
+		public final class locator
+				extends
+				UniprotEdgeProperty<
+						OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType,
+						OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, OnlineArticleOnlineJournalType,
+						OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
+						locator, String
+						>
+		{
+			public locator() {
+				super(OnlineArticleOnlineJournalType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 	}
 
 	public final class OrganismTaxonType

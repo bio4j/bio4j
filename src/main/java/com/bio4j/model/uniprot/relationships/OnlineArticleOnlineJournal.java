@@ -22,6 +22,11 @@ public final class OnlineArticleOnlineJournal<I extends UntypedGraph<RV, RVT, RE
 		super(edge, type);
 	}
 
+	// properties
+	public String locator() {
+		return get(type().locator);
+	}
+
 	@Override
 	public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> self() {
 		return this;

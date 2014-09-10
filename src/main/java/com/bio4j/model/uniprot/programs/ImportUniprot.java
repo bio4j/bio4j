@@ -2,6 +2,7 @@ package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.*;
+import com.bio4j.model.uniprot.relationships.OnlineArticleOnlineJournal;
 import com.bio4j.model.uniprot.relationships.ProteinFeature;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
@@ -1746,40 +1747,28 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										Optional<OnlineJournal<I,RV,RVT,RE,RET>> optionalOnlineJournal = graph.onlineJournalNameIndex().getVertex(nameSt);
 
 										if(!optionalOnlineJournal.isPresent()){
-											
+
+											onlineJournal = graph.OnlineJournal().from(graph.raw().addVertex(null));
+											onlineJournal.set(graph.OnlineJournal().name, nameSt);
+
+
+										}else{
+											onlineJournal = optionalOnlineJournal.get();
 										}
 
-										long onlineJournalId = -1;
-										IndexHits<Long> onlineJournalNameIndexHits = onlineJournalNameIndex.get(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt);
-										if (onlineJournalNameIndexHits.hasNext()) {
-											onlineJournalId = onlineJournalNameIndexHits.getSingle();
-										}
-										onlineJournalNameIndexHits.close();
-										if (onlineJournalId < 0) {
-											onlineJournalProperties.put(OnlineJournalNode.NAME_PROPERTY, nameSt);
-											onlineJournalId = inserter.createNode(onlineJournalProperties);
-											//--indexing node by type---
-											nodeTypeIndex.add(onlineJournalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, OnlineJournalNode.NODE_TYPE));
-											onlineJournalNameIndex.add(onlineJournalId, MapUtil.map(OnlineJournalNode.ONLINE_JOURNAL_NAME_INDEX, nameSt));
+										OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> onlineArticleOnlineJournal = onlineArticle.addOutEdge(graph.OnlineArticleOnlineJournal(), onlineJournal);
+										onlineArticleOnlineJournal.set(graph.OnlineArticleOnlineJournal().locator, locatorSt);
 
-											//---flushing online journal name index---
-											onlineJournalNameIndex.flush();
-										}
-
-										onlineArticleJournalProperties.put(OnlineArticleJournalRel.LOCATOR_PROPERTY, locatorSt);
-										inserter.createRelationship(onlineArticleId, onlineJournalId, onlineArticleJournalRel, onlineArticleJournalProperties);
 									}
 									//----------------------------
 
 								}else{
 									onlineArticle = optionalOnlineArticle.get();
+									reference = onlineArticle.referenceOnlineArticle_inNode();
 								}
 
-								if (onlineArticleId < 0) {
-
-								}
 								//protein citation
-								inserter.createRelationship(onlineArticleId, currentProteinId, onlineArticleProteinCitationRel, null);
+								protein.addOutEdge(graph.ProteinReference(), reference);
 							}
 
 						}
