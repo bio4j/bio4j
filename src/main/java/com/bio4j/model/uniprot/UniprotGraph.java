@@ -2055,6 +2055,8 @@ public abstract class UniprotGraph<
 					UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
 					> {
 
+		public final scope scope = new scope();
+
         public UnpublishedObservationType(RVT raw) {
 			super(raw);
 		}

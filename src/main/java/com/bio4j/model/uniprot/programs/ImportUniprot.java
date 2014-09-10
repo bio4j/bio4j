@@ -1900,22 +1900,32 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						break;
 					case UNPUBLISHED_OBSERVATION_CITATION_TYPE:
 						if (uniprotDataXML.getUnpublishedObservations()) {
+
 							String dateSt = citation.getAttributeValue("date");
+							String scopeSt = referenceElement.getChildText("scope");
 							if (dateSt == null) {
 								dateSt = "";
 							}
-
-							unpublishedObservationProperties.put(UnpublishedObservationNode.DATE_PROPERTY, dateSt);
-							long unpublishedObservationId = inserter.createNode(unpublishedObservationProperties);
-							//--indexing node by type---
-							nodeTypeIndex.add(unpublishedObservationId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, UnpublishedObservationNode.NODE_TYPE));
-
-							//---authors person association-----
-							for (long personId : authorsPersonNodesIds) {
-								inserter.createRelationship(unpublishedObservationId, personId, unpublishedObservationAuthorRel, null);
+							if (scopeSt == null){
+								scopeSt = "";
 							}
 
-							inserter.createRelationship(unpublishedObservationId, currentProteinId, unpublishedObservationProteinCitationRel, null);
+
+							UnpublishedObservation<I,RV,RVT,RE,RET> unpublishedObservation = graph.UnpublishedObservation().from(graph.raw().addVertex(null));
+							unpublishedObservation.set(graph.UnpublishedObservation().scope, scopeSt);
+
+							Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
+							reference.set(graph.Reference().date, dateSt);
+							reference.addOutEdge(graph.ReferenceUnpublishedObservation(), unpublishedObservation);
+
+							//---authors association-----
+							for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+								reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+							}
+
+							//protein citation
+							protein.addOutEdge(graph.ProteinReference(), reference);
+							
 						}
 						break;
 				}
