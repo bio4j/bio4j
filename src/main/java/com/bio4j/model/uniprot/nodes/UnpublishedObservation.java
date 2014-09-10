@@ -23,6 +23,11 @@ public final class UnpublishedObservation<I extends UntypedGraph<RV, RVT, RE, RE
 		return this;
 	}
 
+	// properties
+	public String scope() {
+		return get(type().scope);
+	}
+
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
 	// relationships

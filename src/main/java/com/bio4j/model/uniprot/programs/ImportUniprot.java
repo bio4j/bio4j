@@ -2,6 +2,7 @@ package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.*;
+import com.bio4j.model.uniprot.relationships.ArticleJournal;
 import com.bio4j.model.uniprot.relationships.OnlineArticleOnlineJournal;
 import com.bio4j.model.uniprot.relationships.ProteinFeature;
 import com.ohnosequences.typedGraphs.UntypedGraph;
@@ -98,7 +99,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String ARTICLE_CITATION_TYPE = "journal article";
 	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online journal article";
 	public static final String BOOK_CITATION_TYPE = "book";
-	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observation";
+	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observations";
 
 	protected SimpleDateFormat dateFormat;
 
@@ -1735,7 +1736,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 									}
-
+									//---consortiums association----
 									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
 										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
 									}
@@ -1750,7 +1751,6 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 											onlineJournal = graph.OnlineJournal().from(graph.raw().addVertex(null));
 											onlineJournal.set(graph.OnlineJournal().name, nameSt);
-
 
 										}else{
 											onlineJournal = optionalOnlineJournal.get();
@@ -1777,7 +1777,9 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						//-----------------------------ARTICLE-----------------------------------------
 						break;
 					case ARTICLE_CITATION_TYPE:
+
 						if (uniprotDataXML.getArticles()) {
+
 							String journalNameSt = citation.getAttributeValue("name");
 							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
@@ -1786,7 +1788,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							String volumeSt = citation.getAttributeValue("volume");
 							String doiSt = "";
 							String medlineSt = "";
-							String pubmedSt = "";
+							String pubmedId = "";
 
 							if (journalNameSt == null) {
 								journalNameSt = "";
@@ -1817,81 +1819,79 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										medlineSt = tempDbRef.getAttributeValue("id");
 										break;
 									case "PubMed":
-										pubmedSt = tempDbRef.getAttributeValue("id");
+										pubmedId = tempDbRef.getAttributeValue("id");
 										break;
 								}
 							}
 
-							//long articleId = indexService.getSingleNode(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-							long articleId = -1;
-							IndexHits<Long> articleTitleIndexHits = articleTitleIndex.get(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt);
-							if (articleTitleIndexHits.hasNext()) {
-								articleId = articleTitleIndexHits.getSingle();
-							}
-							articleTitleIndexHits.close();
-							if (articleId < 0) {
-								articleProperties.put(ArticleNode.TITLE_PROPERTY, titleSt);
-								articleProperties.put(ArticleNode.DOI_ID_PROPERTY, doiSt);
-								articleProperties.put(ArticleNode.MEDLINE_ID_PROPERTY, medlineSt);
-								articleProperties.put(ArticleNode.PUBMED_ID_PROPERTY, pubmedSt);
-								articleId = inserter.createNode(articleProperties);
-								//--indexing node by type---
-								nodeTypeIndex.add(articleId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, ArticleNode.NODE_TYPE));
-								if (!titleSt.equals("")) {
-									articleTitleIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_TITLE_FULL_TEXT_INDEX, titleSt));
-									//--flushing article title index---
-									articleTitleIndex.flush();
-								}
+							if (titleSt != "") {
+								Article<I,RV,RVT,RE,RET> article = null;
+								Optional<Article<I,RV,RVT,RE,RET>> optionalArticle = graph.articleTitleIndex().getVertex(titleSt);
+								Reference<I,RV,RVT,RE,RET> reference = null;
 
-								//---indexing by medline, doi and pubmed--
-								if (!doiSt.isEmpty()) {
-									articleDoiIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_DOI_ID_INDEX, doiSt));
-								}
-								if (!medlineSt.isEmpty()) {
-									articleMedlineIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_MEDLINE_ID_INDEX, medlineSt));
-								}
-								if (!pubmedSt.isEmpty()) {
-									articlePubmedIdIndex.add(articleId, MapUtil.map(ArticleNode.ARTICLE_PUBMED_ID_INDEX, pubmedSt));
-								}
+								if(!optionalArticle.isPresent()){
 
-								//---authors person association-----
-								for (long personId : authorsPersonNodesIds) {
-									inserter.createRelationship(articleId, personId, articleAuthorRel, null);
-								}
-								//---authors consortium association-----
-								for (long consortiumId : authorsConsortiumNodesIds) {
-									inserter.createRelationship(articleId, consortiumId, articleAuthorRel, null);
-								}
+									article = graph.Article().from(graph.raw().addVertex(null));
+									article.set(graph.Article().title, titleSt);
+									article.set(graph.Article().doId, doiSt);
 
-								//------journal-----------
-								if (!journalNameSt.equals("")) {
-									//long journalId = indexService.getSingleNode(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-									long journalId = -1;
-									IndexHits<Long> journalNameIndexHits = journalNameIndex.get(JournalNode.JOURNAL_NAME_INDEX, journalNameSt);
-									if (journalNameIndexHits.hasNext()) {
-										journalId = journalNameIndexHits.getSingle();
-									}
-									journalNameIndexHits.close();
-									if (journalId < 0) {
-										journalProperties.put(JournalNode.NAME_PROPERTY, journalNameSt);
-										journalId = inserter.createNode(journalProperties);
-										//--indexing node by type---
-										nodeTypeIndex.add(journalId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, JournalNode.NODE_TYPE));
-										journalNameIndex.add(journalId, MapUtil.map(JournalNode.JOURNAL_NAME_INDEX, journalNameSt));
-										//----flushing journal name index----
-										journalNameIndex.flush();
+									if(pubmedId != ""){
+
+										Pubmed<I,RV,RVT,RE,RET> pubmed = null;
+										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
+
+										if(!optionalPubmed.isPresent()){
+											pubmed = graph.Pubmed().from(graph.raw().addVertex(null));
+											pubmed.set(graph.Pubmed().id, pubmedId);
+										}else{
+											pubmed = optionalPubmed.get();
+										}
+										article.addOutEdge(graph.ArticlePubmed(), pubmed);
 									}
 
-									articleJournalProperties.put(ArticleJournalRel.DATE_PROPERTY, dateSt);
-									articleJournalProperties.put(ArticleJournalRel.FIRST_PROPERTY, firstSt);
-									articleJournalProperties.put(ArticleJournalRel.LAST_PROPERTY, lastSt);
-									articleJournalProperties.put(ArticleJournalRel.VOLUME_PROPERTY, volumeSt);
-									inserter.createRelationship(articleId, journalId, articleJournalRel, articleJournalProperties);
+									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferenceArticle(), article);
+
+									//---authors association-----
+									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									}
+									//---consortiums association----
+									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
+										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
+									}
+
+									//------journal-----------
+									if (!journalNameSt.equals("")) {
+
+										Journal<I,RV,RVT,RE,RET> journal = null;
+										Optional<Journal<I,RV,RVT,RE,RET>> optionalJournal = graph.journalNameIndex().getVertex(journalNameSt);
+
+										if(!optionalJournal.isPresent()){
+											journal = graph.Journal().from(graph.raw().addVertex(null));
+											journal.set(graph.Journal().name, journalNameSt);
+
+										}else{
+											journal = optionalJournal.get();
+										}
+
+										ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), journal);
+										articleJournal.set(graph.ArticleJournal().volume, volumeSt);
+										articleJournal.set(graph.ArticleJournal().first, Integer.parseInt(firstSt));
+										articleJournal.set(graph.ArticleJournal().last, Integer.parseInt(lastSt));
+									}
+									//----------------------------
+
+								}else{
+									article = optionalArticle.get();
+									reference = article.referenceArticle_inNode();
 								}
-								//----------------------------
+
+								//protein citation
+								protein.addOutEdge(graph.ProteinReference(), reference);
+
 							}
-							//protein citation
-							inserter.createRelationship(articleId, currentProteinId, articleProteinCitationRel, null);
 
 						}
 

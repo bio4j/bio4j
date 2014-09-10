@@ -47,6 +47,26 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    Journal<I, RV, RVT, RE, RET>, JournalType,
+		    // property
+		    JournalType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    journalNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Article<I, RV, RVT, RE, RET>, ArticleType,
+		    // property
+		    ArticleType.title, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    articleTitleIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
 		    // property
 		    OnlineJournalType.name, String,
@@ -205,6 +225,16 @@ public abstract class UniprotGraph<
             I, RV, RVT, RE, RET
             >
     pIRIdIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Pubmed<I, RV, RVT, RE, RET>, PubmedType,
+			// property
+			PubmedType.id, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	pubmedIdIndex();
     public abstract TypedVertexIndex.Unique <
             // vertex
             UniGene<I, RV, RVT, RE, RET>, UniGeneType,
@@ -2038,6 +2068,18 @@ public abstract class UniprotGraph<
 		public UnpublishedObservation<I, RV, RVT, RE, RET> from(RV vertex) {
 			return new UnpublishedObservation<I, RV, RVT, RE, RET>(vertex, this);
 		}
+
+		public final class scope
+				extends
+				UniprotVertexProperty<UnpublishedObservation<I, RV, RVT, RE, RET>, UnpublishedObservationType, scope, String> {
+			public scope() {
+				super(UnpublishedObservationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 	}
 
 
@@ -2067,6 +2109,63 @@ public abstract class UniprotGraph<
 		public ArticleJournal<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ArticleJournal<I, RV, RVT, RE, RET>(edge, this);
 		}
+
+		public final volume volume = new volume();
+		public final first first = new first();
+		public final last last = new last();
+
+		public final class volume
+				extends
+				UniprotEdgeProperty<
+						Article<I, RV, RVT, RE, RET>, ArticleType,
+						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
+						Journal<I, RV, RVT, RE, RET>, JournalType,
+						volume, String
+						>
+		{
+			public volume() {
+				super(ArticleJournalType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class first
+				extends
+				UniprotEdgeProperty<
+						Article<I, RV, RVT, RE, RET>, ArticleType,
+						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
+						Journal<I, RV, RVT, RE, RET>, JournalType,
+						first, Integer
+						>
+		{
+			public first() {
+				super(ArticleJournalType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+		public final class last
+				extends
+				UniprotEdgeProperty<
+						Article<I, RV, RVT, RE, RET>, ArticleType,
+						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
+						Journal<I, RV, RVT, RE, RET>, JournalType,
+						last, Integer
+						>
+		{
+			public last() {
+				super(ArticleJournalType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+
 	}
 
 	public final class ArticlePubmedType
