@@ -1430,7 +1430,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								reference.set(graph.Reference().date, dateSt);
 								//---authors association-----
 								for (Person person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthor(), person);
+									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 								}
 
 								//--protein reference citation relationship
@@ -1475,7 +1475,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								reference.set(graph.Reference().date, dateSt);
 								//---authors association-----
 								for (Person person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthor(), person);
+									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 								}
 
 								//--protein citation relationship
@@ -1497,56 +1497,49 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							}
 							if (titleSt == null) {
 								titleSt = "";
-							}
+							}else{
 
-							submissionProperties.put(SubmissionNode.DATE_PROPERTY, dateSt);
-							submissionProperties.put(SubmissionNode.TITLE_PROPERTY, titleSt);
+								Submission<I,RV,RVT,RE,RET> submission = null;
+								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
+								if(!optionalSubmission.isPresent()){
+									submission = graph.Submission().from(graph.raw().addVertex(null));
+									submission.set(graph.Submission().title, titleSt);
 
-							long submissionId;
-							IndexHits<Long> submissionTitleIndexHits = submissionTitleIndex.get(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt);
-							if (submissionTitleIndexHits.hasNext()) {
-								submissionId = submissionTitleIndexHits.getSingle();
-								submissionTitleIndexHits.close();
-							} else {
-								//---submission node creation and indexing
-								submissionId = inserter.createNode(submissionProperties);
-								//--indexing node by type---
-								nodeTypeIndex.add(submissionId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, SubmissionNode.NODE_TYPE));
-								if (!titleSt.isEmpty()) {
-									//--indexing node by title---
-									submissionTitleIndex.add(submissionId, MapUtil.map(SubmissionNode.SUBMISSION_TITLE_INDEX, titleSt));
-									submissionTitleIndex.flush();
+								}else{
+									submission = optionalSubmission.get();
 								}
-							}
 
-							//---authors association-----
-							for (long personId : authorsPersonNodesIds) {
-								inserter.createRelationship(submissionId, personId, submissionAuthorRel, null);
-							}
-							//---authors consortium association-----
-							for (long consortiumId : authorsConsortiumNodesIds) {
-								inserter.createRelationship(submissionId, consortiumId, submissionAuthorRel, null);
-							}
 
-							if (dbSt != null) {
-								long dbId = -1;
-								IndexHits<Long> dbNameIndexHits = dbNameIndex.get(DBNode.DB_NAME_INDEX, dbSt);
-								if (dbNameIndexHits.hasNext()) {
-									dbId = dbNameIndexHits.getSingle();
+								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
+								reference.set(graph.Reference().date, dateSt);
+								//---authors association-----
+								for (Person person : authorsPerson) {
+									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 								}
-								dbNameIndexHits.close();
-								if (dbId < 0) {
-									dbProperties.put(DBNode.NODE_TYPE_PROPERTY, DBNode.NODE_TYPE);
-									dbProperties.put(DBNode.NAME_PROPERTY, dbSt);
-									dbId = createDbNode(dbProperties, inserter, dbNameIndex, nodeTypeIndex);
-									dbNameIndex.flush();
+								for(Consortium consortium : authorsConsortium){
+									reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
 								}
-								//-----submission db relationship-----
-								inserter.createRelationship(submissionId, dbId, submissionDbRel, null);
-							}
 
-							//--protein citation relationship
-							inserter.createRelationship(submissionId, currentProteinId, submissionProteinCitationRel, null);
+								if (dbSt != null) {
+
+									DB<I,RV,RVT,RE,RET> db = null;
+									Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
+									if(!optionalDB.isPresent()){
+										db = graph.DB().from(graph.raw().addVertex(null));
+										db.set(graph.DB().name, dbSt);
+									}else{
+										db = optionalDB.get();
+									}
+
+									//-----submission db relationship-----
+									submission.addOutEdge(graph.SubmissionDB(), db);
+								}
+
+								//--protein citation relationship
+								protein.addOutEdge(graph.ProteinReference(), reference);
+								reference.addOutEdge(graph.ReferenceSubmission(), submission);
+
+							}
 
 						}
 

@@ -47,6 +47,16 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    DB<I, RV, RVT, RE, RET>, DBType,
+		    // property
+		    DBType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    dbNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    Country<I, RV, RVT, RE, RET>, CountryType,
 		    // property
 		    CountryType.name, String,
@@ -65,6 +75,16 @@ public abstract class UniprotGraph<
 			I, RV, RVT, RE, RET
 			>
 	patentNumberIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Submission<I, RV, RVT, RE, RET>, SubmissionType,
+			// property
+			SubmissionType.title, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	submissionTitleIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Institute<I, RV, RVT, RE, RET>, InstituteType,
@@ -385,7 +405,9 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinReferenceType ProteinReference();
 
-	public abstract ReferenceAuthorType ReferenceAuthor();
+	public abstract ReferenceAuthorPersonType ReferenceAuthorPerson();
+
+	public abstract ReferenceAuthorConsortiumType ReferenceAuthorConsortium();
 
 	public abstract ReferenceArticleType ReferenceArticle();
 
@@ -2792,28 +2814,53 @@ public abstract class UniprotGraph<
 		}
 	}
 
-	public final class ReferenceAuthorType
+	public final class ReferenceAuthorConsortiumType
 			extends
 			UniprotEdgeType<
 					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceAuthor<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorType,
+					ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
+					Consortium<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ConsortiumType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ReferenceAuthorConsortiumType(RET raw) {
+			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Consortium());
+		}
+
+		@Override
+		public ReferenceAuthorConsortiumType value() {
+			return graph().ReferenceAuthorConsortium();
+		}
+
+		@Override
+		public ReferenceAuthorConsortium<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceAuthorConsortium<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ReferenceAuthorPersonType
+			extends
+			UniprotEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceAuthorPerson<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorPersonType,
 					Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		public ReferenceAuthorType(RET raw) {
+		public ReferenceAuthorPersonType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Person());
 		}
 
 		@Override
-		public ReferenceAuthorType value() {
-			return graph().ReferenceAuthor();
+		public ReferenceAuthorPersonType value() {
+			return graph().ReferenceAuthorPerson();
 		}
 
 		@Override
-		public ReferenceAuthor<I, RV, RVT, RE, RET> from(RE edge) {
-			return new ReferenceAuthor<I, RV, RVT, RE, RET>(edge, this);
+		public ReferenceAuthorPerson<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ReferenceAuthorPerson<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 

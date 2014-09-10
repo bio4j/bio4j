@@ -1,8 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.relationships.ArticleJournal;
-import com.bio4j.model.uniprot.relationships.ReferenceAuthor;
+import com.bio4j.model.uniprot.relationships.ReferenceAuthorPerson;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public final class Person <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE
 
 	// referenceAuthor
 	// ingoing
-	public List<ReferenceAuthor<I, RV, RVT, RE, RET>> referenceAuthor_in(){
+	public List<ReferenceAuthorPerson<I, RV, RVT, RE, RET>> referenceAuthor_in(){
 		return inMany(graph().ReferenceAuthor());
 	}
 	public List<Reference<I, RV, RVT, RE, RET>> referenceAuthor_inNodes(){
