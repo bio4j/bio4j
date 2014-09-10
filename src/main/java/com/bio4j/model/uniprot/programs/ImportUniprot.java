@@ -1643,43 +1643,37 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								//----publisher--
 								if (!publisherSt.equals("")) {
 
-									Publisher<I,RV,RVT,RE,RET> editor = null;
+									Publisher<I,RV,RVT,RE,RET> publisher = null;
 									Optional<Publisher<I,RV,RVT,RE,RET>> optionalPublisher = graph.publisherNameIndex().getVertex(publisherSt);
 
-									long publisherId = -1;
-									IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
-									if (publisherNameIndexHits.hasNext()) {
-										publisherId = publisherNameIndexHits.getSingle();
+									if(!optionalPublisher.isPresent()){
+
+										publisher = graph.Publisher().from(graph.raw().addVertex(null));
+										publisher.set(graph.Publisher().name, publisherSt);
+
+									}else{
+										publisher = optionalPublisher.get();
 									}
-									publisherNameIndexHits.close();
-									if (publisherId < 0) {
-										publisherProperties.put(PublisherNode.NAME_PROPERTY, publisherSt);
-										publisherId = inserter.createNode(publisherProperties);
-										//--indexing node by type---
-										nodeTypeIndex.add(publisherId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, PublisherNode.NODE_TYPE));
-										publisherNameIndex.add(publisherId, MapUtil.map(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt));
-										//--flushing publisher name index--
-										publisherNameIndex.flush();
-									}
-									inserter.createRelationship(bookId, publisherId, bookPublisherRel, null);
+
+									book.addOutEdge(graph.BookPublisher(), publisher);
 								}
 
 								//-----city-----
 								if (!citySt.equals("")) {
-									//long cityId = indexService.getSingleNode(CityNode.CITY_NAME_INDEX, citySt);
-									long cityId = -1;
-									IndexHits<Long> cityNameIndexHits = cityNameIndex.get(CityNode.CITY_NAME_INDEX, citySt);
-									if (cityNameIndexHits.hasNext()) {
-										cityId = cityNameIndexHits.getSingle();
+
+									City<I,RV,RVT,RE,RET> city = null;
+									Optional<City<I,RV,RVT,RE,RET>> optionalCity = graph.cityNameIndex().getVertex(citySt);
+
+									if(!optionalCity.isPresent()){
+
+										city = graph.City().from(graph.raw().addVertex(null));
+										city.set(graph.City().name, citySt);
+
+									}else{
+										city = optionalCity.get();
 									}
-									cityNameIndexHits.close();
-									if (cityId < 0) {
-										cityProperties.put(CityNode.NAME_PROPERTY, citySt);
-										cityId = createCityNode(cityProperties, inserter, cityNameIndex, nodeTypeIndex);
-										//-----flushing city name index---
-										cityNameIndex.flush();
-									}
-									inserter.createRelationship(bookId, cityId, bookCityRel, null);
+
+									book.addOutEdge(graph.BookCity(), city);
 								}
 
 							}else{
@@ -1690,13 +1684,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							//--protein citation relationship
 							protein.addOutEdge(graph.ProteinReference(), reference);
 
-
-							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
-							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
-							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
-							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
-							//--protein citation relationship
-							inserter.createRelationship(bookId, currentProteinId, bookProteinCitationRel, bookProteinCitationProperties);
+//                          TODO see if these fields can somehow be included
+//							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
+//							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
+//							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
+//							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
 
 						}
 

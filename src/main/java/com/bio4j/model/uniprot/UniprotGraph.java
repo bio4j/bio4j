@@ -47,6 +47,16 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    City<I, RV, RVT, RE, RET>, CityType,
+		    // property
+		    CityType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    cityNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    Publisher<I, RV, RVT, RE, RET>, PublisherType,
 		    // property
 		    PublisherType.name, String,
