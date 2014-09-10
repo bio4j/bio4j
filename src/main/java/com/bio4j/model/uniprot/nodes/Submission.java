@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.relationships.ReferenceSubmission;
 import com.bio4j.model.uniprot.relationships.SubmissionDB;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
@@ -42,4 +43,9 @@ public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
 	public DB<I, RV, RVT, RE, RET> submissionDB_outNode(){
 		return outOneV(graph().SubmissionDB());
 	}
+
+	// referenceSubmission
+	// ingoing
+	public ReferenceSubmission<I, RV, RVT, RE, RET> referenceSubmission_in(){   return inOne(graph().ReferenceSubmission());}
+	public Reference<I, RV, RVT, RE, RET> referenceSubmission_inNode(){ return inOneV(graph().ReferenceSubmission());}
 }

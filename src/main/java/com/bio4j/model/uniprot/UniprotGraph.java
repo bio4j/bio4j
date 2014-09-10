@@ -47,6 +47,26 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    Publisher<I, RV, RVT, RE, RET>, PublisherType,
+		    // property
+		    PublisherType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    publisherNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
+		    Book<I, RV, RVT, RE, RET>, BookType,
+		    // property
+		    BookType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    bookNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    DB<I, RV, RVT, RE, RET>, DBType,
 		    // property
 		    DBType.name, String,
@@ -2899,6 +2919,11 @@ public abstract class UniprotGraph<
 			implements
 			TypedEdge.Type.OneToOne {
 
+		public final title title = new title();
+		public final first first = new first();
+		public final last last = new last();
+		public final volume volume = new volume();
+
 		public ReferenceBookType(RET raw) {
 			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Book());
 		}
@@ -2911,6 +2936,78 @@ public abstract class UniprotGraph<
 		@Override
 		public ReferenceBook<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ReferenceBook<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class title
+				extends
+				UniprotEdgeProperty<
+						Reference<I, RV, RVT, RE, RET>, ReferenceType,
+						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
+						Book<I, RV, RVT, RE, RET>, BookType,
+						title, String
+						>
+		{
+			public title() {
+				super(ReferenceBookType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+		public final class volume
+				extends
+				UniprotEdgeProperty<
+						Reference<I, RV, RVT, RE, RET>, ReferenceType,
+						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
+						Book<I, RV, RVT, RE, RET>, BookType,
+						volume, String
+						>
+		{
+			public volume() {
+				super(ReferenceBookType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+		public final class first
+				extends
+				UniprotEdgeProperty<
+						Reference<I, RV, RVT, RE, RET>, ReferenceType,
+						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
+						Book<I, RV, RVT, RE, RET>, BookType,
+						first, Integer
+						>
+		{
+			public first() {
+				super(ReferenceBookType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+
+		public final class last
+				extends
+				UniprotEdgeProperty<
+						Reference<I, RV, RVT, RE, RET>, ReferenceType,
+						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
+						Book<I, RV, RVT, RE, RET>, BookType,
+						last, Integer
+						>
+		{
+			public last() {
+				super(ReferenceBookType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
 		}
 	}
 

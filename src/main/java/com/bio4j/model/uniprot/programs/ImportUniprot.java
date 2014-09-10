@@ -1385,6 +1385,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								Thesis<I,RV,RVT,RE,RET> thesis = null;
 								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
+								Reference<I,RV,RVT,RE,RET> reference = null;
 
 								if(!optionalThesis.isPresent()){
 
@@ -1395,13 +1396,26 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 									String instituteSt = citation.getAttributeValue("institute");
 									String countrySt = citation.getAttributeValue("country");
 
+									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferenceThesis(), thesis);
+
+									//---authors association-----
+									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									}
+
 									if (instituteSt != null) {
 
 										Institute<I,RV,RVT,RE,RET> institute = null;
 										Optional<Institute<I,RV,RVT,RE,RET>> optionalInstitute = graph.instituteNameIndex().getVertex(instituteSt);
+
+
 										if(!optionalInstitute.isPresent()){
+
 											institute = graph.Institute().from(graph.raw().addVertex(null));
 											institute.set(graph.Institute().name, instituteSt);
+
 										}else{
 											institute = optionalInstitute.get();
 										}
@@ -1424,18 +1438,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									thesis = optionalThesis.get();
-								}
-
-								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
-								reference.set(graph.Reference().date, dateSt);
-								//---authors association-----
-								for (Person person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									reference = thesis.referenceThesis_inNode();
 								}
 
 								//--protein reference citation relationship
 								protein.addOutEdge(graph.ProteinReference(), reference);
-								reference.addOutEdge(graph.ReferenceThesis(), thesis);
+
 
 							}
 
@@ -1463,24 +1471,31 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								Patent<I,RV,RVT,RE,RET> patent = null;
 								Optional<Patent<I,RV,RVT,RE,RET>> optionalPatent = graph.patentNumberIndex().getVertex(numberSt);
+								Reference<I,RV,RVT,RE,RET> reference = null;
+
 								if(!optionalPatent.isPresent()){
+
 									patent = graph.Patent().from(graph.raw().addVertex(null));
 									patent.set(graph.Patent().number, numberSt);
 									patent.set(graph.Patent().title, titleSt);
+
+									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferencePatent(), patent);
+
+									//---authors association-----
+									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									}
+
 								}else{
 									patent = optionalPatent.get();
-								}
-
-								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
-								reference.set(graph.Reference().date, dateSt);
-								//---authors association-----
-								for (Person person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									reference = patent.referencePatent_inNode();
 								}
 
 								//--protein citation relationship
 								protein.addOutEdge(graph.ProteinReference(), reference);
-								reference.addOutEdge(graph.ReferencePatent(), patent);
+
 							}
 						}
 
@@ -1501,43 +1516,48 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								Submission<I,RV,RVT,RE,RET> submission = null;
 								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
+								Reference<I,RV,RVT,RE,RET> reference = null;
+
 								if(!optionalSubmission.isPresent()){
+
 									submission = graph.Submission().from(graph.raw().addVertex(null));
 									submission.set(graph.Submission().title, titleSt);
 
-								}else{
-									submission = optionalSubmission.get();
-								}
-
-
-								Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
-								reference.set(graph.Reference().date, dateSt);
-								//---authors association-----
-								for (Person person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-								}
-								for(Consortium consortium : authorsConsortium){
-									reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
-								}
-
-								if (dbSt != null) {
-
-									DB<I,RV,RVT,RE,RET> db = null;
-									Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
-									if(!optionalDB.isPresent()){
-										db = graph.DB().from(graph.raw().addVertex(null));
-										db.set(graph.DB().name, dbSt);
-									}else{
-										db = optionalDB.get();
+									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference.set(graph.Reference().date, dateSt);
+									//---authors association-----
+									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									}
+									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
+										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
 									}
 
-									//-----submission db relationship-----
-									submission.addOutEdge(graph.SubmissionDB(), db);
+									if (dbSt != null) {
+
+										DB<I,RV,RVT,RE,RET> db = null;
+										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
+										if(!optionalDB.isPresent()){
+											db = graph.DB().from(graph.raw().addVertex(null));
+											db.set(graph.DB().name, dbSt);
+										}else{
+											db = optionalDB.get();
+										}
+
+										//-----submission db relationship-----
+										submission.addOutEdge(graph.SubmissionDB(), db);
+									}
+
+									reference.addOutEdge(graph.ReferenceSubmission(), submission);
+
+								}else{
+									submission = optionalSubmission.get();
+									reference = submission.referenceSubmission_inNode();
 								}
 
 								//--protein citation relationship
 								protein.addOutEdge(graph.ProteinReference(), reference);
-								reference.addOutEdge(graph.ReferenceSubmission(), submission);
+
 
 							}
 
@@ -1581,57 +1601,51 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								volumeSt = "";
 							}
 
-							long bookId = -1;
-							IndexHits<Long> bookNameIndexHits = bookNameIndex.get(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt);
-							if (bookNameIndexHits.hasNext()) {
-								bookId = bookNameIndexHits.getSingle();
-							}
-							bookNameIndexHits.close();
+							Book<I,RV,RVT,RE,RET> book = null;
+							Optional<Book<I,RV,RVT,RE,RET>> optionalBook = graph.bookNameIndex().getVertex(nameSt);
+							Reference<I,RV,RVT,RE,RET> reference = null;
 
-							if (bookId < 0) {
-								bookProperties.put(BookNode.NAME_PROPERTY, nameSt);
-								bookProperties.put(BookNode.DATE_PROPERTY, dateSt);
-								//---book node creation and indexing
-								bookId = inserter.createNode(bookProperties);
+							if(!optionalBook.isPresent()){
 
-								bookNameIndex.add(bookId, MapUtil.map(BookNode.BOOK_NAME_FULL_TEXT_INDEX, nameSt));
-								//--indexing node by type---
-								nodeTypeIndex.add(bookId, MapUtil.map(Bio4jManager.NODE_TYPE_INDEX_NAME, BookNode.NODE_TYPE));
+								book = graph.Book().from(graph.raw().addVertex(null));
+								book.set(graph.Book().name, nameSt);
 
-								//--flushing book name index---
-								bookNameIndex.flush();
+								reference = graph.Reference().from(graph.raw().addVertex(null));
+								reference.set(graph.Reference().date, dateSt);
+								reference.addOutEdge(graph.ReferenceBook(), book);
+
 								//---authors association-----
-								for (long personId : authorsPersonNodesIds) {
-									inserter.createRelationship(bookId, personId, bookAuthorRel, null);
+								for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 								}
 
 								//---editor association-----
 								Element editorListElem = citation.getChild("editorList");
 								if (editorListElem != null) {
 									List<Element> editorsElems = editorListElem.getChildren("person");
-									for (Element person : editorsElems) {
-										//long editorId = indexService.getSingleNode(PersonNode.PERSON_NAME_INDEX, person.getAttributeValue("name"));
-										long editorId = -1;
-										IndexHits<Long> personNameIndexHits = personNameIndex.get(PersonNode.PERSON_NAME_FULL_TEXT_INDEX, person.getAttributeValue("name"));
-										if (personNameIndexHits.hasNext()) {
-											editorId = personNameIndexHits.getSingle();
+									for (Element personElement : editorsElems) {
+
+										Person<I,RV,RVT,RE,RET> editor = null;
+										String personName = personElement.getAttributeValue("name");
+										Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
+
+										if(!optionalPerson.isPresent()){
+											editor = graph.Person().from(graph.raw().addVertex(null));
+											editor.set(graph.Person().name, personName);
+										}else{
+											editor = optionalPerson.get();
 										}
-										personNameIndexHits.close();
-										if (editorId < 0) {
-											personProperties.put(PersonNode.NAME_PROPERTY, person.getAttributeValue("name"));
-											editorId = createPersonNode(personProperties, inserter, personNameIndex, nodeTypeIndex);
-										}
-										//---flushing person name index---
-										personNameIndex.flush();
-										//editor association
-										inserter.createRelationship(bookId, editorId, bookEditorRel, null);
+										book.addOutEdge(graph.BookEditor(), editor);
+
 									}
 								}
 
-
 								//----publisher--
 								if (!publisherSt.equals("")) {
-									//long publisherId = indexService.getSingleNode(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
+
+									Publisher<I,RV,RVT,RE,RET> editor = null;
+									Optional<Publisher<I,RV,RVT,RE,RET>> optionalPublisher = graph.publisherNameIndex().getVertex(publisherSt);
+
 									long publisherId = -1;
 									IndexHits<Long> publisherNameIndexHits = publisherNameIndex.get(PublisherNode.PUBLISHER_NAME_INDEX, publisherSt);
 									if (publisherNameIndexHits.hasNext()) {
@@ -1667,7 +1681,15 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 									}
 									inserter.createRelationship(bookId, cityId, bookCityRel, null);
 								}
+
+							}else{
+								book = optionalBook.get();
+								reference = book.referenceBook_inNode();
 							}
+
+							//--protein citation relationship
+							protein.addOutEdge(graph.ProteinReference(), reference);
+
 
 							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
 							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
