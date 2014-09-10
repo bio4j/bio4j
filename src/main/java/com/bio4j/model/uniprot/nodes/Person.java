@@ -37,10 +37,10 @@ public final class Person <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE
 	// referenceAuthor
 	// ingoing
 	public List<ReferenceAuthorPerson<I, RV, RVT, RE, RET>> referenceAuthor_in(){
-		return inMany(graph().ReferenceAuthor());
+		return inMany(graph().ReferenceAuthorPerson());
 	}
 	public List<Reference<I, RV, RVT, RE, RET>> referenceAuthor_inNodes(){
-		return inManyV(graph().ReferenceAuthor());
+		return inManyV(graph().ReferenceAuthorPerson());
 	}
 
 
