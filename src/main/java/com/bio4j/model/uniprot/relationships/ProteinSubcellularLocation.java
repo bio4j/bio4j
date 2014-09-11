@@ -17,6 +17,16 @@ public final class ProteinSubcellularLocation <I extends UntypedGraph<RV, RVT, R
 				I, RV, RVT, RE, RET
 				> {
 
+	// properties
+	public String status() {
+		return get(type().status);
+	}
+	public String topology() {    return get(type().topology);	}
+	public String topologyStatus() {    return get(type().topologyStatus);	}
+	public String evidence() {
+		return get(type().evidence);
+	}
+
 	public ProteinSubcellularLocation(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType type) {
 
 		super(edge, type);

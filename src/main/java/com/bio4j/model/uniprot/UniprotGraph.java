@@ -2389,10 +2389,227 @@ public abstract class UniprotGraph<
 			return new ProteinComment<I, RV, RVT, RE, RET>(edge, this);
 		}
 
+		public final redoxPotentialEvidence redoxPotentialEvidence = new redoxPotentialEvidence();
+		public final redoxPotential redoxPotential = new redoxPotential();
+		public final absorptionText absorptionText = new absorptionText();
+		public final absorptionMax absorptionMax = new absorptionMax();
+		public final kineticsXML kineticsXML = new kineticsXML();
+		public final phDependence phDependence = new phDependence();
+		public final temperatureDependence temperatureDependence = new temperatureDependence();
 		public final text text = new text();
 		public final status status = new status();
 		public final evidence evidence = new evidence();
+		public final begin begin = new begin();
+		public final end end = new end();
+		public final method method = new method();
+		public final mass mass = new mass();
+		public final position position = new position();
 
+
+		public final class redoxPotentialEvidence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						redoxPotentialEvidence, String
+						>
+		{
+			public redoxPotentialEvidence() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class redoxPotential
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						redoxPotential, String
+						>
+		{
+			public redoxPotential() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class absorptionText
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						absorptionText, String
+						>
+		{
+			public absorptionText() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class absorptionMax
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						absorptionMax, String
+						>
+		{
+			public absorptionMax() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class kineticsXML
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						kineticsXML, String
+						>
+		{
+			public kineticsXML() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class phDependence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						phDependence, String
+						>
+		{
+			public phDependence() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class temperatureDependence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						temperatureDependence, String
+						>
+		{
+			public temperatureDependence() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class position
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						position, String
+						>
+		{
+			public position() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class mass
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						mass, String
+						>
+		{
+			public mass() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class method
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						method, String
+						>
+		{
+			public method() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class end
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						end, Integer
+						>
+		{
+			public end() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
+		public final class begin
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
+						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+						begin, Integer
+						>
+		{
+			public begin() {
+				super(ProteinCommentType.this);
+			}
+
+			public Class<Integer> valueClass() {
+				return Integer.class;
+			}
+		}
 		public final class text
 				extends
 				UniprotEdgeProperty<
@@ -2944,6 +3161,80 @@ public abstract class UniprotGraph<
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
+
+		public final evidence evidence = new evidence();
+		public final status status = new status();
+		public final topology topology = new topology();
+		public final topologyStatus topologyStatus = new topologyStatus();
+
+		public final class topologyStatus
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
+						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+						topologyStatus, String
+						>
+		{
+			public topologyStatus() {
+				super(ProteinSubcellularLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class topology
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
+						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+						topology, String
+						>
+		{
+			public topology() {
+				super(ProteinSubcellularLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class evidence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
+						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+						evidence, String
+						>
+		{
+			public evidence() {
+				super(ProteinSubcellularLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class status
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
+						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+						status, String
+						>
+		{
+			public status() {
+				super(ProteinSubcellularLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 
 		public ProteinSubcellularLocationType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SubcellularLocation());

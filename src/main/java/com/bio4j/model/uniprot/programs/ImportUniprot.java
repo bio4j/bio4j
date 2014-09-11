@@ -801,487 +801,487 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
     }
 
-//	private void importProteinComments(XMLElement entryXMLElem,
-//	                                          UniprotGraph<I,RV,RVT,RE,RET> graph,
-//	                                          Protein<I,RV,RVT,RE,RET> protein,
-//	                                          String proteinSequence,
-//	                                          UniprotDataXML uniprotDataXML) {
-//
-//
-//		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
-//
-//		for (Element commentElem : comments) {
-//
-//			String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
-//
-//			Element textElem = commentElem.getChild("text");
-//			String commentTextSt = "";
-//			String commentStatusSt = "";
-//			String commentEvidenceSt = "";
-//			if (textElem != null) {
-//				commentTextSt = textElem.getText();
-//				commentStatusSt = textElem.getAttributeValue("status");
-//				if (commentStatusSt == null) {
-//					commentStatusSt = "";
-//				}
-//				commentEvidenceSt = textElem.getAttributeValue("evidence");
-//				if (commentEvidenceSt == null) {
-//					commentEvidenceSt = "";
-//				}
-//			}
-//
-//
-//
-//			commentProperties.put(BasicCommentRel.TEXT_PROPERTY, commentTextSt);
-//			commentProperties.put(BasicCommentRel.STATUS_PROPERTY, commentStatusSt);
-//			commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//
-//			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
-//			Optional<TitanCommentType> commentOptional =  graph.commentTypeNameIndex.getNode(commentTypeSt);
-//			TitanCommentType comment = null;
-//
-//			if(!commentOptional.isPresent()){
-//				comment = graph.commentTypeT.from(graph.rawGraph().addVertex(null));
-//				comment.set(graph.commentTypeT.name, commentTypeSt);
-//				graph.rawGraph().commit();
-//			}else{
-//				comment = commentOptional.get();
-//			}
-//			//-----toxic dose----------------
-//			switch (commentTypeSt) {
-//				case ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, toxicDoseCommentRel, commentProperties);
-//					break;
-//				case CautionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, cautionCommentRel, commentProperties);
-//					break;
-//				case CofactorCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, cofactorCommentRel, commentProperties);
-//					break;
-//				case DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
-//					break;
-//				case OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.TEXT_PROPERTY, commentTextSt);
-//					String nameSt = commentElem.getAttributeValue("name");
-//					if (nameSt == null) {
-//						nameSt = "";
-//					}
-//					String linkSt = "";
-//					Element linkElem = commentElem.getChild("link");
-//					if (linkElem != null) {
-//						String uriSt = linkElem.getAttributeValue("uri");
-//						if (uriSt != null) {
-//							linkSt = uriSt;
-//						}
-//					}
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.NAME_PROPERTY, nameSt);
-//					onlineInformationCommentProperties.put(OnlineInformationCommentRel.LINK_PROPERTY, linkSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, onlineInformationCommentRel, onlineInformationCommentProperties);
-//					break;
-//				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
-//					break;
-//				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
-//					break;
-//				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
-//					break;
-//				case SubunitCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, subunitCommentRel, commentProperties);
-//					break;
-//				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
-//					break;
-//				case DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
-//					break;
-//				case PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
-//					break;
-//				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
-//					break;
-//				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
-//					break;
-//				case BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEXT_PROPERTY, commentTextSt);
-//					String phDependenceSt = commentElem.getChildText("phDependence");
-//					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
-//					if (phDependenceSt == null) {
-//						phDependenceSt = "";
-//					}
-//					if (temperatureDependenceSt == null) {
-//						temperatureDependenceSt = "";
-//					}
-//					String absorptionMaxSt = "";
-//					String absorptionTextSt = "";
-//					Element absorptionElem = commentElem.getChild("absorption");
-//					if (absorptionElem != null) {
-//						absorptionMaxSt = absorptionElem.getChildText("max");
-//						absorptionTextSt = absorptionElem.getChildText("text");
-//						if (absorptionMaxSt == null) {
-//							absorptionMaxSt = "";
-//						}
-//						if (absorptionTextSt == null) {
-//							absorptionTextSt = "";
-//						}
-//					}
-//					String kineticsSt = "";
-//					Element kineticsElem = commentElem.getChild("kinetics");
-//					if (kineticsElem != null) {
-//						kineticsSt = new XMLElement(kineticsElem).toString();
-//					}
-//					String redoxPotentialSt = "";
-//					String redoxPotentialEvidenceSt = "";
-//					Element redoxPotentialElem = commentElem.getChild("redoxPotential");
-//					if (redoxPotentialElem != null) {
-//						redoxPotentialSt = redoxPotentialElem.getText();
-//						redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
-//						if (redoxPotentialSt == null) {
-//							redoxPotentialSt = "";
-//						}
-//						if (redoxPotentialEvidenceSt == null) {
-//							redoxPotentialEvidenceSt = "";
-//						}
-//					}
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEMPERATURE_DEPENDENCE_PROPERTY, temperatureDependenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.PH_DEPENDENCE_PROPERTY, phDependenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.KINETICS_XML_PROPERTY, kineticsSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_MAX_PROPERTY, absorptionMaxSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_TEXT_PROPERTY, absorptionTextSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_EVIDENCE_PROPERTY, redoxPotentialEvidenceSt);
-//					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_PROPERTY, redoxPotentialSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, bioPhysicoChemicalPropertiesCommentRel, biophysicochemicalCommentProperties);
-//					break;
-//				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
-//					break;
-//				case PathwayCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, pathwayCommentRel, commentProperties);
-//					break;
-//				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
-//					break;
-//				case ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					if (uniprotDataXML.getSubcellularLocations()) {
-//						List<Element> subcLocations = commentElem.getChildren(UniprotStuff.SUBCELLULAR_LOCATION_TAG_NAME);
-//
-//						for (Element subcLocation : subcLocations) {
-//
-//							List<Element> locations = subcLocation.getChildren(UniprotStuff.LOCATION_TAG_NAME);
-//							Element firstLocation = locations.get(0);
-//							//long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-//							long firstLocationId = -1;
-//							IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-//							if (firstLocationIndexHits.hasNext()) {
-//								firstLocationId = firstLocationIndexHits.getSingle();
-//							}
-//							firstLocationIndexHits.close();
-//							long lastLocationId = firstLocationId;
-//
-//							if (firstLocationId < 0) {
-//								subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-//								lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-//								//---flushing subcellular location name index---
-//								subcellularLocationNameIndex.flush();
-//							}
-//
-//							for (int i = 1; i < locations.size(); i++) {
-//
-//								long tempLocationId;
-//								IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
-//								if (tempLocationIndexHits.hasNext()) {
-//									tempLocationId = tempLocationIndexHits.getSingle();
-//									tempLocationIndexHits.close();
-//								} else {
-//									subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-//									tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-//									subcellularLocationNameIndex.flush();
-//								}
-//
-//								inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
-//								lastLocationId = tempLocationId;
-//							}
-//							Element lastLocation = locations.get(locations.size() - 1);
-//							String evidenceSt = lastLocation.getAttributeValue(UniprotStuff.EVIDENCE_ATTRIBUTE);
-//							String statusSt = lastLocation.getAttributeValue(UniprotStuff.STATUS_ATTRIBUTE);
-//							String topologyStatusSt = "";
-//							String topologySt = "";
-//							Element topologyElem = subcLocation.getChild("topology");
-//							if (topologyElem != null) {
-//								topologySt = topologyElem.getText();
-//								topologyStatusSt = topologyElem.getAttributeValue("status");
-//							}
-//							if (topologyStatusSt == null) {
-//								topologyStatusSt = "";
-//							}
-//							if (topologySt == null) {
-//								topologySt = "";
-//							}
-//							if (evidenceSt == null) {
-//								evidenceSt = "";
-//							}
-//							if (statusSt == null) {
-//								statusSt = "";
-//							}
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
-//							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
-//							inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
-//
-//						}
-//					}
-//					break;
-//				case UniprotStuff.COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
-//					if (uniprotDataXML.getIsoforms()) {
-//						List<Element> eventList = commentElem.getChildren("event");
-//						List<Element> isoformList = commentElem.getChildren("isoform");
-//
-//						for (Element isoformElem : isoformList) {
-//							String isoformIdSt = isoformElem.getChildText("id");
-//							String isoformNoteSt = isoformElem.getChildText("note");
-//							String isoformNameSt = isoformElem.getChildText("name");
-//							String isoformSeqSt = "";
-//							Element isoSeqElem = isoformElem.getChild("sequence");
-//							if (isoSeqElem != null) {
-//								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-//								if (isoSeqTypeSt.equals("displayed")) {
-//									isoformSeqSt = proteinSequence;
-//								}
-//							}
-//							if (isoformNoteSt == null) {
-//								isoformNoteSt = "";
-//							}
-//							if (isoformNameSt == null) {
-//								isoformNameSt = "";
-//							}
-//							isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
-//							isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-//							isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
-//							isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
-//							//--------------------------------------------------------
-//							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							long isoformId = -1;
-//							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							if (isoformIdIndexHits.hasNext()) {
-//								isoformId = isoformIdIndexHits.getSingle();
-//							}
-//							isoformIdIndexHits.close();
-//							if (isoformId < 0) {
-//								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
-//							}
-//
-//							for (Element eventElem : eventList) {
-//
-//								String eventTypeSt = eventElem.getAttributeValue("type");
-//								switch (eventTypeSt) {
-//									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
-//										break;
-//								}
-//							}
-//
-//							//protein isoform relationship
-//							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
-//
-//						}
-//					}
-//					break;
-//				case UniprotStuff.COMMENT_SEQUENCE_CAUTION_TYPE:
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
-//					Element conflictElem = commentElem.getChild("conflict");
-//					if (conflictElem != null) {
-//
-//						String conflictTypeSt = conflictElem.getAttributeValue("type");
-//						String resourceSt = "";
-//						String idSt = "";
-//						String versionSt = "";
-//
-//						ArrayList<String> positionsList = new ArrayList<>();
-//
-//						Element sequenceElem = conflictElem.getChild("sequence");
-//						if (sequenceElem != null) {
-//							resourceSt = sequenceElem.getAttributeValue("resource");
-//							if (resourceSt == null) {
-//								resourceSt = "";
-//							}
-//							idSt = sequenceElem.getAttributeValue("id");
-//							if (idSt == null) {
-//								idSt = "";
-//							}
-//							versionSt = sequenceElem.getAttributeValue("version");
-//							if (versionSt == null) {
-//								versionSt = "";
-//							}
-//						}
-//
-//						Element locationElem = commentElem.getChild("location");
-//						if (locationElem != null) {
-//							Element positionElem = locationElem.getChild("position");
-//							if (positionElem != null) {
-//								String tempPos = positionElem.getAttributeValue("position");
-//								if (tempPos != null) {
-//									positionsList.add(tempPos);
-//								}
-//							}
-//						}
-//
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
-//						switch (conflictTypeSt) {
-//							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//								}
-//								break;
-//						}
-//					}
-//					break;
-//				case DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
-//					break;
-//				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
-//					break;
-//				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
-//					break;
-//				case RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
-//					List<Element> locationsList = commentElem.getChildren("location");
-//					for (Element tempLoc : locationsList) {
-//						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
-//						rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
-//						inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
-//					}
-//					break;
-//				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
-//					break;
-//				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
-//					break;
-//				case MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//					String methodSt = commentElem.getAttributeValue("method");
-//					String massSt = commentElem.getAttributeValue("mass");
-//					if (methodSt == null) {
-//						methodSt = "";
-//					}
-//					if (massSt == null) {
-//						massSt = "";
-//					}
-//					String beginSt = "";
-//					String endSt = "";
-//					Element locationElem = commentElem.getChild("location");
-//					if (locationElem != null) {
-//						Element beginElem = commentElem.getChild("begin");
-//						Element endElem = commentElem.getChild("end");
-//						if (beginElem != null) {
-//							beginSt = beginElem.getAttributeValue("position");
-//						}
-//
-//						if (endElem != null) {
-//							endSt = endElem.getAttributeValue("position");
-//						}
-//					}
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
-//					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
-//					inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
-//					break;
-//			}
-//
-//		}
-//
-//
-//	}
+	private void importProteinComments(XMLElement entryXMLElem,
+	                                          UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                          Protein<I,RV,RVT,RE,RET> protein,
+	                                          String proteinSequence,
+	                                          UniprotDataXML uniprotDataXML) {
+
+
+		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+
+		for (Element commentElem : comments) {
+
+			String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
+
+			Element textElem = commentElem.getChild("text");
+			String commentTextSt = "";
+			String commentStatusSt = "";
+			String commentEvidenceSt = "";
+			if (textElem != null) {
+				commentTextSt = textElem.getText();
+				commentStatusSt = textElem.getAttributeValue("status");
+				if (commentStatusSt == null) {
+					commentStatusSt = "";
+				}
+				commentEvidenceSt = textElem.getAttributeValue("evidence");
+				if (commentEvidenceSt == null) {
+					commentEvidenceSt = "";
+				}
+			}
+
+
+
+			commentProperties.put(BasicCommentRel.TEXT_PROPERTY, commentTextSt);
+			commentProperties.put(BasicCommentRel.STATUS_PROPERTY, commentStatusSt);
+			commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+
+			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
+			Optional<TitanCommentType> commentOptional =  graph.commentTypeNameIndex.getNode(commentTypeSt);
+			TitanCommentType comment = null;
+
+			if(!commentOptional.isPresent()){
+				comment = graph.commentTypeT.from(graph.rawGraph().addVertex(null));
+				comment.set(graph.commentTypeT.name, commentTypeSt);
+				graph.rawGraph().commit();
+			}else{
+				comment = commentOptional.get();
+			}
+			//-----toxic dose----------------
+			switch (commentTypeSt) {
+				case ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, toxicDoseCommentRel, commentProperties);
+					break;
+				case CautionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, cautionCommentRel, commentProperties);
+					break;
+				case CofactorCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, cofactorCommentRel, commentProperties);
+					break;
+				case DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
+					break;
+				case OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.STATUS_PROPERTY, commentStatusSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.TEXT_PROPERTY, commentTextSt);
+					String nameSt = commentElem.getAttributeValue("name");
+					if (nameSt == null) {
+						nameSt = "";
+					}
+					String linkSt = "";
+					Element linkElem = commentElem.getChild("link");
+					if (linkElem != null) {
+						String uriSt = linkElem.getAttributeValue("uri");
+						if (uriSt != null) {
+							linkSt = uriSt;
+						}
+					}
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.NAME_PROPERTY, nameSt);
+					onlineInformationCommentProperties.put(OnlineInformationCommentRel.LINK_PROPERTY, linkSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, onlineInformationCommentRel, onlineInformationCommentProperties);
+					break;
+				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
+					break;
+				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
+					break;
+				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
+					break;
+				case SubunitCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, subunitCommentRel, commentProperties);
+					break;
+				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
+					break;
+				case DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
+					break;
+				case PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
+					break;
+				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
+					break;
+				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
+					break;
+				case BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.STATUS_PROPERTY, commentStatusSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEXT_PROPERTY, commentTextSt);
+					String phDependenceSt = commentElem.getChildText("phDependence");
+					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
+					if (phDependenceSt == null) {
+						phDependenceSt = "";
+					}
+					if (temperatureDependenceSt == null) {
+						temperatureDependenceSt = "";
+					}
+					String absorptionMaxSt = "";
+					String absorptionTextSt = "";
+					Element absorptionElem = commentElem.getChild("absorption");
+					if (absorptionElem != null) {
+						absorptionMaxSt = absorptionElem.getChildText("max");
+						absorptionTextSt = absorptionElem.getChildText("text");
+						if (absorptionMaxSt == null) {
+							absorptionMaxSt = "";
+						}
+						if (absorptionTextSt == null) {
+							absorptionTextSt = "";
+						}
+					}
+					String kineticsSt = "";
+					Element kineticsElem = commentElem.getChild("kinetics");
+					if (kineticsElem != null) {
+						kineticsSt = new XMLElement(kineticsElem).toString();
+					}
+					String redoxPotentialSt = "";
+					String redoxPotentialEvidenceSt = "";
+					Element redoxPotentialElem = commentElem.getChild("redoxPotential");
+					if (redoxPotentialElem != null) {
+						redoxPotentialSt = redoxPotentialElem.getText();
+						redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
+						if (redoxPotentialSt == null) {
+							redoxPotentialSt = "";
+						}
+						if (redoxPotentialEvidenceSt == null) {
+							redoxPotentialEvidenceSt = "";
+						}
+					}
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEMPERATURE_DEPENDENCE_PROPERTY, temperatureDependenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.PH_DEPENDENCE_PROPERTY, phDependenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.KINETICS_XML_PROPERTY, kineticsSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_MAX_PROPERTY, absorptionMaxSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_TEXT_PROPERTY, absorptionTextSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_EVIDENCE_PROPERTY, redoxPotentialEvidenceSt);
+					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_PROPERTY, redoxPotentialSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, bioPhysicoChemicalPropertiesCommentRel, biophysicochemicalCommentProperties);
+					break;
+				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
+					break;
+				case PathwayCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, pathwayCommentRel, commentProperties);
+					break;
+				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
+					break;
+				case ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					if (uniprotDataXML.getSubcellularLocations()) {
+						List<Element> subcLocations = commentElem.getChildren(UniprotStuff.SUBCELLULAR_LOCATION_TAG_NAME);
+
+						for (Element subcLocation : subcLocations) {
+
+							List<Element> locations = subcLocation.getChildren(UniprotStuff.LOCATION_TAG_NAME);
+							Element firstLocation = locations.get(0);
+							//long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+							long firstLocationId = -1;
+							IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
+							if (firstLocationIndexHits.hasNext()) {
+								firstLocationId = firstLocationIndexHits.getSingle();
+							}
+							firstLocationIndexHits.close();
+							long lastLocationId = firstLocationId;
+
+							if (firstLocationId < 0) {
+								subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
+								lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
+								//---flushing subcellular location name index---
+								subcellularLocationNameIndex.flush();
+							}
+
+							for (int i = 1; i < locations.size(); i++) {
+
+								long tempLocationId;
+								IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
+								if (tempLocationIndexHits.hasNext()) {
+									tempLocationId = tempLocationIndexHits.getSingle();
+									tempLocationIndexHits.close();
+								} else {
+									subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
+									tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
+									subcellularLocationNameIndex.flush();
+								}
+
+								inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
+								lastLocationId = tempLocationId;
+							}
+							Element lastLocation = locations.get(locations.size() - 1);
+							String evidenceSt = lastLocation.getAttributeValue(UniprotStuff.EVIDENCE_ATTRIBUTE);
+							String statusSt = lastLocation.getAttributeValue(UniprotStuff.STATUS_ATTRIBUTE);
+							String topologyStatusSt = "";
+							String topologySt = "";
+							Element topologyElem = subcLocation.getChild("topology");
+							if (topologyElem != null) {
+								topologySt = topologyElem.getText();
+								topologyStatusSt = topologyElem.getAttributeValue("status");
+							}
+							if (topologyStatusSt == null) {
+								topologyStatusSt = "";
+							}
+							if (topologySt == null) {
+								topologySt = "";
+							}
+							if (evidenceSt == null) {
+								evidenceSt = "";
+							}
+							if (statusSt == null) {
+								statusSt = "";
+							}
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
+							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
+							inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
+
+						}
+					}
+					break;
+				case UniprotStuff.COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
+					if (uniprotDataXML.getIsoforms()) {
+						List<Element> eventList = commentElem.getChildren("event");
+						List<Element> isoformList = commentElem.getChildren("isoform");
+
+						for (Element isoformElem : isoformList) {
+							String isoformIdSt = isoformElem.getChildText("id");
+							String isoformNoteSt = isoformElem.getChildText("note");
+							String isoformNameSt = isoformElem.getChildText("name");
+							String isoformSeqSt = "";
+							Element isoSeqElem = isoformElem.getChild("sequence");
+							if (isoSeqElem != null) {
+								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
+								if (isoSeqTypeSt.equals("displayed")) {
+									isoformSeqSt = proteinSequence;
+								}
+							}
+							if (isoformNoteSt == null) {
+								isoformNoteSt = "";
+							}
+							if (isoformNameSt == null) {
+								isoformNameSt = "";
+							}
+							isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
+							isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
+							isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
+							isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
+							//--------------------------------------------------------
+							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							long isoformId = -1;
+							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							if (isoformIdIndexHits.hasNext()) {
+								isoformId = isoformIdIndexHits.getSingle();
+							}
+							isoformIdIndexHits.close();
+							if (isoformId < 0) {
+								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
+							}
+
+							for (Element eventElem : eventList) {
+
+								String eventTypeSt = eventElem.getAttributeValue("type");
+								switch (eventTypeSt) {
+									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
+										break;
+								}
+							}
+
+							//protein isoform relationship
+							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+
+						}
+					}
+					break;
+				case UniprotStuff.COMMENT_SEQUENCE_CAUTION_TYPE:
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
+					Element conflictElem = commentElem.getChild("conflict");
+					if (conflictElem != null) {
+
+						String conflictTypeSt = conflictElem.getAttributeValue("type");
+						String resourceSt = "";
+						String idSt = "";
+						String versionSt = "";
+
+						ArrayList<String> positionsList = new ArrayList<>();
+
+						Element sequenceElem = conflictElem.getChild("sequence");
+						if (sequenceElem != null) {
+							resourceSt = sequenceElem.getAttributeValue("resource");
+							if (resourceSt == null) {
+								resourceSt = "";
+							}
+							idSt = sequenceElem.getAttributeValue("id");
+							if (idSt == null) {
+								idSt = "";
+							}
+							versionSt = sequenceElem.getAttributeValue("version");
+							if (versionSt == null) {
+								versionSt = "";
+							}
+						}
+
+						Element locationElem = commentElem.getChild("location");
+						if (locationElem != null) {
+							Element positionElem = locationElem.getChild("position");
+							if (positionElem != null) {
+								String tempPos = positionElem.getAttributeValue("position");
+								if (tempPos != null) {
+									positionsList.add(tempPos);
+								}
+							}
+						}
+
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
+						switch (conflictTypeSt) {
+							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+								}
+								break;
+						}
+					}
+					break;
+				case DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
+					break;
+				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
+					break;
+				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
+					break;
+				case RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
+					List<Element> locationsList = commentElem.getChildren("location");
+					for (Element tempLoc : locationsList) {
+						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
+						rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
+						inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
+					}
+					break;
+				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
+					break;
+				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
+					break;
+				case MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+					String methodSt = commentElem.getAttributeValue("method");
+					String massSt = commentElem.getAttributeValue("mass");
+					if (methodSt == null) {
+						methodSt = "";
+					}
+					if (massSt == null) {
+						massSt = "";
+					}
+					String beginSt = "";
+					String endSt = "";
+					Element locationElem = commentElem.getChild("location");
+					if (locationElem != null) {
+						Element beginElem = commentElem.getChild("begin");
+						Element endElem = commentElem.getChild("end");
+						if (beginElem != null) {
+							beginSt = beginElem.getAttributeValue("position");
+						}
+
+						if (endElem != null) {
+							endSt = endElem.getAttributeValue("position");
+						}
+					}
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
+					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
+					inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
+					break;
+			}
+
+		}
+
+
+	}
 
     private void addPropertiesToProteinFeatureRelationship(UniprotGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
                                                                   String id, String description, String evidence, String status, int begin, int end,
