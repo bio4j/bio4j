@@ -35,6 +35,7 @@ public final class Disease <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public String acronym() {
 		return get(type().acronym);
 	}
+	public String description() { return get(type().description);}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 

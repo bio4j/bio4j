@@ -2,10 +2,7 @@ package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.*;
-import com.bio4j.model.uniprot.relationships.ArticleJournal;
-import com.bio4j.model.uniprot.relationships.OnlineArticleOnlineJournal;
-import com.bio4j.model.uniprot.relationships.ProteinComment;
-import com.bio4j.model.uniprot.relationships.ProteinFeature;
+import com.bio4j.model.uniprot.relationships.*;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
@@ -103,6 +100,9 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observations";
 
 	public static final String COMMENT_TYPE_DISEASE = "disease";
+	public static final String COMMENT_TYPE_FUNCTION = "function";
+	public static final String COMMENT_TYPE_COFACTOR = "cofactor";
+	public static final String COMMENT_TYPE_CATALYTIC_ACTIVITY = "catalytic activity";
 
 
 
@@ -855,16 +855,53 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				comment = commentOptional.get();
 			}
 
-			ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
-			proteinComment.set(graph.ProteinComment().text, commentTextSt);
-			proteinComment.set(graph.ProteinComment().status, commentStatusSt);
-			proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+//			ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+//			proteinComment.set(graph.ProteinComment().text, commentTextSt);
+//			proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+//			proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+
+			boolean createStandardProteinComment = false;
 
 			//-----toxic dose----------------
 			switch (commentTypeSt) {
 
+				case COMMENT_TYPE_FUNCTION:
+					createStandardProteinComment = true;
+					break;
+				case COMMENT_TYPE_COFACTOR:
+					createStandardProteinComment = true;
+					break;
+				case COMMENT_TYPE_CATALYTIC_ACTIVITY:
+					createStandardProteinComment = true;
+					break;
 				case COMMENT_TYPE_DISEASE:
-					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
+
+					Element diseaseElement = commentElem.getChild("disease");
+					String diseaseId = diseaseElement.getAttributeValue("id");
+					String diseaseName = diseaseElement.getChildText("name");
+					String diseaseDescription = diseaseElement.getChildText("description");
+					String diseaseAcronym = diseaseElement.getChildText("acronym");
+
+					Disease<I,RV,RVT,RE,RET> disease = null;
+					Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
+
+					if(!diseaseOptional.isPresent()){
+
+						disease = graph.Disease().from(graph.raw().addVertex(null));
+						disease.set(graph.Disease().name, diseaseName);
+						disease.set(graph.Disease().id, diseaseId);
+						disease.set(graph.Disease().acronym, diseaseAcronym);
+						disease.set(graph.Disease().description, diseaseDescription);
+
+					}else{
+						disease = diseaseOptional.get();
+					}
+
+					ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
+					proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
+					proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
+					proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
+
 					break;
 
 				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:

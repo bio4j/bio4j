@@ -47,6 +47,16 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    Disease<I, RV, RVT, RE, RET>, DiseaseType,
+		    // property
+		    DiseaseType.id, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    diseaseIdIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    Journal<I, RV, RVT, RE, RET>, JournalType,
 		    // property
 		    JournalType.name, String,
@@ -850,6 +860,7 @@ public abstract class UniprotGraph<
 		public final name name = new name();
 		public final id id = new id();
 		public final acronym acronym = new acronym();
+		public final description description = new description();
 
 		public DiseaseType(RVT raw) {
 			super(raw);
@@ -891,6 +902,17 @@ public abstract class UniprotGraph<
 				extends
 				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, acronym, String> {
 			public acronym() {
+				super(DiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class description
+				extends
+				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, description, String> {
+			public description() {
 				super(DiseaseType.this);
 			}
 
