@@ -103,6 +103,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String COMMENT_TYPE_FUNCTION = "function";
 	public static final String COMMENT_TYPE_COFACTOR = "cofactor";
 	public static final String COMMENT_TYPE_CATALYTIC_ACTIVITY = "catalytic activity";
+	public static final String COMMENT_TYPE_ENZYME_REGULATION = "enzyme regulation";
+	public static final String COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES = "biophysicochemical properties";
 
 
 
@@ -874,6 +876,9 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case COMMENT_TYPE_CATALYTIC_ACTIVITY:
 					createStandardProteinComment = true;
 					break;
+				case COMMENT_TYPE_ENZYME_REGULATION:
+					createStandardProteinComment = true;
+					break;
 				case COMMENT_TYPE_DISEASE:
 
 					Element diseaseElement = commentElem.getChild("disease");
@@ -931,10 +936,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
 					break;
-				case BioPhysicoChemicalPropertiesCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.STATUS_PROPERTY, commentStatusSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEXT_PROPERTY, commentTextSt);
+				case COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES:
+
 					String phDependenceSt = commentElem.getChildText("phDependence");
 					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
 					if (phDependenceSt == null) {
@@ -974,14 +977,19 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							redoxPotentialEvidenceSt = "";
 						}
 					}
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.TEMPERATURE_DEPENDENCE_PROPERTY, temperatureDependenceSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.PH_DEPENDENCE_PROPERTY, phDependenceSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.KINETICS_XML_PROPERTY, kineticsSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_MAX_PROPERTY, absorptionMaxSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.ABSORPTION_TEXT_PROPERTY, absorptionTextSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_EVIDENCE_PROPERTY, redoxPotentialEvidenceSt);
-					biophysicochemicalCommentProperties.put(BioPhysicoChemicalPropertiesCommentRel.REDOX_POTENTIAL_PROPERTY, redoxPotentialSt);
-					inserter.createRelationship(currentProteinId, commentTypeId, bioPhysicoChemicalPropertiesCommentRel, biophysicochemicalCommentProperties);
+
+					ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+					proteinComment.set(graph.ProteinComment().text, commentTextSt);
+					proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+					proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+					proteinComment.set(graph.ProteinComment().temperatureDependence, temperatureDependenceSt);
+					proteinComment.set(graph.ProteinComment().phDependence, phDependenceSt);
+					proteinComment.set(graph.ProteinComment().kineticsXML, kineticsSt);
+					proteinComment.set(graph.ProteinComment().absorptionMax, absorptionMaxSt);
+					proteinComment.set(graph.ProteinComment().absorptionText, absorptionTextSt);
+					proteinComment.set(graph.ProteinComment().redoxPotentialEvidence, redoxPotentialEvidenceSt);
+					proteinComment.set(graph.ProteinComment().redoxPotential, redoxPotentialSt);
+
 					break;
 				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
