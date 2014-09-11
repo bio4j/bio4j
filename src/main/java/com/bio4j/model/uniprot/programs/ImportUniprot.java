@@ -115,9 +115,13 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION = "PTM";
 	public static final String COMMENT_TYPE_RNA_EDITING = "RNA editing";
 	public static final String COMMENT_TYPE_MASS_SPECTROMETRY = "mass spectrometry";
-
-
-
+	public static final String COMMENT_TYPE_POLYMORPHISM = "polymorphism";
+	public static final String COMMENT_TYPE_DISRUPTION_PHENOTYPE = "disruption phenotype";
+	public static final String COMMENT_TYPE_ALLERGEN = "allergen";
+	public static final String COMMENT_TYPE_TOXIC_DOSE = "toxic dose";
+	public static final String COMMENT_TYPE_BIOTECHNOLOGY = "biotechnology";
+	public static final String COMMENT_TYPE_PHARMACEUTICAL = "pharmaceutical";
+	public static final String COMMENT_TYPE_MISCELLANEOUS = "miscellaneous";
 
 	protected SimpleDateFormat dateFormat;
 
@@ -875,7 +879,6 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 			boolean createStandardProteinComment = false;
 
-			//-----toxic dose----------------
 			switch (commentTypeSt) {
 
 				case COMMENT_TYPE_FUNCTION:
@@ -923,17 +926,20 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case COMMENT_TYPE_TISSUE_SPECIFICITY:
 					createStandardProteinComment = true;
 					break;
+				case COMMENT_TYPE_TOXIC_DOSE:
+					createStandardProteinComment = true;
+					break;
 				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
 					break;
-				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
+				case COMMENT_TYPE_BIOTECHNOLOGY:
+					createStandardProteinComment = true;
 					break;
 				case COMMENT_TYPE_SUBUNIT:
 					createStandardProteinComment = true;
 					break;
-				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
+				case COMMENT_TYPE_POLYMORPHISM:
+					createStandardProteinComment = true;
 					break;
 				case COMMENT_TYPE_DOMAIN:
 					createStandardProteinComment = true;
@@ -944,8 +950,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
 					break;
-				case DisruptionPhenotypeCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, disruptionPhenotypeCommentRel, commentProperties);
+				case COMMENT_TYPE_DISRUPTION_PHENOTYPE:
+					createStandardProteinComment = true;
 					break;
 				case COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES:
 
@@ -1002,8 +1008,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					proteinComment.set(graph.ProteinComment().redoxPotential, redoxPotentialSt);
 
 					break;
-				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
+				case COMMENT_TYPE_ALLERGEN:
+					createStandardProteinComment = true;
 					break;
 				case COMMENT_TYPE_PATHWAY:
 					createStandardProteinComment = true;
@@ -1263,8 +1269,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
 					createStandardProteinComment = true;
 					break;
-				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
+				case COMMENT_TYPE_MISCELLANEOUS:
+					createStandardProteinComment = true;
 					break;
 				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
@@ -1283,8 +1289,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						proteinComment.set(graph.ProteinComment().position, positionSt);
 					}
 					break;
-				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, pharmaceuticalCommentRel, commentProperties);
+				case COMMENT_TYPE_PHARMACEUTICAL:
+					createStandardProteinComment = true;
 					break;
 				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
