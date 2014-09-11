@@ -165,6 +165,16 @@ public abstract class UniprotGraph<
 			I, RV, RVT, RE, RET
 			>
 	submissionTitleIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+			// property
+			SubcellularLocationType.name, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	subcellularLocationNameIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Institute<I, RV, RVT, RE, RET>, InstituteType,

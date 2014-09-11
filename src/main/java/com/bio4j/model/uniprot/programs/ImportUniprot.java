@@ -105,6 +105,9 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String COMMENT_TYPE_CATALYTIC_ACTIVITY = "catalytic activity";
 	public static final String COMMENT_TYPE_ENZYME_REGULATION = "enzyme regulation";
 	public static final String COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES = "biophysicochemical properties";
+	public static final String COMMENT_TYPE_SUBUNIT = "subunit";
+	public static final String COMMENT_TYPE_PATHWAY = "pathway";
+	public static final String COMMENT_TYPE_SUBCELLULAR_LOCATION = "subcellular location";
 
 
 
@@ -918,8 +921,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case BiotechnologyCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, biotechnologyCommentRel, commentProperties);
 					break;
-				case SubunitCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, subunitCommentRel, commentProperties);
+				case COMMENT_TYPE_SUBUNIT:
+					createStandardProteinComment = true;
 					break;
 				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
@@ -994,55 +997,54 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case AllergenCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, allergenCommentRel, commentProperties);
 					break;
-				case PathwayCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, pathwayCommentRel, commentProperties);
+				case COMMENT_TYPE_PATHWAY:
+					createStandardProteinComment = true;
 					break;
 				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
 					break;
-				case ProteinSubcellularLocationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+				case COMMENT_TYPE_SUBCELLULAR_LOCATION:
+
 					if (uniprotDataXML.getSubcellularLocations()) {
-						List<Element> subcLocations = commentElem.getChildren(UniprotStuff.SUBCELLULAR_LOCATION_TAG_NAME);
+						List<Element> subcLocations = commentElem.getChildren(SUBCELLULAR_LOCATION_TAG_NAME);
 
 						for (Element subcLocation : subcLocations) {
 
-							List<Element> locations = subcLocation.getChildren(UniprotStuff.LOCATION_TAG_NAME);
-							Element firstLocation = locations.get(0);
-							//long firstLocationId = indexService.getSingleNode(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-							long firstLocationId = -1;
-							IndexHits<Long> firstLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, firstLocation.getTextTrim());
-							if (firstLocationIndexHits.hasNext()) {
-								firstLocationId = firstLocationIndexHits.getSingle();
-							}
-							firstLocationIndexHits.close();
-							long lastLocationId = firstLocationId;
+							List<Element> locations = subcLocation.getChildren(LOCATION_TAG_NAME);
+							Element firstLocationElem = locations.get(0);
 
-							if (firstLocationId < 0) {
-								subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, firstLocation.getTextTrim());
-								lastLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-								//---flushing subcellular location name index---
-								subcellularLocationNameIndex.flush();
+							String firstLocationSt = firstLocationElem.getTextTrim();
+							SubcellularLocation<I,RV,RVT,RE,RET> lastLocation = null;
+							Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
+
+							if(!lastLocationOptional.isPresent()){
+								lastLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
+								lastLocation.set(graph.SubcellularLocation().name, firstLocationSt);
+							}else{
+								lastLocation = lastLocationOptional.get();
 							}
 
 							for (int i = 1; i < locations.size(); i++) {
 
-								long tempLocationId;
-								IndexHits<Long> tempLocationIndexHits = subcellularLocationNameIndex.get(SubcellularLocationNode.SUBCELLULAR_LOCATION_NAME_INDEX, locations.get(i).getTextTrim());
-								if (tempLocationIndexHits.hasNext()) {
-									tempLocationId = tempLocationIndexHits.getSingle();
-									tempLocationIndexHits.close();
-								} else {
-									subcellularLocationProperties.put(SubcellularLocationNode.NAME_PROPERTY, locations.get(i).getTextTrim());
-									tempLocationId = createSubcellularLocationNode(subcellularLocationProperties, inserter, subcellularLocationNameIndex, nodeTypeIndex);
-									subcellularLocationNameIndex.flush();
+								SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = null;
+								String tempLocationSt = locations.get(i).getTextTrim();
+								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
+
+								if(!tempLocationOptional.isPresent()){
+									tempLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
+									tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+								}else{
+									tempLocation = tempLocationOptional.get();
 								}
 
-								inserter.createRelationship(tempLocationId, lastLocationId, subcellularLocationParentRel, null);
-								lastLocationId = tempLocationId;
+								tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
+								lastLocation = tempLocation;
+
 							}
-							Element lastLocation = locations.get(locations.size() - 1);
-							String evidenceSt = lastLocation.getAttributeValue(UniprotStuff.EVIDENCE_ATTRIBUTE);
-							String statusSt = lastLocation.getAttributeValue(UniprotStuff.STATUS_ATTRIBUTE);
+
+							Element lastLocationElem = locations.get(locations.size() - 1);
+							String evidenceSt = lastLocationElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
+							String statusSt = lastLocationElem.getAttributeValue(STATUS_ATTRIBUTE);
 							String topologyStatusSt = "";
 							String topologySt = "";
 							Element topologyElem = subcLocation.getChild("topology");
@@ -1062,11 +1064,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							if (statusSt == null) {
 								statusSt = "";
 							}
-							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.EVIDENCE_PROPERTY, evidenceSt);
-							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.STATUS_PROPERTY, statusSt);
-							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_PROPERTY, topologySt);
-							proteinSubcellularLocationProperties.put(ProteinSubcellularLocationRel.TOPOLOGY_STATUS_PROPERTY, topologyStatusSt);
-							inserter.createRelationship(currentProteinId, lastLocationId, proteinSubcellularLocationRel, proteinSubcellularLocationProperties);
+
+							ProteinSubcellularLocation<I,RV,RVT,RE,RET> proteinSubcellularLocation = protein.addOutEdge(graph.ProteinSubcellularLocation(), lastLocation);
+							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().evidence, evidenceSt);
+							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().status, statusSt);
+							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topology, topologySt);
+							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topologyStatus, topologyStatusSt);
 
 						}
 					}
