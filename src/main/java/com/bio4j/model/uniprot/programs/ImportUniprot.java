@@ -4,6 +4,7 @@ import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.*;
 import com.bio4j.model.uniprot.relationships.ArticleJournal;
 import com.bio4j.model.uniprot.relationships.OnlineArticleOnlineJournal;
+import com.bio4j.model.uniprot.relationships.ProteinComment;
 import com.bio4j.model.uniprot.relationships.ProteinFeature;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
@@ -100,6 +101,10 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online journal article";
 	public static final String BOOK_CITATION_TYPE = "book";
 	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observations";
+
+	public static final String COMMENT_TYPE_DISEASE = "disease";
+
+
 
 	protected SimpleDateFormat dateFormat;
 
@@ -837,50 +842,31 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 			commentProperties.put(BasicCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
 
 			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
-			Optional<TitanCommentType> commentOptional =  graph.commentTypeNameIndex.getNode(commentTypeSt);
-			TitanCommentType comment = null;
+			Optional<CommentType<I,RV,RVT,RE,RET>> commentOptional =  graph.commentTypeNameIndex().getVertex(commentTypeSt);
+			CommentType<I,RV,RVT,RE,RET> comment = null;
 
 			if(!commentOptional.isPresent()){
-				comment = graph.commentTypeT.from(graph.rawGraph().addVertex(null));
-				comment.set(graph.commentTypeT.name, commentTypeSt);
-				graph.rawGraph().commit();
+
+				comment = graph.CommentType().from(graph.raw().addVertex(null));
+				comment.set(graph.CommentType().name, commentTypeSt);
+				graph.raw().commit();
+
 			}else{
 				comment = commentOptional.get();
 			}
+
+			ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+			proteinComment.set(graph.ProteinComment().text, commentTextSt);
+			proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+			proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+
 			//-----toxic dose----------------
 			switch (commentTypeSt) {
-				case ToxicDoseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, toxicDoseCommentRel, commentProperties);
-					break;
-				case CautionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, cautionCommentRel, commentProperties);
-					break;
-				case CofactorCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, cofactorCommentRel, commentProperties);
-					break;
-				case DiseaseCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+
+				case COMMENT_TYPE_DISEASE:
 					inserter.createRelationship(currentProteinId, commentTypeId, diseaseCommentRel, commentProperties);
 					break;
-				case OnlineInformationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					onlineInformationCommentProperties.put(OnlineInformationCommentRel.STATUS_PROPERTY, commentStatusSt);
-					onlineInformationCommentProperties.put(OnlineInformationCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-					onlineInformationCommentProperties.put(OnlineInformationCommentRel.TEXT_PROPERTY, commentTextSt);
-					String nameSt = commentElem.getAttributeValue("name");
-					if (nameSt == null) {
-						nameSt = "";
-					}
-					String linkSt = "";
-					Element linkElem = commentElem.getChild("link");
-					if (linkElem != null) {
-						String uriSt = linkElem.getAttributeValue("uri");
-						if (uriSt != null) {
-							linkSt = uriSt;
-						}
-					}
-					onlineInformationCommentProperties.put(OnlineInformationCommentRel.NAME_PROPERTY, nameSt);
-					onlineInformationCommentProperties.put(OnlineInformationCommentRel.LINK_PROPERTY, linkSt);
-					inserter.createRelationship(currentProteinId, commentTypeId, onlineInformationCommentRel, onlineInformationCommentProperties);
-					break;
+
 				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
 					break;

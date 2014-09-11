@@ -355,6 +355,16 @@ public abstract class UniprotGraph<
             I, RV, RVT, RE, RET
             >
     featureTypeNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+			// property
+			CommentTypeType.name, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	commentTypeNameIndex();
 
 
 
@@ -367,6 +377,8 @@ public abstract class UniprotGraph<
 	public abstract BookType Book();
 
 	public abstract CityType City();
+
+	public abstract DiseaseType Disease();
 
 	public abstract CommentTypeType CommentType();
 
@@ -456,6 +468,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinCommentType ProteinComment();
 
 	public abstract ProteinDatasetType ProteinDataset();
+
+	public abstract ProteinDiseaseType ProteinDisease();
 
 	public abstract ProteinEMBLType ProteinEMBL();
 
@@ -817,6 +831,67 @@ public abstract class UniprotGraph<
 				UniprotVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
 			public name() {
 				super(DBType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class DiseaseType
+			extends
+			UniprotVertexType<
+					Disease<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.DiseaseType
+					> {
+
+		public final name name = new name();
+		public final id id = new id();
+		public final acronym acronym = new acronym();
+
+		public DiseaseType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public DiseaseType value() {
+			return graph().Disease();
+		}
+
+		@Override
+		public Disease<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Disease<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, name, String> {
+			public name() {
+				super(DiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, id, String> {
+			public id() {
+				super(DiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class acronym
+				extends
+				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, acronym, String> {
+			public acronym() {
+				super(DiseaseType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -2685,6 +2760,87 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinDataset<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinDataset<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinDiseaseType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinDisease<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
+					Disease<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DiseaseType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public final text text = new text();
+		public final status status = new status();
+		public final evidence evidence = new evidence();
+
+		public ProteinDiseaseType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Disease());
+		}
+
+		@Override
+		public ProteinDiseaseType value() {
+			return graph().ProteinDisease();
+		}
+
+		@Override
+		public ProteinDisease<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinDisease<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class text
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
+						Disease<I, RV, RVT, RE, RET>, DiseaseType,
+						text, String
+						>
+		{
+			public text() {
+				super(ProteinDiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class status
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
+						Disease<I, RV, RVT, RE, RET>, DiseaseType,
+						status, String
+						>
+		{
+			public status() {
+				super(ProteinDiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class evidence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
+						Disease<I, RV, RVT, RE, RET>, DiseaseType,
+						evidence, String
+						>
+		{
+			public evidence() {
+				super(ProteinDiseaseType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 
