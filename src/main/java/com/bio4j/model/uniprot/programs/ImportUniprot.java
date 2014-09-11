@@ -108,6 +108,14 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	public static final String COMMENT_TYPE_SUBUNIT = "subunit";
 	public static final String COMMENT_TYPE_PATHWAY = "pathway";
 	public static final String COMMENT_TYPE_SUBCELLULAR_LOCATION = "subcellular location";
+	public static final String COMMENT_TYPE_TISSUE_SPECIFICITY = "tissue specificity";
+	public static final String COMMENT_TYPE_DEVELOPMENTAL_STAGE = "developmental stage";
+	public static final String COMMENT_TYPE_INDUCTION = "induction";
+	public static final String COMMENT_TYPE_DOMAIN = "domain";
+	public static final String COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION = "PTM";
+	public static final String COMMENT_TYPE_RNA_EDITING = "RNA editing";
+	public static final String COMMENT_TYPE_MASS_SPECTROMETRY = "mass spectrometry";
+
 
 
 
@@ -912,8 +920,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 					break;
 
-				case TissueSpecificityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, tissueSpecificityCommentRel, commentProperties);
+				case COMMENT_TYPE_TISSUE_SPECIFICITY:
+					createStandardProteinComment = true;
 					break;
 				case FunctionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, functionCommentRel, commentProperties);
@@ -927,11 +935,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case PolymorphismCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, polymorphismCommentRel, commentProperties);
 					break;
-				case DomainCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, domainCommentRel, commentProperties);
+				case COMMENT_TYPE_DOMAIN:
+					createStandardProteinComment = true;
 					break;
-				case PostTranslationalModificationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, postTranslationalModificationCommentRel, commentProperties);
+				case COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION:
+					createStandardProteinComment = true;
 					break;
 				case CatalyticActivityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, catalyticActivityCommentRel, commentProperties);
@@ -1000,8 +1008,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case COMMENT_TYPE_PATHWAY:
 					createStandardProteinComment = true;
 					break;
-				case InductionCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, inductionCommentRel, commentProperties);
+				case COMMENT_TYPE_INDUCTION:
+					createStandardProteinComment = true;
 					break;
 				case COMMENT_TYPE_SUBCELLULAR_LOCATION:
 
@@ -1074,7 +1082,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						}
 					}
 					break;
-				case UniprotStuff.COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
+				case COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
 					if (uniprotDataXML.getIsoforms()) {
 						List<Element> eventList = commentElem.getChildren("event");
 						List<Element> isoformList = commentElem.getChildren("isoform");
@@ -1138,7 +1146,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						}
 					}
 					break;
-				case UniprotStuff.COMMENT_SEQUENCE_CAUTION_TYPE:
+				case COMMENT_SEQUENCE_CAUTION_TYPE:
 					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
 					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
 					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
@@ -1252,8 +1260,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 						}
 					}
 					break;
-				case DevelopmentalStageCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					inserter.createRelationship(currentProteinId, commentTypeId, developmentalStageCommentRel, commentProperties);
+				case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
+					createStandardProteinComment = true;
 					break;
 				case MiscellaneousCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, miscellaneousCommentRel, commentProperties);
@@ -1261,15 +1269,18 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case SimilarityCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, similarityCommentRel, commentProperties);
 					break;
-				case RnaEditingCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-					rnaEditingCommentProperties.put(RnaEditingCommentRel.STATUS_PROPERTY, commentStatusSt);
-					rnaEditingCommentProperties.put(RnaEditingCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-					rnaEditingCommentProperties.put(RnaEditingCommentRel.TEXT_PROPERTY, commentTextSt);
+				case COMMENT_TYPE_RNA_EDITING:
+
 					List<Element> locationsList = commentElem.getChildren("location");
+
 					for (Element tempLoc : locationsList) {
 						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
-						rnaEditingCommentProperties.put(RnaEditingCommentRel.POSITION_PROPERTY, positionSt);
-						inserter.createRelationship(currentProteinId, commentTypeId, rnaEditingCommentRel, rnaEditingCommentProperties);
+
+						proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+						proteinComment.set(graph.ProteinComment().text, commentTextSt);
+						proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+						proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+						proteinComment.set(graph.ProteinComment().position, positionSt);
 					}
 					break;
 				case PharmaceuticalCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
@@ -1278,7 +1289,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case EnzymeRegulationCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
 					inserter.createRelationship(currentProteinId, commentTypeId, enzymeRegulationCommentRel, commentProperties);
 					break;
-				case MassSpectrometryCommentRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+				case COMMENT_TYPE_MASS_SPECTROMETRY:
 					String methodSt = commentElem.getAttributeValue("method");
 					String massSt = commentElem.getAttributeValue("mass");
 					if (methodSt == null) {
@@ -1287,28 +1298,38 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					if (massSt == null) {
 						massSt = "";
 					}
-					String beginSt = "";
-					String endSt = "";
-					Element locationElem = commentElem.getChild("location");
-					if (locationElem != null) {
-						Element beginElem = commentElem.getChild("begin");
-						Element endElem = commentElem.getChild("end");
-						if (beginElem != null) {
-							beginSt = beginElem.getAttributeValue("position");
+
+
+					locationsList = commentElem.getChildren("location");
+
+					for (Element tempLoc : locationsList) {
+						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
+
+						String beginSt = "";
+						String endSt = "";
+
+						if (tempLoc != null) {
+							Element beginElem = tempLoc.getChild("begin");
+							Element endElem = tempLoc.getChild("end");
+							if (beginElem != null) {
+								beginSt = beginElem.getAttributeValue("position");
+							}
+
+							if (endElem != null) {
+								endSt = endElem.getAttributeValue("position");
+							}
 						}
 
-						if (endElem != null) {
-							endSt = endElem.getAttributeValue("position");
-						}
+						proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+						proteinComment.set(graph.ProteinComment().text, commentTextSt);
+						proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+						proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+						proteinComment.set(graph.ProteinComment().position, positionSt);
+						proteinComment.set(graph.ProteinComment().end, Integer.parseInt(endSt));
+						proteinComment.set(graph.ProteinComment().begin, Integer.parseInt(beginSt));
+						proteinComment.set(graph.ProteinComment().method, methodSt);
+						proteinComment.set(graph.ProteinComment().mass, massSt);
 					}
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.STATUS_PROPERTY, commentStatusSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.TEXT_PROPERTY, commentTextSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.METHOD_PROPERTY, methodSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.MASS_PROPERTY, massSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.BEGIN_PROPERTY, beginSt);
-					massSpectrometryCommentProperties.put(MassSpectrometryCommentRel.END_PROPERTY, endSt);
-					inserter.createRelationship(currentProteinId, commentTypeId, massSpectrometryCommentRel, massSpectrometryCommentProperties);
 					break;
 			}
 
