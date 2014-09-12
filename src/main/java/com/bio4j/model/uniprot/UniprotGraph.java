@@ -2246,15 +2246,15 @@ public abstract class UniprotGraph<
 						Article<I, RV, RVT, RE, RET>, ArticleType,
 						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
 						Journal<I, RV, RVT, RE, RET>, JournalType,
-						first, Integer
+						first, String
 						>
 		{
 			public first() {
 				super(ArticleJournalType.this);
 			}
 
-			public Class<Integer> valueClass() {
-				return Integer.class;
+			public Class<String> valueClass() {
+				return String.class;
 			}
 		}
 		public final class last
@@ -2263,15 +2263,15 @@ public abstract class UniprotGraph<
 						Article<I, RV, RVT, RE, RET>, ArticleType,
 						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
 						Journal<I, RV, RVT, RE, RET>, JournalType,
-						last, Integer
+						last, String
 						>
 		{
 			public last() {
 				super(ArticleJournalType.this);
 			}
 
-			public Class<Integer> valueClass() {
-				return Integer.class;
+			public Class<String> valueClass() {
+				return String.class;
 			}
 		}
 

@@ -26,8 +26,8 @@ public final class ArticleJournal<I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 	public String volume() {
 		return get(type().volume);
 	}
-	public int first() {    return get(type().first);	}
-	public int last() {
+	public String first() {    return get(type().first);	}
+	public String last() {
 		return get(type().last);
 	}
 

@@ -1900,8 +1900,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 										ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), journal);
 										articleJournal.set(graph.ArticleJournal().volume, volumeSt);
-										articleJournal.set(graph.ArticleJournal().first, Integer.parseInt(firstSt));
-										articleJournal.set(graph.ArticleJournal().last, Integer.parseInt(lastSt));
+										articleJournal.set(graph.ArticleJournal().first, firstSt);
+										articleJournal.set(graph.ArticleJournal().last, lastSt);
 									}
 									//----------------------------
 
