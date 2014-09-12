@@ -21,6 +21,18 @@ public abstract class EnzymeDBGraph<
 				I, RV, RVT, RE, RET
 				> {
 
+	// indices
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Enzyme<I, RV, RVT, RE, RET>, EnzymeType,
+			// property
+			EnzymeType.id, String,
+			// graph
+			EnzymeDBGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	enzymeIdIndex();
+
     protected I raw = null;
 
     public EnzymeDBGraph(I graph){
