@@ -763,11 +763,26 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             Integer beginFeature = null;
             Integer endFeature = null;
             if (positionElem != null) {
-                beginFeature = Integer.parseInt(positionElem.getAttributeValue(FEATURE_POSITION_POSITION_ATTRIBUTE));
+	            String tempValue = positionElem.getAttributeValue(FEATURE_POSITION_POSITION_ATTRIBUTE);
+	            if (tempValue == null) {
+		            beginFeature = -1;
+	            }else{
+		            beginFeature = Integer.parseInt(tempValue);
+	            }
                 endFeature = beginFeature;
             } else {
-                beginFeature = Integer.parseInt(locationElem.getChild(FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE));
-                endFeature = Integer.parseInt(locationElem.getChild(FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE));
+	            String tempValue = locationElem.getChild(FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
+	            if(tempValue == null){
+		            beginFeature = null;
+	            }else{
+		            beginFeature = Integer.parseInt(tempValue);
+	            }
+	            tempValue = locationElem.getChild(FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
+	            if(tempValue == null){
+		            endFeature = null;
+	            }else{
+		            endFeature = Integer.parseInt(tempValue);
+	            }
             }
 
             if (beginFeature == null) {
