@@ -1264,7 +1264,18 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					locationsList = commentElem.getChildren("location");
 
 					for (Element tempLoc : locationsList) {
-						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
+
+						String positionSt = "";
+
+						Element positionElem = tempLoc.getChild("position");
+
+						if(positionElem != null){
+							positionSt = positionElem.getAttributeValue("position");
+							if(positionSt == null){
+								positionSt = "";
+							}
+						}
+
 
 						String beginSt = "";
 						String endSt = "";
