@@ -1780,7 +1780,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							if (!titleSt.equals("")) {
 
 								OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = null;
-								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(nameSt);
+								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(titleSt);
 								Reference<I,RV,RVT,RE,RET> reference = null;
 
 								if(!optionalOnlineArticle.isPresent()){
