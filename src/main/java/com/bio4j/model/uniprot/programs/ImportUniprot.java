@@ -875,32 +875,35 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 				case COMMENT_TYPE_DISEASE:
 
 					Element diseaseElement = commentElem.getChild("disease");
-					String diseaseId = diseaseElement.getAttributeValue("id");
-					String diseaseName = diseaseElement.getChildText("name");
-					String diseaseDescription = diseaseElement.getChildText("description");
-					String diseaseAcronym = diseaseElement.getChildText("acronym");
 
-					if(diseaseId != null){
+					if(diseaseElement != null){
+						String diseaseId = diseaseElement.getAttributeValue("id");
+						String diseaseName = diseaseElement.getChildText("name");
+						String diseaseDescription = diseaseElement.getChildText("description");
+						String diseaseAcronym = diseaseElement.getChildText("acronym");
 
-						Disease<I,RV,RVT,RE,RET> disease = null;
-						Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
+						if(diseaseId != null){
 
-						if(!diseaseOptional.isPresent()){
+							Disease<I,RV,RVT,RE,RET> disease = null;
+							Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
 
-							disease = graph.Disease().from(graph.raw().addVertex(null));
-							disease.set(graph.Disease().name, diseaseName);
-							disease.set(graph.Disease().id, diseaseId);
-							disease.set(graph.Disease().acronym, diseaseAcronym);
-							disease.set(graph.Disease().description, diseaseDescription);
+							if(!diseaseOptional.isPresent()){
 
-						}else{
-							disease = diseaseOptional.get();
+								disease = graph.Disease().from(graph.raw().addVertex(null));
+								disease.set(graph.Disease().name, diseaseName);
+								disease.set(graph.Disease().id, diseaseId);
+								disease.set(graph.Disease().acronym, diseaseAcronym);
+								disease.set(graph.Disease().description, diseaseDescription);
+
+							}else{
+								disease = diseaseOptional.get();
+							}
+
+							ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
+							proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
+							proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
+							proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
 						}
-
-						ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
-						proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
-						proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
-						proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
 					}
 
 					break;
@@ -1307,6 +1310,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 							if (endElem != null) {
 								endSt = endElem.getAttributeValue("position");
+							}
+							if(endSt == null || endSt.isEmpty()){
+								endSt = "-1";
+							}
+							if(beginSt == null || beginSt.isEmpty()){
+								beginSt = "-1";
 							}
 						}
 
