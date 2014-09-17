@@ -76,10 +76,10 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						String id = columns[0].trim();
 						String taxonomicRankSt = columns[2].trim();
 						int taxonomicRank;
-						if(taxonomicRankSt.equals("no rank")){
-							taxonomicRank = -1;
-						}else{
+						try{
 							taxonomicRank = Integer.parseInt(taxonomicRankSt);
+						}catch(Exception e){
+							taxonomicRank = -1;
 						}
 						NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.NCBITaxon().from(ncbiTaxonomyGraph.raw().addVertex(null));
 						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
