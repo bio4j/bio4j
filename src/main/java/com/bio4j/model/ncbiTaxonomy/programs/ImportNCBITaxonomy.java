@@ -74,9 +74,16 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						String[] columns = line.split("\\|");
 
 						String id = columns[0].trim();
+						String taxonomicRankSt = columns[2].trim();
+						int taxonomicRank;
+						if(taxonomicRankSt.equals("no rank")){
+							taxonomicRank = -1;
+						}else{
+							taxonomicRank = Integer.parseInt(taxonomicRankSt);
+						}
 						NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.NCBITaxon().from(ncbiTaxonomyGraph.raw().addVertex(null));
 						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
-						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, Integer.parseInt(columns[2].trim()));
+						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRank);
 						//node.setEmblCode(columns[3].trim()); TODO add emblCode??
 
 						//saving the parent of the node for later
