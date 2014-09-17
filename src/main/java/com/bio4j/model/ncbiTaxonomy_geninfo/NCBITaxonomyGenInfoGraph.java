@@ -62,7 +62,7 @@ public abstract class NCBITaxonomyGenInfoGraph<
 					// tgt
 					NCBITaxon<I, RV, RVT, RE, RET>,
 					NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
-					NCBITaxonomyGraph<I, RV, RVT, RE, RET>
+					NCBITaxonomyGraph<I, RV, RVT, RE, RET>>
 			implements
 			TypedEdge.Type.ManyToOne
 	{
