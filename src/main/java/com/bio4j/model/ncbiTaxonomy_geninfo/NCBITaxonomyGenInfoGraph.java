@@ -1,4 +1,4 @@
-package com.bio4j.model.ncbiTaxonomy_geninfo.;
+package com.bio4j.model.ncbiTaxonomy_geninfo;
 
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
@@ -7,6 +7,7 @@ import com.bio4j.model.geninfo.GenInfoGraph;
 import com.bio4j.model.geninfo.nodes.GenInfo;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy_geninfo.relationships.GenInfoNCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.nodes.Protein;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
@@ -44,139 +45,59 @@ public abstract class NCBITaxonomyGenInfoGraph<
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges
-	public abstract NCBITaxonGenInfoType NCBITaxonGenInfo();
+	public abstract GenInfoNCBITaxonType GenInfoNCBITaxon();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Edge types
-	public final class NCBITaxonGenInfoType
+	public final class GenInfoNCBITaxonType
 			extends
-			NCBITaxonGenInfoEdgeType <
+			NCBITaxonomyGenInfoEdgeType <
 					// src
-					NCBITaxon<I, RV, RVT, RE, RET>,
-					NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
-					NCBITaxonomyGraph<I, RV, RVT, RE, RET>,
-					// edge
-					NCBITaxonGenInfo<I, RV, RVT, RE, RET>,
-					UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,
-					// tgt
 					GenInfo<I, RV, RVT, RE, RET>,
 					GenInfoGraph<I, RV, RVT, RE, RET>.GenInfoType,
-					GenInfoGraph<I, RV, RVT, RE, RET>
-					>
+					GenInfoGraph<I, RV, RVT, RE, RET>,
+					// edge
+					GenInfoNCBITaxon<I, RV, RVT, RE, RET>,
+					NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET>.GenInfoNCBITaxonType,
+					// tgt
+					NCBITaxon<I, RV, RVT, RE, RET>,
+					NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
+					NCBITaxonomyGraph<I, RV, RVT, RE, RET>
 			implements
-			TypedEdge.Type.ManyToMany
+			TypedEdge.Type.ManyToOne
 	{
 
-		public EnzymaticActivityType(RET raw) {
+		public GenInfoNCBITaxonType(RET raw) {
 
 			super(
-					UniprotEnzymeDBGraph.this.uniprotGraph().Protein(),
+					NCBITaxonomyGenInfoGraph.this.genInfoGraph().GenInfo(),
 					raw,
-					UniprotEnzymeDBGraph.this.enzymeDBGraph().Enzyme()
+					NCBITaxonomyGenInfoGraph.this.ncbiTaxonomyGraph().NCBITaxon()
 			);
 		}
 
 		@Override
-		public EnzymaticActivityType value() {
-			return graph().EnzymaticActivity();
+		public GenInfoNCBITaxonType value() {
+			return graph().GenInfoNCBITaxon();
 		}
 
 		@Override
-		public EnzymaticActivity<I, RV, RVT, RE, RET> from(RE edge) {
-			return new EnzymaticActivity<I, RV, RVT, RE, RET>(edge, this);
+		public GenInfoNCBITaxon<I, RV, RVT, RE, RET> from(RE edge) {
+			return new GenInfoNCBITaxon<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class UniprotEnzymeDBVertexProperty<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>,
-			P extends UniprotEnzymeDBVertexProperty<V, VT, P, PV>,
-			PV
-			>
-			implements
-			Property<V, VT, P, PV, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		protected UniprotEnzymeDBVertexProperty(VT type) {
-
-			this.type = type;
-		}
-
-		private VT type;
-
-		@Override
-		public final VT elementType() {
-			return type;
-		}
-	}
-
-	public abstract static class UniprotEnzymeDBVertex<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>,
-			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
-			TypedVertex<V, VT, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		private RV vertex;
-		private VT type;
-
-		protected UniprotEnzymeDBVertex(RV vertex, VT type) {
-
-			this.vertex = vertex;
-			this.type = type;
-		}
-
-		@Override
-		public UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return type().graph();
-		}
-
-		@Override
-		public RV raw() {
-			return this.vertex;
-		}
-
-		@Override
-		public VT type() {
-			return type;
-		}
-	}
-
-	abstract class UniprotEnzymeDBVertexType<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>
-			>
-			implements
-			TypedVertex.Type<V, VT, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		private RVT raw;
-
-		protected UniprotEnzymeDBVertexType(RVT raw) {
-			this.raw = raw;
-		}
-
-		@Override
-		public final RVT raw() {
-			return raw;
-		}
-
-		@Override
-		public final UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotEnzymeDBGraph.this;
-		}
-	}
-
-	public abstract static class UniprotEnzymeDBEdge<
+	public abstract static class NCBITaxonomyGenInfoEdge<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends NCBITaxonomyGenInfoEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET>.NCBITaxonomyGenInfoEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -186,7 +107,7 @@ public abstract class NCBITaxonomyGenInfoGraph<
 			implements
 			TypedEdge<
 					S, ST, SG,
-					E, ET, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -194,14 +115,14 @@ public abstract class NCBITaxonomyGenInfoGraph<
 		private RE edge;
 		private ET type;
 
-		protected UniprotEnzymeDBEdge(RE edge, ET type) {
+		protected NCBITaxonomyGenInfoEdge(RE edge, ET type) {
 
 			this.edge = edge;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
+		public NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -216,14 +137,14 @@ public abstract class NCBITaxonomyGenInfoGraph<
 		}
 	}
 
-	abstract class UniprotEnzymeDBEdgeType<
+	abstract class NCBITaxonomyGenInfoEdgeType<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends NCBITaxonomyGenInfoEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET>.NCBITaxonomyGenInfoEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -232,7 +153,7 @@ public abstract class NCBITaxonomyGenInfoGraph<
 			implements
 			TypedEdge.Type<
 					S, ST, SG,
-					E, ET, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -241,7 +162,7 @@ public abstract class NCBITaxonomyGenInfoGraph<
 		private ST srcT;
 		private TT tgtT;
 
-		protected UniprotEnzymeDBEdgeType(ST srcT, RET raw, TT tgtT) {
+		protected NCBITaxonomyGenInfoEdgeType(ST srcT, RET raw, TT tgtT) {
 
 			this.raw = raw;
 			this.srcT = srcT;
@@ -264,8 +185,8 @@ public abstract class NCBITaxonomyGenInfoGraph<
 		}
 
 		@Override
-		public final UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotEnzymeDBGraph.this;
+		public final NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET> graph() {
+			return NCBITaxonomyGenInfoGraph.this;
 		}
 	}
 }
