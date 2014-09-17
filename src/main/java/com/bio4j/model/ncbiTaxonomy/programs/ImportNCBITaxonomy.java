@@ -139,16 +139,29 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 					String parentTaxId = nodeParentMap.get(nodeTaxId);
 
-					NCBITaxon<I,RV,RVT,RE,RET> taxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(nodeTaxId).get();
+					Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(nodeTaxId);
+					NCBITaxon<I,RV,RVT,RE,RET> taxon = null;
 
-					if (!nodeTaxId.equals(parentTaxId)) {
-						NCBITaxon<I,RV,RVT,RE,RET> parentTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(parentTaxId).get();
-						parentTaxon.addOutEdge(ncbiTaxonomyGraph.NCBITaxonParent(), taxon);
-					}
+					if(!optionalTaxon.isPresent()){
+						Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
+					}else{
+						taxon = optionalTaxon.get();
+						if (!nodeTaxId.equals(parentTaxId)) {
+							Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalParentTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(parentTaxId);
+							NCBITaxon<I,RV,RVT,RE,RET> parentTaxon;
+							if(!optionalParentTaxon.isPresent()){
+								Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
+							}else{
+								parentTaxon = optionalParentTaxon.get();
+								parentTaxon.addOutEdge(ncbiTaxonomyGraph.NCBITaxonParent(), taxon);
+							}
 
-					linesCounter++;
-					if((linesCounter % limitForTransaction) == 0){
-						ncbiTaxonomyGraph.raw().commit();
+						}
+
+						linesCounter++;
+						if((linesCounter % limitForTransaction) == 0){
+							ncbiTaxonomyGraph.raw().commit();
+						}
 					}
 
 				}
