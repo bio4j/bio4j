@@ -1068,68 +1068,80 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					}
 					break;
 				case COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
-//					if (uniprotDataXML.getIsoforms()) {
-//						List<Element> eventList = commentElem.getChildren("event");
-//						List<Element> isoformList = commentElem.getChildren("isoform");
-//
-//						for (Element isoformElem : isoformList) {
-//							String isoformIdSt = isoformElem.getChildText("id");
-//							String isoformNoteSt = isoformElem.getChildText("note");
-//							String isoformNameSt = isoformElem.getChildText("name");
-//							String isoformSeqSt = "";
-//							Element isoSeqElem = isoformElem.getChild("sequence");
-//							if (isoSeqElem != null) {
-//								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-//								if (isoSeqTypeSt.equals("displayed")) {
-//									isoformSeqSt = proteinSequence;
-//								}
-//							}
-//							if (isoformNoteSt == null) {
-//								isoformNoteSt = "";
-//							}
-//							if (isoformNameSt == null) {
-//								isoformNameSt = "";
-//							}
-//							isoformProperties.put(IsoformNode.ID_PROPERTY, isoformIdSt);
-//							isoformProperties.put(IsoformNode.NOTE_PROPERTY, isoformNoteSt);
-//							isoformProperties.put(IsoformNode.NAME_PROPERTY, isoformNameSt);
-//							isoformProperties.put(IsoformNode.SEQUENCE_PROPERTY, isoformSeqSt);
-//							//--------------------------------------------------------
-//							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							long isoformId = -1;
-//							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							if (isoformIdIndexHits.hasNext()) {
-//								isoformId = isoformIdIndexHits.getSingle();
-//							}
-//							isoformIdIndexHits.close();
-//							if (isoformId < 0) {
-//								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
-//							}
-//
-//							for (Element eventElem : eventList) {
-//
-//								String eventTypeSt = eventElem.getAttributeValue("type");
-//								switch (eventTypeSt) {
-//									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
-//										break;
-//								}
-//							}
-//
-//							//protein isoform relationship
-//							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
-//
-//						}
-//					}
+
+					if (uniprotDataXML.getIsoforms()) {
+						List<Element> eventList = commentElem.getChildren("event");
+						List<Element> isoformList = commentElem.getChildren("isoform");
+
+						for (Element isoformElem : isoformList) {
+							String isoformIdSt = isoformElem.getChildText("id");
+							String isoformNoteSt = isoformElem.getChildText("note");
+							String isoformNameSt = isoformElem.getChildText("name");
+							String isoformSeqSt = "";
+							Element isoSeqElem = isoformElem.getChild("sequence");
+							if (isoSeqElem != null) {
+								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
+								if (isoSeqTypeSt.equals("displayed")) {
+									isoformSeqSt = proteinSequence;
+								}
+							}
+							if (isoformNoteSt == null) {
+								isoformNoteSt = "";
+							}
+							if (isoformNameSt == null) {
+								isoformNameSt = "";
+							}
+
+							Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
+							Isoform<I,RV,RVT,RE,RET> isoform;
+							if(!isoformOptional.isPresent()){
+								isoform = graph.Isoform().from(graph.raw().addVertex(null));
+								isoform.set(graph.Isoform().name, isoformNameSt);
+								isoform.set(graph.Isoform().note, isoformNoteSt);
+								isoform.set(graph.Isoform().sequence, isoformSeqSt);
+								isoform.set(graph.Isoform().id, isoformIdSt);
+							}else{
+								isoform = isoformOptional.get();
+							}
+
+							graph.raw().commit();
+
+							//--------------------------------------------------------
+							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							long isoformId = -1;
+							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+							if (isoformIdIndexHits.hasNext()) {
+								isoformId = isoformIdIndexHits.getSingle();
+							}
+							isoformIdIndexHits.close();
+							if (isoformId < 0) {
+								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
+							}
+
+							for (Element eventElem : eventList) {
+
+								String eventTypeSt = eventElem.getAttributeValue("type");
+								switch (eventTypeSt) {
+									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
+										break;
+									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
+										break;
+								}
+							}
+
+							//protein isoform relationship
+							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+
+						}
+					}
 					break;
 				case COMMENT_SEQUENCE_CAUTION_TYPE:
 

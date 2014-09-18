@@ -195,6 +195,16 @@ public abstract class UniprotGraph<
 		    I, RV, RVT, RE, RET
 		    >
     instituteNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Isoform<I, RV, RVT, RE, RET>, IsoformType,
+			// property
+			IsoformType.id, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	isoformIdIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Consortium<I, RV, RVT, RE, RET>, ConsortiumType,
@@ -429,6 +439,8 @@ public abstract class UniprotGraph<
 	public abstract InstituteType Institute();
 
 	public abstract InterproType Interpro();
+
+	public abstract IsoformType Isoform();
 
 	public abstract JournalType Journal();
 
@@ -1190,6 +1202,79 @@ public abstract class UniprotGraph<
 				UniprotVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
 			public name() {
 				super(InstituteType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class IsoformType
+			extends
+			UniprotVertexType<
+					Isoform<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+					> {
+
+		public final name name = new name();
+		public final id id = new id();
+		public final note note = new note();
+		public final sequence sequence = new sequence();
+
+		public IsoformType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public IsoformType value() {
+			return graph().Isoform();
+		}
+
+		@Override
+		public Isoform<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new Isoform<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class sequence
+				extends
+				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, sequence, String> {
+			public sequence() {
+				super(IsoformType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class note
+				extends
+				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, note, String> {
+			public note() {
+				super(IsoformType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, id, String> {
+			public id() {
+				super(IsoformType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class name
+				extends
+				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, name, String> {
+			public name() {
+				super(IsoformType.this);
 			}
 
 			public Class<String> valueClass() {
