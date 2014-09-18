@@ -130,13 +130,13 @@ public abstract class NCBITaxonomyGraph<
 
 		public final class taxonomicRank
 				extends
-				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, taxonomicRank, Integer> {
+				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, taxonomicRank, String> {
 			public taxonomicRank() {
 				super(NCBITaxonType.this.graph().NCBITaxon());
 			}
 
-			public Class<Integer> valueClass() {
-				return Integer.class;
+			public Class<String> valueClass() {
+				return String.class;
 			}
 		}
 

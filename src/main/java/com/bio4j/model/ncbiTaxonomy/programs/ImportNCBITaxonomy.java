@@ -75,15 +75,10 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 						String id = columns[0].trim();
 						String taxonomicRankSt = columns[2].trim();
-						int taxonomicRank;
-						try{
-							taxonomicRank = Integer.parseInt(taxonomicRankSt);
-						}catch(Exception e){
-							taxonomicRank = -1;
-						}
+
 						NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.NCBITaxon().from(ncbiTaxonomyGraph.raw().addVertex(null));
 						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
-						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRank);
+						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRankSt);
 						//node.setEmblCode(columns[3].trim()); TODO add emblCode??
 
 						//saving the parent of the node for later
@@ -146,6 +141,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
 					}else{
 						taxon = optionalTaxon.get();
+						Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " found! :D");
 						if (!nodeTaxId.equals(parentTaxId)) {
 							Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalParentTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(parentTaxId);
 							NCBITaxon<I,RV,RVT,RE,RET> parentTaxon;
