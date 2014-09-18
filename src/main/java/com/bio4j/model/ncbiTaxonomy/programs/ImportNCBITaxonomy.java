@@ -112,6 +112,8 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						if(optionalTaxon.isPresent()){
 							NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
 							taxon.set(ncbiTaxonomyGraph.NCBITaxon().scientificName, scientificNameSt);
+						}else{
+							Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
 						}
 
 						linesCounter++;

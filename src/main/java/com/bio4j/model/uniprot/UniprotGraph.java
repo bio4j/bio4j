@@ -436,6 +436,8 @@ public abstract class UniprotGraph<
 
 	public abstract PersonType Person();
 
+	public abstract SequenceCautionType SequenceCaution();
+
 	public abstract PfamType Pfam();
 
 	public abstract PIRType PIR();
@@ -518,6 +520,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinRefSeqType ProteinRefSeq();
 
 	public abstract ProteinReferenceType ProteinReference();
+
+	public abstract ProteinSequenceCautionType ProteinSequenceCaution();
 
 	public abstract ReferenceAuthorPersonType ReferenceAuthorPerson();
 
@@ -1973,6 +1977,43 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class SequenceCautionType
+			extends
+			UniprotVertexType<
+					SequenceCaution<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+					> {
+
+		public final name name = new name();
+
+		public SequenceCautionType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public SequenceCautionType value() {
+			return graph().SequenceCaution();
+		}
+
+		@Override
+		public SequenceCaution<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new SequenceCaution<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType, name, String> {
+			public name() {
+				super(SequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 	public final class SubcellularLocationType
 			extends
 			UniprotVertexType<
@@ -3337,6 +3378,87 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinRefSeq<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinRefSeq<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class ProteinSequenceCautionType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinSequenceCaution<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinSequenceCautionType,
+					SequenceCaution<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public final evidence evidence = new evidence();
+		public final status status = new status();
+		public final text text = new text();
+
+		public ProteinSequenceCautionType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SequenceCaution());
+		}
+
+		@Override
+		public ProteinSequenceCautionType value() {
+			return graph().ProteinSequenceCaution();
+		}
+
+		@Override
+		public ProteinSequenceCaution<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinSequenceCaution<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class evidence
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						evidence, String
+						>
+		{
+			public evidence() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class status
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						status, String
+						>
+		{
+			public status() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class text
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						text, String
+						>
+		{
+			public text() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 

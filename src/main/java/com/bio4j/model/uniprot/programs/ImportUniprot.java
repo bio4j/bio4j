@@ -1132,118 +1132,124 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 //					}
 					break;
 				case COMMENT_SEQUENCE_CAUTION_TYPE:
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
-//					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
-//					Element conflictElem = commentElem.getChild("conflict");
-//					if (conflictElem != null) {
-//
-//						String conflictTypeSt = conflictElem.getAttributeValue("type");
-//						String resourceSt = "";
-//						String idSt = "";
-//						String versionSt = "";
-//
-//						ArrayList<String> positionsList = new ArrayList<>();
-//
-//						Element sequenceElem = conflictElem.getChild("sequence");
-//						if (sequenceElem != null) {
-//							resourceSt = sequenceElem.getAttributeValue("resource");
-//							if (resourceSt == null) {
-//								resourceSt = "";
-//							}
-//							idSt = sequenceElem.getAttributeValue("id");
-//							if (idSt == null) {
-//								idSt = "";
-//							}
-//							versionSt = sequenceElem.getAttributeValue("version");
-//							if (versionSt == null) {
-//								versionSt = "";
-//							}
-//						}
-//
-//						Element locationElem = commentElem.getChild("location");
-//						if (locationElem != null) {
-//							Element positionElem = locationElem.getChild("position");
-//							if (positionElem != null) {
-//								String tempPos = positionElem.getAttributeValue("position");
-//								if (tempPos != null) {
-//									positionsList.add(tempPos);
-//								}
-//							}
-//						}
-//
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
-//						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
-//						switch (conflictTypeSt) {
-//							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
-//								}
-//								break;
-//							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//								if (positionsList.size() > 0) {
-//									for (String tempPosition : positionsList) {
-//										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
-//										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//									}
-//								} else {
-//									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
-//									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
-//								}
-//								break;
-//						}
-//					}
+
+
+
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.EVIDENCE_PROPERTY, commentEvidenceSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.STATUS_PROPERTY, commentStatusSt);
+					sequenceCautionProperties.put(BasicProteinSequenceCautionRel.TEXT_PROPERTY, commentTextSt);
+					Element conflictElem = commentElem.getChild("conflict");
+					if (conflictElem != null) {
+
+						String conflictTypeSt = conflictElem.getAttributeValue("type");
+						String resourceSt = "";
+						String idSt = "";
+						String versionSt = "";
+
+						ArrayList<String> positionsList = new ArrayList<>();
+
+						Element sequenceElem = conflictElem.getChild("sequence");
+						if (sequenceElem != null) {
+							resourceSt = sequenceElem.getAttributeValue("resource");
+							if (resourceSt == null) {
+								resourceSt = "";
+							}
+							idSt = sequenceElem.getAttributeValue("id");
+							if (idSt == null) {
+								idSt = "";
+							}
+							versionSt = sequenceElem.getAttributeValue("version");
+							if (versionSt == null) {
+								versionSt = "";
+							}
+						}
+
+						Element locationElem = commentElem.getChild("location");
+						if (locationElem != null) {
+							Element positionElem = locationElem.getChild("position");
+							if (positionElem != null) {
+								String tempPos = positionElem.getAttributeValue("position");
+								if (tempPos != null) {
+									positionsList.add(tempPos);
+								}
+							}
+						}
+
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.RESOURCE_PROPERTY, resourceSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.ID_PROPERTY, idSt);
+						sequenceCautionProperties.put(BasicProteinSequenceCautionRel.VERSION_PROPERTY, versionSt);
+
+						Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
+
+						switch (conflictTypeSt) {
+							case ProteinErroneousGeneModelPredictionRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousGeneModelPredictionId, proteinErroneousGeneModelPredictionRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousInitiationId, proteinErroneousInitiationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTranslationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTranslationId, proteinErroneousTranslationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinErroneousTerminationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionErroneousTerminationId, proteinErroneousTerminationRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinFrameshiftRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionFrameshiftId, proteinFrameshiftRel, sequenceCautionProperties);
+								}
+								break;
+							case ProteinMiscellaneousDiscrepancyRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, tempPosition);
+										inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+									}
+								} else {
+									sequenceCautionProperties.put(BasicProteinSequenceCautionRel.POSITION_PROPERTY, "");
+									inserter.createRelationship(currentProteinId, seqCautionMiscellaneousDiscrepancyId, proteinMiscellaneousDiscrepancyRel, sequenceCautionProperties);
+								}
+								break;
+						}
+					}
 					break;
 				case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
 					createStandardProteinComment = true;

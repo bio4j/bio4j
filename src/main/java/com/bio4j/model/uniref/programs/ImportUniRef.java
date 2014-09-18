@@ -46,7 +46,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 			File uniref100File = new File(args[0]);
 			File uniref90File = new File(args[1]);
 			File uniref50File = new File(args[2]);
-			String dbFolder = args[2];
+			String dbFolder = args[3];
 
 			BufferedWriter statsBuff = null;
 
