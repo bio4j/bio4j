@@ -157,6 +157,16 @@ public abstract class UniprotGraph<
 	patentNumberIndex();
 	public abstract TypedVertexIndex.Unique <
 			// vertex
+			SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+			// property
+			SequenceCautionType.name, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	sequenceCautionNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
 			Submission<I, RV, RVT, RE, RET>, SubmissionType,
 			// property
 			SubmissionType.title, String,
@@ -453,8 +463,6 @@ public abstract class UniprotGraph<
 	public abstract ReferenceType Reference();
 
 	public abstract RefSeqType RefSeq();
-
-	//public abstract SequenceCautionType SequenceCaution();
 
 	public abstract SubcellularLocationType SubcellularLocation();
 
@@ -3394,6 +3402,10 @@ public abstract class UniprotGraph<
 		public final evidence evidence = new evidence();
 		public final status status = new status();
 		public final text text = new text();
+		public final id id = new id();
+		public final resource resource = new resource();
+		public final version version = new version();
+		public final position position = new position();
 
 		public ProteinSequenceCautionType(RET raw) {
 			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SequenceCaution());
@@ -3409,6 +3421,74 @@ public abstract class UniprotGraph<
 			return new ProteinSequenceCaution<I, RV, RVT, RE, RET>(edge, this);
 		}
 
+		public final class position
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						position, String
+						>
+		{
+			public position() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class version
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						version, String
+						>
+		{
+			public version() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class resource
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						resource, String
+						>
+		{
+			public resource() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class id
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
+						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+						id, String
+						>
+		{
+			public id() {
+				super(ProteinSequenceCautionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 		public final class evidence
 				extends
 				UniprotEdgeProperty<
@@ -3441,7 +3521,7 @@ public abstract class UniprotGraph<
 
 			public Class<String> valueClass() {
 				return String.class;
-			} 
+			}
 		}
 		public final class text
 				extends
