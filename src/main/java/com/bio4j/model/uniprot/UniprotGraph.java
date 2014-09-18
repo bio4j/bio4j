@@ -3441,7 +3441,7 @@ public abstract class UniprotGraph<
 
 			public Class<String> valueClass() {
 				return String.class;
-			}
+			} 
 		}
 		public final class text
 				extends
