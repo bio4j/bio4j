@@ -168,19 +168,25 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 				XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
 				entryStBuilder.delete(0, entryStBuilder.length());
 
-				ArrayList<String> membersAccessionList = new ArrayList<String>();
-				Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
-				String representantAccession = getRepresentantAccession(representativeMember);
+				String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
+				String updatedDate = entryXMLElem.asJDomElement().getAttributeValue("updated");
+				String name = entryXMLElem.asJDomElement().getChildText("name");
 
 				if(unirefClusterNumber == 50){
 					UniRef50Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef50Cluster().from(uniRefGraph.raw().addVertex(null));
-					cluster.set(uniRefGraph.UniRef50Cluster().id, representantAccession);
+					cluster.set(uniRefGraph.UniRef50Cluster().id, entryId);
+					cluster.set(uniRefGraph.UniRef50Cluster().updatedDate, updatedDate);
+					cluster.set(uniRefGraph.UniRef50Cluster().name, name);
 				}else if(unirefClusterNumber == 90){
 					UniRef90Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef90Cluster().from(uniRefGraph.raw().addVertex(null));
-					cluster.set(uniRefGraph.UniRef90Cluster().id, representantAccession);
+					cluster.set(uniRefGraph.UniRef90Cluster().id, entryId);
+					cluster.set(uniRefGraph.UniRef90Cluster().updatedDate, updatedDate);
+					cluster.set(uniRefGraph.UniRef90Cluster().name, name);
 				}else if(unirefClusterNumber == 100){
 					UniRef100Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef100Cluster().from(uniRefGraph.raw().addVertex(null));
-					cluster.set(uniRefGraph.UniRef100Cluster().id, representantAccession);
+					cluster.set(uniRefGraph.UniRef100Cluster().id, entryId);
+					cluster.set(uniRefGraph.UniRef100Cluster().updatedDate, updatedDate);
+					cluster.set(uniRefGraph.UniRef100Cluster().name, name);
 				}
 
 			}
