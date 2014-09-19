@@ -32,6 +32,12 @@ public final class UniRef90Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	public String id() {
 		return get(type().id);
 	}
+	public String name() {
+		return get(type().name);
+	}
+	public String updatedDate() {
+		return get(type().updatedDate);
+	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 

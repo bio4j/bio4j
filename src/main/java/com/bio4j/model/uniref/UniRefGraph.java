@@ -93,6 +93,8 @@ public abstract class UniRefGraph<
 					> {
 
 		public final id id = new id();
+		public final name name = new name();
+		public final updatedDate updatedDate = new updatedDate();
 
 		public UniRef50ClusterType(RVT raw) {
 			super(raw);
@@ -119,6 +121,28 @@ public abstract class UniRefGraph<
 				return String.class;
 			}
 		}
+		public final class name
+				extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, name, String> {
+			public name() {
+				super(UniRef50ClusterType.this.graph().UniRef50Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class updatedDate
+				extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, updatedDate, String> {
+			public updatedDate() {
+				super(UniRef50ClusterType.this.graph().UniRef50Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 
 
 	}
@@ -131,6 +155,8 @@ public abstract class UniRefGraph<
 					> {
 
 		public final id id = new id();
+		public final name name = new name();
+		public final updatedDate updatedDate = new updatedDate();
 
 		public UniRef90ClusterType(RVT raw) {
 			super(raw);
@@ -157,6 +183,28 @@ public abstract class UniRefGraph<
 				return String.class;
 			}
 		}
+		public final class name
+				extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, name, String> {
+			public name() {
+				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class updatedDate
+				extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, updatedDate, String> {
+			public updatedDate() {
+				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 
 	}
 
@@ -168,6 +216,8 @@ public abstract class UniRefGraph<
 					> {
 
 		public final id id = new id();
+		public final name name = new name();
+		public final updatedDate updatedDate = new updatedDate();
 
 		public UniRef100ClusterType(RVT raw) {
 			super(raw);
@@ -187,6 +237,28 @@ public abstract class UniRefGraph<
 				extends
 				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, id, String> {
 			public id() {
+				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class name
+				extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, name, String> {
+			public name() {
+				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class updatedDate
+				extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, updatedDate, String> {
+			public updatedDate() {
 				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
 			}
 
