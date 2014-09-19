@@ -84,7 +84,7 @@ public abstract class NCBITaxonomyGraph<
 				extends
 				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, id, String> {
 			public id() {
-				super(NCBITaxonType.this.graph().NCBITaxon());
+				super(NCBITaxonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -96,7 +96,7 @@ public abstract class NCBITaxonomyGraph<
 				extends
 				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, name, String> {
 			public name() {
-				super(NCBITaxonType.this.graph().NCBITaxon());
+				super(NCBITaxonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -108,7 +108,7 @@ public abstract class NCBITaxonomyGraph<
 				extends
 				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, comment, String> {
 			public comment() {
-				super(NCBITaxonType.this.graph().NCBITaxon());
+				super(NCBITaxonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -120,7 +120,7 @@ public abstract class NCBITaxonomyGraph<
 				extends
 				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, scientificName, String> {
 			public scientificName() {
-				super(NCBITaxonType.this.graph().NCBITaxon());
+				super(NCBITaxonType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -132,7 +132,7 @@ public abstract class NCBITaxonomyGraph<
 				extends
 				NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, taxonomicRank, String> {
 			public taxonomicRank() {
-				super(NCBITaxonType.this.graph().NCBITaxon());
+				super(NCBITaxonType.this);
 			}
 
 			public Class<String> valueClass() {

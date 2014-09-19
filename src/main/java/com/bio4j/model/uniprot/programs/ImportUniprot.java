@@ -1106,39 +1106,39 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 							graph.raw().commit();
 
-							//--------------------------------------------------------
-							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-							long isoformId = -1;
-							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-							if (isoformIdIndexHits.hasNext()) {
-								isoformId = isoformIdIndexHits.getSingle();
-							}
-							isoformIdIndexHits.close();
-							if (isoformId < 0) {
-								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
-							}
-
-							for (Element eventElem : eventList) {
-
-								String eventTypeSt = eventElem.getAttributeValue("type");
-								switch (eventTypeSt) {
-									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
-										break;
-									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
-										break;
-									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
-										break;
-									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
-										break;
-								}
-							}
-
-							//protein isoform relationship
-							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+//							//--------------------------------------------------------
+//							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+//							long isoformId = -1;
+//							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
+//							if (isoformIdIndexHits.hasNext()) {
+//								isoformId = isoformIdIndexHits.getSingle();
+//							}
+//							isoformIdIndexHits.close();
+//							if (isoformId < 0) {
+//								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
+//							}
+//
+//							for (Element eventElem : eventList) {
+//
+//								String eventTypeSt = eventElem.getAttributeValue("type");
+//								switch (eventTypeSt) {
+//									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+//										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
+//										break;
+//									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+//										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
+//										break;
+//									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+//										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
+//										break;
+//									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
+//										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
+//										break;
+//								}
+//							}
+//
+//							//protein isoform relationship
+//							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
 
 						}
 					}
