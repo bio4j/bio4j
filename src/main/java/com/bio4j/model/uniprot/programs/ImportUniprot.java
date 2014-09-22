@@ -1182,6 +1182,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							}
 						}
 
+						System.out.println("conflictTypeSt = " + conflictTypeSt);
+						System.out.println("sequenceCautionNameIndex = " + graph.sequenceCautionNameIndex());
 						Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
 						SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution;
 
