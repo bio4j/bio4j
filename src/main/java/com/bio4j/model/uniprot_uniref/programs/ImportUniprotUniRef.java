@@ -91,6 +91,8 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				}
 			} finally {
 				try {
+					//committing last transaction
+					uniprotUniRefGraph.raw().commit();
 					//closing logger file handler
 					fh.close();
 					//closing neo4j managers
@@ -259,6 +261,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			entryCounter++;
 			if ((entryCounter % limitForPrintingOut) == 0) {
 				logger.log(Level.INFO, (entryCounter + " entries parsed!!"));
+				uniprotUniRefGraph.raw().commit();
 			}
 
 		}
