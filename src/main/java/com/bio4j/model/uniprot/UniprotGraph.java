@@ -531,6 +531,12 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinPIRType ProteinPIR();
 
+	public abstract ProteinProteinInteractionType ProteinProteinInteraction();
+
+	public abstract ProteinIsoformInteractionType ProteinIsoformInteraction();
+
+	public abstract IsoformProteinInteractionType IsoformProteinInteraction();
+
 	public abstract ProteinReactomeTermType ProteinReactomeTerm();
 
 	public abstract ProteinSubcellularLocationType ProteinSubcellularLocation();
@@ -3399,6 +3405,204 @@ public abstract class UniprotGraph<
 		}
 	}
 
+	public final class ProteinProteinInteractionType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinProteinInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinProteinInteractionType,
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ProteinProteinInteractionType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Protein());
+		}
+
+		@Override
+		public ProteinProteinInteractionType value() {
+			return graph().ProteinProteinInteraction();
+		}
+
+		@Override
+		public ProteinProteinInteraction<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinProteinInteraction<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final experiments experiments = new experiments();
+		public final organismsDiffer organismsDiffer = new organismsDiffer();
+		public final intActId1 intActId1 = new intActId1();
+		public final intActId2 intActId2 = new intActId2();
+
+		public final class experiments
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						experiments, String
+						>
+		{
+			public experiments() {
+				super(ProteinProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class organismsDiffer
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						organismsDiffer, String
+						>
+		{
+			public organismsDiffer() {
+				super(ProteinProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId1
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						intActId1, String
+						>
+		{
+			public intActId1() {
+				super(ProteinProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId2
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						intActId2, String
+						>
+		{
+			public intActId2() {
+				super(ProteinProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
+	public final class ProteinIsoformInteractionType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinIsoformInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinIsoformInteractionType,
+					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ProteinIsoformInteractionType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Isoform());
+		}
+
+		@Override
+		public ProteinIsoformInteractionType value() {
+			return graph().ProteinIsoformInteraction();
+		}
+
+		@Override
+		public ProteinIsoformInteraction<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinIsoformInteraction<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final experiments experiments = new experiments();
+		public final organismsDiffer organismsDiffer = new organismsDiffer();
+		public final intActId1 intActId1 = new intActId1();
+		public final intActId2 intActId2 = new intActId2();
+
+		public final class experiments
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						experiments, String
+						>
+		{
+			public experiments() {
+				super(ProteinIsoformInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class organismsDiffer
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						organismsDiffer, String
+						>
+		{
+			public organismsDiffer() {
+				super(ProteinIsoformInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId1
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						intActId1, String
+						>
+		{
+			public intActId1() {
+				super(ProteinIsoformInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId2
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						intActId2, String
+						>
+		{
+			public intActId2() {
+				super(ProteinIsoformInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+	}
+
 	public final class ProteinReactomeTermType
 			extends
 			UniprotEdgeType<
@@ -3421,6 +3625,105 @@ public abstract class UniprotGraph<
 		@Override
 		public ProteinReactomeTerm<I, RV, RVT, RE, RET> from(RE edge) {
 			return new ProteinReactomeTerm<I, RV, RVT, RE, RET>(edge, this);
+		}
+	}
+
+	public final class IsoformProteinInteractionType
+			extends
+			UniprotEdgeType<
+					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType,
+					IsoformProteinInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformProteinInteractionType,
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public IsoformProteinInteractionType(RET raw) {
+			super(UniprotGraph.this.Isoform(), raw, UniprotGraph.this.Protein());
+		}
+
+		@Override
+		public IsoformProteinInteractionType value() {
+			return graph().IsoformProteinInteraction();
+		}
+
+		@Override
+		public IsoformProteinInteraction<I, RV, RVT, RE, RET> from(RE edge) {
+			return new IsoformProteinInteraction<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final experiments experiments = new experiments();
+		public final organismsDiffer organismsDiffer = new organismsDiffer();
+		public final intActId1 intActId1 = new intActId1();
+		public final intActId2 intActId2 = new intActId2();
+
+		public final class experiments
+				extends
+				UniprotEdgeProperty<
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						experiments, String
+						>
+		{
+			public experiments() {
+				super(IsoformProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class organismsDiffer
+				extends
+				UniprotEdgeProperty<
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						organismsDiffer, String
+						>
+		{
+			public organismsDiffer() {
+				super(IsoformProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId1
+				extends
+				UniprotEdgeProperty<
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						intActId1, String
+						>
+		{
+			public intActId1() {
+				super(IsoformProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class intActId2
+				extends
+				UniprotEdgeProperty<
+						Isoform<I, RV, RVT, RE, RET>, IsoformType,
+						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						intActId2, String
+						>
+		{
+			public intActId2() {
+				super(IsoformProteinInteractionType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 
