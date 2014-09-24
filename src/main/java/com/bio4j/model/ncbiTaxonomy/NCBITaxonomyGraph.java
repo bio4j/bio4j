@@ -2,6 +2,7 @@ package com.bio4j.model.ncbiTaxonomy;
 
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.ncbiTaxonomy.relationships.NCBITaxonParent;
+import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.ohnosequences.typedGraphs.*;
 
 /**
@@ -42,6 +43,8 @@ public abstract class NCBITaxonomyGraph<
 			I, RV, RVT, RE, RET
 			>
 	nCBITaxonIdIndex();
+
+	public abstract UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
 
 	// types
 	// vertices

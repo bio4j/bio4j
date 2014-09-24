@@ -2,6 +2,8 @@ package com.bio4j.model.ncbiTaxonomy.nodes;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.relationships.NCBITaxonParent;
+import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot_go.relationships.ProteinNCBITaxon;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
@@ -59,6 +61,15 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 	}
 	public NCBITaxon<I, RV, RVT, RE, RET> ncbiTaxonParent_outV(){
 		return outOneV(graph().NCBITaxonParent());
+	}
+
+	//----proteinNCBITaxon-------
+	// ingoing
+	public List<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_in(){
+		return inMany(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> proteinNCBITaxon_inV(){
+		return inManyV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 
 }
