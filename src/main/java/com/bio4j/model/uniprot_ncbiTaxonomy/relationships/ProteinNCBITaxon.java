@@ -1,4 +1,4 @@
-package com.bio4j.model.uniprot_go.relationships;
+package com.bio4j.model.uniprot_ncbiTaxonomy.relationships;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.nodes.GoTerm;

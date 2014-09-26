@@ -1,9 +1,12 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.*;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.uniprot_go.relationships.ProteinNCBITaxon;
+import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.ProteinNCBITaxon;
 import com.bio4j.model.uniprot_uniref.relationships.*;
 import com.bio4j.model.uniref.nodes.UniRef100Cluster;
 import com.bio4j.model.uniref.nodes.UniRef50Cluster;
@@ -212,6 +215,15 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outManyV(graph().ProteinReference());
 	}
 
+
+	//----proteinNCBITaxon-------
+	// outgoing
+	public ProteinNCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_out(){
+		return outOne(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	}
+	public NCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_outV(){
+		return outOneV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	}
 
 
 }
