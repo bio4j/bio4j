@@ -5,7 +5,6 @@ import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.*;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
-import com.bio4j.model.uniprot_go.relationships.ProteinNCBITaxon;
 import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.ProteinNCBITaxon;
 import com.bio4j.model.uniprot_uniref.relationships.*;
 import com.bio4j.model.uniref.nodes.UniRef100Cluster;

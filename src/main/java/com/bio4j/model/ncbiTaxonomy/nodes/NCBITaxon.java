@@ -3,7 +3,7 @@ package com.bio4j.model.ncbiTaxonomy.nodes;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.relationships.NCBITaxonParent;
 import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_go.relationships.ProteinNCBITaxon;
+import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.ProteinNCBITaxon;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.util.List;
