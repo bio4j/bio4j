@@ -47,6 +47,16 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
+		    GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+		    // property
+		    GeneLocationType.name, String,
+		    // graph
+		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    I, RV, RVT, RE, RET
+		    >
+    geneLocationNameIndex();
+    public abstract TypedVertexIndex.Unique <
+		    // vertex
 		    Disease<I, RV, RVT, RE, RET>, DiseaseType,
 		    // property
 		    DiseaseType.id, String,

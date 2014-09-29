@@ -41,6 +41,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     public static final String REFERENCE_TAG_NAME = "reference";
     public static final String CITATION_TAG_NAME = "citation";
 
+	public static final String GENE_LOCATION_TAG_NAME = "geneLocation";
+
     public static final String ORGANISM_TAG_NAME = "organism";
     public static final String ORGANISM_NAME_TAG_NAME = "name";
     public static final String ORGANISM_NAME_TYPE_ATTRIBUTE = "type";
@@ -559,6 +561,37 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
                         }
                         //---------------------------------------------------------------------------------------
+
+	                    //---------------------------------------------------------------------------------------
+	                    //--------------------------------geneLocation-------------------------------------------
+	                    List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
+
+	                    for (Element geneLocationElem : geneLocationElements){
+
+		                    String geneLocationTypeSt = geneLocationElem.getAttributeValue("type");
+		                    String geneLocationNameSt = geneLocationElem.getChildText("name");
+		                    if(geneLocationNameSt == null){
+			                    geneLocationNameSt = "";
+		                    }
+
+		                    Optional<GeneLocation<I,RV,RVT,RE,RET>> optionalGeneLocation = graph.geneLocationNameIndex().getVertex(geneLocationTypeSt);
+		                    GeneLocation<I,RV,RVT,RE,RET> geneLocation = null;
+
+		                    if(optionalGeneLocation.isPresent()){
+
+			                    geneLocation = optionalGeneLocation.get();
+
+		                    }else{
+
+			                    geneLocation = graph.GeneLocation().from(graph.raw().addVertex(null));
+			                    geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
+			                    graph.raw().commit();
+			                    
+		                    }
+
+		                    ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);
+		                    proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
+	                    }
 
                         //---------------------------------------------------------------------------------------
                         //--------------------------------organism-----------------------------------------------
