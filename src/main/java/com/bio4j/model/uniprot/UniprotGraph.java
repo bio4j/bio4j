@@ -436,6 +436,8 @@ public abstract class UniprotGraph<
 
 	public abstract FeatureTypeType FeatureType();
 
+	public abstract GeneLocationType GeneLocation();
+
 	public abstract InstituteType Institute();
 
 	public abstract InterproType Interpro();
@@ -518,6 +520,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinEnsemblType ProteinEnsembl();
 
 	public abstract ProteinFeatureType ProteinFeature();
+
+	public abstract ProteinGeneLocationType ProteinGeneLocation();
 
 	public abstract ProteinInterproType ProteinInterpro();
 
@@ -1130,6 +1134,43 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+	}
+
+	public final class GeneLocationType
+			extends
+			UniprotVertexType<
+					GeneLocation<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType
+					> {
+
+		public final name name = new name();
+
+		public GeneLocationType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public GeneLocationType value() {
+			return graph().GeneLocation();
+		}
+
+		@Override
+		public GeneLocation<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new GeneLocation<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType, name, String> {
+			public name() {
+				super(GeneLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
 	}
 
 	public final class InterproType
@@ -3253,6 +3294,52 @@ public abstract class UniprotGraph<
                 return String.class;
             }
         }
+	}
+
+	public final class ProteinGeneLocationType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinGeneLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinGeneLocationType,
+					GeneLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public final name name = new name();
+
+		public ProteinGeneLocationType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.GeneLocation());
+		}
+
+		@Override
+		public ProteinGeneLocationType value() {
+			return graph().ProteinGeneLocation();
+		}
+
+		@Override
+		public ProteinGeneLocation<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinGeneLocation<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class name
+				extends
+				UniprotEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinGeneLocation<I, RV, RVT, RE, RET>, ProteinGeneLocationType,
+						GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+						name, String
+						>
+		{
+			public name() {
+				super(ProteinGeneLocationType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
 	}
 
 	public final class ProteinInterproType

@@ -224,5 +224,14 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outOneV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 
+	// proteinGeneLocation
+	// outgoing
+	public List<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
+		return outMany(graph().ProteinGeneLocation());
+	}
+	public List<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outNodes(){
+		return outManyV(graph().ProteinGeneLocation());
+	}
+
 
 }
