@@ -586,7 +586,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 			                    geneLocation = graph.GeneLocation().from(graph.raw().addVertex(null));
 			                    geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
 			                    graph.raw().commit();
-			                    
+
 		                    }
 
 		                    ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);

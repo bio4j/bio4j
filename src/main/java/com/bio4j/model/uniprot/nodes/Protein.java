@@ -79,6 +79,78 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outOneV(graph().ProteinOrganism());
 	}
 
+	// proteinComment
+	// outgoing
+	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_out(){
+		return outMany(graph().ProteinComment());
+	}
+	public List<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outNodes(){
+		return outManyV(graph().ProteinComment());
+	}
+
+	// proteinRefSeq
+	// outgoing
+	public List<ProteinRefSeq<I, RV, RVT, RE, RET>> proteinRefSeq_out(){
+		return outMany(graph().ProteinRefSeq());
+	}
+	public List<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outNodes(){
+		return outManyV(graph().ProteinRefSeq());
+	}
+
+	// proteinSequenceCaution
+	// outgoing
+	public List<ProteinSequenceCaution<I, RV, RVT, RE, RET>> proteinSequenceCaution_out(){
+		return outMany(graph().ProteinSequenceCaution());
+	}
+	public List<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outNodes(){
+		return outManyV(graph().ProteinSequenceCaution());
+	}
+
+	// proteinSubcellularLocation
+	// outgoing
+	public List<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_out(){
+		return outMany(graph().ProteinSubcellularLocation());
+	}
+	public List<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outNodes(){
+		return outManyV(graph().ProteinSubcellularLocation());
+	}
+
+	// proteinPIR
+	// outgoing
+	public List<ProteinPIR<I, RV, RVT, RE, RET>> proteinPIR_out(){
+		return outMany(graph().ProteinPIR());
+	}
+	public List<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outNodes(){
+		return outManyV(graph().ProteinPIR());
+	}
+
+	// proteinFeature
+	// outgoing
+	public List<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_out(){
+		return outMany(graph().ProteinFeature());
+	}
+	public List<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outNodes(){
+		return outManyV(graph().ProteinFeature());
+	}
+
+	// proteinEMBL
+	// outgoing
+	public List<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_out(){
+		return outMany(graph().ProteinEMBL());
+	}
+	public List<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outNodes(){
+		return outManyV(graph().ProteinEMBL());
+	}
+
+	// proteinDisease
+	// outgoing
+	public List<ProteinDisease<I, RV, RVT, RE, RET>> proteinDisease_out(){
+		return outMany(graph().ProteinDisease());
+	}
+	public List<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outNodes(){
+		return outManyV(graph().ProteinDisease());
+	}
+
 	// proteinDataset
 	// outgoing
 	public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_out(){
@@ -104,6 +176,15 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	}
 	public List<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outNodes(){
 		return outManyV(graph().ProteinReactomeTerm());
+	}
+
+	// proteinEnsembl
+	// outgoing
+	public List<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_out(){
+		return outMany(graph().ProteinEnsembl());
+	}
+	public List<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outNodes(){
+		return outManyV(graph().ProteinEnsembl());
 	}
 
 	// proteinKeyword
@@ -233,5 +314,30 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outManyV(graph().ProteinGeneLocation());
 	}
 
+	// proteinProteinInteraction
+	// outgoing
+	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_out(){
+		return outMany(graph().ProteinProteinInteraction());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_outV(){
+		return outManyV(graph().ProteinProteinInteraction());
+	}
 
+	// proteinProteinInteraction
+	// ingoing
+	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_in(){
+		return inMany(graph().ProteinProteinInteraction());
+	}
+	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_inV(){
+		return inManyV(graph().ProteinProteinInteraction());
+	}
+
+	// proteinIsoformInteraction
+	// outgoing
+	public List<ProteinIsoformInteraction<I, RV, RVT, RE, RET>> proteinIsoformInteraction_out(){
+		return outMany(graph().ProteinIsoformInteraction());
+	}
+	public List<Isoform<I, RV, RVT, RE, RET>> proteinIsoformInteraction_outV(){
+		return outManyV(graph().ProteinIsoformInteraction());
+	}
 }
