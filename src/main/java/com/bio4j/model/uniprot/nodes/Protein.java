@@ -1,10 +1,12 @@
 package com.bio4j.model.uniprot.nodes;
 
 import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.go.nodes.GoTerm;
 import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.relationships.*;
 import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
 import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.ProteinNCBITaxon;
 import com.bio4j.model.uniprot_uniref.relationships.*;
 import com.bio4j.model.uniref.nodes.UniRef100Cluster;
@@ -230,6 +232,15 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	}
 	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outNodes(){
         return outManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
+	}
+
+	// goAnnotation
+	// outgoing
+	public List<GoAnnotation<I, RV, RVT, RE, RET>>  goAnnotation_out(){
+		return outMany(graph().uniprotGoGraph().GoAnnotation());
+	}
+	public List<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outNodes(){
+		return outManyV(graph().uniprotGoGraph().GoAnnotation());
 	}
 
 	// uniref50Member
