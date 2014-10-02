@@ -77,7 +77,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public ProteinOrganism<I, RV, RVT, RE, RET> proteinOrganism_out(){
 		return outOne(graph().ProteinOrganism());
 	}
-	public Organism<I, RV, RVT, RE, RET>  proteinOrganism_outNodes(){
+	public Organism<I, RV, RVT, RE, RET>  proteinOrganism_outV(){
 		return outOneV(graph().ProteinOrganism());
 	}
 
@@ -86,7 +86,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_out(){
 		return outMany(graph().ProteinComment());
 	}
-	public List<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outNodes(){
+	public List<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outV(){
 		return outManyV(graph().ProteinComment());
 	}
 
@@ -95,7 +95,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinRefSeq<I, RV, RVT, RE, RET>> proteinRefSeq_out(){
 		return outMany(graph().ProteinRefSeq());
 	}
-	public List<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outNodes(){
+	public List<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outV(){
 		return outManyV(graph().ProteinRefSeq());
 	}
 
@@ -104,7 +104,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinSequenceCaution<I, RV, RVT, RE, RET>> proteinSequenceCaution_out(){
 		return outMany(graph().ProteinSequenceCaution());
 	}
-	public List<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outNodes(){
+	public List<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outV(){
 		return outManyV(graph().ProteinSequenceCaution());
 	}
 
@@ -113,7 +113,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_out(){
 		return outMany(graph().ProteinSubcellularLocation());
 	}
-	public List<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outNodes(){
+	public List<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outV(){
 		return outManyV(graph().ProteinSubcellularLocation());
 	}
 
@@ -122,7 +122,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinPIR<I, RV, RVT, RE, RET>> proteinPIR_out(){
 		return outMany(graph().ProteinPIR());
 	}
-	public List<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outNodes(){
+	public List<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outV(){
 		return outManyV(graph().ProteinPIR());
 	}
 
@@ -131,7 +131,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_out(){
 		return outMany(graph().ProteinFeature());
 	}
-	public List<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outNodes(){
+	public List<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outV(){
 		return outManyV(graph().ProteinFeature());
 	}
 
@@ -140,7 +140,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_out(){
 		return outMany(graph().ProteinEMBL());
 	}
-	public List<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outNodes(){
+	public List<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outV(){
 		return outManyV(graph().ProteinEMBL());
 	}
 
@@ -149,7 +149,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinDisease<I, RV, RVT, RE, RET>> proteinDisease_out(){
 		return outMany(graph().ProteinDisease());
 	}
-	public List<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outNodes(){
+	public List<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outV(){
 		return outManyV(graph().ProteinDisease());
 	}
 
@@ -158,7 +158,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public ProteinDataset<I, RV, RVT, RE, RET> proteinDataset_out(){
 		return outOne(graph().ProteinDataset());
 	}
-	public Dataset<I, RV, RVT, RE, RET>  proteinDataset_outNodes(){
+	public Dataset<I, RV, RVT, RE, RET>  proteinDataset_outV(){
 		return outOneV(graph().ProteinDataset());
 	}
 
@@ -167,7 +167,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinInterpro<I, RV, RVT, RE, RET>> proteinIntepro_out(){
 		return outMany(graph().ProteinInterpro());
 	}
-	public List<Interpro<I, RV, RVT, RE, RET>>  proteinInterpro_outNodes(){
+	public List<Interpro<I, RV, RVT, RE, RET>>  proteinInterpro_outV(){
 		return outManyV(graph().ProteinInterpro());
 	}
 
@@ -176,7 +176,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_out(){
 		return outMany(graph().ProteinReactomeTerm());
 	}
-	public List<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outNodes(){
+	public List<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outV(){
 		return outManyV(graph().ProteinReactomeTerm());
 	}
 
@@ -185,7 +185,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_out(){
 		return outMany(graph().ProteinEnsembl());
 	}
-	public List<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outNodes(){
+	public List<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outV(){
 		return outManyV(graph().ProteinEnsembl());
 	}
 
@@ -194,7 +194,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinKeyword<I, RV, RVT, RE, RET>> proteinKeyword_out(){
 		return outMany(graph().ProteinKeyword());
 	}
-	public List<Keyword<I, RV, RVT, RE, RET>>  proteinKeyword_outNodes(){
+	public List<Keyword<I, RV, RVT, RE, RET>>  proteinKeyword_outV(){
 		return outManyV(graph().ProteinKeyword());
 	}
 
@@ -203,7 +203,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_out(){
 		return outMany(graph().ProteinKegg());
 	}
-	public List<Kegg<I, RV, RVT, RE, RET>>  proteinKegg_outNodes(){
+	public List<Kegg<I, RV, RVT, RE, RET>>  proteinKegg_outV(){
 		return outManyV(graph().ProteinKegg());
 	}
 
@@ -212,7 +212,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_out(){
 		return outMany(graph().ProteinPfam());
 	}
-	public List<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outNodes(){
+	public List<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outV(){
 		return outManyV(graph().ProteinPfam());
 	}
 
@@ -221,7 +221,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinUniGene<I, RV, RVT, RE, RET>> proteinUniGene_out(){
 		return outMany(graph().ProteinUniGene());
 	}
-	public List<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outNodes(){
+	public List<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outV(){
 		return outManyV(graph().ProteinUniGene());
 	}
 
@@ -230,7 +230,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<EnzymaticActivity<I, RV, RVT, RE, RET>>   enzymaticActivity_out(){
         return outMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
-	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outNodes(){
+	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outV(){
         return outManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
 
@@ -239,7 +239,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<GoAnnotation<I, RV, RVT, RE, RET>>  goAnnotation_out(){
 		return outMany(graph().uniprotGoGraph().GoAnnotation());
 	}
-	public List<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outNodes(){
+	public List<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outV(){
 		return outManyV(graph().uniprotGoGraph().GoAnnotation());
 	}
 
@@ -302,7 +302,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_out(){
 		return outMany(graph().ProteinReference());
 	}
-	public List<Reference<I, RV, RVT, RE, RET>> proteinReference_outNodes(){
+	public List<Reference<I, RV, RVT, RE, RET>> proteinReference_outV(){
 		return outManyV(graph().ProteinReference());
 	}
 
@@ -321,7 +321,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public List<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
 		return outMany(graph().ProteinGeneLocation());
 	}
-	public List<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outNodes(){
+	public List<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outV(){
 		return outManyV(graph().ProteinGeneLocation());
 	}
 
