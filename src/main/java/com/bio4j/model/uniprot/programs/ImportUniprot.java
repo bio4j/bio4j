@@ -1509,7 +1509,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									thesis = optionalThesis.get();
-									reference = thesis.referenceThesis_inNode();
+									reference = thesis.referenceThesis_inV();
 								}
 
 								//--protein reference citation relationship
@@ -1561,7 +1561,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									patent = optionalPatent.get();
-									reference = patent.referencePatent_inNode();
+									reference = patent.referencePatent_inV();
 								}
 
 								//--protein citation relationship
@@ -1623,7 +1623,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									submission = optionalSubmission.get();
-									reference = submission.referenceSubmission_inNode();
+									reference = submission.referenceSubmission_inV();
 								}
 
 								//--protein citation relationship
@@ -1749,7 +1749,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 							}else{
 								book = optionalBook.get();
-								reference = book.referenceBook_inNode();
+								reference = book.referenceBook_inV();
 							}
 
 							//--protein citation relationship
@@ -1833,7 +1833,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									onlineArticle = optionalOnlineArticle.get();
-									reference = onlineArticle.referenceOnlineArticle_inNode();
+									reference = onlineArticle.referenceOnlineArticle_inV();
 								}
 
 								//protein citation
@@ -1954,7 +1954,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								}else{
 									article = optionalArticle.get();
-									reference = article.referenceArticle_inNode();
+									reference = article.referenceArticle_inV();
 								}
 
 								//protein citation
