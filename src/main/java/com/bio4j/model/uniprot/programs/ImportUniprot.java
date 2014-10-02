@@ -163,7 +163,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             try {
 
                 // This block configures the logger with handler and formatter
-                fh = new FileHandler("ImportUniprot" + args[0].split("\\.")[0] + ".log", false);
+                fh = new FileHandler("ImportUniprot" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
