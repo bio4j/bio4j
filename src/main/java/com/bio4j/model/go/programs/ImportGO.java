@@ -2,9 +2,8 @@
 package com.bio4j.model.go.programs;
 
 import com.bio4j.model.go.GoGraph;
-import com.bio4j.model.go.nodes.GoTerm;
-import com.bio4j.model.go.nodes.SubOntologies;
-import com.ohnosequences.util.Executable;
+import com.bio4j.model.go.vertices.GoTerm;
+import com.bio4j.model.go.vertices.SubOntologies;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 

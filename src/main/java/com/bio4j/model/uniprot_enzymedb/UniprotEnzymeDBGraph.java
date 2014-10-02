@@ -2,10 +2,10 @@ package com.bio4j.model.uniprot_enzymedb;
 
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
-import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.uniprot.vertices.Protein;
+import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
 import com.ohnosequences.typedGraphs.*;
 
 /**

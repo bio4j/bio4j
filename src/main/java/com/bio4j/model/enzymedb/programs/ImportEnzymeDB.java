@@ -17,7 +17,7 @@
 package com.bio4j.model.enzymedb.programs;
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
-import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.io.*;

@@ -2,12 +2,12 @@ package com.bio4j.model.uniprot_uniref;
 
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_uniref.relationships.*;
+import com.bio4j.model.uniprot.vertices.Protein;
+import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.UniRefGraph;
-import com.bio4j.model.uniref.nodes.UniRef100Cluster;
-import com.bio4j.model.uniref.nodes.UniRef90Cluster;
-import com.bio4j.model.uniref.nodes.UniRef50Cluster;
+import com.bio4j.model.uniref.vertices.UniRef100Cluster;
+import com.bio4j.model.uniref.vertices.UniRef90Cluster;
+import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.ohnosequences.typedGraphs.*;
 
 /**

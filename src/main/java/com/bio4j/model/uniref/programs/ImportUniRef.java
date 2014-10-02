@@ -1,14 +1,13 @@
 package com.bio4j.model.uniref.programs;
 
 import com.bio4j.model.uniref.UniRefGraph;
-import com.bio4j.model.uniref.nodes.UniRef100Cluster;
-import com.bio4j.model.uniref.nodes.UniRef50Cluster;
-import com.bio4j.model.uniref.nodes.UniRef90Cluster;
+import com.bio4j.model.uniref.vertices.UniRef100Cluster;
+import com.bio4j.model.uniref.vertices.UniRef50Cluster;
+import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

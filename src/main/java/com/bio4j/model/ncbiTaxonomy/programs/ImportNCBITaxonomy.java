@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
-import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 

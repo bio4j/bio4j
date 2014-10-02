@@ -1,7 +1,7 @@
 package com.bio4j.model.ncbiTaxonomy;
 
-import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
-import com.bio4j.model.ncbiTaxonomy.relationships.NCBITaxonParent;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.ohnosequences.typedGraphs.*;
 

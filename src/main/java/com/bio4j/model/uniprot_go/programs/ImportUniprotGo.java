@@ -1,18 +1,13 @@
 package com.bio4j.model.uniprot_go.programs;
 
-import com.bio4j.model.go.nodes.GoTerm;
-import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.go.vertices.GoTerm;
+import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
-import com.thinkaurelius.titan.core.TitanFactory;
-import com.thinkaurelius.titan.core.TitanGraph;
-import org.apache.commons.configuration.BaseConfiguration;
-import org.apache.commons.configuration.Configuration;
 import org.jdom2.Element;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

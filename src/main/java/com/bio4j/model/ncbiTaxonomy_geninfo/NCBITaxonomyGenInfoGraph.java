@@ -1,16 +1,11 @@
 package com.bio4j.model.ncbiTaxonomy_geninfo;
 
 
-import com.bio4j.model.enzymedb.EnzymeDBGraph;
-import com.bio4j.model.enzymedb.nodes.Enzyme;
 import com.bio4j.model.geninfo.GenInfoGraph;
-import com.bio4j.model.geninfo.nodes.GenInfo;
+import com.bio4j.model.geninfo.vertices.GenInfo;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
-import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
-import com.bio4j.model.ncbiTaxonomy_geninfo.relationships.GenInfoNCBITaxon;
-import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_enzymedb.relationships.EnzymaticActivity;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
 import com.ohnosequences.typedGraphs.*;
 
 /**

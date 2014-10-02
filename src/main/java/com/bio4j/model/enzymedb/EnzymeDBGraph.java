@@ -1,6 +1,6 @@
 package com.bio4j.model.enzymedb;
 
-import com.bio4j.model.enzymedb.nodes.Enzyme;
+import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.ohnosequences.typedGraphs.*;
 

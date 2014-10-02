@@ -1,10 +1,10 @@
 package com.bio4j.model.uniprot_ncbiTaxonomy;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
-import com.bio4j.model.ncbiTaxonomy.nodes.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_ncbiTaxonomy.relationships.ProteinNCBITaxon;
+import com.bio4j.model.uniprot.vertices.Protein;
+import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.ohnosequences.typedGraphs.*;
 
 /**

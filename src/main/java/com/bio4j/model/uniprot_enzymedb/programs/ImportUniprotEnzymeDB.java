@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot_enzymedb.programs;
 
-import com.bio4j.model.enzymedb.nodes.Enzyme;
-import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.enzymedb.vertices.Enzyme;
+import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;

@@ -2,10 +2,10 @@ package com.bio4j.model.uniprot_go;
 
 
 import com.bio4j.model.go.GoGraph;
-import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Protein;
-import com.bio4j.model.uniprot_go.relationships.GoAnnotation;
+import com.bio4j.model.uniprot.vertices.Protein;
+import com.bio4j.model.uniprot_go.edges.GoAnnotation;
 import com.ohnosequences.typedGraphs.*;
 
 /**

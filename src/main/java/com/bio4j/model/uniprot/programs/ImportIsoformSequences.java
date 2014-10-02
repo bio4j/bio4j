@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.Isoform;
+import com.bio4j.model.uniprot.vertices.Isoform;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
 import java.io.*;

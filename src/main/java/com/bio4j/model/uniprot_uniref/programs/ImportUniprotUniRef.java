@@ -1,10 +1,10 @@
 package com.bio4j.model.uniprot_uniref.programs;
 
-import com.bio4j.model.uniprot.nodes.Protein;
+import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
-import com.bio4j.model.uniref.nodes.UniRef100Cluster;
-import com.bio4j.model.uniref.nodes.UniRef50Cluster;
-import com.bio4j.model.uniref.nodes.UniRef90Cluster;
+import com.bio4j.model.uniref.vertices.UniRef100Cluster;
+import com.bio4j.model.uniref.vertices.UniRef50Cluster;
+import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 

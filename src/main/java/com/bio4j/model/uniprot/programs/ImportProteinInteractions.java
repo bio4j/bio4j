@@ -1,17 +1,13 @@
 package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniprotGraph;
-import com.bio4j.model.uniprot.nodes.*;
-import com.bio4j.model.uniprot.relationships.*;
+import com.bio4j.model.uniprot.vertices.*;
+import com.bio4j.model.uniprot.edges.*;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
-import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
 import org.jdom2.Element;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

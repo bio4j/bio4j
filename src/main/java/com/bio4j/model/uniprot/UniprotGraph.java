@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot;
 
-import com.bio4j.model.uniprot.nodes.*;
-import com.bio4j.model.uniprot.relationships.*;
+import com.bio4j.model.uniprot.vertices.*;
+import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
