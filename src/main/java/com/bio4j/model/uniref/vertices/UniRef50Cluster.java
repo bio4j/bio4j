@@ -46,7 +46,7 @@ public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	public UniRef50Representant<I, RV, RVT, RE, RET> uniRef50Representant_in(){
 		return inOne(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
-	public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inNode(){
+	public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inV(){
 		return inOneV(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
 
