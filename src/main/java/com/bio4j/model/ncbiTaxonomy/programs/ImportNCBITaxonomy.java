@@ -41,7 +41,6 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 			File nodesDumpFile = new File(args[0]);
 			File namesDumpFile = new File(args[1]);
-			File mergedDumpFile = new File(args[2]);
 			String dbFolder = args[3];
 
 			logger.log(Level.INFO, "creating manager...");
@@ -166,36 +165,6 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 				logger.log(Level.INFO, "Done!");
 
-//                 logger.log(Level.INFO, "reading merged file...");
-//                 //------------reading merged file-----------------
-//                 reader = new BufferedReader(new FileReader(mergedDumpFile));
-//                 linesCounter = 0;
-//                 while ((line = reader.readLine()) != null) {
-//
-//                     String[] columns = line.split("\\|");
-//
-//                     String oldId = columns[0].trim();
-//                     String goodId = columns[1].trim();
-//
-//                     NCBITaxonNode goodNode = nodeRetriever.getNCBITaxonByTaxId(goodId);
-//                     if (goodNode != null) {
-//                         goodNode.addOldTaxId(oldId);
-//
-//                         linesCounter++;
-//                         if((linesCounter % limitForTransaction) == 0){
-//                             graph.commit();
-//                         }
-//
-//                     } else {
-//                         logger.log(Level.WARNING, "Taxon ID " + goodId +
-//                                    " is not found. Old ID " + oldId + " is not mapped to it.");
-//                     }
-//
-//                 }
-//                 reader.close();
-//                 graph.commit();
-//
-//                 logger.log(Level.INFO, "done!");
 
 			} catch (Exception ex) {
 				Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);

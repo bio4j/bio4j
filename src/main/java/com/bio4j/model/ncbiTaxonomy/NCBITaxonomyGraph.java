@@ -9,26 +9,29 @@ import com.ohnosequences.typedGraphs.*;
 
 # NCBI Taxonomy graph
 
-This graph includes all Enzyme terms that are included in ExPASy database but those that have been either transferred or deleted.
-You can check more information about Enzyme database [here](http://enzyme.expasy.org/)
+This graph includes the whole NCBI taxonomy tree.
+Files used in the importing process can be found [here](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz)
+
+Once that information is extracted we are building the tree from the information included in the following files:
+
+* **nodes.dmp**
+* **names.dmp**
 
 ## data model
 
-It only consists of the vertices of Enzyme type.
+It simply consists of the vertices of NCBITaxon type plus the hierarchical relationships represented as NCBITaxonParent edges.
 
-### Enzymes
+### NCBITaxons
 
-We have a `Enzyme` vertex which contains property data present for each term.
+We have a `NCBITaxon` vertex which contains property data present for each NCBI taxonomic unit.
 
-##### Enzyme properties stored
+##### NCBITaxon properties stored
 
 - id
-- official name
-- cofactors _(stored as a flatten String array)_
-- prosite cross references _(stored as a flatten String array)_
-- catalytic activity
+- name
 - comment
-
+- scientific name
+- taxonomic rank
 
  */
 public abstract class NCBITaxonomyGraph<
