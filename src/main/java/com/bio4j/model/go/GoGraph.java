@@ -21,7 +21,7 @@ Basically there are `GoTerm` nodes and relationships between them. The modeling 
 
 ### GoTerms
 
-We have a `GoTerm` node which contains property data present for each term. Do note though that some of these properties are represented as edges.
+We have a `GoTerm` vertex which contains property data present for each term. Do note though that some of these properties are represented as edges.
 
 ##### [Essential elements](http://www.geneontology.org/GO.ontology.structure.shtml#essential)
 
