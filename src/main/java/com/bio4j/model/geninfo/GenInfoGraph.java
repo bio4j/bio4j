@@ -4,8 +4,16 @@ import com.bio4j.model.geninfo.vertices.GenInfo;
 import com.bio4j.model.ncbiTaxonomy_geninfo.NCBITaxonomyGenInfoGraph;
 import com.ohnosequences.typedGraphs.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Gen Info graph
+
+This graph just includes GenInfo nodes that represent [GI numbers](http://www.ncbi.nlm.nih.gov/Sitemap/sequenceIDs.html)
+
+## data model
+
+It only consists of the vertices of GenInfo type. These vertices only have a property, ID.
+
  */
 public abstract class GenInfoGraph<
 		// untyped graph

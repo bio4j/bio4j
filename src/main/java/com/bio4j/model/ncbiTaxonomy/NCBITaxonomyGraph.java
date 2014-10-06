@@ -5,8 +5,31 @@ import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.ohnosequences.typedGraphs.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# NCBI Taxonomy graph
+
+This graph includes all Enzyme terms that are included in ExPASy database but those that have been either transferred or deleted.
+You can check more information about Enzyme database [here](http://enzyme.expasy.org/)
+
+## data model
+
+It only consists of the vertices of Enzyme type.
+
+### Enzymes
+
+We have a `Enzyme` vertex which contains property data present for each term.
+
+##### Enzyme properties stored
+
+- id
+- official name
+- cofactors _(stored as a flatten String array)_
+- prosite cross references _(stored as a flatten String array)_
+- catalytic activity
+- comment
+
+
  */
 public abstract class NCBITaxonomyGraph<
 		// untyped graph
