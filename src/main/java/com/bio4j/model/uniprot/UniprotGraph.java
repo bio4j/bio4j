@@ -10,8 +10,72 @@ import com.ohnosequences.typedGraphs.*;
 
 import java.util.Date;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Uniprot graph
+
+This graph includes virtually all of the data from [Uniprot KB](http://www.uniprot.org)
+
+## data model
+
+The hub of this graph are Protein vertices, having edges connecting them to all the different entities that may be found in Uniprot KB.
+
+### Proteins
+
+The following properties are stored at the `Protein` vertex:
+
+- `accession`
+- `shortName`
+- `name`
+- `fullName`
+- `sequence`
+- `modifiedDate`
+- `createdDate`
+- `mass`
+- `version`
+- `length`
+
+### Gene Locations
+
+Protein gene locations are stored as edges with type `ProteinGeneLocatoin` linking to `GeneLocation` vertices. These `GeneLocation` vertices only have a property `name` representing each of the different gene location types that exist:
+- Hydrogenosome
+- Mitochondrion
+- Nucleomorph
+- Plasmid
+- Chloroplast
+- Non-photosynthetic plastid
+- Organellar chromatophore
+- Plastid
+
+### Keywords
+
+Connected to `Protein` vertices via `ProteinKeyword` edges.
+The following properties are stored at the `Keyword` vertex:
+
+- `id`
+- `name`
+
+### Interpro motifs
+
+Connected to `Protein` vertices via `ProteinInterpro` edges.
+The following properties are stored at the `Interpro` vertex:
+
+- `id`
+- `name`
+
+### Pfam
+
+Connected to `Protein` vertices via `ProteinPfam` edges.
+The following properties are stored at the `Pfam` vertex:
+
+- `id`
+- `name`
+
+### Gene locations
+
+
+
+
  */
 public abstract class UniprotGraph<
 		// untyped graph
