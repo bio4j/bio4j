@@ -95,7 +95,11 @@ Protein comments are modelled through `ProteinComment` edges linking to `Comment
 
 Some of these properties are specific for a type of comment and thus will be empty for other comment types. We decided it was a better option to model it this way instead of creating many different edge types since otherwise we would have ended having a lot of edge type that would be almost equivalent.
 
+There are though a few _exceptions_ where comments are promoted to be entities such as:
 
+- `Alternative producs` --> This comment type actually includes information about isoforms which are modelled by `Isoform` vertices
+- `Subcellular locations` --> Subcellular locations constitute a vertex type themselves since the hierarchy of locations included in the comment is modelled as a sort of taxonomy, being the protein connected only to the _leaf_ node of that taxonomy through an edge of the type `ProteinSubcellularLocation`.
+- `Disease` --> Diseases have their own vertex type `Disease` to which proteins are connected via edges from the type `ProteinDisease`
 
 
  */
