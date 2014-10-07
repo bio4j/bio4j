@@ -125,6 +125,19 @@ Protein features are modelled through `ProteinFeature` edges linking to `Feature
 - `variation`
 - `ref`
 
+Some of these properties are specific for a type of feature and thus will be empty for other feature types. We decided it was a better option to model it this way instead of creating many different edge types since otherwise we would have ended having too many edge types for things that are almost equivalent.
+
+### Isoforms
+
+Modelled as `Isoform` vertices, include the following properties:
+
+- `id`
+- `name`
+- `note`
+- `sequence`
+
+They are connected to proteins through edges from the type ProteinIsoformInteraction
+
  */
 public abstract class UniprotGraph<
 		// untyped graph
@@ -160,14 +173,24 @@ public abstract class UniprotGraph<
     // indices
     public abstract TypedVertexIndex.Unique <
 		    // vertex
-		    GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+		    AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType,
 		    // property
-		    GeneLocationType.name, String,
+		    AlternativeProductType.name, String,
 		    // graph
 		    UniprotGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
-    geneLocationNameIndex();
+    alternativeProductNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+			// property
+			GeneLocationType.name, String,
+			// graph
+			UniprotGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	geneLocationNameIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Disease<I, RV, RVT, RE, RET>, DiseaseType,
@@ -535,6 +558,8 @@ public abstract class UniprotGraph<
 	// types
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// vertices
+    public abstract AlternativeProductType AlternativeProduct();
+
 	public abstract ArticleType Article();
 
 	public abstract BookType Book();
@@ -615,6 +640,8 @@ public abstract class UniprotGraph<
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// edges
+
+	public abstract IsoformEventGeneratorType IsoformEventGenerator();
 
 	public abstract ArticleJournalType ArticleJournal();
 
@@ -706,6 +733,43 @@ public abstract class UniprotGraph<
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// Vertex types
+
+	public final class AlternativeProductType
+			extends
+			UniprotVertexType<
+					AlternativeProduct<I, RV, RVT, RE, RET>,
+					UniprotGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+					> {
+
+		public final name name = new name();
+
+		public AlternativeProductType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public AlternativeProductType value() {
+			return graph().AlternativeProduct();
+		}
+
+		@Override
+		public AlternativeProduct<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new AlternativeProduct<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniprotVertexProperty<AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType, name, String> {
+			public name() {
+				super(AlternativeProductType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
 
 	public final class ArticleType
 			extends
@@ -3463,6 +3527,31 @@ public abstract class UniprotGraph<
 			}
 		}
 
+	}
+
+	public final class IsoformEventGeneratorType
+			extends
+			UniprotEdgeType<
+					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType,
+					IsoformEventGenerator<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformEventGeneratorType,
+					AlternativeProduct<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public IsoformEventGeneratorType(RET raw) {
+			super(UniprotGraph.this.Isoform(), raw, UniprotGraph.this.AlternativeProduct());
+		}
+
+		@Override
+		public IsoformEventGeneratorType value() {
+			return graph().IsoformEventGenerator();
+		}
+
+		@Override
+		public IsoformEventGenerator<I, RV, RVT, RE, RET> from(RE edge) {
+			return new IsoformEventGenerator<I, RV, RVT, RE, RET>(edge, this);
+		}
 	}
 
 	public final class ProteinInterproType
