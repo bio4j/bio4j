@@ -926,6 +926,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								disease.set(graph.Disease().id, diseaseId);
 								disease.set(graph.Disease().acronym, diseaseAcronym);
 								disease.set(graph.Disease().description, diseaseDescription);
+								graph.raw().commit();
 
 							}else{
 								disease = diseaseOptional.get();
@@ -1045,6 +1046,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							if(!lastLocationOptional.isPresent()){
 								lastLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
 								lastLocation.set(graph.SubcellularLocation().name, firstLocationSt);
+								graph.raw().commit();
 							}else{
 								lastLocation = lastLocationOptional.get();
 							}
@@ -1058,6 +1060,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								if(!tempLocationOptional.isPresent()){
 									tempLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
 									tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+									graph.raw().commit();
 								}else{
 									tempLocation = tempLocationOptional.get();
 								}
@@ -1132,45 +1135,30 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								isoform.set(graph.Isoform().note, isoformNoteSt);
 								isoform.set(graph.Isoform().sequence, isoformSeqSt);
 								isoform.set(graph.Isoform().id, isoformIdSt);
+								graph.raw().commit();
 							}else{
 								isoform = isoformOptional.get();
 							}
 
 							graph.raw().commit();
 
-//							//--------------------------------------------------------
-//							//long isoformId = indexService.getSingleNode(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							long isoformId = -1;
-//							IndexHits<Long> isoformIdIndexHits = isoformIdIndex.get(IsoformNode.ISOFORM_ID_INDEX, isoformIdSt);
-//							if (isoformIdIndexHits.hasNext()) {
-//								isoformId = isoformIdIndexHits.getSingle();
-//							}
-//							isoformIdIndexHits.close();
-//							if (isoformId < 0) {
-//								isoformId = createIsoformNode(isoformProperties, inserter, isoformIdIndex, nodeTypeIndex);
-//							}
-//
-//							for (Element eventElem : eventList) {
-//
-//								String eventTypeSt = eventElem.getAttributeValue("type");
-//								switch (eventTypeSt) {
-//									case AlternativeProductInitiationRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductInitiationId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductPromoterRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductPromoterId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductRibosomalFrameshiftingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductRibosomalFrameshiftingId, isoformEventGeneratorRel, null);
-//										break;
-//									case AlternativeProductSplicingRel.UNIPROT_ATTRIBUTE_TYPE_VALUE:
-//										inserter.createRelationship(isoformId, alternativeProductSplicingId, isoformEventGeneratorRel, null);
-//										break;
-//								}
-//							}
-//
-//							//protein isoform relationship
-//							inserter.createRelationship(currentProteinId, isoformId, proteinIsoformRel, null);
+							for (Element eventElem : eventList) {
+
+								String eventTypeSt = eventElem.getAttributeValue("type");
+
+								Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
+								AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct;
+
+								if(alternativeProductOptional.isPresent()){
+									alternativeProduct = alternativeProductOptional.get();
+								}else{
+									alternativeProduct = graph.AlternativeProduct().from(graph.raw().addVertex(null));
+									alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
+									graph.raw().commit();
+								}
+
+								isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
+							}
 
 						}
 					}
@@ -1423,6 +1411,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					if(!optionalPerson.isPresent()){
 						person = graph.Person().from(graph.raw().addVertex(null));
 						person.set(graph.Person().name, personName);
+						graph.raw().commit();
 					}else{
 						person = optionalPerson.get();
 					}
@@ -1436,6 +1425,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					if(!optionalConsortium.isPresent()){
 						consortium = graph.Consortium().from(graph.raw().addVertex(null));
 						consortium.set(graph.Consortium().name, consortiumName);
+						graph.raw().commit();
 					}else{
 						consortium = optionalConsortium.get();
 					}
@@ -1486,6 +1476,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 											institute = graph.Institute().from(graph.raw().addVertex(null));
 											institute.set(graph.Institute().name, instituteSt);
+											graph.raw().commit();
 
 										}else{
 											institute = optionalInstitute.get();
@@ -1498,6 +1489,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 											if(!optionalCountry.isPresent()){
 												country = graph.Country().from(graph.raw().addVertex(null));
 												country.set(graph.Country().name, countrySt);
+												graph.raw().commit();
 											}else{
 												country = optionalCountry.get();
 											}
@@ -1549,6 +1541,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 									patent = graph.Patent().from(graph.raw().addVertex(null));
 									patent.set(graph.Patent().number, numberSt);
 									patent.set(graph.Patent().title, titleSt);
+									graph.raw().commit();
 
 									reference = graph.Reference().from(graph.raw().addVertex(null));
 									reference.set(graph.Reference().date, dateSt);
@@ -1593,6 +1586,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 									submission = graph.Submission().from(graph.raw().addVertex(null));
 									submission.set(graph.Submission().title, titleSt);
+									graph.raw().commit();
 
 									reference = graph.Reference().from(graph.raw().addVertex(null));
 									reference.set(graph.Reference().date, dateSt);
@@ -1611,6 +1605,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										if(!optionalDB.isPresent()){
 											db = graph.DB().from(graph.raw().addVertex(null));
 											db.set(graph.DB().name, dbSt);
+											graph.raw().commit();
 										}else{
 											db = optionalDB.get();
 										}
@@ -1680,6 +1675,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								book = graph.Book().from(graph.raw().addVertex(null));
 								book.set(graph.Book().name, nameSt);
+								graph.raw().commit();
 
 								reference = graph.Reference().from(graph.raw().addVertex(null));
 								reference.set(graph.Reference().date, dateSt);
@@ -1703,6 +1699,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										if(!optionalPerson.isPresent()){
 											editor = graph.Person().from(graph.raw().addVertex(null));
 											editor.set(graph.Person().name, personName);
+											graph.raw().commit();
 										}else{
 											editor = optionalPerson.get();
 										}
@@ -1721,6 +1718,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 										publisher = graph.Publisher().from(graph.raw().addVertex(null));
 										publisher.set(graph.Publisher().name, publisherSt);
+										graph.raw().commit();
 
 									}else{
 										publisher = optionalPublisher.get();
@@ -1739,6 +1737,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 										city = graph.City().from(graph.raw().addVertex(null));
 										city.set(graph.City().name, citySt);
+										graph.raw().commit();
 
 									}else{
 										city = optionalCity.get();
@@ -1796,6 +1795,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 									onlineArticle = graph.OnlineArticle().from(graph.raw().addVertex(null));
 									onlineArticle.set(graph.OnlineArticle().title, titleSt);
+									graph.raw().commit();
 
 									reference = graph.Reference().from(graph.raw().addVertex(null));
 									reference.set(graph.Reference().date, dateSt);
@@ -1820,6 +1820,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 											onlineJournal = graph.OnlineJournal().from(graph.raw().addVertex(null));
 											onlineJournal.set(graph.OnlineJournal().name, nameSt);
+											graph.raw().commit();
 
 										}else{
 											onlineJournal = optionalOnlineJournal.get();
@@ -1903,6 +1904,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 									article = graph.Article().from(graph.raw().addVertex(null));
 									article.set(graph.Article().title, titleSt);
 									article.set(graph.Article().doId, doiSt);
+									graph.raw().commit();
 
 									if(pubmedId != ""){
 
@@ -1912,6 +1914,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										if(!optionalPubmed.isPresent()){
 											pubmed = graph.Pubmed().from(graph.raw().addVertex(null));
 											pubmed.set(graph.Pubmed().id, pubmedId);
+											graph.raw().commit();
 										}else{
 											pubmed = optionalPubmed.get();
 										}
@@ -1940,7 +1943,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										if(!optionalJournal.isPresent()){
 											journal = graph.Journal().from(graph.raw().addVertex(null));
 											journal.set(graph.Journal().name, journalNameSt);
-
+											graph.raw().commit();
 										}else{
 											journal = optionalJournal.get();
 										}
