@@ -8,15 +8,15 @@ import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.RelTypes;
 
-import com.bio4j.model.go.nodes.*;
+import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.GoNamespace;
 
 // properties
 import com.bio4j.model.properties.Name;
 import com.bio4j.model.properties.Id;
 import com.bio4j.model.properties.Comment;
-import com.bio4j.model.properties.Obsolete;
+import com.bio4j.model.properties.Synonym;
 import com.bio4j.model.properties.Definition;
-import com.bio4j.model.properties.AlternativeIds;
 
 /**
  *
@@ -26,32 +26,31 @@ import com.bio4j.model.properties.AlternativeIds;
 public interface Term extends Relationship <
   GoTerm, GoTerm.Type,
   Term, Term.Type,
-  GoTermNamespace, GoTermNamespace.Type
+  GoNamespace, GoNamespace.Type
 >,
   // properties
-  Id<Term, Term.Type>,
-  Name<Term, Term.Type>,
-  Definition<Term, Term.Type>,
-  Comment<Term, Term.Type>,
-  Obsolete<Term, Term.Type>,
-  AlternativeIds<Term, Term.Type>
+  Id<Term,Term.Type>,
+  Name<Term,Term.Type>,
+  Synonym<Term,Term.Type>,
+  Definition<Term,Term.Type>,
+  Comment<Term,Term.Type>
 {
 
   public static Type TYPE = Type.term;
+
   @Override public default Type type() { return TYPE; }
   
   public static enum Type implements RelTypes.ManyToOne <
     GoTerm, GoTerm.Type,
     Term, Term.Type,
-    GoTermNamespace, GoTermNamespace.Type
+    GoNamespace, GoNamespace.Type
   >
   {
-
     term;
 
     @Override public Type value() { return term; }
     @Override public GoTerm.Type sourceType() { return GoTerm.TYPE; }
-    @Override public GoTermNamespace.Type targetType() { return GoTermNamespace.TYPE; }
+    @Override public GoNamespace.Type targetType() { return GoNamespace.TYPE; }
   }
 }
 ```
@@ -130,6 +129,7 @@ public interface Term extends Relationship <
               + [Length.java][main/java/com/bio4j/model/properties/Length.java]
               + [CommonName.java][main/java/com/bio4j/model/properties/CommonName.java]
               + [EmblCode.java][main/java/com/bio4j/model/properties/EmblCode.java]
+              + [Synonym.java][main/java/com/bio4j/model/properties/Synonym.java]
               + [Last.java][main/java/com/bio4j/model/properties/Last.java]
               + [Mass.java][main/java/com/bio4j/model/properties/Mass.java]
               + [Date.java][main/java/com/bio4j/model/properties/Date.java]
@@ -152,11 +152,15 @@ public interface Term extends Relationship <
               + [NcbiTaxonomyModule.java][main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]
             + go
               + [GoModule.java][main/java/com/bio4j/model/go/GoModule.java]
+              + properties
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
                 + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
                 + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
+                + goSlims
+                  + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
+                  + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
                 + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
@@ -168,8 +172,9 @@ public interface Term extends Relationship <
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
                 + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
+                + [GoNamespace.java][main/java/com/bio4j/model/go/nodes/GoNamespace.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
                 + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
-                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -476,6 +481,7 @@ public interface Term extends Relationship <
 [main/java/com/bio4j/model/properties/Length.java]: ../../properties/Length.java.md
 [main/java/com/bio4j/model/properties/CommonName.java]: ../../properties/CommonName.java.md
 [main/java/com/bio4j/model/properties/EmblCode.java]: ../../properties/EmblCode.java.md
+[main/java/com/bio4j/model/properties/Synonym.java]: ../../properties/Synonym.java.md
 [main/java/com/bio4j/model/properties/Last.java]: ../../properties/Last.java.md
 [main/java/com/bio4j/model/properties/Mass.java]: ../../properties/Mass.java.md
 [main/java/com/bio4j/model/properties/Date.java]: ../../properties/Date.java.md
@@ -495,6 +501,8 @@ public interface Term extends Relationship <
 [main/java/com/bio4j/model/go/indexes/ById.java]: ../indexes/ById.java.md
 [main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: BiologicalProcess.java.md
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: MolecularFunction.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: goSlims/PlantSlim.java.md
 [main/java/com/bio4j/model/go/relationships/Term.java]: Term.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: HasPartOf.java.md
@@ -505,8 +513,9 @@ public interface Term extends Relationship <
 [main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: GoSubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: CellularComponent.java.md
 [main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
+[main/java/com/bio4j/model/go/nodes/GoNamespace.java]: ../nodes/GoNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../nodes/GoSlims.java.md
 [main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../nodes/GoRoot.java.md
-[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: ../nodes/GoTermNamespace.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md

@@ -4,13 +4,13 @@ package com.bio4j.model.go.indexes;
 
 // import com.bio4j.model.NodeUniqueIndex;
 
-import com.bio4j.model.go.nodes.GoTerm;
+import com.bio4j.model.go.nodes.Term;
 import com.bio4j.model.properties.Id;
 
-// public interface ById extends NodeUniqueIndex<GoTerm, GoTerm.Type, id.Type, String> {
+// public interface ById extends NodeUniqueIndex<Term, Term.Type, id.Type, String> {
   
 //   @Override
-//   public GoTerm getNode(String byValue);
+//   public Term getNode(String byValue);
 // }
 ```
 
@@ -88,6 +88,7 @@ import com.bio4j.model.properties.Id;
               + [Length.java][main/java/com/bio4j/model/properties/Length.java]
               + [CommonName.java][main/java/com/bio4j/model/properties/CommonName.java]
               + [EmblCode.java][main/java/com/bio4j/model/properties/EmblCode.java]
+              + [Synonym.java][main/java/com/bio4j/model/properties/Synonym.java]
               + [Last.java][main/java/com/bio4j/model/properties/Last.java]
               + [Mass.java][main/java/com/bio4j/model/properties/Mass.java]
               + [Date.java][main/java/com/bio4j/model/properties/Date.java]
@@ -110,24 +111,27 @@ import com.bio4j.model.properties.Id;
               + [NcbiTaxonomyModule.java][main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]
             + go
               + [GoModule.java][main/java/com/bio4j/model/go/GoModule.java]
+              + properties
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
                 + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
                 + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
+                + goSlims
+                  + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
+                  + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
-                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -148,8 +152,8 @@ import com.bio4j.model.properties.Id;
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -434,6 +438,7 @@ import com.bio4j.model.properties.Id;
 [main/java/com/bio4j/model/properties/Length.java]: ../../properties/Length.java.md
 [main/java/com/bio4j/model/properties/CommonName.java]: ../../properties/CommonName.java.md
 [main/java/com/bio4j/model/properties/EmblCode.java]: ../../properties/EmblCode.java.md
+[main/java/com/bio4j/model/properties/Synonym.java]: ../../properties/Synonym.java.md
 [main/java/com/bio4j/model/properties/Last.java]: ../../properties/Last.java.md
 [main/java/com/bio4j/model/properties/Mass.java]: ../../properties/Mass.java.md
 [main/java/com/bio4j/model/properties/Date.java]: ../../properties/Date.java.md
@@ -453,18 +458,19 @@ import com.bio4j.model.properties.Id;
 [main/java/com/bio4j/model/go/indexes/ById.java]: ById.java.md
 [main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: ../relationships/BiologicalProcess.java.md
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: ../relationships/MolecularFunction.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: ../relationships/Term.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: ../relationships/goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: ../relationships/goSlims/PlantSlim.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../relationships/HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: ../relationships/Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: ../relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: ../relationships/SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: ../relationships/CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../nodes/GoRoot.java.md
-[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: ../nodes/GoTermNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: ../nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: ../nodes/SubOntologies.java.md
+[main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../nodes/GoSlims.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md
@@ -484,8 +490,8 @@ import com.bio4j.model.properties.Id;
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../../util/GenomeElementRetriever.java.md

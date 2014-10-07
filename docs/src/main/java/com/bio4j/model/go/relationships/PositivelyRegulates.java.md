@@ -5,7 +5,8 @@ package com.bio4j.model.go.relationships;
 import com.ohnosequences.typedGraphs.Relationship;
 import com.ohnosequences.typedGraphs.RelationshipType;
 
-import com.bio4j.model.go.nodes.GoTerm;
+
+import com.bio4j.model.go.nodes.Term;
 
 /**
  *
@@ -13,31 +14,30 @@ import com.bio4j.model.go.nodes.GoTerm;
  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
  */
 public interface PositivelyRegulates extends Relationship <
-  GoTerm, GoTerm.Type,
-  PositivelyRegulates,  PositivelyRegulates.Type,
-  GoTerm, GoTerm.Type
+  Term, Term.Type,
+  PositivelyRegulates, PositivelyRegulates.Type,
+  Term, Term.Type
 > 
 {
 
-  public GoTerm source();
-  public GoTerm target();
+  @Override public Term source();
+  @Override public Term target();
 
   public static Type TYPE = Type.positivelyRegulates;
-  public static enum Type implements RelationshipType <
 
-    GoTerm, GoTerm.Type,
-    PositivelyRegulates,  PositivelyRegulates.Type,
-    GoTerm, GoTerm.Type
+  @Override public default Type type() { return TYPE; }
 
+  public static enum Type implements RelationshipType.ManyToMany <
+    Term, Term.Type,
+    PositivelyRegulates, PositivelyRegulates.Type,
+    Term, Term.Type
   > 
   {
     positivelyRegulates;
-
-    public Arity arity() { return Arity.manyToMany; } // TODO review arity
     
     public Type value() { return positivelyRegulates; }    
-    public GoTerm.Type sourceType() { return GoTerm.TYPE; }
-    public GoTerm.Type targetType() { return GoTerm.TYPE; }
+    public Term.Type sourceType() { return Term.TYPE; }
+    public Term.Type targetType() { return Term.TYPE; }
   }
 
   
@@ -119,6 +119,7 @@ public interface PositivelyRegulates extends Relationship <
               + [Length.java][main/java/com/bio4j/model/properties/Length.java]
               + [CommonName.java][main/java/com/bio4j/model/properties/CommonName.java]
               + [EmblCode.java][main/java/com/bio4j/model/properties/EmblCode.java]
+              + [Synonym.java][main/java/com/bio4j/model/properties/Synonym.java]
               + [Last.java][main/java/com/bio4j/model/properties/Last.java]
               + [Mass.java][main/java/com/bio4j/model/properties/Mass.java]
               + [Date.java][main/java/com/bio4j/model/properties/Date.java]
@@ -141,24 +142,27 @@ public interface PositivelyRegulates extends Relationship <
               + [NcbiTaxonomyModule.java][main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]
             + go
               + [GoModule.java][main/java/com/bio4j/model/go/GoModule.java]
+              + properties
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
                 + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
                 + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
+                + goSlims
+                  + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
+                  + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
-                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -179,8 +183,8 @@ public interface PositivelyRegulates extends Relationship <
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -465,6 +469,7 @@ public interface PositivelyRegulates extends Relationship <
 [main/java/com/bio4j/model/properties/Length.java]: ../../properties/Length.java.md
 [main/java/com/bio4j/model/properties/CommonName.java]: ../../properties/CommonName.java.md
 [main/java/com/bio4j/model/properties/EmblCode.java]: ../../properties/EmblCode.java.md
+[main/java/com/bio4j/model/properties/Synonym.java]: ../../properties/Synonym.java.md
 [main/java/com/bio4j/model/properties/Last.java]: ../../properties/Last.java.md
 [main/java/com/bio4j/model/properties/Mass.java]: ../../properties/Mass.java.md
 [main/java/com/bio4j/model/properties/Date.java]: ../../properties/Date.java.md
@@ -484,18 +489,19 @@ public interface PositivelyRegulates extends Relationship <
 [main/java/com/bio4j/model/go/indexes/ById.java]: ../indexes/ById.java.md
 [main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: BiologicalProcess.java.md
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: MolecularFunction.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: Term.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: goSlims/PlantSlim.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../nodes/GoRoot.java.md
-[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: ../nodes/GoTermNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: ../nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: ../nodes/SubOntologies.java.md
+[main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../nodes/GoSlims.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../../util/SubmissionRetriever.java.md
@@ -515,8 +521,8 @@ public interface PositivelyRegulates extends Relationship <
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../../util/GenomeElementRetriever.java.md

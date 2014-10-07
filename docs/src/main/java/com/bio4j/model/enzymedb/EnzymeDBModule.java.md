@@ -5,7 +5,7 @@ package com.bio4j.model.enzymedb;
 import java.util.Set;
 import java.util.HashSet;
 
-import com.ohnosequences.typedGraphs.Module;
+import com.ohnosequences.typedGraphs.TypedGraph;
 import com.ohnosequences.typedGraphs.NodeType;
 import com.ohnosequences.typedGraphs.RelationshipType;
 import com.ohnosequences.typedGraphs.PropertyType;
@@ -18,14 +18,14 @@ import com.bio4j.model.enzymedb.relationships.*;
 import com.bio4j.model.properties.*;
 
 
-public enum EnzymeDBModule implements Module {
+public enum EnzymeDBModule implements TypedGraph {
 
   enzymeDB;
   
   // package name
   public static String PKG = "com.bio4j.model.enzymedb";
   // dependencies
-  public static Set<Module> DEPENDENCIES = new HashSet<Module>() {{
+  public static Set<TypedGraph> DEPENDENCIES = new HashSet<TypedGraph>() {{
     add(UniProtModule.uniprot);
   }};
   // node types
@@ -49,11 +49,12 @@ public enum EnzymeDBModule implements Module {
   }};
 
   public String pkg() { return PKG; }
-  public Set<Module> dependencies() { return DEPENDENCIES; }
+  public Set<TypedGraph> dependencies() { return DEPENDENCIES; }
   public Set<PropertyType> propertyTypes() { return PROPERTY_TYPES; }
   public Set<NodeType> nodeTypes() { return NODE_TYPES; }
   public Set<RelationshipType> relationshipTypes() { return RELATIONSHIP_TYPES; }
 }
+
 ```
 
 
@@ -130,6 +131,7 @@ public enum EnzymeDBModule implements Module {
               + [Length.java][main/java/com/bio4j/model/properties/Length.java]
               + [CommonName.java][main/java/com/bio4j/model/properties/CommonName.java]
               + [EmblCode.java][main/java/com/bio4j/model/properties/EmblCode.java]
+              + [Synonym.java][main/java/com/bio4j/model/properties/Synonym.java]
               + [Last.java][main/java/com/bio4j/model/properties/Last.java]
               + [Mass.java][main/java/com/bio4j/model/properties/Mass.java]
               + [Date.java][main/java/com/bio4j/model/properties/Date.java]
@@ -152,24 +154,27 @@ public enum EnzymeDBModule implements Module {
               + [NcbiTaxonomyModule.java][main/java/com/bio4j/model/ncbiTaxonomy/NcbiTaxonomyModule.java]
             + go
               + [GoModule.java][main/java/com/bio4j/model/go/GoModule.java]
+              + properties
               + indexes
                 + [ById.java][main/java/com/bio4j/model/go/indexes/ById.java]
               + relationships
                 + [BiologicalProcess.java][main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]
                 + [MolecularFunction.java][main/java/com/bio4j/model/go/relationships/MolecularFunction.java]
-                + [Term.java][main/java/com/bio4j/model/go/relationships/Term.java]
+                + goSlims
+                  + [GoSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]
+                  + [PlantSlim.java][main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]
                 + [PositivelyRegulates.java][main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/relationships/HasPartOf.java]
                 + [Regulates.java][main/java/com/bio4j/model/go/relationships/Regulates.java]
                 + [PartOf.java][main/java/com/bio4j/model/go/relationships/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/relationships/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]
-                + [GoSubOntology.java][main/java/com/bio4j/model/go/relationships/GoSubOntology.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/relationships/SubOntology.java]
                 + [CellularComponent.java][main/java/com/bio4j/model/go/relationships/CellularComponent.java]
               + nodes
-                + [GoTerm.java][main/java/com/bio4j/model/go/nodes/GoTerm.java]
-                + [GoRoot.java][main/java/com/bio4j/model/go/nodes/GoRoot.java]
-                + [GoTermNamespace.java][main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]
+                + [Term.java][main/java/com/bio4j/model/go/nodes/Term.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/nodes/SubOntologies.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/nodes/GoSlims.java]
             + util
               + [OnlineJournalRetriever.java][main/java/com/bio4j/model/util/OnlineJournalRetriever.java]
               + [PfamRetriever.java][main/java/com/bio4j/model/util/PfamRetriever.java]
@@ -190,8 +195,8 @@ public enum EnzymeDBModule implements Module {
               + [SequenceCautionRetriever.java][main/java/com/bio4j/model/util/SequenceCautionRetriever.java]
               + [RelationshipRetriever.java][main/java/com/bio4j/model/util/RelationshipRetriever.java]
               + [EnzymeRetriever.java][main/java/com/bio4j/model/util/EnzymeRetriever.java]
+              + [TermRetriever.java][main/java/com/bio4j/model/util/TermRetriever.java]
               + [ProteinRetriever.java][main/java/com/bio4j/model/util/ProteinRetriever.java]
-              + [GoTermRetriever.java][main/java/com/bio4j/model/util/GoTermRetriever.java]
               + [PersonRetriever.java][main/java/com/bio4j/model/util/PersonRetriever.java]
               + [PatentRetriever.java][main/java/com/bio4j/model/util/PatentRetriever.java]
               + [GenomeElementRetriever.java][main/java/com/bio4j/model/util/GenomeElementRetriever.java]
@@ -476,6 +481,7 @@ public enum EnzymeDBModule implements Module {
 [main/java/com/bio4j/model/properties/Length.java]: ../properties/Length.java.md
 [main/java/com/bio4j/model/properties/CommonName.java]: ../properties/CommonName.java.md
 [main/java/com/bio4j/model/properties/EmblCode.java]: ../properties/EmblCode.java.md
+[main/java/com/bio4j/model/properties/Synonym.java]: ../properties/Synonym.java.md
 [main/java/com/bio4j/model/properties/Last.java]: ../properties/Last.java.md
 [main/java/com/bio4j/model/properties/Mass.java]: ../properties/Mass.java.md
 [main/java/com/bio4j/model/properties/Date.java]: ../properties/Date.java.md
@@ -495,18 +501,19 @@ public enum EnzymeDBModule implements Module {
 [main/java/com/bio4j/model/go/indexes/ById.java]: ../go/indexes/ById.java.md
 [main/java/com/bio4j/model/go/relationships/BiologicalProcess.java]: ../go/relationships/BiologicalProcess.java.md
 [main/java/com/bio4j/model/go/relationships/MolecularFunction.java]: ../go/relationships/MolecularFunction.java.md
-[main/java/com/bio4j/model/go/relationships/Term.java]: ../go/relationships/Term.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/GoSlim.java]: ../go/relationships/goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/relationships/goSlims/PlantSlim.java]: ../go/relationships/goSlims/PlantSlim.java.md
 [main/java/com/bio4j/model/go/relationships/PositivelyRegulates.java]: ../go/relationships/PositivelyRegulates.java.md
 [main/java/com/bio4j/model/go/relationships/HasPartOf.java]: ../go/relationships/HasPartOf.java.md
 [main/java/com/bio4j/model/go/relationships/Regulates.java]: ../go/relationships/Regulates.java.md
 [main/java/com/bio4j/model/go/relationships/PartOf.java]: ../go/relationships/PartOf.java.md
 [main/java/com/bio4j/model/go/relationships/IsA.java]: ../go/relationships/IsA.java.md
 [main/java/com/bio4j/model/go/relationships/NegativelyRegulates.java]: ../go/relationships/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/relationships/GoSubOntology.java]: ../go/relationships/GoSubOntology.java.md
+[main/java/com/bio4j/model/go/relationships/SubOntology.java]: ../go/relationships/SubOntology.java.md
 [main/java/com/bio4j/model/go/relationships/CellularComponent.java]: ../go/relationships/CellularComponent.java.md
-[main/java/com/bio4j/model/go/nodes/GoTerm.java]: ../go/nodes/GoTerm.java.md
-[main/java/com/bio4j/model/go/nodes/GoRoot.java]: ../go/nodes/GoRoot.java.md
-[main/java/com/bio4j/model/go/nodes/GoTermNamespace.java]: ../go/nodes/GoTermNamespace.java.md
+[main/java/com/bio4j/model/go/nodes/Term.java]: ../go/nodes/Term.java.md
+[main/java/com/bio4j/model/go/nodes/SubOntologies.java]: ../go/nodes/SubOntologies.java.md
+[main/java/com/bio4j/model/go/nodes/GoSlims.java]: ../go/nodes/GoSlims.java.md
 [main/java/com/bio4j/model/util/OnlineJournalRetriever.java]: ../util/OnlineJournalRetriever.java.md
 [main/java/com/bio4j/model/util/PfamRetriever.java]: ../util/PfamRetriever.java.md
 [main/java/com/bio4j/model/util/SubmissionRetriever.java]: ../util/SubmissionRetriever.java.md
@@ -526,8 +533,8 @@ public enum EnzymeDBModule implements Module {
 [main/java/com/bio4j/model/util/SequenceCautionRetriever.java]: ../util/SequenceCautionRetriever.java.md
 [main/java/com/bio4j/model/util/RelationshipRetriever.java]: ../util/RelationshipRetriever.java.md
 [main/java/com/bio4j/model/util/EnzymeRetriever.java]: ../util/EnzymeRetriever.java.md
+[main/java/com/bio4j/model/util/TermRetriever.java]: ../util/TermRetriever.java.md
 [main/java/com/bio4j/model/util/ProteinRetriever.java]: ../util/ProteinRetriever.java.md
-[main/java/com/bio4j/model/util/GoTermRetriever.java]: ../util/GoTermRetriever.java.md
 [main/java/com/bio4j/model/util/PersonRetriever.java]: ../util/PersonRetriever.java.md
 [main/java/com/bio4j/model/util/PatentRetriever.java]: ../util/PatentRetriever.java.md
 [main/java/com/bio4j/model/util/GenomeElementRetriever.java]: ../util/GenomeElementRetriever.java.md

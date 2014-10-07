@@ -15,6 +15,11 @@ project/plugins/project/
 .settings/
 .cache
 
+# IntelliJ Idea specific
+.idea/
+bin/
+*.iml
+
 # st2
 *.sublime-project
 *.sublime-workspace
