@@ -71,7 +71,29 @@ The following properties are stored at the `Pfam` vertex:
 - `id`
 - `name`
 
-### Gene locations
+### Comments
+
+Protein comments are modelled through `ProteinComment` edges linking to `CommentType` vertices. `CommentType` vertices only have one property `name` and there exists a vertex for each of the possible comment types.
+
+#### ProteinComment properties
+
+- `position`
+- `mass`
+- `evidence`
+- `method`
+- `begin`
+- `end`
+- `status`
+- `text`
+- `temperatureDependence`
+- `phDependence`
+- `kineticsXML`
+- `absorptionMax`
+- `absorptionText`
+- `redoxPotential`
+- `redoxPotentialEvidence`
+
+Some of these properties are specific for a type of comment and thus will be empty for other comment types. We decided it was a better option to model it this way instead of creating many different edge types since otherwise we would have ended having a lot of edge type that would be almost equivalent.
 
 
 
