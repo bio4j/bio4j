@@ -99,8 +99,31 @@ There are though a few _exceptions_ where comments are promoted to be entities s
 
 - `Alternative producs` --> This comment type actually includes information about isoforms which are modelled by `Isoform` vertices
 - `Subcellular locations` --> Subcellular locations constitute a vertex type themselves since the hierarchy of locations included in the comment is modelled as a sort of taxonomy, being the protein connected only to the _leaf_ node of that taxonomy through an edge of the type `ProteinSubcellularLocation`.
-- `Disease` --> Diseases have their own vertex type `Disease` to which proteins are connected via edges from the type `ProteinDisease`
+- `Disease` --> Diseases have their own vertex type `Disease` to which proteins are connected via edges from the type `ProteinDisease`. `Disease` nodes have in turn the following properties:
++ `id`
++ `name`
++ `acronym`
++ `description`
+`ProteinDisease` edges include the properties:
++ `text`
++ `evidence`
++ `status`
 
+### Features
+
+Protein features are modelled through `ProteinFeature` edges linking to `FeatureType` vertices. `FeatureType` vertices only have one property `name` and there exists a vertex for each of the possible feature types.
+
+#### ProteinFeature properties
+
+- `description`
+- `evidence`
+- `id`
+- `status`
+- `begin`
+- `end`
+- `original`
+- `variation`
+- `ref`
 
  */
 public abstract class UniprotGraph<
