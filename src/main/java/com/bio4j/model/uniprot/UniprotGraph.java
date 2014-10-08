@@ -203,6 +203,42 @@ Modelled as `Isoform` vertices, include the following properties:
 
 They are connected to proteins through edges from the type ProteinIsoformInteraction
 
+### Organisms
+
+Leaf vertices in the taxonomy tree, they are the taxonomic units linked to proteins through `ProteinOrganism` edges. They are connected to non-leaf vertices via `OrganismTaxon` edges.
+The following properties are included:
+
+- `scientificName`
+- `commonName`
+- `synonymName`
+
+### Citations
+
+#### References
+
+All types of citations are connected to Proteins via intermediary vertices of type `Reference`. These vertices only include one property `date`. Edges linking `Protein` and `Reference` vertices are from the type `ProteinReference`.
+
+#### Articles
+
+Including the following properties:
+
+- `title`
+- `doId`
+
+In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+
+#### Books
+
+Including the following properties:
+
+- `name`
+
+In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+
+
+
  */
 public abstract class UniprotGraph<
 		// untyped graph
