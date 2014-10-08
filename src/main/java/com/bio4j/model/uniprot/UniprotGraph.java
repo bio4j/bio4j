@@ -71,6 +71,71 @@ The following properties are stored at the `Pfam` vertex:
 - `id`
 - `name`
 
+### Dataset
+
+These vertices represent the data set to which a protein belongs. There only exist two vertices in the database, one for Swiss-Prot and other for TrEMBL.
+A protein is connected to its data set via an edge with type `ProteinDataset`
+
+### EMBL
+
+EMBL terms, including the following properties:
+
+- `id`
+- `proteinSequenceId`
+- `moleculeType`
+
+They are connected to `Protein` vertices via `ProteinEMBL` edges.
+
+### Ensembl
+
+Ensembl terms, including the following properties:
+
+- `id`
+- `proteinSequenceId`
+- `moleculeId`
+- `geneId`
+
+They are connected to `Protein` vertices via `ProteinEnsembl` edges.
+
+### Kegg
+
+Connected to `Protein` vertices via `ProteinKegg` edges.
+The following properties are stored at the `Kegg` vertex:
+
+- `id`
+
+### PIR
+
+Connected to `Protein` vertices via `ProteinPIR` edges.
+The following properties are stored at the `PIR` vertex:
+
+- `id`
+- `entryName`
+
+### ReactomeTerm
+
+Connected to `Protein` vertices via `ProteinReactomeTerm` edges.
+The following properties are stored at the `ReactomeTerm` vertex:
+
+- `id`
+- `pathwayName`
+
+### RefSeq
+
+Connected to `Protein` vertices via `ProteinRefSeq` edges.
+The following properties are stored at the `RefSeq` vertex:
+
+- `id`
+- `nucleotideSequenceId`
+
+### UniGene
+
+Connected to `Protein` vertices via `ProteinUniGene` edges.
+The following properties are stored at the `UniGene` vertex:
+
+- `id`
+
+
 ### Comments
 
 Protein comments are modelled through `ProteinComment` edges linking to `CommentType` vertices. `CommentType` vertices only have one property `name` and there exists a vertex for each of the possible comment types.
