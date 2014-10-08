@@ -227,6 +227,7 @@ Including the following properties:
 
 In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+Article authors are stored at the `Reference` level.
 
 #### Books
 
@@ -234,8 +235,12 @@ Including the following properties:
 
 - `name`
 
-In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
-They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+Other properties such as the city where the book was published are modelled as edges of type `BookCity` which link to `City` nodes.
+Book editors are modelled via `BookEditor` edges linking to `Person` vertices.
+Book publishers are modelled through `BookPublisher` edges connecting to `Publisher` vertices.
+Book authors are stored at the `Reference` level.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Books are connected to `Reference` vertices via an edge of type `ReferenceBook`.
 
 
 
