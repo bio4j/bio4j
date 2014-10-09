@@ -2,6 +2,7 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.BookCity;
+import com.bio4j.model.uniprot.edges.BookPublisher;
 import com.bio4j.model.uniprot.edges.ReferenceBook;
 import com.ohnosequences.typedGraphs.UntypedGraph;
 
@@ -52,4 +53,13 @@ public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, R
 	public City<I, RV, RVT, RE, RET> bookCity_outV(){
 		return outOneV(graph().BookCity());
 	}
+
+    // bookPublisher
+    // outgoing
+    public BookPublisher<I, RV, RVT, RE, RET> bookPublisher_out(){
+        return outOne(graph().BookPublisher());
+    }
+    public Publisher<I, RV, RVT, RE, RET> bookPublisher_outV(){
+        return outOneV(graph().BookPublisher());
+    }
 }
