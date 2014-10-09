@@ -112,7 +112,7 @@ The following properties are stored at the `PIR` vertex:
 - `id`
 - `entryName`
 
-### ReactomeTerm
+### ReactomeTerms
 
 Connected to `Protein` vertices via `ProteinReactomeTerm` edges.
 The following properties are stored at the `ReactomeTerm` vertex:
@@ -220,7 +220,7 @@ All types of citations are connected to Proteins via intermediary vertices of ty
 
 #### Articles
 
-Article properties:
+`Article` properties:
 
 - `title`
 - `doId`
@@ -230,13 +230,24 @@ Other properties such as the following are stored via edges:
 The journal where the `Article` was published is modelled through an edge of type `ArticleJournal` which links to a `Journal` node.
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
 Article authors are stored at the `Reference` level.
-In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+In the case where they have a `Pubmed` id, there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
 
-They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+#### Online Articles
+
+`OnlineArticle` properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The online journal where the `OnlineArticle` was published is modelled through an edge of type `OnlineArticleOnlineJournal` which links to a `OnlineJournal` node.
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Online articles are connected to `Reference` vertices via an edge of type `ReferenceOnlineArticle`.
+`OnlineArticle` authors are stored at the `Reference` level.
+
 
 #### Books
 
-Book properties:
+`Book` properties:
 
 - `name`
 
@@ -251,7 +262,7 @@ They are connected to `Protein` vertices via an intermediary `Reference` vertex.
 
 #### Submissions
 
-Submission properties:
+`Submission` properties:
 
 - `title`
 
@@ -264,7 +275,7 @@ Submission authors are stored at the `Reference` level.
 
 #### Patents
 
-Patent properties:
+`Patent` properties:
 
 - `title`
 - `number`
@@ -274,7 +285,7 @@ Patent authors are stored at the `Reference` level.
 
 #### Theses
 
-Thesis properties:
+`Thesis` properties:
 
 - `title`
 
