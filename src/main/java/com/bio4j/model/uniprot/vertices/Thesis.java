@@ -3,9 +3,10 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ReferenceThesis;
 import com.bio4j.model.uniprot.edges.ThesisInstitute;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

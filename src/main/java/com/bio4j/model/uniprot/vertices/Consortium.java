@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ReferenceAuthorConsortium;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class Consortium <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
 
 	// referenceAuthorConsortium
 	// ingoing
-	public List<ReferenceAuthorConsortium<I, RV, RVT, RE, RET>> referenceAuthorConsortium_in(){
+	public Stream<ReferenceAuthorConsortium<I, RV, RVT, RE, RET>> referenceAuthorConsortium_in(){
 		return inMany(graph().ReferenceAuthorConsortium());
 	}
-	public List<Reference<I, RV, RVT, RE, RET>> referenceAuthorConsortium_inNodes(){
+	public Stream<Reference<I, RV, RVT, RE, RET>> referenceAuthorConsortium_inNodes(){
 		return inManyV(graph().ReferenceAuthorConsortium());
 	}
 

@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.SubmissionDB;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class DB <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RE
 
 	// submissionDB
 	// ingoing
-	public List<SubmissionDB<I, RV, RVT, RE, RET>> submissionDB_in(){
+	public Stream<SubmissionDB<I, RV, RVT, RE, RET>> submissionDB_in(){
 		return inMany(graph().SubmissionDB());
 	}
-	public List<Submission<I, RV, RVT, RE, RET>> submissionDB_inV(){
+	public Stream<Submission<I, RV, RVT, RE, RET>> submissionDB_inV(){
 		return inManyV(graph().SubmissionDB());
 	}
 

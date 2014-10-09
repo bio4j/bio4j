@@ -3,9 +3,10 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.OrganismTaxon;
 import com.bio4j.model.uniprot.edges.TaxonParent;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
@@ -37,19 +38,19 @@ public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
 	// organismTaxon
 	// ingoing
-	public List<OrganismTaxon<I, RV, RVT, RE, RET>> organismTaxon_in(){
+	public Stream<OrganismTaxon<I, RV, RVT, RE, RET>> organismTaxon_in(){
 		return inMany(graph().OrganismTaxon());
 	}
-	public List<Organism<I, RV, RVT, RE, RET>> organismTaxon_inV(){
+	public Stream<Organism<I, RV, RVT, RE, RET>> organismTaxon_inV(){
 		return inManyV(graph().OrganismTaxon());
 	}
 
 	// taxonParent
 	// ingoing
-	public List<TaxonParent<I, RV, RVT, RE, RET>> taxonParent_in(){
+	public Stream<TaxonParent<I, RV, RVT, RE, RET>> taxonParent_in(){
 		return inMany(graph().TaxonParent());
 	}
-	public List<Taxon<I, RV, RVT, RE, RET>> taxonParent_inV(){
+	public Stream<Taxon<I, RV, RVT, RE, RET>> taxonParent_inV(){
 		return inManyV(graph().TaxonParent());
 	}
 

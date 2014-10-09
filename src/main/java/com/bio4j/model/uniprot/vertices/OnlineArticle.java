@@ -3,9 +3,10 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.OnlineArticleOnlineJournal;
 import com.bio4j.model.uniprot.edges.ReferenceOnlineArticle;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.

@@ -2,7 +2,7 @@ package com.bio4j.model.go.vertices;
 
 // base types
 import com.bio4j.model.go.GoGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /**
  * Rels into this singleton node represent subontologies.

@@ -6,7 +6,7 @@ import com.bio4j.model.geninfo.vertices.GenInfo;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

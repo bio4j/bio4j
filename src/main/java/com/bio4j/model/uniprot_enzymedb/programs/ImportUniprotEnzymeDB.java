@@ -3,12 +3,13 @@ package com.bio4j.model.uniprot_enzymedb.programs;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;

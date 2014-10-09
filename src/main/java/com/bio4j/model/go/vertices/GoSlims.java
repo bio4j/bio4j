@@ -1,7 +1,7 @@
 package com.bio4j.model.go.vertices;
 
 import com.bio4j.model.go.GoGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 public final class GoSlims<I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT,RE,RET>
 extends GoGraph.GoVertex<
@@ -32,9 +32,10 @@ extends GoGraph.GoVertex<
 // package com.bio4j.model.go.nodes;
 
 // import java.util.List;
+// import java.util.stream.Stream;
 
 
-// import com.ohnosequences.typedGraphs.Node;
+// import com.bio4j.angulillos.Node;
 
 // import com.bio4j.model.go.GoGraph.GoSlimsType;
 
@@ -53,7 +54,7 @@ extends GoGraph.GoVertex<
 
 //   // plantSlim
 //   // incoming
-//   // public List<? extends PlantSlim> plantSlim_in();
-//   // public List<? extends Term> plantSlim_inNodes();
+//   // public Stream<? extends PlantSlim> plantSlim_in();
+//   // public Stream<? extends Term> plantSlim_inNodes();
 //   // TODO same for the other GoSlims
 // }

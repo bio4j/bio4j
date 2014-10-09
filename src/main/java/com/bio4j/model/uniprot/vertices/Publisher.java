@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.BookPublisher;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class Publisher <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT,
 
 	// bookPublisher
 	// ingoing
-	public List<BookPublisher<I, RV, RVT, RE, RET>> bookPublisher_in(){
+	public Stream<BookPublisher<I, RV, RVT, RE, RET>> bookPublisher_in(){
 		return inMany(graph().BookPublisher());
 	}
-	public List<Book<I, RV, RVT, RE, RET>> bookPublisher_inV(){
+	public Stream<Book<I, RV, RVT, RE, RET>> bookPublisher_inV(){
 		return inManyV(graph().BookPublisher());
 	}
 

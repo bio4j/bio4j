@@ -4,9 +4,10 @@ import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends NCBITaxonomyGraph.NCBITaxonomyVertex<
@@ -47,10 +48,10 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	//----ncbiTaxonParent-------
 	// ingoing
-	public List<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in(){
+	public Stream<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in(){
 		return inMany(graph().NCBITaxonParent());
 	}
-	public List<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV(){
+	public Stream<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV(){
 		return inManyV(graph().NCBITaxonParent());
 	}
 
@@ -65,10 +66,10 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	//----proteinNCBITaxon-------
 	// ingoing
-	public List<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_in(){
+	public Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_in(){
 		return inMany(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinNCBITaxon_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinNCBITaxon_inV(){
 		return inManyV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 

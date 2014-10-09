@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot.edges;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.Isoform;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 /**
  * Created by ppareja on 9/23/2014.
