@@ -6,8 +6,30 @@ import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.ohnosequences.typedGraphs.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# UniRef graph
+
+This graph includes virtually all data from UniRef clusters including 50, 90 and 100.
+You can check more information about UniRef data [here](http://www.uniprot.org/help/uniref)
+
+## data model
+
+It only consists of three different vertex types, one for each type of UniRefCluster:
+
+- `UniRef50Cluster`
+- `UniRef90Cluster`
+- `UniRef100Cluster`
+
+
+##### UniRef clusters' properties stored
+
+- `id`
+- `name`
+- `updatedDate`
+
+_There no specific property for any of the three different types of cluster_
+
  */
 public abstract class UniRefGraph<
 		// untyped graph
