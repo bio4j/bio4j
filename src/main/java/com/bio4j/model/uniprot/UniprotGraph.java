@@ -285,8 +285,35 @@ The `Institute` associated to the `Thesis` is modelled via an edge of type `Thes
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceThesis`.
 Thesis authors are stored at the `Reference` level.
 
+#### Unpublished Observations
 
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceUnpublishedObservations`.
+Unpublished observations authors are stored at the `Reference` level.
 
+### People
+
+`Person` vertices include the following properties:
+
+- `name`
+
+They are linked to `Reference` vertices via edges of type `ReferenceAuthorPerson`.
+
+### Consortiums
+
+`Consortium` vertices include the following properties:
+
+- `name`
+
+They are linked to `Reference` vertices via edges of type `ReferenceAuthorConsortium`.
+
+### Subcellular Locations
+
+`SubcellularLocation` vertices include the following properties:
+
+- `name`
+
+They are linked to `Protein` vertices via edges of type `ProteinSubcellularLocation`.
+The hierarchical relationship among differnt subcellular location elements is expressed through edges of type `SubcellularLocationParent`.
 
  */
 public abstract class UniprotGraph<
