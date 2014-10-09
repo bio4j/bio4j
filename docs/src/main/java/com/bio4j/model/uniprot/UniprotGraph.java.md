@@ -230,6 +230,7 @@ Article properties:
 
 Other properties such as the following are stored via edges:
 
+The journal where the `Article` was published is modelled through an edge of type `ArticleJournal` which links to a `Journal` node.
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
 Article authors are stored at the `Reference` level.
 In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
@@ -259,11 +260,33 @@ Submission properties:
 
 Other properties such as the following are stored via edges:
 
-The database where a submission was submitted is modelled via an edge of type `SubmissionDB` which links to a `DB` node.
-Submission authors are stored at the `Reference` level.
+The database where a submission was submitted is modelled via an edge of type `SubmissionDB` which links to a `DB` vertex.
 
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Submissions are connected to `Reference` vertices via an edge of type `ReferenceSubmission`.
+Submission authors are stored at the `Reference` level.
 
+#### Patents
+
+Patent properties:
+
+- `title`
+- `number`
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Patents are connected to `Reference` vertices via an edge of type `ReferencePatent`.
+Patent authors are stored at the `Reference` level.
+
+#### Theses
+
+Thesis properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The `Institute` associated to the `Thesis` is modelled via an edge of type `ThesisInstitute` which links to a `Thesis` vertex.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceThesis`.
+Thesis authors are stored at the `Reference` level.
 
 
 
