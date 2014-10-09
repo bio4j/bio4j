@@ -220,27 +220,48 @@ All types of citations are connected to Proteins via intermediary vertices of ty
 
 #### Articles
 
-Including the following properties:
+Article properties:
 
 - `title`
 - `doId`
 
-In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+Other properties such as the following are stored via edges:
+
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
 Article authors are stored at the `Reference` level.
+In the case where they have a PubmedId there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
 
 #### Books
 
-Including the following properties:
+Book properties:
 
 - `name`
 
-Other properties such as the city where the book was published are modelled as edges of type `BookCity` which link to `City` nodes.
+Other properties such as the following are stored via edges:
+
+The city where the book was published is modelled through an edge of type `BookCity` which links to a `City` node.
 Book editors are modelled via `BookEditor` edges linking to `Person` vertices.
 Book publishers are modelled through `BookPublisher` edges connecting to `Publisher` vertices.
 Book authors are stored at the `Reference` level.
 
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Books are connected to `Reference` vertices via an edge of type `ReferenceBook`.
+
+#### Submissions
+
+Submission properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The database where a submission was submitted is modelled via an edge of type `SubmissionDB` which links to a `DB` node.
+Submission authors are stored at the `Reference` level.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Submissions are connected to `Reference` vertices via an edge of type `ReferenceSubmission`.
+
+
 
 
 
