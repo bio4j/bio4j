@@ -301,7 +301,31 @@ Thesis authors are stored at the `Reference` level.
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceUnpublishedObservations`.
 Unpublished observations authors are stored at the `Reference` level.
 
-### People
+#### Journals
+
+`Journal` properties:
+
+- `name`
+
+#### Online journals
+
+`OnlineJournal` properties:
+
+- `name`
+
+#### Institutes
+
+`Institute` properties:
+
+- `name`
+
+#### Publishers
+
+`Publisher` properties:
+
+- `name`
+
+#### People
 
 `Person` vertices include the following properties:
 
@@ -309,7 +333,7 @@ Unpublished observations authors are stored at the `Reference` level.
 
 They are linked to `Reference` vertices via edges of type `ReferenceAuthorPerson`.
 
-### Consortiums
+#### Consortiums
 
 `Consortium` vertices include the following properties:
 
