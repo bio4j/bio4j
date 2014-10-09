@@ -1,9 +1,12 @@
 package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.edges.ArticleJournal;
 import com.bio4j.model.uniprot.edges.ArticlePubmed;
 import com.bio4j.model.uniprot.edges.ReferenceArticle;
 import com.ohnosequences.typedGraphs.UntypedGraph;
+
+import java.util.List;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -53,4 +56,12 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Reference<I, RV, RVT, RE, RET> referenceArticle_inV(){
 		return inOneV(graph().ReferenceArticle());
 	}
+    // articleJournal
+    // outgoing
+    public ArticleJournal<I, RV, RVT, RE, RET> articleJournal_out(){
+        return outOne(graph().ArticleJournal());
+    }
+    public Journal<I, RV, RVT, RE, RET> articleJournal_outV(){
+        return outOneV(graph().ArticleJournal());
+    }
 }
