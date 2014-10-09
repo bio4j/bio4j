@@ -257,10 +257,19 @@ Submission properties:
 Other properties such as the following are stored via edges:
 
 The database where a submission was submitted is modelled via an edge of type `SubmissionDB` which links to a `DB` node.
-Submission authors are stored at the `Reference` level.
 
 They are connected to `Protein` vertices via an intermediary `Reference` vertex. Submissions are connected to `Reference` vertices via an edge of type `ReferenceSubmission`.
+Submission authors are stored at the `Reference` level.
 
+#### Patents
+
+Patent properties:
+
+- `title`
+- `number`
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Patents are connected to `Reference` vertices via an edge of type `ReferencePatent`.
+Patent authors are stored at the `Reference` level.
 
 
 
