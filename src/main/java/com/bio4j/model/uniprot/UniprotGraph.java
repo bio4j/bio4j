@@ -201,7 +201,8 @@ Modelled as `Isoform` vertices, include the following properties:
 - `note`
 - `sequence`
 
-They are connected to proteins through edges from the type ProteinIsoformInteraction
+They are connected to proteins through edges from the type `ProteinIsoformInteraction`
+They are also linked to `AlternativeProduct` vertices via edges of type `IsoformEventGenerator`.
 
 ### Organisms
 
@@ -339,6 +340,18 @@ They are linked to `Reference` vertices via edges of type `ReferenceAuthorPerson
 
 - `name`
 
+#### Countries
+
+`Country` vertices have the properties:
+
+- `name`
+
+#### Cities
+
+`City` vertices include the following properties:
+
+- `name`
+
 They are linked to `Reference` vertices via edges of type `ReferenceAuthorConsortium`.
 
 ### Subcellular Locations
@@ -349,6 +362,23 @@ They are linked to `Reference` vertices via edges of type `ReferenceAuthorConsor
 
 They are linked to `Protein` vertices via edges of type `ProteinSubcellularLocation`.
 The hierarchical relationship among differnt subcellular location elements is expressed through edges of type `SubcellularLocationParent`.
+
+### Sequence Caution
+
+`SequenceCaution` vertices include the following properties:
+
+- `name`
+
+They are connected to `Protein` vertices via edges of type `ProteinSequenceCaution`.
+
+### Alternative Products
+
+`AlternativeProduct` vertices have the following properties:
+
+- `name`
+
+They are associated to `Isoform` vertices via edges of type `IsoformEventGenerator`.
+
 
  */
 public abstract class UniprotGraph<
