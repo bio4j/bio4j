@@ -106,7 +106,7 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	public Optional<Stream<GoTerm<I, RV, RVT, RE, RET>>> positivelyRegulates_inV(){
 		return inManyOptionalV(graph().PositivelyRegulates());
 	}
-	public Optional<Stream<PositivelyRegulates<I, RV, RVT, RE, RET>> positivelyRegulates_out(){
+	public Optional<Stream<PositivelyRegulates<I, RV, RVT, RE, RET>>> positivelyRegulates_out(){
 		return outManyOptional(graph().PositivelyRegulates());
 	}
 
