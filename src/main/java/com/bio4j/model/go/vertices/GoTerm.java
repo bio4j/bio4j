@@ -7,6 +7,7 @@ import com.bio4j.model.uniprot_go.edges.GoAnnotation;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
@@ -49,20 +50,20 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	// rels
 
 	//----part of---------
-	public Stream<PartOf<I, RV, RVT, RE, RET>> partOf_in() {
-		return inMany(graph().PartOf());
+	public Optional<Stream<PartOf<I, RV, RVT, RE, RET>>> partOf_in() {
+		return inManyOptional(graph().PartOf());
 	}
 
-	public Stream<GoTerm<I, RV, RVT, RE, RET>> partOf_inV() {
-		return inManyV(graph().PartOf());
+	public Optional<Stream<GoTerm<I, RV, RVT, RE, RET>>> partOf_inV() {
+		return inManyOptionalV(graph().PartOf());
 	}
 
-	public Stream<PartOf<I, RV, RVT, RE, RET>> partOf_out() {
-		return outMany(graph().PartOf());
+	public Optional<Stream<PartOf<I, RV, RVT, RE, RET>>> partOf_out() {
+		return outManyOptional(graph().PartOf());
 	}
 
-	public Stream<GoTerm<I, RV, RVT, RE, RET>> partOf_outV() {
-		return outManyV(graph().PartOf());
+	public Optional<Stream<GoTerm<I, RV, RVT, RE, RET>>> partOf_outV() {
+		return outManyOptionalV(graph().PartOf());
 	}
 
 	//----has part of-------

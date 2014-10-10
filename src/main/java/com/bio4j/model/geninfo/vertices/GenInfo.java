@@ -2,6 +2,8 @@ package com.bio4j.model.geninfo.vertices;
 
 import com.bio4j.model.geninfo.GenInfoGraph;
 import com.bio4j.angulillos.UntypedGraph;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
@@ -28,6 +30,12 @@ public final class GenInfo<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE
 	}
 
 	// rels
+
+    //-----genInfoNCBITaxon----
+    // outgoing
+    public GenInfoNCBITaxon<I, RV, RVT, RE, RET> genInfoNCBITaxon_out(){   return outOne(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+    public NCBITaxon<I, RV, RVT, RE, RET> genInfoNCBITaxon_outV(){   return outOneV(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+
 
 
 
