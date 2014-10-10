@@ -7,6 +7,7 @@ import com.bio4j.model.uniprot.edges.ReferenceArticle;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -43,11 +44,11 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// articlePubmed
 	// outgoing
-	public ArticlePubmed<I, RV, RVT, RE, RET>  articlePubmed_out(){
-		return outOne(graph().ArticlePubmed());
+	public Optional<ArticlePubmed<I, RV, RVT, RE, RET>> articlePubmed_out(){
+		return outOneOptional(graph().ArticlePubmed());
 	}
-	public Pubmed<I, RV, RVT, RE, RET> articlePubmed_outV(){
-		return outOneV(graph().ArticlePubmed());
+	public Optional<Pubmed<I, RV, RVT, RE, RET>> articlePubmed_outV(){
+		return outOneOptionalV(graph().ArticlePubmed());
 	}
 	// referenceArticle
 	// ingoing
@@ -59,10 +60,10 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	}
     // articleJournal
     // outgoing
-    public ArticleJournal<I, RV, RVT, RE, RET> articleJournal_out(){
-        return outOne(graph().ArticleJournal());
+    public Optional<ArticleJournal<I, RV, RVT, RE, RET>> articleJournal_out(){
+        return outOneOptional(graph().ArticleJournal());
     }
-    public Journal<I, RV, RVT, RE, RET> articleJournal_outV(){
-        return outOneV(graph().ArticleJournal());
+    public Optional<Journal<I, RV, RVT, RE, RET>> articleJournal_outV(){
+        return outOneOptionalV(graph().ArticleJournal());
     }
 }
