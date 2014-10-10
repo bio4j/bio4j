@@ -4,9 +4,10 @@ import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ArticleJournal;
 import com.bio4j.model.uniprot.edges.ArticlePubmed;
 import com.bio4j.model.uniprot.edges.ReferenceArticle;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.

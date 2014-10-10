@@ -12,10 +12,11 @@ import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -83,73 +84,73 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinComment
 	// outgoing
-	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_out(){
+	public Stream<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_out(){
 		return outMany(graph().ProteinComment());
 	}
-	public List<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outV(){
+	public Stream<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outV(){
 		return outManyV(graph().ProteinComment());
 	}
 
 	// proteinRefSeq
 	// outgoing
-	public List<ProteinRefSeq<I, RV, RVT, RE, RET>> proteinRefSeq_out(){
+	public Stream<ProteinRefSeq<I, RV, RVT, RE, RET>> proteinRefSeq_out(){
 		return outMany(graph().ProteinRefSeq());
 	}
-	public List<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outV(){
+	public Stream<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outV(){
 		return outManyV(graph().ProteinRefSeq());
 	}
 
 	// proteinSequenceCaution
 	// outgoing
-	public List<ProteinSequenceCaution<I, RV, RVT, RE, RET>> proteinSequenceCaution_out(){
+	public Stream<ProteinSequenceCaution<I, RV, RVT, RE, RET>> proteinSequenceCaution_out(){
 		return outMany(graph().ProteinSequenceCaution());
 	}
-	public List<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outV(){
+	public Stream<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outV(){
 		return outManyV(graph().ProteinSequenceCaution());
 	}
 
 	// proteinSubcellularLocation
 	// outgoing
-	public List<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_out(){
+	public Stream<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_out(){
 		return outMany(graph().ProteinSubcellularLocation());
 	}
-	public List<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outV(){
+	public Stream<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outV(){
 		return outManyV(graph().ProteinSubcellularLocation());
 	}
 
 	// proteinPIR
 	// outgoing
-	public List<ProteinPIR<I, RV, RVT, RE, RET>> proteinPIR_out(){
+	public Stream<ProteinPIR<I, RV, RVT, RE, RET>> proteinPIR_out(){
 		return outMany(graph().ProteinPIR());
 	}
-	public List<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outV(){
+	public Stream<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outV(){
 		return outManyV(graph().ProteinPIR());
 	}
 
 	// proteinFeature
 	// outgoing
-	public List<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_out(){
+	public Stream<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_out(){
 		return outMany(graph().ProteinFeature());
 	}
-	public List<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outV(){
+	public Stream<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outV(){
 		return outManyV(graph().ProteinFeature());
 	}
 
 	// proteinEMBL
 	// outgoing
-	public List<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_out(){
+	public Stream<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_out(){
 		return outMany(graph().ProteinEMBL());
 	}
-	public List<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outV(){
+	public Stream<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outV(){
 		return outManyV(graph().ProteinEMBL());
 	}
 
 	// proteinDisease
 	// outgoing
-	public List<ProteinDisease<I, RV, RVT, RE, RET>> proteinDisease_out(){
+	public Stream<ProteinDisease<I, RV, RVT, RE, RET>> proteinDisease_out(){
 		return outMany(graph().ProteinDisease());
 	}
-	public List<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outV(){
+	public Stream<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outV(){
 		return outManyV(graph().ProteinDisease());
 	}
 
@@ -164,82 +165,82 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinInterpro
 	// outgoing
-	public List<ProteinInterpro<I, RV, RVT, RE, RET>> proteinIntepro_out(){
+	public Stream<ProteinInterpro<I, RV, RVT, RE, RET>> proteinIntepro_out(){
 		return outMany(graph().ProteinInterpro());
 	}
-	public List<Interpro<I, RV, RVT, RE, RET>>  proteinInterpro_outV(){
+	public Stream<Interpro<I, RV, RVT, RE, RET>>  proteinInterpro_outV(){
 		return outManyV(graph().ProteinInterpro());
 	}
 
 	// proteinReactomeTerm
 	// outgoing
-	public List<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_out(){
+	public Stream<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_out(){
 		return outMany(graph().ProteinReactomeTerm());
 	}
-	public List<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outV(){
+	public Stream<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outV(){
 		return outManyV(graph().ProteinReactomeTerm());
 	}
 
 	// proteinEnsembl
 	// outgoing
-	public List<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_out(){
+	public Stream<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_out(){
 		return outMany(graph().ProteinEnsembl());
 	}
-	public List<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outV(){
+	public Stream<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outV(){
 		return outManyV(graph().ProteinEnsembl());
 	}
 
 	// proteinKeyword
 	// outgoing
-	public List<ProteinKeyword<I, RV, RVT, RE, RET>> proteinKeyword_out(){
+	public Stream<ProteinKeyword<I, RV, RVT, RE, RET>> proteinKeyword_out(){
 		return outMany(graph().ProteinKeyword());
 	}
-	public List<Keyword<I, RV, RVT, RE, RET>>  proteinKeyword_outV(){
+	public Stream<Keyword<I, RV, RVT, RE, RET>>  proteinKeyword_outV(){
 		return outManyV(graph().ProteinKeyword());
 	}
 
 	// proteinKegg
 	// outgoing
-	public List<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_out(){
+	public Stream<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_out(){
 		return outMany(graph().ProteinKegg());
 	}
-	public List<Kegg<I, RV, RVT, RE, RET>>  proteinKegg_outV(){
+	public Stream<Kegg<I, RV, RVT, RE, RET>>  proteinKegg_outV(){
 		return outManyV(graph().ProteinKegg());
 	}
 
 	// proteinPfam
 	// outgoing
-	public List<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_out(){
+	public Stream<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_out(){
 		return outMany(graph().ProteinPfam());
 	}
-	public List<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outV(){
+	public Stream<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outV(){
 		return outManyV(graph().ProteinPfam());
 	}
 
 	// proteinUniGene
 	// outgoing
-	public List<ProteinUniGene<I, RV, RVT, RE, RET>> proteinUniGene_out(){
+	public Stream<ProteinUniGene<I, RV, RVT, RE, RET>> proteinUniGene_out(){
 		return outMany(graph().ProteinUniGene());
 	}
-	public List<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outV(){
+	public Stream<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outV(){
 		return outManyV(graph().ProteinUniGene());
 	}
 
 	// enzymaticActivity
 	// outgoing
-	public List<EnzymaticActivity<I, RV, RVT, RE, RET>>   enzymaticActivity_out(){
+	public Stream<EnzymaticActivity<I, RV, RVT, RE, RET>>   enzymaticActivity_out(){
         return outMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
-	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outV(){
+	public Stream<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outV(){
         return outManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
 
 	// goAnnotation
 	// outgoing
-	public List<GoAnnotation<I, RV, RVT, RE, RET>>  goAnnotation_out(){
+	public Stream<GoAnnotation<I, RV, RVT, RE, RET>>  goAnnotation_out(){
 		return outMany(graph().uniprotGoGraph().GoAnnotation());
 	}
-	public List<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outV(){
 		return outManyV(graph().uniprotGoGraph().GoAnnotation());
 	}
 
@@ -299,10 +300,10 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinReference
 	// outgoing
-	public List<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_out(){
+	public Stream<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_out(){
 		return outMany(graph().ProteinReference());
 	}
-	public List<Reference<I, RV, RVT, RE, RET>> proteinReference_outV(){
+	public Stream<Reference<I, RV, RVT, RE, RET>> proteinReference_outV(){
 		return outManyV(graph().ProteinReference());
 	}
 
@@ -318,37 +319,37 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinGeneLocation
 	// outgoing
-	public List<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
+	public Stream<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
 		return outMany(graph().ProteinGeneLocation());
 	}
-	public List<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outV(){
+	public Stream<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outV(){
 		return outManyV(graph().ProteinGeneLocation());
 	}
 
 	// proteinProteinInteraction
 	// outgoing
-	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_out(){
+	public Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_out(){
 		return outMany(graph().ProteinProteinInteraction());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_outV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_outV(){
 		return outManyV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinProteinInteraction
 	// ingoing
-	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_in(){
+	public Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_in(){
 		return inMany(graph().ProteinProteinInteraction());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_inV(){
 		return inManyV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinIsoformInteraction
 	// outgoing
-	public List<ProteinIsoformInteraction<I, RV, RVT, RE, RET>> proteinIsoformInteraction_out(){
+	public Stream<ProteinIsoformInteraction<I, RV, RVT, RE, RET>> proteinIsoformInteraction_out(){
 		return outMany(graph().ProteinIsoformInteraction());
 	}
-	public List<Isoform<I, RV, RVT, RE, RET>> proteinIsoformInteraction_outV(){
+	public Stream<Isoform<I, RV, RVT, RE, RET>> proteinIsoformInteraction_outV(){
 		return outManyV(graph().ProteinIsoformInteraction());
 	}
 }

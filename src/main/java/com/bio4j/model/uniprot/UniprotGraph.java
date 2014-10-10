@@ -6,7 +6,7 @@ import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 import java.util.Date;
 

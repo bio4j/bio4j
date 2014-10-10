@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinKegg;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class Kegg <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, 
 
 	// proteinKegg
 	// ingoing
-	public List<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_in(){
+	public Stream<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_in(){
 		return inMany(graph().ProteinKegg());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinKegg_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinKegg_inV(){
 		return inManyV(graph().ProteinKegg());
 	}
 

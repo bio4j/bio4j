@@ -5,7 +5,7 @@ import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.go.vertices.SubOntologies;
 import com.bio4j.model.go.edges.*;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /*
 

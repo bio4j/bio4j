@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinFeature;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class FeatureType <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RV
 
 	// proteinFeature
 	// ingoing
-	public List<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_in(){
+	public Stream<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_in(){
 		return inMany(graph().ProteinFeature());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinFeature_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinFeature_inV(){
 		return inManyV(graph().ProteinFeature());
 	}
 

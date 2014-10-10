@@ -1,7 +1,7 @@
 package com.bio4j.model.geninfo.vertices;
 
 import com.bio4j.model.geninfo.GenInfoGraph;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

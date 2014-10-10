@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ReferenceAuthorPerson;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -36,10 +37,10 @@ public final class Person <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE
 
 	// referenceAuthorPeron
 	// ingoing
-	public List<ReferenceAuthorPerson<I, RV, RVT, RE, RET>> referenceAuthorPerson_in(){
+	public Stream<ReferenceAuthorPerson<I, RV, RVT, RE, RET>> referenceAuthorPerson_in(){
 		return inMany(graph().ReferenceAuthorPerson());
 	}
-	public List<Reference<I, RV, RVT, RE, RET>> referenceAuthorPerson_inV(){
+	public Stream<Reference<I, RV, RVT, RE, RET>> referenceAuthorPerson_inV(){
 		return inManyV(graph().ReferenceAuthorPerson());
 	}
 

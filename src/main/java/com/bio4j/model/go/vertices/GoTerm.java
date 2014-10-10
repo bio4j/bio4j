@@ -4,9 +4,10 @@ import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.edges.*;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.edges.GoAnnotation;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends GoGraph.GoVertex<
@@ -48,98 +49,98 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	// rels
 
 	//----part of---------
-	public List<PartOf<I, RV, RVT, RE, RET>> partOf_in() {
+	public Stream<PartOf<I, RV, RVT, RE, RET>> partOf_in() {
 		return inMany(graph().PartOf());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> partOf_inV() {
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> partOf_inV() {
 		return inManyV(graph().PartOf());
 	}
 
-	public List<PartOf<I, RV, RVT, RE, RET>> partOf_out() {
+	public Stream<PartOf<I, RV, RVT, RE, RET>> partOf_out() {
 		return outMany(graph().PartOf());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> partOf_outV() {
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> partOf_outV() {
 		return outManyV(graph().PartOf());
 	}
 
 	//----has part of-------
-	public List<HasPartOf<I, RV, RVT, RE, RET>> hasPartOf_in(){
+	public Stream<HasPartOf<I, RV, RVT, RE, RET>> hasPartOf_in(){
 		return inMany(graph().HasPartOf());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> hasPartOf_inV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> hasPartOf_inV(){
 		return inManyV(graph().HasPartOf());
 	}
-	public List<HasPartOf<I, RV, RVT, RE, RET>> hasPartOf_out(){
+	public Stream<HasPartOf<I, RV, RVT, RE, RET>> hasPartOf_out(){
 		return outMany(graph().HasPartOf());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> hasPartOf_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> hasPartOf_outV(){
 		return outManyV(graph().HasPartOf());
 	}
 
 	//----regulates-------
-	public List<Regulates<I, RV, RVT, RE, RET>> regulates_in(){
+	public Stream<Regulates<I, RV, RVT, RE, RET>> regulates_in(){
 		return inMany(graph().Regulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> regulates_inV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> regulates_inV(){
 		return inManyV(graph().Regulates());
 	}
-	public List<Regulates<I, RV, RVT, RE, RET>> regulates_out(){
+	public Stream<Regulates<I, RV, RVT, RE, RET>> regulates_out(){
 		return outMany(graph().Regulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> regulates_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> regulates_outV(){
 		return outManyV(graph().Regulates());
 	}
 
 	//----positively regulates-------
-	public List<PositivelyRegulates<I, RV, RVT, RE, RET>> positivelyRegulates_in(){
+	public Stream<PositivelyRegulates<I, RV, RVT, RE, RET>> positivelyRegulates_in(){
 		return inMany(graph().PositivelyRegulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> positivelyRegulates_inV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> positivelyRegulates_inV(){
 		return inManyV(graph().PositivelyRegulates());
 	}
-	public List<PositivelyRegulates<I, RV, RVT, RE, RET>> positivelyRegulates_out(){
+	public Stream<PositivelyRegulates<I, RV, RVT, RE, RET>> positivelyRegulates_out(){
 		return outMany(graph().PositivelyRegulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> positivelyRegulates_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> positivelyRegulates_outV(){
 		return outManyV(graph().PositivelyRegulates());
 	}
 
 	//----negatively regulates-------
-	public List<NegativelyRegulates<I, RV, RVT, RE, RET>> negativelyRegulates_in(){
+	public Stream<NegativelyRegulates<I, RV, RVT, RE, RET>> negativelyRegulates_in(){
 		return inMany(graph().NegativelyRegulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> negativelyRegulates_inV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> negativelyRegulates_inV(){
 		return inManyV(graph().NegativelyRegulates());
 	}
-	public List<NegativelyRegulates<I, RV, RVT, RE, RET>> negaitivelyRegulates_out(){
+	public Stream<NegativelyRegulates<I, RV, RVT, RE, RET>> negaitivelyRegulates_out(){
 		return outMany(graph().NegativelyRegulates());
 	}
 
-	public List<GoTerm<I, RV, RVT, RE, RET>> negativelyRegulates_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> negativelyRegulates_outV(){
 		return outManyV(graph().NegativelyRegulates());
 	}
 
 	//----is a-------
-	public List<IsA<I, RV, RVT, RE, RET>> isA_in(){
+	public Stream<IsA<I, RV, RVT, RE, RET>> isA_in(){
 		return inMany(graph().IsA());
 	}
-	public List<GoTerm<I, RV, RVT, RE, RET>> isA_inV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> isA_inV(){
 		return inManyV(graph().IsA());
 	}
 
-	public List<IsA<I, RV, RVT, RE, RET>> isA_out(){
+	public Stream<IsA<I, RV, RVT, RE, RET>> isA_out(){
 		return outMany(graph().IsA());
 	}
-	public List<GoTerm<I, RV, RVT, RE, RET>> isA_outV(){
+	public Stream<GoTerm<I, RV, RVT, RE, RET>> isA_outV(){
 		return outManyV(graph().IsA());
 	}
 
@@ -153,11 +154,11 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	}
 
 	//-----goAnnotation----
-	public List<GoAnnotation<I, RV, RVT, RE, RET>> goAnnotation_in() {   
+	public Stream<GoAnnotation<I, RV, RVT, RE, RET>> goAnnotation_in() {   
 
 		return inMany( graph().uniprotGoGraph().GoAnnotation() );
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> goAnnotation_inV(){   return inManyV(graph().uniprotGoGraph().GoAnnotation());}
+	public Stream<Protein<I, RV, RVT, RE, RET>> goAnnotation_inV(){   return inManyV(graph().uniprotGoGraph().GoAnnotation());}
 
 
 

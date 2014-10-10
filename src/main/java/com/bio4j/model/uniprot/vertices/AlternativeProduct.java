@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.IsoformEventGenerator;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 10/7/2014.
@@ -36,10 +37,10 @@ public class AlternativeProduct <I extends UntypedGraph<RV, RVT, RE, RET>, RV, R
 
 	// IsoformEventGenerator
 	// ingoing
-	public List<IsoformEventGenerator<I, RV, RVT, RE, RET>> isoformEventGenerator_in(){
+	public Stream<IsoformEventGenerator<I, RV, RVT, RE, RET>> isoformEventGenerator_in(){
 		return inMany(graph().IsoformEventGenerator());
 	}
-	public List<Isoform<I, RV, RVT, RE, RET>> isoformEventGenerator_inV(){
+	public Stream<Isoform<I, RV, RVT, RE, RET>> isoformEventGenerator_inV(){
 		return inManyV(graph().IsoformEventGenerator());
 	}
 

@@ -7,7 +7,7 @@ import com.bio4j.model.go.vertices.SubOntologies;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 import java.io.*;
 import java.util.*;

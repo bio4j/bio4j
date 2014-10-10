@@ -5,13 +5,14 @@ import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.Optional;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
