@@ -247,110 +247,110 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// uniref50Member
 	// outgoing
-	public UniRef50Member<I, RV, RVT, RE, RET> uniref50Member_out(){
+	public Optional<UniRef50Member<I, RV, RVT, RE, RET>> uniref50Member_out(){
 		return outOne(graph().uniprotUniRefGraph().UniRef50Member());
 	}
-	public UniRef50Cluster<I, RV, RVT, RE, RET> uniref50Member_outNode(){
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>> uniref50Member_outNode(){
 		return outOneV(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 
 	// uniref50Representant
 	// outgoing
-	public UniRef50Representant<I, RV, RVT, RE, RET> uniref50Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef50Representant());
+	public Optional<UniRef50Representant<I, RV, RVT, RE, RET>> uniref50Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
-	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef50Representant());
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_outNode(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
 
 	// uniref90Member
 	// outgoing
-	public UniRef90Member<I, RV, RVT, RE, RET> uniref90Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef90Member());
+	public Optional<UniRef90Member<I, RV, RVT, RE, RET>> uniref90Member_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Member());
 	}
-	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef90Member());
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Member_outNode(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Member());
 	}
 
 	// uniref90Representant
 	// outgoing
-	public UniRef90Representant<I, RV, RVT, RE, RET> uniref90Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef90Representant());
+	public Optional<UniRef90Representant<I, RV, RVT, RE, RET>> uniref90Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
-	public UniRef90Cluster<I, RV, RVT, RE, RET> uniref90Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef90Representant());
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Representant_outNode(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
 
 	// uniref100Member
 	// outgoing
-	public UniRef100Member<I, RV, RVT, RE, RET> uniref100Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef100Member());
+	public Optional<UniRef100Member<I, RV, RVT, RE, RET>> uniref100Member_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Member());
 	}
-	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef100Member());
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Member_outNode(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Member());
 	}
 
 	// uniref90Representant
 	// outgoing
-	public UniRef100Representant<I, RV, RVT, RE, RET> uniref100Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef100Representant());
+	public Optional<UniRef100Representant<I, RV, RVT, RE, RET>> uniref100Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
-	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef100Representant());
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Representant_outNode(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
 
 	// proteinReference
 	// outgoing
-	public Stream<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_out(){
-		return outMany(graph().ProteinReference());
+	public Optional<Stream<ProteinReference<I, RV, RVT, RE, RET>>> proteinReference_out(){
+		return outManyOptional(graph().ProteinReference());
 	}
-	public Stream<Reference<I, RV, RVT, RE, RET>> proteinReference_outV(){
-		return outManyV(graph().ProteinReference());
+	public Optional<Stream<Reference<I, RV, RVT, RE, RET>>> proteinReference_outV(){
+		return outManyOptionalV(graph().ProteinReference());
 	}
 
 
 	//----proteinNCBITaxon-------
 	// outgoing
-	public ProteinNCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_out(){
-		return outOne(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_out(){
+		return outOneOptional(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
-	public NCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_outV(){
-		return outOneV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<NCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_outV(){
+		return outOneOptionalV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 
 	// proteinGeneLocation
 	// outgoing
-	public Stream<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
-		return outMany(graph().ProteinGeneLocation());
+	public Optional<Stream<ProteinGeneLocation<I, RV, RVT, RE, RET>>> proteinGeneLocation_out(){
+		return outManyOptional(graph().ProteinGeneLocation());
 	}
-	public Stream<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outV(){
-		return outManyV(graph().ProteinGeneLocation());
+	public Optional<Stream<GeneLocation<I, RV, RVT, RE, RET>>> proteinGeneLocation_outV(){
+		return outManyOptionalV(graph().ProteinGeneLocation());
 	}
 
 	// proteinProteinInteraction
 	// outgoing
-	public Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_out(){
-		return outMany(graph().ProteinProteinInteraction());
+	public Optional<Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>>> proteinProteinInteraction_out(){
+		return outManyOptional(graph().ProteinProteinInteraction());
 	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_outV(){
-		return outManyV(graph().ProteinProteinInteraction());
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinProteinInteraction_outV(){
+		return outManyOptionalV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinProteinInteraction
 	// ingoing
-	public Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_in(){
-		return inMany(graph().ProteinProteinInteraction());
+	public Optional<Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>>> proteinProteinInteraction_in(){
+		return inManyOptional(graph().ProteinProteinInteraction());
 	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_inV(){
-		return inManyV(graph().ProteinProteinInteraction());
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinProteinInteraction_inV(){
+		return inManyOptionalV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinIsoformInteraction
 	// outgoing
-	public Stream<ProteinIsoformInteraction<I, RV, RVT, RE, RET>> proteinIsoformInteraction_out(){
-		return outMany(graph().ProteinIsoformInteraction());
+	public Optional<Stream<ProteinIsoformInteraction<I, RV, RVT, RE, RET>>> proteinIsoformInteraction_out(){
+		return outManyOptional(graph().ProteinIsoformInteraction());
 	}
-	public Stream<Isoform<I, RV, RVT, RE, RET>> proteinIsoformInteraction_outV(){
-		return outManyV(graph().ProteinIsoformInteraction());
+	public Optional<Stream<Isoform<I, RV, RVT, RE, RET>>> proteinIsoformInteraction_outV(){
+		return outManyOptionalV(graph().ProteinIsoformInteraction());
 	}
 }
