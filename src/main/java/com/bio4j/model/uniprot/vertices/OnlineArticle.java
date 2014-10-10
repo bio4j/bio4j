@@ -6,6 +6,7 @@ import com.bio4j.model.uniprot.edges.ReferenceOnlineArticle;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -47,10 +48,10 @@ public final class OnlineArticle <I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 
     // onlineArticleOnlineJournal
     // outgoing
-    public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> onlineArticleOnlineJournal_out(){
-        return outOne(graph().OnlineArticleOnlineJournal());
+    public Optional<OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>> onlineArticleOnlineJournal_out(){
+        return outOneOptional(graph().OnlineArticleOnlineJournal());
     }
-    public OnlineJournal<I, RV, RVT, RE, RET> onlineArticleOnlineJournal_outV(){
-        return outOneV(graph().OnlineArticleOnlineJournal());
+    public Optional<OnlineJournal<I, RV, RVT, RE, RET>> onlineArticleOnlineJournal_outV(){
+        return outOneOptionalV(graph().OnlineArticleOnlineJournal());
     }
 }
