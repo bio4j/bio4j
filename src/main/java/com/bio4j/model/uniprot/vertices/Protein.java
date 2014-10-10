@@ -248,10 +248,10 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	// uniref50Member
 	// outgoing
 	public Optional<UniRef50Member<I, RV, RVT, RE, RET>> uniref50Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef50Member());
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>> uniref50Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef50Member());
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 
 	// uniref50Representant
@@ -259,7 +259,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef50Representant<I, RV, RVT, RE, RET>> uniref50Representant_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
-	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_outNode(){
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>>  uniref50Representant_outNode(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
 
