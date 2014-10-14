@@ -1136,6 +1136,8 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								isoform.set(graph.Isoform().sequence, isoformSeqSt);
 								isoform.set(graph.Isoform().id, isoformIdSt);
 								graph.raw().commit();
+								//Adding edge from Protein to Isoform
+								protein.addOutEdge(graph.ProteinIsoform(), isoform);
 							}else{
 								isoform = isoformOptional.get();
 							}

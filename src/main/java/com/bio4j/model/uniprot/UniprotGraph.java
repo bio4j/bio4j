@@ -689,6 +689,8 @@ public abstract class UniprotGraph<
 
 	public abstract ProteinIsoformInteractionType ProteinIsoformInteraction();
 
+	public abstract ProteinIsoformType ProteinIsoform();
+
 	public abstract IsoformProteinInteractionType IsoformProteinInteraction();
 
 	public abstract ProteinReactomeTermType ProteinReactomeTerm();
@@ -3801,6 +3803,32 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+	}
+
+	public final class ProteinIsoformType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinIsoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinIsoformType,
+					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ProteinIsoformType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Isoform());
+		}
+
+		@Override
+		public ProteinIsoformType value() {
+			return graph().ProteinIsoform();
+		}
+
+		@Override
+		public ProteinIsoform<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinIsoform<I, RV, RVT, RE, RET>(edge, this);
+		}
+
 	}
 
 	public final class ProteinIsoformInteractionType
