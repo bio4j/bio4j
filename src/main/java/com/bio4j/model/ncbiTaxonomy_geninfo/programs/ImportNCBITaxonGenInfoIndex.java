@@ -94,7 +94,7 @@ public abstract class ImportNCBITaxonGenInfoIndex<I extends UntypedGraph<RV,RVT,
 							genInfo = genInfoOptional.get();
 						}
 
-						ncbiTaxon.addInEdge(ncbiTaxonomyGenInfoGraph.GenInfoNCBITaxon(), genInfo);
+						ncbiTaxon.addInEdge( genInfo, ncbiTaxonomyGenInfoGraph.GenInfoNCBITaxon());
 
 					} else {
 						incorrectPairsBuff.write(genInfoId + "\t" + taxId + "\n");
