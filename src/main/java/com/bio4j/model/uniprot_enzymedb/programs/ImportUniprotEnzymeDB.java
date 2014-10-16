@@ -147,8 +147,8 @@ public abstract class ImportUniprotEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprot:\nInput file: " + inFile.getName()
-							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
+					statsBuff.write("Statistics for program ImportUniprotEnzymeDB:\nInput file: " + inFile.getName()
+							+ "\nThere were " + proteinCounter + " proteins analyzed.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---

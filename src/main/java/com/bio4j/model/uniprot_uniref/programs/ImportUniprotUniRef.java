@@ -61,14 +61,14 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			try {
 
 				// This block configure the logger with handler and formatter
-				fh = new FileHandler("ImportUniRefTitan.log", true);
+				fh = new FileHandler("ImportUniprotUniRefTitan.log", true);
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
 				logger.addHandler(fh);
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUnirefStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotUnirefStats.txt")));
 
 				//------------------- UNIREF 100----------------------------
 				System.out.println("Reading Uniref 100 file...");
