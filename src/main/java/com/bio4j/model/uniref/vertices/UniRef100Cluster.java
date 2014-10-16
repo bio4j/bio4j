@@ -56,7 +56,7 @@ public final class UniRef100Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, R
 	public Stream<UniRef100Member<I, RV, RVT, RE, RET>> uniRef100Member_in(){
 		return inMany(graph().uniprotUniRefGraph().UniRef100Member());
 	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef100Member_inNode(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef100Member_inV(){
 		return inManyV(graph().uniprotUniRefGraph().UniRef100Member());
 	}
 
