@@ -250,7 +250,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef50Member<I, RV, RVT, RE, RET>> uniref50Member_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Member());
 	}
-	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>> uniref50Member_outNode(){
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>> uniref50Member_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 
@@ -259,7 +259,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef50Representant<I, RV, RVT, RE, RET>> uniref50Representant_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
-	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>>  uniref50Representant_outNode(){
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>>  uniref50Representant_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
 
@@ -268,7 +268,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef90Member<I, RV, RVT, RE, RET>> uniref90Member_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Member());
 	}
-	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Member_outNode(){
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Member_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Member());
 	}
 
@@ -277,7 +277,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef90Representant<I, RV, RVT, RE, RET>> uniref90Representant_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
-	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Representant_outNode(){
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Representant_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
 
@@ -286,7 +286,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef100Member<I, RV, RVT, RE, RET>> uniref100Member_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Member());
 	}
-	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Member_outNode(){
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Member_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Member());
 	}
 
@@ -295,7 +295,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Optional<UniRef100Representant<I, RV, RVT, RE, RET>> uniref100Representant_out(){
 		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
-	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Representant_outNode(){
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Representant_outV(){
 		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
 
