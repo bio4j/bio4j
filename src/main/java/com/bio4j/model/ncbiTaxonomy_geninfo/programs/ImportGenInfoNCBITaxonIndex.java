@@ -79,7 +79,7 @@ public abstract class ImportGenInfoNCBITaxonIndex<I extends UntypedGraph<RV,RVT,
 						Optional<GenInfo<I, RV, RVT, RE, RET>> genInfoOptional = ncbiTaxonomyGenInfoGraph.genInfoGraph().genInfoIdIndex().getVertex(genInfoId);
 						GenInfo<I, RV, RVT, RE, RET> genInfo = null;
 						if(!genInfoOptional.isPresent()){
-							genInfo = ncbiTaxonomyGenInfoGraph.genInfoGraph().GenInfo().from(ncbiTaxonomyGenInfoGraph.raw().addVertex(null));
+							genInfo = ncbiTaxonomyGenInfoGraph.genInfoGraph().addVertex(ncbiTaxonomyGenInfoGraph.genInfoGraph().GenInfo());
 							genInfo.set(ncbiTaxonomyGenInfoGraph.genInfoGraph().GenInfo().id, genInfoId);
 							ncbiTaxonomyGenInfoGraph.raw().commit();
 						}else{
