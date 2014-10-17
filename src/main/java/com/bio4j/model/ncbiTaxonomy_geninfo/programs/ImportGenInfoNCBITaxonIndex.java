@@ -1,20 +1,12 @@
 package com.bio4j.model.ncbiTaxonomy_geninfo.programs;
 
 import com.bio4j.model.geninfo.vertices.GenInfo;
-import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.ncbiTaxonomy_geninfo.NCBITaxonomyGenInfoGraph;
-import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.bio4j.angulillos.UntypedGraph;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
-import org.jdom2.Element;
 
 import java.io.*;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +15,7 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportNCBITaxonGenInfoIndex<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+public abstract class ImportGenInfoNCBITaxonIndex<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
 	private static final Logger logger = Logger.getLogger("ImportGenInfoNCBITaxonIndex");
 	private static FileHandler fh;
@@ -145,7 +137,7 @@ public abstract class ImportNCBITaxonGenInfoIndex<I extends UntypedGraph<RV,RVT,
 
 
 				} catch (IOException ex) {
-					Logger.getLogger(ImportNCBITaxonGenInfoIndex.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(ImportGenInfoNCBITaxonIndex.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
 			}
