@@ -152,7 +152,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 									transferredEntry = false;
 								}
 
-								Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.Enzyme().from(enzymeDBGraph.raw().addVertex(null));
+								Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
 
 								enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
 								enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);
