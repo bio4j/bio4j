@@ -5,6 +5,8 @@ import com.bio4j.model.uniprot.edges.ReferenceSubmission;
 import com.bio4j.model.uniprot.edges.SubmissionDB;
 import com.bio4j.angulillos.UntypedGraph;
 
+import java.util.Optional;
+
 /**
  * Created by ppareja on 7/23/2014.
  */
@@ -35,11 +37,11 @@ public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
 
 	// submissionDB
 	// outgoing
-	public SubmissionDB<I, RV, RVT, RE, RET> submissionDB_out(){
-		return outOne(graph().SubmissionDB());
+	public Optional<SubmissionDB<I, RV, RVT, RE, RET>> submissionDB_out(){
+		return outOneOptional(graph().SubmissionDB());
 	}
-	public DB<I, RV, RVT, RE, RET> submissionDB_outV(){
-		return outOneV(graph().SubmissionDB());
+	public Optional<DB<I, RV, RVT, RE, RET>> submissionDB_outV(){
+		return outOneOptionalV(graph().SubmissionDB());
 	}
 
 	// referenceSubmission

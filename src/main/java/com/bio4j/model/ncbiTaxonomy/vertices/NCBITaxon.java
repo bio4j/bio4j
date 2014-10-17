@@ -1,12 +1,15 @@
 package com.bio4j.model.ncbiTaxonomy.vertices;
 
+import com.bio4j.model.geninfo.vertices.GenInfo;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
+import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
@@ -48,29 +51,35 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	//----ncbiTaxonParent-------
 	// ingoing
-	public Stream<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in(){
-		return inMany(graph().NCBITaxonParent());
+	public Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_in(){
+		return inManyOptional(graph().NCBITaxonParent());
 	}
-	public Stream<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV(){
-		return inManyV(graph().NCBITaxonParent());
+	public Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_inV(){
+		return inManyOptionalV(graph().NCBITaxonParent());
 	}
 
 	//----ncbiTaxonParent-------
 	// outgoing
-	public NCBITaxonParent<I, RV, RVT, RE, RET> ncbiTaxonParent_out(){
-		return outOne(graph().NCBITaxonParent());
+	public Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_out(){
+		return outOneOptional(graph().NCBITaxonParent());
 	}
-	public NCBITaxon<I, RV, RVT, RE, RET> ncbiTaxonParent_outV(){
-		return outOneV(graph().NCBITaxonParent());
+	public Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_outV(){
+		return outOneOptionalV(graph().NCBITaxonParent());
 	}
 
 	//----proteinNCBITaxon-------
 	// ingoing
-	public Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_in(){
-		return inMany(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>>> proteinNCBITaxon_in(){
+		return inManyOptional(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinNCBITaxon_inV(){
-		return inManyV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinNCBITaxon_inV(){
+		return inManyOptionalV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
+
+    //-----genInfoNCBITaxon----
+    // ingoing
+    public Optional<Stream<GenInfoNCBITaxon<I, RV, RVT, RE, RET>>> genInfoNCBITaxon_in(){   return inManyOptional(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+    public Optional<Stream<GenInfo<I, RV, RVT, RE, RET>>> genInfoNCBITaxon_inV(){   return inManyOptionalV(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+
 
 }

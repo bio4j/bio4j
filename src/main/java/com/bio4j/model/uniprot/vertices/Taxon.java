@@ -6,6 +6,7 @@ import com.bio4j.model.uniprot.edges.TaxonParent;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -38,29 +39,29 @@ public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
 	// organismTaxon
 	// ingoing
-	public Stream<OrganismTaxon<I, RV, RVT, RE, RET>> organismTaxon_in(){
-		return inMany(graph().OrganismTaxon());
+	public Optional<Stream<OrganismTaxon<I, RV, RVT, RE, RET>>> organismTaxon_in(){
+		return inManyOptional(graph().OrganismTaxon());
 	}
-	public Stream<Organism<I, RV, RVT, RE, RET>> organismTaxon_inV(){
-		return inManyV(graph().OrganismTaxon());
+	public Optional<Stream<Organism<I, RV, RVT, RE, RET>>> organismTaxon_inV(){
+		return inManyOptionalV(graph().OrganismTaxon());
 	}
 
 	// taxonParent
 	// ingoing
-	public Stream<TaxonParent<I, RV, RVT, RE, RET>> taxonParent_in(){
-		return inMany(graph().TaxonParent());
+	public Optional<Stream<TaxonParent<I, RV, RVT, RE, RET>>> taxonParent_in(){
+		return inManyOptional(graph().TaxonParent());
 	}
-	public Stream<Taxon<I, RV, RVT, RE, RET>> taxonParent_inV(){
-		return inManyV(graph().TaxonParent());
+	public Optional<Stream<Taxon<I, RV, RVT, RE, RET>>> taxonParent_inV(){
+		return inManyOptionalV(graph().TaxonParent());
 	}
 
 	// taxonParent
 	// outgoing
-	public TaxonParent<I, RV, RVT, RE, RET> taxonParent_out(){
-		return outOne(graph().TaxonParent());
+	public Optional<TaxonParent<I, RV, RVT, RE, RET>> taxonParent_out(){
+		return outOneOptional(graph().TaxonParent());
 	}
-	public Taxon<I, RV, RVT, RE, RET> taxonParent_outV(){
-		return outOneV(graph().TaxonParent());
+	public Optional<Taxon<I, RV, RVT, RE, RET>> taxonParent_outV(){
+		return outOneOptionalV(graph().TaxonParent());
 	}
 
 
