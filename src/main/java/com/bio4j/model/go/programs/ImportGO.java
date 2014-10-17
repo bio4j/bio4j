@@ -92,9 +92,8 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 
 				logger.log(Level.INFO, "inserting subontologies nodes....");
 				//---biological process---
-				SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.SubOntologies().from(
-					goGraph.raw().addVertex(null)
-				);
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.addVertex(goGraph.SubOntologies());
+				
 				subOntologiesBP.set(goGraph.SubOntologies().name, "biological_process");
 
 				SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.SubOntologies().from(
