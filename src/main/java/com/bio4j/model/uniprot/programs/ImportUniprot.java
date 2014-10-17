@@ -921,7 +921,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 							if(!diseaseOptional.isPresent()){
 
-								disease = graph.Disease().from(graph.raw().addVertex(null));
+								disease = graph.addVertex(graph.Disease());
 								disease.set(graph.Disease().name, diseaseName);
 								disease.set(graph.Disease().id, diseaseId);
 								disease.set(graph.Disease().acronym, diseaseAcronym);
@@ -1044,7 +1044,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
 
 							if(!lastLocationOptional.isPresent()){
-								lastLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
+								lastLocation = graph.addVertex(graph.SubcellularLocation());
 								lastLocation.set(graph.SubcellularLocation().name, firstLocationSt);
 								graph.raw().commit();
 							}else{
@@ -1058,7 +1058,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
 
 								if(!tempLocationOptional.isPresent()){
-									tempLocation = graph.SubcellularLocation().from(graph.raw().addVertex(null));
+									tempLocation = graph.addVertex(graph.SubcellularLocation());
 									tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
 									graph.raw().commit();
 								}else{
@@ -1130,7 +1130,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
 							Isoform<I,RV,RVT,RE,RET> isoform;
 							if(!isoformOptional.isPresent()){
-								isoform = graph.Isoform().from(graph.raw().addVertex(null));
+								isoform = graph.addVertex(graph.Isoform());
 								isoform.set(graph.Isoform().name, isoformNameSt);
 								isoform.set(graph.Isoform().note, isoformNoteSt);
 								isoform.set(graph.Isoform().sequence, isoformSeqSt);
@@ -1154,7 +1154,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 								if(alternativeProductOptional.isPresent()){
 									alternativeProduct = alternativeProductOptional.get();
 								}else{
-									alternativeProduct = graph.AlternativeProduct().from(graph.raw().addVertex(null));
+									alternativeProduct = graph.addVertex(graph.AlternativeProduct());
 									alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
 									graph.raw().commit();
 								}
@@ -1211,7 +1211,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 						if(!sequenceCautionOptional.isPresent()){
 
-							sequenceCaution = graph.SequenceCaution().from(graph.raw().addVertex(null));
+							sequenceCaution = graph.addVertex(graph.SequenceCaution());
 							sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
 							graph.raw().commit();
 
@@ -1411,7 +1411,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					String personName = personElement.getAttributeValue("name");
 					Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
 					if(!optionalPerson.isPresent()){
-						person = graph.Person().from(graph.raw().addVertex(null));
+						person = graph.addVertex(graph.Person());
 						person.set(graph.Person().name, personName);
 						graph.raw().commit();
 					}else{
@@ -1425,7 +1425,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					String consortiumName = consortiumElement.getAttributeValue("name");
 					Optional<Consortium<I,RV,RVT,RE,RET>> optionalConsortium = graph.consortiumNameIndex().getVertex(consortiumName);
 					if(!optionalConsortium.isPresent()){
-						consortium = graph.Consortium().from(graph.raw().addVertex(null));
+						consortium = graph.addVertex(graph.Consortium());
 						consortium.set(graph.Consortium().name, consortiumName);
 						graph.raw().commit();
 					}else{
@@ -1452,14 +1452,14 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								if(!optionalThesis.isPresent()){
 
-									thesis = graph.Thesis().from(graph.raw().addVertex(null));
+									thesis = graph.addVertex(graph.Thesis());
 									thesis.set(graph.Thesis().title, titleSt);
 
 									//-----------institute-----------------------------
 									String instituteSt = citation.getAttributeValue("institute");
 									String countrySt = citation.getAttributeValue("country");
 
-									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference = graph.addVertex(graph.Reference());
 									reference.set(graph.Reference().date, dateSt);
 									reference.addOutEdge(graph.ReferenceThesis(), thesis);
 
@@ -1476,7 +1476,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 										if(!optionalInstitute.isPresent()){
 
-											institute = graph.Institute().from(graph.raw().addVertex(null));
+											institute = graph.addVertex(graph.Institute());
 											institute.set(graph.Institute().name, instituteSt);
 											graph.raw().commit();
 
@@ -1489,7 +1489,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 											Country<I,RV,RVT,RE,RET> country = null;
 											Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
 											if(!optionalCountry.isPresent()){
-												country = graph.Country().from(graph.raw().addVertex(null));
+												country = graph.addVertex(graph.Country());
 												country.set(graph.Country().name, countrySt);
 												graph.raw().commit();
 											}else{
@@ -1540,12 +1540,12 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								if(!optionalPatent.isPresent()){
 
-									patent = graph.Patent().from(graph.raw().addVertex(null));
+									patent = graph.addVertex(graph.Patent());
 									patent.set(graph.Patent().number, numberSt);
 									patent.set(graph.Patent().title, titleSt);
 									graph.raw().commit();
 
-									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference = graph.addVertex(graph.Reference());
 									reference.set(graph.Reference().date, dateSt);
 									reference.addOutEdge(graph.ReferencePatent(), patent);
 
@@ -1586,11 +1586,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								if(!optionalSubmission.isPresent()){
 
-									submission = graph.Submission().from(graph.raw().addVertex(null));
+									submission = graph.addVertex(graph.Submission());
 									submission.set(graph.Submission().title, titleSt);
 									graph.raw().commit();
 
-									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference = graph.addVertex(graph.Reference());
 									reference.set(graph.Reference().date, dateSt);
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
@@ -1675,11 +1675,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 							if(!optionalBook.isPresent()){
 
-								book = graph.Book().from(graph.raw().addVertex(null));
+								book = graph.addVertex(graph.Book());
 								book.set(graph.Book().name, nameSt);
 								graph.raw().commit();
 
-								reference = graph.Reference().from(graph.raw().addVertex(null));
+								reference = graph.addVertex(graph.Reference());
 								reference.set(graph.Reference().date, dateSt);
 								reference.addOutEdge(graph.ReferenceBook(), book);
 
@@ -1699,7 +1699,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
 
 										if(!optionalPerson.isPresent()){
-											editor = graph.Person().from(graph.raw().addVertex(null));
+											editor = graph.addVertex(graph.Person());
 											editor.set(graph.Person().name, personName);
 											graph.raw().commit();
 										}else{
@@ -1718,7 +1718,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 									if(!optionalPublisher.isPresent()){
 
-										publisher = graph.Publisher().from(graph.raw().addVertex(null));
+										publisher = graph.addVertex(graph.Publisher());
 										publisher.set(graph.Publisher().name, publisherSt);
 										graph.raw().commit();
 
@@ -1737,7 +1737,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 									if(!optionalCity.isPresent()){
 
-										city = graph.City().from(graph.raw().addVertex(null));
+										city = graph.addVertex(graph.City());
 										city.set(graph.City().name, citySt);
 										graph.raw().commit();
 
@@ -1795,11 +1795,11 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								if(!optionalOnlineArticle.isPresent()){
 
-									onlineArticle = graph.OnlineArticle().from(graph.raw().addVertex(null));
+									onlineArticle = graph.addVertex(graph.OnlineArticle());
 									onlineArticle.set(graph.OnlineArticle().title, titleSt);
 									graph.raw().commit();
 
-									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference = graph.addVertex(graph.Reference());
 									reference.set(graph.Reference().date, dateSt);
 									reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
 
@@ -1820,7 +1820,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 										if(!optionalOnlineJournal.isPresent()){
 
-											onlineJournal = graph.OnlineJournal().from(graph.raw().addVertex(null));
+											onlineJournal = graph.addVertex(graph.OnlineJournal());
 											onlineJournal.set(graph.OnlineJournal().name, nameSt);
 											graph.raw().commit();
 
@@ -1903,7 +1903,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 								if(!optionalArticle.isPresent()){
 
-									article = graph.Article().from(graph.raw().addVertex(null));
+									article = graph.addVertex(graph.Article());
 									article.set(graph.Article().title, titleSt);
 									article.set(graph.Article().doId, doiSt);
 									graph.raw().commit();
@@ -1914,7 +1914,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
 
 										if(!optionalPubmed.isPresent()){
-											pubmed = graph.Pubmed().from(graph.raw().addVertex(null));
+											pubmed = graph.addVertex(graph.Pubmed());
 											pubmed.set(graph.Pubmed().id, pubmedId);
 											graph.raw().commit();
 										}else{
@@ -1923,7 +1923,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										article.addOutEdge(graph.ArticlePubmed(), pubmed);
 									}
 
-									reference = graph.Reference().from(graph.raw().addVertex(null));
+									reference = graph.addVertex(graph.Reference());
 									reference.set(graph.Reference().date, dateSt);
 									reference.addOutEdge(graph.ReferenceArticle(), article);
 
@@ -1943,7 +1943,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										Optional<Journal<I,RV,RVT,RE,RET>> optionalJournal = graph.journalNameIndex().getVertex(journalNameSt);
 
 										if(!optionalJournal.isPresent()){
-											journal = graph.Journal().from(graph.raw().addVertex(null));
+											journal = graph.addVertex(graph.Journal());
 											journal.set(graph.Journal().name, journalNameSt);
 											graph.raw().commit();
 										}else{
@@ -1985,10 +1985,10 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 							}
 
 
-							UnpublishedObservation<I,RV,RVT,RE,RET> unpublishedObservation = graph.UnpublishedObservation().from(graph.raw().addVertex(null));
+							UnpublishedObservation<I,RV,RVT,RE,RET> unpublishedObservation = graph.addVertex(graph.UnpublishedObservation());
 							unpublishedObservation.set(graph.UnpublishedObservation().scope, scopeSt);
 
-							Reference<I,RV,RVT,RE,RET> reference = graph.Reference().from(graph.raw().addVertex(null));
+							Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
 							reference.set(graph.Reference().date, dateSt);
 							reference.addOutEdge(graph.ReferenceUnpublishedObservation(), unpublishedObservation);
 
