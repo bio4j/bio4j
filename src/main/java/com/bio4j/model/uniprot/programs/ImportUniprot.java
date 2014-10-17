@@ -1605,7 +1605,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 										DB<I,RV,RVT,RE,RET> db = null;
 										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
 										if(!optionalDB.isPresent()){
-											db = graph.DB().from(graph.raw().addVertex(null));
+											db = graph.addVertex(graph.DB());
 											db.set(graph.DB().name, dbSt);
 											graph.raw().commit();
 										}else{
