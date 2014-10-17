@@ -1610,7 +1610,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 										DB<I,RV,RVT,RE,RET> db = null;
 										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
 										if(!optionalDB.isPresent()){
-											db = graph.DB().from(graph.raw().addVertex(null));
+											db = graph.addVertex(graph.DB());
 											db.set(graph.DB().name, dbSt);
 											graph.raw().commit();
 										}else{
