@@ -1,31 +1,153 @@
 
 ```java
-package com.bio4j.model.go.edges;
+package com.bio4j.model.ncbiTaxonomy_geninfo.programs;
 
-import com.bio4j.model.go.GoGraph;
-import com.bio4j.model.go.vertices.GoTerm;
+import com.bio4j.model.geninfo.vertices.GenInfo;
+import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
+import com.bio4j.model.ncbiTaxonomy_geninfo.NCBITaxonomyGenInfoGraph;
 import com.bio4j.angulillos.UntypedGraph;
 
-public final class NegativelyRegulates<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends
-		GoGraph.GoEdge<
-				GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType,
-				NegativelyRegulates<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.NegativelyRegulatesType,
-				GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType,
-				I, RV, RVT, RE, RET
-				> {
+import java.io.*;
+import java.util.Optional;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-	public NegativelyRegulates(RE edge, GoGraph<I, RV, RVT, RE, RET>.NegativelyRegulatesType type) {
+/**
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ */
+public abstract class ImportGenInfoNCBITaxonIndex<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-		super(edge, type);
+	private static final Logger logger = Logger.getLogger("ImportGenInfoNCBITaxonIndex");
+	private static FileHandler fh;
+
+	protected abstract NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+
+
+	public void importGenInfoNCBITaxonIndex(String[] args) {
+
+		if (args.length != 2) {
+			System.out.println("This program expects the following parameters: \n"
+					+ "1. GI tax Id association filename \n"
+					+ "2. Bio4j DB folder \n");
+		} else {
+
+			long initTime = System.nanoTime();
+
+			File inFile = new File(args[0]);
+			String dbFolder = args[1];
+
+
+			NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGenInfoGraph = config(dbFolder);
+
+			BufferedWriter statsBuff = null;
+			BufferedWriter incorrectPairsBuff = null;
+
+			int genInfoCounter = 0;
+			int limitForPrintingOut = 10000;
+			int lineCounter = 0;
+
+			try {
+
+				// This block configures the logger with handler and formatter
+				fh = new FileHandler("ImportNCBITaxonGenInfoIndex.log", false);
+
+				SimpleFormatter formatter = new SimpleFormatter();
+				fh.setFormatter(formatter);
+				logger.addHandler(fh);
+				logger.setLevel(Level.ALL);
+
+				//---creating writer for stats file-----
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportNCBITaxonGenInfoIndexStats.txt")));
+				incorrectPairsBuff = new BufferedWriter(new FileWriter(new File("incorrectGiTaxIdPairs.txt")));
+
+				BufferedReader reader = new BufferedReader(new FileReader(inFile));
+				StringBuilder entryStBuilder = new StringBuilder();
+				String line;
+
+				while ((line = reader.readLine()) != null) {
+
+					String[] columns = line.split("\t");
+
+					String genInfoId = columns[0];
+					String taxId = columns[1];
+
+					Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonOptional = ncbiTaxonomyGenInfoGraph.ncbiTaxonomyGraph().nCBITaxonIdIndex().getVertex(taxId);
+
+					if (ncbiTaxonOptional.isPresent()) {
+
+						NCBITaxon<I, RV, RVT, RE, RET> ncbiTaxon = ncbiTaxonOptional.get();
+						Optional<GenInfo<I, RV, RVT, RE, RET>> genInfoOptional = ncbiTaxonomyGenInfoGraph.genInfoGraph().genInfoIdIndex().getVertex(genInfoId);
+						GenInfo<I, RV, RVT, RE, RET> genInfo = null;
+						if(!genInfoOptional.isPresent()){
+							genInfo = ncbiTaxonomyGenInfoGraph.genInfoGraph().addVertex(ncbiTaxonomyGenInfoGraph.genInfoGraph().GenInfo());
+							genInfo.set(ncbiTaxonomyGenInfoGraph.genInfoGraph().GenInfo().id, genInfoId);
+							ncbiTaxonomyGenInfoGraph.raw().commit();
+						}else{
+							genInfo = genInfoOptional.get();
+						}
+
+						ncbiTaxon.addInEdge( genInfo, ncbiTaxonomyGenInfoGraph.GenInfoNCBITaxon());
+
+					} else {
+						incorrectPairsBuff.write(genInfoId + "\t" + taxId + "\n");
+					}
+
+					lineCounter++;
+
+					if (lineCounter % 100000 == 0) {
+						logger.log(Level.INFO, (lineCounter + " lines parsed..."));
+						incorrectPairsBuff.flush();
+					}
+				}
+				reader.close();
+
+
+			} catch (Exception e) {
+				logger.log(Level.SEVERE, e.getMessage());
+				StackTraceElement[] trace = e.getStackTrace();
+				for (StackTraceElement stackTraceElement : trace) {
+					logger.log(Level.SEVERE, stackTraceElement.toString());
+				}
+			} finally {
+
+				try {
+					//------closing writers-------
+
+					// shutdown, makes sure all changes are written to disk
+					ncbiTaxonomyGenInfoGraph.raw().shutdown();
+
+					// closing logger file handler
+					fh.close();
+
+					//-----------------writing stats file---------------------
+					long elapsedTime = System.nanoTime() - initTime;
+					long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+					long hours = elapsedSeconds / 3600;
+					long minutes = (elapsedSeconds % 3600) / 60;
+					long seconds = (elapsedSeconds % 3600) % 60;
+
+					statsBuff.write("Statistics for program ImportNCBITaxonGenInfoIndex:\nInput file: " + inFile.getName()
+							+ "\nThere were " + genInfoCounter + " Gen Info elements inserted.\n"
+							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+					//---closing stats writer---
+					statsBuff.close();
+					//---closing incorrect pairs writer---
+					incorrectPairsBuff.close();
+
+
+				} catch (IOException ex) {
+					Logger.getLogger(ImportGenInfoNCBITaxonIndex.class.getName()).log(Level.SEVERE, null, ex);
+				}
+
+			}
+		}
+
 	}
 
-	@Override
-	public NegativelyRegulates<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
 }
-
 ```
 
 
@@ -237,20 +359,20 @@ public final class NegativelyRegulates<I extends UntypedGraph<RV, RVT, RE, RET>,
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]: ../../ncbiTaxonomy/vertices/NCBITaxon.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: goSlims/GoSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]: PositivelyRegulates.java.md
-[main/java/com/bio4j/model/go/edges/HasPartOf.java]: HasPartOf.java.md
-[main/java/com/bio4j/model/go/edges/Regulates.java]: Regulates.java.md
-[main/java/com/bio4j/model/go/edges/PartOf.java]: PartOf.java.md
-[main/java/com/bio4j/model/go/edges/IsA.java]: IsA.java.md
-[main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/edges/SubOntology.java]: SubOntology.java.md
-[main/java/com/bio4j/model/go/GoGraph.java]: ../GoGraph.java.md
-[main/java/com/bio4j/model/go/vertices/SubOntologies.java]: ../vertices/SubOntologies.java.md
-[main/java/com/bio4j/model/go/vertices/GoTerm.java]: ../vertices/GoTerm.java.md
-[main/java/com/bio4j/model/go/vertices/GoSlims.java]: ../vertices/GoSlims.java.md
-[main/java/com/bio4j/model/go/programs/ImportGO.java]: ../programs/ImportGO.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../../go/edges/goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../../go/edges/goSlims/PlantSlim.java.md
+[main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]: ../../go/edges/PositivelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/HasPartOf.java]: ../../go/edges/HasPartOf.java.md
+[main/java/com/bio4j/model/go/edges/Regulates.java]: ../../go/edges/Regulates.java.md
+[main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
+[main/java/com/bio4j/model/go/edges/IsA.java]: ../../go/edges/IsA.java.md
+[main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/SubOntology.java]: ../../go/edges/SubOntology.java.md
+[main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
+[main/java/com/bio4j/model/go/vertices/SubOntologies.java]: ../../go/vertices/SubOntologies.java.md
+[main/java/com/bio4j/model/go/vertices/GoTerm.java]: ../../go/vertices/GoTerm.java.md
+[main/java/com/bio4j/model/go/vertices/GoSlims.java]: ../../go/vertices/GoSlims.java.md
+[main/java/com/bio4j/model/go/programs/ImportGO.java]: ../../go/programs/ImportGO.java.md
 [main/java/com/bio4j/model/uniprot/edges/BookCity.java]: ../../uniprot/edges/BookCity.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]: ../../uniprot/edges/ProteinReference.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
@@ -345,9 +467,9 @@ public final class NegativelyRegulates<I extends UntypedGraph<RV, RVT, RE, RET>,
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
 [main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../NCBITaxonomyGenInfoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ImportGenInfoNCBITaxonIndex.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
 [main/java/com/bio4j/model/uniprot_go/UniprotGoGraph.java]: ../../uniprot_go/UniprotGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniprotGo.java]: ../../uniprot_go/programs/ImportUniprotGo.java.md

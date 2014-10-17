@@ -14,10 +14,12 @@ import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -85,74 +87,74 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinComment
 	// outgoing
-	public List<ProteinComment<I, RV, RVT, RE, RET>> proteinComment_out(){
-		return outMany(graph().ProteinComment());
+	public Optional<Stream<ProteinComment<I, RV, RVT, RE, RET>>> proteinComment_out(){
+		return outManyOptional(graph().ProteinComment());
 	}
-	public List<CommentType<I, RV, RVT, RE, RET>>  proteinComment_outV(){
-		return outManyV(graph().ProteinComment());
+	public Optional<Stream<CommentType<I, RV, RVT, RE, RET>>>  proteinComment_outV(){
+		return outManyOptionalV(graph().ProteinComment());
 	}
 
 	// proteinRefSeq
 	// outgoing
-	public List<ProteinRefSeq<I, RV, RVT, RE, RET>> proteinRefSeq_out(){
-		return outMany(graph().ProteinRefSeq());
+	public Optional<Stream<ProteinRefSeq<I, RV, RVT, RE, RET>>> proteinRefSeq_out(){
+		return outManyOptional(graph().ProteinRefSeq());
 	}
-	public List<RefSeq<I, RV, RVT, RE, RET>>  proteinRefSeq_outV(){
-		return outManyV(graph().ProteinRefSeq());
+	public Optional<Stream<RefSeq<I, RV, RVT, RE, RET>>>  proteinRefSeq_outV(){
+		return outManyOptionalV(graph().ProteinRefSeq());
 	}
 
 	// proteinSequenceCaution
 	// outgoing
-	public List<ProteinSequenceCaution<I, RV, RVT, RE, RET>> proteinSequenceCaution_out(){
-		return outMany(graph().ProteinSequenceCaution());
+	public Optional<Stream<ProteinSequenceCaution<I, RV, RVT, RE, RET>>> proteinSequenceCaution_out(){
+		return outManyOptional(graph().ProteinSequenceCaution());
 	}
-	public List<SequenceCaution<I, RV, RVT, RE, RET>>  proteinSequenceCaution_outV(){
-		return outManyV(graph().ProteinSequenceCaution());
+	public Optional<Stream<SequenceCaution<I, RV, RVT, RE, RET>>>  proteinSequenceCaution_outV(){
+		return outManyOptionalV(graph().ProteinSequenceCaution());
 	}
 
 	// proteinSubcellularLocation
 	// outgoing
-	public List<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_out(){
-		return outMany(graph().ProteinSubcellularLocation());
+	public Optional<Stream<ProteinSubcellularLocation<I, RV, RVT, RE, RET>>> proteinSubcellularLocation_out(){
+		return outManyOptional(graph().ProteinSubcellularLocation());
 	}
-	public List<SubcellularLocation<I, RV, RVT, RE, RET>>  proteinSubcellularLocation_outV(){
-		return outManyV(graph().ProteinSubcellularLocation());
+	public Optional<Stream<SubcellularLocation<I, RV, RVT, RE, RET>>>  proteinSubcellularLocation_outV(){
+		return outManyOptionalV(graph().ProteinSubcellularLocation());
 	}
 
 	// proteinPIR
 	// outgoing
-	public List<ProteinPIR<I, RV, RVT, RE, RET>> proteinPIR_out(){
-		return outMany(graph().ProteinPIR());
+	public Optional<Stream<ProteinPIR<I, RV, RVT, RE, RET>>> proteinPIR_out(){
+		return outManyOptional(graph().ProteinPIR());
 	}
-	public List<PIR<I, RV, RVT, RE, RET>>  proteinPIR_outV(){
-		return outManyV(graph().ProteinPIR());
+	public Optional<Stream<PIR<I, RV, RVT, RE, RET>>>  proteinPIR_outV(){
+		return outManyOptionalV(graph().ProteinPIR());
 	}
 
 	// proteinFeature
 	// outgoing
-	public List<ProteinFeature<I, RV, RVT, RE, RET>> proteinFeature_out(){
-		return outMany(graph().ProteinFeature());
+	public Optional<Stream<ProteinFeature<I, RV, RVT, RE, RET>>> proteinFeature_out(){
+		return outManyOptional(graph().ProteinFeature());
 	}
-	public List<FeatureType<I, RV, RVT, RE, RET>>  proteinFeature_outV(){
-		return outManyV(graph().ProteinFeature());
+	public Optional<Stream<FeatureType<I, RV, RVT, RE, RET>>>  proteinFeature_outV(){
+		return outManyOptionalV(graph().ProteinFeature());
 	}
 
 	// proteinEMBL
 	// outgoing
-	public List<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_out(){
-		return outMany(graph().ProteinEMBL());
+	public Optional<Stream<ProteinEMBL<I, RV, RVT, RE, RET>>> proteinEMBL_out(){
+		return outManyOptional(graph().ProteinEMBL());
 	}
-	public List<EMBL<I, RV, RVT, RE, RET>>  proteinEMBL_outV(){
-		return outManyV(graph().ProteinEMBL());
+	public Optional<Stream<EMBL<I, RV, RVT, RE, RET>>>  proteinEMBL_outV(){
+		return outManyOptionalV(graph().ProteinEMBL());
 	}
 
 	// proteinDisease
 	// outgoing
-	public List<ProteinDisease<I, RV, RVT, RE, RET>> proteinDisease_out(){
-		return outMany(graph().ProteinDisease());
+	public Optional<Stream<ProteinDisease<I, RV, RVT, RE, RET>>> proteinDisease_out(){
+		return outManyOptional(graph().ProteinDisease());
 	}
-	public List<Disease<I, RV, RVT, RE, RET>>  proteinDisease_outV(){
-		return outManyV(graph().ProteinDisease());
+	public Optional<Stream<Disease<I, RV, RVT, RE, RET>>>  proteinDisease_outV(){
+		return outManyOptionalV(graph().ProteinDisease());
 	}
 
 	// proteinDataset
@@ -166,192 +168,192 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinInterpro
 	// outgoing
-	public List<ProteinInterpro<I, RV, RVT, RE, RET>> proteinIntepro_out(){
-		return outMany(graph().ProteinInterpro());
+	public Optional<Stream<ProteinInterpro<I, RV, RVT, RE, RET>>> proteinIntepro_out(){
+		return outManyOptional(graph().ProteinInterpro());
 	}
-	public List<Interpro<I, RV, RVT, RE, RET>>  proteinInterpro_outV(){
-		return outManyV(graph().ProteinInterpro());
+	public Optional<Stream<Interpro<I, RV, RVT, RE, RET>>>  proteinInterpro_outV(){
+		return outManyOptionalV(graph().ProteinInterpro());
 	}
 
 	// proteinReactomeTerm
 	// outgoing
-	public List<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_out(){
-		return outMany(graph().ProteinReactomeTerm());
+	public Optional<Stream<ProteinReactomeTerm<I, RV, RVT, RE, RET>>> proteinReactomeTerm_out(){
+		return outManyOptional(graph().ProteinReactomeTerm());
 	}
-	public List<ReactomeTerm<I, RV, RVT, RE, RET>>  proteinReactomeTerm_outV(){
-		return outManyV(graph().ProteinReactomeTerm());
+	public Optional<Stream<ReactomeTerm<I, RV, RVT, RE, RET>>>  proteinReactomeTerm_outV(){
+		return outManyOptionalV(graph().ProteinReactomeTerm());
 	}
 
 	// proteinEnsembl
 	// outgoing
-	public List<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_out(){
-		return outMany(graph().ProteinEnsembl());
+	public Optional<Stream<ProteinEnsembl<I, RV, RVT, RE, RET>>> proteinEnsembl_out(){
+		return outManyOptional(graph().ProteinEnsembl());
 	}
-	public List<Ensembl<I, RV, RVT, RE, RET>>  proteinEnsembl_outV(){
-		return outManyV(graph().ProteinEnsembl());
+	public Optional<Stream<Ensembl<I, RV, RVT, RE, RET>>>  proteinEnsembl_outV(){
+		return outManyOptionalV(graph().ProteinEnsembl());
 	}
 
 	// proteinKeyword
 	// outgoing
-	public List<ProteinKeyword<I, RV, RVT, RE, RET>> proteinKeyword_out(){
-		return outMany(graph().ProteinKeyword());
+	public Optional<Stream<ProteinKeyword<I, RV, RVT, RE, RET>>> proteinKeyword_out(){
+		return outManyOptional(graph().ProteinKeyword());
 	}
-	public List<Keyword<I, RV, RVT, RE, RET>>  proteinKeyword_outV(){
-		return outManyV(graph().ProteinKeyword());
+	public Optional<Stream<Keyword<I, RV, RVT, RE, RET>>>  proteinKeyword_outV(){
+		return outManyOptionalV(graph().ProteinKeyword());
 	}
 
 	// proteinKegg
 	// outgoing
-	public List<ProteinKegg<I, RV, RVT, RE, RET>> proteinKegg_out(){
-		return outMany(graph().ProteinKegg());
+	public Optional<Stream<ProteinKegg<I, RV, RVT, RE, RET>>> proteinKegg_out(){
+		return outManyOptional(graph().ProteinKegg());
 	}
-	public List<Kegg<I, RV, RVT, RE, RET>>  proteinKegg_outV(){
-		return outManyV(graph().ProteinKegg());
+	public Optional<Stream<Kegg<I, RV, RVT, RE, RET>>>  proteinKegg_outV(){
+		return outManyOptionalV(graph().ProteinKegg());
 	}
 
 	// proteinPfam
 	// outgoing
-	public List<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_out(){
-		return outMany(graph().ProteinPfam());
+	public Optional<Stream<ProteinPfam<I, RV, RVT, RE, RET>>> proteinPfam_out(){
+		return outManyOptional(graph().ProteinPfam());
 	}
-	public List<Pfam<I, RV, RVT, RE, RET>>  proteinPfam_outV(){
-		return outManyV(graph().ProteinPfam());
+	public Optional<Stream<Pfam<I, RV, RVT, RE, RET>>>  proteinPfam_outV(){
+		return outManyOptionalV(graph().ProteinPfam());
 	}
 
 	// proteinUniGene
 	// outgoing
-	public List<ProteinUniGene<I, RV, RVT, RE, RET>> proteinUniGene_out(){
-		return outMany(graph().ProteinUniGene());
+	public Optional<Stream<ProteinUniGene<I, RV, RVT, RE, RET>>> proteinUniGene_out(){
+		return outManyOptional(graph().ProteinUniGene());
 	}
-	public List<UniGene<I, RV, RVT, RE, RET>>  proteinUniGene_outV(){
-		return outManyV(graph().ProteinUniGene());
+	public Optional<Stream<UniGene<I, RV, RVT, RE, RET>>>  proteinUniGene_outV(){
+		return outManyOptionalV(graph().ProteinUniGene());
 	}
 
 	// enzymaticActivity
 	// outgoing
-	public List<EnzymaticActivity<I, RV, RVT, RE, RET>>   enzymaticActivity_out(){
-        return outMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
+	public Optional<Stream<EnzymaticActivity<I, RV, RVT, RE, RET>>>   enzymaticActivity_out(){
+        return outManyOptional(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
-	public List<Enzyme<I, RV, RVT, RE, RET>>   enzymaticActivity_outV(){
-        return outManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
+	public Optional<Stream<Enzyme<I, RV, RVT, RE, RET>>>   enzymaticActivity_outV(){
+        return outManyOptionalV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());
 	}
 
 	// goAnnotation
 	// outgoing
-	public List<GoAnnotation<I, RV, RVT, RE, RET>>  goAnnotation_out(){
-		return outMany(graph().uniprotGoGraph().GoAnnotation());
+	public Optional<Stream<GoAnnotation<I, RV, RVT, RE, RET>>>  goAnnotation_out(){
+		return outManyOptional(graph().uniprotGoGraph().GoAnnotation());
 	}
-	public List<GoTerm<I, RV, RVT, RE, RET>>   goAnnotation_outV(){
-		return outManyV(graph().uniprotGoGraph().GoAnnotation());
+	public Optional<Stream<GoTerm<I, RV, RVT, RE, RET>>>   goAnnotation_outV(){
+		return outManyOptionalV(graph().uniprotGoGraph().GoAnnotation());
 	}
 
 	// uniref50Member
 	// outgoing
-	public UniRef50Member<I, RV, RVT, RE, RET> uniref50Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef50Member());
+	public Optional<UniRef50Member<I, RV, RVT, RE, RET>> uniref50Member_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Member());
 	}
-	public UniRef50Cluster<I, RV, RVT, RE, RET> uniref50Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef50Member());
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>> uniref50Member_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 
 	// uniref50Representant
 	// outgoing
-	public UniRef50Representant<I, RV, RVT, RE, RET> uniref50Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef50Representant());
+	public Optional<UniRef50Representant<I, RV, RVT, RE, RET>> uniref50Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
-	public UniRef50Cluster<I, RV, RVT, RE, RET>  uniref50Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef50Representant());
+	public Optional<UniRef50Cluster<I, RV, RVT, RE, RET>>  uniref50Representant_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef50Representant());
 	}
 
 	// uniref90Member
 	// outgoing
-	public UniRef90Member<I, RV, RVT, RE, RET> uniref90Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef90Member());
+	public Optional<UniRef90Member<I, RV, RVT, RE, RET>> uniref90Member_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Member());
 	}
-	public UniRef90Cluster<I, RV, RVT, RE, RET>  uniref90Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef90Member());
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Member_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Member());
 	}
 
 	// uniref90Representant
 	// outgoing
-	public UniRef90Representant<I, RV, RVT, RE, RET> uniref90Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef90Representant());
+	public Optional<UniRef90Representant<I, RV, RVT, RE, RET>> uniref90Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
-	public UniRef90Cluster<I, RV, RVT, RE, RET> uniref90Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef90Representant());
+	public Optional<UniRef90Cluster<I, RV, RVT, RE, RET>> uniref90Representant_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef90Representant());
 	}
 
 	// uniref100Member
 	// outgoing
-	public UniRef100Member<I, RV, RVT, RE, RET> uniref100Member_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef100Member());
+	public Optional<UniRef100Member<I, RV, RVT, RE, RET>> uniref100Member_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Member());
 	}
-	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Member_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef100Member());
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Member_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Member());
 	}
 
 	// uniref90Representant
 	// outgoing
-	public UniRef100Representant<I, RV, RVT, RE, RET> uniref100Representant_out(){
-		return outOne(graph().uniprotUniRefGraph().UniRef100Representant());
+	public Optional<UniRef100Representant<I, RV, RVT, RE, RET>> uniref100Representant_out(){
+		return outOneOptional(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
-	public UniRef100Cluster<I, RV, RVT, RE, RET> uniref100Representant_outNode(){
-		return outOneV(graph().uniprotUniRefGraph().UniRef100Representant());
+	public Optional<UniRef100Cluster<I, RV, RVT, RE, RET>> uniref100Representant_outV(){
+		return outOneOptionalV(graph().uniprotUniRefGraph().UniRef100Representant());
 	}
 
 	// proteinReference
 	// outgoing
-	public List<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_out(){
-		return outMany(graph().ProteinReference());
+	public Optional<Stream<ProteinReference<I, RV, RVT, RE, RET>>> proteinReference_out(){
+		return outManyOptional(graph().ProteinReference());
 	}
-	public List<Reference<I, RV, RVT, RE, RET>> proteinReference_outV(){
-		return outManyV(graph().ProteinReference());
+	public Optional<Stream<Reference<I, RV, RVT, RE, RET>>> proteinReference_outV(){
+		return outManyOptionalV(graph().ProteinReference());
 	}
 
 
 	//----proteinNCBITaxon-------
 	// outgoing
-	public ProteinNCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_out(){
-		return outOne(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<ProteinNCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_out(){
+		return outOneOptional(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
-	public NCBITaxon<I, RV, RVT, RE, RET> proteinNCBITaxon_outV(){
-		return outOneV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+	public Optional<NCBITaxon<I, RV, RVT, RE, RET>> proteinNCBITaxon_outV(){
+		return outOneOptionalV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 
 	// proteinGeneLocation
 	// outgoing
-	public List<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_out(){
-		return outMany(graph().ProteinGeneLocation());
+	public Optional<Stream<ProteinGeneLocation<I, RV, RVT, RE, RET>>> proteinGeneLocation_out(){
+		return outManyOptional(graph().ProteinGeneLocation());
 	}
-	public List<GeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_outV(){
-		return outManyV(graph().ProteinGeneLocation());
+	public Optional<Stream<GeneLocation<I, RV, RVT, RE, RET>>> proteinGeneLocation_outV(){
+		return outManyOptionalV(graph().ProteinGeneLocation());
 	}
 
 	// proteinProteinInteraction
 	// outgoing
-	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_out(){
-		return outMany(graph().ProteinProteinInteraction());
+	public Optional<Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>>> proteinProteinInteraction_out(){
+		return outManyOptional(graph().ProteinProteinInteraction());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_outV(){
-		return outManyV(graph().ProteinProteinInteraction());
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinProteinInteraction_outV(){
+		return outManyOptionalV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinProteinInteraction
 	// ingoing
-	public List<ProteinProteinInteraction<I, RV, RVT, RE, RET>> proteinProteinInteraction_in(){
-		return inMany(graph().ProteinProteinInteraction());
+	public Optional<Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>>> proteinProteinInteraction_in(){
+		return inManyOptional(graph().ProteinProteinInteraction());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinProteinInteraction_inV(){
-		return inManyV(graph().ProteinProteinInteraction());
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinProteinInteraction_inV(){
+		return inManyOptionalV(graph().ProteinProteinInteraction());
 	}
 
 	// proteinIsoformInteraction
 	// outgoing
-	public List<ProteinIsoformInteraction<I, RV, RVT, RE, RET>> proteinIsoformInteraction_out(){
-		return outMany(graph().ProteinIsoformInteraction());
+	public Optional<Stream<ProteinIsoformInteraction<I, RV, RVT, RE, RET>>> proteinIsoformInteraction_out(){
+		return outManyOptional(graph().ProteinIsoformInteraction());
 	}
-	public List<Isoform<I, RV, RVT, RE, RET>> proteinIsoformInteraction_outV(){
-		return outManyV(graph().ProteinIsoformInteraction());
+	public Optional<Stream<Isoform<I, RV, RVT, RE, RET>>> proteinIsoformInteraction_outV(){
+		return outManyOptionalV(graph().ProteinIsoformInteraction());
 	}
 }
 
@@ -368,311 +370,315 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
       + com
         + bio4j
           + model
-            + enums
-            + enzymedb
-              + [EnzymeDBGraph.java][main\java\com\bio4j\model\enzymedb\EnzymeDBGraph.java]
+            + uniref
+              + vertices
+                + [UniRef100Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]
+                + [UniRef90Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]
+                + [UniRef50Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]
+              + [UniRefGraph.java][main/java/com/bio4j/model/uniref/UniRefGraph.java]
               + programs
-                + [ImportEnzymeDB.java][main\java\com\bio4j\model\enzymedb\programs\ImportEnzymeDB.java]
+                + [ImportUniRef.java][main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]
+            + uniprot_uniref
+              + edges
+                + [UniRef100Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Member.java]
+                + [UniRef50Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Member.java]
+                + [UniRef100Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]
+                + [UniRef90Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]
+                + [UniRef50Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Representant.java]
+                + [UniRef90Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Member.java]
+              + [UniprotUniRefGraph.java][main/java/com/bio4j/model/uniprot_uniref/UniprotUniRefGraph.java]
+              + programs
+                + [ImportUniprotUniRef.java][main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniprotUniRef.java]
+            + uniprot_enzymedb
+              + edges
+                + [EnzymaticActivity.java][main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]
+              + [UniprotEnzymeDBGraph.java][main/java/com/bio4j/model/uniprot_enzymedb/UniprotEnzymeDBGraph.java]
+              + programs
+                + [ImportUniprotEnzymeDB.java][main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java]
+            + enzymedb
+              + [EnzymeDBGraph.java][main/java/com/bio4j/model/enzymedb/EnzymeDBGraph.java]
               + vertices
-                + [Enzyme.java][main\java\com\bio4j\model\enzymedb\vertices\Enzyme.java]
-            + geninfo
-              + [GenInfoGraph.java][main\java\com\bio4j\model\geninfo\GenInfoGraph.java]
+                + [Enzyme.java][main/java/com/bio4j/model/enzymedb/vertices/Enzyme.java]
+              + programs
+                + [ImportEnzymeDB.java][main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]
+            + enums
+            + ncbiTaxonomy
+              + [NCBITaxonomyGraph.java][main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]
+              + edges
+                + [NCBITaxonParent.java][main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]
               + vertices
-                + [GenInfo.java][main\java\com\bio4j\model\geninfo\vertices\GenInfo.java]
+                + [NCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]
+              + programs
+                + [ImportNCBITaxonomy.java][main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]
             + go
               + edges
                 + goSlims
-                  + [GoSlim.java][main\java\com\bio4j\model\go\edges\goSlims\GoSlim.java]
-                  + [PlantSlim.java][main\java\com\bio4j\model\go\edges\goSlims\PlantSlim.java]
-                + [HasPartOf.java][main\java\com\bio4j\model\go\edges\HasPartOf.java]
-                + [IsA.java][main\java\com\bio4j\model\go\edges\IsA.java]
-                + [NegativelyRegulates.java][main\java\com\bio4j\model\go\edges\NegativelyRegulates.java]
-                + [PartOf.java][main\java\com\bio4j\model\go\edges\PartOf.java]
-                + [PositivelyRegulates.java][main\java\com\bio4j\model\go\edges\PositivelyRegulates.java]
-                + [Regulates.java][main\java\com\bio4j\model\go\edges\Regulates.java]
-                + [SubOntology.java][main\java\com\bio4j\model\go\edges\SubOntology.java]
-              + [GoGraph.java][main\java\com\bio4j\model\go\GoGraph.java]
-              + programs
-                + [ImportGO.java][main\java\com\bio4j\model\go\programs\ImportGO.java]
+                  + [GoSlim.java][main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]
+                  + [PlantSlim.java][main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]
+                + [PositivelyRegulates.java][main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]
+                + [HasPartOf.java][main/java/com/bio4j/model/go/edges/HasPartOf.java]
+                + [Regulates.java][main/java/com/bio4j/model/go/edges/Regulates.java]
+                + [PartOf.java][main/java/com/bio4j/model/go/edges/PartOf.java]
+                + [IsA.java][main/java/com/bio4j/model/go/edges/IsA.java]
+                + [NegativelyRegulates.java][main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]
+                + [SubOntology.java][main/java/com/bio4j/model/go/edges/SubOntology.java]
+              + [GoGraph.java][main/java/com/bio4j/model/go/GoGraph.java]
               + vertices
-                + [GoSlims.java][main\java\com\bio4j\model\go\vertices\GoSlims.java]
-                + [GoTerm.java][main\java\com\bio4j\model\go\vertices\GoTerm.java]
-                + [SubOntologies.java][main\java\com\bio4j\model\go\vertices\SubOntologies.java]
-            + ncbiTaxonomy
-              + edges
-                + [NCBITaxonParent.java][main\java\com\bio4j\model\ncbiTaxonomy\edges\NCBITaxonParent.java]
-              + [NCBITaxonomyGraph.java][main\java\com\bio4j\model\ncbiTaxonomy\NCBITaxonomyGraph.java]
+                + [SubOntologies.java][main/java/com/bio4j/model/go/vertices/SubOntologies.java]
+                + [GoTerm.java][main/java/com/bio4j/model/go/vertices/GoTerm.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/vertices/GoSlims.java]
               + programs
-                + [ImportNCBITaxonomy.java][main\java\com\bio4j\model\ncbiTaxonomy\programs\ImportNCBITaxonomy.java]
-              + vertices
-                + [NCBITaxon.java][main\java\com\bio4j\model\ncbiTaxonomy\vertices\NCBITaxon.java]
-            + ncbiTaxonomy_geninfo
-              + edges
-                + [GenInfoNCBITaxon.java][main\java\com\bio4j\model\ncbiTaxonomy_geninfo\edges\GenInfoNCBITaxon.java]
-              + [NCBITaxonomyGenInfoGraph.java][main\java\com\bio4j\model\ncbiTaxonomy_geninfo\NCBITaxonomyGenInfoGraph.java]
+                + [ImportGO.java][main/java/com/bio4j/model/go/programs/ImportGO.java]
             + uniprot
               + edges
-                + [ArticleJournal.java][main\java\com\bio4j\model\uniprot\edges\ArticleJournal.java]
-                + [ArticlePubmed.java][main\java\com\bio4j\model\uniprot\edges\ArticlePubmed.java]
-                + [BookCity.java][main\java\com\bio4j\model\uniprot\edges\BookCity.java]
-                + [BookEditor.java][main\java\com\bio4j\model\uniprot\edges\BookEditor.java]
-                + [BookPublisher.java][main\java\com\bio4j\model\uniprot\edges\BookPublisher.java]
-                + [InstituteCountry.java][main\java\com\bio4j\model\uniprot\edges\InstituteCountry.java]
-                + [IsoformEventGenerator.java][main\java\com\bio4j\model\uniprot\edges\IsoformEventGenerator.java]
-                + [IsoformProteinInteraction.java][main\java\com\bio4j\model\uniprot\edges\IsoformProteinInteraction.java]
-                + [OnlineArticleOnlineJournal.java][main\java\com\bio4j\model\uniprot\edges\OnlineArticleOnlineJournal.java]
-                + [OrganismTaxon.java][main\java\com\bio4j\model\uniprot\edges\OrganismTaxon.java]
-                + [ProteinComment.java][main\java\com\bio4j\model\uniprot\edges\ProteinComment.java]
-                + [ProteinDataset.java][main\java\com\bio4j\model\uniprot\edges\ProteinDataset.java]
-                + [ProteinDisease.java][main\java\com\bio4j\model\uniprot\edges\ProteinDisease.java]
-                + [ProteinEMBL.java][main\java\com\bio4j\model\uniprot\edges\ProteinEMBL.java]
-                + [ProteinEnsembl.java][main\java\com\bio4j\model\uniprot\edges\ProteinEnsembl.java]
-                + [ProteinFeature.java][main\java\com\bio4j\model\uniprot\edges\ProteinFeature.java]
-                + [ProteinGeneLocation.java][main\java\com\bio4j\model\uniprot\edges\ProteinGeneLocation.java]
-                + [ProteinInterpro.java][main\java\com\bio4j\model\uniprot\edges\ProteinInterpro.java]
-                + [ProteinIsoformInteraction.java][main\java\com\bio4j\model\uniprot\edges\ProteinIsoformInteraction.java]
-                + [ProteinKegg.java][main\java\com\bio4j\model\uniprot\edges\ProteinKegg.java]
-                + [ProteinKeyword.java][main\java\com\bio4j\model\uniprot\edges\ProteinKeyword.java]
-                + [ProteinOrganism.java][main\java\com\bio4j\model\uniprot\edges\ProteinOrganism.java]
-                + [ProteinPfam.java][main\java\com\bio4j\model\uniprot\edges\ProteinPfam.java]
-                + [ProteinPIR.java][main\java\com\bio4j\model\uniprot\edges\ProteinPIR.java]
-                + [ProteinProteinInteraction.java][main\java\com\bio4j\model\uniprot\edges\ProteinProteinInteraction.java]
-                + [ProteinReactomeTerm.java][main\java\com\bio4j\model\uniprot\edges\ProteinReactomeTerm.java]
-                + [ProteinReference.java][main\java\com\bio4j\model\uniprot\edges\ProteinReference.java]
-                + [ProteinRefSeq.java][main\java\com\bio4j\model\uniprot\edges\ProteinRefSeq.java]
-                + [ProteinSequenceCaution.java][main\java\com\bio4j\model\uniprot\edges\ProteinSequenceCaution.java]
-                + [ProteinSubcellularLocation.java][main\java\com\bio4j\model\uniprot\edges\ProteinSubcellularLocation.java]
-                + [ProteinUniGene.java][main\java\com\bio4j\model\uniprot\edges\ProteinUniGene.java]
-                + [ReferenceArticle.java][main\java\com\bio4j\model\uniprot\edges\ReferenceArticle.java]
-                + [ReferenceAuthorConsortium.java][main\java\com\bio4j\model\uniprot\edges\ReferenceAuthorConsortium.java]
-                + [ReferenceAuthorPerson.java][main\java\com\bio4j\model\uniprot\edges\ReferenceAuthorPerson.java]
-                + [ReferenceBook.java][main\java\com\bio4j\model\uniprot\edges\ReferenceBook.java]
-                + [ReferenceOnlineArticle.java][main\java\com\bio4j\model\uniprot\edges\ReferenceOnlineArticle.java]
-                + [ReferencePatent.java][main\java\com\bio4j\model\uniprot\edges\ReferencePatent.java]
-                + [ReferenceSubmission.java][main\java\com\bio4j\model\uniprot\edges\ReferenceSubmission.java]
-                + [ReferenceThesis.java][main\java\com\bio4j\model\uniprot\edges\ReferenceThesis.java]
-                + [ReferenceUnpublishedObservation.java][main\java\com\bio4j\model\uniprot\edges\ReferenceUnpublishedObservation.java]
-                + [SubcellularLocationParent.java][main\java\com\bio4j\model\uniprot\edges\SubcellularLocationParent.java]
-                + [SubmissionDB.java][main\java\com\bio4j\model\uniprot\edges\SubmissionDB.java]
-                + [TaxonParent.java][main\java\com\bio4j\model\uniprot\edges\TaxonParent.java]
-                + [ThesisInstitute.java][main\java\com\bio4j\model\uniprot\edges\ThesisInstitute.java]
-              + programs
-                + [ImportIsoformSequences.java][main\java\com\bio4j\model\uniprot\programs\ImportIsoformSequences.java]
-                + [ImportProteinInteractions.java][main\java\com\bio4j\model\uniprot\programs\ImportProteinInteractions.java]
-                + [ImportUniprot.java][main\java\com\bio4j\model\uniprot\programs\ImportUniprot.java]
-              + [UniprotGraph.java][main\java\com\bio4j\model\uniprot\UniprotGraph.java]
+                + [BookCity.java][main/java/com/bio4j/model/uniprot/edges/BookCity.java]
+                + [ProteinReference.java][main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]
+                + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
+                + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
+                + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
+                + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
+                + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
+                + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
+                + [ProteinDataset.java][main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]
+                + [ReferencePatent.java][main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]
+                + [TaxonParent.java][main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]
+                + [ProteinReactomeTerm.java][main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]
+                + [ProteinDisease.java][main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]
+                + [BookPublisher.java][main/java/com/bio4j/model/uniprot/edges/BookPublisher.java]
+                + [InstituteCountry.java][main/java/com/bio4j/model/uniprot/edges/InstituteCountry.java]
+                + [ReferenceOnlineArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]
+                + [BookEditor.java][main/java/com/bio4j/model/uniprot/edges/BookEditor.java]
+                + [ProteinOrganism.java][main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]
+                + [ReferenceSubmission.java][main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]
+                + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
+                + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
+                + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
+                + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
+                + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
+                + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
+                + [SubmissionDB.java][main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]
+                + [OnlineArticleOnlineJournal.java][main/java/com/bio4j/model/uniprot/edges/OnlineArticleOnlineJournal.java]
+                + [OrganismTaxon.java][main/java/com/bio4j/model/uniprot/edges/OrganismTaxon.java]
+                + [ThesisInstitute.java][main/java/com/bio4j/model/uniprot/edges/ThesisInstitute.java]
+                + [ProteinUniGene.java][main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]
+                + [ProteinKegg.java][main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]
+                + [ProteinProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]
+                + [ProteinRefSeq.java][main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]
+                + [ProteinSubcellularLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]
+                + [ReferenceUnpublishedObservation.java][main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]
+                + [ReferenceBook.java][main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]
+                + [IsoformEventGenerator.java][main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]
+                + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
+                + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
+                + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
+                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
+                + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
+                + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
+                + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
+                + [ProteinGeneLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]
               + vertices
-                + [AlternativeProduct.java][main\java\com\bio4j\model\uniprot\vertices\AlternativeProduct.java]
-                + [Article.java][main\java\com\bio4j\model\uniprot\vertices\Article.java]
-                + [Book.java][main\java\com\bio4j\model\uniprot\vertices\Book.java]
-                + [City.java][main\java\com\bio4j\model\uniprot\vertices\City.java]
-                + [CommentType.java][main\java\com\bio4j\model\uniprot\vertices\CommentType.java]
-                + [Consortium.java][main\java\com\bio4j\model\uniprot\vertices\Consortium.java]
-                + [Country.java][main\java\com\bio4j\model\uniprot\vertices\Country.java]
-                + [Dataset.java][main\java\com\bio4j\model\uniprot\vertices\Dataset.java]
-                + [DB.java][main\java\com\bio4j\model\uniprot\vertices\DB.java]
-                + [Disease.java][main\java\com\bio4j\model\uniprot\vertices\Disease.java]
-                + [EMBL.java][main\java\com\bio4j\model\uniprot\vertices\EMBL.java]
-                + [Ensembl.java][main\java\com\bio4j\model\uniprot\vertices\Ensembl.java]
-                + [FeatureType.java][main\java\com\bio4j\model\uniprot\vertices\FeatureType.java]
-                + [GeneLocation.java][main\java\com\bio4j\model\uniprot\vertices\GeneLocation.java]
-                + [Institute.java][main\java\com\bio4j\model\uniprot\vertices\Institute.java]
-                + [Interpro.java][main\java\com\bio4j\model\uniprot\vertices\Interpro.java]
-                + [Isoform.java][main\java\com\bio4j\model\uniprot\vertices\Isoform.java]
-                + [Journal.java][main\java\com\bio4j\model\uniprot\vertices\Journal.java]
-                + [Kegg.java][main\java\com\bio4j\model\uniprot\vertices\Kegg.java]
-                + [Keyword.java][main\java\com\bio4j\model\uniprot\vertices\Keyword.java]
-                + [OnlineArticle.java][main\java\com\bio4j\model\uniprot\vertices\OnlineArticle.java]
-                + [OnlineJournal.java][main\java\com\bio4j\model\uniprot\vertices\OnlineJournal.java]
-                + [Organism.java][main\java\com\bio4j\model\uniprot\vertices\Organism.java]
-                + [Patent.java][main\java\com\bio4j\model\uniprot\vertices\Patent.java]
-                + [Person.java][main\java\com\bio4j\model\uniprot\vertices\Person.java]
-                + [Pfam.java][main\java\com\bio4j\model\uniprot\vertices\Pfam.java]
-                + [PIR.java][main\java\com\bio4j\model\uniprot\vertices\PIR.java]
-                + [Protein.java][main\java\com\bio4j\model\uniprot\vertices\Protein.java]
-                + [Publisher.java][main\java\com\bio4j\model\uniprot\vertices\Publisher.java]
-                + [Pubmed.java][main\java\com\bio4j\model\uniprot\vertices\Pubmed.java]
-                + [ReactomeTerm.java][main\java\com\bio4j\model\uniprot\vertices\ReactomeTerm.java]
-                + [Reference.java][main\java\com\bio4j\model\uniprot\vertices\Reference.java]
-                + [RefSeq.java][main\java\com\bio4j\model\uniprot\vertices\RefSeq.java]
-                + [SequenceCaution.java][main\java\com\bio4j\model\uniprot\vertices\SequenceCaution.java]
-                + [SubcellularLocation.java][main\java\com\bio4j\model\uniprot\vertices\SubcellularLocation.java]
-                + [Submission.java][main\java\com\bio4j\model\uniprot\vertices\Submission.java]
-                + [Taxon.java][main\java\com\bio4j\model\uniprot\vertices\Taxon.java]
-                + [Thesis.java][main\java\com\bio4j\model\uniprot\vertices\Thesis.java]
-                + [UniGene.java][main\java\com\bio4j\model\uniprot\vertices\UniGene.java]
-                + [UnpublishedObservation.java][main\java\com\bio4j\model\uniprot\vertices\UnpublishedObservation.java]
-            + uniprot_enzymedb
-              + edges
-                + [EnzymaticActivity.java][main\java\com\bio4j\model\uniprot_enzymedb\edges\EnzymaticActivity.java]
+                + [Article.java][main/java/com/bio4j/model/uniprot/vertices/Article.java]
+                + [Taxon.java][main/java/com/bio4j/model/uniprot/vertices/Taxon.java]
+                + [Publisher.java][main/java/com/bio4j/model/uniprot/vertices/Publisher.java]
+                + [Book.java][main/java/com/bio4j/model/uniprot/vertices/Book.java]
+                + [OnlineArticle.java][main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]
+                + [GeneLocation.java][main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]
+                + [Person.java][main/java/com/bio4j/model/uniprot/vertices/Person.java]
+                + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
+                + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
+                + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
+                + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
+                + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
+                + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
+                + [Keyword.java][main/java/com/bio4j/model/uniprot/vertices/Keyword.java]
+                + [Protein.java][main/java/com/bio4j/model/uniprot/vertices/Protein.java]
+                + [Submission.java][main/java/com/bio4j/model/uniprot/vertices/Submission.java]
+                + [CommentType.java][main/java/com/bio4j/model/uniprot/vertices/CommentType.java]
+                + [Pubmed.java][main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]
+                + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
+                + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
+                + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
+                + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
+                + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
+                + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
+                + [AlternativeProduct.java][main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]
+                + [Institute.java][main/java/com/bio4j/model/uniprot/vertices/Institute.java]
+                + [Isoform.java][main/java/com/bio4j/model/uniprot/vertices/Isoform.java]
+                + [RefSeq.java][main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]
+                + [Kegg.java][main/java/com/bio4j/model/uniprot/vertices/Kegg.java]
+                + [Consortium.java][main/java/com/bio4j/model/uniprot/vertices/Consortium.java]
+                + [Pfam.java][main/java/com/bio4j/model/uniprot/vertices/Pfam.java]
+                + [Disease.java][main/java/com/bio4j/model/uniprot/vertices/Disease.java]
+                + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
+                + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
+                + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
+                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
+                + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
+                + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
+                + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
+                + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
+              + [UniprotGraph.java][main/java/com/bio4j/model/uniprot/UniprotGraph.java]
               + programs
-                + [ImportUniprotEnzymeDB.java][main\java\com\bio4j\model\uniprot_enzymedb\programs\ImportUniprotEnzymeDB.java]
-              + [UniprotEnzymeDBGraph.java][main\java\com\bio4j\model\uniprot_enzymedb\UniprotEnzymeDBGraph.java]
-            + uniprot_go
-              + edges
-                + [GoAnnotation.java][main\java\com\bio4j\model\uniprot_go\edges\GoAnnotation.java]
-              + programs
-                + [ImportUniprotGo.java][main\java\com\bio4j\model\uniprot_go\programs\ImportUniprotGo.java]
-              + [UniprotGoGraph.java][main\java\com\bio4j\model\uniprot_go\UniprotGoGraph.java]
+                + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
+                + [ImportProteinInteractions.java][main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]
+                + [ImportUniprot.java][main/java/com/bio4j/model/uniprot/programs/ImportUniprot.java]
             + uniprot_ncbiTaxonomy
               + edges
-                + [ProteinNCBITaxon.java][main\java\com\bio4j\model\uniprot_ncbiTaxonomy\edges\ProteinNCBITaxon.java]
-              + [UniprotNCBITaxonomyGraph.java][main\java\com\bio4j\model\uniprot_ncbiTaxonomy\UniprotNCBITaxonomyGraph.java]
-            + uniprot_uniref
-              + edges
-                + [UniRef100Member.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef100Member.java]
-                + [UniRef100Representant.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef100Representant.java]
-                + [UniRef50Member.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef50Member.java]
-                + [UniRef50Representant.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef50Representant.java]
-                + [UniRef90Member.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef90Member.java]
-                + [UniRef90Representant.java][main\java\com\bio4j\model\uniprot_uniref\edges\UniRef90Representant.java]
+                + [ProteinNCBITaxon.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]
               + programs
-                + [ImportUniprotUniRef.java][main\java\com\bio4j\model\uniprot_uniref\programs\ImportUniprotUniRef.java]
-              + [UniprotUniRefGraph.java][main\java\com\bio4j\model\uniprot_uniref\UniprotUniRefGraph.java]
-            + uniref
-              + programs
-                + [ImportUniRef.java][main\java\com\bio4j\model\uniref\programs\ImportUniRef.java]
-              + [UniRefGraph.java][main\java\com\bio4j\model\uniref\UniRefGraph.java]
+                + [ImportUniprotNCBITaxonomy.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java]
+              + [UniprotNCBITaxonomyGraph.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java]
+            + geninfo
               + vertices
-                + [UniRef100Cluster.java][main\java\com\bio4j\model\uniref\vertices\UniRef100Cluster.java]
-                + [UniRef50Cluster.java][main\java\com\bio4j\model\uniref\vertices\UniRef50Cluster.java]
-                + [UniRef90Cluster.java][main\java\com\bio4j\model\uniref\vertices\UniRef90Cluster.java]
-    + scala
-  + test
-    + java
-    + scala
+                + [GenInfo.java][main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]
+              + [GenInfoGraph.java][main/java/com/bio4j/model/geninfo/GenInfoGraph.java]
+            + ncbiTaxonomy_geninfo
+              + [NCBITaxonomyGenInfoGraph.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]
+              + edges
+                + [GenInfoNCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]
+              + programs
+                + [ImportGenInfoNCBITaxonIndex.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]
+            + uniprot_go
+              + edges
+                + [GoAnnotation.java][main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]
+              + [UniprotGoGraph.java][main/java/com/bio4j/model/uniprot_go/UniprotGoGraph.java]
+              + programs
+                + [ImportUniprotGo.java][main/java/com/bio4j/model/uniprot_go/programs/ImportUniprotGo.java]
 
-[main\java\com\bio4j\model\enzymedb\EnzymeDBGraph.java]: ..\..\enzymedb\EnzymeDBGraph.java.md
-[main\java\com\bio4j\model\enzymedb\programs\ImportEnzymeDB.java]: ..\..\enzymedb\programs\ImportEnzymeDB.java.md
-[main\java\com\bio4j\model\enzymedb\vertices\Enzyme.java]: ..\..\enzymedb\vertices\Enzyme.java.md
-[main\java\com\bio4j\model\geninfo\GenInfoGraph.java]: ..\..\geninfo\GenInfoGraph.java.md
-[main\java\com\bio4j\model\geninfo\vertices\GenInfo.java]: ..\..\geninfo\vertices\GenInfo.java.md
-[main\java\com\bio4j\model\go\edges\goSlims\GoSlim.java]: ..\..\go\edges\goSlims\GoSlim.java.md
-[main\java\com\bio4j\model\go\edges\goSlims\PlantSlim.java]: ..\..\go\edges\goSlims\PlantSlim.java.md
-[main\java\com\bio4j\model\go\edges\HasPartOf.java]: ..\..\go\edges\HasPartOf.java.md
-[main\java\com\bio4j\model\go\edges\IsA.java]: ..\..\go\edges\IsA.java.md
-[main\java\com\bio4j\model\go\edges\NegativelyRegulates.java]: ..\..\go\edges\NegativelyRegulates.java.md
-[main\java\com\bio4j\model\go\edges\PartOf.java]: ..\..\go\edges\PartOf.java.md
-[main\java\com\bio4j\model\go\edges\PositivelyRegulates.java]: ..\..\go\edges\PositivelyRegulates.java.md
-[main\java\com\bio4j\model\go\edges\Regulates.java]: ..\..\go\edges\Regulates.java.md
-[main\java\com\bio4j\model\go\edges\SubOntology.java]: ..\..\go\edges\SubOntology.java.md
-[main\java\com\bio4j\model\go\GoGraph.java]: ..\..\go\GoGraph.java.md
-[main\java\com\bio4j\model\go\programs\ImportGO.java]: ..\..\go\programs\ImportGO.java.md
-[main\java\com\bio4j\model\go\vertices\GoSlims.java]: ..\..\go\vertices\GoSlims.java.md
-[main\java\com\bio4j\model\go\vertices\GoTerm.java]: ..\..\go\vertices\GoTerm.java.md
-[main\java\com\bio4j\model\go\vertices\SubOntologies.java]: ..\..\go\vertices\SubOntologies.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy\edges\NCBITaxonParent.java]: ..\..\ncbiTaxonomy\edges\NCBITaxonParent.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy\NCBITaxonomyGraph.java]: ..\..\ncbiTaxonomy\NCBITaxonomyGraph.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy\programs\ImportNCBITaxonomy.java]: ..\..\ncbiTaxonomy\programs\ImportNCBITaxonomy.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy\vertices\NCBITaxon.java]: ..\..\ncbiTaxonomy\vertices\NCBITaxon.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy_geninfo\edges\GenInfoNCBITaxon.java]: ..\..\ncbiTaxonomy_geninfo\edges\GenInfoNCBITaxon.java.md
-[main\java\com\bio4j\model\ncbiTaxonomy_geninfo\NCBITaxonomyGenInfoGraph.java]: ..\..\ncbiTaxonomy_geninfo\NCBITaxonomyGenInfoGraph.java.md
-[main\java\com\bio4j\model\uniprot\edges\ArticleJournal.java]: ..\edges\ArticleJournal.java.md
-[main\java\com\bio4j\model\uniprot\edges\ArticlePubmed.java]: ..\edges\ArticlePubmed.java.md
-[main\java\com\bio4j\model\uniprot\edges\BookCity.java]: ..\edges\BookCity.java.md
-[main\java\com\bio4j\model\uniprot\edges\BookEditor.java]: ..\edges\BookEditor.java.md
-[main\java\com\bio4j\model\uniprot\edges\BookPublisher.java]: ..\edges\BookPublisher.java.md
-[main\java\com\bio4j\model\uniprot\edges\InstituteCountry.java]: ..\edges\InstituteCountry.java.md
-[main\java\com\bio4j\model\uniprot\edges\IsoformEventGenerator.java]: ..\edges\IsoformEventGenerator.java.md
-[main\java\com\bio4j\model\uniprot\edges\IsoformProteinInteraction.java]: ..\edges\IsoformProteinInteraction.java.md
-[main\java\com\bio4j\model\uniprot\edges\OnlineArticleOnlineJournal.java]: ..\edges\OnlineArticleOnlineJournal.java.md
-[main\java\com\bio4j\model\uniprot\edges\OrganismTaxon.java]: ..\edges\OrganismTaxon.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinComment.java]: ..\edges\ProteinComment.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinDataset.java]: ..\edges\ProteinDataset.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinDisease.java]: ..\edges\ProteinDisease.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinEMBL.java]: ..\edges\ProteinEMBL.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinEnsembl.java]: ..\edges\ProteinEnsembl.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinFeature.java]: ..\edges\ProteinFeature.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinGeneLocation.java]: ..\edges\ProteinGeneLocation.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinInterpro.java]: ..\edges\ProteinInterpro.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinIsoformInteraction.java]: ..\edges\ProteinIsoformInteraction.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinKegg.java]: ..\edges\ProteinKegg.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinKeyword.java]: ..\edges\ProteinKeyword.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinOrganism.java]: ..\edges\ProteinOrganism.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinPfam.java]: ..\edges\ProteinPfam.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinPIR.java]: ..\edges\ProteinPIR.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinProteinInteraction.java]: ..\edges\ProteinProteinInteraction.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinReactomeTerm.java]: ..\edges\ProteinReactomeTerm.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinReference.java]: ..\edges\ProteinReference.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinRefSeq.java]: ..\edges\ProteinRefSeq.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinSequenceCaution.java]: ..\edges\ProteinSequenceCaution.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinSubcellularLocation.java]: ..\edges\ProteinSubcellularLocation.java.md
-[main\java\com\bio4j\model\uniprot\edges\ProteinUniGene.java]: ..\edges\ProteinUniGene.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceArticle.java]: ..\edges\ReferenceArticle.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceAuthorConsortium.java]: ..\edges\ReferenceAuthorConsortium.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceAuthorPerson.java]: ..\edges\ReferenceAuthorPerson.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceBook.java]: ..\edges\ReferenceBook.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceOnlineArticle.java]: ..\edges\ReferenceOnlineArticle.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferencePatent.java]: ..\edges\ReferencePatent.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceSubmission.java]: ..\edges\ReferenceSubmission.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceThesis.java]: ..\edges\ReferenceThesis.java.md
-[main\java\com\bio4j\model\uniprot\edges\ReferenceUnpublishedObservation.java]: ..\edges\ReferenceUnpublishedObservation.java.md
-[main\java\com\bio4j\model\uniprot\edges\SubcellularLocationParent.java]: ..\edges\SubcellularLocationParent.java.md
-[main\java\com\bio4j\model\uniprot\edges\SubmissionDB.java]: ..\edges\SubmissionDB.java.md
-[main\java\com\bio4j\model\uniprot\edges\TaxonParent.java]: ..\edges\TaxonParent.java.md
-[main\java\com\bio4j\model\uniprot\edges\ThesisInstitute.java]: ..\edges\ThesisInstitute.java.md
-[main\java\com\bio4j\model\uniprot\programs\ImportIsoformSequences.java]: ..\programs\ImportIsoformSequences.java.md
-[main\java\com\bio4j\model\uniprot\programs\ImportProteinInteractions.java]: ..\programs\ImportProteinInteractions.java.md
-[main\java\com\bio4j\model\uniprot\programs\ImportUniprot.java]: ..\programs\ImportUniprot.java.md
-[main\java\com\bio4j\model\uniprot\UniprotGraph.java]: ..\UniprotGraph.java.md
-[main\java\com\bio4j\model\uniprot\vertices\AlternativeProduct.java]: AlternativeProduct.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Article.java]: Article.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Book.java]: Book.java.md
-[main\java\com\bio4j\model\uniprot\vertices\City.java]: City.java.md
-[main\java\com\bio4j\model\uniprot\vertices\CommentType.java]: CommentType.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Consortium.java]: Consortium.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Country.java]: Country.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Dataset.java]: Dataset.java.md
-[main\java\com\bio4j\model\uniprot\vertices\DB.java]: DB.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Disease.java]: Disease.java.md
-[main\java\com\bio4j\model\uniprot\vertices\EMBL.java]: EMBL.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Ensembl.java]: Ensembl.java.md
-[main\java\com\bio4j\model\uniprot\vertices\FeatureType.java]: FeatureType.java.md
-[main\java\com\bio4j\model\uniprot\vertices\GeneLocation.java]: GeneLocation.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Institute.java]: Institute.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Interpro.java]: Interpro.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Isoform.java]: Isoform.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Journal.java]: Journal.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Kegg.java]: Kegg.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Keyword.java]: Keyword.java.md
-[main\java\com\bio4j\model\uniprot\vertices\OnlineArticle.java]: OnlineArticle.java.md
-[main\java\com\bio4j\model\uniprot\vertices\OnlineJournal.java]: OnlineJournal.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Organism.java]: Organism.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Patent.java]: Patent.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Person.java]: Person.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Pfam.java]: Pfam.java.md
-[main\java\com\bio4j\model\uniprot\vertices\PIR.java]: PIR.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Protein.java]: Protein.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Publisher.java]: Publisher.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Pubmed.java]: Pubmed.java.md
-[main\java\com\bio4j\model\uniprot\vertices\ReactomeTerm.java]: ReactomeTerm.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Reference.java]: Reference.java.md
-[main\java\com\bio4j\model\uniprot\vertices\RefSeq.java]: RefSeq.java.md
-[main\java\com\bio4j\model\uniprot\vertices\SequenceCaution.java]: SequenceCaution.java.md
-[main\java\com\bio4j\model\uniprot\vertices\SubcellularLocation.java]: SubcellularLocation.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Submission.java]: Submission.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Taxon.java]: Taxon.java.md
-[main\java\com\bio4j\model\uniprot\vertices\Thesis.java]: Thesis.java.md
-[main\java\com\bio4j\model\uniprot\vertices\UniGene.java]: UniGene.java.md
-[main\java\com\bio4j\model\uniprot\vertices\UnpublishedObservation.java]: UnpublishedObservation.java.md
-[main\java\com\bio4j\model\uniprot_enzymedb\edges\EnzymaticActivity.java]: ..\..\uniprot_enzymedb\edges\EnzymaticActivity.java.md
-[main\java\com\bio4j\model\uniprot_enzymedb\programs\ImportUniprotEnzymeDB.java]: ..\..\uniprot_enzymedb\programs\ImportUniprotEnzymeDB.java.md
-[main\java\com\bio4j\model\uniprot_enzymedb\UniprotEnzymeDBGraph.java]: ..\..\uniprot_enzymedb\UniprotEnzymeDBGraph.java.md
-[main\java\com\bio4j\model\uniprot_go\edges\GoAnnotation.java]: ..\..\uniprot_go\edges\GoAnnotation.java.md
-[main\java\com\bio4j\model\uniprot_go\programs\ImportUniprotGo.java]: ..\..\uniprot_go\programs\ImportUniprotGo.java.md
-[main\java\com\bio4j\model\uniprot_go\UniprotGoGraph.java]: ..\..\uniprot_go\UniprotGoGraph.java.md
-[main\java\com\bio4j\model\uniprot_ncbiTaxonomy\edges\ProteinNCBITaxon.java]: ..\..\uniprot_ncbiTaxonomy\edges\ProteinNCBITaxon.java.md
-[main\java\com\bio4j\model\uniprot_ncbiTaxonomy\UniprotNCBITaxonomyGraph.java]: ..\..\uniprot_ncbiTaxonomy\UniprotNCBITaxonomyGraph.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef100Member.java]: ..\..\uniprot_uniref\edges\UniRef100Member.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef100Representant.java]: ..\..\uniprot_uniref\edges\UniRef100Representant.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef50Member.java]: ..\..\uniprot_uniref\edges\UniRef50Member.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef50Representant.java]: ..\..\uniprot_uniref\edges\UniRef50Representant.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef90Member.java]: ..\..\uniprot_uniref\edges\UniRef90Member.java.md
-[main\java\com\bio4j\model\uniprot_uniref\edges\UniRef90Representant.java]: ..\..\uniprot_uniref\edges\UniRef90Representant.java.md
-[main\java\com\bio4j\model\uniprot_uniref\programs\ImportUniprotUniRef.java]: ..\..\uniprot_uniref\programs\ImportUniprotUniRef.java.md
-[main\java\com\bio4j\model\uniprot_uniref\UniprotUniRefGraph.java]: ..\..\uniprot_uniref\UniprotUniRefGraph.java.md
-[main\java\com\bio4j\model\uniref\programs\ImportUniRef.java]: ..\..\uniref\programs\ImportUniRef.java.md
-[main\java\com\bio4j\model\uniref\UniRefGraph.java]: ..\..\uniref\UniRefGraph.java.md
-[main\java\com\bio4j\model\uniref\vertices\UniRef100Cluster.java]: ..\..\uniref\vertices\UniRef100Cluster.java.md
-[main\java\com\bio4j\model\uniref\vertices\UniRef50Cluster.java]: ..\..\uniref\vertices\UniRef50Cluster.java.md
-[main\java\com\bio4j\model\uniref\vertices\UniRef90Cluster.java]: ..\..\uniref\vertices\UniRef90Cluster.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]: ../../uniref/vertices/UniRef100Cluster.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]: ../../uniref/vertices/UniRef90Cluster.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]: ../../uniref/vertices/UniRef50Cluster.java.md
+[main/java/com/bio4j/model/uniref/UniRefGraph.java]: ../../uniref/UniRefGraph.java.md
+[main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]: ../../uniref/programs/ImportUniRef.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Member.java]: ../../uniprot_uniref/edges/UniRef100Member.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Member.java]: ../../uniprot_uniref/edges/UniRef50Member.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]: ../../uniprot_uniref/edges/UniRef100Representant.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]: ../../uniprot_uniref/edges/UniRef90Representant.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Representant.java]: ../../uniprot_uniref/edges/UniRef50Representant.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Member.java]: ../../uniprot_uniref/edges/UniRef90Member.java.md
+[main/java/com/bio4j/model/uniprot_uniref/UniprotUniRefGraph.java]: ../../uniprot_uniref/UniprotUniRefGraph.java.md
+[main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniprotUniRef.java]: ../../uniprot_uniref/programs/ImportUniprotUniRef.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]: ../../uniprot_enzymedb/edges/EnzymaticActivity.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/UniprotEnzymeDBGraph.java]: ../../uniprot_enzymedb/UniprotEnzymeDBGraph.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java]: ../../uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java.md
+[main/java/com/bio4j/model/enzymedb/EnzymeDBGraph.java]: ../../enzymedb/EnzymeDBGraph.java.md
+[main/java/com/bio4j/model/enzymedb/vertices/Enzyme.java]: ../../enzymedb/vertices/Enzyme.java.md
+[main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]: ../../enzymedb/programs/ImportEnzymeDB.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]: ../../ncbiTaxonomy/vertices/NCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../../go/edges/goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../../go/edges/goSlims/PlantSlim.java.md
+[main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]: ../../go/edges/PositivelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/HasPartOf.java]: ../../go/edges/HasPartOf.java.md
+[main/java/com/bio4j/model/go/edges/Regulates.java]: ../../go/edges/Regulates.java.md
+[main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
+[main/java/com/bio4j/model/go/edges/IsA.java]: ../../go/edges/IsA.java.md
+[main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/SubOntology.java]: ../../go/edges/SubOntology.java.md
+[main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
+[main/java/com/bio4j/model/go/vertices/SubOntologies.java]: ../../go/vertices/SubOntologies.java.md
+[main/java/com/bio4j/model/go/vertices/GoTerm.java]: ../../go/vertices/GoTerm.java.md
+[main/java/com/bio4j/model/go/vertices/GoSlims.java]: ../../go/vertices/GoSlims.java.md
+[main/java/com/bio4j/model/go/programs/ImportGO.java]: ../../go/programs/ImportGO.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookCity.java]: ../edges/BookCity.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]: ../edges/ProteinReference.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../edges/ProteinIsoform.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: ../edges/ProteinFeature.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: ../edges/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: ../edges/ReferenceThesis.java.md
+[main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: ../edges/ArticlePubmed.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: ../edges/ReferenceAuthorConsortium.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../edges/ProteinDataset.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../edges/ReferencePatent.java.md
+[main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]: ../edges/TaxonParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]: ../edges/ProteinReactomeTerm.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]: ../edges/ProteinDisease.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookPublisher.java]: ../edges/BookPublisher.java.md
+[main/java/com/bio4j/model/uniprot/edges/InstituteCountry.java]: ../edges/InstituteCountry.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]: ../edges/ReferenceOnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../edges/BookEditor.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: ../edges/ProteinOrganism.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]: ../edges/ReferenceSubmission.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: ../edges/ProteinPfam.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: ../edges/ProteinEnsembl.java.md
+[main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: ../edges/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: ../edges/ProteinComment.java.md
+[main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: ../edges/ArticleJournal.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: ../edges/ProteinPIR.java.md
+[main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]: ../edges/SubmissionDB.java.md
+[main/java/com/bio4j/model/uniprot/edges/OnlineArticleOnlineJournal.java]: ../edges/OnlineArticleOnlineJournal.java.md
+[main/java/com/bio4j/model/uniprot/edges/OrganismTaxon.java]: ../edges/OrganismTaxon.java.md
+[main/java/com/bio4j/model/uniprot/edges/ThesisInstitute.java]: ../edges/ThesisInstitute.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]: ../edges/ProteinUniGene.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]: ../edges/ProteinKegg.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]: ../edges/ProteinProteinInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: ../edges/ProteinRefSeq.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]: ../edges/ReferenceUnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]: ../edges/ReferenceBook.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]: ../edges/IsoformEventGenerator.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../edges/IsoformProteinInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: ../edges/ProteinIsoformInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: ../edges/ReferenceArticle.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: ../edges/ProteinInterpro.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: ../edges/ProteinEMBL.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: ../edges/ProteinSequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../edges/ReferenceAuthorPerson.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]: ../edges/ProteinGeneLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Article.java]: Article.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Taxon.java]: Taxon.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Publisher.java]: Publisher.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Book.java]: Book.java.md
+[main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]: OnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]: GeneLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Person.java]: Person.java.md
+[main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: SubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: FeatureType.java.md
+[main/java/com/bio4j/model/uniprot/vertices/PIR.java]: PIR.java.md
+[main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: ReactomeTerm.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: Thesis.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: Ensembl.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Keyword.java]: Keyword.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Protein.java]: Protein.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Submission.java]: Submission.java.md
+[main/java/com/bio4j/model/uniprot/vertices/CommentType.java]: CommentType.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]: Pubmed.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Reference.java]: Reference.java.md
+[main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: UniGene.java.md
+[main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: EMBL.java.md
+[main/java/com/bio4j/model/uniprot/vertices/DB.java]: DB.java.md
+[main/java/com/bio4j/model/uniprot/vertices/City.java]: City.java.md
+[main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]: AlternativeProduct.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Institute.java]: Institute.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Isoform.java]: Isoform.java.md
+[main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]: RefSeq.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Kegg.java]: Kegg.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Consortium.java]: Consortium.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Pfam.java]: Pfam.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Disease.java]: Disease.java.md
+[main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: OnlineJournal.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Patent.java]: Patent.java.md
+[main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: UnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: Interpro.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Organism.java]: Organism.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: Dataset.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Journal.java]: Journal.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Country.java]: Country.java.md
+[main/java/com/bio4j/model/uniprot/UniprotGraph.java]: ../UniprotGraph.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../programs/ImportProteinInteractions.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniprot.java]: ../programs/ImportUniprot.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
+[main/java/com/bio4j/model/uniprot_go/UniprotGoGraph.java]: ../../uniprot_go/UniprotGoGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/programs/ImportUniprotGo.java]: ../../uniprot_go/programs/ImportUniprotGo.java.md
