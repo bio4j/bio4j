@@ -10,8 +10,38 @@ import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.ohnosequences.typedGraphs.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Uniprot UniRef graph
+
+This graph includes the connection between Proteins and UniRef clusters (50/90/100) modelled via the following relationships.
+
+## data model
+
+### UniRef50Member
+
+Connecting `Protein` and `UniRef50Cluster` vertices, it links a protein and the UniRef 50 cluster to which it belongs.
+
+### UniRef50Representant
+
+Connecting `Protein` and `UniRef50Cluster` vertices, it links a protein and the UniRef 50 cluster it's the representant of.
+
+### UniRef90Member
+
+Connecting `Protein` and `UniRef90Cluster` vertices, it links a protein and the UniRef 90 cluster to which it belongs.
+
+### UniRef90Representant
+
+Connecting `Protein` and `UniRef90Cluster` vertices, it links a protein and the UniRef 90 cluster it's the representant of.
+
+### UniRef100Member
+
+Connecting `Protein` and `UniRef100Cluster` vertices, it links a protein and the UniRef 100 cluster to which it belongs.
+
+### UniRef100Representant
+
+Connecting `Protein` and `UniRef100Cluster` vertices, it links a protein and the UniRef 100 cluster it's the representant of.
+
  */
 public abstract class UniprotUniRefGraph<
 		// untyped graph

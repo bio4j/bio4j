@@ -8,8 +8,18 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.edges.GoAnnotation;
 import com.ohnosequences.typedGraphs.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Uniprot GO graph
+
+This graph includes the connection between Proteins and Gene Ontology terms modelled via the edge type GOAnnotation
+
+## data model
+
+### GOAnnotation
+
+Connecting `Protein` and `GOTerm` vertices.
+
  */
 public abstract class UniprotGoGraph<
 		// untyped graph
