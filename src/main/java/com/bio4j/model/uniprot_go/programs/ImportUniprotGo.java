@@ -9,6 +9,7 @@ import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -102,14 +103,22 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(GO_DB_REFERENCE_TYPE)) {
 
 								if(protein == null){
-									protein = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+									if(proteinOptional.isPresent()){
+										protein = proteinOptional.get();
+									}else{
+										logger.log(Level.INFO, "Protein with id " + accessionSt + " not found...");
+									}
 								}
 
 								String goId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-								GoTerm<I,RV,RVT,RE,RET> goTerm = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId).get();
-
-								protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTerm);
+								Optional<GoTerm<I,RV,RVT,RE,RET>> goTermOptional = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId);
+								if(goTermOptional.isPresent()){
+									protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTermOptional.get());
+								}else{
+									logger.log(Level.INFO, "GO term with id " + goId + " not found...");
+								}
 
 
 							}
