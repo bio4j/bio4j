@@ -108,6 +108,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 										protein = proteinOptional.get();
 									}else{
 										logger.log(Level.INFO, "Protein with id " + accessionSt + " not found...");
+										break;
 									}
 								}
 
