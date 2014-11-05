@@ -1,6 +1,5 @@
 package com.bio4j.model.uniprot_go.tests;
 
-import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.bio4j.angulillos.UntypedGraph;
@@ -9,8 +8,6 @@ import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
