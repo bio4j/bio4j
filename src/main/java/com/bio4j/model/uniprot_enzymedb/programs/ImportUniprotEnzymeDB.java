@@ -9,6 +9,7 @@ import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -103,9 +104,13 @@ public abstract class ImportUniprotEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 
 								String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-								Enzyme<I,RV,RVT,RE,RET> enzyme = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID).get();
+								Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
 
-								protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzyme);
+								if(enzymeOptional.isPresent()){
+									protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
+								}else{
+									logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
+								}
 
 
 							}
