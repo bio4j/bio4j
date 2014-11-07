@@ -117,6 +117,12 @@ public abstract class ImportUniprotEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 									if(uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() == null){
 										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() is null");
 									}
+									if(uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id == null){
+										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id is null");
+									}
+									if(uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id.elementType() == null){
+										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id.elementType() is null");
+									}
 
 									Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
 
