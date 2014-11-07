@@ -94,24 +94,26 @@ public abstract class ImportUniprotEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 
 						for (Element dbReferenceElem : dbReferenceList) {
 
-							//-------------------GO -----------------------------
+							//-------------------ENZYME DB -----------------------------
 							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
 
 								if(protein == null){
 									protein = uniprotEnzymeDBGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
 								}
 
-
 								String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-								Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
+								if(enzymeID != null){
+									Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
 
-								if(enzymeOptional.isPresent()){
-									protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
+									if(enzymeOptional.isPresent()){
+										protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
+									}else{
+										logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
+									}
 								}else{
-									logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
+									logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
 								}
-
 
 							}
 
