@@ -105,27 +105,6 @@ public abstract class ImportUniprotEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 
 								if(enzymeID != null){
 
-									logger.log(Level.INFO, "accessionSt " + accessionSt);
-									logger.log(Level.INFO, "enzymeID: " + enzymeID);
-
-									if(uniprotEnzymeDBGraph == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph is null");
-									}
-									if(uniprotEnzymeDBGraph.enzymeDBGraph() == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph() is null");
-									}
-									if(uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() is null");
-									}
-									if(uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id is null");
-									}
-									if(uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id.elementType() == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().Enzyme().id.elementType() is null");
-									}
-									if(uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() == null){
-										logger.log(Level.INFO, "uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex() is null");
-									}
 									//uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
 
 									Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
