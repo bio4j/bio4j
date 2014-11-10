@@ -109,7 +109,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
 			public id() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -121,7 +121,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
 			public cofactors() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String[]> valueClass() {
@@ -133,7 +133,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
 			public comment() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -145,7 +145,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
 			public officialName() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -157,7 +157,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
 			public alternateNames() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String[]> valueClass() {
@@ -169,7 +169,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
 			public catalyticActivity() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -181,7 +181,7 @@ public abstract class EnzymeDBGraph<
 				extends
 				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
 			public prositeCrossReferences() {
-				super(EnzymeType.this.graph().Enzyme());
+				super(EnzymeType.this);
 			}
 
 			public Class<String[]> valueClass() {
