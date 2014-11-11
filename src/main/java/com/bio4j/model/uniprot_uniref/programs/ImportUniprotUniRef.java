@@ -158,7 +158,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 		String line;
 
 		int entryCounter = 0;
-		int limitForPrintingOut = 10000;
+		int limitForPrintingOut = 1000;
 
 		while ((line = reader.readLine()) != null) {
 			//----we reached a entry line-----
