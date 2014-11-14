@@ -94,6 +94,24 @@ public abstract class UniprotUniRefGraph<
 		public UniRef50Member<I, RV, RVT, RE, RET> from(RE edge) {
 			return new UniRef50Member<I, RV, RVT, RE, RET>(edge, this);
 		}
+
+		public final class proteinAccession
+				extends
+				UniprotUniRefEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+						UniRef50Member<I, RV, RVT, RE, RET>, UniRef50MemberType,
+						UniRef50Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
+						proteinAccession, String
+						>
+		{
+			public proteinAccession() {
+				super(UniRef50MemberType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 	}
 
 	public final class UniRef90MemberType
@@ -132,6 +150,24 @@ public abstract class UniprotUniRefGraph<
 		@Override
 		public UniRef90Member<I, RV, RVT, RE, RET> from(RE edge) {
 			return new UniRef90Member<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class proteinAccession
+				extends
+				UniprotUniRefEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+						UniRef90Member<I, RV, RVT, RE, RET>, UniRef90MemberType,
+						UniRef90Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType,
+						proteinAccession, String
+						>
+		{
+			public proteinAccession() {
+				super(UniRef90MemberType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
 		}
 	}
 
