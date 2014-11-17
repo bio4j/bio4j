@@ -330,6 +330,40 @@ public abstract class UniprotUniRefGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
+	public abstract class UniprotUniRefEdgeProperty<
+			S extends UniprotUniRefVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<S, ST>,
+			SG extends UniprotUniRefGraph<SG, I, RV, RVT, RE, RET>,
+			E extends UniprotUniRefEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
+			ET extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefEdgeType<S, ST, E, ET, T, TT>,
+			T extends UniprotUniRefVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<T, TT>,
+			TG extends UniprotUniRefGraph<TG, I, RV, RVT, RE, RET>,
+			P extends UniprotUniRefEdgeProperty <
+					S, ST,SG,
+					E, ET,
+					T, TT, TG,
+					P, PV
+					>,
+			PV
+			>
+			implements
+			Property<E, ET, P, PV, UniprotUniRefGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+
+		protected UniprotUniRefEdgeProperty(ET type) {
+
+			this.type = type;
+		}
+
+		private ET type;
+
+		@Override
+		public final ET elementType() {
+			return type;
+		}
+	}
+
+
 	public abstract class UniprotUniRefVertexProperty<
 			V extends UniprotUniRefVertex<V, VT, I, RV, RVT, RE, RET>,
 			VT extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<V, VT>,
