@@ -85,6 +85,8 @@ public abstract class UniprotUniRefGraph<
 			);
 		}
 
+		public final proteinAccession proteinAccession = new proteinAccession();
+
 		@Override
 		public UniRef50MemberType value() {
 			return graph().UniRef50Member();
@@ -96,13 +98,17 @@ public abstract class UniprotUniRefGraph<
 		}
 
 		public final class proteinAccession
-				extends
-				UniprotUniRefEdgeProperty<
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-						UniRef50Member<I, RV, RVT, RE, RET>, UniRef50MemberType,
-						UniRef50Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
-						proteinAccession, String
-						>
+		extends
+			UniprotUniRefEdgeProperty<
+				// src
+				Protein<I,RV,RVT,RE,RET>,UniprotGraph<I,RV,RVT,RE,RET>.ProteinType, UniprotGraph<I,RV,RVT,RE,RET>,
+				// edge
+				UniRef50Member<I,RV,RVT,RE,RET>,UniRef50MemberType,
+				// property
+				proteinAccession, String,
+				// tgt
+				UniRef50Cluster<I,RV,RVT,RE,RET>,UniRefGraph<I,RV,RVT,RE,RET>.UniRef50ClusterType, UniRefGraph<I,RV,RVT,RE,RET>
+			>
 		{
 			public proteinAccession() {
 				super(UniRef50MemberType.this);
@@ -133,7 +139,7 @@ public abstract class UniprotUniRefGraph<
 			TypedEdge.Type.ManyToOne
 	{
 
-        public UniRef90MemberType(RET raw) {
+    public UniRef90MemberType(RET raw) {
 
 			super(
 					UniprotUniRefGraph.this.uniprotGraph().Protein(),
@@ -141,6 +147,8 @@ public abstract class UniprotUniRefGraph<
 					UniprotUniRefGraph.this.uniRefGraph().UniRef90Cluster()
 			);
 		}
+
+		public final proteinAccession proteinAccession = new proteinAccession();
 
 		@Override
 		public UniRef90MemberType value() {
@@ -153,13 +161,17 @@ public abstract class UniprotUniRefGraph<
 		}
 
 		public final class proteinAccession
-				extends
-				UniprotUniRefEdgeProperty<
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-						UniRef90Member<I, RV, RVT, RE, RET>, UniRef90MemberType,
-						UniRef90Cluster<I, RV, RVT, RE, RET>, UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType,
-						proteinAccession, String
-						>
+		extends
+			UniprotUniRefEdgeProperty<
+				// src
+				Protein<I,RV,RVT,RE,RET>,UniprotGraph<I,RV,RVT,RE,RET>.ProteinType, UniprotGraph<I,RV,RVT,RE,RET>,
+				// edge
+				UniRef90Member<I,RV,RVT,RE,RET>,UniRef90MemberType,
+				// property
+				proteinAccession, String,
+				// tgt
+				UniRef90Cluster<I,RV,RVT,RE,RET>,UniRefGraph<I,RV,RVT,RE,RET>.UniRef90ClusterType, UniRefGraph<I,RV,RVT,RE,RET>
+			>
 		{
 			public proteinAccession() {
 				super(UniRef90MemberType.this);
@@ -329,26 +341,25 @@ public abstract class UniprotUniRefGraph<
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
-
+	// TODO: add a Bio4j base vertex and edge interface
 	public abstract class UniprotUniRefEdgeProperty<
-			S extends UniprotUniRefVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<S, ST>,
-			SG extends UniprotUniRefGraph<SG, I, RV, RVT, RE, RET>,
-			E extends UniprotUniRefEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefEdgeType<S, ST, E, ET, T, TT>,
-			T extends UniprotUniRefVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<T, TT>,
-			TG extends UniprotUniRefGraph<TG, I, RV, RVT, RE, RET>,
-			P extends UniprotUniRefEdgeProperty <
-					S, ST,SG,
-					E, ET,
-					T, TT, TG,
-					P, PV
-					>,
-			PV
-			>
-			implements
-			Property<E, ET, P, PV, UniprotUniRefGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+		// src vertex and graph
+		S extends TypedVertex<S,ST, SG,I,RV,RVT,RE,RET>,
+		ST extends TypedVertex.Type<S,ST, SG,I,RV,RVT,RE,RET>,
+		SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
+		// edge
+		E extends UniprotUniRefEdge<S,ST,SG, E,ET, T,TT,TG, I,RV,RVT,RE,RET>,
+		ET extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+		// property
+		P extends UniprotUniRefEdgeProperty<S,ST,SG, E,ET,P,PV, T,TT,TG>,
+		PV,
+		// tgt vertex and graph
+		T extends TypedVertex<T,TT, TG, I,RV,RVT,RE,RET>,
+		TT extends TypedVertex.Type<T,TT, TG, I,RV,RVT,RE,RET>,
+		TG extends TypedGraph<TG, I,RV,RVT,RE,RET>
+	>
+	implements
+			Property<E,ET, P,PV, UniprotUniRefGraph<I,RV,RVT,RE,RET>, I,RV,RVT,RE,RET> {
 
 		protected UniprotUniRefEdgeProperty(ET type) {
 
@@ -390,8 +401,8 @@ public abstract class UniprotUniRefGraph<
 			V extends UniprotUniRefVertex<V, VT, I, RV, RVT, RE, RET>,
 			VT extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
+	>
+	implements
 			TypedVertex<V, VT, UniprotUniRefGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RV vertex;
@@ -419,7 +430,7 @@ public abstract class UniprotUniRefGraph<
 		}
 	}
 
-	abstract class UniprotUniRefVertexType<
+	public abstract class UniprotUniRefVertexType<
 			V extends UniprotUniRefVertex<V, VT, I, RV, RVT, RE, RET>,
 			VT extends UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniprotUniRefVertexType<V, VT>
 			>
@@ -456,13 +467,13 @@ public abstract class UniprotUniRefGraph<
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
 			TG extends TypedGraph<TG, I, RV, RVT, RE, RET>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
-			TypedEdge<
-					S, ST, SG,
-					E, ET, UniprotUniRefGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, TG
-					>
+	>
+	implements
+		TypedEdge<
+				S, ST, SG,
+				E, ET, UniprotUniRefGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+				T, TT, TG
+		>
 	{
 
 		private RE edge;
