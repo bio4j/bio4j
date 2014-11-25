@@ -166,7 +166,7 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinInterpro
 	// outgoing
-	public Optional<Stream<ProteinInterpro<I, RV, RVT, RE, RET>>> proteinIntepro_out(){
+	public Optional<Stream<ProteinInterpro<I, RV, RVT, RE, RET>>> proteinInterpro_out(){
 		return outManyOptional(graph().ProteinInterpro());
 	}
 	public Optional<Stream<Interpro<I, RV, RVT, RE, RET>>>  proteinInterpro_outV(){
