@@ -7,7 +7,7 @@ import com.bio4j.model.go.vertices.SubOntologies;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 import java.io.*;
 import java.util.*;
@@ -92,19 +92,13 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 
 				logger.log(Level.INFO, "inserting subontologies nodes....");
 				//---biological process---
-				SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.SubOntologies().from(
-					goGraph.raw().addVertex(null)
-				);
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.addVertex(goGraph.SubOntologies());
 				subOntologiesBP.set(goGraph.SubOntologies().name, "biological_process");
 
-				SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.SubOntologies().from(
-					goGraph.raw().addVertex(null)
-				);
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.addVertex(goGraph.SubOntologies());
 				subOntologiesCC.set(goGraph.SubOntologies().name, "cellular_component");
 
-				SubOntologies<I,RV,RVT,RE,RET> subOntologiesMM = goGraph.SubOntologies().from(
-					goGraph.raw().addVertex(goGraph.SubOntologies().raw())
-				);
+				SubOntologies<I,RV,RVT,RE,RET> subOntologiesMM = goGraph.addVertex(goGraph.SubOntologies());
 				subOntologiesMM.set(goGraph.SubOntologies().name, "molecular_function");
 
 				logger.log(Level.INFO, "inserting term nodes....");
@@ -223,9 +217,7 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 						//-------------------------------------
 
 
-						GoTerm<I,RV,RVT,RE,RET> term = goGraph.GoTerm().from(
-							goGraph.raw().addVertex( goGraph.GoTerm().raw() )
-						);
+						GoTerm<I,RV,RVT,RE,RET> term = goGraph.addVertex(goGraph.GoTerm());
 
 						term.set(goGraph.GoTerm().id, goId);
 						term.set(goGraph.GoTerm().name, goName);

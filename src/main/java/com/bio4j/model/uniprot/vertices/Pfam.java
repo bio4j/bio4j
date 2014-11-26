@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinPfam;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
@@ -39,10 +40,10 @@ public class Pfam <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 
 	// proteinPfam
 	// ingoing
-	public List<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_in(){
+	public Stream<ProteinPfam<I, RV, RVT, RE, RET>> proteinPfam_in(){
 		return inMany(graph().ProteinPfam());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinPfam_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinPfam_inV(){
 		return inManyV(graph().ProteinPfam());
 	}
 

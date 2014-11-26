@@ -4,11 +4,12 @@ import com.bio4j.model.uniref.UniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 
 import java.io.*;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -173,17 +174,17 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 				String name = entryXMLElem.asJDomElement().getChildText("name");
 
 				if(unirefClusterNumber == 50){
-					UniRef50Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef50Cluster().from(uniRefGraph.raw().addVertex(null));
+					UniRef50Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef50Cluster());
 					cluster.set(uniRefGraph.UniRef50Cluster().id, entryId);
 					cluster.set(uniRefGraph.UniRef50Cluster().updatedDate, updatedDate);
 					cluster.set(uniRefGraph.UniRef50Cluster().name, name);
 				}else if(unirefClusterNumber == 90){
-					UniRef90Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef90Cluster().from(uniRefGraph.raw().addVertex(null));
+					UniRef90Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef90Cluster());
 					cluster.set(uniRefGraph.UniRef90Cluster().id, entryId);
 					cluster.set(uniRefGraph.UniRef90Cluster().updatedDate, updatedDate);
 					cluster.set(uniRefGraph.UniRef90Cluster().name, name);
 				}else if(unirefClusterNumber == 100){
-					UniRef100Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.UniRef100Cluster().from(uniRefGraph.raw().addVertex(null));
+					UniRef100Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef100Cluster());
 					cluster.set(uniRefGraph.UniRef100Cluster().id, entryId);
 					cluster.set(uniRefGraph.UniRef100Cluster().updatedDate, updatedDate);
 					cluster.set(uniRefGraph.UniRef100Cluster().name, name);

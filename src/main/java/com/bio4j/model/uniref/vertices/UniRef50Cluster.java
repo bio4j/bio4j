@@ -4,9 +4,10 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.edges.UniRef50Member;
 import com.bio4j.model.uniprot_uniref.edges.UniRef50Representant;
 import com.bio4j.model.uniref.UniRefGraph;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -52,10 +53,10 @@ public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 
 	//uniRef50Member
 	// ingoing
-	public List<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
+	public Stream<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
 		return inMany(graph().uniprotUniRefGraph().UniRef50Member());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inNode(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inV(){
 		return inManyV(graph().uniprotUniRefGraph().UniRef50Member());
 	}
 

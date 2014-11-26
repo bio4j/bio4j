@@ -5,7 +5,7 @@ import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

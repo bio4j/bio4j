@@ -3,9 +3,10 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.OrganismTaxon;
 import com.bio4j.model.uniprot.edges.ProteinOrganism;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -52,10 +53,10 @@ public final class Organism <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	// proteinOrganism
 	// ingoing
-	public List<ProteinOrganism<I, RV, RVT, RE, RET>> proteinOrganism_in(){
+	public Stream<ProteinOrganism<I, RV, RVT, RE, RET>> proteinOrganism_in(){
 		return inMany(graph().ProteinOrganism());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinOrganism_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinOrganism_inV(){
 		return inManyV(graph().ProteinOrganism());
 	}
 

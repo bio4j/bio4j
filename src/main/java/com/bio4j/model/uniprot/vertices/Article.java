@@ -1,9 +1,14 @@
 package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.edges.ArticleJournal;
 import com.bio4j.model.uniprot.edges.ArticlePubmed;
 import com.bio4j.model.uniprot.edges.ReferenceArticle;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -39,11 +44,11 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// articlePubmed
 	// outgoing
-	public ArticlePubmed<I, RV, RVT, RE, RET>  articlePubmed_out(){
-		return outOne(graph().ArticlePubmed());
+	public Optional<ArticlePubmed<I, RV, RVT, RE, RET>> articlePubmed_out(){
+		return outOneOptional(graph().ArticlePubmed());
 	}
-	public Pubmed<I, RV, RVT, RE, RET> articlePubmed_outV(){
-		return outOneV(graph().ArticlePubmed());
+	public Optional<Pubmed<I, RV, RVT, RE, RET>> articlePubmed_outV(){
+		return outOneOptionalV(graph().ArticlePubmed());
 	}
 	// referenceArticle
 	// ingoing
@@ -53,4 +58,12 @@ public final class Article <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Reference<I, RV, RVT, RE, RET> referenceArticle_inV(){
 		return inOneV(graph().ReferenceArticle());
 	}
+    // articleJournal
+    // outgoing
+    public Optional<ArticleJournal<I, RV, RVT, RE, RET>> articleJournal_out(){
+        return outOneOptional(graph().ArticleJournal());
+    }
+    public Optional<Journal<I, RV, RVT, RE, RET>> articleJournal_outV(){
+        return outOneOptionalV(graph().ArticleJournal());
+    }
 }

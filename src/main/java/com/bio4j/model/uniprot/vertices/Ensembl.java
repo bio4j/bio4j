@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinEnsembl;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
@@ -45,10 +46,10 @@ public final class Ensembl <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 
 	// proteinEnsembl
 	// ingoing
-	public List<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_in(){
+	public Stream<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_in(){
 		return inMany(graph().ProteinEnsembl());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinEnsembl_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinEnsembl_inV(){
 		return inManyV(graph().ProteinEnsembl());
 	}
 

@@ -1,8 +1,13 @@
 package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.edges.OnlineArticleOnlineJournal;
 import com.bio4j.model.uniprot.edges.ReferenceOnlineArticle;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -40,4 +45,13 @@ public final class OnlineArticle <I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 	public Reference<I, RV, RVT, RE, RET> referenceOnlineArticle_inV(){
 		return inOneV(graph().ReferenceOnlineArticle());
 	}
+
+    // onlineArticleOnlineJournal
+    // outgoing
+    public Optional<OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>> onlineArticleOnlineJournal_out(){
+        return outOneOptional(graph().OnlineArticleOnlineJournal());
+    }
+    public Optional<OnlineJournal<I, RV, RVT, RE, RET>> onlineArticleOnlineJournal_outV(){
+        return outOneOptionalV(graph().OnlineArticleOnlineJournal());
+    }
 }

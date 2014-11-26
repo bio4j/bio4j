@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinReactomeTerm;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -39,10 +40,10 @@ public final class ReactomeTerm <I extends UntypedGraph<RV, RVT, RE, RET>, RV, R
 
 	// proteinReactomeTerm
 	// ingoing
-	public List<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_in(){
+	public Stream<ProteinReactomeTerm<I, RV, RVT, RE, RET>> proteinReactomeTerm_in(){
 		return inMany(graph().ProteinReactomeTerm());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinReactomeTerm_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinReactomeTerm_inV(){
 		return inManyV(graph().ProteinReactomeTerm());
 	}
 

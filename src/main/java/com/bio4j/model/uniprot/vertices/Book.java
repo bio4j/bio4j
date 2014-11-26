@@ -2,10 +2,13 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.BookCity;
+import com.bio4j.model.uniprot.edges.BookPublisher;
 import com.bio4j.model.uniprot.edges.ReferenceBook;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
@@ -46,10 +49,19 @@ public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, R
 
 	// bookCity
 	// outgoing
-	public BookCity<I, RV, RVT, RE, RET> bookCity_out(){
-		return outOne(graph().BookCity());
+	public Optional<BookCity<I, RV, RVT, RE, RET>> bookCity_out(){
+		return outOneOptional(graph().BookCity());
 	}
-	public City<I, RV, RVT, RE, RET> bookCity_outV(){
-		return outOneV(graph().BookCity());
+	public Optional<City<I, RV, RVT, RE, RET>> bookCity_outV(){
+		return outOneOptionalV(graph().BookCity());
 	}
+
+    // bookPublisher
+    // outgoing
+    public Optional<BookPublisher<I, RV, RVT, RE, RET>> bookPublisher_out(){
+        return outOneOptional(graph().BookPublisher());
+    }
+    public Optional<Publisher<I, RV, RVT, RE, RET>> bookPublisher_outV(){
+        return outOneOptionalV(graph().BookPublisher());
+    }
 }

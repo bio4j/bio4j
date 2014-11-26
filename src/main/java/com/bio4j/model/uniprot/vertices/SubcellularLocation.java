@@ -3,9 +3,10 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinSubcellularLocation;
 import com.bio4j.model.uniprot.edges.SubcellularLocationParent;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
@@ -37,19 +38,19 @@ public final class SubcellularLocation <I extends UntypedGraph<RV, RVT, RE, RET>
 
 	// proteinSubcellularLocation
 	// ingoing
-	public List<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_in(){
+	public Stream<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_in(){
 		return inMany(graph().ProteinSubcellularLocation());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinSubcellularLocation_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinSubcellularLocation_inV(){
 		return inManyV(graph().ProteinSubcellularLocation());
 	}
 
 	// subcellularLocationParent
 	// ingoing
-	public List<SubcellularLocationParent<I, RV, RVT, RE, RET>> subcellularLocationParent_in(){
+	public Stream<SubcellularLocationParent<I, RV, RVT, RE, RET>> subcellularLocationParent_in(){
 		return inMany(graph().SubcellularLocationParent());
 	}
-	public List<SubcellularLocation<I, RV, RVT, RE, RET>> subcellularLocationParent_inV(){
+	public Stream<SubcellularLocation<I, RV, RVT, RE, RET>> subcellularLocationParent_inV(){
 		return inManyV(graph().SubcellularLocationParent());
 	}
 

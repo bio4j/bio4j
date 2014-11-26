@@ -6,7 +6,7 @@ import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 import java.util.Date;
 
@@ -930,6 +930,8 @@ public abstract class UniprotGraph<
 	public abstract ProteinProteinInteractionType ProteinProteinInteraction();
 
 	public abstract ProteinIsoformInteractionType ProteinIsoformInteraction();
+
+	public abstract ProteinIsoformType ProteinIsoform();
 
 	public abstract IsoformProteinInteractionType IsoformProteinInteraction();
 
@@ -4043,6 +4045,32 @@ public abstract class UniprotGraph<
 				return String.class;
 			}
 		}
+	}
+
+	public final class ProteinIsoformType
+			extends
+			UniprotEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinIsoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinIsoformType,
+					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public ProteinIsoformType(RET raw) {
+			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Isoform());
+		}
+
+		@Override
+		public ProteinIsoformType value() {
+			return graph().ProteinIsoform();
+		}
+
+		@Override
+		public ProteinIsoform<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinIsoform<I, RV, RVT, RE, RET>(edge, this);
+		}
+
 	}
 
 	public final class ProteinIsoformInteractionType

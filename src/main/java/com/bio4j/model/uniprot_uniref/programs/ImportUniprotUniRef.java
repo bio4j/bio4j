@@ -5,13 +5,14 @@ import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.Optional;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -60,14 +61,14 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			try {
 
 				// This block configure the logger with handler and formatter
-				fh = new FileHandler("ImportUniRefTitan.log", true);
+				fh = new FileHandler("ImportUniprotUniRefTitan.log", true);
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
 				logger.addHandler(fh);
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUnirefStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotUnirefStats.txt")));
 
 				//------------------- UNIREF 100----------------------------
 				System.out.println("Reading Uniref 100 file...");
@@ -157,7 +158,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 		String line;
 
 		int entryCounter = 0;
-		int limitForPrintingOut = 10000;
+		int limitForPrintingOut = 1000;
 
 		while ((line = reader.readLine()) != null) {
 			//----we reached a entry line-----
@@ -214,7 +215,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						}
 
 					}else{
-
+						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
 					}
 
 				}else if(unirefClusterNumber == 90){
@@ -233,7 +234,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						}
 
 					}else{
-
+						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
 					}
 
 				}else if(unirefClusterNumber == 100){
@@ -252,7 +253,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						}
 
 					}else{
-
+						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
 					}
 				}
 

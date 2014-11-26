@@ -9,7 +9,7 @@ import java.util.logging.SimpleFormatter;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 
 /**
@@ -75,7 +75,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						String id = columns[0].trim();
 						String taxonomicRankSt = columns[2].trim();
 
-						NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.NCBITaxon().from(ncbiTaxonomyGraph.raw().addVertex(null));
+						NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.addVertex(ncbiTaxonomyGraph.NCBITaxon());
 						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
 						ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRankSt);
 						//node.setEmblCode(columns[3].trim()); TODO add emblCode??

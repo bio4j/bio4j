@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot.programs;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
@@ -60,7 +60,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 			try {
 
 				// This block configures the logger with handler and formatter
-				fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0] + ".log", false);
+				fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
@@ -68,7 +68,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
 				BufferedReader reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();

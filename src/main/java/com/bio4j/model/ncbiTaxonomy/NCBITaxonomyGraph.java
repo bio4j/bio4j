@@ -2,8 +2,9 @@ package com.bio4j.model.ncbiTaxonomy;
 
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
+import com.bio4j.model.ncbiTaxonomy_geninfo.NCBITaxonomyGenInfoGraph;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /*
 
@@ -71,6 +72,7 @@ public abstract class NCBITaxonomyGraph<
 	nCBITaxonIdIndex();
 
 	public abstract UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
+    public abstract NCBITaxonomyGenInfoGraph<I, RV, RVT, RE, RET> ncbiTaxonomyGenInfoGraph();
 
 	// types
 	// vertices
@@ -183,7 +185,7 @@ public abstract class NCBITaxonomyGraph<
 					NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType
 					>
 			implements
-			TypedEdge.Type.ManyToOne {
+			TypedEdge.Type.OneToMany {
 
 		public NCBITaxonParentType(RET raw) {
 			super(NCBITaxonomyGraph.this.NCBITaxon(), raw, NCBITaxonomyGraph.this.NCBITaxon());

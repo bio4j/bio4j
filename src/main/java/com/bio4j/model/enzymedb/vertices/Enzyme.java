@@ -3,9 +3,11 @@ package com.bio4j.model.enzymedb.vertices;
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends EnzymeDBGraph.EnzymeVertex<
@@ -56,8 +58,8 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
 	//-----enzymaticActivity----
 	// ingoing
-	public List<EnzymaticActivity<I, RV, RVT, RE, RET>> enzymaticActivity_in(){   return inMany(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
-	public List<Protein<I, RV, RVT, RE, RET>> enzymaticActivity_inV(){   return inManyV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
+	public Optional<Stream<EnzymaticActivity<I, RV, RVT, RE, RET>>> enzymaticActivity_in(){   return inManyOptional(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> enzymaticActivity_inV(){   return inManyOptionalV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
 
 
 }

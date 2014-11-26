@@ -8,7 +8,7 @@ import com.bio4j.model.uniref.UniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /*
 

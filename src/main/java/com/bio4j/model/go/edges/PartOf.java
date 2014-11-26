@@ -2,7 +2,7 @@ package com.bio4j.model.go.edges;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.vertices.GoTerm;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 public final class PartOf<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends

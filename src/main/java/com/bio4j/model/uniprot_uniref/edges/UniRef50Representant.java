@@ -6,7 +6,7 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.UniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

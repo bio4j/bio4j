@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot.edges;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.*;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>

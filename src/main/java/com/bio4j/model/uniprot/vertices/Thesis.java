@@ -2,7 +2,12 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ReferenceThesis;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.model.uniprot.edges.ThesisInstitute;
+import com.bio4j.angulillos.UntypedGraph;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
@@ -40,4 +45,12 @@ public final class Thesis<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	public Reference<I, RV, RVT, RE, RET> referenceThesis_inV(){
         return inOneV(graph().ReferenceThesis());
 	}
+    // thesisInstitute
+    // outgoing
+    public Optional<ThesisInstitute<I, RV, RVT, RE, RET>> thesisInstitute_out(){
+        return outOneOptional(graph().ThesisInstitute());
+    }
+    public Optional<Institute<I, RV, RVT, RE, RET>> thesisInstitute_outV(){
+        return outOneOptionalV(graph().ThesisInstitute());
+    }
 }

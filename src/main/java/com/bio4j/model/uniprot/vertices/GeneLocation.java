@@ -2,9 +2,10 @@ package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.edges.ProteinGeneLocation;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
@@ -36,10 +37,10 @@ public final class GeneLocation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, R
 
 	// proteinGeneLocation
 	// ingoing
-	public List<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_in(){
+	public Stream<ProteinGeneLocation<I, RV, RVT, RE, RET>> proteinGeneLocation_in(){
 		return inMany(graph().ProteinGeneLocation());
 	}
-	public List<Protein<I, RV, RVT, RE, RET>> proteinGeneLocation_inV(){
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinGeneLocation_inV(){
 		return inManyV(graph().ProteinGeneLocation());
 	}
 

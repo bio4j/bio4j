@@ -3,12 +3,14 @@ package com.bio4j.model.uniprot_go.programs;
 import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.UniprotGoGraph;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +63,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 			try {
 
 				// This block configures the logger with handler and formatter
-				fh = new FileHandler("ImportUniprotGo" + args[0].split("\\.")[0] + ".log", false);
+				fh = new FileHandler("ImportUniprotGo" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
@@ -69,7 +71,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotGoStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotGoStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
 				BufferedReader reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
@@ -101,14 +103,23 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(GO_DB_REFERENCE_TYPE)) {
 
 								if(protein == null){
-									protein = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+									if(proteinOptional.isPresent()){
+										protein = proteinOptional.get();
+									}else{
+										logger.log(Level.INFO, "Protein with id " + accessionSt + " not found...");
+										break;
+									}
 								}
 
 								String goId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-								GoTerm<I,RV,RVT,RE,RET> goTerm = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId).get();
-
-								protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTerm);
+								Optional<GoTerm<I,RV,RVT,RE,RET>> goTermOptional = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId);
+								if(goTermOptional.isPresent()){
+									protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTermOptional.get());
+								}else{
+									logger.log(Level.INFO, "GO term with id " + goId + " not found...");
+								}
 
 
 							}
@@ -150,7 +161,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprot:\nInput file: " + inFile.getName()
+					statsBuff.write("Statistics for program ImportUniprotGO:\nInput file: " + inFile.getName()
 							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 

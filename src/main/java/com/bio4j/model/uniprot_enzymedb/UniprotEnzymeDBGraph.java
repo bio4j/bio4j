@@ -6,7 +6,7 @@ import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /*
 

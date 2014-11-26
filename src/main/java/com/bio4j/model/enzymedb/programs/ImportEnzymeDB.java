@@ -18,11 +18,12 @@ package com.bio4j.model.enzymedb.programs;
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.ohnosequences.typedGraphs.UntypedGraph;
+import com.bio4j.angulillos.UntypedGraph;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,7 +152,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 									transferredEntry = false;
 								}
 
-								Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.Enzyme().from(enzymeDBGraph.raw().addVertex(null));
+								Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
 
 								enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
 								enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);

@@ -6,7 +6,7 @@ import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.UniprotGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.edges.GoAnnotation;
-import com.ohnosequences.typedGraphs.*;
+import com.bio4j.angulillos.*;
 
 /*
 
