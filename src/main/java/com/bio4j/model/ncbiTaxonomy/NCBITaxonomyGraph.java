@@ -185,7 +185,7 @@ public abstract class NCBITaxonomyGraph<
 					NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType
 					>
 			implements
-			TypedEdge.Type.ManyToOne {
+			TypedEdge.Type.OneToMany {
 
 		public NCBITaxonParentType(RET raw) {
 			super(NCBITaxonomyGraph.this.NCBITaxon(), raw, NCBITaxonomyGraph.this.NCBITaxon());
