@@ -99,7 +99,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 							if(organismElement != null){
 
 								//-----db references-------------
-								List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+								List<Element> dbReferenceList = organismElement.getChildren(DB_REFERENCE_TAG_NAME);
 
 								for (Element dbReferenceElem : dbReferenceList) {
 
