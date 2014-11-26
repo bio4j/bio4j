@@ -8,8 +8,18 @@ import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
 import com.bio4j.angulillos.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# NCBI taxonomy GenInfo graph
+
+This graph includes the edges among NCBI taxonomic units and GenInfo vertices.
+
+## data model
+
+### GenInfoNCBITaxon
+
+Connecting `GenInfo` and `NCBITaxon` vertices.
+
  */
 public abstract class NCBITaxonomyGenInfoGraph<
 		// untyped graph

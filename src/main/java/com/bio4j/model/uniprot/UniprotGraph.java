@@ -71,6 +71,71 @@ The following properties are stored at the `Pfam` vertex:
 - `id`
 - `name`
 
+### Dataset
+
+These vertices represent the data set to which a protein belongs. There only exist two vertices in the database, one for Swiss-Prot and other for TrEMBL.
+A protein is connected to its data set via an edge with type `ProteinDataset`
+
+### EMBL
+
+EMBL terms, including the following properties:
+
+- `id`
+- `proteinSequenceId`
+- `moleculeType`
+
+They are connected to `Protein` vertices via `ProteinEMBL` edges.
+
+### Ensembl
+
+Ensembl terms, including the following properties:
+
+- `id`
+- `proteinSequenceId`
+- `moleculeId`
+- `geneId`
+
+They are connected to `Protein` vertices via `ProteinEnsembl` edges.
+
+### Kegg
+
+Connected to `Protein` vertices via `ProteinKegg` edges.
+The following properties are stored at the `Kegg` vertex:
+
+- `id`
+
+### PIR
+
+Connected to `Protein` vertices via `ProteinPIR` edges.
+The following properties are stored at the `PIR` vertex:
+
+- `id`
+- `entryName`
+
+### ReactomeTerms
+
+Connected to `Protein` vertices via `ProteinReactomeTerm` edges.
+The following properties are stored at the `ReactomeTerm` vertex:
+
+- `id`
+- `pathwayName`
+
+### RefSeq
+
+Connected to `Protein` vertices via `ProteinRefSeq` edges.
+The following properties are stored at the `RefSeq` vertex:
+
+- `id`
+- `nucleotideSequenceId`
+
+### UniGene
+
+Connected to `Protein` vertices via `ProteinUniGene` edges.
+The following properties are stored at the `UniGene` vertex:
+
+- `id`
+
+
 ### Comments
 
 Protein comments are modelled through `ProteinComment` edges linking to `CommentType` vertices. `CommentType` vertices only have one property `name` and there exists a vertex for each of the possible comment types.
@@ -136,7 +201,184 @@ Modelled as `Isoform` vertices, include the following properties:
 - `note`
 - `sequence`
 
-They are connected to proteins through edges from the type ProteinIsoformInteraction
+They are connected to proteins through edges from the type `ProteinIsoformInteraction`
+They are also linked to `AlternativeProduct` vertices via edges of type `IsoformEventGenerator`.
+
+### Organisms
+
+Leaf vertices in the taxonomy tree, they are the taxonomic units linked to proteins through `ProteinOrganism` edges. They are connected to non-leaf vertices via `OrganismTaxon` edges.
+The following properties are included:
+
+- `scientificName`
+- `commonName`
+- `synonymName`
+
+### Citations
+
+#### References
+
+All types of citations are connected to Proteins via intermediary vertices of type `Reference`. These vertices only include one property `date`. Edges linking `Protein` and `Reference` vertices are from the type `ProteinReference`.
+
+#### Articles
+
+`Article` properties:
+
+- `title`
+- `doId`
+
+Other properties such as the following are stored via edges:
+
+The journal where the `Article` was published is modelled through an edge of type `ArticleJournal` which links to a `Journal` node.
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Articles are connected to `Reference` vertices via an edge of type `ReferenceArticle`.
+Article authors are stored at the `Reference` level.
+In the case where they have a `Pubmed` id, there exists an edge of type `ArticlePubmed` connecting it to the specific `Pubmed` vertex.
+
+#### Online Articles
+
+`OnlineArticle` properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The online journal where the `OnlineArticle` was published is modelled through an edge of type `OnlineArticleOnlineJournal` which links to a `OnlineJournal` node.
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Online articles are connected to `Reference` vertices via an edge of type `ReferenceOnlineArticle`.
+`OnlineArticle` authors are stored at the `Reference` level.
+
+
+#### Books
+
+`Book` properties:
+
+- `name`
+
+Other properties such as the following are stored via edges:
+
+The city where the book was published is modelled through an edge of type `BookCity` which links to a `City` node.
+Book editors are modelled via `BookEditor` edges linking to `Person` vertices.
+Book publishers are modelled through `BookPublisher` edges connecting to `Publisher` vertices.
+Book authors are stored at the `Reference` level.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Books are connected to `Reference` vertices via an edge of type `ReferenceBook`.
+
+#### Submissions
+
+`Submission` properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The database where a submission was submitted is modelled via an edge of type `SubmissionDB` which links to a `DB` vertex.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Submissions are connected to `Reference` vertices via an edge of type `ReferenceSubmission`.
+Submission authors are stored at the `Reference` level.
+
+#### Patents
+
+`Patent` properties:
+
+- `title`
+- `number`
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Patents are connected to `Reference` vertices via an edge of type `ReferencePatent`.
+Patent authors are stored at the `Reference` level.
+
+#### Theses
+
+`Thesis` properties:
+
+- `title`
+
+Other properties such as the following are stored via edges:
+
+The `Institute` associated to the `Thesis` is modelled via an edge of type `ThesisInstitute` which links to a `Thesis` vertex.
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceThesis`.
+Thesis authors are stored at the `Reference` level.
+
+#### Unpublished Observations
+
+They are connected to `Protein` vertices via an intermediary `Reference` vertex. Theses are connected to `Reference` vertices via an edge of type `ReferenceUnpublishedObservations`.
+Unpublished observations authors are stored at the `Reference` level.
+
+#### Journals
+
+`Journal` properties:
+
+- `name`
+
+#### Online journals
+
+`OnlineJournal` properties:
+
+- `name`
+
+#### Institutes
+
+`Institute` properties:
+
+- `name`
+
+#### Publishers
+
+`Publisher` properties:
+
+- `name`
+
+#### People
+
+`Person` vertices include the following properties:
+
+- `name`
+
+They are linked to `Reference` vertices via edges of type `ReferenceAuthorPerson`.
+
+#### Consortiums
+
+`Consortium` vertices include the following properties:
+
+- `name`
+
+#### Countries
+
+`Country` vertices have the properties:
+
+- `name`
+
+#### Cities
+
+`City` vertices include the following properties:
+
+- `name`
+
+They are linked to `Reference` vertices via edges of type `ReferenceAuthorConsortium`.
+
+### Subcellular Locations
+
+`SubcellularLocation` vertices include the following properties:
+
+- `name`
+
+They are linked to `Protein` vertices via edges of type `ProteinSubcellularLocation`.
+The hierarchical relationship among differnt subcellular location elements is expressed through edges of type `SubcellularLocationParent`.
+
+### Sequence Caution
+
+`SequenceCaution` vertices include the following properties:
+
+- `name`
+
+They are connected to `Protein` vertices via edges of type `ProteinSequenceCaution`.
+
+### Alternative Products
+
+`AlternativeProduct` vertices have the following properties:
+
+- `name`
+
+They are associated to `Isoform` vertices via edges of type `IsoformEventGenerator`.
+
 
  */
 public abstract class UniprotGraph<
