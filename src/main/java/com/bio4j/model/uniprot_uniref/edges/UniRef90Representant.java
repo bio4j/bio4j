@@ -34,6 +34,11 @@ public final class UniRef90Representant<I extends UntypedGraph<RV, RVT, RE, RET>
 		super(edge, type);
 	}
 
+	// properties
+	public String proteinAccession() {
+		return get(type().proteinAccession);
+	}
+
 	@Override
 	public UniRef90Representant<I, RV, RVT, RE, RET> self() {
 		return this;

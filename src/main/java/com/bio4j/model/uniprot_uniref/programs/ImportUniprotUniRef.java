@@ -2,6 +2,7 @@ package com.bio4j.model.uniprot_uniref.programs;
 
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
+import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
@@ -207,11 +208,16 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-							representant.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
-							representant.addOutEdge(uniprotUniRefGraph.UniRef50Representant(), cluster);
+
+							UniRef50Member<I,RV,RVT,RE,RET> uniRef50Member = representant.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
+							uniRef50Member.set(uniprotUniRefGraph.UniRef50Member().proteinAccession, representant.accession());
+
+							UniRef50Representant<I,RV,RVT,RE,RET> uniRef50Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef50Representant(), cluster);
+							uniRef50Representant.set(uniprotUniRefGraph.UniRef50Representant().proteinAccession, representant.accession());
 						}
 						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							protein.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
+							UniRef50Member<I,RV,RVT,RE,RET> uniRef50Member = protein.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
+							uniRef50Member.set(uniprotUniRefGraph.UniRef50Member().proteinAccession, protein.accession());
 						}
 
 					}else{
@@ -226,11 +232,16 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-							representant.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
-							representant.addOutEdge(uniprotUniRefGraph.UniRef90Representant(), cluster);
+
+							UniRef90Member<I,RV,RVT,RE,RET> uniRef90Member = representant.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
+							uniRef90Member.set(uniprotUniRefGraph.UniRef90Member().proteinAccession, representant.accession());
+
+							UniRef90Representant<I,RV,RVT,RE,RET> uniRef90Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef90Representant(), cluster);
+							uniRef90Representant.set(uniprotUniRefGraph.UniRef90Representant().proteinAccession, representant.accession());
 						}
 						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							protein.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
+							UniRef90Member<I,RV,RVT,RE,RET> uniRef90Member = protein.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
+							uniRef90Member.set(uniprotUniRefGraph.UniRef90Member().proteinAccession, protein.accession());
 						}
 
 					}else{
@@ -245,11 +256,16 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-							representant.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
-							representant.addOutEdge(uniprotUniRefGraph.UniRef100Representant(), cluster);
+
+							UniRef100Member<I,RV,RVT,RE,RET> uniRef100Member = representant.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
+							uniRef100Member.set(uniprotUniRefGraph.UniRef100Member().proteinAccession, representant.accession());
+
+							UniRef100Representant<I,RV,RVT,RE,RET> uniRef100Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef100Representant(), cluster);
+							uniRef100Representant.set(uniprotUniRefGraph.UniRef100Representant().proteinAccession, representant.accession());
 						}
 						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							protein.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
+							UniRef100Member<I,RV,RVT,RE,RET> uniRef100Member = protein.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
+							uniRef100Member.set(uniprotUniRefGraph.UniRef100Member().proteinAccession, protein.accession());
 						}
 
 					}else{
