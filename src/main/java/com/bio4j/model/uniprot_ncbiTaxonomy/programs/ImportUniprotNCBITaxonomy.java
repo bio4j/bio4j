@@ -90,37 +90,42 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 
 						String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
 
-						Protein<I,RV,RVT,RE,RET> protein = uniprotNCBITaxonomyGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+						Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotNCBITaxonomyGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+						if(proteinOptional.isPresent()){
 
-						Element organismElement = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
-						if(organismElement != null){
+							Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
 
-							//-----db references-------------
-							List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+							Element organismElement = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
+							if(organismElement != null){
 
-							for (Element dbReferenceElem : dbReferenceList) {
+								//-----db references-------------
+								List<Element> dbReferenceList = organismElement.getChildren(DB_REFERENCE_TAG_NAME);
 
-								//-------------------NCBI TAXONOMY -----------------------------
-								if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(NCBI_TAXONOMY_TYPE)) {
+								for (Element dbReferenceElem : dbReferenceList) {
 
-									String taxonId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+									//-------------------NCBI TAXONOMY -----------------------------
+									if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(NCBI_TAXONOMY_TYPE)) {
 
-									Optional<NCBITaxon<I,RV,RVT,RE,RET>> ncbiTaxonOptional = uniprotNCBITaxonomyGraph.ncbiTaxonomyGraph().nCBITaxonIdIndex().getVertex(taxonId);
-									if(ncbiTaxonOptional.isPresent()){
-										protein.addOutEdge(uniprotNCBITaxonomyGraph.ProteinNCBITaxon(), ncbiTaxonOptional.get());
+										String taxonId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+
+										Optional<NCBITaxon<I,RV,RVT,RE,RET>> ncbiTaxonOptional = uniprotNCBITaxonomyGraph.ncbiTaxonomyGraph().nCBITaxonIdIndex().getVertex(taxonId);
+										if(ncbiTaxonOptional.isPresent()){
+											protein.addOutEdge(uniprotNCBITaxonomyGraph.ProteinNCBITaxon(), ncbiTaxonOptional.get());
+										}
+
 									}
-
 								}
+								//---------------------------------------------------------------------------------------
 							}
-							//---------------------------------------------------------------------------------------
-						}
 
 
-						proteinCounter++;
-						if ((proteinCounter % limitForPrintingOut) == 0) {
-							String countProteinsSt = proteinCounter + " proteins updated!!";
-							logger.log(Level.INFO, countProteinsSt);
+							proteinCounter++;
+							if ((proteinCounter % limitForPrintingOut) == 0) {
+								String countProteinsSt = proteinCounter + " proteins updated!!";
+								logger.log(Level.INFO, countProteinsSt);
+							}
 						}
+
 
 					}
 				}

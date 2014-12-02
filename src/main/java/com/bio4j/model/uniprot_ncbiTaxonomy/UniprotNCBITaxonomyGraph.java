@@ -7,8 +7,18 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.bio4j.angulillos.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Uniprot NCBI taxonomy graph
+
+This graph includes the connection between Proteins and NCBI taxonmic units modelled via the edge type ProteinNCBITaxon
+
+## data model
+
+### ProteinNCBITaxon
+
+Connecting `Protein` and `NCBITaxon` vertices.
+
  */
 public abstract class UniprotNCBITaxonomyGraph<
 		// untyped graph

@@ -51,20 +51,20 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	//----ncbiTaxonParent-------
 	// ingoing
-	public Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_in(){
-		return inManyOptional(graph().NCBITaxonParent());
+	public Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in(){
+		return inOneOptional(graph().NCBITaxonParent());
 	}
-	public Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_inV(){
-		return inManyOptionalV(graph().NCBITaxonParent());
+	public Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV(){
+		return inOneOptionalV(graph().NCBITaxonParent());
 	}
 
 	//----ncbiTaxonParent-------
 	// outgoing
-	public Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_out(){
-		return outOneOptional(graph().NCBITaxonParent());
+	public Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_out(){
+		return outManyOptional(graph().NCBITaxonParent());
 	}
-	public Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_outV(){
-		return outOneOptionalV(graph().NCBITaxonParent());
+	public Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_outV(){
+		return outManyOptionalV(graph().NCBITaxonParent());
 	}
 
 	//----proteinNCBITaxon-------

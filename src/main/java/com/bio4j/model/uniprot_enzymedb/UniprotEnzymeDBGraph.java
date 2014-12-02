@@ -8,8 +8,18 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
 import com.bio4j.angulillos.*;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+/*
+
+# Uniprot Enzyme DB graph
+
+This graph includes the connection between Enzymes and Proteins modelled via the edge type EnzymaticActivity
+
+## data model
+
+### EnzymaticActivity
+
+Connecting `Protein` and `Enzyme` vertices.
+
  */
 public abstract class UniprotEnzymeDBGraph<
 		// untyped graph
