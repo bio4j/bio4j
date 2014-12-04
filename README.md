@@ -15,7 +15,7 @@ On the contrary, traditional relational databases must flatten the data they rep
 
 * And finally, there are technology specific versions:
   - [**Titan DB implementation**](https://github.com/bio4j/bio4j-titan)
-  - [**Neo4j DB implementation**](https://github.com/bio4j/neo4jdb)
+  - [**Neo4j DB implementation**](https://github.com/bio4j/bio4j-neo4j)
 
 ### Modularity
 
