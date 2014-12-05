@@ -229,10 +229,8 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
                         goGraph.raw().commit();
 
 						//----namespace---
-
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(goId).get();
 						SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace).get();
-						goGraph.addEdge(tempGoTerm,goGraph.SubOntology(), tmpSubontologies);
+						goGraph.addEdge(term,goGraph.SubOntology(), tmpSubontologies);
 
 
 					}
