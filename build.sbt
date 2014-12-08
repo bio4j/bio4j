@@ -11,7 +11,7 @@ description := "Bio4j abstract model"
 bucketSuffix := "era7.com"
 
 libraryDependencies ++= Seq(
-  "bio4j" % "angulillos" % "0.4.0",
+  "bio4j" % "angulillos" % "0.4.1",
   "ohnosequences" % "bioinfo-util" % "1.4.2"
 )
 
