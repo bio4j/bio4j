@@ -325,34 +325,36 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										ensemblIdSet.add(refId);
 
-										String moleculeIdSt = "";
-										String proteinSequenceIdSt = "";
-										String geneIdSt = "";
-										List<Element> children = dbReferenceElem.getChildren("property");
-										for (Element propertyElem : children) {
-											if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
-												proteinSequenceIdSt = propertyElem.getAttributeValue("value");
-											}
-											if (propertyElem.getAttributeValue("type").equals("gene ID")) {
-												geneIdSt = propertyElem.getAttributeValue("value");
-											}
-										}
-										Element moleculeTag = dbReferenceElem.getChild("molecule");
-										if(moleculeTag != null){
-											moleculeIdSt = moleculeTag.getAttributeValue("id");
-											if(moleculeIdSt == null){
-												moleculeTag.getText();
-												if(moleculeIdSt == null){
-													moleculeIdSt = "";
+										if(!graph.ensemblIdIndex().getVertex(refId).isPresent()){
+											String moleculeIdSt = "";
+											String proteinSequenceIdSt = "";
+											String geneIdSt = "";
+											List<Element> children = dbReferenceElem.getChildren("property");
+											for (Element propertyElem : children) {
+												if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
+													proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+												}
+												if (propertyElem.getAttributeValue("type").equals("gene ID")) {
+													geneIdSt = propertyElem.getAttributeValue("value");
 												}
 											}
-										}
+											Element moleculeTag = dbReferenceElem.getChild("molecule");
+											if(moleculeTag != null){
+												moleculeIdSt = moleculeTag.getAttributeValue("id");
+												if(moleculeIdSt == null){
+													moleculeTag.getText();
+													if(moleculeIdSt == null){
+														moleculeIdSt = "";
+													}
+												}
+											}
 
-										Ensembl<I,RV,RVT,RE,RET> ensembl = graph.addVertex(graph.Ensembl());
-										ensembl.set(graph.Ensembl().id, refId);
-										ensembl.set(graph.Ensembl().proteinSequenceId, proteinSequenceIdSt);
-										ensembl.set(graph.Ensembl().moleculeId, moleculeIdSt);
-										ensembl.set(graph.Ensembl().geneId, geneIdSt);
+											Ensembl<I,RV,RVT,RE,RET> ensembl = graph.addVertex(graph.Ensembl());
+											ensembl.set(graph.Ensembl().id, refId);
+											ensembl.set(graph.Ensembl().proteinSequenceId, proteinSequenceIdSt);
+											ensembl.set(graph.Ensembl().moleculeId, moleculeIdSt);
+											ensembl.set(graph.Ensembl().geneId, geneIdSt);
+										}
 
 									}
 									break;
@@ -365,16 +367,18 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										pIRIdSet.add(refId);
 
-										String entryNameSt = "";
-										List<Element> children = dbReferenceElem.getChildren("property");
-										for (Element propertyElem : children) {
-											if (propertyElem.getAttributeValue("type").equals("entry name")) {
-												entryNameSt = propertyElem.getAttributeValue("value");
+										if(!graph.pIRIdIndex().getVertex(refId).isPresent()){
+											String entryNameSt = "";
+											List<Element> children = dbReferenceElem.getChildren("property");
+											for (Element propertyElem : children) {
+												if (propertyElem.getAttributeValue("type").equals("entry name")) {
+													entryNameSt = propertyElem.getAttributeValue("value");
+												}
 											}
+											PIR<I,RV,RVT,RE,RET> pIR = graph.addVertex(graph.PIR());
+											pIR.set(graph.PIR().entryName, entryNameSt);
+											pIR.set(graph.PIR().id, refId);
 										}
-										PIR<I,RV,RVT,RE,RET> pIR = graph.addVertex(graph.PIR());
-										pIR.set(graph.PIR().entryName, entryNameSt);
-										pIR.set(graph.PIR().id, refId);
 									}
 
 									break;
@@ -386,9 +390,10 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										uniGeneIdSet.add(refId);
 
-										UniGene<I,RV,RVT,RE,RET> uniGene = graph.addVertex(graph.UniGene());
-										uniGene.set(graph.UniGene().id, refId);
-
+										if(!graph.uniGeneIdIndex().getVertex(refId).isPresent()){
+											UniGene<I,RV,RVT,RE,RET> uniGene = graph.addVertex(graph.UniGene());
+											uniGene.set(graph.UniGene().id, refId);
+										}
 									}
 									break;
 
@@ -396,9 +401,13 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 									//looking for Kegg vertex
 									if(!keggIdSet.contains(refId)){
+
 										keggIdSet.add(refId);
-										Kegg<I,RV,RVT,RE,RET> kegg = graph.addVertex(graph.Kegg());
-										kegg.set(graph.Kegg().id, refId);
+
+										if(!graph.keggIdIndex().getVertex(refId).isPresent()){
+											Kegg<I,RV,RVT,RE,RET> kegg = graph.addVertex(graph.Kegg());
+											kegg.set(graph.Kegg().id, refId);
+										}
 									}
 									break;
 
@@ -410,23 +419,25 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										eMBLIdSet.add(refId);
 
-										String moleculeTypeSt = "";
-										String proteinSequenceIdSt = "";
-										List<Element> children = dbReferenceElem.getChildren("property");
-										for (Element propertyElem : children) {
-											if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
-												proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+										if(!graph.eMBLIdIndex().getVertex(refId).isPresent()){
+
+											String moleculeTypeSt = "";
+											String proteinSequenceIdSt = "";
+											List<Element> children = dbReferenceElem.getChildren("property");
+											for (Element propertyElem : children) {
+												if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
+													proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+												}
+												if (propertyElem.getAttributeValue("type").equals("molecule type")) {
+													moleculeTypeSt = propertyElem.getAttributeValue("value");
+												}
 											}
-											if (propertyElem.getAttributeValue("type").equals("molecule type")) {
-												moleculeTypeSt = propertyElem.getAttributeValue("value");
-											}
+
+											EMBL<I,RV,RVT,RE,RET> embl = graph.addVertex(graph.EMBL());
+											embl.set(graph.EMBL().id, refId);
+											embl.set(graph.EMBL().proteinSequenceId, proteinSequenceIdSt);
+											embl.set(graph.EMBL().moleculeType, moleculeTypeSt);
 										}
-
-										EMBL<I,RV,RVT,RE,RET> embl = graph.addVertex(graph.EMBL());
-										embl.set(graph.EMBL().id, refId);
-										embl.set(graph.EMBL().proteinSequenceId, proteinSequenceIdSt);
-										embl.set(graph.EMBL().moleculeType, moleculeTypeSt);
-
 									}
 									break;
 
@@ -438,37 +449,43 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										refSeqIdSet.add(refId);
 
-										String nucleotideSequenceIdSt = "";
-										List<Element> children = dbReferenceElem.getChildren("property");
-										for (Element propertyElem : children) {
-											if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
-												nucleotideSequenceIdSt = propertyElem.getAttributeValue("value");
+										if(!graph.refSeqIdIndex().getVertex(refId).isPresent()){
+											String nucleotideSequenceIdSt = "";
+											List<Element> children = dbReferenceElem.getChildren("property");
+											for (Element propertyElem : children) {
+												if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
+													nucleotideSequenceIdSt = propertyElem.getAttributeValue("value");
+												}
 											}
+
+											RefSeq<I,RV,RVT,RE,RET> refSeq = graph.addVertex(graph.RefSeq());
+											refSeq.set(graph.RefSeq().id, refId);
+											refSeq.set(graph.RefSeq().nucleotideSequenceId, nucleotideSequenceIdSt);
 										}
-
-										RefSeq<I,RV,RVT,RE,RET> refSeq = graph.addVertex(graph.RefSeq());
-										refSeq.set(graph.RefSeq().id, refId);
-										refSeq.set(graph.RefSeq().nucleotideSequenceId, nucleotideSequenceIdSt);
-
 									}
 
 									break;
 
 								case "Reactome":
 
-									Element propertyElem = dbReferenceElem.getChild("property");
-									String pathwayName = "";
-									if (propertyElem.getAttributeValue("type").equals("pathway name")) {
-										pathwayName = propertyElem.getAttributeValue("value");
-									}
 
 									if (!reactomeTermIdSet.contains(refId)) {
 
 										reactomeTermIdSet.add(refId);
 
-										ReactomeTerm<I,RV,RVT,RE,RET> reactomeTerm = graph.addVertex(graph.ReactomeTerm());
-										reactomeTerm.set(graph.ReactomeTerm().id, refId);
-										reactomeTerm.set(graph.ReactomeTerm().pathwayName, pathwayName);
+										if(!graph.reactomeTermIdIndex().getVertex(refId).isPresent()){
+
+											Element propertyElem = dbReferenceElem.getChild("property");
+											String pathwayName = "";
+											if (propertyElem.getAttributeValue("type").equals("pathway name")) {
+												pathwayName = propertyElem.getAttributeValue("value");
+											}
+
+
+											ReactomeTerm<I,RV,RVT,RE,RET> reactomeTerm = graph.addVertex(graph.ReactomeTerm());
+											reactomeTerm.set(graph.ReactomeTerm().id, refId);
+											reactomeTerm.set(graph.ReactomeTerm().pathwayName, pathwayName);
+										}
 									}
 
 									break;
@@ -502,17 +519,15 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						//--------------------------------datasets--------------------------------------------------
 						String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
 
-						Dataset<I,RV,RVT,RE,RET> dataset = null;
-						Optional<Dataset<I,RV,RVT,RE,RET>> optionalDataset = graph.datasetNameIndex().getVertex(proteinDataSetSt);
+						if (!datasetNameSet.contains(proteinDataSetSt)) {
 
-						if (!optionalDataset.isPresent()) {
-							dataset = graph.addVertex(graph.Dataset());
-							dataset.set(graph.Dataset().name, proteinDataSetSt);
-							graph.raw().commit();
-						}else{
-							dataset = optionalDataset.get();
+							datasetNameSet.add(proteinDataSetSt);
+
+							if(!graph.datasetNameIndex().getVertex(datasetNameSet).isPresent()){
+								Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
+								dataset.set(graph.Dataset().name, proteinDataSetSt);
+							}
 						}
-						protein.addOutEdge(graph.ProteinDataset(), dataset);
 						//---------------------------------------------------------------------------------------------
 
 
