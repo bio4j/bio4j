@@ -523,7 +523,7 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 							datasetNameSet.add(proteinDataSetSt);
 
-							if(!graph.datasetNameIndex().getVertex(datasetNameSet).isPresent()){
+							if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()){
 								Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
 								dataset.set(graph.Dataset().name, proteinDataSetSt);
 							}
@@ -544,20 +544,18 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
 							for (Element keywordElem : keywordsList) {
 								String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
-								String keywordName = keywordElem.getText();
 
-								Keyword<I,RV,RVT,RE,RET>  keyword = null;
-								Optional<Keyword<I,RV,RVT,RE,RET> > optionalKeyword = graph.keywordIdIndex().getVertex(keywordId);
+								if (!keywordIdSet.contains(keywordId)) {
 
-								if (!optionalKeyword.isPresent()) {
-									keyword = graph.addVertex(graph.Keyword());
-									keyword.set(graph.Keyword().id, keywordId);
-									keyword.set(graph.Keyword().name, keywordName);
-									graph.raw().commit();
-								}else{
-									keyword = optionalKeyword.get();
+									keywordIdSet.add(keywordId);
+
+									if(graph.keywordIdIndex().getVertex(keywordId).isPresent()){
+										String keywordName = keywordElem.getText();
+										Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
+										keyword.set(graph.Keyword().id, keywordId);
+										keyword.set(graph.Keyword().name, keywordName);
+									}
 								}
-								protein.addOutEdge(graph.ProteinKeyword(), keyword);
 							}
 						}
 						//---------------------------------------------------------------------------------------
@@ -571,29 +569,25 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 								if (uniprotDataXML.getInterpro()) {
 									String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-									Interpro<I,RV,RVT,RE,RET> interpro = null;
-									Optional<Interpro<I,RV,RVT,RE,RET>> optionalInterpro = graph.interproIdIndex().getVertex(interproId);
+									if (!interproIdSet.contains(interproId)) {
 
-									if (!optionalInterpro.isPresent()) {
+										interproIdSet.add(interproId);
 
-										String interproEntryNameSt = "";
-										List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-										for (Element prop : properties) {
-											if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_ENTRY_NAME)) {
-												interproEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
-												break;
+										if(!graph.interproIdIndex().getVertex(interproId).isPresent()){
+
+											String interproEntryNameSt = "";
+											List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
+											for (Element prop : properties) {
+												if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_ENTRY_NAME)) {
+													interproEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
+													break;
+												}
 											}
+											Interpro<I,RV,RVT,RE,RET> interpro = graph.addVertex(graph.Interpro());
+											interpro.set(graph.Interpro().id, interproId);
+											interpro.set(graph.Interpro().name, interproEntryNameSt);
 										}
-
-										interpro = graph.addVertex(graph.Interpro());
-										interpro.set(graph.Interpro().id, interproId);
-										interpro.set(graph.Interpro().name, interproEntryNameSt);
-										graph.raw().commit();
-									}else{
-										interpro = optionalInterpro.get();
 									}
-
-									protein.addOutEdge(graph.ProteinInterpro(), interpro);
 								}
 
 							} //-------------------------------PFAM------------------------------------------------------
@@ -602,33 +596,26 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 								if (uniprotDataXML.getPfam()) {
 
 									String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-									Pfam<I,RV,RVT,RE,RET> pfam = null;
-									Optional<Pfam<I,RV,RVT,RE,RET>> optionalPfam = graph.pfamIdIndex().getVertex(pfamId);
 
-									if (!optionalPfam.isPresent()) {
-										String pfamEntryNameSt = "";
-										List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-										for (Element prop : properties) {
-											if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
-												pfamEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
-												break;
+									if (!pfamIdSet.contains(pfamId)) {
+
+										if(graph.pfamIdIndex().getVertex(pfamId).isPresent()){
+											String pfamEntryNameSt = "";
+											List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
+											for (Element prop : properties) {
+												if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
+													pfamEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
+													break;
+												}
 											}
+
+											Pfam<I,RV,RVT,RE,RET> pfam = graph.addVertex(graph.Pfam());
+											pfam.set(graph.Pfam().id, pfamId);
+											pfam.set(graph.Pfam().name, pfamEntryNameSt);
 										}
-
-										pfam = graph.addVertex(graph.Pfam());
-										pfam.set(graph.Pfam().id, pfamId);
-										pfam.set(graph.Pfam().name, pfamEntryNameSt);
-										graph.raw().commit();
-									}else{
-										pfam = optionalPfam.get();
 									}
-
-									protein.addOutEdge(graph.ProteinPfam(), pfam);
 								}
-
-
 							}
-
 						}
 						//---------------------------------------------------------------------------------------
 
