@@ -1131,22 +1131,21 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 								titleSt = "";
 							}else{
 
-								Submission<I,RV,RVT,RE,RET> submission = null;
-								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
+								if(!submissionTitleSet.contains(titleSt)){
+									submissionTitleSet.add(titleSt);
 
-								if(!optionalSubmission.isPresent()){
-
-									submission = graph.addVertex(graph.Submission());
-									submission.set(graph.Submission().title, titleSt);
+									if(!graph.submissionTitleIndex().getVertex(titleSt).isPresent()){
+										Submission<I,RV,RVT,RE,RET> submission = graph.addVertex(graph.Submission());
+										submission.set(graph.Submission().title, titleSt);
+									}
 
 									if (dbSt != null) {
-
-										DB<I,RV,RVT,RE,RET> db = null;
-										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
-										if(!optionalDB.isPresent()){
-											db = graph.addVertex(graph.DB());
-											db.set(graph.DB().name, dbSt);
-
+										if(!dbNameSet.contains(dbSt)){
+											dbNameSet.add(dbSt);
+											if(!graph.dbNameIndex().getVertex(dbSt).isPresent()){
+												DB<I,RV,RVT,RE,RET> db = graph.addVertex(graph.DB());
+												db.set(graph.DB().name, dbSt);
+											}
 										}
 									}
 								}
@@ -1159,18 +1158,11 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 					case BOOK_CITATION_TYPE:
 						if (uniprotDataXML.getBooks()) {
 							String nameSt = citation.getAttributeValue("name");
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
 							String publisherSt = citation.getAttributeValue("publisher");
-							String firstSt = citation.getAttributeValue("first");
-							String lastSt = citation.getAttributeValue("last");
 							String citySt = citation.getAttributeValue("city");
-							String volumeSt = citation.getAttributeValue("volume");
 							if (nameSt == null) {
 								nameSt = "";
-							}
-							if (dateSt == null) {
-								dateSt = "";
 							}
 							if (titleSt == null) {
 								titleSt = "";
@@ -1178,112 +1170,62 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							if (publisherSt == null) {
 								publisherSt = "";
 							}
-							if (firstSt == null) {
-								firstSt = "";
-							}
-							if (lastSt == null) {
-								lastSt = "";
-							}
 							if (citySt == null) {
 								citySt = "";
 							}
-							if (volumeSt == null) {
-								volumeSt = "";
-							}
 
-							Book<I,RV,RVT,RE,RET> book = null;
-							Optional<Book<I,RV,RVT,RE,RET>> optionalBook = graph.bookNameIndex().getVertex(nameSt);
-							Reference<I,RV,RVT,RE,RET> reference = null;
+							if(!bookNameSet.contains(nameSt)){
 
-							if(!optionalBook.isPresent()){
+								bookNameSet.add(nameSt);
 
-								book = graph.addVertex(graph.Book());
-								book.set(graph.Book().name, nameSt);
+								if(!graph.bookNameIndex().getVertex(nameSt).isPresent()){
 
+									Book<I,RV,RVT,RE,RET> book = graph.addVertex(graph.Book());
+									book.set(graph.Book().name, nameSt);
 
-								reference = graph.addVertex(graph.Reference());
-								reference.set(graph.Reference().date, dateSt);
-								reference.addOutEdge(graph.ReferenceBook(), book);
+									//---editor association-----
+									Element editorListElem = citation.getChild("editorList");
+									if (editorListElem != null) {
+										List<Element> editorsElems = editorListElem.getChildren("person");
+										for (Element personElement : editorsElems) {
+											String personName = personElement.getAttributeValue("name");
 
-								//---authors association-----
-								for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-								}
-
-								//---editor association-----
-								Element editorListElem = citation.getChild("editorList");
-								if (editorListElem != null) {
-									List<Element> editorsElems = editorListElem.getChildren("person");
-									for (Element personElement : editorsElems) {
-
-										Person<I,RV,RVT,RE,RET> editor = null;
-										String personName = personElement.getAttributeValue("name");
-										Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
-
-										if(!optionalPerson.isPresent()){
-											editor = graph.addVertex(graph.Person());
-											editor.set(graph.Person().name, personName);
-
-										}else{
-											editor = optionalPerson.get();
+											if(!personNameSet.contains(personName)){
+												personNameSet.add(personName);
+												if(!graph.personNameIndex().getVertex(personName).isPresent()){
+													Person<I,RV,RVT,RE,RET> editor = graph.addVertex(graph.Person());
+													editor.set(graph.Person().name, personName);
+												}
+											}
 										}
-										book.addOutEdge(graph.BookEditor(), editor);
+									}
 
+									//----publisher--
+									if (!publisherSt.equals("")) {
+										if(!publisherNameSet.contains(publisherSt)){
+											publisherNameSet.add(publisherSt);
+
+											if(!graph.publisherNameIndex().getVertex(publisherSt).isPresent()){
+												Publisher<I,RV,RVT,RE,RET> publisher = graph.addVertex(graph.Publisher());
+												publisher.set(graph.Publisher().name, publisherSt);
+											}
+										}
+									}
+
+									//-----city-----
+									if (!citySt.equals("")) {
+										if(!cityNameSet.contains(citySt)){
+											cityNameSet.add(citySt);
+
+											if(!graph.cityNameIndex().getVertex(citySt).isPresent()){
+												City<I,RV,RVT,RE,RET> city = graph.addVertex(graph.City());
+												city.set(graph.City().name, citySt);
+											}		
+										}
 									}
 								}
 
-								//----publisher--
-								if (!publisherSt.equals("")) {
-
-									Publisher<I,RV,RVT,RE,RET> publisher = null;
-									Optional<Publisher<I,RV,RVT,RE,RET>> optionalPublisher = graph.publisherNameIndex().getVertex(publisherSt);
-
-									if(!optionalPublisher.isPresent()){
-
-										publisher = graph.addVertex(graph.Publisher());
-										publisher.set(graph.Publisher().name, publisherSt);
-
-
-									}else{
-										publisher = optionalPublisher.get();
-									}
-
-									book.addOutEdge(graph.BookPublisher(), publisher);
-								}
-
-								//-----city-----
-								if (!citySt.equals("")) {
-
-									City<I,RV,RVT,RE,RET> city = null;
-									Optional<City<I,RV,RVT,RE,RET>> optionalCity = graph.cityNameIndex().getVertex(citySt);
-
-									if(!optionalCity.isPresent()){
-
-										city = graph.addVertex(graph.City());
-										city.set(graph.City().name, citySt);
-
-
-									}else{
-										city = optionalCity.get();
-									}
-
-									book.addOutEdge(graph.BookCity(), city);
-								}
-
-							}else{
-								book = optionalBook.get();
-								reference = book.referenceBook_inV();
 							}
-
-							//--protein citation relationship
-							protein.addOutEdge(graph.ProteinReference(), reference);
-
-//                          TODO see if these fields can somehow be included
-//							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
-//							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
-
 						}
 
 						//----------------------------------------------------------------------------
