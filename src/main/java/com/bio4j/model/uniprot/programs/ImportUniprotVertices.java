@@ -1022,29 +1022,26 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 				for (Element personElement : authorPersonElems) {
 
-					Person<I,RV,RVT,RE,RET> person = null;
 					String personName = personElement.getAttributeValue("name");
-					Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
-					if(!optionalPerson.isPresent()){
-						person = graph.addVertex(graph.Person());
-						person.set(graph.Person().name, personName);
-
-					}else{
-						person = optionalPerson.get();
+					if(!personNameSet.contains(personName)){
+						personNameSet.add(personName);
+						if(!graph.personNameIndex().getVertex(personName).isPresent()){
+							Person<I,RV,RVT,RE,RET> person = graph.addVertex(graph.Person());
+							person.set(graph.Person().name, personName);
+						}
 					}
 				}
 
 				for (Element consortiumElement : authorConsortiumElems) {
 
-					Consortium<I,RV,RVT,RE,RET> consortium = null;
 					String consortiumName = consortiumElement.getAttributeValue("name");
-					Optional<Consortium<I,RV,RVT,RE,RET>> optionalConsortium = graph.consortiumNameIndex().getVertex(consortiumName);
-					if(!optionalConsortium.isPresent()){
-						consortium = graph.addVertex(graph.Consortium());
-						consortium.set(graph.Consortium().name, consortiumName);
 
-					}else{
-						consortium = optionalConsortium.get();
+					if(!consortiumNameSet.contains(consortiumName)){
+						consortiumNameSet.add(consortiumName);
+						if(!graph.consortiumNameIndex().getVertex(consortiumName).isPresent()){
+							Consortium<I,RV,RVT,RE,RET> consortium = graph.addVertex(graph.Consortium());
+							consortium.set(graph.Consortium().name, consortiumName);
+						}
 					}
 				}
 				//----------------------------------------------------------------------------
@@ -1052,51 +1049,33 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 				switch (citationType) {
 					case THESIS_CITATION_TYPE:
 						if (uniprotDataXML.getThesis()) {
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
-							if (dateSt == null) {
-								dateSt = "";
-							}
 							if (titleSt == null) {
 								titleSt = "";
 							}else{
 
-								Thesis<I,RV,RVT,RE,RET> thesis = null;
-								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
+								if(!thesisTitleSet.contains(titleSt)){
 
-								if(!optionalThesis.isPresent()){
+									thesisTitleSet.add(titleSt);
 
-									thesis = graph.addVertex(graph.Thesis());
-									thesis.set(graph.Thesis().title, titleSt);
+									if(!graph.thesisTitleIndex().getVertex(titleSt).isPresent()){
+										Thesis<I,RV,RVT,RE,RET> thesis = graph.addVertex(graph.Thesis());
+										thesis.set(graph.Thesis().title, titleSt);
+									}
 
 									//-----------institute-----------------------------
 									String instituteSt = citation.getAttributeValue("institute");
 									String countrySt = citation.getAttributeValue("country");
 
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceThesis(), thesis);
-
-									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-									}
-
 									if (instituteSt != null) {
+										if(!instituteNameSet.contains(instituteSt)){
 
-										Institute<I,RV,RVT,RE,RET> institute = null;
-										Optional<Institute<I,RV,RVT,RE,RET>> optionalInstitute = graph.instituteNameIndex().getVertex(instituteSt);
+											instituteNameSet.add(instituteSt);
 
-
-										if(!optionalInstitute.isPresent()){
-
-											institute = graph.addVertex(graph.Institute());
-											institute.set(graph.Institute().name, instituteSt);
-
-
-										}else{
-											institute = optionalInstitute.get();
+											if(!graph.instituteNameIndex().getVertex(instituteSt).isPresent()){
+												Institute<I,RV,RVT,RE,RET> institute = graph.addVertex(graph.Institute());
+												institute.set(graph.Institute().name, instituteSt);
+											}
 										}
 
 										if (countrySt != null) {
