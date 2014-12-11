@@ -850,29 +850,20 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 						if(diseaseId != null){
 
-							Disease<I,RV,RVT,RE,RET> disease = null;
-							Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
+							if(!diseaseIdSet.contains(diseaseId)){
 
-							if(!diseaseOptional.isPresent()){
+								diseaseIdSet.add(diseaseId);
 
-								disease = graph.addVertex(graph.Disease());
-								disease.set(graph.Disease().name, diseaseName);
-								disease.set(graph.Disease().id, diseaseId);
-								disease.set(graph.Disease().acronym, diseaseAcronym);
-								disease.set(graph.Disease().description, diseaseDescription);
-
-
-							}else{
-								disease = diseaseOptional.get();
+								if(!graph.diseaseIdIndex().getVertex(diseaseId).isPresent()){
+									Disease<I,RV,RVT,RE,RET> disease = graph.addVertex(graph.Disease());
+									disease.set(graph.Disease().name, diseaseName);
+									disease.set(graph.Disease().id, diseaseId);
+									disease.set(graph.Disease().acronym, diseaseAcronym);
+									disease.set(graph.Disease().description, diseaseDescription);
+								}
 							}
-
-							ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
-							proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
-							proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
-							proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
 						}
 					}
-
 					break;
 
 
@@ -884,68 +875,22 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						for (Element subcLocation : subcLocations) {
 
 							List<Element> locations = subcLocation.getChildren(LOCATION_TAG_NAME);
-							Element firstLocationElem = locations.get(0);
 
-							String firstLocationSt = firstLocationElem.getTextTrim();
-							SubcellularLocation<I,RV,RVT,RE,RET> lastLocation = null;
-							Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
+							for (int i = 0; i < locations.size(); i++) {
 
-							if(!lastLocationOptional.isPresent()){
-								lastLocation = graph.addVertex(graph.SubcellularLocation());
-								lastLocation.set(graph.SubcellularLocation().name, firstLocationSt);
-
-							}else{
-								lastLocation = lastLocationOptional.get();
-							}
-
-							for (int i = 1; i < locations.size(); i++) {
-
-								SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = null;
 								String tempLocationSt = locations.get(i).getTextTrim();
 								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
 
-								if(!tempLocationOptional.isPresent()){
-									tempLocation = graph.addVertex(graph.SubcellularLocation());
-									tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+								if(!subcellularLocationNameSet.contains(tempLocationSt)){
 
-								}else{
-									tempLocation = tempLocationOptional.get();
+									subcellularLocationNameSet.add(tempLocationSt);
+
+									if(!graph.subcellularLocationNameIndex().getVertex(tempLocationSt).isPresent()){
+										SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = graph.addVertex(graph.SubcellularLocation());
+										tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+									}
 								}
-
-								tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
-								lastLocation = tempLocation;
-
 							}
-
-							Element lastLocationElem = locations.get(locations.size() - 1);
-							String evidenceSt = lastLocationElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
-							String statusSt = lastLocationElem.getAttributeValue(STATUS_ATTRIBUTE);
-							String topologyStatusSt = "";
-							String topologySt = "";
-							Element topologyElem = subcLocation.getChild("topology");
-							if (topologyElem != null) {
-								topologySt = topologyElem.getText();
-								topologyStatusSt = topologyElem.getAttributeValue("status");
-							}
-							if (topologyStatusSt == null) {
-								topologyStatusSt = "";
-							}
-							if (topologySt == null) {
-								topologySt = "";
-							}
-							if (evidenceSt == null) {
-								evidenceSt = "";
-							}
-							if (statusSt == null) {
-								statusSt = "";
-							}
-
-							ProteinSubcellularLocation<I,RV,RVT,RE,RET> proteinSubcellularLocation = protein.addOutEdge(graph.ProteinSubcellularLocation(), lastLocation);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().evidence, evidenceSt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().status, statusSt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topology, topologySt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topologyStatus, topologyStatusSt);
-
 						}
 					}
 					break;
@@ -974,39 +919,33 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 								isoformNameSt = "";
 							}
 
-							Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
-							Isoform<I,RV,RVT,RE,RET> isoform;
-							if(!isoformOptional.isPresent()){
-								isoform = graph.addVertex(graph.Isoform());
-								isoform.set(graph.Isoform().name, isoformNameSt);
-								isoform.set(graph.Isoform().note, isoformNoteSt);
-								isoform.set(graph.Isoform().sequence, isoformSeqSt);
-								isoform.set(graph.Isoform().id, isoformIdSt);
+							if(!isoformIdSet.contains(isoformIdSt)){
 
-								//Adding edge from Protein to Isoform
-								protein.addOutEdge(graph.ProteinIsoform(), isoform);
-							}else{
-								isoform = isoformOptional.get();
+								isoformIdSet.add(isoformIdSt);
+
+								if(!graph.isoformIdIndex().getVertex(isoformIdSt).isPresent()){
+
+									Isoform<I,RV,RVT,RE,RET> isoform = graph.addVertex(graph.Isoform());
+									isoform.set(graph.Isoform().name, isoformNameSt);
+									isoform.set(graph.Isoform().note, isoformNoteSt);
+									isoform.set(graph.Isoform().sequence, isoformSeqSt);
+									isoform.set(graph.Isoform().id, isoformIdSt);
+								}
 							}
-
-
 
 							for (Element eventElem : eventList) {
 
 								String eventTypeSt = eventElem.getAttributeValue("type");
 
-								Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
-								AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct;
+								if(!alternativeProductTypeNameSet.contains(eventTypeSt)){
 
-								if(alternativeProductOptional.isPresent()){
-									alternativeProduct = alternativeProductOptional.get();
-								}else{
-									alternativeProduct = graph.addVertex(graph.AlternativeProduct());
-									alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
+									alternativeProductTypeNameSet.add(eventTypeSt);
 
+									if(!graph.alternativeProductNameIndex().getVertex(eventTypeSt).isPresent()){
+										AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct = graph.addVertex(graph.AlternativeProduct());
+										alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
+									}
 								}
-
-								isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
 							}
 
 						}
@@ -1018,80 +957,22 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 					if (conflictElem != null) {
 
 						String conflictTypeSt = conflictElem.getAttributeValue("type");
-						String resourceSt = "";
-						String idSt = "";
-						String versionSt = "";
 
-						ArrayList<String> positionsList = new ArrayList<>();
+						if(!sequenceCautionNameSet.contains(conflictTypeSt)){
 
-						Element sequenceElem = conflictElem.getChild("sequence");
-						if (sequenceElem != null) {
-							resourceSt = sequenceElem.getAttributeValue("resource");
-							if (resourceSt == null) {
-								resourceSt = "";
-							}
-							idSt = sequenceElem.getAttributeValue("id");
-							if (idSt == null) {
-								idSt = "";
-							}
-							versionSt = sequenceElem.getAttributeValue("version");
-							if (versionSt == null) {
-								versionSt = "";
+							sequenceCautionNameSet.add(conflictTypeSt);
+
+							if(!graph.sequenceCautionNameIndex().getVertex(conflictTypeSt).isPresent()){
+								SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution = graph.addVertex(graph.SequenceCaution());
+								sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
 							}
 						}
-
-						Element locationElem = commentElem.getChild("location");
-						if (locationElem != null) {
-							Element positionElem = locationElem.getChild("position");
-							if (positionElem != null) {
-								String tempPos = positionElem.getAttributeValue("position");
-								if (tempPos != null) {
-									positionsList.add(tempPos);
-								}
-							}
-						}
-
-//						System.out.println("conflictTypeSt = " + conflictTypeSt);
-//						System.out.println("sequenceCautionNameIndex = " + graph.sequenceCautionNameIndex());
-						Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
-						SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution;
-
-						if(!sequenceCautionOptional.isPresent()){
-
-							sequenceCaution = graph.addVertex(graph.SequenceCaution());
-							sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
-
-
-						}else{
-							sequenceCaution = sequenceCautionOptional.get();
-						}
-
-
 					}
 					break;
-
 			}
-
 		}
-
-
 	}
 
-	private void addPropertiesToProteinFeatureRelationship(UniprotGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
-	                                                       String id, String description, String evidence, String status, int begin, int end,
-	                                                       String original, String variation, String ref){
-
-		proteinFeature.set(graph.ProteinFeature().description, description);
-		proteinFeature.set(graph.ProteinFeature().id, id);
-		proteinFeature.set(graph.ProteinFeature().evidence, evidence);
-		proteinFeature.set(graph.ProteinFeature().status, status);
-		proteinFeature.set(graph.ProteinFeature().begin, begin);
-		proteinFeature.set(graph.ProteinFeature().end, end);
-		proteinFeature.set(graph.ProteinFeature().original, original);
-		proteinFeature.set(graph.ProteinFeature().variation, variation);
-		proteinFeature.set(graph.ProteinFeature().ref, ref);
-
-	}
 
 	private static String getProteinFullName(Element proteinElement) {
 		if (proteinElement == null) {
