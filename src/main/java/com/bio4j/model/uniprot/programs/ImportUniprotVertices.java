@@ -1080,32 +1080,17 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 										if (countrySt != null) {
 
-											Country<I,RV,RVT,RE,RET> country = null;
-											Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
-											if(!optionalCountry.isPresent()){
-												country = graph.addVertex(graph.Country());
-												country.set(graph.Country().name, countrySt);
-
-											}else{
-												country = optionalCountry.get();
+											if(!countryNameSet.contains(countrySt)){
+												countryNameSet.add(countrySt);
+												if(!graph.countryNameIndex().getVertex(countrySt).isPresent()){
+													Country<I,RV,RVT,RE,RET> country = graph.addVertex(graph.Country());
+													country.set(graph.Country().name, countrySt);
+												}
 											}
-
-											institute.addOutEdge(graph.InstituteCountry(), country);
 										}
-										thesis.addOutEdge(graph.ThesisInstitute(), institute);
 									}
-
-								}else{
-									thesis = optionalThesis.get();
-									reference = thesis.referenceThesis_inV();
 								}
-
-								//--protein reference citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
-
 							}
-
 						}
 
 						//----------------------------------------------------------------------------
@@ -1114,11 +1099,7 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 					case PATENT_CITATION_TYPE:
 						if (uniprotDataXML.getPatents()) {
 							String numberSt = citation.getAttributeValue("number");
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
-							if (dateSt == null) {
-								dateSt = "";
-							}
 							if (titleSt == null) {
 								titleSt = "";
 							}
@@ -1127,35 +1108,15 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							}
 
 							if (!numberSt.equals("")) {
+								if(!patentNumberSet.contains(numberSt)){
+									patentNumberSet.add(numberSt);
 
-								Patent<I,RV,RVT,RE,RET> patent = null;
-								Optional<Patent<I,RV,RVT,RE,RET>> optionalPatent = graph.patentNumberIndex().getVertex(numberSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
-
-								if(!optionalPatent.isPresent()){
-
-									patent = graph.addVertex(graph.Patent());
-									patent.set(graph.Patent().number, numberSt);
-									patent.set(graph.Patent().title, titleSt);
-
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferencePatent(), patent);
-
-									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									if(!graph.patentNumberIndex().getVertex(numberSt).isPresent()){
+										Patent<I,RV,RVT,RE,RET> patent = graph.addVertex(graph.Patent());
+										patent.set(graph.Patent().number, numberSt);
+										patent.set(graph.Patent().title, titleSt);
 									}
-
-								}else{
-									patent = optionalPatent.get();
-									reference = patent.referencePatent_inV();
 								}
-
-								//--protein citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
 							}
 						}
 
@@ -1164,35 +1125,19 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						break;
 					case SUBMISSION_CITATION_TYPE:
 						if (uniprotDataXML.getSubmissions()) {
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
 							String dbSt = citation.getAttributeValue("db");
-							if (dateSt == null) {
-								dateSt = "";
-							}
 							if (titleSt == null) {
 								titleSt = "";
 							}else{
 
 								Submission<I,RV,RVT,RE,RET> submission = null;
 								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
 
 								if(!optionalSubmission.isPresent()){
 
 									submission = graph.addVertex(graph.Submission());
 									submission.set(graph.Submission().title, titleSt);
-
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-									}
-									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
-										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
-									}
 
 									if (dbSt != null) {
 
@@ -1202,27 +1147,10 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 											db = graph.addVertex(graph.DB());
 											db.set(graph.DB().name, dbSt);
 
-										}else{
-											db = optionalDB.get();
 										}
-
-										//-----submission db relationship-----
-										submission.addOutEdge(graph.SubmissionDB(), db);
 									}
-
-									reference.addOutEdge(graph.ReferenceSubmission(), submission);
-
-								}else{
-									submission = optionalSubmission.get();
-									reference = submission.referenceSubmission_inV();
 								}
-
-								//--protein citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
-
 							}
-
 						}
 
 						//----------------------------------------------------------------------------
