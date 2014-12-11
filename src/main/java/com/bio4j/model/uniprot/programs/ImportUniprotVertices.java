@@ -58,7 +58,6 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	public static final String INTERPRO_DB_REFERENCE_TYPE = "InterPro";
 	public static final String INTERPRO_ENTRY_NAME = "entry name";
 
-	public static final String GO_DB_REFERENCE_TYPE = "GO";
 	public static final String EVIDENCE_TYPE_ATTRIBUTE = "evidence";
 
 	public static final String SEQUENCE_MASS_ATTRIBUTE = "mass";
@@ -80,17 +79,7 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	public static final String FEATURE_TYPE_ATTRIBUTE = "type";
 	public static final String FEATURE_DESCRIPTION_ATTRIBUTE = "description";
 	public static final String STATUS_ATTRIBUTE = "status";
-	public static final String FEATURE_REF_ATTRIBUTE = "ref";
-	public static final String FEATURE_ID_ATTRIBUTE = "id";
 	public static final String EVIDENCE_ATTRIBUTE = "evidence";
-	public static final String FEATURE_LOCATION_TAG_NAME = "location";
-	public static final String FEATURE_ORIGINAL_TAG_NAME = "original";
-	public static final String FEATURE_VARIATION_TAG_NAME = "variation";
-	public static final String FEATURE_POSITION_TAG_NAME = "position";
-	public static final String FEATURE_LOCATION_BEGIN_TAG_NAME = "begin";
-	public static final String FEATURE_LOCATION_END_TAG_NAME = "end";
-	public static final String FEATURE_LOCATION_POSITION_ATTRIBUTE = "position";
-	public static final String FEATURE_POSITION_POSITION_ATTRIBUTE = "position";
 
 	public static final String THESIS_CITATION_TYPE = "thesis";
 	public static final String PATENT_CITATION_TYPE = "patent";
@@ -98,32 +87,9 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	public static final String ARTICLE_CITATION_TYPE = "journal article";
 	public static final String ONLINE_ARTICLE_CITATION_TYPE = "online journal article";
 	public static final String BOOK_CITATION_TYPE = "book";
-	public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE = "unpublished observations";
 
 	public static final String COMMENT_TYPE_DISEASE = "disease";
-	public static final String COMMENT_TYPE_FUNCTION = "function";
-	public static final String COMMENT_TYPE_COFACTOR = "cofactor";
-	public static final String COMMENT_TYPE_CATALYTIC_ACTIVITY = "catalytic activity";
-	public static final String COMMENT_TYPE_ENZYME_REGULATION = "enzyme regulation";
-	public static final String COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES = "biophysicochemical properties";
-	public static final String COMMENT_TYPE_SUBUNIT = "subunit";
-	public static final String COMMENT_TYPE_PATHWAY = "pathway";
 	public static final String COMMENT_TYPE_SUBCELLULAR_LOCATION = "subcellular location";
-	public static final String COMMENT_TYPE_TISSUE_SPECIFICITY = "tissue specificity";
-	public static final String COMMENT_TYPE_DEVELOPMENTAL_STAGE = "developmental stage";
-	public static final String COMMENT_TYPE_INDUCTION = "induction";
-	public static final String COMMENT_TYPE_DOMAIN = "domain";
-	public static final String COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION = "PTM";
-	public static final String COMMENT_TYPE_RNA_EDITING = "RNA editing";
-	public static final String COMMENT_TYPE_MASS_SPECTROMETRY = "mass spectrometry";
-	public static final String COMMENT_TYPE_POLYMORPHISM = "polymorphism";
-	public static final String COMMENT_TYPE_DISRUPTION_PHENOTYPE = "disruption phenotype";
-	public static final String COMMENT_TYPE_ALLERGEN = "allergen";
-	public static final String COMMENT_TYPE_TOXIC_DOSE = "toxic dose";
-	public static final String COMMENT_TYPE_BIOTECHNOLOGY = "biotechnology";
-	public static final String COMMENT_TYPE_PHARMACEUTICAL = "pharmaceutical";
-	public static final String COMMENT_TYPE_MISCELLANEOUS = "miscellaneous";
-	public static final String COMMENT_TYPE_SIMILARITY = "similarity";
 
 	protected SimpleDateFormat dateFormat;
 
@@ -1220,7 +1186,7 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 											if(!graph.cityNameIndex().getVertex(citySt).isPresent()){
 												City<I,RV,RVT,RE,RET> city = graph.addVertex(graph.City());
 												city.set(graph.City().name, citySt);
-											}		
+											}
 										}
 									}
 								}
@@ -1233,10 +1199,8 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						break;
 					case ONLINE_ARTICLE_CITATION_TYPE:
 						if (uniprotDataXML.getOnlineArticles()) {
-							String locatorSt = citation.getChildText("locator");
 							String nameSt = citation.getAttributeValue("name");
 							String titleSt = citation.getChildText("title");
-							String dateSt = citation.getAttributeValue("date");
 
 							if (titleSt == null) {
 								titleSt = "";
@@ -1244,69 +1208,33 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							if (nameSt == null) {
 								nameSt = "";
 							}
-							if (locatorSt == null) {
-								locatorSt = "";
-							}
-							if (dateSt == null) {
-								dateSt = "";
-							}
 
 							if (!titleSt.equals("")) {
 
-								OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = null;
-								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
+								if(!onlineArticleTitleSet.contains(titleSt)){
 
-								if(!optionalOnlineArticle.isPresent()){
+									onlineArticleTitleSet.add(titleSt);
 
-									onlineArticle = graph.addVertex(graph.OnlineArticle());
-									onlineArticle.set(graph.OnlineArticle().title, titleSt);
+									if(!graph.onlineArticleTitleIndex().getVertex(titleSt).isPresent()){
+										OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = graph.addVertex(graph.OnlineArticle());
+										onlineArticle.set(graph.OnlineArticle().title, titleSt);
 
+										//------online journal-----------
+										if (!nameSt.equals("")) {
 
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+											if(!onlineJournalNameSet.contains(nameSt)){
+												onlineJournalNameSet.add(nameSt);
 
-									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-									}
-									//---consortiums association----
-									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
-										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
-									}
-
-									//------online journal-----------
-									if (!nameSt.equals("")) {
-
-										OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = null;
-										Optional<OnlineJournal<I,RV,RVT,RE,RET>> optionalOnlineJournal = graph.onlineJournalNameIndex().getVertex(nameSt);
-
-										if(!optionalOnlineJournal.isPresent()){
-
-											onlineJournal = graph.addVertex(graph.OnlineJournal());
-											onlineJournal.set(graph.OnlineJournal().name, nameSt);
-
-
-										}else{
-											onlineJournal = optionalOnlineJournal.get();
+												if(!graph.onlineJournalNameIndex().getVertex(nameSt).isPresent()){
+													OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = graph.addVertex(graph.OnlineJournal());
+													onlineJournal.set(graph.OnlineJournal().name, nameSt);
+												}
+											}
 										}
-
-										OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> onlineArticleOnlineJournal = onlineArticle.addOutEdge(graph.OnlineArticleOnlineJournal(), onlineJournal);
-										onlineArticleOnlineJournal.set(graph.OnlineArticleOnlineJournal().locator, locatorSt);
-
+										//----------------------------
 									}
-									//----------------------------
-
-								}else{
-									onlineArticle = optionalOnlineArticle.get();
-									reference = onlineArticle.referenceOnlineArticle_inV();
 								}
-
-								//protein citation
-								protein.addOutEdge(graph.ProteinReference(), reference);
 							}
-
 						}
 
 						//----------------------------------------------------------------------------
@@ -1317,29 +1245,13 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						if (uniprotDataXML.getArticles()) {
 
 							String journalNameSt = citation.getAttributeValue("name");
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
-							String firstSt = citation.getAttributeValue("first");
-							String lastSt = citation.getAttributeValue("last");
-							String volumeSt = citation.getAttributeValue("volume");
 							String doiSt = "";
 							String medlineSt = "";
 							String pubmedId = "";
 
 							if (journalNameSt == null) {
 								journalNameSt = "";
-							}
-							if (dateSt == null) {
-								dateSt = "";
-							}
-							if (firstSt == null) {
-								firstSt = "";
-							}
-							if (lastSt == null) {
-								lastSt = "";
-							}
-							if (volumeSt == null) {
-								volumeSt = "";
 							}
 							if (titleSt == null) {
 								titleSt = "";
@@ -1361,110 +1273,48 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							}
 
 							if (titleSt != "") {
-								Article<I,RV,RVT,RE,RET> article = null;
-								Optional<Article<I,RV,RVT,RE,RET>> optionalArticle = graph.articleTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
 
-								if(!optionalArticle.isPresent()){
+								if(!articleTitleNameSet.contains(titleSt)){
+									articleTitleNameSet.add(titleSt);
 
-									article = graph.addVertex(graph.Article());
-									article.set(graph.Article().title, titleSt);
-									article.set(graph.Article().doId, doiSt);
+									if(!graph.articleTitleIndex().getVertex(titleSt).isPresent()){
 
+										Article<I,RV,RVT,RE,RET> article = graph.addVertex(graph.Article());
+										article.set(graph.Article().title, titleSt);
+										article.set(graph.Article().doId, doiSt);
 
-									if(pubmedId != ""){
+										if(pubmedId != ""){
 
-										Pubmed<I,RV,RVT,RE,RET> pubmed = null;
-										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
+											if(!pubmedIdSet.contains(pubmedId)){
+												pubmedIdSet.add(pubmedId);
 
-										if(!optionalPubmed.isPresent()){
-											pubmed = graph.addVertex(graph.Pubmed());
-											pubmed.set(graph.Pubmed().id, pubmedId);
+												if(!graph.pubmedIdIndex().getVertex(pubmedId).isPresent()){
+													Pubmed<I,RV,RVT,RE,RET> pubmed = graph.addVertex(graph.Pubmed());
+													pubmed.set(graph.Pubmed().id, pubmedId);
+												}
 
-										}else{
-											pubmed = optionalPubmed.get();
-										}
-										article.addOutEdge(graph.ArticlePubmed(), pubmed);
-									}
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceArticle(), article);
-
-									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-									}
-									//---consortiums association----
-									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
-										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
-									}
-
-									//------journal-----------
-									if (!journalNameSt.equals("")) {
-
-										Journal<I,RV,RVT,RE,RET> journal = null;
-										Optional<Journal<I,RV,RVT,RE,RET>> optionalJournal = graph.journalNameIndex().getVertex(journalNameSt);
-
-										if(!optionalJournal.isPresent()){
-											journal = graph.addVertex(graph.Journal());
-											journal.set(graph.Journal().name, journalNameSt);
-
-										}else{
-											journal = optionalJournal.get();
+											}
 										}
 
-										ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), journal);
-										articleJournal.set(graph.ArticleJournal().volume, volumeSt);
-										articleJournal.set(graph.ArticleJournal().first, firstSt);
-										articleJournal.set(graph.ArticleJournal().last, lastSt);
-									}
-									//----------------------------
+										//------journal-----------
+										if (!journalNameSt.equals("")) {
 
-								}else{
-									article = optionalArticle.get();
-									reference = article.referenceArticle_inV();
+											if(!journalNameSet.contains(journalNameSt)){
+												journalNameSet.add(journalNameSt);
+												if(!graph.journalNameIndex().getVertex(journalNameSt).isPresent()){
+													Journal<I,RV,RVT,RE,RET> journal = graph.addVertex(graph.Journal());
+													journal.set(graph.Journal().name, journalNameSt);
+												}
+											}
+										}
+										//----------------------------
+									}
 								}
-
-								//protein citation
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
 							}
-
 						}
 
 						//----------------------------------------------------------------------------
 						//----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
-						break;
-					case UNPUBLISHED_OBSERVATION_CITATION_TYPE:
-						if (uniprotDataXML.getUnpublishedObservations()) {
-
-							String dateSt = citation.getAttributeValue("date");
-							String scopeSt = referenceElement.getChildText("scope");
-							if (dateSt == null) {
-								dateSt = "";
-							}
-							if (scopeSt == null){
-								scopeSt = "";
-							}
-
-
-							UnpublishedObservation<I,RV,RVT,RE,RET> unpublishedObservation = graph.addVertex(graph.UnpublishedObservation());
-							unpublishedObservation.set(graph.UnpublishedObservation().scope, scopeSt);
-
-							Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-							reference.set(graph.Reference().date, dateSt);
-							reference.addOutEdge(graph.ReferenceUnpublishedObservation(), unpublishedObservation);
-
-							//---authors association-----
-							for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
-								reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
-							}
-
-							//protein citation
-							protein.addOutEdge(graph.ProteinReference(), reference);
-
-						}
 						break;
 				}
 			}
