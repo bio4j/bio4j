@@ -706,6 +706,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						if ((proteinCounter % limitForPrintingOut) == 0) {
 							String countProteinsSt = proteinCounter + " proteins inserted!!";
 							logger.log(Level.INFO, countProteinsSt);
+							graph.raw().commit();
 						}
 
 					}
