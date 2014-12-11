@@ -22,7 +22,7 @@ import java.util.logging.SimpleFormatter;
  */
 public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-	private static final Logger logger = Logger.getLogger("ImportUniprotVertices");
+	private static final Logger logger = Logger.getLogger("ImportUniProtVertices");
 	private static FileHandler fh;
 
 	public static final String ENTRY_TAG_NAME = "entry";
@@ -205,7 +205,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 			try {
 
 				// This block configures the logger with handler and formatter
-				fh = new FileHandler("ImportUniprot" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+				fh = new FileHandler("ImportUniProtVertices" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
@@ -224,7 +224,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 				UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotVerticesStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0] + ".txt")));
 
 				reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
@@ -735,7 +735,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprot:\nInput file: " + inFile.getName()
+					statsBuff.write("Statistics for program ImportUniProtVertices:\nInput file: " + inFile.getName()
 							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
@@ -744,7 +744,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 
 				} catch (IOException ex) {
-					Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(ImportUniProtVertices.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
 			}
