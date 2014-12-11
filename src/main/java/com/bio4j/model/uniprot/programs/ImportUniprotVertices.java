@@ -20,7 +20,7 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
 	private static final Logger logger = Logger.getLogger("ImportUniprotVertices");
 	private static FileHandler fh;
@@ -134,7 +134,7 @@ public abstract class ImportUniprotVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 	protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
-	protected void importUniprot(String[] args) {
+	protected void importUniProtVertices(String[] args) {
 
 		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
