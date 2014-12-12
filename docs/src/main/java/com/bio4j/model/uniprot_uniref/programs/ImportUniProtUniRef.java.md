@@ -42,9 +42,9 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
 		if (args.length != 4) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniref 100 xml filename \n"
-					+ "2. Uniref 90 xml filename \n"
-					+ "3. Uniref 50 xml filename \n"
+					+ "1. UniRef 100 xml filename \n"
+					+ "2. UniRef 90 xml filename \n"
+					+ "3. UniRef 50 xml filename \n"
 					+ "4. Bio4j DB folder");
 		} else {
 
@@ -71,18 +71,18 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUnirefStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUniRefStats.txt")));
 
 				//------------------- UNIREF 100----------------------------
-				System.out.println("Reading Uniref 100 file...");
+				System.out.println("Reading UniRef 100 file...");
 				uniref100EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref100File, 100);
 				System.out.println("Done! :)");
 				//------------------- UNIREF 90----------------------------
-				System.out.println("Reading Uniref 90 file...");
+				System.out.println("Reading UniRef 90 file...");
 				uniref90EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref90File, 90);
 				System.out.println("Done! :)");
 				//------------------- UNIREF 50----------------------------
-				System.out.println("Reading Uniref 50 file...");
+				System.out.println("Reading UniRef 50 file...");
 				uniref50EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref50File, 50);
 				System.out.println("Done! :)");
 
@@ -110,13 +110,13 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					long seconds = (elapsedSeconds % 3600) % 60;
 
 					statsBuff.write("Statistics for program ImportUniProtUniRefTitan:\nInput files: " +
-							"\nUniref 100 file: " + uniref100File.getName() +
-							"\nUniref 90 file: " + uniref90File.getName() +
-							"\nUniref 50 file: " + uniref50File.getName()
+							"\nUniRef 100 file: " + uniref100File.getName() +
+							"\nUniRef 90 file: " + uniref90File.getName() +
+							"\nUniRef 50 file: " + uniref50File.getName()
 							+ "\nThe following number of entries was parsed:\n"
-							+ "Uniref 100 --> " + uniref100EntryCounter + " entries\n"
-							+ "Uniref 90 --> " + uniref90EntryCounter + " entries\n"
-							+ "Uniref 50 --> " + uniref50EntryCounter + " entries\n"
+							+ "UniRef 100 --> " + uniref100EntryCounter + " entries\n"
+							+ "UniRef 90 --> " + uniref90EntryCounter + " entries\n"
+							+ "UniRef 50 --> " + uniref50EntryCounter + " entries\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---

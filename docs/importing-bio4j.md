@@ -40,7 +40,7 @@ Here's the link to the official website describing how to [install JDK 7 for Lin
 
 + Tuning executions.xml file
 
-  **Bio4j is divided in modules** and so it is the importing process, that way you don't have to import the whole thing in the case where you are interested only in some of the data sources _( **Gene Ontology**, **NCBI taxonomy tree**, etc...)_. However you must be coherent when importing a set modules, that's to say, for example it's not possible to import the **Uniref clusters** without previously importing **UniProt KB** - otherwise there wouldn't be proteins to link to in the clusters!
+  **Bio4j is divided in modules** and so it is the importing process, that way you don't have to import the whole thing in the case where you are interested only in some of the data sources _( **Gene Ontology**, **NCBI taxonomy tree**, etc...)_. However you must be coherent when importing a set modules, that's to say, for example it's not possible to import the **UniRef clusters** without previously importing **UniProt KB** - otherwise there wouldn't be proteins to link to in the clusters!
 
   Here is a diagram showing what resources must be present before importing others:
 

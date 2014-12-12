@@ -57,7 +57,7 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 		} else {
 
 			int termCounter = 0;
-			int limitForPrintingOut = 10000;
+			int limitForPrintingOut = 100;
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
@@ -223,17 +223,15 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 						term.set(goGraph.GoTerm().id, goId);
 						term.set(goGraph.GoTerm().name, goName);
 						term.set(goGraph.GoTerm().definition, goDefinition);
-						//term.set(goGraph.GoTerm().obso, goIsObsolete);
+						term.set(goGraph.GoTerm().obsolete, goIsObsolete);
 						term.set(goGraph.GoTerm().comment, goComment);
 						//----------------------
 
                         goGraph.raw().commit();
 
 						//----namespace---
-
-						GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(goId).get();
 						SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace).get();
-						goGraph.addEdge(tempGoTerm,goGraph.SubOntology(), tmpSubontologies);
+						goGraph.addEdge(term,goGraph.SubOntology(), tmpSubontologies);
 
 
 					}
