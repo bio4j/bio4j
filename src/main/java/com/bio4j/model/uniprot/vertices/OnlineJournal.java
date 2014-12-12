@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class OnlineJournal <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		OnlineJournal<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType,
 		I, RV, RVT, RE, RET

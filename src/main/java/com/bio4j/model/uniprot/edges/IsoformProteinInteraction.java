@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public class IsoformProteinInteraction<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType,
 				IsoformProteinInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformProteinInteractionType,
 				Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,

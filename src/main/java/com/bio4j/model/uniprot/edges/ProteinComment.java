@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ProteinComment <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 				ProteinComment<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinCommentType,
 				CommentType<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CommentTypeType,

@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ProteinEMBL <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 				ProteinEMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinEMBLType,
 				EMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EMBLType,

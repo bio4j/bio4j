@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class OnlineArticleOnlineJournal<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				OnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType,
 				OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleOnlineJournalType,
 				OnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType,

@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ReferenceUnpublishedObservation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
 				ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
 				UnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,

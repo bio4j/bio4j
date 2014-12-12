@@ -28,7 +28,7 @@ Here's the link to the official website describing how to [install JDK 7 for Lin
 - [ExecuteBio4jTool.jar](https://s3-eu-west-1.amazonaws.com/bio4j-public/releases/0.9/ExecuteBio4jTool.jar)
 - [executionsBio4j.xml](https://github.com/bio4j/neo4jdb/blob/master/executionsBio4j.xml) _(this file can be customized in order to just import a sub-set of the data available, see for example [this one](https://github.com/bio4j/bio4j/blob/v0.7.0/executionsBio4j.xml))_
 - [batchInserter.properties](https://github.com/bio4j/neo4jdb/blob/master/batchInserter.properties)  _**IMPORTANT** -->(this file should be changed according to the amount of RAM memory available in your machine)_
-- [uniprotData.xml](https://github.com/bio4j/neo4jdb/blob/master/uniprotData.xml) _This file will only be used in the case where you want to import Uniprot module. (Set the boolean flags included in the XML file to true/false depending on your choice of data you want to import from Uniprot)_
+- [uniprotData.xml](https://github.com/bio4j/neo4jdb/blob/master/uniprotData.xml) _This file will only be used in the case where you want to import UniProt module. (Set the boolean flags included in the XML file to true/false depending on your choice of data you want to import from UniProt)_
 
 #### 8. Import data
 
@@ -40,17 +40,17 @@ Here's the link to the official website describing how to [install JDK 7 for Lin
 
 + Tuning executions.xml file
 
-  **Bio4j is divided in modules** and so it is the importing process, that way you don't have to import the whole thing in the case where you are interested only in some of the data sources _( **Gene Ontology**, **NCBI taxonomy tree**, etc...)_. However you must be coherent when importing a set modules, that's to say, for example it's not possible to import the **Uniref clusters** without previously importing **Uniprot KB** - otherwise there wouldn't be proteins to link to in the clusters!
+  **Bio4j is divided in modules** and so it is the importing process, that way you don't have to import the whole thing in the case where you are interested only in some of the data sources _( **Gene Ontology**, **NCBI taxonomy tree**, etc...)_. However you must be coherent when importing a set modules, that's to say, for example it's not possible to import the **Uniref clusters** without previously importing **UniProt KB** - otherwise there wouldn't be proteins to link to in the clusters!
 
   Here is a diagram showing what resources must be present before importing others:
 
   ![Bio4j modules dependencies](resources/images/ModuleDependencies.png)
 
   In order to customize the modules that will be imported you have to modify the file **executionsBio4j.xml**.
-  Let's imagine that we want a database including only the Gene Ontology, NCBI taxonomy tree and Uniprot KB (only Swiss-prot entries). 
+  Let's imagine that we want a database including only the Gene Ontology, NCBI taxonomy tree and UniProt KB (only Swiss-prot entries). 
   The corresponding executions.xml file should look like this:
 
-  **Note:** Don't forget to include InitBio4jDB program in the case where you want to have Uniprot KB module in your database.
+  **Note:** Don't forget to include InitBio4jDB program in the case where you want to have UniProt KB module in your database.
 
   ``` xml
   <scheduled_executions>
@@ -78,7 +78,7 @@ Here's the link to the official website describing how to [install JDK 7 for Lin
       </arguments>
     </execution>
     <execution>
-      <class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniprot</class_full_name>
+      <class_full_name>com.era7.bioinfo.bio4j.programs.ImportUniProt</class_full_name>
       <arguments>
         <argument>uniprot_sprot.xml</argument>
         <argument>bio4jdb</argument>

@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class BookCity<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
 				BookCity<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookCityType,
 				City<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CityType,

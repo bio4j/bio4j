@@ -38,7 +38,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
 		if (args.length != 2) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniprot xml filename \n"
+					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n");
 		} else {
 

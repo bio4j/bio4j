@@ -9,7 +9,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ArticlePubmed<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
 				ArticlePubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
 				Pubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PubmedType,

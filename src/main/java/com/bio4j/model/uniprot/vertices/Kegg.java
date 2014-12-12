@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class Kegg <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Kegg<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.KeggType,
 		I, RV, RVT, RE, RET

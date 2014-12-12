@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class SequenceCaution <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		SequenceCaution<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType,
 		I, RV, RVT, RE, RET

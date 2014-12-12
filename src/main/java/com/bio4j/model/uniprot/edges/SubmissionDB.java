@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class SubmissionDB <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Submission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
 				SubmissionDB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionDBType,
 				DB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DBType,

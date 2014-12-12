@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/29/2014.
  */
 public final class Reference <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Reference<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
 		I, RV, RVT, RE, RET

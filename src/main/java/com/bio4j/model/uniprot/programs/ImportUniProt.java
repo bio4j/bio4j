@@ -22,7 +22,7 @@ import java.util.logging.SimpleFormatter;
  */
 public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-    private static final Logger logger = Logger.getLogger("ImportUniprot");
+    private static final Logger logger = Logger.getLogger("ImportUniProt");
     private static FileHandler fh;
 
     public static final String ENTRY_TAG_NAME = "entry";
@@ -130,11 +130,11 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
     protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
-    protected void importUniprot(String[] args) {
+    protected void importUniProt(String[] args) {
 
         if (args.length != 3) {
             System.out.println("This program expects the following parameters: \n"
-                    + "1. Uniprot xml filename \n"
+                    + "1. UniProt xml filename \n"
                     + "2. Bio4j DB folder \n"
                     + "3. Config XML file");
         } else {
@@ -162,7 +162,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             try {
 
                 // This block configures the logger with handler and formatter
-                fh = new FileHandler("ImportUniprot" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+                fh = new FileHandler("ImportUniProt" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
@@ -181,7 +181,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                 UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtStats_" + inFile.getName().split("\\.")[0] + ".txt")));
 
                 reader = new BufferedReader(new FileReader(inFile));
                 StringBuilder entryStBuilder = new StringBuilder();
@@ -732,7 +732,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                     long minutes = (elapsedSeconds % 3600) / 60;
                     long seconds = (elapsedSeconds % 3600) % 60;
 
-                    statsBuff.write("Statistics for program ImportUniprot:\nInput file: " + inFile.getName()
+                    statsBuff.write("Statistics for program ImportUniProt:\nInput file: " + inFile.getName()
                             + "\nThere were " + proteinCounter + " proteins inserted.\n"
                             + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 

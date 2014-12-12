@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class Book<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Book<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.BookType,
 		I, RV, RVT, RE, RET

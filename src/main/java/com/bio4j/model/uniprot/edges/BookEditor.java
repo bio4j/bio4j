@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class BookEditor<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
 				BookEditor<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookEditorType,
 				Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType,

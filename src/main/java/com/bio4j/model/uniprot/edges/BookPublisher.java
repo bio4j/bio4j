@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class BookPublisher<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
 				BookPublisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookPublisherType,
 				Publisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PublisherType,

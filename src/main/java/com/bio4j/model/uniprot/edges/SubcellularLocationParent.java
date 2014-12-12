@@ -9,7 +9,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class SubcellularLocationParent <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
 				SubcellularLocationParent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationParentType,
 				SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,

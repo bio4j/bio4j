@@ -8,7 +8,7 @@ import com.bio4j.angulillos.UntypedGraph;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class UnpublishedObservation<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		UnpublishedObservation<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,
 		I, RV, RVT, RE, RET

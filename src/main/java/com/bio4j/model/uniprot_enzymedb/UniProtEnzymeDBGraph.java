@@ -10,7 +10,7 @@ import com.bio4j.angulillos.*;
 
 /*
 
-# Uniprot Enzyme DB graph
+# UniProt Enzyme DB graph
 
 This graph includes the connection between Enzymes and Proteins modelled via the edge type EnzymaticActivity
 
@@ -21,7 +21,7 @@ This graph includes the connection between Enzymes and Proteins modelled via the
 Connecting `Protein` and `Enzyme` vertices.
 
  */
-public abstract class UniprotEnzymeDBGraph<
+public abstract class UniProtEnzymeDBGraph<
 		// untyped graph
 		I extends UntypedGraph<RV, RVT, RE, RET>,
 		// vertices
@@ -31,13 +31,13 @@ public abstract class UniprotEnzymeDBGraph<
 		>
 		implements
 		TypedGraph<
-				UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>,
+				UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
 
     protected I raw = null;
 
-    public UniprotEnzymeDBGraph(I graph){
+    public UniProtEnzymeDBGraph(I graph){
         raw = graph;
     }
 
@@ -56,14 +56,14 @@ public abstract class UniprotEnzymeDBGraph<
 	// Edge types
 	public final class EnzymaticActivityType
 			extends
-			UniprotEnzymeDBEdgeType <
+			UniProtEnzymeDBEdgeType <
 					// src
 					Protein<I, RV, RVT, RE, RET>,
 					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					EnzymaticActivity<I, RV, RVT, RE, RET>,
-					UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,
+					UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,
 					// tgt
 					Enzyme<I, RV, RVT, RE, RET>,
 					EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType,
@@ -76,9 +76,9 @@ public abstract class UniprotEnzymeDBGraph<
 		public EnzymaticActivityType(RET raw) {
 
 			super(
-					UniprotEnzymeDBGraph.this.uniprotGraph().Protein(),
+					UniProtEnzymeDBGraph.this.uniprotGraph().Protein(),
 					raw,
-					UniprotEnzymeDBGraph.this.enzymeDBGraph().Enzyme()
+					UniProtEnzymeDBGraph.this.enzymeDBGraph().Enzyme()
 			);
 		}
 
@@ -96,16 +96,16 @@ public abstract class UniprotEnzymeDBGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class UniprotEnzymeDBVertexProperty<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>,
-			P extends UniprotEnzymeDBVertexProperty<V, VT, P, PV>,
+	public abstract class UniProtEnzymeDBVertexProperty<
+			V extends UniProtEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.UniProtEnzymeDBVertexType<V, VT>,
+			P extends UniProtEnzymeDBVertexProperty<V, VT, P, PV>,
 			PV
 			>
 			implements
-			Property<V, VT, P, PV, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			Property<V, VT, P, PV, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-		protected UniprotEnzymeDBVertexProperty(VT type) {
+		protected UniProtEnzymeDBVertexProperty(VT type) {
 
 			this.type = type;
 		}
@@ -118,25 +118,25 @@ public abstract class UniprotEnzymeDBGraph<
 		}
 	}
 
-	public abstract static class UniprotEnzymeDBVertex<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>,
+	public abstract static class UniProtEnzymeDBVertex<
+			V extends UniProtEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.UniProtEnzymeDBVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
-			TypedVertex<V, VT, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex<V, VT, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RV vertex;
 		private VT type;
 
-		protected UniprotEnzymeDBVertex(RV vertex, VT type) {
+		protected UniProtEnzymeDBVertex(RV vertex, VT type) {
 
 			this.vertex = vertex;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -151,16 +151,16 @@ public abstract class UniprotEnzymeDBGraph<
 		}
 	}
 
-	abstract class UniprotEnzymeDBVertexType<
-			V extends UniprotEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBVertexType<V, VT>
+	abstract class UniProtEnzymeDBVertexType<
+			V extends UniProtEnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.UniProtEnzymeDBVertexType<V, VT>
 			>
 			implements
-			TypedVertex.Type<V, VT, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex.Type<V, VT, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RVT raw;
 
-		protected UniprotEnzymeDBVertexType(RVT raw) {
+		protected UniProtEnzymeDBVertexType(RVT raw) {
 			this.raw = raw;
 		}
 
@@ -170,19 +170,19 @@ public abstract class UniprotEnzymeDBGraph<
 		}
 
 		@Override
-		public final UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotEnzymeDBGraph.this;
+		public final UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtEnzymeDBGraph.this;
 		}
 	}
 
-	public abstract static class UniprotEnzymeDBEdge<
+	public abstract static class UniProtEnzymeDBEdge<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends UniProtEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.UniProtEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -192,7 +192,7 @@ public abstract class UniprotEnzymeDBGraph<
 			implements
 			TypedEdge<
 					S, ST, SG,
-					E, ET, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -200,14 +200,14 @@ public abstract class UniprotEnzymeDBGraph<
 		private RE edge;
 		private ET type;
 
-		protected UniprotEnzymeDBEdge(RE edge, ET type) {
+		protected UniProtEnzymeDBEdge(RE edge, ET type) {
 
 			this.edge = edge;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -222,14 +222,14 @@ public abstract class UniprotEnzymeDBGraph<
 		}
 	}
 
-	abstract class UniprotEnzymeDBEdgeType<
+	abstract class UniProtEnzymeDBEdgeType<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.UniprotEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends UniProtEnzymeDBEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.UniProtEnzymeDBEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -238,7 +238,7 @@ public abstract class UniprotEnzymeDBGraph<
 			implements
 			TypedEdge.Type<
 					S, ST, SG,
-					E, ET, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -247,7 +247,7 @@ public abstract class UniprotEnzymeDBGraph<
 		private ST srcT;
 		private TT tgtT;
 
-		protected UniprotEnzymeDBEdgeType(ST srcT, RET raw, TT tgtT) {
+		protected UniProtEnzymeDBEdgeType(ST srcT, RET raw, TT tgtT) {
 
 			this.raw = raw;
 			this.srcT = srcT;
@@ -270,8 +270,8 @@ public abstract class UniprotEnzymeDBGraph<
 		}
 
 		@Override
-		public final UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotEnzymeDBGraph.this;
+		public final UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtEnzymeDBGraph.this;
 		}
 	}
 }

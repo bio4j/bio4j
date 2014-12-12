@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Protein<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 		I, RV, RVT, RE, RET

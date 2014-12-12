@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/29/2014.
  */
 public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Taxon<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.TaxonType,
 		I, RV, RVT, RE, RET

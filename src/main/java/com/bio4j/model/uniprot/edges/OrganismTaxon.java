@@ -10,7 +10,7 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class OrganismTaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniProtGraph.UniprotEdge<
+		UniProtGraph.UniProtEdge<
 				Organism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType,
 				OrganismTaxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismTaxonType,
 				Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType,

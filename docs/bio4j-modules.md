@@ -77,7 +77,7 @@ Quoting their website: _"The Reference Sequence (RefSeq) collection aims to prov
 Bio4j incorporates the data available in **RefSeq Complete release** _(gbff imported files can be found here: ftp://ftp.ncbi.nlm.nih.gov/refseq/release/complete/ )_.
 
 Nodes created from this data source include, among others: Genome element, gene, CDS, RNA...
-> Just note that whenever there's redundant information about proteins/genes that's also present in Uniprot KB we always give preference to that found in Uniprot.
+> Just note that whenever there's redundant information about proteins/genes that's also present in UniProt KB we always give preference to that found in UniProt.
 
 The respective _executionsBio4j.xml_ would look something like this:
 
@@ -146,7 +146,7 @@ Use this _executionsBio4j.xml_ file to import the tree:
 			<argument>names.dmp</argument>
 			<argument>merged.dmp</argument>
 			<argument>bio4jdb</argument><!--Database folder-->
-			<argument>true</argument><!-- Associate Uniprot taxonomy -->
+			<argument>true</argument><!-- Associate UniProt taxonomy -->
 		</arguments>
 	</execution>
 </scheduled_executions>  
@@ -167,7 +167,7 @@ In the case where you also want to index taxonomic units by the respective GIs, 
 </scheduled_executions>  
 ```
 
-## Uniprot KB
+## UniProt KB
 
 _"The UniProt Knowledgebase (UniProtKB) is the central hub for the collection of functional information on proteins, with accurate, consistent and rich annotation."_
 Bio4j includes both:
@@ -175,13 +175,13 @@ Bio4j includes both:
 *  **Swiss-Prot**: _reviewed, manually annotated_
 *  **TrEMBL**: _unreviewed, automatically annotated_
 
-Almost all data included in Uniprot KB has been incorporated into Bio4j, only some external references (or similar things) are still to be included.
+Almost all data included in UniProt KB has been incorporated into Bio4j, only some external references (or similar things) are still to be included.
 If you want to include both datasets (Swiss-Prot and TrEMBL) use a executions.XML file looking like this:
 
 ```xml
 <scheduled_executions>    
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniprot</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniProt</class_full_name>
 		<arguments>
 			<argument>uniprot_sprot.xml</argument>
 			<argument>bio4jdb</argument><!-- Database folder -->
@@ -190,7 +190,7 @@ If you want to include both datasets (Swiss-Prot and TrEMBL) use a executions.XM
 		</arguments>
 	</execution>	
 	<execution>
-		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniprot</class_full_name>
+		<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniProt</class_full_name>
 		<arguments>
 			<argument>uniprot_trembl.xml</argument>
 			<argument>bio4jdb</argument><!-- Database folder -->

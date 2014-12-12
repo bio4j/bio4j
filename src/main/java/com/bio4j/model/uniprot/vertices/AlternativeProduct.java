@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 10/7/2014.
  */
 public class AlternativeProduct <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		AlternativeProduct<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.AlternativeProductType,
 		I, RV, RVT, RE, RET

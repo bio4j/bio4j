@@ -4,7 +4,7 @@ import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
+import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
 import com.bio4j.angulillos.UntypedGraph;
 
 /**
@@ -12,14 +12,14 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class EnzymaticActivity<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniprotEnzymeDBGraph.UniprotEnzymeDBEdge<
+		UniProtEnzymeDBGraph.UniProtEnzymeDBEdge<
 				// src
 				Protein<I, RV, RVT, RE, RET>,
 				UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 				UniProtGraph<I, RV, RVT, RE, RET>,
 				// edge
 				EnzymaticActivity<I, RV, RVT, RE, RET>,
-				UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,
+				UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,
 				//tgt
 				Enzyme<I, RV, RVT, RE, RET>,
 				EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType,
@@ -28,7 +28,7 @@ public final class EnzymaticActivity<I extends UntypedGraph<RV, RVT, RE, RET>, R
 				I, RV, RVT, RE, RET
 				> {
 
-	public EnzymaticActivity(RE edge, UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType type) {
+	public EnzymaticActivity(RE edge, UniProtEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType type) {
 
 		super(edge, type);
 	}

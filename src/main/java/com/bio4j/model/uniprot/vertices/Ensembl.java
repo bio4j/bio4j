@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/29/2014.
  */
 public final class Ensembl <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Ensembl<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
 		I, RV, RVT, RE, RET

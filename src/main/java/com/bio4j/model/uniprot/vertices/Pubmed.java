@@ -8,7 +8,7 @@ import com.bio4j.angulillos.UntypedGraph;
  * Created by ppareja on 7/23/2014.
  */
 public final class Pubmed <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Pubmed<I, RV, RVT, RE, RET>,
 		UniProtGraph<I, RV, RVT, RE, RET>.PubmedType,
 		I, RV, RVT, RE, RET
