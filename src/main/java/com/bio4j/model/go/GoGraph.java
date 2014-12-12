@@ -4,7 +4,7 @@ import com.bio4j.model.go.vertices.GoSlims;
 import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.go.vertices.SubOntologies;
 import com.bio4j.model.go.edges.*;
-import com.bio4j.model.uniprot_go.UniprotGoGraph;
+import com.bio4j.model.uniprot_go.UniProtGoGraph;
 import com.bio4j.angulillos.*;
 
 /*
@@ -89,7 +89,7 @@ public abstract class GoGraph<
         return raw;
     }
 
-	public abstract UniprotGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
+	public abstract UniProtGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
 
 	// indices
 	public abstract TypedVertexIndex.Unique <

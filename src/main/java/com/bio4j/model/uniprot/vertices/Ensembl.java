@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinEnsembl;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
  */
 public final class Ensembl <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Ensembl<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType,
+		UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Ensembl(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType type) {
+	public Ensembl(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType type) {
 		super(vertex, type);
 	}
 

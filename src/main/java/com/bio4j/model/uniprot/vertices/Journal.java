@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ArticleJournal;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
 public final class Journal <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Journal<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.JournalType,
+		UniProtGraph<I, RV, RVT, RE, RET>.JournalType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Journal(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.JournalType type) {
+	public Journal(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.JournalType type) {
 		super(vertex, type);
 	}
 
