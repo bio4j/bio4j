@@ -107,7 +107,7 @@ Use this _executionsBio4j.xml_ file in order to import UniRef clusters:
 ```xml
 <scheduled_executions>    
     <execution>
-	<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniref</class_full_name>
+	<class_full_name>com.era7.bioinfo.bio4j.neo4j.programs.ImportUniRef</class_full_name>
 		<arguments>
 			<argument>uniref100.xml</argument><!--UniRef 100 XML file-->
 			<argument>uniref90.xml</argument><!--UniRef 90 XML file-->
