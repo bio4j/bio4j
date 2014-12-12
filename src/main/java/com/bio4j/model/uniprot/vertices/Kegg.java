@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinKegg;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
 public final class Kegg <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Kegg<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.KeggType,
+		UniProtGraph<I, RV, RVT, RE, RET>.KeggType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Kegg(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.KeggType type) {
+	public Kegg(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.KeggType type) {
 		super(vertex, type);
 	}
 

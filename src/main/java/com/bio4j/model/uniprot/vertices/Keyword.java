@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinKeyword;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
  */
 public class Keyword <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Keyword<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.KeywordType,
+		UniProtGraph<I, RV, RVT, RE, RET>.KeywordType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Keyword(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.KeywordType type) {
+	public Keyword(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.KeywordType type) {
 		super(vertex, type);
 	}
 

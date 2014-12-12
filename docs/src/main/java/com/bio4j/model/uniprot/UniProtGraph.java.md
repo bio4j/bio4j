@@ -4,10 +4,10 @@ package com.bio4j.model.uniprot;
 
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
-import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
-import com.bio4j.model.uniprot_go.UniprotGoGraph;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
-import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
+import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
+import com.bio4j.model.uniprot_go.UniProtGoGraph;
+import com.bio4j.model.uniprot_ncbiTaxonomy.UniProtNCBITaxonomyGraph;
+import com.bio4j.model.uniprot_uniref.UniProtUniRefGraph;
 import com.bio4j.angulillos.*;
 
 import java.util.Date;
@@ -15,13 +15,13 @@ import java.util.Date;
 
 
 
-# Uniprot graph
+# UniProt graph
 
-This graph includes virtually all of the data from [Uniprot KB](http://www.uniprot.org)
+This graph includes virtually all of the data from [UniProt KB](http://www.uniprot.org)
 
 ## data model
 
-The hub of this graph are Protein vertices, having edges connecting them to all the different entities that may be found in Uniprot KB.
+The hub of this graph are Protein vertices, having edges connecting them to all the different entities that may be found in UniProt KB.
 
 ### Proteins
 
@@ -386,7 +386,7 @@ They are associated to `Isoform` vertices via edges of type `IsoformEventGenerat
 
 
 ```java
-public abstract class UniprotGraph<
+public abstract class UniProtGraph<
 		// untyped graph
 		I extends UntypedGraph<RV, RVT, RE, RET>,
 		// vertices
@@ -396,13 +396,13 @@ public abstract class UniprotGraph<
 		>
 		implements
 		TypedGraph<
-				UniprotGraph<I, RV, RVT, RE, RET>,
+				UniProtGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
 
     protected I raw = null;
 
-    public UniprotGraph(I graph){
+    public UniProtGraph(I graph){
         raw = graph;
     }
 
@@ -410,10 +410,10 @@ public abstract class UniprotGraph<
         return raw;
     }
 
-	public abstract UniprotUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
-	public abstract UniprotGoGraph<I, RV, RVT, RE, RET> uniprotGoGraph();
-	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
-	public abstract UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
+	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
+	public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniprotGoGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -424,7 +424,7 @@ public abstract class UniprotGraph<
 		    // property
 		    AlternativeProductType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     alternativeProductNameIndex();
@@ -434,7 +434,7 @@ public abstract class UniprotGraph<
 			// property
 			GeneLocationType.name, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	geneLocationNameIndex();
@@ -444,7 +444,7 @@ public abstract class UniprotGraph<
 		    // property
 		    DiseaseType.id, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     diseaseIdIndex();
@@ -454,7 +454,7 @@ public abstract class UniprotGraph<
 		    // property
 		    JournalType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     journalNameIndex();
@@ -464,7 +464,7 @@ public abstract class UniprotGraph<
 		    // property
 		    ArticleType.title, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     articleTitleIndex();
@@ -474,7 +474,7 @@ public abstract class UniprotGraph<
 		    // property
 		    OnlineJournalType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     onlineJournalNameIndex();
@@ -484,7 +484,7 @@ public abstract class UniprotGraph<
 		    // property
 		    OnlineArticleType.title, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     onlineArticleTitleIndex();
@@ -494,7 +494,7 @@ public abstract class UniprotGraph<
 		    // property
 		    CityType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     cityNameIndex();
@@ -504,7 +504,7 @@ public abstract class UniprotGraph<
 		    // property
 		    PublisherType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     publisherNameIndex();
@@ -514,7 +514,7 @@ public abstract class UniprotGraph<
 		    // property
 		    BookType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     bookNameIndex();
@@ -524,7 +524,7 @@ public abstract class UniprotGraph<
 		    // property
 		    DBType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     dbNameIndex();
@@ -534,7 +534,7 @@ public abstract class UniprotGraph<
 		    // property
 		    CountryType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     countryNameIndex();
@@ -544,7 +544,7 @@ public abstract class UniprotGraph<
 			// property
 			PatentType.number, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	patentNumberIndex();
@@ -554,7 +554,7 @@ public abstract class UniprotGraph<
 			// property
 			SequenceCautionType.name, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	sequenceCautionNameIndex();
@@ -564,7 +564,7 @@ public abstract class UniprotGraph<
 			// property
 			SubmissionType.title, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	submissionTitleIndex();
@@ -574,7 +574,7 @@ public abstract class UniprotGraph<
 			// property
 			SubcellularLocationType.name, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	subcellularLocationNameIndex();
@@ -584,7 +584,7 @@ public abstract class UniprotGraph<
 		    // property
 		    InstituteType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     instituteNameIndex();
@@ -594,7 +594,7 @@ public abstract class UniprotGraph<
 			// property
 			IsoformType.id, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	isoformIdIndex();
@@ -604,7 +604,7 @@ public abstract class UniprotGraph<
 		    // property
 		    ConsortiumType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     consortiumNameIndex();
@@ -614,7 +614,7 @@ public abstract class UniprotGraph<
 			// property
 			ThesisType.title, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	thesisTitleIndex();
@@ -624,7 +624,7 @@ public abstract class UniprotGraph<
 		    // property
 		    PersonType.name, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     personNameIndex();
@@ -634,17 +634,17 @@ public abstract class UniprotGraph<
 		    // property
 		    ProteinType.accession, String,
 		    // graph
-		    UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
 		    I, RV, RVT, RE, RET
 		    >
     proteinAccessionIndex();
     public abstract TypedVertexIndex.Unique <
             // vertex
-            Ensembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType,
+            Ensembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
             // property
-            UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType.id, String,
+            UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     ensemblIdIndex();
@@ -654,7 +654,7 @@ public abstract class UniprotGraph<
             // property
             PIRType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     pIRIdIndex();
@@ -664,7 +664,7 @@ public abstract class UniprotGraph<
 			// property
 			PubmedType.id, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	pubmedIdIndex();
@@ -674,7 +674,7 @@ public abstract class UniprotGraph<
             // property
             UniGeneType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     uniGeneIdIndex();
@@ -684,7 +684,7 @@ public abstract class UniprotGraph<
             // property
             KeggType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     keggIdIndex();
@@ -694,7 +694,7 @@ public abstract class UniprotGraph<
             // property
             EMBLType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     eMBLIdIndex();
@@ -704,7 +704,7 @@ public abstract class UniprotGraph<
             // property
             RefSeqType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     refSeqIdIndex();
@@ -714,7 +714,7 @@ public abstract class UniprotGraph<
             // property
             ReactomeTermType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     reactomeTermIdIndex();
@@ -724,7 +724,7 @@ public abstract class UniprotGraph<
             // property
             DatasetType.name, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     datasetNameIndex();
@@ -734,7 +734,7 @@ public abstract class UniprotGraph<
             // property
             KeywordType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     keywordIdIndex();
@@ -744,7 +744,7 @@ public abstract class UniprotGraph<
             // property
             InterproType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     interproIdIndex();
@@ -754,7 +754,7 @@ public abstract class UniprotGraph<
             // property
             PfamType.id, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     pfamIdIndex();
@@ -764,7 +764,7 @@ public abstract class UniprotGraph<
             // property
             OrganismType.scientificName, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     organismScientificNameIndex();
@@ -774,7 +774,7 @@ public abstract class UniprotGraph<
             // property
             TaxonType.name, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     taxonNameIndex();
@@ -784,7 +784,7 @@ public abstract class UniprotGraph<
             // property
             FeatureTypeType.name, String,
             // graph
-            UniprotGraph<I, RV, RVT, RE, RET>,
+		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
             >
     featureTypeNameIndex();
@@ -794,7 +794,7 @@ public abstract class UniprotGraph<
 			// property
 			CommentTypeType.name, String,
 			// graph
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>,
 			I, RV, RVT, RE, RET
 			>
 	commentTypeNameIndex();
@@ -985,9 +985,9 @@ public abstract class UniprotGraph<
 
 	public final class AlternativeProductType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					AlternativeProduct<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+					UniProtGraph<I, RV, RVT, RE, RET>.AlternativeProductType
 					> {
 
 		public final name name = new name();
@@ -1008,7 +1008,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType, name, String> {
+				UniProtVertexProperty<AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType, name, String> {
 			public name() {
 				super(AlternativeProductType.this);
 			}
@@ -1022,9 +1022,9 @@ public abstract class UniprotGraph<
 
 	public final class ArticleType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Article<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ArticleType
+					UniProtGraph<I, RV, RVT, RE, RET>.ArticleType
 					> {
 
 		public final doId doId = new doId();
@@ -1046,7 +1046,7 @@ public abstract class UniprotGraph<
 
 		public final class doId
 				extends
-				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
+				UniProtVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
 			public doId() {
 				super(ArticleType.this);
 			}
@@ -1058,7 +1058,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
+				UniProtVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
 			public title() {
 				super(ArticleType.this);
 			}
@@ -1073,9 +1073,9 @@ public abstract class UniprotGraph<
 
 	public final class BookType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Book<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.BookType
+					UniProtGraph<I, RV, RVT, RE, RET>.BookType
 					> {
 
 		public final name name = new name();
@@ -1096,7 +1096,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Book<I, RV, RVT, RE, RET>, BookType, name, String> {
+				UniProtVertexProperty<Book<I, RV, RVT, RE, RET>, BookType, name, String> {
 			public name() {
 				super(BookType.this);
 			}
@@ -1110,9 +1110,9 @@ public abstract class UniprotGraph<
 
 	public final class CityType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					City<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.CityType
+					UniProtGraph<I, RV, RVT, RE, RET>.CityType
 					> {
 
 		public final name name = new name();
@@ -1133,7 +1133,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
+				UniProtVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
 			public name() {
 				super(CityType.this);
 			}
@@ -1147,9 +1147,9 @@ public abstract class UniprotGraph<
 
 	public final class ConsortiumType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Consortium<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ConsortiumType
+					UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType
 					> {
 
 		public final name name = new name();
@@ -1170,7 +1170,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Consortium<I, RV, RVT, RE, RET>, ConsortiumType, name, String> {
+				UniProtVertexProperty<Consortium<I, RV, RVT, RE, RET>, ConsortiumType, name, String> {
 			public name() {
 				super(ConsortiumType.this);
 			}
@@ -1184,9 +1184,9 @@ public abstract class UniprotGraph<
 
 	public final class CommentTypeType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					CommentType<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType
+					UniProtGraph<I, RV, RVT, RE, RET>.CommentTypeType
 					> {
 
 		public final name name = new name();
@@ -1207,7 +1207,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<CommentType<I, RV, RVT, RE, RET>, CommentTypeType, name, String> {
+				UniProtVertexProperty<CommentType<I, RV, RVT, RE, RET>, CommentTypeType, name, String> {
 			public name() {
 				super(CommentTypeType.this);
 			}
@@ -1221,9 +1221,9 @@ public abstract class UniprotGraph<
 
 	public final class CountryType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Country<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.CountryType
+					UniProtGraph<I, RV, RVT, RE, RET>.CountryType
 					> {
 
 		public final name name = new name();
@@ -1244,7 +1244,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Country<I, RV, RVT, RE, RET>, CountryType, name, String> {
+				UniProtVertexProperty<Country<I, RV, RVT, RE, RET>, CountryType, name, String> {
 			public name() {
 				super(CountryType.this);
 			}
@@ -1258,9 +1258,9 @@ public abstract class UniprotGraph<
 
 	public final class DatasetType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Dataset<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.DatasetType
+					UniProtGraph<I, RV, RVT, RE, RET>.DatasetType
 					> {
 
 		public final name name = new name();
@@ -1281,7 +1281,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Dataset<I, RV, RVT, RE, RET>, DatasetType, name, String> {
+				UniProtVertexProperty<Dataset<I, RV, RVT, RE, RET>, DatasetType, name, String> {
 			public name() {
 				super(DatasetType.this);
 			}
@@ -1295,9 +1295,9 @@ public abstract class UniprotGraph<
 
 	public final class DBType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					DB<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.DBType
+					UniProtGraph<I, RV, RVT, RE, RET>.DBType
 					> {
 
 		public final name name = new name();
@@ -1318,7 +1318,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
+				UniProtVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
 			public name() {
 				super(DBType.this);
 			}
@@ -1332,9 +1332,9 @@ public abstract class UniprotGraph<
 
 	public final class DiseaseType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Disease<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.DiseaseType
+					UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType
 					> {
 
 		public final name name = new name();
@@ -1358,7 +1358,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, name, String> {
+				UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, name, String> {
 			public name() {
 				super(DiseaseType.this);
 			}
@@ -1369,7 +1369,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, id, String> {
+				UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, id, String> {
 			public id() {
 				super(DiseaseType.this);
 			}
@@ -1380,7 +1380,7 @@ public abstract class UniprotGraph<
 		}
 		public final class acronym
 				extends
-				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, acronym, String> {
+				UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, acronym, String> {
 			public acronym() {
 				super(DiseaseType.this);
 			}
@@ -1391,7 +1391,7 @@ public abstract class UniprotGraph<
 		}
 		public final class description
 				extends
-				UniprotVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, description, String> {
+				UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, description, String> {
 			public description() {
 				super(DiseaseType.this);
 			}
@@ -1405,9 +1405,9 @@ public abstract class UniprotGraph<
 
 	public final class EMBLType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					EMBL<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.EMBLType
+					UniProtGraph<I, RV, RVT, RE, RET>.EMBLType
 					> {
 
 		public final id id = new id();
@@ -1430,7 +1430,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, id, String> {
+				UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, id, String> {
 			public id() {
 				super(EMBLType.this);
 			}
@@ -1441,7 +1441,7 @@ public abstract class UniprotGraph<
 		}
 		public final class proteinSequenceId
 				extends
-				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, proteinSequenceId, String> {
+				UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, proteinSequenceId, String> {
 			public proteinSequenceId() {
 				super(EMBLType.this);
 			}
@@ -1452,7 +1452,7 @@ public abstract class UniprotGraph<
 		}
 		public final class moleculeType
 				extends
-				UniprotVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, moleculeType, String> {
+				UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, moleculeType, String> {
 			public moleculeType() {
 				super(EMBLType.this);
 			}
@@ -1466,9 +1466,9 @@ public abstract class UniprotGraph<
 
 	public final class EnsemblType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Ensembl<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType
+					UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType
 					> {
 
 		public final id id = new id();
@@ -1492,7 +1492,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, id, String> {
+				UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, id, String> {
 			public id() {
 				super(EnsemblType.this);
 			}
@@ -1503,7 +1503,7 @@ public abstract class UniprotGraph<
 		}
 		public final class proteinSequenceId
 				extends
-				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, proteinSequenceId, String> {
+				UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, proteinSequenceId, String> {
 			public proteinSequenceId() {
 				super(EnsemblType.this);
 			}
@@ -1514,7 +1514,7 @@ public abstract class UniprotGraph<
 		}
 		public final class moleculeId
 				extends
-				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, moleculeId, String> {
+				UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, moleculeId, String> {
 			public moleculeId() {
 				super(EnsemblType.this);
 			}
@@ -1525,7 +1525,7 @@ public abstract class UniprotGraph<
 		}
 		public final class geneId
 				extends
-				UniprotVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, geneId, String> {
+				UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, geneId, String> {
 			public geneId() {
 				super(EnsemblType.this);
 			}
@@ -1538,9 +1538,9 @@ public abstract class UniprotGraph<
 
 	public final class FeatureTypeType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					FeatureType<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+					UniProtGraph<I, RV, RVT, RE, RET>.FeatureTypeType
 					> {
 
 		public final name name = new name();
@@ -1561,7 +1561,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType, name, String> {
+				UniProtVertexProperty<FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType, name, String> {
 			public name() {
 				super(FeatureTypeType.this);
 			}
@@ -1574,9 +1574,9 @@ public abstract class UniprotGraph<
 
 	public final class GeneLocationType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					GeneLocation<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType
+					UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType
 					> {
 
 		public final name name = new name();
@@ -1597,7 +1597,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType, name, String> {
+				UniProtVertexProperty<GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType, name, String> {
 			public name() {
 				super(GeneLocationType.this);
 			}
@@ -1611,9 +1611,9 @@ public abstract class UniprotGraph<
 
 	public final class InterproType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Interpro<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.InterproType
+					UniProtGraph<I, RV, RVT, RE, RET>.InterproType
 					> {
 
 		public final name name = new name();
@@ -1635,7 +1635,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
+				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
 			public name() {
 				super(InterproType.this);
 			}
@@ -1646,7 +1646,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
+				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
 			public id() {
 				super(InterproType.this);
 			}
@@ -1659,9 +1659,9 @@ public abstract class UniprotGraph<
 
 	public final class InstituteType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Institute<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.InstituteType
+					UniProtGraph<I, RV, RVT, RE, RET>.InstituteType
 					> {
 
 		public final name name = new name();
@@ -1682,7 +1682,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
+				UniProtVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
 			public name() {
 				super(InstituteType.this);
 			}
@@ -1696,9 +1696,9 @@ public abstract class UniprotGraph<
 
 	public final class IsoformType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Isoform<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+					UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
 					> {
 
 		public final name name = new name();
@@ -1722,7 +1722,7 @@ public abstract class UniprotGraph<
 
 		public final class sequence
 				extends
-				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, sequence, String> {
+				UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, sequence, String> {
 			public sequence() {
 				super(IsoformType.this);
 			}
@@ -1733,7 +1733,7 @@ public abstract class UniprotGraph<
 		}
 		public final class note
 				extends
-				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, note, String> {
+				UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, note, String> {
 			public note() {
 				super(IsoformType.this);
 			}
@@ -1744,7 +1744,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, id, String> {
+				UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, id, String> {
 			public id() {
 				super(IsoformType.this);
 			}
@@ -1755,7 +1755,7 @@ public abstract class UniprotGraph<
 		}
 		public final class name
 				extends
-				UniprotVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, name, String> {
+				UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, name, String> {
 			public name() {
 				super(IsoformType.this);
 			}
@@ -1769,9 +1769,9 @@ public abstract class UniprotGraph<
 
 	public final class JournalType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Journal<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.JournalType
+					UniProtGraph<I, RV, RVT, RE, RET>.JournalType
 					> {
 
 		public final name name = new name();
@@ -1792,7 +1792,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Journal<I, RV, RVT, RE, RET>, JournalType, name, String> {
+				UniProtVertexProperty<Journal<I, RV, RVT, RE, RET>, JournalType, name, String> {
 			public name() {
 				super(JournalType.this);
 			}
@@ -1805,9 +1805,9 @@ public abstract class UniprotGraph<
 
 	public final class KeggType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Kegg<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.KeggType
+					UniProtGraph<I, RV, RVT, RE, RET>.KeggType
 					> {
 
 		public final id id = new id();
@@ -1828,7 +1828,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<Kegg<I, RV, RVT, RE, RET>, KeggType, id, String> {
+				UniProtVertexProperty<Kegg<I, RV, RVT, RE, RET>, KeggType, id, String> {
 			public id() {
 				super(KeggType.this);
 			}
@@ -1841,9 +1841,9 @@ public abstract class UniprotGraph<
 
 	public final class KeywordType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Keyword<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.KeywordType
+					UniProtGraph<I, RV, RVT, RE, RET>.KeywordType
 					> {
 
 		public final name name = new name();
@@ -1865,7 +1865,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, name, String> {
+				UniProtVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, name, String> {
 			public name() {
 				super(KeywordType.this);
 			}
@@ -1876,7 +1876,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, id, String> {
+				UniProtVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, id, String> {
 			public id() {
 				super(KeywordType.this);
 			}
@@ -1889,9 +1889,9 @@ public abstract class UniprotGraph<
 
 	public final class OnlineArticleType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					OnlineArticle<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+					UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType
 					> {
 
 		public final title title = new title();
@@ -1912,7 +1912,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
+				UniProtVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
 			public title() {
 				super(OnlineArticleType.this);
 			}
@@ -1925,9 +1925,9 @@ public abstract class UniprotGraph<
 
 	public final class OnlineJournalType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					OnlineJournal<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+					UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType
 					> {
 
 		public final name name = new name();
@@ -1948,7 +1948,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType, name, String> {
+				UniProtVertexProperty<OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType, name, String> {
 			public name() {
 				super(OnlineJournalType.this);
 			}
@@ -1961,9 +1961,9 @@ public abstract class UniprotGraph<
 
 	public final class OrganismType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Organism<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.OrganismType
+					UniProtGraph<I, RV, RVT, RE, RET>.OrganismType
 					> {
 
 		public final scientificName scientificName = new scientificName();
@@ -1986,7 +1986,7 @@ public abstract class UniprotGraph<
 
 		public final class scientificName
 				extends
-				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, scientificName, String> {
+				UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, scientificName, String> {
 			public scientificName() {
 				super(OrganismType.this);
 			}
@@ -1997,7 +1997,7 @@ public abstract class UniprotGraph<
 		}
 		public final class commonName
 				extends
-				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, commonName, String> {
+				UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, commonName, String> {
 			public commonName() {
 				super(OrganismType.this);
 			}
@@ -2008,7 +2008,7 @@ public abstract class UniprotGraph<
 		}
 		public final class synonymName
 				extends
-				UniprotVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, synonymName, String> {
+				UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, synonymName, String> {
 			public synonymName() {
 				super(OrganismType.this);
 			}
@@ -2021,9 +2021,9 @@ public abstract class UniprotGraph<
 
 	public final class PatentType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Patent<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PatentType
+					UniProtGraph<I, RV, RVT, RE, RET>.PatentType
 					> {
 
 		public final title title = new title();
@@ -2045,7 +2045,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, title, String> {
+				UniProtVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, title, String> {
 			public title() {
 				super(PatentType.this);
 			}
@@ -2057,7 +2057,7 @@ public abstract class UniprotGraph<
 
 		public final class number
 				extends
-				UniprotVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
+				UniProtVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
 			public number() {
 				super(PatentType.this);
 			}
@@ -2071,9 +2071,9 @@ public abstract class UniprotGraph<
 
 	public final class PersonType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Person<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+					UniProtGraph<I, RV, RVT, RE, RET>.PersonType
 					> {
 
 		public final name name = new name();
@@ -2094,7 +2094,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Person<I, RV, RVT, RE, RET>, PersonType, name, String> {
+				UniProtVertexProperty<Person<I, RV, RVT, RE, RET>, PersonType, name, String> {
 			public name() {
 				super(PersonType.this);
 			}
@@ -2108,9 +2108,9 @@ public abstract class UniprotGraph<
 
 	public final class PfamType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Pfam<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PfamType
+					UniProtGraph<I, RV, RVT, RE, RET>.PfamType
 					> {
 
 		public final name name = new name();
@@ -2132,7 +2132,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, name, String> {
+				UniProtVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, name, String> {
 			public name() {
 				super(PfamType.this);
 			}
@@ -2143,7 +2143,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, id, String> {
+				UniProtVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, id, String> {
 			public id() {
 				super(PfamType.this);
 			}
@@ -2156,9 +2156,9 @@ public abstract class UniprotGraph<
 
 	public final class PubmedType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Pubmed<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PubmedType
+					UniProtGraph<I, RV, RVT, RE, RET>.PubmedType
 					> {
 
 		public final id id = new id();
@@ -2179,7 +2179,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<Pubmed<I, RV, RVT, RE, RET>, PubmedType, id, String> {
+				UniProtVertexProperty<Pubmed<I, RV, RVT, RE, RET>, PubmedType, id, String> {
 			public id() {
 				super(PubmedType.this);
 			}
@@ -2192,9 +2192,9 @@ public abstract class UniprotGraph<
 
 	public final class PIRType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					PIR<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PIRType
+					UniProtGraph<I, RV, RVT, RE, RET>.PIRType
 					> {
 
 		public final id id = new id();
@@ -2216,7 +2216,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, id, String> {
+				UniProtVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, id, String> {
 			public id() {
 				super(PIRType.this);
 			}
@@ -2227,7 +2227,7 @@ public abstract class UniprotGraph<
 		}
         public final class entryName
                 extends
-                UniprotVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, entryName, String> {
+                UniProtVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, entryName, String> {
             public entryName() {
                 super(PIRType.this);
             }
@@ -2241,9 +2241,9 @@ public abstract class UniprotGraph<
 
 	public final class ProteinType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
 					> {
 
 		public final accession accession = new accession();
@@ -2274,7 +2274,7 @@ public abstract class UniprotGraph<
 
 		public final class accession
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String> {
 			public accession() {
 				super(ProteinType.this);
 			}
@@ -2285,7 +2285,7 @@ public abstract class UniprotGraph<
 		}
 		public final class shortName
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
 			public shortName() {
 				super(ProteinType.this);
 			}
@@ -2296,7 +2296,7 @@ public abstract class UniprotGraph<
 		}
 		public final class sequence
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, sequence, String> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, sequence, String> {
 			public sequence() {
 				super(ProteinType.this);
 			}
@@ -2307,7 +2307,7 @@ public abstract class UniprotGraph<
 		}
 		public final class fullName
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
 			public fullName() {
 				super(ProteinType.this);
 			}
@@ -2318,7 +2318,7 @@ public abstract class UniprotGraph<
 		}
         public final class name
                 extends
-                UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, name, String> {
+                UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, name, String> {
             public name() {
                 super(ProteinType.this);
             }
@@ -2329,7 +2329,7 @@ public abstract class UniprotGraph<
         }
 		public final class modifiedDate
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {
 			public modifiedDate() {
 				super(ProteinType.this);
 			}
@@ -2340,7 +2340,7 @@ public abstract class UniprotGraph<
 		}
 		public final class createdDate
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, createdDate, Date> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, createdDate, Date> {
 			public createdDate() {
 				super(ProteinType.this);
 			}
@@ -2351,7 +2351,7 @@ public abstract class UniprotGraph<
 		}
 		public final class mass
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, String> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, String> {
 			public mass() {
 				super(ProteinType.this);
 			}
@@ -2362,7 +2362,7 @@ public abstract class UniprotGraph<
 		}
 		public final class version
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, version, Integer> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, version, Integer> {
 			public version() {
 				super(ProteinType.this);
 			}
@@ -2373,7 +2373,7 @@ public abstract class UniprotGraph<
 		}
 		public final class length
 				extends
-				UniprotVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, length, Integer> {
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, length, Integer> {
 			public length() {
 				super(ProteinType.this);
 			}
@@ -2387,9 +2387,9 @@ public abstract class UniprotGraph<
 
 	public final class PublisherType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Publisher<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.PublisherType
+					UniProtGraph<I, RV, RVT, RE, RET>.PublisherType
 					> {
 
 		public final name name = new name();
@@ -2410,7 +2410,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Publisher<I, RV, RVT, RE, RET>, PublisherType, name, String> {
+				UniProtVertexProperty<Publisher<I, RV, RVT, RE, RET>, PublisherType, name, String> {
 			public name() {
 				super(PublisherType.this);
 			}
@@ -2423,9 +2423,9 @@ public abstract class UniprotGraph<
 
 	public final class ReactomeTermType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					ReactomeTerm<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+					UniProtGraph<I, RV, RVT, RE, RET>.ReactomeTermType
 					> {
 
 		public final id id = new id();
@@ -2447,7 +2447,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, id, String> {
+				UniProtVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, id, String> {
 			public id() {
 				super(ReactomeTermType.this);
 			}
@@ -2458,7 +2458,7 @@ public abstract class UniprotGraph<
 		}
 		public final class pathwayName
 				extends
-				UniprotVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, pathwayName, String> {
+				UniProtVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, pathwayName, String> {
 			public pathwayName() {
 				super(ReactomeTermType.this);
 			}
@@ -2471,9 +2471,9 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Reference<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType
+					UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
 					> {
 
 		public final date date = new date();
@@ -2494,7 +2494,7 @@ public abstract class UniprotGraph<
 
 		public final class date
 				extends
-				UniprotVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
+				UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
 			public date() {
 				super(ReferenceType.this);
 			}
@@ -2507,9 +2507,9 @@ public abstract class UniprotGraph<
 
 	public final class RefSeqType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					RefSeq<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.RefSeqType
+					UniProtGraph<I, RV, RVT, RE, RET>.RefSeqType
 					> {
 
 		public final id id = new id();
@@ -2531,7 +2531,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, id, String> {
+				UniProtVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, id, String> {
 			public id() {
 				super(RefSeqType.this);
 			}
@@ -2542,7 +2542,7 @@ public abstract class UniprotGraph<
 		}
 		public final class nucleotideSequenceId
 				extends
-				UniprotVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, nucleotideSequenceId, String> {
+				UniProtVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, nucleotideSequenceId, String> {
 			public nucleotideSequenceId() {
 				super(RefSeqType.this);
 			}
@@ -2555,9 +2555,9 @@ public abstract class UniprotGraph<
 
 	public final class SequenceCautionType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					SequenceCaution<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+					UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType
 					> {
 
 		public final name name = new name();
@@ -2578,7 +2578,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType, name, String> {
+				UniProtVertexProperty<SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType, name, String> {
 			public name() {
 				super(SequenceCautionType.this);
 			}
@@ -2592,9 +2592,9 @@ public abstract class UniprotGraph<
 
 	public final class SubcellularLocationType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					SubcellularLocation<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+					UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
 					> {
 
 		public final name name = new name();
@@ -2615,7 +2615,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType, name, String> {
+				UniProtVertexProperty<SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType, name, String> {
 			public name() {
 				super(SubcellularLocationType.this);
 			}
@@ -2628,9 +2628,9 @@ public abstract class UniprotGraph<
 
 	public final class SubmissionType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Submission<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType
+					UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType
 					> {
 
 		public final title title = new title();
@@ -2651,7 +2651,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotVertexProperty<Submission<I, RV, RVT, RE, RET>, SubmissionType, title, String> {
+				UniProtVertexProperty<Submission<I, RV, RVT, RE, RET>, SubmissionType, title, String> {
 			public title() {
 				super(SubmissionType.this);
 			}
@@ -2664,9 +2664,9 @@ public abstract class UniprotGraph<
 
 	public final class TaxonType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Taxon<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+					UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
 					> {
 
 		public final name name = new name();
@@ -2687,7 +2687,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotVertexProperty<Taxon<I, RV, RVT, RE, RET>, TaxonType, name, String> {
+				UniProtVertexProperty<Taxon<I, RV, RVT, RE, RET>, TaxonType, name, String> {
 			public name() {
 				super(TaxonType.this);
 			}
@@ -2701,9 +2701,9 @@ public abstract class UniprotGraph<
 
 	public final class ThesisType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					Thesis<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ThesisType
+					UniProtGraph<I, RV, RVT, RE, RET>.ThesisType
 					> {
 
 		public final title title = new title();
@@ -2724,7 +2724,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotVertexProperty<Thesis<I, RV, RVT, RE, RET>, ThesisType, title, String> {
+				UniProtVertexProperty<Thesis<I, RV, RVT, RE, RET>, ThesisType, title, String> {
 			public title() {
 				super(ThesisType.this);
 			}
@@ -2738,9 +2738,9 @@ public abstract class UniprotGraph<
 
 	public final class UniGeneType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					UniGene<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.UniGeneType
+					UniProtGraph<I, RV, RVT, RE, RET>.UniGeneType
 					> {
 
 		public final id id = new id();
@@ -2761,7 +2761,7 @@ public abstract class UniprotGraph<
 
 		public final class id
 				extends
-				UniprotVertexProperty<UniGene<I, RV, RVT, RE, RET>, UniGeneType, id, String> {
+				UniProtVertexProperty<UniGene<I, RV, RVT, RE, RET>, UniGeneType, id, String> {
 			public id() {
 				super(UniGeneType.this);
 			}
@@ -2774,9 +2774,9 @@ public abstract class UniprotGraph<
 
 	public final class UnpublishedObservationType
 			extends
-			UniprotVertexType<
+			UniProtVertexType<
 					UnpublishedObservation<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+					UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
 					> {
 
 		public final scope scope = new scope();
@@ -2797,7 +2797,7 @@ public abstract class UniprotGraph<
 
 		public final class scope
 				extends
-				UniprotVertexProperty<UnpublishedObservation<I, RV, RVT, RE, RET>, UnpublishedObservationType, scope, String> {
+				UniProtVertexProperty<UnpublishedObservation<I, RV, RVT, RE, RET>, UnpublishedObservationType, scope, String> {
 			public scope() {
 				super(UnpublishedObservationType.this);
 			}
@@ -2814,16 +2814,16 @@ public abstract class UniprotGraph<
 
 	public final class ArticleJournalType
 			extends
-			UniprotEdgeType<
-					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
-					ArticleJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
-					Journal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.JournalType
+			UniProtEdgeType<
+					Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
+					ArticleJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
+					Journal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.JournalType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
         public ArticleJournalType(RET raw) {
-			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Journal());
+			super(UniProtGraph.this.Article(), raw, UniProtGraph.this.Journal());
 		}
 
 		@Override
@@ -2842,7 +2842,7 @@ public abstract class UniprotGraph<
 
 		public final class volume
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Article<I, RV, RVT, RE, RET>, ArticleType,
 						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
 						Journal<I, RV, RVT, RE, RET>, JournalType,
@@ -2859,7 +2859,7 @@ public abstract class UniprotGraph<
 		}
 		public final class first
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Article<I, RV, RVT, RE, RET>, ArticleType,
 						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
 						Journal<I, RV, RVT, RE, RET>, JournalType,
@@ -2876,7 +2876,7 @@ public abstract class UniprotGraph<
 		}
 		public final class last
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Article<I, RV, RVT, RE, RET>, ArticleType,
 						ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
 						Journal<I, RV, RVT, RE, RET>, JournalType,
@@ -2896,16 +2896,16 @@ public abstract class UniprotGraph<
 
 	public final class ArticlePubmedType
 			extends
-			UniprotEdgeType<
-					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
-					ArticlePubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
-					Pubmed<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PubmedType
+			UniProtEdgeType<
+					Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
+					ArticlePubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
+					Pubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PubmedType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
         public ArticlePubmedType(RET raw) {
-			super(UniprotGraph.this.Article(), raw, UniprotGraph.this.Pubmed());
+			super(UniProtGraph.this.Article(), raw, UniProtGraph.this.Pubmed());
 		}
 
 		@Override
@@ -2921,16 +2921,16 @@ public abstract class UniprotGraph<
 
 	public final class BookCityType
 			extends
-			UniprotEdgeType<
-					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
-					BookCity<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookCityType,
-					City<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CityType
+			UniProtEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
+					BookCity<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookCityType,
+					City<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CityType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
         public BookCityType(RET raw) {
-			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.City());
+			super(UniProtGraph.this.Book(), raw, UniProtGraph.this.City());
 		}
 
 		@Override
@@ -2946,16 +2946,16 @@ public abstract class UniprotGraph<
 
 	public final class BookEditorType
 			extends
-			UniprotEdgeType<
-					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
-					BookEditor<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookEditorType,
-					Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+			UniProtEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
+					BookEditor<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookEditorType,
+					Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public BookEditorType(RET raw) {
-			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.Person());
+			super(UniProtGraph.this.Book(), raw, UniProtGraph.this.Person());
 		}
 
 		@Override
@@ -2971,16 +2971,16 @@ public abstract class UniprotGraph<
 
 	public final class BookPublisherType
 			extends
-			UniprotEdgeType<
-					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
-					BookPublisher<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookPublisherType,
-					Publisher<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PublisherType
+			UniProtEdgeType<
+					Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
+					BookPublisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookPublisherType,
+					Publisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PublisherType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public BookPublisherType(RET raw) {
-			super(UniprotGraph.this.Book(), raw, UniprotGraph.this.Publisher());
+			super(UniProtGraph.this.Book(), raw, UniProtGraph.this.Publisher());
 		}
 
 		@Override
@@ -2996,16 +2996,16 @@ public abstract class UniprotGraph<
 
 	public final class InstituteCountryType
 			extends
-			UniprotEdgeType<
-					Institute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType,
-					InstituteCountry<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
-					Country<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CountryType
+			UniProtEdgeType<
+					Institute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteType,
+					InstituteCountry<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
+					Country<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CountryType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public InstituteCountryType(RET raw) {
-			super(UniprotGraph.this.Institute(), raw, UniprotGraph.this.Country());
+			super(UniProtGraph.this.Institute(), raw, UniProtGraph.this.Country());
 		}
 
 		@Override
@@ -3021,16 +3021,16 @@ public abstract class UniprotGraph<
 
 	public final class OnlineArticleOnlineJournalType
 			extends
-			UniprotEdgeType<
-					OnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType,
-					OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleOnlineJournalType,
-					OnlineJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+			UniProtEdgeType<
+					OnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType,
+					OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleOnlineJournalType,
+					OnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public OnlineArticleOnlineJournalType(RET raw) {
-			super(UniprotGraph.this.OnlineArticle(), raw, UniprotGraph.this.OnlineJournal());
+			super(UniProtGraph.this.OnlineArticle(), raw, UniProtGraph.this.OnlineJournal());
 		}
 
 		@Override
@@ -3047,7 +3047,7 @@ public abstract class UniprotGraph<
 
 		public final class locator
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType,
 						OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, OnlineArticleOnlineJournalType,
 						OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
@@ -3066,16 +3066,16 @@ public abstract class UniprotGraph<
 
 	public final class OrganismTaxonType
 			extends
-			UniprotEdgeType<
-					Organism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismType,
-					OrganismTaxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismTaxonType,
-					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+			UniProtEdgeType<
+					Organism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType,
+					OrganismTaxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismTaxonType,
+					Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public OrganismTaxonType(RET raw) {
-			super(UniprotGraph.this.Organism(), raw, UniprotGraph.this.Taxon());
+			super(UniProtGraph.this.Organism(), raw, UniProtGraph.this.Taxon());
 		}
 
 		@Override
@@ -3091,16 +3091,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinCommentType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinComment<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinCommentType,
-					CommentType<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CommentTypeType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinComment<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinCommentType,
+					CommentType<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CommentTypeType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinCommentType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.CommentType());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.CommentType());
 		}
 
 		@Override
@@ -3132,7 +3132,7 @@ public abstract class UniprotGraph<
 
 		public final class redoxPotentialEvidence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3149,7 +3149,7 @@ public abstract class UniprotGraph<
 		}
 		public final class redoxPotential
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3166,7 +3166,7 @@ public abstract class UniprotGraph<
 		}
 		public final class absorptionText
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3183,7 +3183,7 @@ public abstract class UniprotGraph<
 		}
 		public final class absorptionMax
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3200,7 +3200,7 @@ public abstract class UniprotGraph<
 		}
 		public final class kineticsXML
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3217,7 +3217,7 @@ public abstract class UniprotGraph<
 		}
 		public final class phDependence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3234,7 +3234,7 @@ public abstract class UniprotGraph<
 		}
 		public final class temperatureDependence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3251,7 +3251,7 @@ public abstract class UniprotGraph<
 		}
 		public final class position
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3268,7 +3268,7 @@ public abstract class UniprotGraph<
 		}
 		public final class mass
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3285,7 +3285,7 @@ public abstract class UniprotGraph<
 		}
 		public final class method
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3302,7 +3302,7 @@ public abstract class UniprotGraph<
 		}
 		public final class end
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3319,7 +3319,7 @@ public abstract class UniprotGraph<
 		}
 		public final class begin
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3336,7 +3336,7 @@ public abstract class UniprotGraph<
 		}
 		public final class text
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3353,7 +3353,7 @@ public abstract class UniprotGraph<
 		}
 		public final class status
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3370,7 +3370,7 @@ public abstract class UniprotGraph<
 		}
 		public final class evidence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
 						CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
@@ -3389,16 +3389,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinDatasetType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinDataset<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinDatasetType,
-					Dataset<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DatasetType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinDataset<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDatasetType,
+					Dataset<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DatasetType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public ProteinDatasetType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Dataset());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Dataset());
 		}
 
 		@Override
@@ -3414,10 +3414,10 @@ public abstract class UniprotGraph<
 
 	public final class ProteinDiseaseType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinDisease<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
-					Disease<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DiseaseType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinDisease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
+					Disease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
@@ -3427,7 +3427,7 @@ public abstract class UniprotGraph<
 		public final evidence evidence = new evidence();
 
 		public ProteinDiseaseType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Disease());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Disease());
 		}
 
 		@Override
@@ -3442,7 +3442,7 @@ public abstract class UniprotGraph<
 
 		public final class text
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
 						Disease<I, RV, RVT, RE, RET>, DiseaseType,
@@ -3459,7 +3459,7 @@ public abstract class UniprotGraph<
 		}
 		public final class status
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
 						Disease<I, RV, RVT, RE, RET>, DiseaseType,
@@ -3476,7 +3476,7 @@ public abstract class UniprotGraph<
 		}
 		public final class evidence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
 						Disease<I, RV, RVT, RE, RET>, DiseaseType,
@@ -3495,16 +3495,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinEMBLType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinEMBL<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinEMBLType,
-					EMBL<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EMBLType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinEMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinEMBLType,
+					EMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EMBLType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinEMBLType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.EMBL());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.EMBL());
 		}
 
 		@Override
@@ -3520,16 +3520,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinEnsemblType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinEnsembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinEnsemblType,
-					Ensembl<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.EnsemblType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinEnsembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinEnsemblType,
+					Ensembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinEnsemblType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Ensembl());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Ensembl());
 		}
 
 		@Override
@@ -3545,10 +3545,10 @@ public abstract class UniprotGraph<
 
 	public final class ProteinFeatureType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinFeature<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinFeatureType,
-					FeatureType<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinFeature<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinFeatureType,
+					FeatureType<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.FeatureTypeType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
@@ -3564,7 +3564,7 @@ public abstract class UniprotGraph<
         public final ref ref = new ref();
 
 		public ProteinFeatureType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.FeatureType());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.FeatureType());
 		}
 
 		@Override
@@ -3579,7 +3579,7 @@ public abstract class UniprotGraph<
 
         public final class description
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3596,7 +3596,7 @@ public abstract class UniprotGraph<
         }
         public final class id
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3613,7 +3613,7 @@ public abstract class UniprotGraph<
         }
         public final class evidence
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3630,7 +3630,7 @@ public abstract class UniprotGraph<
         }
         public final class status
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3647,7 +3647,7 @@ public abstract class UniprotGraph<
         }
         public final class begin
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3664,7 +3664,7 @@ public abstract class UniprotGraph<
         }
         public final class end
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3681,7 +3681,7 @@ public abstract class UniprotGraph<
         }
         public final class original
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3698,7 +3698,7 @@ public abstract class UniprotGraph<
         }
         public final class variation
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3715,7 +3715,7 @@ public abstract class UniprotGraph<
         }
         public final class ref
                 extends
-                UniprotEdgeProperty<
+                UniProtEdgeProperty<
                         Protein<I, RV, RVT, RE, RET>, ProteinType,
                         ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
                         FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
@@ -3734,10 +3734,10 @@ public abstract class UniprotGraph<
 
 	public final class ProteinGeneLocationType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinGeneLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinGeneLocationType,
-					GeneLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinGeneLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinGeneLocationType,
+					GeneLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
@@ -3745,7 +3745,7 @@ public abstract class UniprotGraph<
 		public final name name = new name();
 
 		public ProteinGeneLocationType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.GeneLocation());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.GeneLocation());
 		}
 
 		@Override
@@ -3760,7 +3760,7 @@ public abstract class UniprotGraph<
 
 		public final class name
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinGeneLocation<I, RV, RVT, RE, RET>, ProteinGeneLocationType,
 						GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
@@ -3780,16 +3780,16 @@ public abstract class UniprotGraph<
 
 	public final class IsoformEventGeneratorType
 			extends
-			UniprotEdgeType<
-					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType,
-					IsoformEventGenerator<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformEventGeneratorType,
-					AlternativeProduct<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+			UniProtEdgeType<
+					Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType,
+					IsoformEventGenerator<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformEventGeneratorType,
+					AlternativeProduct<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.AlternativeProductType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public IsoformEventGeneratorType(RET raw) {
-			super(UniprotGraph.this.Isoform(), raw, UniprotGraph.this.AlternativeProduct());
+			super(UniProtGraph.this.Isoform(), raw, UniProtGraph.this.AlternativeProduct());
 		}
 
 		@Override
@@ -3805,16 +3805,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinInterproType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinInterpro<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinInterproType,
-					Interpro<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InterproType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinInterpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterproType,
+					Interpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterproType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinInterproType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Interpro());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Interpro());
 		}
 
 		@Override
@@ -3830,16 +3830,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinKeggType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinKegg<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinKeggType,
-					Kegg<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.KeggType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinKegg<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinKeggType,
+					Kegg<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.KeggType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinKeggType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Kegg());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Kegg());
 		}
 
 		@Override
@@ -3855,16 +3855,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinKeywordType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinKeyword<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinKeywordType,
-					Keyword<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.KeywordType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinKeyword<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinKeywordType,
+					Keyword<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.KeywordType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinKeywordType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Keyword());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Keyword());
 		}
 
 		@Override
@@ -3880,16 +3880,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinOrganismType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinOrganism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinOrganismType,
-					Organism<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OrganismType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinOrganism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinOrganismType,
+					Organism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public ProteinOrganismType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Organism());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Organism());
 		}
 
 		@Override
@@ -3905,16 +3905,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinPfamType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinPfam<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPfamType,
-					Pfam<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PfamType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinPfam<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPfamType,
+					Pfam<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PfamType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinPfamType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Pfam());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Pfam());
 		}
 
 		@Override
@@ -3930,16 +3930,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinPIRType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinPIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
-					PIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PIRType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinPIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
+					PIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PIRType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinPIRType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.PIR());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.PIR());
 		}
 
 		@Override
@@ -3955,16 +3955,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinProteinInteractionType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinProteinInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinProteinInteractionType,
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinProteinInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinProteinInteractionType,
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinProteinInteractionType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Protein());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Protein());
 		}
 
 		@Override
@@ -3984,7 +3984,7 @@ public abstract class UniprotGraph<
 
 		public final class experiments
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4001,7 +4001,7 @@ public abstract class UniprotGraph<
 		}
 		public final class organismsDiffer
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4018,7 +4018,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId1
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4035,7 +4035,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId2
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4054,16 +4054,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinIsoformType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinIsoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinIsoformType,
-					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinIsoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinIsoformType,
+					Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinIsoformType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Isoform());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Isoform());
 		}
 
 		@Override
@@ -4080,16 +4080,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinIsoformInteractionType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinIsoformInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinIsoformInteractionType,
-					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinIsoformInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinIsoformInteractionType,
+					Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinIsoformInteractionType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Isoform());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Isoform());
 		}
 
 		@Override
@@ -4109,7 +4109,7 @@ public abstract class UniprotGraph<
 
 		public final class experiments
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
@@ -4126,7 +4126,7 @@ public abstract class UniprotGraph<
 		}
 		public final class organismsDiffer
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
@@ -4143,7 +4143,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId1
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
@@ -4160,7 +4160,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId2
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
@@ -4179,16 +4179,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinReactomeTermType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinReactomeTerm<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinReactomeTermType,
-					ReactomeTerm<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinReactomeTerm<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinReactomeTermType,
+					ReactomeTerm<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReactomeTermType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinReactomeTermType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.ReactomeTerm());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.ReactomeTerm());
 		}
 
 		@Override
@@ -4204,16 +4204,16 @@ public abstract class UniprotGraph<
 
 	public final class IsoformProteinInteractionType
 			extends
-			UniprotEdgeType<
-					Isoform<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType,
-					IsoformProteinInteraction<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.IsoformProteinInteractionType,
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType
+			UniProtEdgeType<
+					Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType,
+					IsoformProteinInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformProteinInteractionType,
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public IsoformProteinInteractionType(RET raw) {
-			super(UniprotGraph.this.Isoform(), raw, UniprotGraph.this.Protein());
+			super(UniProtGraph.this.Isoform(), raw, UniProtGraph.this.Protein());
 		}
 
 		@Override
@@ -4233,7 +4233,7 @@ public abstract class UniprotGraph<
 
 		public final class experiments
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
 						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4250,7 +4250,7 @@ public abstract class UniprotGraph<
 		}
 		public final class organismsDiffer
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
 						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4267,7 +4267,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId1
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
 						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4284,7 +4284,7 @@ public abstract class UniprotGraph<
 		}
 		public final class intActId2
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Isoform<I, RV, RVT, RE, RET>, IsoformType,
 						IsoformProteinInteraction<I, RV, RVT, RE, RET>, IsoformProteinInteractionType,
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
@@ -4303,16 +4303,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinReferenceType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinReference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinReferenceType,
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinReference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinReferenceType,
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinReferenceType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.Reference());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Reference());
 		}
 
 		@Override
@@ -4328,16 +4328,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinRefSeqType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinRefSeq<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinRefSeqType,
-					RefSeq<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.RefSeqType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinRefSeq<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinRefSeqType,
+					RefSeq<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.RefSeqType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinRefSeqType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.RefSeq());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.RefSeq());
 		}
 
 		@Override
@@ -4353,10 +4353,10 @@ public abstract class UniprotGraph<
 
 	public final class ProteinSequenceCautionType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinSequenceCaution<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinSequenceCautionType,
-					SequenceCaution<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinSequenceCaution<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinSequenceCautionType,
+					SequenceCaution<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
@@ -4370,7 +4370,7 @@ public abstract class UniprotGraph<
 		public final position position = new position();
 
 		public ProteinSequenceCautionType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SequenceCaution());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.SequenceCaution());
 		}
 
 		@Override
@@ -4385,7 +4385,7 @@ public abstract class UniprotGraph<
 
 		public final class position
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4402,7 +4402,7 @@ public abstract class UniprotGraph<
 		}
 		public final class version
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4419,7 +4419,7 @@ public abstract class UniprotGraph<
 		}
 		public final class resource
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4436,7 +4436,7 @@ public abstract class UniprotGraph<
 		}
 		public final class id
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4453,7 +4453,7 @@ public abstract class UniprotGraph<
 		}
 		public final class evidence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4470,7 +4470,7 @@ public abstract class UniprotGraph<
 		}
 		public final class status
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4487,7 +4487,7 @@ public abstract class UniprotGraph<
 		}
 		public final class text
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
 						SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
@@ -4506,10 +4506,10 @@ public abstract class UniprotGraph<
 
 	public final class ProteinSubcellularLocationType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinSubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType,
-					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinSubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType,
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
@@ -4521,7 +4521,7 @@ public abstract class UniprotGraph<
 
 		public final class topologyStatus
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
 						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
@@ -4538,7 +4538,7 @@ public abstract class UniprotGraph<
 		}
 		public final class topology
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
 						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
@@ -4555,7 +4555,7 @@ public abstract class UniprotGraph<
 		}
 		public final class evidence
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
 						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
@@ -4572,7 +4572,7 @@ public abstract class UniprotGraph<
 		}
 		public final class status
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Protein<I, RV, RVT, RE, RET>, ProteinType,
 						ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
 						SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
@@ -4589,7 +4589,7 @@ public abstract class UniprotGraph<
 		}
 
 		public ProteinSubcellularLocationType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.SubcellularLocation());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.SubcellularLocation());
 		}
 
 		@Override
@@ -4605,16 +4605,16 @@ public abstract class UniprotGraph<
 
 	public final class ProteinUniGeneType
 			extends
-			UniprotEdgeType<
-					Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinUniGene<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinUniGeneType,
-					UniGene<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.UniGeneType
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinUniGene<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinUniGeneType,
+					UniGene<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.UniGeneType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ProteinUniGeneType(RET raw) {
-			super(UniprotGraph.this.Protein(), raw, UniprotGraph.this.UniGene());
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.UniGene());
 		}
 
 		@Override
@@ -4630,16 +4630,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceAuthorConsortiumType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
-					Consortium<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ConsortiumType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
+					Consortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ReferenceAuthorConsortiumType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Consortium());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Consortium());
 		}
 
 		@Override
@@ -4655,16 +4655,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceAuthorPersonType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceAuthorPerson<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceAuthorPersonType,
-					Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceAuthorPerson<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorPersonType,
+					Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
 		public ReferenceAuthorPersonType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Person());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Person());
 		}
 
 		@Override
@@ -4680,16 +4680,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceArticleType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceArticleType,
-					Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceArticleType,
+					Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferenceArticleType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Article());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Article());
 		}
 
 		@Override
@@ -4705,10 +4705,10 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceBookType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceBook<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceBookType,
-					Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceBook<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceBookType,
+					Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
@@ -4719,7 +4719,7 @@ public abstract class UniprotGraph<
 		public final volume volume = new volume();
 
 		public ReferenceBookType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Book());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Book());
 		}
 
 		@Override
@@ -4734,7 +4734,7 @@ public abstract class UniprotGraph<
 
 		public final class title
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Reference<I, RV, RVT, RE, RET>, ReferenceType,
 						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
 						Book<I, RV, RVT, RE, RET>, BookType,
@@ -4752,7 +4752,7 @@ public abstract class UniprotGraph<
 
 		public final class volume
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Reference<I, RV, RVT, RE, RET>, ReferenceType,
 						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
 						Book<I, RV, RVT, RE, RET>, BookType,
@@ -4770,7 +4770,7 @@ public abstract class UniprotGraph<
 
 		public final class first
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Reference<I, RV, RVT, RE, RET>, ReferenceType,
 						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
 						Book<I, RV, RVT, RE, RET>, BookType,
@@ -4788,7 +4788,7 @@ public abstract class UniprotGraph<
 
 		public final class last
 				extends
-				UniprotEdgeProperty<
+				UniProtEdgeProperty<
 						Reference<I, RV, RVT, RE, RET>, ReferenceType,
 						ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
 						Book<I, RV, RVT, RE, RET>, BookType,
@@ -4807,16 +4807,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferencePatentType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferencePatent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferencePatentType,
-					Patent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PatentType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferencePatent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferencePatentType,
+					Patent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PatentType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferencePatentType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Patent());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Patent());
 		}
 
 		@Override
@@ -4832,16 +4832,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceThesisType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceThesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceThesisType,
-					Thesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceThesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceThesisType,
+					Thesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferenceThesisType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Thesis());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Thesis());
 		}
 
 		@Override
@@ -4857,16 +4857,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceSubmissionType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceSubmission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceSubmissionType,
-					Submission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceSubmission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceSubmissionType,
+					Submission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferenceSubmissionType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.Submission());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.Submission());
 		}
 
 		@Override
@@ -4882,16 +4882,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceUnpublishedObservationType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
-					UnpublishedObservation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
+					UnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferenceUnpublishedObservationType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.UnpublishedObservation());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.UnpublishedObservation());
 		}
 
 		@Override
@@ -4907,16 +4907,16 @@ public abstract class UniprotGraph<
 
 	public final class ReferenceOnlineArticleType
 			extends
-			UniprotEdgeType<
-					Reference<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceType,
-					ReferenceOnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ReferenceOnlineArticleType,
-					OnlineArticle<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+			UniProtEdgeType<
+					Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+					ReferenceOnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceOnlineArticleType,
+					OnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType
 					>
 			implements
 			TypedEdge.Type.OneToOne {
 
 		public ReferenceOnlineArticleType(RET raw) {
-			super(UniprotGraph.this.Reference(), raw, UniprotGraph.this.OnlineArticle());
+			super(UniProtGraph.this.Reference(), raw, UniProtGraph.this.OnlineArticle());
 		}
 
 		@Override
@@ -4932,16 +4932,16 @@ public abstract class UniprotGraph<
 
 	public final class SubcellularLocationParentType
 			extends
-			UniprotEdgeType<
-					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
-					SubcellularLocationParent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationParentType,
-					SubcellularLocation<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+			UniProtEdgeType<
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
+					SubcellularLocationParent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationParentType,
+					SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public SubcellularLocationParentType(RET raw) {
-			super(UniprotGraph.this.SubcellularLocation(), raw, UniprotGraph.this.SubcellularLocation());
+			super(UniProtGraph.this.SubcellularLocation(), raw, UniProtGraph.this.SubcellularLocation());
 		}
 
 		@Override
@@ -4957,16 +4957,16 @@ public abstract class UniprotGraph<
 
 	public final class SubmissionDBType
 			extends
-			UniprotEdgeType<
-					Submission<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType,
-					SubmissionDB<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionDBType,
-					DB<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.DBType
+			UniProtEdgeType<
+					Submission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
+					SubmissionDB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionDBType,
+					DB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DBType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public SubmissionDBType(RET raw) {
-			super(UniprotGraph.this.Submission(), raw, UniprotGraph.this.DB());
+			super(UniProtGraph.this.Submission(), raw, UniProtGraph.this.DB());
 		}
 
 		@Override
@@ -4982,16 +4982,16 @@ public abstract class UniprotGraph<
 
 	public final class TaxonParentType
 			extends
-			UniprotEdgeType<
-					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType,
-					TaxonParent<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonParentType,
-					Taxon<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType
+			UniProtEdgeType<
+					Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType,
+					TaxonParent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonParentType,
+					Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public TaxonParentType(RET raw) {
-			super(UniprotGraph.this.Taxon(), raw, UniprotGraph.this.Taxon());
+			super(UniProtGraph.this.Taxon(), raw, UniProtGraph.this.Taxon());
 		}
 
 		@Override
@@ -5007,16 +5007,16 @@ public abstract class UniprotGraph<
 
 	public final class ThesisInstituteType
 			extends
-			UniprotEdgeType<
-					Thesis<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisType,
-					ThesisInstitute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ThesisInstituteType,
-					Institute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType
+			UniProtEdgeType<
+					Thesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisType,
+					ThesisInstitute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisInstituteType,
+					Institute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteType
 					>
 			implements
 			TypedEdge.Type.ManyToOne {
 
 		public ThesisInstituteType(RET raw) {
-			super(UniprotGraph.this.Thesis(), raw, UniprotGraph.this.Institute());
+			super(UniProtGraph.this.Thesis(), raw, UniProtGraph.this.Institute());
 		}
 
 		@Override
@@ -5034,16 +5034,16 @@ public abstract class UniprotGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class UniprotVertexProperty<
-			V extends UniprotVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<V, VT>,
-			P extends UniprotVertexProperty<V, VT, P, PV>,
+	public abstract class UniProtVertexProperty<
+			V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
+			P extends UniProtVertexProperty<V, VT, P, PV>,
 			PV
 			>
 			implements
-			Property<V, VT, P, PV, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			Property<V, VT, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-		protected UniprotVertexProperty(VT type) {
+		protected UniProtVertexProperty(VT type) {
 
 			this.type = type;
 		}
@@ -5056,14 +5056,14 @@ public abstract class UniprotGraph<
 		}
 	}
 
-    public abstract class UniprotEdgeProperty<
-            S extends UniprotVertex<S, ST, I, RV, RVT, RE, RET>,
-            ST extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<S, ST>,
-            E extends UniprotEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-            ET extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotEdgeType<S, ST, E, ET, T, TT>,
-            T extends UniprotVertex<T, TT, I, RV, RVT, RE, RET>,
-            TT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<T, TT>,
-            P extends UniprotEdgeProperty <
+    public abstract class UniProtEdgeProperty<
+            S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
+            ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+            E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
+            ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+            T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
+            TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>,
+            P extends UniProtEdgeProperty <
                 S, ST,
                 E, ET,
                 T, TT,
@@ -5072,9 +5072,9 @@ public abstract class UniprotGraph<
             PV
            >
             implements
-            Property<E, ET, P, PV, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+            Property<E, ET, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-        protected UniprotEdgeProperty(ET type) {
+        protected UniProtEdgeProperty(ET type) {
 
             this.type = type;
         }
@@ -5088,25 +5088,25 @@ public abstract class UniprotGraph<
     }
 
 
-	public abstract static class UniprotVertex<
-			V extends UniprotVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<V, VT>,
+	public abstract static class UniProtVertex<
+			V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
-			TypedVertex<V, VT, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex<V, VT, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RV vertex;
 		private VT type;
 
-		protected UniprotVertex(RV vertex, VT type) {
+		protected UniProtVertex(RV vertex, VT type) {
 
 			this.vertex = vertex;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -5121,16 +5121,16 @@ public abstract class UniprotGraph<
 		}
 	}
 
-	abstract class UniprotVertexType<
-			V extends UniprotVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<V, VT>
+	abstract class UniProtVertexType<
+			V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>
 			>
 			implements
-			TypedVertex.Type<V, VT, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex.Type<V, VT, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RVT raw;
 
-		protected UniprotVertexType(RVT raw) {
+		protected UniProtVertexType(RVT raw) {
 			this.raw = raw;
 		}
 
@@ -5140,38 +5140,38 @@ public abstract class UniprotGraph<
 		}
 
 		@Override
-		public final UniprotGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotGraph.this;
+		public final UniProtGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtGraph.this;
 		}
 	}
 
-	public abstract static class UniprotEdge<
-			S extends UniprotVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<S, ST>,
-			E extends UniprotEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotEdgeType<S, ST, E, ET, T, TT>,
-			T extends UniprotVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<T, TT>,
+	public abstract static class UniProtEdge<
+			S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+			E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
+			ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+			T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
 			TypedEdge<
-					S, ST, UniprotGraph<I, RV, RVT, RE, RET>,
-					E, ET, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, UniprotGraph<I, RV, RVT, RE, RET>
+					S, ST, UniProtGraph<I, RV, RVT, RE, RET>,
+					E, ET, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					T, TT, UniProtGraph<I, RV, RVT, RE, RET>
 					> {
 
 		private RE edge;
 		private ET type;
 
-		protected UniprotEdge(RE edge, ET type) {
+		protected UniProtEdge(RE edge, ET type) {
 
 			this.edge = edge;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -5186,26 +5186,26 @@ public abstract class UniprotGraph<
 		}
 	}
 
-	abstract class UniprotEdgeType<
-			S extends UniprotVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<S, ST>,
-			E extends UniprotEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotEdgeType<S, ST, E, ET, T, TT>,
-			T extends UniprotVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends UniprotGraph<I, RV, RVT, RE, RET>.UniprotVertexType<T, TT>
+	abstract class UniProtEdgeType<
+			S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+			E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
+			ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+			T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>
 			>
 			implements
 			TypedEdge.Type<
-					S, ST, UniprotGraph<I, RV, RVT, RE, RET>,
-					E, ET, UniprotGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, UniprotGraph<I, RV, RVT, RE, RET>
+					S, ST, UniProtGraph<I, RV, RVT, RE, RET>,
+					E, ET, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					T, TT, UniProtGraph<I, RV, RVT, RE, RET>
 					> {
 
 		private RET raw;
 		private ST srcT;
 		private TT tgtT;
 
-		protected UniprotEdgeType(ST srcT, RET raw, TT tgtT) {
+		protected UniProtEdgeType(ST srcT, RET raw, TT tgtT) {
 
 			this.raw = raw;
 			this.srcT = srcT;
@@ -5228,8 +5228,8 @@ public abstract class UniprotGraph<
 		}
 
 		@Override
-		public final UniprotGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotGraph.this;
+		public final UniProtGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtGraph.this;
 		}
 	}
 
@@ -5249,318 +5249,317 @@ public abstract class UniprotGraph<
       + com
         + bio4j
           + model
-            + enums
+            + uniref
+              + vertices
+                + [UniRef100Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]
+                + [UniRef90Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]
+                + [UniRef50Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]
+              + [UniRefGraph.java][main/java/com/bio4j/model/uniref/UniRefGraph.java]
+              + programs
+                + [ImportUniRef.java][main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]
+            + uniprot_uniref
+              + [UniProtUniRefGraph.java][main/java/com/bio4j/model/uniprot_uniref/UniProtUniRefGraph.java]
+              + edges
+                + [UniRef100Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Member.java]
+                + [UniRef50Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Member.java]
+                + [UniRef100Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]
+                + [UniRef90Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]
+                + [UniRef50Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Representant.java]
+                + [UniRef90Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Member.java]
+              + programs
+                + [ImportUniProtUniRef.java][main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniProtUniRef.java]
+            + uniprot_enzymedb
+              + edges
+                + [EnzymaticActivity.java][main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]
+              + [UniProtEnzymeDBGraph.java][main/java/com/bio4j/model/uniprot_enzymedb/UniProtEnzymeDBGraph.java]
+              + programs
+                + [ImportUniProtEnzymeDB.java][main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniProtEnzymeDB.java]
             + enzymedb
               + [EnzymeDBGraph.java][main/java/com/bio4j/model/enzymedb/EnzymeDBGraph.java]
-              + programs
-                + [ImportEnzymeDB.java][main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]
               + vertices
                 + [Enzyme.java][main/java/com/bio4j/model/enzymedb/vertices/Enzyme.java]
-            + geninfo
-              + [GenInfoGraph.java][main/java/com/bio4j/model/geninfo/GenInfoGraph.java]
+              + programs
+                + [ImportEnzymeDB.java][main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]
+            + ncbiTaxonomy
+              + [NCBITaxonomyGraph.java][main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]
+              + edges
+                + [NCBITaxonParent.java][main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]
               + vertices
-                + [GenInfo.java][main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]
+                + [NCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]
+              + programs
+                + [ImportNCBITaxonomy.java][main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]
             + go
               + edges
                 + goSlims
                   + [GoSlim.java][main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]
                   + [PlantSlim.java][main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]
+                + [PositivelyRegulates.java][main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]
                 + [HasPartOf.java][main/java/com/bio4j/model/go/edges/HasPartOf.java]
+                + [Regulates.java][main/java/com/bio4j/model/go/edges/Regulates.java]
+                + [PartOf.java][main/java/com/bio4j/model/go/edges/PartOf.java]
                 + [IsA.java][main/java/com/bio4j/model/go/edges/IsA.java]
                 + [NegativelyRegulates.java][main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]
-                + [PartOf.java][main/java/com/bio4j/model/go/edges/PartOf.java]
-                + [PositivelyRegulates.java][main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]
-                + [Regulates.java][main/java/com/bio4j/model/go/edges/Regulates.java]
                 + [SubOntology.java][main/java/com/bio4j/model/go/edges/SubOntology.java]
               + [GoGraph.java][main/java/com/bio4j/model/go/GoGraph.java]
+              + vertices
+                + [SubOntologies.java][main/java/com/bio4j/model/go/vertices/SubOntologies.java]
+                + [GoTerm.java][main/java/com/bio4j/model/go/vertices/GoTerm.java]
+                + [GoSlims.java][main/java/com/bio4j/model/go/vertices/GoSlims.java]
               + programs
                 + [ImportGO.java][main/java/com/bio4j/model/go/programs/ImportGO.java]
-              + vertices
-                + [GoSlims.java][main/java/com/bio4j/model/go/vertices/GoSlims.java]
-                + [GoTerm.java][main/java/com/bio4j/model/go/vertices/GoTerm.java]
-                + [SubOntologies.java][main/java/com/bio4j/model/go/vertices/SubOntologies.java]
-            + ncbiTaxonomy
-              + edges
-                + [NCBITaxonParent.java][main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]
-              + [NCBITaxonomyGraph.java][main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]
-              + programs
-                + [ImportNCBITaxonomy.java][main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]
-              + vertices
-                + [NCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]
-            + ncbiTaxonomy_geninfo
-              + edges
-                + [GenInfoNCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]
-              + [NCBITaxonomyGenInfoGraph.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]
-              + programs
-                + [ImportGenInfoNCBITaxonIndex.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]
             + uniprot
+              + [UniProtGraph.java][main/java/com/bio4j/model/uniprot/UniProtGraph.java]
               + edges
-                + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
-                + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
                 + [BookCity.java][main/java/com/bio4j/model/uniprot/edges/BookCity.java]
-                + [BookEditor.java][main/java/com/bio4j/model/uniprot/edges/BookEditor.java]
+                + [ProteinReference.java][main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]
+                + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
+                + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
+                + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
+                + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
+                + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
+                + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
+                + [ProteinDataset.java][main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]
+                + [ReferencePatent.java][main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]
+                + [TaxonParent.java][main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]
+                + [ProteinReactomeTerm.java][main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]
+                + [ProteinDisease.java][main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]
                 + [BookPublisher.java][main/java/com/bio4j/model/uniprot/edges/BookPublisher.java]
                 + [InstituteCountry.java][main/java/com/bio4j/model/uniprot/edges/InstituteCountry.java]
-                + [IsoformEventGenerator.java][main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]
-                + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
+                + [ReferenceOnlineArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]
+                + [BookEditor.java][main/java/com/bio4j/model/uniprot/edges/BookEditor.java]
+                + [ProteinOrganism.java][main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]
+                + [ReferenceSubmission.java][main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]
+                + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
+                + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
+                + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
+                + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
+                + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
+                + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
+                + [SubmissionDB.java][main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]
                 + [OnlineArticleOnlineJournal.java][main/java/com/bio4j/model/uniprot/edges/OnlineArticleOnlineJournal.java]
                 + [OrganismTaxon.java][main/java/com/bio4j/model/uniprot/edges/OrganismTaxon.java]
-                + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
-                + [ProteinDataset.java][main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]
-                + [ProteinDisease.java][main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]
-                + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
-                + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
-                + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
-                + [ProteinGeneLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]
-                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
-                + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
-                + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
-                + [ProteinKegg.java][main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]
-                + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
-                + [ProteinOrganism.java][main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]
-                + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
-                + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
-                + [ProteinProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]
-                + [ProteinReactomeTerm.java][main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]
-                + [ProteinReference.java][main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]
-                + [ProteinRefSeq.java][main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]
-                + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
-                + [ProteinSubcellularLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]
-                + [ProteinUniGene.java][main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]
-                + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
-                + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
-                + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
-                + [ReferenceBook.java][main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]
-                + [ReferenceOnlineArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]
-                + [ReferencePatent.java][main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]
-                + [ReferenceSubmission.java][main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]
-                + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
-                + [ReferenceUnpublishedObservation.java][main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]
-                + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
-                + [SubmissionDB.java][main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]
-                + [TaxonParent.java][main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]
                 + [ThesisInstitute.java][main/java/com/bio4j/model/uniprot/edges/ThesisInstitute.java]
+                + [ProteinUniGene.java][main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]
+                + [ProteinKegg.java][main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]
+                + [ProteinProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]
+                + [ProteinRefSeq.java][main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]
+                + [ProteinSubcellularLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]
+                + [ReferenceUnpublishedObservation.java][main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]
+                + [ReferenceBook.java][main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]
+                + [IsoformEventGenerator.java][main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]
+                + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
+                + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
+                + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
+                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
+                + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
+                + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
+                + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
+                + [ProteinGeneLocation.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]
+              + vertices
+                + [Article.java][main/java/com/bio4j/model/uniprot/vertices/Article.java]
+                + [Taxon.java][main/java/com/bio4j/model/uniprot/vertices/Taxon.java]
+                + [Publisher.java][main/java/com/bio4j/model/uniprot/vertices/Publisher.java]
+                + [Book.java][main/java/com/bio4j/model/uniprot/vertices/Book.java]
+                + [OnlineArticle.java][main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]
+                + [GeneLocation.java][main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]
+                + [Person.java][main/java/com/bio4j/model/uniprot/vertices/Person.java]
+                + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
+                + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
+                + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
+                + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
+                + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
+                + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
+                + [Keyword.java][main/java/com/bio4j/model/uniprot/vertices/Keyword.java]
+                + [Protein.java][main/java/com/bio4j/model/uniprot/vertices/Protein.java]
+                + [Submission.java][main/java/com/bio4j/model/uniprot/vertices/Submission.java]
+                + [CommentType.java][main/java/com/bio4j/model/uniprot/vertices/CommentType.java]
+                + [Pubmed.java][main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]
+                + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
+                + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
+                + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
+                + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
+                + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
+                + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
+                + [AlternativeProduct.java][main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]
+                + [Institute.java][main/java/com/bio4j/model/uniprot/vertices/Institute.java]
+                + [Isoform.java][main/java/com/bio4j/model/uniprot/vertices/Isoform.java]
+                + [RefSeq.java][main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]
+                + [Kegg.java][main/java/com/bio4j/model/uniprot/vertices/Kegg.java]
+                + [Consortium.java][main/java/com/bio4j/model/uniprot/vertices/Consortium.java]
+                + [Pfam.java][main/java/com/bio4j/model/uniprot/vertices/Pfam.java]
+                + [Disease.java][main/java/com/bio4j/model/uniprot/vertices/Disease.java]
+                + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
+                + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
+                + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
+                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
+                + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
+                + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
+                + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
+                + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
                 + [ImportProteinInteractions.java][main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]
-                + [ImportUniprot.java][main/java/com/bio4j/model/uniprot/programs/ImportUniprot.java]
-              + [UniprotGraph.java][main/java/com/bio4j/model/uniprot/UniprotGraph.java]
-              + vertices
-                + [AlternativeProduct.java][main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]
-                + [Article.java][main/java/com/bio4j/model/uniprot/vertices/Article.java]
-                + [Book.java][main/java/com/bio4j/model/uniprot/vertices/Book.java]
-                + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
-                + [CommentType.java][main/java/com/bio4j/model/uniprot/vertices/CommentType.java]
-                + [Consortium.java][main/java/com/bio4j/model/uniprot/vertices/Consortium.java]
-                + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
-                + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
-                + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
-                + [Disease.java][main/java/com/bio4j/model/uniprot/vertices/Disease.java]
-                + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
-                + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
-                + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
-                + [GeneLocation.java][main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]
-                + [Institute.java][main/java/com/bio4j/model/uniprot/vertices/Institute.java]
-                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
-                + [Isoform.java][main/java/com/bio4j/model/uniprot/vertices/Isoform.java]
-                + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
-                + [Kegg.java][main/java/com/bio4j/model/uniprot/vertices/Kegg.java]
-                + [Keyword.java][main/java/com/bio4j/model/uniprot/vertices/Keyword.java]
-                + [OnlineArticle.java][main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]
-                + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
-                + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
-                + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
-                + [Person.java][main/java/com/bio4j/model/uniprot/vertices/Person.java]
-                + [Pfam.java][main/java/com/bio4j/model/uniprot/vertices/Pfam.java]
-                + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
-                + [Protein.java][main/java/com/bio4j/model/uniprot/vertices/Protein.java]
-                + [Publisher.java][main/java/com/bio4j/model/uniprot/vertices/Publisher.java]
-                + [Pubmed.java][main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]
-                + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
-                + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
-                + [RefSeq.java][main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]
-                + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
-                + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
-                + [Submission.java][main/java/com/bio4j/model/uniprot/vertices/Submission.java]
-                + [Taxon.java][main/java/com/bio4j/model/uniprot/vertices/Taxon.java]
-                + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
-                + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
-                + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
-            + uniprot_enzymedb
-              + edges
-                + [EnzymaticActivity.java][main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]
-              + programs
-                + [ImportUniprotEnzymeDB.java][main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java]
-              + [UniprotEnzymeDBGraph.java][main/java/com/bio4j/model/uniprot_enzymedb/UniprotEnzymeDBGraph.java]
-            + uniprot_go
-              + edges
-                + [GoAnnotation.java][main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]
-              + programs
-                + [ImportUniprotGo.java][main/java/com/bio4j/model/uniprot_go/programs/ImportUniprotGo.java]
-              + tests
-                + [ImportUniprotGoTest.java][main/java/com/bio4j/model/uniprot_go/tests/ImportUniprotGoTest.java]
-              + [UniprotGoGraph.java][main/java/com/bio4j/model/uniprot_go/UniprotGoGraph.java]
             + uniprot_ncbiTaxonomy
               + edges
                 + [ProteinNCBITaxon.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]
+              + [UniProtNCBITaxonomyGraph.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]
               + programs
-                + [ImportUniprotNCBITaxonomy.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java]
-              + [UniprotNCBITaxonomyGraph.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java]
-            + uniprot_uniref
-              + edges
-                + [UniRef100Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Member.java]
-                + [UniRef100Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]
-                + [UniRef50Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Member.java]
-                + [UniRef50Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Representant.java]
-                + [UniRef90Member.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Member.java]
-                + [UniRef90Representant.java][main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]
-              + programs
-                + [ImportUniprotUniRef.java][main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniprotUniRef.java]
-              + [UniprotUniRefGraph.java][main/java/com/bio4j/model/uniprot_uniref/UniprotUniRefGraph.java]
-            + uniref
-              + programs
-                + [ImportUniRef.java][main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]
-              + [UniRefGraph.java][main/java/com/bio4j/model/uniref/UniRefGraph.java]
+                + [ImportUniProtNCBITaxonomy.java][main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]
+            + geninfo
               + vertices
-                + [UniRef100Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]
-                + [UniRef50Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]
-                + [UniRef90Cluster.java][main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]
+                + [GenInfo.java][main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]
+              + [GenInfoGraph.java][main/java/com/bio4j/model/geninfo/GenInfoGraph.java]
+            + ncbiTaxonomy_geninfo
+              + [NCBITaxonomyGenInfoGraph.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]
+              + edges
+                + [GenInfoNCBITaxon.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]
+              + programs
+                + [ImportGenInfoNCBITaxonIndex.java][main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]
+            + uniprot_go
+              + edges
+                + [GoAnnotation.java][main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]
+              + tests
+                + [ImportUniProtGoTest.java][main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]
+              + programs
+                + [ImportUniProtGo.java][main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]
+              + [UniProtGoGraph.java][main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]
 
-[main/java/com/bio4j/model/enzymedb/EnzymeDBGraph.java]: ../enzymedb/EnzymeDBGraph.java.md
-[main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]: ../enzymedb/programs/ImportEnzymeDB.java.md
-[main/java/com/bio4j/model/enzymedb/vertices/Enzyme.java]: ../enzymedb/vertices/Enzyme.java.md
-[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../geninfo/vertices/GenInfo.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../go/edges/goSlims/GoSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../go/edges/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/HasPartOf.java]: ../go/edges/HasPartOf.java.md
-[main/java/com/bio4j/model/go/edges/IsA.java]: ../go/edges/IsA.java.md
-[main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../go/edges/NegativelyRegulates.java.md
-[main/java/com/bio4j/model/go/edges/PartOf.java]: ../go/edges/PartOf.java.md
-[main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]: ../go/edges/PositivelyRegulates.java.md
-[main/java/com/bio4j/model/go/edges/Regulates.java]: ../go/edges/Regulates.java.md
-[main/java/com/bio4j/model/go/edges/SubOntology.java]: ../go/edges/SubOntology.java.md
-[main/java/com/bio4j/model/go/GoGraph.java]: ../go/GoGraph.java.md
-[main/java/com/bio4j/model/go/programs/ImportGO.java]: ../go/programs/ImportGO.java.md
-[main/java/com/bio4j/model/go/vertices/GoSlims.java]: ../go/vertices/GoSlims.java.md
-[main/java/com/bio4j/model/go/vertices/GoTerm.java]: ../go/vertices/GoTerm.java.md
-[main/java/com/bio4j/model/go/vertices/SubOntologies.java]: ../go/vertices/SubOntologies.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../ncbiTaxonomy/edges/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../ncbiTaxonomy/NCBITaxonomyGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]: ../ncbiTaxonomy/vertices/NCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
-[main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: edges/ArticleJournal.java.md
-[main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: edges/ArticlePubmed.java.md
-[main/java/com/bio4j/model/uniprot/edges/BookCity.java]: edges/BookCity.java.md
-[main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: edges/BookEditor.java.md
-[main/java/com/bio4j/model/uniprot/edges/BookPublisher.java]: edges/BookPublisher.java.md
-[main/java/com/bio4j/model/uniprot/edges/InstituteCountry.java]: edges/InstituteCountry.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]: edges/IsoformEventGenerator.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: edges/IsoformProteinInteraction.java.md
-[main/java/com/bio4j/model/uniprot/edges/OnlineArticleOnlineJournal.java]: edges/OnlineArticleOnlineJournal.java.md
-[main/java/com/bio4j/model/uniprot/edges/OrganismTaxon.java]: edges/OrganismTaxon.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: edges/ProteinComment.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: edges/ProteinDataset.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]: edges/ProteinDisease.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: edges/ProteinEMBL.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: edges/ProteinEnsembl.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: edges/ProteinFeature.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]: edges/ProteinGeneLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: edges/ProteinInterpro.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: edges/ProteinIsoform.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: edges/ProteinIsoformInteraction.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]: edges/ProteinKegg.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: edges/ProteinKeyword.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: edges/ProteinOrganism.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: edges/ProteinPfam.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: edges/ProteinPIR.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]: edges/ProteinProteinInteraction.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]: edges/ProteinReactomeTerm.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]: edges/ProteinReference.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: edges/ProteinRefSeq.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: edges/ProteinSequenceCaution.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: edges/ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]: edges/ProteinUniGene.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: edges/ReferenceArticle.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: edges/ReferenceAuthorConsortium.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: edges/ReferenceAuthorPerson.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]: edges/ReferenceBook.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]: edges/ReferenceOnlineArticle.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: edges/ReferencePatent.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]: edges/ReferenceSubmission.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: edges/ReferenceThesis.java.md
-[main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]: edges/ReferenceUnpublishedObservation.java.md
-[main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: edges/SubcellularLocationParent.java.md
-[main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]: edges/SubmissionDB.java.md
-[main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]: edges/TaxonParent.java.md
-[main/java/com/bio4j/model/uniprot/edges/ThesisInstitute.java]: edges/ThesisInstitute.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: programs/ImportIsoformSequences.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: programs/ImportProteinInteractions.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportUniprot.java]: programs/ImportUniprot.java.md
-[main/java/com/bio4j/model/uniprot/UniprotGraph.java]: UniprotGraph.java.md
-[main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]: vertices/AlternativeProduct.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Article.java]: vertices/Article.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Book.java]: vertices/Book.java.md
-[main/java/com/bio4j/model/uniprot/vertices/City.java]: vertices/City.java.md
-[main/java/com/bio4j/model/uniprot/vertices/CommentType.java]: vertices/CommentType.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Consortium.java]: vertices/Consortium.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Country.java]: vertices/Country.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: vertices/Dataset.java.md
-[main/java/com/bio4j/model/uniprot/vertices/DB.java]: vertices/DB.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Disease.java]: vertices/Disease.java.md
-[main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: vertices/EMBL.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: vertices/Ensembl.java.md
-[main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: vertices/FeatureType.java.md
-[main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]: vertices/GeneLocation.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Institute.java]: vertices/Institute.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: vertices/Interpro.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Isoform.java]: vertices/Isoform.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Journal.java]: vertices/Journal.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Kegg.java]: vertices/Kegg.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Keyword.java]: vertices/Keyword.java.md
-[main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]: vertices/OnlineArticle.java.md
-[main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: vertices/OnlineJournal.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Organism.java]: vertices/Organism.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Patent.java]: vertices/Patent.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Person.java]: vertices/Person.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Pfam.java]: vertices/Pfam.java.md
-[main/java/com/bio4j/model/uniprot/vertices/PIR.java]: vertices/PIR.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Protein.java]: vertices/Protein.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Publisher.java]: vertices/Publisher.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]: vertices/Pubmed.java.md
-[main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: vertices/ReactomeTerm.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Reference.java]: vertices/Reference.java.md
-[main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]: vertices/RefSeq.java.md
-[main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: vertices/SequenceCaution.java.md
-[main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: vertices/SubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Submission.java]: vertices/Submission.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Taxon.java]: vertices/Taxon.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: vertices/Thesis.java.md
-[main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: vertices/UniGene.java.md
-[main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: vertices/UnpublishedObservation.java.md
-[main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]: ../uniprot_enzymedb/edges/EnzymaticActivity.java.md
-[main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java]: ../uniprot_enzymedb/programs/ImportUniprotEnzymeDB.java.md
-[main/java/com/bio4j/model/uniprot_enzymedb/UniprotEnzymeDBGraph.java]: ../uniprot_enzymedb/UniprotEnzymeDBGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../uniprot_go/edges/GoAnnotation.java.md
-[main/java/com/bio4j/model/uniprot_go/programs/ImportUniprotGo.java]: ../uniprot_go/programs/ImportUniprotGo.java.md
-[main/java/com/bio4j/model/uniprot_go/tests/ImportUniprotGoTest.java]: ../uniprot_go/tests/ImportUniprotGoTest.java.md
-[main/java/com/bio4j/model/uniprot_go/UniprotGoGraph.java]: ../uniprot_go/UniprotGoGraph.java.md
-[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
-[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java]: ../uniprot_ncbiTaxonomy/programs/ImportUniprotNCBITaxonomy.java.md
-[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java]: ../uniprot_ncbiTaxonomy/UniprotNCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]: ../uniref/vertices/UniRef100Cluster.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]: ../uniref/vertices/UniRef90Cluster.java.md
+[main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]: ../uniref/vertices/UniRef50Cluster.java.md
+[main/java/com/bio4j/model/uniref/UniRefGraph.java]: ../uniref/UniRefGraph.java.md
+[main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]: ../uniref/programs/ImportUniRef.java.md
+[main/java/com/bio4j/model/uniprot_uniref/UniProtUniRefGraph.java]: ../uniprot_uniref/UniProtUniRefGraph.java.md
 [main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Member.java]: ../uniprot_uniref/edges/UniRef100Member.java.md
-[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]: ../uniprot_uniref/edges/UniRef100Representant.java.md
 [main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Member.java]: ../uniprot_uniref/edges/UniRef50Member.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef100Representant.java]: ../uniprot_uniref/edges/UniRef100Representant.java.md
+[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]: ../uniprot_uniref/edges/UniRef90Representant.java.md
 [main/java/com/bio4j/model/uniprot_uniref/edges/UniRef50Representant.java]: ../uniprot_uniref/edges/UniRef50Representant.java.md
 [main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Member.java]: ../uniprot_uniref/edges/UniRef90Member.java.md
-[main/java/com/bio4j/model/uniprot_uniref/edges/UniRef90Representant.java]: ../uniprot_uniref/edges/UniRef90Representant.java.md
-[main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniprotUniRef.java]: ../uniprot_uniref/programs/ImportUniprotUniRef.java.md
-[main/java/com/bio4j/model/uniprot_uniref/UniprotUniRefGraph.java]: ../uniprot_uniref/UniprotUniRefGraph.java.md
-[main/java/com/bio4j/model/uniref/programs/ImportUniRef.java]: ../uniref/programs/ImportUniRef.java.md
-[main/java/com/bio4j/model/uniref/UniRefGraph.java]: ../uniref/UniRefGraph.java.md
-[main/java/com/bio4j/model/uniref/vertices/UniRef100Cluster.java]: ../uniref/vertices/UniRef100Cluster.java.md
-[main/java/com/bio4j/model/uniref/vertices/UniRef50Cluster.java]: ../uniref/vertices/UniRef50Cluster.java.md
-[main/java/com/bio4j/model/uniref/vertices/UniRef90Cluster.java]: ../uniref/vertices/UniRef90Cluster.java.md
+[main/java/com/bio4j/model/uniprot_uniref/programs/ImportUniProtUniRef.java]: ../uniprot_uniref/programs/ImportUniProtUniRef.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/edges/EnzymaticActivity.java]: ../uniprot_enzymedb/edges/EnzymaticActivity.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/UniProtEnzymeDBGraph.java]: ../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/programs/ImportUniProtEnzymeDB.java]: ../uniprot_enzymedb/programs/ImportUniProtEnzymeDB.java.md
+[main/java/com/bio4j/model/enzymedb/EnzymeDBGraph.java]: ../enzymedb/EnzymeDBGraph.java.md
+[main/java/com/bio4j/model/enzymedb/vertices/Enzyme.java]: ../enzymedb/vertices/Enzyme.java.md
+[main/java/com/bio4j/model/enzymedb/programs/ImportEnzymeDB.java]: ../enzymedb/programs/ImportEnzymeDB.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../ncbiTaxonomy/NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../ncbiTaxonomy/edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/vertices/NCBITaxon.java]: ../ncbiTaxonomy/vertices/NCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../go/edges/goSlims/GoSlim.java.md
+[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../go/edges/goSlims/PlantSlim.java.md
+[main/java/com/bio4j/model/go/edges/PositivelyRegulates.java]: ../go/edges/PositivelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/HasPartOf.java]: ../go/edges/HasPartOf.java.md
+[main/java/com/bio4j/model/go/edges/Regulates.java]: ../go/edges/Regulates.java.md
+[main/java/com/bio4j/model/go/edges/PartOf.java]: ../go/edges/PartOf.java.md
+[main/java/com/bio4j/model/go/edges/IsA.java]: ../go/edges/IsA.java.md
+[main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../go/edges/NegativelyRegulates.java.md
+[main/java/com/bio4j/model/go/edges/SubOntology.java]: ../go/edges/SubOntology.java.md
+[main/java/com/bio4j/model/go/GoGraph.java]: ../go/GoGraph.java.md
+[main/java/com/bio4j/model/go/vertices/SubOntologies.java]: ../go/vertices/SubOntologies.java.md
+[main/java/com/bio4j/model/go/vertices/GoTerm.java]: ../go/vertices/GoTerm.java.md
+[main/java/com/bio4j/model/go/vertices/GoSlims.java]: ../go/vertices/GoSlims.java.md
+[main/java/com/bio4j/model/go/programs/ImportGO.java]: ../go/programs/ImportGO.java.md
+[main/java/com/bio4j/model/uniprot/UniProtGraph.java]: UniProtGraph.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookCity.java]: edges/BookCity.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinReference.java]: edges/ProteinReference.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: edges/ProteinIsoform.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: edges/ProteinFeature.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: edges/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: edges/ReferenceThesis.java.md
+[main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: edges/ArticlePubmed.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: edges/ReferenceAuthorConsortium.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: edges/ProteinDataset.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: edges/ReferencePatent.java.md
+[main/java/com/bio4j/model/uniprot/edges/TaxonParent.java]: edges/TaxonParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinReactomeTerm.java]: edges/ProteinReactomeTerm.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinDisease.java]: edges/ProteinDisease.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookPublisher.java]: edges/BookPublisher.java.md
+[main/java/com/bio4j/model/uniprot/edges/InstituteCountry.java]: edges/InstituteCountry.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceOnlineArticle.java]: edges/ReferenceOnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: edges/BookEditor.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: edges/ProteinOrganism.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceSubmission.java]: edges/ReferenceSubmission.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: edges/ProteinPfam.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: edges/ProteinEnsembl.java.md
+[main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: edges/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: edges/ProteinComment.java.md
+[main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: edges/ArticleJournal.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: edges/ProteinPIR.java.md
+[main/java/com/bio4j/model/uniprot/edges/SubmissionDB.java]: edges/SubmissionDB.java.md
+[main/java/com/bio4j/model/uniprot/edges/OnlineArticleOnlineJournal.java]: edges/OnlineArticleOnlineJournal.java.md
+[main/java/com/bio4j/model/uniprot/edges/OrganismTaxon.java]: edges/OrganismTaxon.java.md
+[main/java/com/bio4j/model/uniprot/edges/ThesisInstitute.java]: edges/ThesisInstitute.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinUniGene.java]: edges/ProteinUniGene.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinKegg.java]: edges/ProteinKegg.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinProteinInteraction.java]: edges/ProteinProteinInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: edges/ProteinRefSeq.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceUnpublishedObservation.java]: edges/ReferenceUnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceBook.java]: edges/ReferenceBook.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformEventGenerator.java]: edges/IsoformEventGenerator.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: edges/IsoformProteinInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: edges/ProteinIsoformInteraction.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: edges/ReferenceArticle.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: edges/ProteinInterpro.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: edges/ProteinEMBL.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: edges/ProteinSequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: edges/ReferenceAuthorPerson.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinGeneLocation.java]: edges/ProteinGeneLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Article.java]: vertices/Article.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Taxon.java]: vertices/Taxon.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Publisher.java]: vertices/Publisher.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Book.java]: vertices/Book.java.md
+[main/java/com/bio4j/model/uniprot/vertices/OnlineArticle.java]: vertices/OnlineArticle.java.md
+[main/java/com/bio4j/model/uniprot/vertices/GeneLocation.java]: vertices/GeneLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Person.java]: vertices/Person.java.md
+[main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: vertices/SubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: vertices/FeatureType.java.md
+[main/java/com/bio4j/model/uniprot/vertices/PIR.java]: vertices/PIR.java.md
+[main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: vertices/ReactomeTerm.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: vertices/Thesis.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: vertices/Ensembl.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Keyword.java]: vertices/Keyword.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Protein.java]: vertices/Protein.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Submission.java]: vertices/Submission.java.md
+[main/java/com/bio4j/model/uniprot/vertices/CommentType.java]: vertices/CommentType.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Pubmed.java]: vertices/Pubmed.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Reference.java]: vertices/Reference.java.md
+[main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: vertices/UniGene.java.md
+[main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: vertices/SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: vertices/EMBL.java.md
+[main/java/com/bio4j/model/uniprot/vertices/DB.java]: vertices/DB.java.md
+[main/java/com/bio4j/model/uniprot/vertices/City.java]: vertices/City.java.md
+[main/java/com/bio4j/model/uniprot/vertices/AlternativeProduct.java]: vertices/AlternativeProduct.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Institute.java]: vertices/Institute.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Isoform.java]: vertices/Isoform.java.md
+[main/java/com/bio4j/model/uniprot/vertices/RefSeq.java]: vertices/RefSeq.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Kegg.java]: vertices/Kegg.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Consortium.java]: vertices/Consortium.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Pfam.java]: vertices/Pfam.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Disease.java]: vertices/Disease.java.md
+[main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: vertices/OnlineJournal.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Patent.java]: vertices/Patent.java.md
+[main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: vertices/UnpublishedObservation.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: vertices/Interpro.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Organism.java]: vertices/Organism.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: vertices/Dataset.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Journal.java]: vertices/Journal.java.md
+[main/java/com/bio4j/model/uniprot/vertices/Country.java]: vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: programs/ImportUniProt.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: programs/ImportProteinInteractions.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../uniprot_go/edges/GoAnnotation.java.md
+[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../uniprot_go/tests/ImportUniProtGoTest.java.md
+[main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../uniprot_go/programs/ImportUniProtGo.java.md
+[main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../uniprot_go/UniProtGoGraph.java.md

@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.edges;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Country;
 import com.bio4j.model.uniprot.vertices.Institute;
 import com.bio4j.angulillos.UntypedGraph;
@@ -10,14 +10,14 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class InstituteCountry<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniprotGraph.UniprotEdge<
-				Institute<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteType,
-				InstituteCountry<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
-				Country<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.CountryType,
+		UniProtGraph.UniProtEdge<
+				Institute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteType,
+				InstituteCountry<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
+				Country<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CountryType,
 				I, RV, RVT, RE, RET
 				> {
 
-	public InstituteCountry(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.InstituteCountryType type) {
+	public InstituteCountry(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.InstituteCountryType type) {
 
 		super(edge, type);
 	}

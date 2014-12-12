@@ -1,6 +1,6 @@
 ## Bio4j
 
-Bio4j is a bioinformatics graph based DB including most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**RefSeq**](http://www.ncbi.nlm.nih.gov/RefSeq/), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
+Bio4j is a bioinformatics graph based DB including most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
 
 Bio4j provides a completely new and powerful **framework for protein related information querying and management**. 
 Since it relies on a high-performance graph engine, data is stored in a way that semantically represents its own structure. 
@@ -14,8 +14,8 @@ On the contrary, traditional relational databases must flatten the data they rep
 * Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/blueprints), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
 
 * And finally, there are technology specific versions:
-  - [**Titan DB implementation**](https://github.com/bio4j/titandb)
-  - [**Neo4j DB implementation**](https://github.com/bio4j/neo4jdb)
+  - [**Titan DB implementation**](https://github.com/bio4j/bio4j-titan)
+  - [**Neo4j DB implementation**](https://github.com/bio4j/bio4j-neo4j)
 
 ### Modularity
 
