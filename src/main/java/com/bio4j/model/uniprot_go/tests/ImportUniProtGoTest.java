@@ -1,18 +1,13 @@
-package com.bio4j.model.uniprot_ncbiTaxonomy.programs;
+package com.bio4j.model.uniprot_go.tests;
 
-import com.bio4j.model.go.vertices.GoTerm;
-import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_go.UniprotGoGraph;
+import com.bio4j.model.uniprot_go.UniProtGoGraph;
 import com.bio4j.angulillos.UntypedGraph;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
 import java.io.*;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,28 +16,28 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+public abstract class ImportUniProtGoTest<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-	private static final Logger logger = Logger.getLogger("ImportUniprotNCBITaxonomy");
+	private static final Logger logger = Logger.getLogger("ImportUniProtGoTest");
 	private static FileHandler fh;
 
 	public static final String ENTRY_TAG_NAME = "entry";
 	public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
 
-	public static final String ORGANISM_TAG_NAME = "organism";
 	public static final String DB_REFERENCE_TAG_NAME = "dbReference";
 	public static final String DB_REFERENCE_TYPE_ATTRIBUTE = "type";
 	public static final String DB_REFERENCE_ID_ATTRIBUTE = "id";
-	public static final String NCBI_TAXONOMY_TYPE = "NCBI Taxonomy";
 
-	protected abstract UniprotNCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	public static final String GO_DB_REFERENCE_TYPE = "GO";
+
+	protected abstract UniProtGoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 
-	public void importUniprotNCBITaxonomy(String[] args) {
+	public void importUniProtGoTest(String[] args) {
 
 		if (args.length != 2) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniprot xml filename \n"
+					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n");
 		} else {
 
@@ -52,7 +47,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 			String dbFolder = args[1];
 
 
-			UniprotNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniprotNCBITaxonomyGraph = config(dbFolder);
+			UniProtGoGraph<I,RV,RVT,RE,RET> uniprotGoGraph = config(dbFolder);
 
 			BufferedWriter statsBuff = null;
 
@@ -62,7 +57,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 			try {
 
 				// This block configures the logger with handler and formatter
-				fh = new FileHandler("ImportUniprotNCBITaxonomy" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+				fh = new FileHandler("ImportUniProtGoTest" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
@@ -70,7 +65,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotNCBITaxonomyStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtGoTestStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
 				BufferedReader reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
@@ -85,47 +80,53 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 						}
 						//linea final del organism
 						entryStBuilder.append(line);
+						//System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
 						XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
 						entryStBuilder.delete(0, entryStBuilder.length());
 
 						String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
 
-						Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotNCBITaxonomyGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
-						if(proteinOptional.isPresent()){
+						Protein<I,RV,RVT,RE,RET> protein = null;
 
-							Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
+						//-----db references-------------
+						List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
 
-							Element organismElement = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
-							if(organismElement != null){
+						for (Element dbReferenceElem : dbReferenceList) {
 
-								//-----db references-------------
-								List<Element> dbReferenceList = organismElement.getChildren(DB_REFERENCE_TAG_NAME);
+							//-------------------GO -----------------------------
+							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(GO_DB_REFERENCE_TYPE)) {
 
-								for (Element dbReferenceElem : dbReferenceList) {
+//								if(protein == null){
+//									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+//									if(proteinOptional.isPresent()){
+//										protein = proteinOptional.get();
+//									}else{
+//										logger.log(Level.INFO, "Protein with id " + accessionSt + " not found...");
+//										break;
+//									}
+//								}
 
-									//-------------------NCBI TAXONOMY -----------------------------
-									if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(NCBI_TAXONOMY_TYPE)) {
+								String goId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-										String taxonId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+//								Optional<GoTerm<I,RV,RVT,RE,RET>> goTermOptional = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId);
+//								if(goTermOptional.isPresent()){
+//									protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTermOptional.get());
+//								}else{
+//									logger.log(Level.INFO, "GO term with id " + goId + " not found...");
+//								}
 
-										Optional<NCBITaxon<I,RV,RVT,RE,RET>> ncbiTaxonOptional = uniprotNCBITaxonomyGraph.ncbiTaxonomyGraph().nCBITaxonIdIndex().getVertex(taxonId);
-										if(ncbiTaxonOptional.isPresent()){
-											protein.addOutEdge(uniprotNCBITaxonomyGraph.ProteinNCBITaxon(), ncbiTaxonOptional.get());
-										}
 
-									}
-								}
-								//---------------------------------------------------------------------------------------
 							}
 
-
-							proteinCounter++;
-							if ((proteinCounter % limitForPrintingOut) == 0) {
-								String countProteinsSt = proteinCounter + " proteins updated!!";
-								logger.log(Level.INFO, countProteinsSt);
-							}
 						}
+						//---------------------------------------------------------------------------------------
 
+
+						proteinCounter++;
+						if ((proteinCounter % limitForPrintingOut) == 0) {
+							String countProteinsSt = proteinCounter + " proteins updated!!";
+							logger.log(Level.INFO, countProteinsSt);
+						}
 
 					}
 				}
@@ -142,7 +143,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 					//------closing writers-------
 
 					// shutdown, makes sure all changes are written to disk
-					uniprotNCBITaxonomyGraph.raw().shutdown();
+					uniprotGoGraph.raw().shutdown();
 
 					// closing logger file handler
 					fh.close();
@@ -154,7 +155,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprotNCBITaxonomy:\nInput file: " + inFile.getName()
+					statsBuff.write("Statistics for program ImportUniProtGoTest:\nInput file: " + inFile.getName()
 							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
@@ -163,7 +164,7 @@ public abstract class ImportUniprotNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 
 
 				} catch (IOException ex) {
-					Logger.getLogger(ImportUniprotNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(ImportUniProtGoTest.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
 			}

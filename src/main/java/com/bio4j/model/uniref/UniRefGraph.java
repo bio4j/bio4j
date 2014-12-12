@@ -1,6 +1,6 @@
 package com.bio4j.model.uniref;
 
-import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
+import com.bio4j.model.uniprot_uniref.UniProtUniRefGraph;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
@@ -55,7 +55,7 @@ public abstract class UniRefGraph<
         return raw;
     }
 
-	public abstract UniprotUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
+	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// indices

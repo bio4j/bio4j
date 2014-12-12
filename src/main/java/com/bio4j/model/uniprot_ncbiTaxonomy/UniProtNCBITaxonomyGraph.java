@@ -2,14 +2,14 @@ package com.bio4j.model.uniprot_ncbiTaxonomy;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.bio4j.angulillos.*;
 
 /*
 
-# Uniprot NCBI taxonomy graph
+# UniProt NCBI taxonomy graph
 
 This graph includes the connection between Proteins and NCBI taxonmic units modelled via the edge type ProteinNCBITaxon
 
@@ -20,7 +20,7 @@ This graph includes the connection between Proteins and NCBI taxonmic units mode
 Connecting `Protein` and `NCBITaxon` vertices.
 
  */
-public abstract class UniprotNCBITaxonomyGraph<
+public abstract class UniProtNCBITaxonomyGraph<
 		// untyped graph
 		I extends UntypedGraph<RV, RVT, RE, RET>,
 		// vertices
@@ -30,13 +30,13 @@ public abstract class UniprotNCBITaxonomyGraph<
 		>
 		implements
 		TypedGraph<
-				UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>,
+				UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>,
 				I, RV, RVT, RE, RET
 				> {
 
     protected I raw = null;
 
-    public UniprotNCBITaxonomyGraph(I graph){
+    public UniProtNCBITaxonomyGraph(I graph){
         raw = graph;
     }
 
@@ -44,7 +44,7 @@ public abstract class UniprotNCBITaxonomyGraph<
         return raw;
     }
 
-	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
 	public abstract NCBITaxonomyGraph<I, RV, RVT, RE, RET> ncbiTaxonomyGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,14 +55,14 @@ public abstract class UniprotNCBITaxonomyGraph<
 	// Edge types
 	public final class ProteinNCBITaxonType
 			extends
-			UniprotNCBITaxonomyEdgeType <
+			UniProtNCBITaxonomyEdgeType <
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					ProteinNCBITaxon<I, RV, RVT, RE, RET>,
-					UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.ProteinNCBITaxonType,
+					UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.ProteinNCBITaxonType,
 					// tgt
 					NCBITaxon<I, RV, RVT, RE, RET>,
 					NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
@@ -75,9 +75,9 @@ public abstract class UniprotNCBITaxonomyGraph<
 		public ProteinNCBITaxonType(RET raw) {
 
 			super(
-					UniprotNCBITaxonomyGraph.this.uniprotGraph().Protein(),
+					UniProtNCBITaxonomyGraph.this.uniprotGraph().Protein(),
 					raw,
-					UniprotNCBITaxonomyGraph.this.ncbiTaxonomyGraph().NCBITaxon()
+					UniProtNCBITaxonomyGraph.this.ncbiTaxonomyGraph().NCBITaxon()
 			);
 		}
 
@@ -95,16 +95,16 @@ public abstract class UniprotNCBITaxonomyGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class UniprotNCBITaxonomyVertexProperty<
-			V extends UniprotNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniprotNCBITaxonomyVertexType<V, VT>,
-			P extends UniprotNCBITaxonomyVertexProperty<V, VT, P, PV>,
+	public abstract class UniProtNCBITaxonomyVertexProperty<
+			V extends UniProtNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniProtNCBITaxonomyVertexType<V, VT>,
+			P extends UniProtNCBITaxonomyVertexProperty<V, VT, P, PV>,
 			PV
 			>
 			implements
-			Property<V, VT, P, PV, UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			Property<V, VT, P, PV, UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-		protected UniprotNCBITaxonomyVertexProperty(VT type) {
+		protected UniProtNCBITaxonomyVertexProperty(VT type) {
 
 			this.type = type;
 		}
@@ -117,25 +117,25 @@ public abstract class UniprotNCBITaxonomyGraph<
 		}
 	}
 
-	public abstract static class UniprotNCBITaxonomyVertex<
-			V extends UniprotNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniprotNCBITaxonomyVertexType<V, VT>,
+	public abstract static class UniProtNCBITaxonomyVertex<
+			V extends UniProtNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniProtNCBITaxonomyVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
-			TypedVertex<V, VT, UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex<V, VT, UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RV vertex;
 		private VT type;
 
-		protected UniprotNCBITaxonomyVertex(RV vertex, VT type) {
+		protected UniProtNCBITaxonomyVertex(RV vertex, VT type) {
 
 			this.vertex = vertex;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -150,16 +150,16 @@ public abstract class UniprotNCBITaxonomyGraph<
 		}
 	}
 
-	abstract class UniprotNCBITaxonomyVertexType<
-			V extends UniprotNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniprotNCBITaxonomyVertexType<V, VT>
+	abstract class UniProtNCBITaxonomyVertexType<
+			V extends UniProtNCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniProtNCBITaxonomyVertexType<V, VT>
 			>
 			implements
-			TypedVertex.Type<V, VT, UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+			TypedVertex.Type<V, VT, UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RVT raw;
 
-		protected UniprotNCBITaxonomyVertexType(RVT raw) {
+		protected UniProtNCBITaxonomyVertexType(RVT raw) {
 			this.raw = raw;
 		}
 
@@ -169,19 +169,19 @@ public abstract class UniprotNCBITaxonomyGraph<
 		}
 
 		@Override
-		public final UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotNCBITaxonomyGraph.this;
+		public final UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtNCBITaxonomyGraph.this;
 		}
 	}
 
-	public abstract static class UniprotNCBITaxonomyEdge<
+	public abstract static class UniProtNCBITaxonomyEdge<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotNCBITaxonomyEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniprotNCBITaxonomyEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends UniProtNCBITaxonomyEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniProtNCBITaxonomyEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -191,7 +191,7 @@ public abstract class UniprotNCBITaxonomyGraph<
 			implements
 			TypedEdge<
 					S, ST, SG,
-					E, ET, UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -199,14 +199,14 @@ public abstract class UniprotNCBITaxonomyGraph<
 		private RE edge;
 		private ET type;
 
-		protected UniprotNCBITaxonomyEdge(RE edge, ET type) {
+		protected UniProtNCBITaxonomyEdge(RE edge, ET type) {
 
 			this.edge = edge;
 			this.type = type;
 		}
 
 		@Override
-		public UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+		public UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
 			return type().graph();
 		}
 
@@ -221,14 +221,14 @@ public abstract class UniprotNCBITaxonomyGraph<
 		}
 	}
 
-	abstract class UniprotNCBITaxonomyEdgeType<
+	abstract class UniProtNCBITaxonomyEdgeType<
 			// src
 			S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
 			ST extends TypedVertex.Type<S,ST, SG, I, RV, RVT, RE, RET>,
 			SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
 			// edge
-			E extends UniprotNCBITaxonomyEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
-			ET extends UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniprotNCBITaxonomyEdgeType<S,ST,SG, E,ET, T,TT,TG>,
+			E extends UniProtNCBITaxonomyEdge<S,ST,SG, E,ET, T, TT,TG, I, RV, RVT, RE, RET>,
+			ET extends UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>.UniProtNCBITaxonomyEdgeType<S,ST,SG, E,ET, T,TT,TG>,
 			// tgt
 			T extends TypedVertex<T,TT,TG, I, RV, RVT, RE, RET>,
 			TT extends TypedVertex.Type<T,TT,TG, I, RV, RVT, RE, RET>,
@@ -237,7 +237,7 @@ public abstract class UniprotNCBITaxonomyGraph<
 			implements
 			TypedEdge.Type<
 					S, ST, SG,
-					E, ET, UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+					E, ET, UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
 					T, TT, TG
 					>
 	{
@@ -246,7 +246,7 @@ public abstract class UniprotNCBITaxonomyGraph<
 		private ST srcT;
 		private TT tgtT;
 
-		protected UniprotNCBITaxonomyEdgeType(ST srcT, RET raw, TT tgtT) {
+		protected UniProtNCBITaxonomyEdgeType(ST srcT, RET raw, TT tgtT) {
 
 			this.raw = raw;
 			this.srcT = srcT;
@@ -269,8 +269,8 @@ public abstract class UniprotNCBITaxonomyGraph<
 		}
 
 		@Override
-		public final UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-			return UniprotNCBITaxonomyGraph.this;
+		public final UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+			return UniProtNCBITaxonomyGraph.this;
 		}
 	}
 }

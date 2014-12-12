@@ -1,7 +1,7 @@
 package com.bio4j.model.enzymedb;
 
 import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
+import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
 import com.bio4j.angulillos.*;
 
 /*
@@ -66,7 +66,7 @@ public abstract class EnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
 
 	// types
 	// vertices

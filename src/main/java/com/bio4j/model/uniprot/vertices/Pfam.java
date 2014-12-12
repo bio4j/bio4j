@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinPfam;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
  */
 public class Pfam <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Pfam<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.PfamType,
+		UniProtGraph<I, RV, RVT, RE, RET>.PfamType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Pfam(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.PfamType type) {
+	public Pfam(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.PfamType type) {
 		super(vertex, type);
 	}
 

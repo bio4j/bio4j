@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ArticlePubmed;
 import com.bio4j.angulillos.UntypedGraph;
 
@@ -8,13 +8,13 @@ import com.bio4j.angulillos.UntypedGraph;
  * Created by ppareja on 7/23/2014.
  */
 public final class Pubmed <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniProtVertex<
 		Pubmed<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.PubmedType,
+		UniProtGraph<I, RV, RVT, RE, RET>.PubmedType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Pubmed(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.PubmedType type) {
+	public Pubmed(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.PubmedType type) {
 		super(vertex, type);
 	}
 
