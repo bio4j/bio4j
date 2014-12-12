@@ -1,11 +1,10 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.OrganismTaxon;
 import com.bio4j.model.uniprot.edges.TaxonParent;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -13,13 +12,13 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/29/2014.
  */
 public final class Taxon <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Taxon<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.TaxonType,
+		UniProtGraph<I, RV, RVT, RE, RET>.TaxonType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Taxon(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.TaxonType type) {
+	public Taxon(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType type) {
 		super(vertex, type);
 	}
 

@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinIsoformInteraction;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
  */
 public final class Isoform <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Isoform<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.IsoformType,
+		UniProtGraph<I, RV, RVT, RE, RET>.IsoformType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Isoform(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.IsoformType type) {
+	public Isoform(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType type) {
 		super(vertex, type);
 	}
 

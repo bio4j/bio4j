@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinSequenceCaution;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class SequenceCaution <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		SequenceCaution<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType,
+		UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public SequenceCaution(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.SequenceCautionType type) {
+	public SequenceCaution(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType type) {
 		super(vertex, type);
 	}
 

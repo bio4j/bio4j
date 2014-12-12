@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot_uniref.edges;
 
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
 import com.bio4j.model.uniref.UniRefGraph;
@@ -16,8 +16,8 @@ public final class UniRef50Member<I extends UntypedGraph<RV, RVT, RE, RET>, RV, 
 		UniprotUniRefGraph.UniprotUniRefEdge<
 				// src
 				Protein<I, RV, RVT, RE, RET>,
-				UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-				UniprotGraph<I, RV, RVT, RE, RET>,
+				UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+				UniProtGraph<I, RV, RVT, RE, RET>,
 				// edge
 				UniRef50Member<I, RV, RVT, RE, RET>,
 				UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,

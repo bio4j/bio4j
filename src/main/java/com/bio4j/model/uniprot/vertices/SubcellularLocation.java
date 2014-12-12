@@ -1,24 +1,23 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinSubcellularLocation;
 import com.bio4j.model.uniprot.edges.SubcellularLocationParent;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
 public final class SubcellularLocation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		SubcellularLocation<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
+		UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public SubcellularLocation(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.SubcellularLocationType type) {
+	public SubcellularLocation(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType type) {
 		super(vertex, type);
 	}
 

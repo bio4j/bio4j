@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.programs;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.angulillos.UntypedGraph;
@@ -20,7 +20,7 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
     private static final Logger logger = Logger.getLogger("ImportUniprot");
     private static FileHandler fh;
@@ -128,7 +128,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	protected SimpleDateFormat dateFormat;
 
 
-    protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+    protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
     protected void importUniprot(String[] args) {
 
@@ -148,7 +148,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             String currentAccessionId = "";
 
             //-------creating graph handlers---------------------
-            UniprotGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+            UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
 
             BufferedWriter enzymeIdsNotFoundBuff = null;
@@ -741,7 +741,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 
                 } catch (IOException ex) {
-                    Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ImportUniProt.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
@@ -750,7 +750,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     }
 
     private void importProteinFeatures(XMLElement entryXMLElem,
-                                              UniprotGraph<I,RV,RVT,RE,RET> graph,
+                                              UniProtGraph<I,RV,RVT,RE,RET> graph,
                                               Protein<I,RV,RVT,RE,RET> protein) {
 
         //--------------------------------features----------------------------------------------------
@@ -846,7 +846,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
     }
 
 	private void importProteinComments(XMLElement entryXMLElem,
-	                                          UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                          UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                          Protein<I,RV,RVT,RE,RET> protein,
 	                                          String proteinSequence,
 	                                          UniprotDataXML uniprotDataXML) {
@@ -1343,7 +1343,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 	}
 
-    private void addPropertiesToProteinFeatureRelationship(UniprotGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
+    private void addPropertiesToProteinFeatureRelationship(UniProtGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
                                                                   String id, String description, String evidence, String status, int begin, int end,
                                                                   String original, String variation, String ref){
 
@@ -1387,7 +1387,7 @@ public abstract class ImportUniprot<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 
 	private void importProteinCitations(XMLElement entryXMLElem,
-	                                           UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                           UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                           Protein<I,RV,RVT,RE,RET> protein,
 	                                           UniprotDataXML uniprotDataXML) {
 

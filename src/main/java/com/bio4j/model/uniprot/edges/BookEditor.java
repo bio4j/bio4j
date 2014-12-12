@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.edges;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Book;
 import com.bio4j.model.uniprot.vertices.Person;
 import com.bio4j.angulillos.UntypedGraph;
@@ -10,14 +10,14 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class BookEditor<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniprotGraph.UniprotEdge<
-				Book<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookType,
-				BookEditor<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.BookEditorType,
-				Person<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PersonType,
+		UniProtGraph.UniprotEdge<
+				Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
+				BookEditor<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookEditorType,
+				Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType,
 				I, RV, RVT, RE, RET
 				> {
 
-	public BookEditor(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.BookEditorType type) {
+	public BookEditor(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.BookEditorType type) {
 
 		super(edge, type);
 	}

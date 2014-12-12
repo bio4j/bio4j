@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot_enzymedb;
 
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
 import com.bio4j.angulillos.*;
@@ -45,7 +45,7 @@ public abstract class UniprotEnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
 	public abstract EnzymeDBGraph<I, RV, RVT, RE, RET> enzymeDBGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,8 +59,8 @@ public abstract class UniprotEnzymeDBGraph<
 			UniprotEnzymeDBEdgeType <
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					EnzymaticActivity<I, RV, RVT, RE, RET>,
 					UniprotEnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymaticActivityType,

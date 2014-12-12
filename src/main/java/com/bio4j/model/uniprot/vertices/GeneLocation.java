@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinGeneLocation;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class GeneLocation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		GeneLocation<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType,
+		UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public GeneLocation(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.GeneLocationType type) {
+	public GeneLocation(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType type) {
 		super(vertex, type);
 	}
 

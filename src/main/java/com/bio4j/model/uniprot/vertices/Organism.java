@@ -1,24 +1,23 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.OrganismTaxon;
 import com.bio4j.model.uniprot.edges.ProteinOrganism;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/23/2014.
  */
 public final class Organism <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Organism<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.OrganismType,
+		UniProtGraph<I, RV, RVT, RE, RET>.OrganismType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Organism(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.OrganismType type) {
+	public Organism(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType type) {
 		super(vertex, type);
 	}
 

@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot_go;
 
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.vertices.GoTerm;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.edges.GoAnnotation;
 import com.bio4j.angulillos.*;
@@ -45,7 +45,7 @@ public abstract class UniprotGoGraph<
         return raw;
     }
 
-	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
 	public abstract GoGraph<I, RV, RVT, RE, RET> goGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,8 +59,8 @@ public abstract class UniprotGoGraph<
 		UniprotGoEdgeType <
 			// src
 			Protein<I, RV, RVT, RE, RET>, 
-			UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-			UniprotGraph<I, RV, RVT, RE, RET>,
+			UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+				UniProtGraph<I, RV, RVT, RE, RET>,
 			// edge
 			GoAnnotation<I, RV, RVT, RE, RET>, 
 			UniprotGoGraph<I, RV, RVT, RE, RET>.GoAnnotationType,

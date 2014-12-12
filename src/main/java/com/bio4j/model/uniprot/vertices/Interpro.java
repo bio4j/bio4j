@@ -1,23 +1,22 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ProteinInterpro;
 import com.bio4j.angulillos.UntypedGraph;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
  * Created by ppareja on 7/29/2014.
  */
 public final class Interpro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Interpro<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.InterproType,
+		UniProtGraph<I, RV, RVT, RE, RET>.InterproType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Interpro(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.InterproType type) {
+	public Interpro(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.InterproType type) {
 		super(vertex, type);
 	}
 

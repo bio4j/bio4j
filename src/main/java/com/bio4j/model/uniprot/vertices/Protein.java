@@ -3,7 +3,7 @@ package com.bio4j.model.uniprot.vertices;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
 import com.bio4j.model.uniprot_go.edges.GoAnnotation;
@@ -15,7 +15,6 @@ import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -23,13 +22,13 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Protein<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
+		UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Protein(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType type) {
+	public Protein(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType type) {
 		super(vertex, type);
 	}
 

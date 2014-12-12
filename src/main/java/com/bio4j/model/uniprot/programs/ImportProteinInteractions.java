@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.programs;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.angulillos.UntypedGraph;
@@ -32,7 +32,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
 	public static final String COMMENT_TYPE_INTERACTION = "interaction";
 
-	protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 	protected void importProteinInteractions(String[] args) {
 
@@ -50,7 +50,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 			String currentAccessionId = "";
 
 			//-------creating graph handlers---------------------
-			UniprotGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
 			BufferedWriter statsBuff = null;
 
@@ -205,7 +205,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
 
 				} catch (IOException ex) {
-					Logger.getLogger(ImportUniprot.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(ImportUniProt.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
 			}

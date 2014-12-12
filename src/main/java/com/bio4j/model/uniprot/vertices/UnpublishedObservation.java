@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ReferenceUnpublishedObservation;
 import com.bio4j.angulillos.UntypedGraph;
 
@@ -8,13 +8,13 @@ import com.bio4j.angulillos.UntypedGraph;
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
 public final class UnpublishedObservation<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		UnpublishedObservation<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,
+		UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType,
 		I, RV, RVT, RE, RET
 		>  {
 
-	public UnpublishedObservation(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType type) {
+	public UnpublishedObservation(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType type) {
 		super(vertex, type);
 	}
 

@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot_uniref;
 
 
 import com.bio4j.angulillos.*;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.UniRefGraph;
@@ -67,7 +67,7 @@ public abstract class UniprotUniRefGraph<
 		return raw;
 	}
 
-	public abstract UniprotGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
 
 	public abstract UniRefGraph<I, RV, RVT, RE, RET> uniRefGraph();
 
@@ -93,8 +93,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef50Member<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50MemberType,
@@ -131,7 +131,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef50Member<I, RV, RVT, RE, RET>, UniRef50MemberType,
 						// property
@@ -154,8 +154,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef90Member<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef90MemberType,
@@ -192,7 +192,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef90Member<I, RV, RVT, RE, RET>, UniRef90MemberType,
 						// property
@@ -215,8 +215,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef100Member<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef100MemberType,
@@ -253,7 +253,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef100Member<I, RV, RVT, RE, RET>, UniRef100MemberType,
 						// property
@@ -276,8 +276,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef100Representant<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef100RepresentantType,
@@ -314,7 +314,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef100Representant<I, RV, RVT, RE, RET>, UniRef100RepresentantType,
 						// property
@@ -337,8 +337,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef50Representant<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef50RepresentantType,
@@ -375,7 +375,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef50Representant<I, RV, RVT, RE, RET>, UniRef50RepresentantType,
 						// property
@@ -398,8 +398,8 @@ public abstract class UniprotUniRefGraph<
 			UniprotUniRefEdgeType<
 					// src
 					Protein<I, RV, RVT, RE, RET>,
-					UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-					UniprotGraph<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					UniProtGraph<I, RV, RVT, RE, RET>,
 					// edge
 					UniRef90Representant<I, RV, RVT, RE, RET>,
 					UniprotUniRefGraph<I, RV, RVT, RE, RET>.UniRef90RepresentantType,
@@ -436,7 +436,7 @@ public abstract class UniprotUniRefGraph<
 				extends
 				UniprotUniRefEdgeProperty<
 						// src
-						Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType, UniprotGraph<I, RV, RVT, RE, RET>,
+						Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType, UniProtGraph<I, RV, RVT, RE, RET>,
 						// edge
 						UniRef90Representant<I, RV, RVT, RE, RET>, UniRef90RepresentantType,
 						// property

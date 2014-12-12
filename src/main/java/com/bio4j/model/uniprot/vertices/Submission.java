@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.vertices;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.edges.ReferenceSubmission;
 import com.bio4j.model.uniprot.edges.SubmissionDB;
 import com.bio4j.angulillos.UntypedGraph;
@@ -11,13 +11,13 @@ import java.util.Optional;
  * Created by ppareja on 7/23/2014.
  */
 public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniprotGraph.UniprotVertex<
+		extends UniProtGraph.UniprotVertex<
 		Submission<I, RV, RVT, RE, RET>,
-		UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType,
+		UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
 		I, RV, RVT, RE, RET
 		>  {
 
-	public Submission(RV vertex, UniprotGraph<I, RV, RVT, RE, RET>.SubmissionType type) {
+	public Submission(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType type) {
 		super(vertex, type);
 	}
 

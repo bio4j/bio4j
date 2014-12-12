@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.edges;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.PIR;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.angulillos.UntypedGraph;
@@ -10,14 +10,14 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ProteinPIR <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniprotGraph.UniprotEdge<
-				Protein<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-				ProteinPIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
-				PIR<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.PIRType,
+		UniProtGraph.UniprotEdge<
+				Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+				ProteinPIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
+				PIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PIRType,
 				I, RV, RVT, RE, RET
 				> {
 
-	public ProteinPIR(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ProteinPIRType type) {
+	public ProteinPIR(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPIRType type) {
 
 		super(edge, type);
 	}

@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.programs;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Isoform;
 import com.bio4j.angulillos.UntypedGraph;
 
@@ -22,7 +22,7 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 	private static final Logger logger = Logger.getLogger("ImportIsoformSequences");
 	private static FileHandler fh;
 
-	protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 	public void importIsoformSequences(String[] args) {
 
@@ -41,7 +41,7 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 
 			BufferedWriter statsBuff = null;
 
-			UniprotGraph<I,RV,RVT,RE,RET> uniprotGraph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> uniProtGraph = config(dbFolder);
 
 			int isoformCounter = 0;
 
@@ -84,12 +84,12 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 						String sequence = seqStBuilder.toString();
 						seqStBuilder.delete(0, seqStBuilder.length());
 
-						Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = uniprotGraph.isoformIdIndex().getVertex(isoformIdSt);
+						Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = uniProtGraph.isoformIdIndex().getVertex(isoformIdSt);
 
 						if(isoformOptional.isPresent()){
 							Isoform<I,RV,RVT,RE,RET> isoform = isoformOptional.get();
-							isoform.set(uniprotGraph.Isoform().sequence, sequence);
-							isoform.set(uniprotGraph.Isoform().name, isoformNameSt);
+							isoform.set(uniProtGraph.Isoform().sequence, sequence);
+							isoform.set(uniProtGraph.Isoform().name, isoformNameSt);
 							System.out.println("Setting name for: " + isoform.id());
 							isoformCounter++;
 						}
@@ -115,13 +115,13 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 				}
 			} finally {
 
-				uniprotGraph.raw().commit();
+				uniProtGraph.raw().commit();
 
 				//closing logger file handler
 				fh.close();
 				logger.log(Level.INFO, "Closing up graph....");
 				// shutdown, makes sure all changes are written to disk
-				uniprotGraph.raw().shutdown();
+				uniProtGraph.raw().shutdown();
 
 				try {
 

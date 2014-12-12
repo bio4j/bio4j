@@ -2,7 +2,7 @@ package com.bio4j.model.uniprot_ncbiTaxonomy.edges;
 
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.UniprotNCBITaxonomyGraph;
 import com.bio4j.angulillos.UntypedGraph;
@@ -15,8 +15,8 @@ public final class ProteinNCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV
         UniprotNCBITaxonomyGraph.UniprotNCBITaxonomyEdge<
                 // src
                 Protein<I, RV, RVT, RE, RET>,
-                UniprotGraph<I, RV, RVT, RE, RET>.ProteinType,
-                UniprotGraph<I, RV, RVT, RE, RET>,
+                UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                UniProtGraph<I, RV, RVT, RE, RET>,
                 // edge
                 ProteinNCBITaxon<I, RV, RVT, RE, RET>,
                 UniprotNCBITaxonomyGraph<I, RV, RVT, RE, RET>.ProteinNCBITaxonType,
