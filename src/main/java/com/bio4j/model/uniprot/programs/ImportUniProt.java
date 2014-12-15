@@ -396,20 +396,9 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                         }
 
 
-//						proteinProperties.put(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, convertToStringArray(ensemblPlantsReferences));
-
 
                         // TODO we need to decide how to store this
-//						//---------------gene-names-------------------
-//						Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-//						ArrayList<String> geneNames = new ArrayList<>();
-//						if (geneElement != null) {
-//							List<Element> genesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-//							for (Element geneNameElem : genesList) {
-//								geneNames.add(geneNameElem.getText());
-//							}
-//						}
-//						//-----------------------------------------
+
 
 
                         //--------------reactome associations----------------
@@ -591,6 +580,31 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 		                    ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);
 		                    proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 	                    }
+
+
+                        //---------------------------------------------------------------------------------------
+                        //--------------------------------gene names-------------------------------------------
+
+                        Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+                        if (geneElement != null) {
+                            List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
+
+                            for (Element geneNameElem : geneNamesList) {
+                                String geneNameSt = geneNameElem.getText();
+                                String typeSt = geneNameElem.getAttributeValue("type");
+
+                                Optional<GeneName<I,RV,RVT,RE,RET>> optionalGeneName = graph.geneNameNameIndex().getVertex(geneNameSt);
+
+                                if(optionalGeneName.isPresent()){
+                                    GeneName<I,RV,RVT,RE,RET> geneName = optionalGeneName.get();
+                                    ProteinGeneName<I,RV,RVT,RE,RET> proteinGeneName = protein.addOutEdge(graph.ProteinGeneName(), geneName);
+                                    proteinGeneName.set(graph.ProteinGeneName().geneNameType, typeSt);
+                                }
+
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------
+
 
                         //---------------------------------------------------------------------------------------
                         //--------------------------------organism-----------------------------------------------
