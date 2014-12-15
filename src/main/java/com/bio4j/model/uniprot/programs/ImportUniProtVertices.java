@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.programs;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.angulillos.UntypedGraph;
@@ -132,13 +132,13 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	HashSet<String> thesisTitleSet;
 	HashSet<String> uniGeneIdSet;
 
-	protected abstract UniprotGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 	protected void importUniProtVertices(String[] args) {
 
 		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniprot xml filename \n"
+					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n"
 					+ "3. Config XML file");
 		} else {
@@ -152,7 +152,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 			String currentAccessionId = "";
 
 			//-------creating graph handlers---------------------
-			UniprotGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
 			//------Initializing hash sets---------------
 			alternativeProductTypeNameSet = new HashSet<String>();
@@ -754,7 +754,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	}
 
 	private void importProteinFeatures(XMLElement entryXMLElem,
-	                                   UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                   Protein<I,RV,RVT,RE,RET> protein) {
 
 		//--------------------------------features----------------------------------------------------
@@ -779,7 +779,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	}
 
 	private void importProteinComments(XMLElement entryXMLElem,
-	                                   UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                   Protein<I,RV,RVT,RE,RET> protein,
 	                                   String proteinSequence,
 	                                   UniprotDataXML uniprotDataXML) {
@@ -969,7 +969,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 
 	private void importProteinCitations(XMLElement entryXMLElem,
-	                                    UniprotGraph<I,RV,RVT,RE,RET> graph,
+	                                    UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                    Protein<I,RV,RVT,RE,RET> protein,
 	                                    UniprotDataXML uniprotDataXML) {
 
