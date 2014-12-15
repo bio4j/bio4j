@@ -500,10 +500,10 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                 if (uniprotDataXML.getInterpro()) {
                                     String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-                                    Interpro<I,RV,RVT,RE,RET> interpro = null;
-                                    Optional<Interpro<I,RV,RVT,RE,RET>> optionalInterpro = graph.interproIdIndex().getVertex(interproId);
+                                    InterPro<I,RV,RVT,RE,RET> interpro = null;
+                                    Optional<InterPro<I,RV,RVT,RE,RET>> optionalInterPro = graph.interproIdIndex().getVertex(interproId);
 
-                                    if (!optionalInterpro.isPresent()) {
+                                    if (!optionalInterPro.isPresent()) {
 
                                         String interproEntryNameSt = "";
                                         List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
@@ -514,15 +514,15 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                             }
                                         }
 
-                                        interpro = graph.addVertex(graph.Interpro());
-                                        interpro.set(graph.Interpro().id, interproId);
-                                        interpro.set(graph.Interpro().name, interproEntryNameSt);
+                                        interpro = graph.addVertex(graph.InterPro());
+                                        interpro.set(graph.InterPro().id, interproId);
+                                        interpro.set(graph.InterPro().name, interproEntryNameSt);
                                         graph.raw().commit();
                                     }else{
-                                        interpro = optionalInterpro.get();
+                                        interpro = optionalInterPro.get();
                                     }
 
-                                    protein.addOutEdge(graph.ProteinInterpro(), interpro);
+                                    protein.addOutEdge(graph.ProteinInterPro(), interpro);
                                 }
 
                             } //-------------------------------PFAM------------------------------------------------------

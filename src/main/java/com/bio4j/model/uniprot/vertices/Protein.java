@@ -163,13 +163,13 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outOneV(graph().ProteinDataset());
 	}
 
-	// proteinInterpro
+	// proteinInterPro
 	// outgoing
-	public Optional<Stream<ProteinInterpro<I, RV, RVT, RE, RET>>> proteinInterpro_out(){
-		return outManyOptional(graph().ProteinInterpro());
+	public Optional<Stream<ProteinInterPro<I, RV, RVT, RE, RET>>> proteinInterPro_out(){
+		return outManyOptional(graph().ProteinInterPro());
 	}
-	public Optional<Stream<Interpro<I, RV, RVT, RE, RET>>>  proteinInterpro_outV(){
-		return outManyOptionalV(graph().ProteinInterpro());
+	public Optional<Stream<InterPro<I, RV, RVT, RE, RET>>>  proteinInterPro_outV(){
+		return outManyOptionalV(graph().ProteinInterPro());
 	}
 
 	// proteinReactomeTerm
