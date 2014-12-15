@@ -618,7 +618,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
 										geneName.set(graph.GeneName().name, geneNameSt);
 									}
-
 								}
 
 							}

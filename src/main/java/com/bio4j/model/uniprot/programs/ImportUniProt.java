@@ -583,6 +583,30 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 
 
                         //---------------------------------------------------------------------------------------
+                        //--------------------------------gene names-------------------------------------------
+
+                        Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+                        if (geneElement != null) {
+                            List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
+
+                            for (Element geneNameElem : geneNamesList) {
+                                String geneNameSt = geneNameElem.getText();
+                                String typeSt = geneNameElem.getAttributeValue("type");
+
+                                Optional<GeneName<I,RV,RVT,RE,RET>> optionalGeneName = graph.geneNameNameIndex().getVertex(geneNameSt);
+
+                                if(optionalGeneName.isPresent()){
+                                    GeneName<I,RV,RVT,RE,RET> geneName = optionalGeneName.get();
+                                    ProteinGeneName<I,RV,RVT,RE,RET> proteinGeneName = protein.addOutEdge(graph.ProteinGeneName(), geneName);
+                                    proteinGeneName.set(graph.ProteinGeneName().geneNameType, typeSt);
+                                }
+
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------
+
+
+                        //---------------------------------------------------------------------------------------
                         //--------------------------------organism-----------------------------------------------
 
                         String scName, commName, synName;
