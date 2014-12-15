@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends EnzymeDBGraph.EnzymeVertex<
+		extends EnzymeDBGraph.EnzymeDBVertex<
 		Enzyme<I, RV, RVT, RE, RET>,
 		EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType,
 		I, RV, RVT, RE, RET

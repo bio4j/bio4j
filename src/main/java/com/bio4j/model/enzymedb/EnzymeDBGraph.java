@@ -1,7 +1,7 @@
 package com.bio4j.model.enzymedb;
 
 import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.bio4j.model.uniprot_enzymedb.UniprotEnzymeDBGraph;
+import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
 import com.bio4j.angulillos.*;
 
 /*
@@ -66,7 +66,7 @@ public abstract class EnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniprotEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
 
 	// types
 	// vertices
@@ -78,7 +78,7 @@ public abstract class EnzymeDBGraph<
 
 	public final class EnzymeType
 			extends
-			EnzymeVertexType<
+			EnzymeDBVertexType<
 					Enzyme<I, RV, RVT, RE, RET>,
 					EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType
 					> {
@@ -107,7 +107,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class id
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
 			public id() {
 				super(EnzymeType.this);
 			}
@@ -119,7 +119,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class cofactors
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
 			public cofactors() {
 				super(EnzymeType.this);
 			}
@@ -131,7 +131,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class comment
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
 			public comment() {
 				super(EnzymeType.this);
 			}
@@ -143,7 +143,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class officialName
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
 			public officialName() {
 				super(EnzymeType.this);
 			}
@@ -155,7 +155,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class alternateNames
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
 			public alternateNames() {
 				super(EnzymeType.this);
 			}
@@ -167,7 +167,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class catalyticActivity
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
 			public catalyticActivity() {
 				super(EnzymeType.this);
 			}
@@ -179,7 +179,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class prositeCrossReferences
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
 			public prositeCrossReferences() {
 				super(EnzymeType.this);
 			}
@@ -194,16 +194,16 @@ public abstract class EnzymeDBGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class EnzymeVertexProperty<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>,
-			P extends EnzymeVertexProperty<V, VT, P, PV>,
+	public abstract class EnzymeDBVertexProperty<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
+			P extends EnzymeDBVertexProperty<V, VT, P, PV>,
 			PV
 			>
 			implements
 			Property<V, VT, P, PV, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-		protected EnzymeVertexProperty(VT type) {
+		protected EnzymeDBVertexProperty(VT type) {
 
 			this.type = type;
 		}
@@ -216,9 +216,9 @@ public abstract class EnzymeDBGraph<
 		}
 	}
 
-	public abstract static class EnzymeVertex<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>,
+	public abstract static class EnzymeDBVertex<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
@@ -227,7 +227,7 @@ public abstract class EnzymeDBGraph<
 		private RV vertex;
 		private VT type;
 
-		protected EnzymeVertex(RV vertex, VT type) {
+		protected EnzymeDBVertex(RV vertex, VT type) {
 
 			this.vertex = vertex;
 			this.type = type;
@@ -249,16 +249,16 @@ public abstract class EnzymeDBGraph<
 		}
 	}
 
-	abstract class EnzymeVertexType<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>
+	abstract class EnzymeDBVertexType<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>
 			>
 			implements
 			TypedVertex.Type<V, VT, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RVT raw;
 
-		protected EnzymeVertexType(RVT raw) {
+		protected EnzymeDBVertexType(RVT raw) {
 			this.raw = raw;
 		}
 
@@ -274,12 +274,12 @@ public abstract class EnzymeDBGraph<
 	}
 
 	public abstract static class EnzymeEdge<
-			S extends EnzymeVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<S, ST>,
+			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
 			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
 			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<T, TT>,
+			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
@@ -315,12 +315,12 @@ public abstract class EnzymeDBGraph<
 	}
 
 	abstract class EnzymeEdgeType<
-			S extends EnzymeVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<S, ST>,
+			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
 			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
 			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<T, TT>
+			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>
 			>
 			implements
 			TypedEdge.Type<

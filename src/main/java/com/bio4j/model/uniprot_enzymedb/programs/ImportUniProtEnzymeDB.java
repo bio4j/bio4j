@@ -1,8 +1,8 @@
-package com.bio4j.model.uniprot_go.programs;
+package com.bio4j.model.uniprot_enzymedb.programs;
 
-import com.bio4j.model.go.vertices.GoTerm;
+import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_go.UniprotGoGraph;
+import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
 import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
@@ -19,31 +19,26 @@ import java.util.logging.SimpleFormatter;
 /**
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-	private static final Logger logger = Logger.getLogger("ImportUniprotGo");
+	private static final Logger logger = Logger.getLogger("ImportUniProtEnzymeDB");
 	private static FileHandler fh;
+
+	protected abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
 	public static final String ENTRY_TAG_NAME = "entry";
 	public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
-
 	public static final String DB_REFERENCE_TAG_NAME = "dbReference";
 	public static final String DB_REFERENCE_TYPE_ATTRIBUTE = "type";
 	public static final String DB_REFERENCE_ID_ATTRIBUTE = "id";
-	public static final String DB_REFERENCE_VALUE_ATTRIBUTE = "value";
-	public static final String DB_REFERENCE_PROPERTY_TAG_NAME = "property";
-
-	public static final String GO_DB_REFERENCE_TYPE = "GO";
-	public static final String EVIDENCE_TYPE_ATTRIBUTE = "evidence";
-
-	protected abstract UniprotGoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	public static final String ENZYME_REFERENCE_TYPE = "EC";
 
 
-	public void importUniprotGo(String[] args) {
+	public void importUniProtEnzymeDB(String[] args) {
 
 		if (args.length != 2) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniprot xml filename \n"
+					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n");
 		} else {
 
@@ -53,7 +48,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 			String dbFolder = args[1];
 
 
-			UniprotGoGraph<I,RV,RVT,RE,RET> uniprotGoGraph = config(dbFolder);
+			UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniprotEnzymeDBGraph = config(dbFolder);
 
 			BufferedWriter statsBuff = null;
 
@@ -63,7 +58,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 			try {
 
 				// This block configures the logger with handler and formatter
-				fh = new FileHandler("ImportUniprotGo" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+				fh = new FileHandler("ImportUniProtEnzymeDB" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
@@ -71,7 +66,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotGoStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtEnzymeDBStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
 				BufferedReader reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
@@ -99,28 +94,29 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 
 						for (Element dbReferenceElem : dbReferenceList) {
 
-							//-------------------GO -----------------------------
-							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(GO_DB_REFERENCE_TYPE)) {
+							//-------------------ENZYME DB -----------------------------
+							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
 
 								if(protein == null){
-									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
-									if(proteinOptional.isPresent()){
-										protein = proteinOptional.get();
+									protein = uniprotEnzymeDBGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+								}
+
+								String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+
+								if(enzymeID != null){
+
+									//uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
+
+									Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
+
+									if(enzymeOptional.isPresent()){
+										protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
 									}else{
-										logger.log(Level.INFO, "Protein with id " + accessionSt + " not found...");
-										break;
+										logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
 									}
-								}
-
-								String goId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-
-								Optional<GoTerm<I,RV,RVT,RE,RET>> goTermOptional = uniprotGoGraph.goGraph().goTermIdIndex().getVertex(goId);
-								if(goTermOptional.isPresent()){
-									protein.addOutEdge(uniprotGoGraph.GoAnnotation(), goTermOptional.get());
 								}else{
-									logger.log(Level.INFO, "GO term with id " + goId + " not found...");
+									logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
 								}
-
 
 							}
 
@@ -149,7 +145,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 					//------closing writers-------
 
 					// shutdown, makes sure all changes are written to disk
-					uniprotGoGraph.raw().shutdown();
+					uniprotEnzymeDBGraph.raw().shutdown();
 
 					// closing logger file handler
 					fh.close();
@@ -161,8 +157,8 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprotGO:\nInput file: " + inFile.getName()
-							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
+					statsBuff.write("Statistics for program ImportUniProtEnzymeDB:\nInput file: " + inFile.getName()
+							+ "\nThere were " + proteinCounter + " proteins analyzed.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---
@@ -170,7 +166,7 @@ public abstract class ImportUniprotGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 
 
 				} catch (IOException ex) {
-					Logger.getLogger(ImportUniprotGo.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(ImportUniProtEnzymeDB.class.getName()).log(Level.SEVERE, null, ex);
 				}
 
 			}

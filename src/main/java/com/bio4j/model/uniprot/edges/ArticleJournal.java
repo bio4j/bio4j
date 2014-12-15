@@ -1,6 +1,6 @@
 package com.bio4j.model.uniprot.edges;
 
-import com.bio4j.model.uniprot.UniprotGraph;
+import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Article;
 import com.bio4j.model.uniprot.vertices.Journal;
 import com.bio4j.angulillos.UntypedGraph;
@@ -10,14 +10,14 @@ import com.bio4j.angulillos.UntypedGraph;
  */
 public final class ArticleJournal<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends
-		UniprotGraph.UniprotEdge<
-				Article<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleType,
-				ArticleJournal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
-				Journal<I, RV, RVT, RE, RET>, UniprotGraph<I, RV, RVT, RE, RET>.JournalType,
+		UniProtGraph.UniProtEdge<
+				Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
+				ArticleJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
+				Journal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.JournalType,
 				I, RV, RVT, RE, RET
 				> {
 
-	public ArticleJournal(RE edge, UniprotGraph<I, RV, RVT, RE, RET>.ArticleJournalType type) {
+	public ArticleJournal(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ArticleJournalType type) {
 
 		super(edge, type);
 	}

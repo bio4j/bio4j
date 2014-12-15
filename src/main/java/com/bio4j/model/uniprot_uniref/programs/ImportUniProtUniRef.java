@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot_uniref.programs;
 
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_uniref.UniprotUniRefGraph;
+import com.bio4j.model.uniprot_uniref.UniProtUniRefGraph;
 import com.bio4j.model.uniprot_uniref.edges.*;
 import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
@@ -27,22 +27,22 @@ import org.jdom2.Element;
  *
  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
  */
-public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET>  {
+public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET>  {
 
 	public static final String ENTRY_TAG_NAME = "entry";
 
-	private static final Logger logger = Logger.getLogger("ImportUniprotUniRef");
+	private static final Logger logger = Logger.getLogger("ImportUniProtUniRef");
 	private static FileHandler fh;
 
-	protected abstract UniprotUniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder);
 
-	public void importUniprotUniRef(String[] args) {
+	public void importUniProtUniRef(String[] args) {
 
 		if (args.length != 4) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. Uniref 100 xml filename \n"
-					+ "2. Uniref 90 xml filename \n"
-					+ "3. Uniref 50 xml filename \n"
+					+ "1. UniRef 100 xml filename \n"
+					+ "2. UniRef 90 xml filename \n"
+					+ "3. UniRef 50 xml filename \n"
 					+ "4. Bio4j DB folder");
 		} else {
 
@@ -53,7 +53,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			File uniref50File = new File(args[2]);
 			String dbFolder = args[3];
 
-			UniprotUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(dbFolder);
+			UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(dbFolder);
 
 			BufferedWriter statsBuff = null;
 
@@ -62,26 +62,26 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			try {
 
 				// This block configure the logger with handler and formatter
-				fh = new FileHandler("ImportUniprotUniRefTitan.log", true);
+				fh = new FileHandler("ImportUniProtUniRefTitan.log", true);
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
 				logger.addHandler(fh);
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniprotUnirefStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUniRefStats.txt")));
 
 				//------------------- UNIREF 100----------------------------
-				System.out.println("Reading Uniref 100 file...");
-				uniref100EntryCounter = importUniprotUniRefFile(uniprotUniRefGraph, uniref100File, 100);
+				System.out.println("Reading UniRef 100 file...");
+				uniref100EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref100File, 100);
 				System.out.println("Done! :)");
 				//------------------- UNIREF 90----------------------------
-				System.out.println("Reading Uniref 90 file...");
-				uniref90EntryCounter = importUniprotUniRefFile(uniprotUniRefGraph, uniref90File, 90);
+				System.out.println("Reading UniRef 90 file...");
+				uniref90EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref90File, 90);
 				System.out.println("Done! :)");
 				//------------------- UNIREF 50----------------------------
-				System.out.println("Reading Uniref 50 file...");
-				uniref50EntryCounter = importUniprotUniRefFile(uniprotUniRefGraph, uniref50File, 50);
+				System.out.println("Reading UniRef 50 file...");
+				uniref50EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref50File, 50);
 				System.out.println("Done! :)");
 
 
@@ -107,14 +107,14 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniprotUniRefTitan:\nInput files: " +
-							"\nUniref 100 file: " + uniref100File.getName() +
-							"\nUniref 90 file: " + uniref90File.getName() +
-							"\nUniref 50 file: " + uniref50File.getName()
+					statsBuff.write("Statistics for program ImportUniProtUniRefTitan:\nInput files: " +
+							"\nUniRef 100 file: " + uniref100File.getName() +
+							"\nUniRef 90 file: " + uniref90File.getName() +
+							"\nUniRef 50 file: " + uniref50File.getName()
 							+ "\nThe following number of entries was parsed:\n"
-							+ "Uniref 100 --> " + uniref100EntryCounter + " entries\n"
-							+ "Uniref 90 --> " + uniref90EntryCounter + " entries\n"
-							+ "Uniref 50 --> " + uniref50EntryCounter + " entries\n"
+							+ "UniRef 100 --> " + uniref100EntryCounter + " entries\n"
+							+ "UniRef 90 --> " + uniref90EntryCounter + " entries\n"
+							+ "UniRef 50 --> " + uniref50EntryCounter + " entries\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---
@@ -149,7 +149,7 @@ public abstract class ImportUniprotUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 		return result;
 	}
 
-	private int importUniprotUniRefFile(UniprotUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph,
+	private int importUniProtUniRefFile(UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph,
 	                                           File unirefFile,
 	                                           int unirefClusterNumber) throws Exception {
 
