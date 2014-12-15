@@ -1,7 +1,7 @@
 package com.bio4j.model.uniprot.vertices;
 
 import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.edges.ProteinInterpro;
+import com.bio4j.model.uniprot.edges.ProteinInterPro;
 import com.bio4j.angulillos.UntypedGraph;
 
 import java.util.stream.Stream;
@@ -9,19 +9,19 @@ import java.util.stream.Stream;
 /**
  * Created by ppareja on 7/29/2014.
  */
-public final class Interpro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class InterPro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
 		extends UniProtGraph.UniProtVertex<
-		Interpro<I, RV, RVT, RE, RET>,
-		UniProtGraph<I, RV, RVT, RE, RET>.InterproType,
+		InterPro<I, RV, RVT, RE, RET>,
+		UniProtGraph<I, RV, RVT, RE, RET>.InterProType,
 		I, RV, RVT, RE, RET
 		> {
 
-	public Interpro(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.InterproType type) {
+	public InterPro(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.InterProType type) {
 		super(vertex, type);
 	}
 
 	@Override
-	public Interpro<I, RV, RVT, RE, RET> self() {
+	public InterPro<I, RV, RVT, RE, RET> self() {
 		return this;
 	}
 
@@ -37,13 +37,13 @@ public final class Interpro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 
 	// relationships
 
-	// proteinInterpro
+	// proteinInterPro
 	// ingoing
-	public Stream<ProteinInterpro<I, RV, RVT, RE, RET>> proteinInterpro_in(){
-		return inMany(graph().ProteinInterpro());
+	public Stream<ProteinInterPro<I, RV, RVT, RE, RET>> proteinInterPro_in(){
+		return inMany(graph().ProteinInterPro());
 	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinInterpro_inV(){
-		return inManyV(graph().ProteinInterpro());
+	public Stream<Protein<I, RV, RVT, RE, RET>> proteinInterPro_inV(){
+		return inManyV(graph().ProteinInterPro());
 	}
 
 

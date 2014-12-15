@@ -551,9 +551,9 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 													break;
 												}
 											}
-											Interpro<I,RV,RVT,RE,RET> interpro = graph.addVertex(graph.Interpro());
-											interpro.set(graph.Interpro().id, interproId);
-											interpro.set(graph.Interpro().name, interproEntryNameSt);
+											InterPro<I,RV,RVT,RE,RET> interpro = graph.addVertex(graph.InterPro());
+											interpro.set(graph.InterPro().id, interproId);
+											interpro.set(graph.InterPro().name, interproEntryNameSt);
 										}
 									}
 								}

@@ -55,10 +55,10 @@ The following properties are stored at the `Keyword` vertex:
 - `id`
 - `name`
 
-### Interpro motifs
+### InterPro motifs
 
-Connected to `Protein` vertices via `ProteinInterpro` edges.
-The following properties are stored at the `Interpro` vertex:
+Connected to `Protein` vertices via `ProteinInterPro` edges.
+The following properties are stored at the `InterPro` vertex:
 
 - `id`
 - `name`
@@ -745,9 +745,9 @@ public abstract class UniProtGraph<
     keywordIdIndex();
     public abstract TypedVertexIndex.Unique <
             // vertex
-            Interpro<I, RV, RVT, RE, RET>, InterproType,
+            InterPro<I, RV, RVT, RE, RET>, InterProType,
             // property
-            InterproType.id, String,
+            InterProType.id, String,
             // graph
 		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
@@ -842,7 +842,7 @@ public abstract class UniProtGraph<
 
 	public abstract InstituteType Institute();
 
-	public abstract InterproType Interpro();
+	public abstract InterProType InterPro();
 
 	public abstract IsoformType Isoform();
 
@@ -929,7 +929,7 @@ public abstract class UniProtGraph<
 
 	public abstract ProteinGeneNameType ProteinGeneName();
 
-	public abstract ProteinInterproType ProteinInterpro();
+	public abstract ProteinInterProType ProteinInterPro();
 
 	public abstract ProteinKeggType ProteinKegg();
 
@@ -1655,35 +1655,35 @@ public abstract class UniProtGraph<
 
 	}
 
-	public final class InterproType
+	public final class InterProType
 			extends
 			UniProtVertexType<
-					Interpro<I, RV, RVT, RE, RET>,
-					UniProtGraph<I, RV, RVT, RE, RET>.InterproType
+					InterPro<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.InterProType
 					> {
 
 		public final name name = new name();
 		public final id id = new id();
 
-        public InterproType(RVT raw) {
+        public InterProType(RVT raw) {
 			super(raw);
 		}
 
 		@Override
-		public InterproType value() {
-			return graph().Interpro();
+		public InterProType value() {
+			return graph().InterPro();
 		}
 
 		@Override
-		public Interpro<I, RV, RVT, RE, RET> from(RV vertex) {
-			return new Interpro<I, RV, RVT, RE, RET>(vertex, this);
+		public InterPro<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new InterPro<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
 		public final class name
 				extends
-				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
+				UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, name, String> {
 			public name() {
-				super(InterproType.this);
+				super(InterProType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1692,9 +1692,9 @@ public abstract class UniProtGraph<
 		}
 		public final class id
 				extends
-				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
+				UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, id, String> {
 			public id() {
-				super(InterproType.this);
+				super(InterProType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -3895,28 +3895,28 @@ public abstract class UniProtGraph<
 		}
 	}
 
-	public final class ProteinInterproType
+	public final class ProteinInterProType
 			extends
 			UniProtEdgeType<
 					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinInterpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterproType,
-					Interpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterproType
+					ProteinInterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterProType,
+					InterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterProType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		public ProteinInterproType(RET raw) {
-			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Interpro());
+		public ProteinInterProType(RET raw) {
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.InterPro());
 		}
 
 		@Override
-		public ProteinInterproType value() {
-			return graph().ProteinInterpro();
+		public ProteinInterProType value() {
+			return graph().ProteinInterPro();
 		}
 
 		@Override
-		public ProteinInterpro<I, RV, RVT, RE, RET> from(RE edge) {
-			return new ProteinInterpro<I, RV, RVT, RE, RET>(edge, this);
+		public ProteinInterPro<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinInterPro<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
