@@ -396,20 +396,9 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                         }
 
 
-//						proteinProperties.put(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, convertToStringArray(ensemblPlantsReferences));
-
 
                         // TODO we need to decide how to store this
-//						//---------------gene-names-------------------
-//						Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-//						ArrayList<String> geneNames = new ArrayList<>();
-//						if (geneElement != null) {
-//							List<Element> genesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-//							for (Element geneNameElem : genesList) {
-//								geneNames.add(geneNameElem.getText());
-//							}
-//						}
-//						//-----------------------------------------
+
 
 
                         //--------------reactome associations----------------
@@ -591,6 +580,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 		                    ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);
 		                    proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 	                    }
+
 
                         //---------------------------------------------------------------------------------------
                         //--------------------------------organism-----------------------------------------------

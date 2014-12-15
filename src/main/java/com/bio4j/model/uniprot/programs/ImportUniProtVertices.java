@@ -108,6 +108,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	HashSet<String> ensemblIdSet;
 	HashSet<String> featureTypeNameSet;
 	HashSet<String> geneLocationNameSet;
+	HashSet<String> geneNameSet;
 	HashSet<String> instituteNameSet;
 	HashSet<String> interproIdSet;
 	HashSet<String> isoformIdSet;
@@ -169,6 +170,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 			ensemblIdSet = new HashSet<String>();
 			featureTypeNameSet = new HashSet<String>();
 			geneLocationNameSet = new HashSet<String>();
+			geneNameSet = new HashSet<String>();
 			instituteNameSet = new HashSet<String>();
 			interproIdSet = new HashSet<String>();
 			isoformIdSet = new HashSet<String>();
@@ -462,18 +464,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 						}
 
 
-						// TODO we need to decide how to store this
-//						//---------------gene-names-------------------
-//						Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-//						ArrayList<String> geneNames = new ArrayList<>();
-//						if (geneElement != null) {
-//							List<Element> genesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-//							for (Element geneNameElem : genesList) {
-//								geneNames.add(geneNameElem.getText());
-//							}
-//						}
-//						//-----------------------------------------
-
 						//-----comments import---
 						if (uniprotDataXML.getComments()) {
 							importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
@@ -609,6 +599,31 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 							}
 
 						}
+
+						//---------------------------------------------------------------------------------------
+						//--------------------------------gene names-------------------------------------------
+
+						Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+						if (geneElement != null) {
+							List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
+
+							for (Element geneNameElem : geneNamesList) {
+								String geneNameSt = geneNameElem.getText();
+								String typeSt = geneNameElem.getAttributeValue("type");
+								if(!geneNameSet.contains(geneNameSt)){
+
+									geneNameSet.add(geneNameSt);
+
+									if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()){
+										GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
+										geneName.set(graph.GeneName().name, geneNameSt);
+									}
+
+								}
+
+							}
+						}
+						//---------------------------------------------------------------------------------------
 
 						//---------------------------------------------------------------------------------------
 						//--------------------------------organism-----------------------------------------------
