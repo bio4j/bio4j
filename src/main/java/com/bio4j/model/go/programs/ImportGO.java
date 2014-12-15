@@ -342,7 +342,7 @@ public abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,R
 					fh.close();
 					logger.log(Level.INFO, "Closing up manager....");
 					//shutdown, makes sure all changes are written to disk
-					//graph.rawGraph().shutdown();
+					goGraph.raw().shutdown();
 
 					//-----------------writing stats file---------------------
 					long elapsedTime = System.nanoTime() - initTime;
