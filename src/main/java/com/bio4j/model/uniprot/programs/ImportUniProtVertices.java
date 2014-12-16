@@ -196,7 +196,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 			uniGeneIdSet = new HashSet<String>();
 			//-------------------------------------------------------------------------
 
-			BufferedWriter enzymeIdsNotFoundBuff = null;
 			BufferedWriter statsBuff = null;
 
 			int proteinCounter = 0;

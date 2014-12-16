@@ -150,8 +150,6 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
             //-------creating graph handlers---------------------
             UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
-
-            BufferedWriter enzymeIdsNotFoundBuff = null;
             BufferedWriter statsBuff = null;
 
             int proteinCounter = 0;
