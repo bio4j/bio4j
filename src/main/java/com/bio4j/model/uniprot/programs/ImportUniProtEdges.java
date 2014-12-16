@@ -438,12 +438,12 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									if(!organismTaxonEdgesAlreadyCreated.contains(organism.scientificName())){
 										organismTaxonEdgesAlreadyCreated.add(organism.scientificName());
-//										if(organism.organismTaxon_out()){
-//
-//										}
-//										organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
+										try{
+											organism.organismTaxon_out();
+										}catch(NoSuchElementException e){
+											organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
+										}
 									}
-
 
 								}
 
