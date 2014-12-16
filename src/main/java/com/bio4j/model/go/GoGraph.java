@@ -89,7 +89,7 @@ public abstract class GoGraph<
         return raw;
     }
 
-	public abstract UniProtGoGraph<I,RV, RVT, RE, RET> uniprotGoGraph();
+	public abstract UniProtGoGraph<I,RV, RVT, RE, RET> uniProtGoGraph();
 
 	// indices
 	public abstract TypedVertexIndex.Unique <

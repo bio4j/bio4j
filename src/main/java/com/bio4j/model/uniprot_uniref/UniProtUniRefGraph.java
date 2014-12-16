@@ -67,7 +67,7 @@ public abstract class UniProtUniRefGraph<
 		return raw;
 	}
 
-	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniProtGraph();
 
 	public abstract UniRefGraph<I, RV, RVT, RE, RET> uniRefGraph();
 
@@ -109,7 +109,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef50MemberType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef50Cluster()
 			);
@@ -170,7 +170,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef90MemberType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef90Cluster()
 			);
@@ -231,7 +231,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef100MemberType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef100Cluster()
 			);
@@ -292,7 +292,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef100RepresentantType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef100Cluster()
 			);
@@ -353,7 +353,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef50RepresentantType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef50Cluster()
 			);
@@ -414,7 +414,7 @@ public abstract class UniProtUniRefGraph<
 		public UniRef90RepresentantType(RET raw) {
 
 			super(
-					UniProtUniRefGraph.this.uniprotGraph().Protein(),
+					UniProtUniRefGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtUniRefGraph.this.uniRefGraph().UniRef90Cluster()
 			);

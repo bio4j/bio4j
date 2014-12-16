@@ -44,7 +44,7 @@ public abstract class UniProtNCBITaxonomyGraph<
         return raw;
     }
 
-	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniProtGraph();
 	public abstract NCBITaxonomyGraph<I, RV, RVT, RE, RET> ncbiTaxonomyGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ public abstract class UniProtNCBITaxonomyGraph<
 		public ProteinNCBITaxonType(RET raw) {
 
 			super(
-					UniProtNCBITaxonomyGraph.this.uniprotGraph().Protein(),
+					UniProtNCBITaxonomyGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtNCBITaxonomyGraph.this.ncbiTaxonomyGraph().NCBITaxon()
 			);

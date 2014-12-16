@@ -45,7 +45,7 @@ public abstract class UniProtEnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniProtGraph();
 	public abstract EnzymeDBGraph<I, RV, RVT, RE, RET> enzymeDBGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ public abstract class UniProtEnzymeDBGraph<
 		public EnzymaticActivityType(RET raw) {
 
 			super(
-					UniProtEnzymeDBGraph.this.uniprotGraph().Protein(),
+					UniProtEnzymeDBGraph.this.uniProtGraph().Protein(),
 					raw,
 					UniProtEnzymeDBGraph.this.enzymeDBGraph().Enzyme()
 			);

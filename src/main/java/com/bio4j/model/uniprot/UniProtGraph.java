@@ -405,10 +405,10 @@ public abstract class UniProtGraph<
         return raw;
     }
 
-	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
-	public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniprotGoGraph();
-	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
-	public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
+	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniProtUniRefGraph();
+	public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniProtGoGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
+	public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniProtNCBITaxonomyGraph();
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
