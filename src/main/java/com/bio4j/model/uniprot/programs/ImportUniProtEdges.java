@@ -184,6 +184,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 				reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
 
+				HashMap<String, HashSet<String>> taxonParentEdgesAlreadyCreated = new HashMap<>();
+				HashSet<String> organismTaxonEdgesAlreadyCreated = new HashSet<>();
+
 				while ((line = reader.readLine()) != null) {
 					if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
 
@@ -220,7 +223,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										if(ensemblOptional.isPresent()){
 											protein.addOutEdge(graph.ProteinEnsembl(), ensemblOptional.get());
 										}
-
 										break;
 									case "PIR":
 										//looking for PIR node
@@ -228,129 +230,52 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										if(optionalPIR.isPresent()){
 											protein.addOutEdge(graph.ProteinPIR(), optionalPIR.get());
 										}
-
-
 										break;
 									case "UniGene":
 										//looking for UniGene node
-										UniGene<I,RV,RVT,RE,RET> uniGene = null;
 										Optional<UniGene<I,RV,RVT,RE,RET>> uniGeneOptional = graph.uniGeneIdIndex().getVertex(refId);
-										if(!uniGeneOptional.isPresent()){
-											uniGene = graph.addVertex(graph.UniGene());
-											uniGene.set(graph.UniGene().id, refId);
-											graph.raw().commit();
-										}else{
-											uniGene = uniGeneOptional.get();
+										if(uniGeneOptional.isPresent()){
+											protein.addOutEdge(graph.ProteinUniGene(), uniGeneOptional.get());
 										}
-										protein.addOutEdge(graph.ProteinUniGene(), uniGene);
 										break;
 									case "KEGG":
 										//looking for Kegg node
-										Kegg<I,RV,RVT,RE,RET> kegg = null;
 										Optional<Kegg<I,RV,RVT,RE,RET>> optionalKegg = graph.keggIdIndex().getVertex(refId);
-										if(!optionalKegg.isPresent()){
-											kegg = graph.addVertex(graph.Kegg());
-											kegg.set(graph.Kegg().id, refId);
-											graph.raw().commit();
-										}else{
-											kegg = optionalKegg.get();
+										if(optionalKegg.isPresent()){
+											protein.addOutEdge(graph.ProteinKegg(), optionalKegg.get());
 										}
-										protein.addOutEdge(graph.ProteinKegg(), kegg);
 										break;
 									case "EMBL":
 										//looking for EMBL node
-										EMBL<I,RV,RVT,RE,RET> embl = null;
 										Optional<EMBL<I,RV,RVT,RE,RET>> optionalEMBL = graph.eMBLIdIndex().getVertex(refId);
-										if(!optionalEMBL.isPresent()){
-											String moleculeTypeSt = "";
-											String proteinSequenceIdSt = "";
-											List<Element> children = dbReferenceElem.getChildren("property");
-											for (Element propertyElem : children) {
-												if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
-													proteinSequenceIdSt = propertyElem.getAttributeValue("value");
-												}
-												if (propertyElem.getAttributeValue("type").equals("molecule type")) {
-													moleculeTypeSt = propertyElem.getAttributeValue("value");
-												}
-											}
-
-											embl = graph.addVertex(graph.EMBL());
-											embl.set(graph.EMBL().id, refId);
-											embl.set(graph.EMBL().proteinSequenceId, proteinSequenceIdSt);
-											embl.set(graph.EMBL().moleculeType, moleculeTypeSt);
-											graph.raw().commit();
-										}else{
-											embl = optionalEMBL.get();
+										if(optionalEMBL.isPresent()){
+											protein.addOutEdge(graph.ProteinEMBL(), optionalEMBL.get());
 										}
-										protein.addOutEdge(graph.ProteinEMBL(), embl);
 										break;
 									case "RefSeq":
 										//looking for RefSeq node
-										RefSeq<I,RV,RVT,RE,RET> refSeq = null;
 										Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getVertex(refId);
-										if(!optionalRefSeq.isPresent()){
-											String nucleotideSequenceIdSt = "";
-											List<Element> children = dbReferenceElem.getChildren("property");
-											for (Element propertyElem : children) {
-												if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
-													nucleotideSequenceIdSt = propertyElem.getAttributeValue("value");
-												}
-											}
-
-											refSeq = graph.addVertex(graph.RefSeq());
-											refSeq.set(graph.RefSeq().id, refId);
-											refSeq.set(graph.RefSeq().nucleotideSequenceId, nucleotideSequenceIdSt);
-											graph.raw().commit();
-										}else{
-											refSeq = optionalRefSeq.get();
+										if(optionalRefSeq.isPresent()){
+											protein.addOutEdge(graph.ProteinRefSeq(), optionalRefSeq.get());
 										}
-										protein.addOutEdge(graph.ProteinRefSeq(), refSeq);
 										break;
 									case "Reactome":
-										Element propertyElem = dbReferenceElem.getChild("property");
-										String pathwayName = "";
-										if (propertyElem.getAttributeValue("type").equals("pathway name")) {
-											pathwayName = propertyElem.getAttributeValue("value");
+										if (uniprotDataXML.getReactome()) {
+											Optional<ReactomeTerm<I,RV,RVT,RE,RET>> optionalReactomeTerm = graph.reactomeTermIdIndex().getVertex(refId);
+											if (optionalReactomeTerm.isPresent()) {
+												protein.addOutEdge(graph.ProteinReactomeTerm(), optionalReactomeTerm.get());
+											}
 										}
-										reactomeReferences.put(refId, pathwayName);
 										break;
 									case "EnsemblPlants":
 										ensemblPlantsReferences.add(refId);
 										break;
 								}
-
 							}
-
-
-
-							// TODO we need to decide how to store this
-
-
-
-							//--------------reactome associations----------------
-							if (uniprotDataXML.getReactome()) {
-								for (String reactomeId : reactomeReferences.keySet()) {
-
-									ReactomeTerm<I,RV,RVT,RE,RET> reactomeTerm = null;
-									Optional<ReactomeTerm<I,RV,RVT,RE,RET>> optionalReactomeTerm = graph.reactomeTermIdIndex().getVertex(reactomeId);
-
-									if (!optionalReactomeTerm.isPresent()) {
-										reactomeTerm = graph.addVertex(graph.ReactomeTerm());
-										reactomeTerm.set(graph.ReactomeTerm().id, reactomeId);
-										reactomeTerm.set(graph.ReactomeTerm().pathwayName, reactomeReferences.get(reactomeId));
-										graph.raw().commit();
-									}else{
-										reactomeTerm = optionalReactomeTerm.get();
-									}
-									protein.addOutEdge(graph.ProteinReactomeTerm(), reactomeTerm);
-								}
-							}
-							//-------------------------------------------------------
-
 
 							//-----comments import---
 							if (uniprotDataXML.getComments()) {
-								importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
+								importProteinComments(entryXMLElem, graph, protein, uniprotDataXML);
 							}
 
 							//-----features import----
@@ -361,20 +286,12 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							//--------------------------------datasets--------------------------------------------------
 							String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
 
-							Dataset<I,RV,RVT,RE,RET> dataset = null;
 							Optional<Dataset<I,RV,RVT,RE,RET>> optionalDataset = graph.datasetNameIndex().getVertex(proteinDataSetSt);
-
-							if (!optionalDataset.isPresent()) {
-								dataset = graph.addVertex(graph.Dataset());
-								dataset.set(graph.Dataset().name, proteinDataSetSt);
-								graph.raw().commit();
-							}else{
-								dataset = optionalDataset.get();
+							if (optionalDataset.isPresent()) {
+								protein.addOutEdge(graph.ProteinDataset(), optionalDataset.get());
 							}
-							protein.addOutEdge(graph.ProteinDataset(), dataset);
+
 							//---------------------------------------------------------------------------------------------
-
-
 							if (uniprotDataXML.getCitations()) {
 								importProteinCitations(entryXMLElem,
 										graph,
@@ -382,26 +299,17 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										uniprotDataXML);
 							}
 
-
 							//-------------------------------keywords------------------------------------------------------
 							if (uniprotDataXML.getKeywords()) {
 								List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
 								for (Element keywordElem : keywordsList) {
+
 									String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
-									String keywordName = keywordElem.getText();
 
-									Keyword<I,RV,RVT,RE,RET>  keyword = null;
 									Optional<Keyword<I,RV,RVT,RE,RET> > optionalKeyword = graph.keywordIdIndex().getVertex(keywordId);
-
-									if (!optionalKeyword.isPresent()) {
-										keyword = graph.addVertex(graph.Keyword());
-										keyword.set(graph.Keyword().id, keywordId);
-										keyword.set(graph.Keyword().name, keywordName);
-										graph.raw().commit();
-									}else{
-										keyword = optionalKeyword.get();
+									if (optionalKeyword.isPresent()) {
+										protein.addOutEdge(graph.ProteinKeyword(), optionalKeyword.get());
 									}
-									protein.addOutEdge(graph.ProteinKeyword(), keyword);
 								}
 							}
 							//---------------------------------------------------------------------------------------
@@ -414,30 +322,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									if (uniprotDataXML.getInterpro()) {
 										String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-
-										InterPro<I,RV,RVT,RE,RET> interpro = null;
 										Optional<InterPro<I,RV,RVT,RE,RET>> optionalInterPro = graph.interproIdIndex().getVertex(interproId);
-
-										if (!optionalInterPro.isPresent()) {
-
-											String interproEntryNameSt = "";
-											List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-											for (Element prop : properties) {
-												if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_ENTRY_NAME)) {
-													interproEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
-													break;
-												}
-											}
-
-											interpro = graph.addVertex(graph.InterPro());
-											interpro.set(graph.InterPro().id, interproId);
-											interpro.set(graph.InterPro().name, interproEntryNameSt);
-											graph.raw().commit();
-										}else{
-											interpro = optionalInterPro.get();
+										if (optionalInterPro.isPresent()) {
+											protein.addOutEdge(graph.ProteinInterPro(), optionalInterPro.get());
 										}
-
-										protein.addOutEdge(graph.ProteinInterPro(), interpro);
 									}
 
 								} //-------------------------------PFAM------------------------------------------------------
@@ -446,33 +334,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									if (uniprotDataXML.getPfam()) {
 
 										String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-										Pfam<I,RV,RVT,RE,RET> pfam = null;
 										Optional<Pfam<I,RV,RVT,RE,RET>> optionalPfam = graph.pfamIdIndex().getVertex(pfamId);
 
-										if (!optionalPfam.isPresent()) {
-											String pfamEntryNameSt = "";
-											List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-											for (Element prop : properties) {
-												if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
-													pfamEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
-													break;
-												}
-											}
-
-											pfam = graph.addVertex(graph.Pfam());
-											pfam.set(graph.Pfam().id, pfamId);
-											pfam.set(graph.Pfam().name, pfamEntryNameSt);
-											graph.raw().commit();
-										}else{
-											pfam = optionalPfam.get();
+										if (optionalPfam.isPresent()) {
+											protein.addOutEdge(graph.ProteinPfam(), optionalPfam.get());
 										}
-
-										protein.addOutEdge(graph.ProteinPfam(), pfam);
 									}
-
-
 								}
-
 							}
 							//---------------------------------------------------------------------------------------
 
@@ -489,22 +357,11 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								}
 
 								Optional<GeneLocation<I,RV,RVT,RE,RET>> optionalGeneLocation = graph.geneLocationNameIndex().getVertex(geneLocationTypeSt);
-								GeneLocation<I,RV,RVT,RE,RET> geneLocation = null;
 
 								if(optionalGeneLocation.isPresent()){
-
-									geneLocation = optionalGeneLocation.get();
-
-								}else{
-
-									geneLocation = graph.addVertex(graph.GeneLocation());
-									geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
-									graph.raw().commit();
-
+									ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), optionalGeneLocation.get());
+									proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 								}
-
-								ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);
-								proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 							}
 
 
@@ -535,90 +392,70 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							//---------------------------------------------------------------------------------------
 							//--------------------------------organism-----------------------------------------------
 
-							String scName, commName, synName;
-							scName = "";
-							commName = "";
-							synName = "";
+							String scName = "";
 
 							Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
 
 							List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
 							for (Element element : organismNames) {
 								String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-								switch (type) {
-									case ORGANISM_SCIENTIFIC_NAME_TYPE:
-										scName = element.getText();
-										break;
-									case ORGANISM_COMMON_NAME_TYPE:
-										commName = element.getText();
-										break;
-									case ORGANISM_SYNONYM_NAME_TYPE:
-										synName = element.getText();
-										break;
+								if (type.equals(ORGANISM_SCIENTIFIC_NAME_TYPE)) {
+									scName = element.getText();
 								}
 							}
 
-							Organism<I,RV,RVT,RE,RET> organism = null;
 							Optional<Organism<I,RV,RVT,RE,RET>> organismOptional = graph.organismScientificNameIndex().getVertex(scName);
 
-							if (!organismOptional.isPresent()) {
+							if (organismOptional.isPresent()) {
+								Organism<I,RV,RVT,RE,RET> organism = organismOptional.get();
 
-								organism = graph.addVertex(graph.Organism());
-								organism.set(graph.Organism().scientificName, scName);
-								organism.set(graph.Organism().commonName, commName);
-								organism.set(graph.Organism().synonymName, synName);
-								graph.raw().commit();
+								protein.addOutEdge(graph.ProteinOrganism(), organism);
 
 								Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
 								List<Element> taxons = lineage.getChildren("taxon");
 
 								Element firstTaxonElem = taxons.get(0);
-
-								Taxon<I,RV,RVT,RE,RET> firstTaxon = null;
 								Optional<Taxon<I,RV,RVT,RE,RET>> firstTaxonOptional = graph.taxonNameIndex().getVertex(firstTaxonElem.getText());
 
-								if (!firstTaxonOptional.isPresent()) {
+								if (firstTaxonOptional.isPresent()) {
+									Taxon<I,RV,RVT,RE,RET> lastTaxon = firstTaxonOptional.get();
 
-									String firstTaxonName = firstTaxonElem.getText();
-									firstTaxon = graph.addVertex(graph.Taxon());
-									firstTaxon.set(graph.Taxon().name, firstTaxonName);
-									graph.raw().commit();
+									for (int i = 1; i < taxons.size(); i++) {
+										String taxonName = taxons.get(i).getText();
+										Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
+										Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
 
-								}else{
-									firstTaxon = firstTaxonOptional.get();
-								}
-
-								Taxon<I,RV,RVT,RE,RET> lastTaxon = firstTaxon;
-
-								for (int i = 1; i < taxons.size(); i++) {
-									String taxonName = taxons.get(i).getText();
-									Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
-									Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
-
-									if (!currentTaxonOptional.isPresent()) {
-
-										currentTaxon = graph.addVertex(graph.Taxon());
-										currentTaxon.set(graph.Taxon().name, taxonName);
-										graph.raw().commit();
-										lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
-									}else{
-										currentTaxon = currentTaxonOptional.get();
+										if (!currentTaxonOptional.isPresent()) {
+											currentTaxon = graph.addVertex(graph.Taxon());
+											currentTaxon.set(graph.Taxon().name, taxonName);
+											graph.raw().commit();
+											lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
+										}else{
+											currentTaxon = currentTaxonOptional.get();
+										}
+										lastTaxon = currentTaxon;
 									}
-									lastTaxon = currentTaxon;
+
+									if(!organismTaxonEdgesAlreadyCreated.contains(organism.scientificName())){
+										organismTaxonEdgesAlreadyCreated.add(organism.scientificName());
+//										if(organism.organismTaxon_out()){
+//
+//										}
+//										organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
+									}
+
+
 								}
 
 
-								organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
 
-							}else{
-								organism = organismOptional.get();
+
+
 							}
-
-
 							//---------------------------------------------------------------------------------------
 							//---------------------------------------------------------------------------------------
 
-							protein.addOutEdge(graph.ProteinOrganism(), organism);
+
 
 						}
 
@@ -772,7 +609,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 	private void importProteinComments(XMLElement entryXMLElem,
 	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                   Protein<I,RV,RVT,RE,RET> protein,
-	                                   String proteinSequence,
 	                                   UniprotDataXML uniprotDataXML) {
 
 
