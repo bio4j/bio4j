@@ -58,8 +58,8 @@ public final class Enzyme<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 
 	//-----enzymaticActivity----
 	// ingoing
-	public Optional<Stream<EnzymaticActivity<I, RV, RVT, RE, RET>>> enzymaticActivity_in(){   return inManyOptional(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
-	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> enzymaticActivity_inV(){   return inManyOptionalV(graph().uniprotEnzymeDBGraph().EnzymaticActivity());}
+	public Optional<Stream<EnzymaticActivity<I, RV, RVT, RE, RET>>> enzymaticActivity_in(){   return inManyOptional(graph().uniProtEnzymeDBGraph().EnzymaticActivity());}
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> enzymaticActivity_inV(){   return inManyOptionalV(graph().uniProtEnzymeDBGraph().EnzymaticActivity());}
 
 
 }

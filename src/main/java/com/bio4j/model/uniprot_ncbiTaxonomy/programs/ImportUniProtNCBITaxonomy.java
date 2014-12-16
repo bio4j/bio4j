@@ -90,7 +90,7 @@ public abstract class ImportUniProtNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 
 						String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
 
-						Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotNCBITaxonomyGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+						Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotNCBITaxonomyGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt);
 						if(proteinOptional.isPresent()){
 
 							Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();

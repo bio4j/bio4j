@@ -98,7 +98,7 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
 
 								if(protein == null){
-									protein = uniprotEnzymeDBGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+									protein = uniprotEnzymeDBGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt).get();
 								}
 
 								String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
