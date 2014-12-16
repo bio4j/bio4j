@@ -45,19 +45,19 @@ public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	//uniRef50Representant
 	// ingoing
 	public UniRef50Representant<I, RV, RVT, RE, RET> uniRef50Representant_in(){
-		return inOne(graph().uniprotUniRefGraph().UniRef50Representant());
+		return inOne(graph().uniProtUniRefGraph().UniRef50Representant());
 	}
 	public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inV(){
-		return inOneV(graph().uniprotUniRefGraph().UniRef50Representant());
+		return inOneV(graph().uniProtUniRefGraph().UniRef50Representant());
 	}
 
 	//uniRef50Member
 	// ingoing
 	public Stream<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
-		return inMany(graph().uniprotUniRefGraph().UniRef50Member());
+		return inMany(graph().uniProtUniRefGraph().UniRef50Member());
 	}
 	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inV(){
-		return inManyV(graph().uniprotUniRefGraph().UniRef50Member());
+		return inManyV(graph().uniProtUniRefGraph().UniRef50Member());
 	}
 
 

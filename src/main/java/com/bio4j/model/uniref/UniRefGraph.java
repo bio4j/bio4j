@@ -55,7 +55,7 @@ public abstract class UniRefGraph<
         return raw;
     }
 
-	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
+	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniProtUniRefGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// indices

@@ -157,9 +157,9 @@ public final class GoTerm<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE,
 	//-----goAnnotation----
 	public Optional<Stream<GoAnnotation<I, RV, RVT, RE, RET>>> goAnnotation_in() {
 
-		return inManyOptional( graph().uniprotGoGraph().GoAnnotation() );
+		return inManyOptional( graph().uniProtGoGraph().GoAnnotation() );
 	}
-	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> goAnnotation_inV(){   return inManyOptionalV(graph().uniprotGoGraph().GoAnnotation());}
+	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> goAnnotation_inV(){   return inManyOptionalV(graph().uniProtGoGraph().GoAnnotation());}
 
 
 

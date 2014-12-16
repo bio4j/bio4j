@@ -45,7 +45,7 @@ public abstract class UniProtGoGraph<
         return raw;
     }
 
-	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniprotGraph();
+	public abstract UniProtGraph<I, RV, RVT, RE, RET> uniProtGraph();
 	public abstract GoGraph<I, RV, RVT, RE, RET> goGraph();
 
 	//////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ public abstract class UniProtGoGraph<
 		public GoAnnotationType(RET raw) {
 
 			super(
-				UniProtGoGraph.this.uniprotGraph().Protein(), 
+				UniProtGoGraph.this.uniProtGraph().Protein(),
 				raw, 
 				UniProtGoGraph.this.goGraph().GoTerm()
 			);

@@ -70,10 +70,10 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 	//----proteinNCBITaxon-------
 	// ingoing
 	public Optional<Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>>> proteinNCBITaxon_in(){
-		return inManyOptional(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+		return inManyOptional(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 	public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinNCBITaxon_inV(){
-		return inManyOptionalV(graph().uniprotNCBITaxonomyGraph().ProteinNCBITaxon());
+		return inManyOptionalV(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
 	}
 
     //-----genInfoNCBITaxon----

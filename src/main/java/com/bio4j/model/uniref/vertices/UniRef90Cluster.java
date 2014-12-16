@@ -45,19 +45,19 @@ public final class UniRef90Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV
 	//uniRef90Representant
 	// ingoing
 	public UniRef90Representant<I, RV, RVT, RE, RET> uniRef90Representant_in(){
-		return inOne(graph().uniprotUniRefGraph().UniRef90Representant());
+		return inOne(graph().uniProtUniRefGraph().UniRef90Representant());
 	}
 	public Protein<I, RV, RVT, RE, RET> uniRef90Representant_inV(){
-		return inOneV(graph().uniprotUniRefGraph().UniRef90Representant());
+		return inOneV(graph().uniProtUniRefGraph().UniRef90Representant());
 	}
 
 	//uniRef90Member
 	// ingoing
 	public Stream<UniRef90Member<I, RV, RVT, RE, RET>> uniRef90Member_in(){
-		return inMany(graph().uniprotUniRefGraph().UniRef90Member());
+		return inMany(graph().uniProtUniRefGraph().UniRef90Member());
 	}
 	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef90Member_inV(){
-		return inManyV(graph().uniprotUniRefGraph().UniRef90Member());
+		return inManyV(graph().uniProtUniRefGraph().UniRef90Member());
 	}
 
 

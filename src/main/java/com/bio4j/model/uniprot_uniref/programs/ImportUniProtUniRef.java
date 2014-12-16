@@ -193,7 +193,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				//----retrieving TitanProtein members----
 				List<Protein<I,RV,RVT,RE,RET>> proteinMembers = new LinkedList<>();
 				for (String proteinAccession : membersAccessionList){
-					Optional<Protein<I,RV,RVT,RE,RET>> optionalProtein = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(proteinAccession);
+					Optional<Protein<I,RV,RVT,RE,RET>> optionalProtein = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(proteinAccession);
 					if(optionalProtein.isPresent()){
 						proteinMembers.add(optionalProtein.get());
 					}
@@ -205,7 +205,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					if(optionalCluster.isPresent()){
 						UniRef50Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
+						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
 
@@ -229,7 +229,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					if(optionalCluster.isPresent()){
 						UniRef90Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
+						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
 
@@ -253,7 +253,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					if(optionalCluster.isPresent()){
 						UniRef100Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniprotGraph().proteinAccessionIndex().getVertex(representantAccession);
+						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
 						if(optionalRepresentant.isPresent()){
 							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
 

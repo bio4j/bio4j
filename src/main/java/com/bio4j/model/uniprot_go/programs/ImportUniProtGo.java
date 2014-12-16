@@ -103,7 +103,7 @@ public abstract class ImportUniProtGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 							if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(GO_DB_REFERENCE_TYPE)) {
 
 								if(protein == null){
-									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniprotGraph().proteinAccessionIndex().getVertex(accessionSt);
+									Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = uniprotGoGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt);
 									if(proteinOptional.isPresent()){
 										protein = proteinOptional.get();
 									}else{

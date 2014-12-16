@@ -66,7 +66,7 @@ public abstract class EnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
 
 	// types
 	// vertices
