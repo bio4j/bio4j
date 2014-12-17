@@ -184,6 +184,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 				reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
 
+				HashSet<String> subcellularLocationParentEdgesAlreadyCreated = new HashSet<>(); //target nodes
 				HashSet<String> taxonParentEdgesAlreadyCreated = new HashSet<>(); //target nodes
 				HashSet<String> organismTaxonEdgesAlreadyCreated = new HashSet<>();
 
@@ -275,7 +276,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							//-----comments import---
 							if (uniprotDataXML.getComments()) {
-								importProteinComments(entryXMLElem, graph, protein, uniprotDataXML);
+								importProteinComments(entryXMLElem, graph, protein, uniprotDataXML, subcellularLocationParentEdgesAlreadyCreated);
 							}
 
 							//-----features import----
@@ -600,7 +601,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 	private void importProteinComments(XMLElement entryXMLElem,
 	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                   Protein<I,RV,RVT,RE,RET> protein,
-	                                   UniprotDataXML uniprotDataXML) {
+	                                   UniprotDataXML uniprotDataXML,
+	                                   HashSet<String> subcellularLocationParentEdgesAlreadyCreated) {
 
 
 		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
@@ -778,20 +780,24 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									for (int i = 1; i < locations.size(); i++) {
 
-										SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = null;
 										String tempLocationSt = locations.get(i).getTextTrim();
 										Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
 
-										if(!tempLocationOptional.isPresent()){
-											tempLocation = graph.addVertex(graph.SubcellularLocation());
-											tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
-											graph.raw().commit();
-										}else{
-											tempLocation = tempLocationOptional.get();
-										}
+										if(tempLocationOptional.isPresent()){
+											SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = tempLocationOptional.get();
 
-										tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
-										lastLocation = tempLocation;
+											if(!subcellularLocationParentEdgesAlreadyCreated.contains(tempLocation.name())){
+												subcellularLocationParentEdgesAlreadyCreated.add(tempLocation.name());
+												try{
+													tempLocation.subcellularLocationParent_out();
+												}catch (NoSuchElementException e){
+													tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
+												}
+											}
+											lastLocation = tempLocation;
+										}else{
+											break;
+										}
 
 									}
 
@@ -835,58 +841,26 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							for (Element isoformElem : isoformList) {
 								String isoformIdSt = isoformElem.getChildText("id");
-								String isoformNoteSt = isoformElem.getChildText("note");
-								String isoformNameSt = isoformElem.getChildText("name");
-								String isoformSeqSt = "";
-								Element isoSeqElem = isoformElem.getChild("sequence");
-								if (isoSeqElem != null) {
-									String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-									if (isoSeqTypeSt.equals("displayed")) {
-										isoformSeqSt = proteinSequence;
-									}
-								}
-								if (isoformNoteSt == null) {
-									isoformNoteSt = "";
-								}
-								if (isoformNameSt == null) {
-									isoformNameSt = "";
-								}
+
 
 								Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
-								Isoform<I,RV,RVT,RE,RET> isoform;
-								if(!isoformOptional.isPresent()){
-									isoform = graph.addVertex(graph.Isoform());
-									isoform.set(graph.Isoform().name, isoformNameSt);
-									isoform.set(graph.Isoform().note, isoformNoteSt);
-									isoform.set(graph.Isoform().sequence, isoformSeqSt);
-									isoform.set(graph.Isoform().id, isoformIdSt);
-									graph.raw().commit();
-									//Adding edge from Protein to Isoform
+
+								if(isoformOptional.isPresent()){
+									Isoform<I,RV,RVT,RE,RET> isoform = isoformOptional.get();
 									protein.addOutEdge(graph.ProteinIsoform(), isoform);
-								}else{
-									isoform = isoformOptional.get();
-								}
 
-								graph.raw().commit();
+									for (Element eventElem : eventList) {
 
-								for (Element eventElem : eventList) {
+										String eventTypeSt = eventElem.getAttributeValue("type");
 
-									String eventTypeSt = eventElem.getAttributeValue("type");
+										Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
 
-									Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
-									AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct;
-
-									if(alternativeProductOptional.isPresent()){
-										alternativeProduct = alternativeProductOptional.get();
-									}else{
-										alternativeProduct = graph.addVertex(graph.AlternativeProduct());
-										alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
-										graph.raw().commit();
+										if(alternativeProductOptional.isPresent()){
+											AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct = alternativeProductOptional.get();
+											isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
+										}
 									}
-
-									isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
 								}
-
 							}
 						}
 						break;
@@ -929,24 +903,25 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								}
 							}
 
-//						System.out.println("conflictTypeSt = " + conflictTypeSt);
-//						System.out.println("sequenceCautionNameIndex = " + graph.sequenceCautionNameIndex());
 							Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
-							SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution;
-
-							if(!sequenceCautionOptional.isPresent()){
-
-								sequenceCaution = graph.addVertex(graph.SequenceCaution());
-								sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
-								graph.raw().commit();
-
-							}else{
-								sequenceCaution = sequenceCautionOptional.get();
-							}
 
 
-							if (positionsList.size() > 0) {
-								for (String tempPosition : positionsList) {
+							if(sequenceCautionOptional.isPresent()){
+
+								SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution = sequenceCautionOptional.get();
+
+								if (positionsList.size() > 0) {
+									for (String tempPosition : positionsList) {
+										ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().text, commentTextSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
+										proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, tempPosition);
+									}
+								} else {
 									ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
@@ -954,19 +929,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
-									proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, tempPosition);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, "");
 								}
-							} else {
-								ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().text, commentTextSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, "");
 							}
-
 						}
 						break;
 					case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
