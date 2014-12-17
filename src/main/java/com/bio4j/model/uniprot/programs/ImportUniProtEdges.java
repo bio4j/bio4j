@@ -1283,19 +1283,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								volumeSt = "";
 							}
 
-							Book<I,RV,RVT,RE,RET> book = null;
 							Optional<Book<I,RV,RVT,RE,RET>> optionalBook = graph.bookNameIndex().getVertex(nameSt);
-							Reference<I,RV,RVT,RE,RET> reference = null;
+							Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(nameSt + graph.Book().name());
 
-							if(!optionalBook.isPresent()){
+							if(optionalBook.isPresent() && optionalReference.isPresent()){
 
-								book = graph.addVertex(graph.Book());
-								book.set(graph.Book().name, nameSt);
-								graph.raw().commit();
-
-								reference = graph.addVertex(graph.Reference());
-								reference.set(graph.Reference().date, dateSt);
-								reference.addOutEdge(graph.ReferenceBook(), book);
+								Book<I,RV,RVT,RE,RET> book = optionalBook.get();
+								Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 
 								//---authors association-----
 								for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
@@ -1308,73 +1302,42 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									List<Element> editorsElems = editorListElem.getChildren("person");
 									for (Element personElement : editorsElems) {
 
-										Person<I,RV,RVT,RE,RET> editor = null;
 										String personName = personElement.getAttributeValue("name");
 										Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
 
-										if(!optionalPerson.isPresent()){
-											editor = graph.addVertex(graph.Person());
-											editor.set(graph.Person().name, personName);
-											graph.raw().commit();
-										}else{
-											editor = optionalPerson.get();
+										if(optionalPerson.isPresent()){
+											book.addOutEdge(graph.BookEditor(), optionalPerson.get());
 										}
-										book.addOutEdge(graph.BookEditor(), editor);
-
 									}
 								}
-
 								//----publisher--
 								if (!publisherSt.equals("")) {
 
-									Publisher<I,RV,RVT,RE,RET> publisher = null;
 									Optional<Publisher<I,RV,RVT,RE,RET>> optionalPublisher = graph.publisherNameIndex().getVertex(publisherSt);
-
-									if(!optionalPublisher.isPresent()){
-
-										publisher = graph.addVertex(graph.Publisher());
-										publisher.set(graph.Publisher().name, publisherSt);
-										graph.raw().commit();
-
-									}else{
-										publisher = optionalPublisher.get();
+									if(optionalPublisher.isPresent()){
+										book.addOutEdge(graph.BookPublisher(), optionalPublisher.get());
 									}
-
-									book.addOutEdge(graph.BookPublisher(), publisher);
 								}
-
 								//-----city-----
 								if (!citySt.equals("")) {
 
-									City<I,RV,RVT,RE,RET> city = null;
 									Optional<City<I,RV,RVT,RE,RET>> optionalCity = graph.cityNameIndex().getVertex(citySt);
 
-									if(!optionalCity.isPresent()){
-
-										city = graph.addVertex(graph.City());
-										city.set(graph.City().name, citySt);
-										graph.raw().commit();
-
-									}else{
-										city = optionalCity.get();
+									if(optionalCity.isPresent()){
+										book.addOutEdge(graph.BookCity(), optionalCity.get());
 									}
-
-									book.addOutEdge(graph.BookCity(), city);
 								}
 
-							}else{
-								book = optionalBook.get();
-								reference = book.referenceBook_inV();
-							}
-
-							//--protein citation relationship
-							protein.addOutEdge(graph.ProteinReference(), reference);
+								//--protein citation relationship
+								protein.addOutEdge(graph.ProteinReference(), reference);
 
 //                          TODO see if these fields can somehow be included
 //							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
 //							bookProteinCitationProperties.put(BookProteinCitationRel.LAST_PROPERTY, lastSt);
 //							bookProteinCitationProperties.put(BookProteinCitationRel.VOLUME_PROPERTY, volumeSt);
 //							bookProteinCitationProperties.put(BookProteinCitationRel.TITLE_PROPERTY, titleSt);
+
+							}
 
 						}
 
