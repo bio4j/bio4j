@@ -1137,6 +1137,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 									if(!graph.submissionTitleIndex().getVertex(titleSt).isPresent()){
 										Submission<I,RV,RVT,RE,RET> submission = graph.addVertex(graph.Submission());
 										submission.set(graph.Submission().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + "Submission");
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceSubmission(), submission);
 									}
 
 									if (dbSt != null) {
@@ -1182,6 +1192,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
 									Book<I,RV,RVT,RE,RET> book = graph.addVertex(graph.Book());
 									book.set(graph.Book().name, nameSt);
+
+									String dateSt = citation.getAttributeValue("date");
+									if (dateSt == null) {
+										dateSt = "";
+									}
+
+									Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+									reference.set(graph.Reference().id, nameSt + "Book");
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferenceBook(), book);
 
 									//---editor association-----
 									Element editorListElem = citation.getChild("editorList");
@@ -1253,6 +1273,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = graph.addVertex(graph.OnlineArticle());
 										onlineArticle.set(graph.OnlineArticle().title, titleSt);
 
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + "OnlineArticle");
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+
 										//------online journal-----------
 										if (!nameSt.equals("")) {
 
@@ -1316,6 +1346,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										Article<I,RV,RVT,RE,RET> article = graph.addVertex(graph.Article());
 										article.set(graph.Article().title, titleSt);
 										article.set(graph.Article().doId, doiSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + "Article");
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceArticle(), article);
 
 										if(pubmedId != ""){
 
