@@ -1041,6 +1041,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 									if(!graph.thesisTitleIndex().getVertex(titleSt).isPresent()){
 										Thesis<I,RV,RVT,RE,RET> thesis = graph.addVertex(graph.Thesis());
 										thesis.set(graph.Thesis().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + "Thesis");
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceThesis(), thesis);
 									}
 
 									//-----------institute-----------------------------
@@ -1095,6 +1105,16 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										Patent<I,RV,RVT,RE,RET> patent = graph.addVertex(graph.Patent());
 										patent.set(graph.Patent().number, numberSt);
 										patent.set(graph.Patent().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, numberSt + "Patent");
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferencePatent(), patent);
 									}
 								}
 							}

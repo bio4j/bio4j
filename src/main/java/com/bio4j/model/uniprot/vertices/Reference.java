@@ -30,6 +30,7 @@ public final class Reference <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT,
 	public String date() {
 		return get(type().date);
 	}
+	public String id(){ return get(type().id); }
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 

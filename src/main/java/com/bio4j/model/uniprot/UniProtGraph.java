@@ -803,6 +803,16 @@ public abstract class UniProtGraph<
 			I, RV, RVT, RE, RET
 			>
 	commentTypeNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Reference<I, RV, RVT, RE, RET>, ReferenceType,
+			// property
+			ReferenceType.id, String,
+			// graph
+			UniProtGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	referenceIdIndex();
 
 
 
@@ -2522,6 +2532,7 @@ public abstract class UniProtGraph<
 					UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
 					> {
 
+		public final id id = new id();
 		public final date date = new date();
 
         public ReferenceType(RVT raw) {
@@ -2538,6 +2549,17 @@ public abstract class UniProtGraph<
 			return new Reference<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
+		public final class id
+				extends
+				UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, id, String> {
+			public id() {
+				super(ReferenceType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 		public final class date
 				extends
 				UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
