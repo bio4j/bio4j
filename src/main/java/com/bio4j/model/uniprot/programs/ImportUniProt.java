@@ -1429,6 +1429,8 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					}else{
 						person = optionalPerson.get();
 					}
+
+                    authorsPerson.add(person);
 				}
 
 				for (Element consortiumElement : authorConsortiumElems) {
@@ -1443,6 +1445,8 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 					}else{
 						consortium = optionalConsortium.get();
 					}
+
+                    authorsConsortium.add(consortium);
 				}
 				//----------------------------------------------------------------------------
 				//-----------------------------THESIS-----------------------------------------

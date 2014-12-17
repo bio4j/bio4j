@@ -1096,29 +1096,21 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 				for (Element personElement : authorPersonElems) {
 
-					Person<I,RV,RVT,RE,RET> person = null;
 					String personName = personElement.getAttributeValue("name");
 					Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
-					if(!optionalPerson.isPresent()){
-						person = graph.addVertex(graph.Person());
-						person.set(graph.Person().name, personName);
-						graph.raw().commit();
-					}else{
-						person = optionalPerson.get();
+					if(optionalPerson.isPresent()){
+						Person<I,RV,RVT,RE,RET> person = optionalPerson.get();
+						authorsPerson.add(person);
 					}
 				}
 
 				for (Element consortiumElement : authorConsortiumElems) {
 
-					Consortium<I,RV,RVT,RE,RET> consortium = null;
 					String consortiumName = consortiumElement.getAttributeValue("name");
 					Optional<Consortium<I,RV,RVT,RE,RET>> optionalConsortium = graph.consortiumNameIndex().getVertex(consortiumName);
-					if(!optionalConsortium.isPresent()){
-						consortium = graph.addVertex(graph.Consortium());
-						consortium.set(graph.Consortium().name, consortiumName);
-						graph.raw().commit();
-					}else{
-						consortium = optionalConsortium.get();
+					if(optionalConsortium.isPresent()){
+						Consortium<I,RV,RVT,RE,RET> consortium = optionalConsortium.get();
+						authorsConsortium.add(consortium);
 					}
 				}
 				//----------------------------------------------------------------------------
@@ -1135,14 +1127,15 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								titleSt = "";
 							}else{
 
-								Thesis<I,RV,RVT,RE,RET> thesis = null;
 								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
 
-								if(!optionalThesis.isPresent()){
+								if(optionalThesis.isPresent()){
 
+									Thesis<I,RV,RVT,RE,RET> thesis = optionalThesis.get();
 									thesis = graph.addVertex(graph.Thesis());
 									thesis.set(graph.Thesis().title, titleSt);
+
+									Reference<I,RV,RVT,RE,RET> reference = null;
 
 									//-----------institute-----------------------------
 									String instituteSt = citation.getAttributeValue("institute");
@@ -1191,7 +1184,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									}
 
 								}else{
-									thesis = optionalThesis.get();
+									thesis =
 									reference = thesis.referenceThesis_inV();
 								}
 
