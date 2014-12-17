@@ -1125,20 +1125,17 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							}else{
 
 								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
+								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex((titleSt + graph.Thesis().name()));
 
-								if(optionalThesis.isPresent()){
 
+								if(optionalReference.isPresent() && optionalThesis.isPresent()){
+
+									Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 									Thesis<I,RV,RVT,RE,RET> thesis = optionalThesis.get();
-
-									Reference<I,RV,RVT,RE,RET> reference = null;
 
 									//-----------institute-----------------------------
 									String instituteSt = citation.getAttributeValue("institute");
 									String countrySt = citation.getAttributeValue("country");
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceThesis(), thesis);
 
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
@@ -1147,46 +1144,24 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									if (instituteSt != null) {
 
-										Institute<I,RV,RVT,RE,RET> institute = null;
 										Optional<Institute<I,RV,RVT,RE,RET>> optionalInstitute = graph.instituteNameIndex().getVertex(instituteSt);
 
+										if(optionalInstitute.isPresent()){
+											thesis.addOutEdge(graph.ThesisInstitute(), optionalInstitute.get());
+											if (countrySt != null) {
 
-										if(!optionalInstitute.isPresent()){
-
-											institute = graph.addVertex(graph.Institute());
-											institute.set(graph.Institute().name, instituteSt);
-											graph.raw().commit();
-
-										}else{
-											institute = optionalInstitute.get();
-										}
-
-										if (countrySt != null) {
-
-											Country<I,RV,RVT,RE,RET> country = null;
-											Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
-											if(!optionalCountry.isPresent()){
-												country = graph.addVertex(graph.Country());
-												country.set(graph.Country().name, countrySt);
-												graph.raw().commit();
-											}else{
-												country = optionalCountry.get();
+												Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
+												if(!optionalCountry.isPresent()){
+													optionalInstitute.get().addOutEdge(graph.InstituteCountry(), optionalCountry.get());
+												}
 											}
-
-											institute.addOutEdge(graph.InstituteCountry(), country);
 										}
-										thesis.addOutEdge(graph.ThesisInstitute(), institute);
 									}
 
-								}else{
-									thesis =
-									reference = thesis.referenceThesis_inV();
-								}
+									//--protein reference citation relationship
+									protein.addOutEdge(graph.ProteinReference(), reference);
 
-								//--protein reference citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
-
+								}				
 							}
 
 						}
