@@ -1415,9 +1415,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							String firstSt = citation.getAttributeValue("first");
 							String lastSt = citation.getAttributeValue("last");
 							String volumeSt = citation.getAttributeValue("volume");
-							String doiSt = "";
-							String medlineSt = "";
-							String pubmedId = "";
 
 							if (journalNameSt == null) {
 								journalNameSt = "";
@@ -1438,51 +1435,31 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								titleSt = "";
 							}
 
-							List<Element> dbReferences = citation.getChildren("dbReference");
-							for (Element tempDbRef : dbReferences) {
-								switch (tempDbRef.getAttributeValue("type")) {
-									case "DOI":
-										doiSt = tempDbRef.getAttributeValue("id");
-										break;
-									case "MEDLINE":
-										medlineSt = tempDbRef.getAttributeValue("id");
-										break;
-									case "PubMed":
-										pubmedId = tempDbRef.getAttributeValue("id");
-										break;
-								}
-							}
 
 							if (titleSt != "") {
-								Article<I,RV,RVT,RE,RET> article = null;
+
 								Optional<Article<I,RV,RVT,RE,RET>> optionalArticle = graph.articleTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
+								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.Article().name());
 
-								if(!optionalArticle.isPresent()){
+								if(optionalArticle.isPresent() && optionalReference.isPresent()){
 
-									article = graph.addVertex(graph.Article());
-									article.set(graph.Article().title, titleSt);
-									article.set(graph.Article().doId, doiSt);
-									graph.raw().commit();
+									Article<I,RV,RVT,RE,RET> article = optionalArticle.get();
+									Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 
-									if(pubmedId != ""){
-
-										Pubmed<I,RV,RVT,RE,RET> pubmed = null;
-										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
-
-										if(!optionalPubmed.isPresent()){
-											pubmed = graph.addVertex(graph.Pubmed());
-											pubmed.set(graph.Pubmed().id, pubmedId);
-											graph.raw().commit();
-										}else{
-											pubmed = optionalPubmed.get();
+									String pubmedId = "";
+									List<Element> dbReferences = citation.getChildren("dbReference");
+									for (Element tempDbRef : dbReferences) {
+										if(tempDbRef.getAttributeValue("type").equals("PubMed")) {
+											pubmedId = tempDbRef.getAttributeValue("id");
 										}
-										article.addOutEdge(graph.ArticlePubmed(), pubmed);
 									}
 
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceArticle(), article);
+									if(pubmedId != ""){
+										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
+										if(optionalPubmed.isPresent()){
+											article.addOutEdge(graph.ArticlePubmed(), optionalPubmed.get());
+										}
+									}
 
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
@@ -1495,37 +1472,21 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									//------journal-----------
 									if (!journalNameSt.equals("")) {
-
-										Journal<I,RV,RVT,RE,RET> journal = null;
 										Optional<Journal<I,RV,RVT,RE,RET>> optionalJournal = graph.journalNameIndex().getVertex(journalNameSt);
-
-										if(!optionalJournal.isPresent()){
-											journal = graph.addVertex(graph.Journal());
-											journal.set(graph.Journal().name, journalNameSt);
-											graph.raw().commit();
-										}else{
-											journal = optionalJournal.get();
+										if(optionalJournal.isPresent()){
+											ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), optionalJournal.get());
+											articleJournal.set(graph.ArticleJournal().volume, volumeSt);
+											articleJournal.set(graph.ArticleJournal().first, firstSt);
+											articleJournal.set(graph.ArticleJournal().last, lastSt);
 										}
-
-										ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), journal);
-										articleJournal.set(graph.ArticleJournal().volume, volumeSt);
-										articleJournal.set(graph.ArticleJournal().first, firstSt);
-										articleJournal.set(graph.ArticleJournal().last, lastSt);
 									}
 									//----------------------------
 
-								}else{
-									article = optionalArticle.get();
-									reference = article.referenceArticle_inV();
+									//protein citation
+									protein.addOutEdge(graph.ProteinReference(), reference);
 								}
-
-								//protein citation
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
 							}
-
 						}
-
 						//----------------------------------------------------------------------------
 						//----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
 						break;
