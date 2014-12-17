@@ -184,7 +184,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 				reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
 
-				HashMap<String, HashSet<String>> taxonParentEdgesAlreadyCreated = new HashMap<>();
+				HashSet<String> taxonParentEdgesAlreadyCreated = new HashSet<>(); //target nodes
 				HashSet<String> organismTaxonEdgesAlreadyCreated = new HashSet<>();
 
 				while ((line = reader.readLine()) != null) {
@@ -425,14 +425,18 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
 										Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
 
-										if (!currentTaxonOptional.isPresent()) {
-											currentTaxon = graph.addVertex(graph.Taxon());
-											currentTaxon.set(graph.Taxon().name, taxonName);
-											graph.raw().commit();
-											lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
-										}else{
+										if(currentTaxonOptional.isPresent()){
 											currentTaxon = currentTaxonOptional.get();
+											if(!taxonParentEdgesAlreadyCreated.contains(currentTaxon.name())){
+												taxonParentEdgesAlreadyCreated.add(currentTaxon.name());
+												try{
+													currentTaxon.taxonParent_in();
+												}catch(NoSuchElementException e){
+													lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
+												}
+											}
 										}
+										
 										lastTaxon = currentTaxon;
 									}
 
@@ -446,19 +450,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									}
 
 								}
-
-
-
-
-
 							}
 							//---------------------------------------------------------------------------------------
 							//---------------------------------------------------------------------------------------
-
-
-
 						}
-
 
 						proteinCounter++;
 						if ((proteinCounter % limitForPrintingOut) == 0) {
