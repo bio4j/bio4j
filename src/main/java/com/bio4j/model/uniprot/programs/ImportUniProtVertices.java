@@ -1048,7 +1048,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										}
 
 										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-										reference.set(graph.Reference().id, titleSt + "Thesis");
+										reference.set(graph.Reference().id, titleSt + graph.Thesis().name());
 										reference.set(graph.Reference().date, dateSt);
 										reference.addOutEdge(graph.ReferenceThesis(), thesis);
 									}
@@ -1112,7 +1112,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										}
 
 										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-										reference.set(graph.Reference().id, numberSt + "Patent");
+										reference.set(graph.Reference().id, numberSt + graph.Patent().name());
 										reference.set(graph.Reference().date, dateSt);
 										reference.addOutEdge(graph.ReferencePatent(), patent);
 									}
@@ -1144,7 +1144,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										}
 
 										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-										reference.set(graph.Reference().id, titleSt + "Submission");
+										reference.set(graph.Reference().id, titleSt + graph.Submission().name());
 										reference.set(graph.Reference().date, dateSt);
 										reference.addOutEdge(graph.ReferenceSubmission(), submission);
 									}
@@ -1199,7 +1199,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 									}
 
 									Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().id, nameSt + "Book");
+									reference.set(graph.Reference().id, nameSt + graph.Book().name());
 									reference.set(graph.Reference().date, dateSt);
 									reference.addOutEdge(graph.ReferenceBook(), book);
 
@@ -1279,7 +1279,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										}
 
 										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-										reference.set(graph.Reference().id, titleSt + "OnlineArticle");
+										reference.set(graph.Reference().id, titleSt + graph.OnlineArticle().name());
 										reference.set(graph.Reference().date, dateSt);
 										reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
 
@@ -1353,7 +1353,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 										}
 
 										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-										reference.set(graph.Reference().id, titleSt + "Article");
+										reference.set(graph.Reference().id, titleSt + graph.Article().name());
 										reference.set(graph.Reference().date, dateSt);
 										reference.addOutEdge(graph.ReferenceArticle(), article);
 

@@ -1118,11 +1118,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 				switch (citationType) {
 					case THESIS_CITATION_TYPE:
 						if (uniprotDataXML.getThesis()) {
-							String dateSt = citation.getAttributeValue("date");
 							String titleSt = citation.getChildText("title");
-							if (dateSt == null) {
-								dateSt = "";
-							}
+
 							if (titleSt == null) {
 								titleSt = "";
 							}else{
@@ -1132,8 +1129,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								if(optionalThesis.isPresent()){
 
 									Thesis<I,RV,RVT,RE,RET> thesis = optionalThesis.get();
-									thesis = graph.addVertex(graph.Thesis());
-									thesis.set(graph.Thesis().title, titleSt);
 
 									Reference<I,RV,RVT,RE,RET> reference = null;
 
