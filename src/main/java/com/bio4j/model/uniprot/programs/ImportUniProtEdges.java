@@ -436,7 +436,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 												}
 											}
 										}
-										
+
 										lastTaxon = currentTaxon;
 									}
 
@@ -459,6 +459,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						if ((proteinCounter % limitForPrintingOut) == 0) {
 							String countProteinsSt = proteinCounter + " proteins inserted!!";
 							logger.log(Level.INFO, countProteinsSt);
+							graph.raw().commit();
 						}
 
 					}
@@ -488,7 +489,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 					long minutes = (elapsedSeconds % 3600) / 60;
 					long seconds = (elapsedSeconds % 3600) % 60;
 
-					statsBuff.write("Statistics for program ImportUniProt:\nInput file: " + inFile.getName()
+					statsBuff.write("Statistics for program ImportUniProtEdges:\nInput file: " + inFile.getName()
 							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
@@ -516,86 +517,81 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 			String featureTypeSt = featureElem.getAttributeValue(FEATURE_TYPE_ATTRIBUTE);
 
-			FeatureType<I,RV,RVT,RE,RET> feature = null;
 			Optional<FeatureType<I,RV,RVT,RE,RET>> optionalFeature = graph.featureTypeNameIndex().getVertex(featureTypeSt);
 
 			if (!optionalFeature.isPresent()) {
 
-				feature = graph.addVertex(graph.FeatureType());
-				feature.set(graph.FeatureType().name, featureTypeSt);
-				graph.raw().commit();
+				FeatureType<I,RV,RVT,RE,RET> feature = optionalFeature.get();
 
-			}else{
-				feature = optionalFeature.get();
-			}
+				String featureDescSt = featureElem.getAttributeValue(FEATURE_DESCRIPTION_ATTRIBUTE);
+				if (featureDescSt == null) {
+					featureDescSt = "";
+				}
+				String featureIdSt = featureElem.getAttributeValue(FEATURE_ID_ATTRIBUTE);
+				if (featureIdSt == null) {
+					featureIdSt = "";
+				}
+				String featureStatusSt = featureElem.getAttributeValue(STATUS_ATTRIBUTE);
+				if (featureStatusSt == null) {
+					featureStatusSt = "";
+				}
+				String featureEvidenceSt = featureElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
+				if (featureEvidenceSt == null) {
+					featureEvidenceSt = "";
+				}
 
-			String featureDescSt = featureElem.getAttributeValue(FEATURE_DESCRIPTION_ATTRIBUTE);
-			if (featureDescSt == null) {
-				featureDescSt = "";
-			}
-			String featureIdSt = featureElem.getAttributeValue(FEATURE_ID_ATTRIBUTE);
-			if (featureIdSt == null) {
-				featureIdSt = "";
-			}
-			String featureStatusSt = featureElem.getAttributeValue(STATUS_ATTRIBUTE);
-			if (featureStatusSt == null) {
-				featureStatusSt = "";
-			}
-			String featureEvidenceSt = featureElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
-			if (featureEvidenceSt == null) {
-				featureEvidenceSt = "";
-			}
+				Element locationElem = featureElem.getChild(FEATURE_LOCATION_TAG_NAME);
+				Element positionElem = locationElem.getChild(FEATURE_POSITION_TAG_NAME);
+				Integer beginFeature = null;
+				Integer endFeature = null;
+				if (positionElem != null) {
+					String tempValue = positionElem.getAttributeValue(FEATURE_POSITION_POSITION_ATTRIBUTE);
+					if (tempValue == null) {
+						beginFeature = -1;
+					}else{
+						beginFeature = Integer.parseInt(tempValue);
+					}
+					endFeature = beginFeature;
+				} else {
+					String tempValue = locationElem.getChild(FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
+					if(tempValue == null){
+						beginFeature = null;
+					}else{
+						beginFeature = Integer.parseInt(tempValue);
+					}
+					tempValue = locationElem.getChild(FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
+					if(tempValue == null){
+						endFeature = null;
+					}else{
+						endFeature = Integer.parseInt(tempValue);
+					}
+				}
 
-			Element locationElem = featureElem.getChild(FEATURE_LOCATION_TAG_NAME);
-			Element positionElem = locationElem.getChild(FEATURE_POSITION_TAG_NAME);
-			Integer beginFeature = null;
-			Integer endFeature = null;
-			if (positionElem != null) {
-				String tempValue = positionElem.getAttributeValue(FEATURE_POSITION_POSITION_ATTRIBUTE);
-				if (tempValue == null) {
+				if (beginFeature == null) {
 					beginFeature = -1;
-				}else{
-					beginFeature = Integer.parseInt(tempValue);
 				}
-				endFeature = beginFeature;
-			} else {
-				String tempValue = locationElem.getChild(FEATURE_LOCATION_BEGIN_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
-				if(tempValue == null){
-					beginFeature = null;
-				}else{
-					beginFeature = Integer.parseInt(tempValue);
+				if (endFeature == null) {
+					endFeature = -1;
 				}
-				tempValue = locationElem.getChild(FEATURE_LOCATION_END_TAG_NAME).getAttributeValue(FEATURE_LOCATION_POSITION_ATTRIBUTE);
-				if(tempValue == null){
-					endFeature = null;
-				}else{
-					endFeature = Integer.parseInt(tempValue);
+
+				String originalSt = featureElem.getChildText(FEATURE_ORIGINAL_TAG_NAME);
+				String variationSt = featureElem.getChildText(FEATURE_VARIATION_TAG_NAME);
+				if (originalSt == null) {
+					originalSt = "";
 				}
-			}
+				if (variationSt == null) {
+					variationSt = "";
+				}
+				String featureRefSt = featureElem.getAttributeValue(FEATURE_REF_ATTRIBUTE);
+				if (featureRefSt == null) {
+					featureRefSt = "";
+				}
 
-			if (beginFeature == null) {
-				beginFeature = -1;
-			}
-			if (endFeature == null) {
-				endFeature = -1;
-			}
+				ProteinFeature<I,RV,RVT,RE,RET> proteinFeature = protein.addOutEdge(graph.ProteinFeature(), feature);
+				addPropertiesToProteinFeatureRelationship(graph, proteinFeature, featureIdSt, featureDescSt, featureEvidenceSt,
+						featureStatusSt, beginFeature, endFeature, originalSt, variationSt, featureRefSt);
 
-			String originalSt = featureElem.getChildText(FEATURE_ORIGINAL_TAG_NAME);
-			String variationSt = featureElem.getChildText(FEATURE_VARIATION_TAG_NAME);
-			if (originalSt == null) {
-				originalSt = "";
 			}
-			if (variationSt == null) {
-				variationSt = "";
-			}
-			String featureRefSt = featureElem.getAttributeValue(FEATURE_REF_ATTRIBUTE);
-			if (featureRefSt == null) {
-				featureRefSt = "";
-			}
-
-			ProteinFeature<I,RV,RVT,RE,RET> proteinFeature = protein.addOutEdge(graph.ProteinFeature(), feature);
-			addPropertiesToProteinFeatureRelationship(graph, proteinFeature, featureIdSt, featureDescSt, featureEvidenceSt,
-					featureStatusSt, beginFeature, endFeature, originalSt, variationSt, featureRefSt);
 
 		}
 
@@ -631,352 +627,336 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
 			Optional<CommentType<I,RV,RVT,RE,RET>> commentOptional =  graph.commentTypeNameIndex().getVertex(commentTypeSt);
-			CommentType<I,RV,RVT,RE,RET> comment = null;
 
 			if(!commentOptional.isPresent()){
 
-				comment = graph.addVertex(graph.CommentType());
-				comment.set(graph.CommentType().name, commentTypeSt);
-				graph.raw().commit();
+				CommentType<I,RV,RVT,RE,RET> comment = commentOptional.get();
+				boolean createStandardProteinComment = false;
 
-			}else{
-				comment = commentOptional.get();
-			}
+				switch (commentTypeSt) {
 
-			boolean createStandardProteinComment = false;
+					case COMMENT_TYPE_FUNCTION:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_COFACTOR:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_CATALYTIC_ACTIVITY:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_ENZYME_REGULATION:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_DISEASE:
 
-			switch (commentTypeSt) {
+						Element diseaseElement = commentElem.getChild("disease");
 
-				case COMMENT_TYPE_FUNCTION:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_COFACTOR:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_CATALYTIC_ACTIVITY:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_ENZYME_REGULATION:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_DISEASE:
+						if(diseaseElement != null){
+							String diseaseId = diseaseElement.getAttributeValue("id");
+							String diseaseName = diseaseElement.getChildText("name");
+							String diseaseDescription = diseaseElement.getChildText("description");
+							String diseaseAcronym = diseaseElement.getChildText("acronym");
 
-					Element diseaseElement = commentElem.getChild("disease");
+							if(diseaseId != null){
 
-					if(diseaseElement != null){
-						String diseaseId = diseaseElement.getAttributeValue("id");
-						String diseaseName = diseaseElement.getChildText("name");
-						String diseaseDescription = diseaseElement.getChildText("description");
-						String diseaseAcronym = diseaseElement.getChildText("acronym");
+								Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
 
-						if(diseaseId != null){
-
-							Disease<I,RV,RVT,RE,RET> disease = null;
-							Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
-
-							if(!diseaseOptional.isPresent()){
-
-								disease = graph.addVertex(graph.Disease());
-								disease.set(graph.Disease().name, diseaseName);
-								disease.set(graph.Disease().id, diseaseId);
-								disease.set(graph.Disease().acronym, diseaseAcronym);
-								disease.set(graph.Disease().description, diseaseDescription);
-								graph.raw().commit();
-
-							}else{
-								disease = diseaseOptional.get();
+								if(diseaseOptional.isPresent()){
+									Disease<I,RV,RVT,RE,RET> disease = diseaseOptional.get();
+									ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
+									proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
+									proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
+									proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
+								}
 							}
-
-							ProteinDisease<I,RV,RVT,RE,RET> proteinDisease = protein.addOutEdge(graph.ProteinDisease(), disease);
-							proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
-							proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
-							proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
 						}
-					}
+						break;
 
-					break;
+					case COMMENT_TYPE_TISSUE_SPECIFICITY:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_TOXIC_DOSE:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_BIOTECHNOLOGY:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_SUBUNIT:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_POLYMORPHISM:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_DOMAIN:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_DISRUPTION_PHENOTYPE:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES:
 
-				case COMMENT_TYPE_TISSUE_SPECIFICITY:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_TOXIC_DOSE:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_BIOTECHNOLOGY:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_SUBUNIT:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_POLYMORPHISM:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_DOMAIN:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_DISRUPTION_PHENOTYPE:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES:
-
-					String phDependenceSt = commentElem.getChildText("phDependence");
-					String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
-					if (phDependenceSt == null) {
-						phDependenceSt = "";
-					}
-					if (temperatureDependenceSt == null) {
-						temperatureDependenceSt = "";
-					}
-					String absorptionMaxSt = "";
-					String absorptionTextSt = "";
-					Element absorptionElem = commentElem.getChild("absorption");
-					if (absorptionElem != null) {
-						absorptionMaxSt = absorptionElem.getChildText("max");
-						absorptionTextSt = absorptionElem.getChildText("text");
-						if (absorptionMaxSt == null) {
-							absorptionMaxSt = "";
+						String phDependenceSt = commentElem.getChildText("phDependence");
+						String temperatureDependenceSt = commentElem.getChildText("temperatureDependence");
+						if (phDependenceSt == null) {
+							phDependenceSt = "";
 						}
-						if (absorptionTextSt == null) {
-							absorptionTextSt = "";
+						if (temperatureDependenceSt == null) {
+							temperatureDependenceSt = "";
 						}
-					}
-					String kineticsSt = "";
-					Element kineticsElem = commentElem.getChild("kinetics");
-					if (kineticsElem != null) {
-						kineticsSt = new XMLElement(kineticsElem).toString();
-					}
-					String redoxPotentialSt = "";
-					String redoxPotentialEvidenceSt = "";
-					Element redoxPotentialElem = commentElem.getChild("redoxPotential");
-					if (redoxPotentialElem != null) {
-						redoxPotentialSt = redoxPotentialElem.getText();
-						redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
-						if (redoxPotentialSt == null) {
-							redoxPotentialSt = "";
-						}
-						if (redoxPotentialEvidenceSt == null) {
-							redoxPotentialEvidenceSt = "";
-						}
-					}
-
-					ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
-					proteinComment.set(graph.ProteinComment().text, commentTextSt);
-					proteinComment.set(graph.ProteinComment().status, commentStatusSt);
-					proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
-					proteinComment.set(graph.ProteinComment().temperatureDependence, temperatureDependenceSt);
-					proteinComment.set(graph.ProteinComment().phDependence, phDependenceSt);
-					proteinComment.set(graph.ProteinComment().kineticsXML, kineticsSt);
-					proteinComment.set(graph.ProteinComment().absorptionMax, absorptionMaxSt);
-					proteinComment.set(graph.ProteinComment().absorptionText, absorptionTextSt);
-					proteinComment.set(graph.ProteinComment().redoxPotentialEvidence, redoxPotentialEvidenceSt);
-					proteinComment.set(graph.ProteinComment().redoxPotential, redoxPotentialSt);
-
-					break;
-				case COMMENT_TYPE_ALLERGEN:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_PATHWAY:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_INDUCTION:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_SUBCELLULAR_LOCATION:
-
-					if (uniprotDataXML.getSubcellularLocations()) {
-						List<Element> subcLocations = commentElem.getChildren(SUBCELLULAR_LOCATION_TAG_NAME);
-
-						for (Element subcLocation : subcLocations) {
-
-							List<Element> locations = subcLocation.getChildren(LOCATION_TAG_NAME);
-							Element firstLocationElem = locations.get(0);
-
-							String firstLocationSt = firstLocationElem.getTextTrim();
-							SubcellularLocation<I,RV,RVT,RE,RET> lastLocation = null;
-							Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
-
-							if(!lastLocationOptional.isPresent()){
-								lastLocation = graph.addVertex(graph.SubcellularLocation());
-								lastLocation.set(graph.SubcellularLocation().name, firstLocationSt);
-								graph.raw().commit();
-							}else{
-								lastLocation = lastLocationOptional.get();
+						String absorptionMaxSt = "";
+						String absorptionTextSt = "";
+						Element absorptionElem = commentElem.getChild("absorption");
+						if (absorptionElem != null) {
+							absorptionMaxSt = absorptionElem.getChildText("max");
+							absorptionTextSt = absorptionElem.getChildText("text");
+							if (absorptionMaxSt == null) {
+								absorptionMaxSt = "";
 							}
+							if (absorptionTextSt == null) {
+								absorptionTextSt = "";
+							}
+						}
+						String kineticsSt = "";
+						Element kineticsElem = commentElem.getChild("kinetics");
+						if (kineticsElem != null) {
+							kineticsSt = new XMLElement(kineticsElem).toString();
+						}
+						String redoxPotentialSt = "";
+						String redoxPotentialEvidenceSt = "";
+						Element redoxPotentialElem = commentElem.getChild("redoxPotential");
+						if (redoxPotentialElem != null) {
+							redoxPotentialSt = redoxPotentialElem.getText();
+							redoxPotentialEvidenceSt = redoxPotentialElem.getAttributeValue("evidence");
+							if (redoxPotentialSt == null) {
+								redoxPotentialSt = "";
+							}
+							if (redoxPotentialEvidenceSt == null) {
+								redoxPotentialEvidenceSt = "";
+							}
+						}
 
-							for (int i = 1; i < locations.size(); i++) {
+						ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+						proteinComment.set(graph.ProteinComment().text, commentTextSt);
+						proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+						proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+						proteinComment.set(graph.ProteinComment().temperatureDependence, temperatureDependenceSt);
+						proteinComment.set(graph.ProteinComment().phDependence, phDependenceSt);
+						proteinComment.set(graph.ProteinComment().kineticsXML, kineticsSt);
+						proteinComment.set(graph.ProteinComment().absorptionMax, absorptionMaxSt);
+						proteinComment.set(graph.ProteinComment().absorptionText, absorptionTextSt);
+						proteinComment.set(graph.ProteinComment().redoxPotentialEvidence, redoxPotentialEvidenceSt);
+						proteinComment.set(graph.ProteinComment().redoxPotential, redoxPotentialSt);
 
-								SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = null;
-								String tempLocationSt = locations.get(i).getTextTrim();
-								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
+						break;
+					case COMMENT_TYPE_ALLERGEN:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_PATHWAY:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_INDUCTION:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_SUBCELLULAR_LOCATION:
 
-								if(!tempLocationOptional.isPresent()){
-									tempLocation = graph.addVertex(graph.SubcellularLocation());
-									tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+						if (uniprotDataXML.getSubcellularLocations()) {
+							List<Element> subcLocations = commentElem.getChildren(SUBCELLULAR_LOCATION_TAG_NAME);
+
+							for (Element subcLocation : subcLocations) {
+
+								List<Element> locations = subcLocation.getChildren(LOCATION_TAG_NAME);
+								Element firstLocationElem = locations.get(0);
+
+								String firstLocationSt = firstLocationElem.getTextTrim();
+								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
+
+								if(lastLocationOptional.isPresent()){
+									SubcellularLocation<I,RV,RVT,RE,RET> lastLocation = lastLocationOptional.get();
+
+									for (int i = 1; i < locations.size(); i++) {
+
+										SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = null;
+										String tempLocationSt = locations.get(i).getTextTrim();
+										Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
+
+										if(!tempLocationOptional.isPresent()){
+											tempLocation = graph.addVertex(graph.SubcellularLocation());
+											tempLocation.set(graph.SubcellularLocation().name, tempLocationSt);
+											graph.raw().commit();
+										}else{
+											tempLocation = tempLocationOptional.get();
+										}
+
+										tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
+										lastLocation = tempLocation;
+
+									}
+
+									Element lastLocationElem = locations.get(locations.size() - 1);
+									String evidenceSt = lastLocationElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
+									String statusSt = lastLocationElem.getAttributeValue(STATUS_ATTRIBUTE);
+									String topologyStatusSt = "";
+									String topologySt = "";
+									Element topologyElem = subcLocation.getChild("topology");
+									if (topologyElem != null) {
+										topologySt = topologyElem.getText();
+										topologyStatusSt = topologyElem.getAttributeValue("status");
+									}
+									if (topologyStatusSt == null) {
+										topologyStatusSt = "";
+									}
+									if (topologySt == null) {
+										topologySt = "";
+									}
+									if (evidenceSt == null) {
+										evidenceSt = "";
+									}
+									if (statusSt == null) {
+										statusSt = "";
+									}
+
+									ProteinSubcellularLocation<I,RV,RVT,RE,RET> proteinSubcellularLocation = protein.addOutEdge(graph.ProteinSubcellularLocation(), lastLocation);
+									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().evidence, evidenceSt);
+									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().status, statusSt);
+									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topology, topologySt);
+									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topologyStatus, topologyStatusSt);
+								}
+							}
+						}
+						break;
+					case COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
+
+						if (uniprotDataXML.getIsoforms()) {
+							List<Element> eventList = commentElem.getChildren("event");
+							List<Element> isoformList = commentElem.getChildren("isoform");
+
+							for (Element isoformElem : isoformList) {
+								String isoformIdSt = isoformElem.getChildText("id");
+								String isoformNoteSt = isoformElem.getChildText("note");
+								String isoformNameSt = isoformElem.getChildText("name");
+								String isoformSeqSt = "";
+								Element isoSeqElem = isoformElem.getChild("sequence");
+								if (isoSeqElem != null) {
+									String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
+									if (isoSeqTypeSt.equals("displayed")) {
+										isoformSeqSt = proteinSequence;
+									}
+								}
+								if (isoformNoteSt == null) {
+									isoformNoteSt = "";
+								}
+								if (isoformNameSt == null) {
+									isoformNameSt = "";
+								}
+
+								Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
+								Isoform<I,RV,RVT,RE,RET> isoform;
+								if(!isoformOptional.isPresent()){
+									isoform = graph.addVertex(graph.Isoform());
+									isoform.set(graph.Isoform().name, isoformNameSt);
+									isoform.set(graph.Isoform().note, isoformNoteSt);
+									isoform.set(graph.Isoform().sequence, isoformSeqSt);
+									isoform.set(graph.Isoform().id, isoformIdSt);
 									graph.raw().commit();
+									//Adding edge from Protein to Isoform
+									protein.addOutEdge(graph.ProteinIsoform(), isoform);
 								}else{
-									tempLocation = tempLocationOptional.get();
+									isoform = isoformOptional.get();
 								}
 
-								tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
-								lastLocation = tempLocation;
-
-							}
-
-							Element lastLocationElem = locations.get(locations.size() - 1);
-							String evidenceSt = lastLocationElem.getAttributeValue(EVIDENCE_ATTRIBUTE);
-							String statusSt = lastLocationElem.getAttributeValue(STATUS_ATTRIBUTE);
-							String topologyStatusSt = "";
-							String topologySt = "";
-							Element topologyElem = subcLocation.getChild("topology");
-							if (topologyElem != null) {
-								topologySt = topologyElem.getText();
-								topologyStatusSt = topologyElem.getAttributeValue("status");
-							}
-							if (topologyStatusSt == null) {
-								topologyStatusSt = "";
-							}
-							if (topologySt == null) {
-								topologySt = "";
-							}
-							if (evidenceSt == null) {
-								evidenceSt = "";
-							}
-							if (statusSt == null) {
-								statusSt = "";
-							}
-
-							ProteinSubcellularLocation<I,RV,RVT,RE,RET> proteinSubcellularLocation = protein.addOutEdge(graph.ProteinSubcellularLocation(), lastLocation);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().evidence, evidenceSt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().status, statusSt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topology, topologySt);
-							proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topologyStatus, topologyStatusSt);
-
-						}
-					}
-					break;
-				case COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
-
-					if (uniprotDataXML.getIsoforms()) {
-						List<Element> eventList = commentElem.getChildren("event");
-						List<Element> isoformList = commentElem.getChildren("isoform");
-
-						for (Element isoformElem : isoformList) {
-							String isoformIdSt = isoformElem.getChildText("id");
-							String isoformNoteSt = isoformElem.getChildText("note");
-							String isoformNameSt = isoformElem.getChildText("name");
-							String isoformSeqSt = "";
-							Element isoSeqElem = isoformElem.getChild("sequence");
-							if (isoSeqElem != null) {
-								String isoSeqTypeSt = isoSeqElem.getAttributeValue("type");
-								if (isoSeqTypeSt.equals("displayed")) {
-									isoformSeqSt = proteinSequence;
-								}
-							}
-							if (isoformNoteSt == null) {
-								isoformNoteSt = "";
-							}
-							if (isoformNameSt == null) {
-								isoformNameSt = "";
-							}
-
-							Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
-							Isoform<I,RV,RVT,RE,RET> isoform;
-							if(!isoformOptional.isPresent()){
-								isoform = graph.addVertex(graph.Isoform());
-								isoform.set(graph.Isoform().name, isoformNameSt);
-								isoform.set(graph.Isoform().note, isoformNoteSt);
-								isoform.set(graph.Isoform().sequence, isoformSeqSt);
-								isoform.set(graph.Isoform().id, isoformIdSt);
 								graph.raw().commit();
-								//Adding edge from Protein to Isoform
-								protein.addOutEdge(graph.ProteinIsoform(), isoform);
-							}else{
-								isoform = isoformOptional.get();
-							}
 
-							graph.raw().commit();
+								for (Element eventElem : eventList) {
 
-							for (Element eventElem : eventList) {
+									String eventTypeSt = eventElem.getAttributeValue("type");
 
-								String eventTypeSt = eventElem.getAttributeValue("type");
+									Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
+									AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct;
 
-								Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
-								AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct;
+									if(alternativeProductOptional.isPresent()){
+										alternativeProduct = alternativeProductOptional.get();
+									}else{
+										alternativeProduct = graph.addVertex(graph.AlternativeProduct());
+										alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
+										graph.raw().commit();
+									}
 
-								if(alternativeProductOptional.isPresent()){
-									alternativeProduct = alternativeProductOptional.get();
-								}else{
-									alternativeProduct = graph.addVertex(graph.AlternativeProduct());
-									alternativeProduct.set(graph.AlternativeProduct().name, eventTypeSt);
-									graph.raw().commit();
+									isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
 								}
 
-								isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
-							}
-
-						}
-					}
-					break;
-				case COMMENT_SEQUENCE_CAUTION_TYPE:
-
-					Element conflictElem = commentElem.getChild("conflict");
-					if (conflictElem != null) {
-
-						String conflictTypeSt = conflictElem.getAttributeValue("type");
-						String resourceSt = "";
-						String idSt = "";
-						String versionSt = "";
-
-						ArrayList<String> positionsList = new ArrayList<>();
-
-						Element sequenceElem = conflictElem.getChild("sequence");
-						if (sequenceElem != null) {
-							resourceSt = sequenceElem.getAttributeValue("resource");
-							if (resourceSt == null) {
-								resourceSt = "";
-							}
-							idSt = sequenceElem.getAttributeValue("id");
-							if (idSt == null) {
-								idSt = "";
-							}
-							versionSt = sequenceElem.getAttributeValue("version");
-							if (versionSt == null) {
-								versionSt = "";
 							}
 						}
+						break;
+					case COMMENT_SEQUENCE_CAUTION_TYPE:
 
-						Element locationElem = commentElem.getChild("location");
-						if (locationElem != null) {
-							Element positionElem = locationElem.getChild("position");
-							if (positionElem != null) {
-								String tempPos = positionElem.getAttributeValue("position");
-								if (tempPos != null) {
-									positionsList.add(tempPos);
+						Element conflictElem = commentElem.getChild("conflict");
+						if (conflictElem != null) {
+
+							String conflictTypeSt = conflictElem.getAttributeValue("type");
+							String resourceSt = "";
+							String idSt = "";
+							String versionSt = "";
+
+							ArrayList<String> positionsList = new ArrayList<>();
+
+							Element sequenceElem = conflictElem.getChild("sequence");
+							if (sequenceElem != null) {
+								resourceSt = sequenceElem.getAttributeValue("resource");
+								if (resourceSt == null) {
+									resourceSt = "";
+								}
+								idSt = sequenceElem.getAttributeValue("id");
+								if (idSt == null) {
+									idSt = "";
+								}
+								versionSt = sequenceElem.getAttributeValue("version");
+								if (versionSt == null) {
+									versionSt = "";
 								}
 							}
-						}
+
+							Element locationElem = commentElem.getChild("location");
+							if (locationElem != null) {
+								Element positionElem = locationElem.getChild("position");
+								if (positionElem != null) {
+									String tempPos = positionElem.getAttributeValue("position");
+									if (tempPos != null) {
+										positionsList.add(tempPos);
+									}
+								}
+							}
 
 //						System.out.println("conflictTypeSt = " + conflictTypeSt);
 //						System.out.println("sequenceCautionNameIndex = " + graph.sequenceCautionNameIndex());
-						Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
-						SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution;
+							Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
+							SequenceCaution<I,RV,RVT,RE,RET> sequenceCaution;
 
-						if(!sequenceCautionOptional.isPresent()){
+							if(!sequenceCautionOptional.isPresent()){
 
-							sequenceCaution = graph.addVertex(graph.SequenceCaution());
-							sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
-							graph.raw().commit();
+								sequenceCaution = graph.addVertex(graph.SequenceCaution());
+								sequenceCaution.set(graph.SequenceCaution().name, conflictTypeSt);
+								graph.raw().commit();
 
-						}else{
-							sequenceCaution = sequenceCautionOptional.get();
-						}
+							}else{
+								sequenceCaution = sequenceCautionOptional.get();
+							}
 
 
-						if (positionsList.size() > 0) {
-							for (String tempPosition : positionsList) {
+							if (positionsList.size() > 0) {
+								for (String tempPosition : positionsList) {
+									ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().text, commentTextSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
+									proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, tempPosition);
+								}
+							} else {
 								ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
 								proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
 								proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
@@ -984,118 +964,107 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
 								proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
 								proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
-								proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, tempPosition);
+								proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, "");
 							}
-						} else {
-							ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().evidence, commentEvidenceSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().status, commentStatusSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().text, commentTextSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().id, idSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
-							proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, "");
+
 						}
+						break;
+					case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_MISCELLANEOUS:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_SIMILARITY:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_RNA_EDITING:
 
-					}
-					break;
-				case COMMENT_TYPE_DEVELOPMENTAL_STAGE:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_MISCELLANEOUS:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_SIMILARITY:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_RNA_EDITING:
+						List<Element> locationsList = commentElem.getChildren("location");
 
-					List<Element> locationsList = commentElem.getChildren("location");
+						for (Element tempLoc : locationsList) {
+							String positionSt = tempLoc.getChild("position").getAttributeValue("position");
 
-					for (Element tempLoc : locationsList) {
-						String positionSt = tempLoc.getChild("position").getAttributeValue("position");
-
-						proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
-						proteinComment.set(graph.ProteinComment().text, commentTextSt);
-						proteinComment.set(graph.ProteinComment().status, commentStatusSt);
-						proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
-						proteinComment.set(graph.ProteinComment().position, positionSt);
-					}
-					break;
-				case COMMENT_TYPE_PHARMACEUTICAL:
-					createStandardProteinComment = true;
-					break;
-				case COMMENT_TYPE_MASS_SPECTROMETRY:
-					String methodSt = commentElem.getAttributeValue("method");
-					String massSt = commentElem.getAttributeValue("mass");
-					if (methodSt == null) {
-						methodSt = "";
-					}
-					if (massSt == null) {
-						massSt = "";
-					}
-
-
-					locationsList = commentElem.getChildren("location");
-
-					for (Element tempLoc : locationsList) {
-
-						String positionSt = "";
-
-						Element positionElem = tempLoc.getChild("position");
-
-						if(positionElem != null){
-							positionSt = positionElem.getAttributeValue("position");
-							if(positionSt == null){
-								positionSt = "";
-							}
+							proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+							proteinComment.set(graph.ProteinComment().text, commentTextSt);
+							proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+							proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+							proteinComment.set(graph.ProteinComment().position, positionSt);
+						}
+						break;
+					case COMMENT_TYPE_PHARMACEUTICAL:
+						createStandardProteinComment = true;
+						break;
+					case COMMENT_TYPE_MASS_SPECTROMETRY:
+						String methodSt = commentElem.getAttributeValue("method");
+						String massSt = commentElem.getAttributeValue("mass");
+						if (methodSt == null) {
+							methodSt = "";
+						}
+						if (massSt == null) {
+							massSt = "";
 						}
 
 
-						String beginSt = "";
-						String endSt = "";
+						locationsList = commentElem.getChildren("location");
 
-						if (tempLoc != null) {
-							Element beginElem = tempLoc.getChild("begin");
-							Element endElem = tempLoc.getChild("end");
-							if (beginElem != null) {
-								beginSt = beginElem.getAttributeValue("position");
+						for (Element tempLoc : locationsList) {
+
+							String positionSt = "";
+
+							Element positionElem = tempLoc.getChild("position");
+
+							if(positionElem != null){
+								positionSt = positionElem.getAttributeValue("position");
+								if(positionSt == null){
+									positionSt = "";
+								}
 							}
 
-							if (endElem != null) {
-								endSt = endElem.getAttributeValue("position");
+
+							String beginSt = "";
+							String endSt = "";
+
+							if (tempLoc != null) {
+								Element beginElem = tempLoc.getChild("begin");
+								Element endElem = tempLoc.getChild("end");
+								if (beginElem != null) {
+									beginSt = beginElem.getAttributeValue("position");
+								}
+
+								if (endElem != null) {
+									endSt = endElem.getAttributeValue("position");
+								}
+								if(endSt == null || endSt.isEmpty()){
+									endSt = "-1";
+								}
+								if(beginSt == null || beginSt.isEmpty()){
+									beginSt = "-1";
+								}
 							}
-							if(endSt == null || endSt.isEmpty()){
-								endSt = "-1";
-							}
-							if(beginSt == null || beginSt.isEmpty()){
-								beginSt = "-1";
-							}
+
+							proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+							proteinComment.set(graph.ProteinComment().text, commentTextSt);
+							proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+							proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+							proteinComment.set(graph.ProteinComment().position, positionSt);
+							proteinComment.set(graph.ProteinComment().end, Integer.parseInt(endSt));
+							proteinComment.set(graph.ProteinComment().begin, Integer.parseInt(beginSt));
+							proteinComment.set(graph.ProteinComment().method, methodSt);
+							proteinComment.set(graph.ProteinComment().mass, massSt);
 						}
+						break;
+				}
 
-						proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
-						proteinComment.set(graph.ProteinComment().text, commentTextSt);
-						proteinComment.set(graph.ProteinComment().status, commentStatusSt);
-						proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
-						proteinComment.set(graph.ProteinComment().position, positionSt);
-						proteinComment.set(graph.ProteinComment().end, Integer.parseInt(endSt));
-						proteinComment.set(graph.ProteinComment().begin, Integer.parseInt(beginSt));
-						proteinComment.set(graph.ProteinComment().method, methodSt);
-						proteinComment.set(graph.ProteinComment().mass, massSt);
-					}
-					break;
+				if(createStandardProteinComment){
+					ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
+					proteinComment.set(graph.ProteinComment().text, commentTextSt);
+					proteinComment.set(graph.ProteinComment().status, commentStatusSt);
+					proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+				}
+
 			}
-
-			if(createStandardProteinComment){
-				ProteinComment<I,RV,RVT,RE,RET> proteinComment = protein.addOutEdge(graph.ProteinComment(), comment);
-				proteinComment.set(graph.ProteinComment().text, commentTextSt);
-				proteinComment.set(graph.ProteinComment().status, commentStatusSt);
-				proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
-			}
-
 		}
-
-
 	}
 
 	private void addPropertiesToProteinFeatureRelationship(UniProtGraph<I,RV,RVT,RE,RET> graph, ProteinFeature<I,RV,RVT,RE,RET> proteinFeature,
