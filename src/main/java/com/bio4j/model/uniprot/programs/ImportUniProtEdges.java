@@ -1161,7 +1161,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//--protein reference citation relationship
 									protein.addOutEdge(graph.ProteinReference(), reference);
 
-								}				
+								}
 							}
 
 						}
@@ -1173,12 +1173,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						if (uniprotDataXML.getPatents()) {
 							String numberSt = citation.getAttributeValue("number");
 							String dateSt = citation.getAttributeValue("date");
-							String titleSt = citation.getChildText("title");
 							if (dateSt == null) {
 								dateSt = "";
-							}
-							if (titleSt == null) {
-								titleSt = "";
 							}
 							if (numberSt == null) {
 								numberSt = "";
@@ -1186,34 +1182,21 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							if (!numberSt.equals("")) {
 
-								Patent<I,RV,RVT,RE,RET> patent = null;
-								Optional<Patent<I,RV,RVT,RE,RET>> optionalPatent = graph.patentNumberIndex().getVertex(numberSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
+								Optional<Reference<I, RV, RVT, RE, RET>> optionalReference = graph.referenceIdIndex().getVertex(numberSt + graph.Patent().name());
 
-								if(!optionalPatent.isPresent()){
+								if (optionalReference.isPresent()) {
 
-									patent = graph.addVertex(graph.Patent());
-									patent.set(graph.Patent().number, numberSt);
-									patent.set(graph.Patent().title, titleSt);
-									graph.raw().commit();
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferencePatent(), patent);
+									Reference<I, RV, RVT, RE, RET> reference = optionalReference.get();
 
 									//---authors association-----
-									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
+									for (Person<I, RV, RVT, RE, RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
 									}
 
-								}else{
-									patent = optionalPatent.get();
-									reference = patent.referencePatent_inV();
+									//--protein citation relationship
+									protein.addOutEdge(graph.ProteinReference(), reference);
+
 								}
-
-								//--protein citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
 							}
 						}
 
@@ -1228,22 +1211,16 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							if (dateSt == null) {
 								dateSt = "";
 							}
-							if (titleSt == null) {
-								titleSt = "";
-							}else{
+							if (titleSt != null) {
 
-								Submission<I,RV,RVT,RE,RET> submission = null;
+								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.Submission().name());
 								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
 
-								if(!optionalSubmission.isPresent()){
+								if(optionalSubmission.isPresent() && optionalReference.isPresent()){
 
-									submission = graph.addVertex(graph.Submission());
-									submission.set(graph.Submission().title, titleSt);
-									graph.raw().commit();
+									Submission<I,RV,RVT,RE,RET> submission = optionalSubmission.get();
+									Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
@@ -1253,34 +1230,19 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									}
 
 									if (dbSt != null) {
-
-										DB<I,RV,RVT,RE,RET> db = null;
 										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
-										if(!optionalDB.isPresent()){
-											db = graph.addVertex(graph.DB());
-											db.set(graph.DB().name, dbSt);
-											graph.raw().commit();
-										}else{
-											db = optionalDB.get();
+										if(optionalDB.isPresent()){
+											submission.addOutEdge(graph.SubmissionDB(), optionalDB.get());
 										}
-
-										//-----submission db relationship-----
-										submission.addOutEdge(graph.SubmissionDB(), db);
 									}
 
 									reference.addOutEdge(graph.ReferenceSubmission(), submission);
 
-								}else{
-									submission = optionalSubmission.get();
-									reference = submission.referenceSubmission_inV();
+									//--protein citation relationship
+									protein.addOutEdge(graph.ProteinReference(), reference);
+
 								}
-
-								//--protein citation relationship
-								protein.addOutEdge(graph.ProteinReference(), reference);
-
-
 							}
-
 						}
 
 						//----------------------------------------------------------------------------
