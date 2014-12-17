@@ -1366,19 +1366,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							if (!titleSt.equals("")) {
 
-								OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = null;
 								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(titleSt);
-								Reference<I,RV,RVT,RE,RET> reference = null;
+								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.OnlineArticle().name());
 
-								if(!optionalOnlineArticle.isPresent()){
+								if(optionalOnlineArticle.isPresent() && optionalReference.isPresent()){
 
-									onlineArticle = graph.addVertex(graph.OnlineArticle());
-									onlineArticle.set(graph.OnlineArticle().title, titleSt);
-									graph.raw().commit();
-
-									reference = graph.addVertex(graph.Reference());
-									reference.set(graph.Reference().date, dateSt);
-									reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+									OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = optionalOnlineArticle.get();
+									Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
@@ -1392,36 +1386,22 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//------online journal-----------
 									if (!nameSt.equals("")) {
 
-										OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = null;
 										Optional<OnlineJournal<I,RV,RVT,RE,RET>> optionalOnlineJournal = graph.onlineJournalNameIndex().getVertex(nameSt);
 
-										if(!optionalOnlineJournal.isPresent()){
-
-											onlineJournal = graph.addVertex(graph.OnlineJournal());
-											onlineJournal.set(graph.OnlineJournal().name, nameSt);
-											graph.raw().commit();
-
-										}else{
-											onlineJournal = optionalOnlineJournal.get();
+										if(optionalOnlineJournal.isPresent()){
+											OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> onlineArticleOnlineJournal = onlineArticle.addOutEdge(graph.OnlineArticleOnlineJournal(), optionalOnlineJournal.get());
+											onlineArticleOnlineJournal.set(graph.OnlineArticleOnlineJournal().locator, locatorSt);
 										}
-
-										OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> onlineArticleOnlineJournal = onlineArticle.addOutEdge(graph.OnlineArticleOnlineJournal(), onlineJournal);
-										onlineArticleOnlineJournal.set(graph.OnlineArticleOnlineJournal().locator, locatorSt);
 
 									}
 									//----------------------------
 
-								}else{
-									onlineArticle = optionalOnlineArticle.get();
-									reference = onlineArticle.referenceOnlineArticle_inV();
+									//protein citation
+									protein.addOutEdge(graph.ProteinReference(), reference);
+
 								}
-
-								//protein citation
-								protein.addOutEdge(graph.ProteinReference(), reference);
 							}
-
 						}
-
 						//----------------------------------------------------------------------------
 						//-----------------------------ARTICLE-----------------------------------------
 						break;
