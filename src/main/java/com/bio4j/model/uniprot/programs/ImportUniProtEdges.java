@@ -6,6 +6,7 @@ import com.bio4j.model.uniprot.edges.*;
 import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
+import org.apache.commons.lang.mutable.MutableInt;
 import org.jdom2.Element;
 
 import java.io.*;
@@ -153,6 +154,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 			BufferedWriter statsBuff = null;
 
 			int proteinCounter = 0;
+			MutableInt edgeCounter = new MutableInt(0);
+			MutableInt vertexIndexCalls = new MutableInt(0);
 			int limitForPrintingOut = 10000;
 
 			dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -206,6 +209,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						currentAccessionId = accessionSt;
 
 						Optional<Protein<I,RV,RVT,RE,RET>> optionalProtein = graph.proteinAccessionIndex().getVertex(accessionSt);
+						vertexIndexCalls.add(1);
 
 						if(optionalProtein.isPresent()){
 							Protein<I,RV,RVT,RE,RET> protein = optionalProtein.get();
@@ -221,50 +225,64 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									case "Ensembl":
 										//looking for Ensembl node
 										Optional<Ensembl<I,RV,RVT,RE,RET>> ensemblOptional = graph.ensemblIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(ensemblOptional.isPresent()){
 											protein.addOutEdge(graph.ProteinEnsembl(), ensemblOptional.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "PIR":
 										//looking for PIR node
 										Optional<PIR<I,RV,RVT,RE,RET>> optionalPIR = graph.pIRIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(optionalPIR.isPresent()){
 											protein.addOutEdge(graph.ProteinPIR(), optionalPIR.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "UniGene":
 										//looking for UniGene node
 										Optional<UniGene<I,RV,RVT,RE,RET>> uniGeneOptional = graph.uniGeneIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(uniGeneOptional.isPresent()){
 											protein.addOutEdge(graph.ProteinUniGene(), uniGeneOptional.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "KEGG":
 										//looking for Kegg node
 										Optional<Kegg<I,RV,RVT,RE,RET>> optionalKegg = graph.keggIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(optionalKegg.isPresent()){
 											protein.addOutEdge(graph.ProteinKegg(), optionalKegg.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "EMBL":
 										//looking for EMBL node
 										Optional<EMBL<I,RV,RVT,RE,RET>> optionalEMBL = graph.eMBLIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(optionalEMBL.isPresent()){
 											protein.addOutEdge(graph.ProteinEMBL(), optionalEMBL.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "RefSeq":
 										//looking for RefSeq node
 										Optional<RefSeq<I,RV,RVT,RE,RET>> optionalRefSeq = graph.refSeqIdIndex().getVertex(refId);
+										vertexIndexCalls.add(1);
 										if(optionalRefSeq.isPresent()){
 											protein.addOutEdge(graph.ProteinRefSeq(), optionalRefSeq.get());
+											edgeCounter.add(1);
 										}
 										break;
 									case "Reactome":
 										if (uniprotDataXML.getReactome()) {
 											Optional<ReactomeTerm<I,RV,RVT,RE,RET>> optionalReactomeTerm = graph.reactomeTermIdIndex().getVertex(refId);
+											vertexIndexCalls.add(1);
 											if (optionalReactomeTerm.isPresent()) {
 												protein.addOutEdge(graph.ProteinReactomeTerm(), optionalReactomeTerm.get());
+												edgeCounter.add(1);
 											}
 										}
 										break;
@@ -276,20 +294,32 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							//-----comments import---
 							if (uniprotDataXML.getComments()) {
-								importProteinComments(entryXMLElem, graph, protein, uniprotDataXML, subcellularLocationParentEdgesAlreadyCreated);
+								importProteinComments(entryXMLElem,
+										graph,
+										protein,
+										uniprotDataXML,
+										subcellularLocationParentEdgesAlreadyCreated,
+										vertexIndexCalls,
+										edgeCounter);
 							}
 
 							//-----features import----
 							if (uniprotDataXML.getFeatures()) {
-								importProteinFeatures(entryXMLElem, graph, protein);
+								importProteinFeatures(entryXMLElem,
+										graph,
+										protein,
+										vertexIndexCalls,
+										edgeCounter);
 							}
 
 							//--------------------------------datasets--------------------------------------------------
 							String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
 
 							Optional<Dataset<I,RV,RVT,RE,RET>> optionalDataset = graph.datasetNameIndex().getVertex(proteinDataSetSt);
+							vertexIndexCalls.add(1);
 							if (optionalDataset.isPresent()) {
 								protein.addOutEdge(graph.ProteinDataset(), optionalDataset.get());
+								edgeCounter.add(1);
 							}
 
 							//---------------------------------------------------------------------------------------------
@@ -297,7 +327,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								importProteinCitations(entryXMLElem,
 										graph,
 										protein,
-										uniprotDataXML);
+										uniprotDataXML,
+										vertexIndexCalls,
+										edgeCounter);
 							}
 
 							//-------------------------------keywords------------------------------------------------------
@@ -308,8 +340,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
 
 									Optional<Keyword<I,RV,RVT,RE,RET> > optionalKeyword = graph.keywordIdIndex().getVertex(keywordId);
+									vertexIndexCalls.add(1);
 									if (optionalKeyword.isPresent()) {
 										protein.addOutEdge(graph.ProteinKeyword(), optionalKeyword.get());
+										edgeCounter.add(1);
 									}
 								}
 							}
@@ -324,8 +358,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									if (uniprotDataXML.getInterpro()) {
 										String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 										Optional<InterPro<I,RV,RVT,RE,RET>> optionalInterPro = graph.interproIdIndex().getVertex(interproId);
+										vertexIndexCalls.add(1);
 										if (optionalInterPro.isPresent()) {
 											protein.addOutEdge(graph.ProteinInterPro(), optionalInterPro.get());
+											edgeCounter.add(1);
 										}
 									}
 
@@ -336,9 +372,11 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 										String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 										Optional<Pfam<I,RV,RVT,RE,RET>> optionalPfam = graph.pfamIdIndex().getVertex(pfamId);
+										vertexIndexCalls.add(1);
 
 										if (optionalPfam.isPresent()) {
 											protein.addOutEdge(graph.ProteinPfam(), optionalPfam.get());
+											edgeCounter.add(1);
 										}
 									}
 								}
@@ -358,9 +396,11 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								}
 
 								Optional<GeneLocation<I,RV,RVT,RE,RET>> optionalGeneLocation = graph.geneLocationNameIndex().getVertex(geneLocationTypeSt);
+								vertexIndexCalls.add(1);
 
 								if(optionalGeneLocation.isPresent()){
 									ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), optionalGeneLocation.get());
+									edgeCounter.add(1);
 									proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 								}
 							}
@@ -378,10 +418,12 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									String typeSt = geneNameElem.getAttributeValue("type");
 
 									Optional<GeneName<I,RV,RVT,RE,RET>> optionalGeneName = graph.geneNameNameIndex().getVertex(geneNameSt);
+									vertexIndexCalls.add(1);
 
 									if(optionalGeneName.isPresent()){
 										GeneName<I,RV,RVT,RE,RET> geneName = optionalGeneName.get();
 										ProteinGeneName<I,RV,RVT,RE,RET> proteinGeneName = protein.addOutEdge(graph.ProteinGeneName(), geneName);
+										edgeCounter.add(1);
 										proteinGeneName.set(graph.ProteinGeneName().geneNameType, typeSt);
 									}
 
@@ -406,17 +448,20 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							}
 
 							Optional<Organism<I,RV,RVT,RE,RET>> organismOptional = graph.organismScientificNameIndex().getVertex(scName);
+							vertexIndexCalls.add(1);
 
 							if (organismOptional.isPresent()) {
 								Organism<I,RV,RVT,RE,RET> organism = organismOptional.get();
 
 								protein.addOutEdge(graph.ProteinOrganism(), organism);
+								edgeCounter.add(1);
 
 								Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
 								List<Element> taxons = lineage.getChildren("taxon");
 
 								Element firstTaxonElem = taxons.get(0);
 								Optional<Taxon<I,RV,RVT,RE,RET>> firstTaxonOptional = graph.taxonNameIndex().getVertex(firstTaxonElem.getText());
+								vertexIndexCalls.add(1);
 
 								if (firstTaxonOptional.isPresent()) {
 									Taxon<I,RV,RVT,RE,RET> lastTaxon = firstTaxonOptional.get();
@@ -425,6 +470,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										String taxonName = taxons.get(i).getText();
 										Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
 										Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
+										vertexIndexCalls.add(1);
 
 										if(currentTaxonOptional.isPresent()){
 											currentTaxon = currentTaxonOptional.get();
@@ -434,6 +480,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 													currentTaxon.taxonParent_in();
 												}catch(NoSuchElementException e){
 													lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
+													edgeCounter.add(1);
 												}
 											}
 										}
@@ -447,6 +494,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 											organism.organismTaxon_out();
 										}catch(NoSuchElementException e){
 											organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
+											edgeCounter.add(1);
 										}
 									}
 
@@ -509,7 +557,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 	private void importProteinFeatures(XMLElement entryXMLElem,
 	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
-	                                   Protein<I,RV,RVT,RE,RET> protein) {
+	                                   Protein<I,RV,RVT,RE,RET> protein,
+	                                   MutableInt vertexIndexCalls,
+	                                   MutableInt edgeCounter) {
 
 		//--------------------------------features----------------------------------------------------
 		List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(FEATURE_TAG_NAME);
@@ -519,6 +569,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 			String featureTypeSt = featureElem.getAttributeValue(FEATURE_TYPE_ATTRIBUTE);
 
 			Optional<FeatureType<I,RV,RVT,RE,RET>> optionalFeature = graph.featureTypeNameIndex().getVertex(featureTypeSt);
+			vertexIndexCalls.add(1);
 
 			if (!optionalFeature.isPresent()) {
 
@@ -591,6 +642,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 				ProteinFeature<I,RV,RVT,RE,RET> proteinFeature = protein.addOutEdge(graph.ProteinFeature(), feature);
 				addPropertiesToProteinFeatureRelationship(graph, proteinFeature, featureIdSt, featureDescSt, featureEvidenceSt,
 						featureStatusSt, beginFeature, endFeature, originalSt, variationSt, featureRefSt);
+				edgeCounter.add(1);
 
 			}
 
@@ -602,7 +654,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 	                                   UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                   Protein<I,RV,RVT,RE,RET> protein,
 	                                   UniprotDataXML uniprotDataXML,
-	                                   HashSet<String> subcellularLocationParentEdgesAlreadyCreated) {
+	                                   HashSet<String> subcellularLocationParentEdgesAlreadyCreated,
+	                                   MutableInt vertexIndexCalls,
+	                                   MutableInt edgeCounter) {
 
 
 		List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
@@ -629,6 +683,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 			//-----------------COMMENT TYPE NODE RETRIEVING/CREATION----------------------
 			Optional<CommentType<I,RV,RVT,RE,RET>> commentOptional =  graph.commentTypeNameIndex().getVertex(commentTypeSt);
+			vertexIndexCalls.add(1);
 
 			if(!commentOptional.isPresent()){
 
@@ -662,6 +717,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							if(diseaseId != null){
 
 								Optional<Disease<I,RV,RVT,RE,RET>> diseaseOptional =  graph.diseaseIdIndex().getVertex(diseaseId);
+								vertexIndexCalls.add(1);
 
 								if(diseaseOptional.isPresent()){
 									Disease<I,RV,RVT,RE,RET> disease = diseaseOptional.get();
@@ -669,6 +725,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									proteinDisease.set(graph.ProteinDisease().text, commentTextSt);
 									proteinDisease.set(graph.ProteinDisease().status, commentStatusSt);
 									proteinDisease.set(graph.ProteinDisease().evidence, commentEvidenceSt);
+									edgeCounter.add(1);
 								}
 							}
 						}
@@ -751,6 +808,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						proteinComment.set(graph.ProteinComment().absorptionText, absorptionTextSt);
 						proteinComment.set(graph.ProteinComment().redoxPotentialEvidence, redoxPotentialEvidenceSt);
 						proteinComment.set(graph.ProteinComment().redoxPotential, redoxPotentialSt);
+						edgeCounter.add(1);
 
 						break;
 					case COMMENT_TYPE_ALLERGEN:
@@ -774,6 +832,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 								String firstLocationSt = firstLocationElem.getTextTrim();
 								Optional<SubcellularLocation<I,RV,RVT,RE,RET>> lastLocationOptional =  graph.subcellularLocationNameIndex().getVertex(firstLocationSt);
+								vertexIndexCalls.add(1);
 
 								if(lastLocationOptional.isPresent()){
 									SubcellularLocation<I,RV,RVT,RE,RET> lastLocation = lastLocationOptional.get();
@@ -782,6 +841,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 										String tempLocationSt = locations.get(i).getTextTrim();
 										Optional<SubcellularLocation<I,RV,RVT,RE,RET>> tempLocationOptional =  graph.subcellularLocationNameIndex().getVertex(tempLocationSt);
+										vertexIndexCalls.add(1);
 
 										if(tempLocationOptional.isPresent()){
 											SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = tempLocationOptional.get();
@@ -792,6 +852,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 													tempLocation.subcellularLocationParent_out();
 												}catch (NoSuchElementException e){
 													tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
+													edgeCounter.add(1);
 												}
 											}
 											lastLocation = tempLocation;
@@ -829,6 +890,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().status, statusSt);
 									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topology, topologySt);
 									proteinSubcellularLocation.set(graph.ProteinSubcellularLocation().topologyStatus, topologyStatusSt);
+									edgeCounter.add(1);
 								}
 							}
 						}
@@ -844,20 +906,24 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 
 								Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(isoformIdSt);
+								vertexIndexCalls.add(1);
 
 								if(isoformOptional.isPresent()){
 									Isoform<I,RV,RVT,RE,RET> isoform = isoformOptional.get();
 									protein.addOutEdge(graph.ProteinIsoform(), isoform);
+									edgeCounter.add(1);
 
 									for (Element eventElem : eventList) {
 
 										String eventTypeSt = eventElem.getAttributeValue("type");
 
 										Optional<AlternativeProduct<I,RV,RVT,RE,RET>> alternativeProductOptional = graph.alternativeProductNameIndex().getVertex(eventTypeSt);
+										vertexIndexCalls.add(1);
 
 										if(alternativeProductOptional.isPresent()){
 											AlternativeProduct<I,RV,RVT,RE,RET> alternativeProduct = alternativeProductOptional.get();
 											isoform.addOutEdge(graph.IsoformEventGenerator(), alternativeProduct);
+											edgeCounter.add(1);
 										}
 									}
 								}
@@ -904,7 +970,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							}
 
 							Optional<SequenceCaution<I,RV,RVT,RE,RET>> sequenceCautionOptional =  graph.sequenceCautionNameIndex().getVertex(conflictTypeSt);
-
+							vertexIndexCalls.add(1);
 
 							if(sequenceCautionOptional.isPresent()){
 
@@ -920,6 +986,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 										proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
 										proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
 										proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, tempPosition);
+										edgeCounter.add(1);
 									}
 								} else {
 									ProteinSequenceCaution<I,RV,RVT,RE,RET> proteinSequenceCaution = protein.addOutEdge(graph.ProteinSequenceCaution(), sequenceCaution);
@@ -930,6 +997,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().resource, resourceSt);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().version, versionSt);
 									proteinSequenceCaution.set(graph.ProteinSequenceCaution().position, "");
+									edgeCounter.add(1);
 								}
 							}
 						}
@@ -955,6 +1023,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							proteinComment.set(graph.ProteinComment().status, commentStatusSt);
 							proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
 							proteinComment.set(graph.ProteinComment().position, positionSt);
+							edgeCounter.add(1);
 						}
 						break;
 					case COMMENT_TYPE_PHARMACEUTICAL:
@@ -1017,6 +1086,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							proteinComment.set(graph.ProteinComment().begin, Integer.parseInt(beginSt));
 							proteinComment.set(graph.ProteinComment().method, methodSt);
 							proteinComment.set(graph.ProteinComment().mass, massSt);
+							edgeCounter.add(1);
 						}
 						break;
 				}
@@ -1026,6 +1096,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 					proteinComment.set(graph.ProteinComment().text, commentTextSt);
 					proteinComment.set(graph.ProteinComment().status, commentStatusSt);
 					proteinComment.set(graph.ProteinComment().evidence, commentEvidenceSt);
+					edgeCounter.add(1);
 				}
 
 			}
@@ -1078,7 +1149,9 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 	private void importProteinCitations(XMLElement entryXMLElem,
 	                                    UniProtGraph<I,RV,RVT,RE,RET> graph,
 	                                    Protein<I,RV,RVT,RE,RET> protein,
-	                                    UniprotDataXML uniprotDataXML) {
+	                                    UniprotDataXML uniprotDataXML,
+	                                    MutableInt vertexIndexCalls,
+	                                    MutableInt edgeCounter) {
 
 		List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
 
@@ -1098,6 +1171,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 					String personName = personElement.getAttributeValue("name");
 					Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
+					vertexIndexCalls.add(1);
 					if(optionalPerson.isPresent()){
 						Person<I,RV,RVT,RE,RET> person = optionalPerson.get();
 						authorsPerson.add(person);
@@ -1108,6 +1182,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 					String consortiumName = consortiumElement.getAttributeValue("name");
 					Optional<Consortium<I,RV,RVT,RE,RET>> optionalConsortium = graph.consortiumNameIndex().getVertex(consortiumName);
+					vertexIndexCalls.add(1);
 					if(optionalConsortium.isPresent()){
 						Consortium<I,RV,RVT,RE,RET> consortium = optionalConsortium.get();
 						authorsConsortium.add(consortium);
@@ -1126,6 +1201,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 								Optional<Thesis<I,RV,RVT,RE,RET>> optionalThesis = graph.thesisTitleIndex().getVertex(titleSt);
 								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex((titleSt + graph.Thesis().name()));
+								vertexIndexCalls.add(2);
 
 
 								if(optionalReference.isPresent() && optionalThesis.isPresent()){
@@ -1140,19 +1216,24 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+										edgeCounter.add(1);
 									}
 
 									if (instituteSt != null) {
 
 										Optional<Institute<I,RV,RVT,RE,RET>> optionalInstitute = graph.instituteNameIndex().getVertex(instituteSt);
+										vertexIndexCalls.add(1);
 
 										if(optionalInstitute.isPresent()){
 											thesis.addOutEdge(graph.ThesisInstitute(), optionalInstitute.get());
+											edgeCounter.add(1);
 											if (countrySt != null) {
 
 												Optional<Country<I,RV,RVT,RE,RET>> optionalCountry = graph.countryNameIndex().getVertex(countrySt);
+												vertexIndexCalls.add(1);
 												if(!optionalCountry.isPresent()){
 													optionalInstitute.get().addOutEdge(graph.InstituteCountry(), optionalCountry.get());
+													edgeCounter.add(1);
 												}
 											}
 										}
@@ -1160,6 +1241,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									//--protein reference citation relationship
 									protein.addOutEdge(graph.ProteinReference(), reference);
+									edgeCounter.add(1);
 
 								}
 							}
@@ -1183,6 +1265,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							if (!numberSt.equals("")) {
 
 								Optional<Reference<I, RV, RVT, RE, RET>> optionalReference = graph.referenceIdIndex().getVertex(numberSt + graph.Patent().name());
+								vertexIndexCalls.add(1);
 
 								if (optionalReference.isPresent()) {
 
@@ -1191,10 +1274,12 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//---authors association-----
 									for (Person<I, RV, RVT, RE, RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+										edgeCounter.add(1);
 									}
 
 									//--protein citation relationship
 									protein.addOutEdge(graph.ProteinReference(), reference);
+									edgeCounter.add(1);
 
 								}
 							}
@@ -1215,6 +1300,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.Submission().name());
 								Optional<Submission<I,RV,RVT,RE,RET>> optionalSubmission = graph.submissionTitleIndex().getVertex(titleSt);
+								vertexIndexCalls.add(2);
 
 								if(optionalSubmission.isPresent() && optionalReference.isPresent()){
 
@@ -1224,22 +1310,28 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+										edgeCounter.add(1);
 									}
 									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
 										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
+										edgeCounter.add(1);
 									}
 
 									if (dbSt != null) {
 										Optional<DB<I,RV,RVT,RE,RET>> optionalDB = graph.dbNameIndex().getVertex(dbSt);
+										vertexIndexCalls.add(1);
 										if(optionalDB.isPresent()){
 											submission.addOutEdge(graph.SubmissionDB(), optionalDB.get());
+											edgeCounter.add(1);
 										}
 									}
 
 									reference.addOutEdge(graph.ReferenceSubmission(), submission);
+									edgeCounter.add(1);
 
 									//--protein citation relationship
 									protein.addOutEdge(graph.ProteinReference(), reference);
+									edgeCounter.add(1);
 
 								}
 							}
@@ -1285,6 +1377,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 							Optional<Book<I,RV,RVT,RE,RET>> optionalBook = graph.bookNameIndex().getVertex(nameSt);
 							Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(nameSt + graph.Book().name());
+							vertexIndexCalls.add(2);
 
 							if(optionalBook.isPresent() && optionalReference.isPresent()){
 
@@ -1294,6 +1387,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								//---authors association-----
 								for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 									reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+									edgeCounter.add(1);
 								}
 
 								//---editor association-----
@@ -1304,9 +1398,11 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 										String personName = personElement.getAttributeValue("name");
 										Optional<Person<I,RV,RVT,RE,RET>> optionalPerson = graph.personNameIndex().getVertex(personName);
+										vertexIndexCalls.add(1);
 
 										if(optionalPerson.isPresent()){
 											book.addOutEdge(graph.BookEditor(), optionalPerson.get());
+											edgeCounter.add(1);
 										}
 									}
 								}
@@ -1314,22 +1410,27 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 								if (!publisherSt.equals("")) {
 
 									Optional<Publisher<I,RV,RVT,RE,RET>> optionalPublisher = graph.publisherNameIndex().getVertex(publisherSt);
+									vertexIndexCalls.add(1);
 									if(optionalPublisher.isPresent()){
 										book.addOutEdge(graph.BookPublisher(), optionalPublisher.get());
+										edgeCounter.add(1);
 									}
 								}
 								//-----city-----
 								if (!citySt.equals("")) {
 
 									Optional<City<I,RV,RVT,RE,RET>> optionalCity = graph.cityNameIndex().getVertex(citySt);
+									vertexIndexCalls.add(1);
 
 									if(optionalCity.isPresent()){
 										book.addOutEdge(graph.BookCity(), optionalCity.get());
+										edgeCounter.add(1);
 									}
 								}
 
 								//--protein citation relationship
 								protein.addOutEdge(graph.ProteinReference(), reference);
+								edgeCounter.add(1);
 
 //                          TODO see if these fields can somehow be included
 //							bookProteinCitationProperties.put(BookProteinCitationRel.FIRST_PROPERTY, firstSt);
@@ -1368,6 +1469,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 								Optional<OnlineArticle<I,RV,RVT,RE,RET>> optionalOnlineArticle = graph.onlineArticleTitleIndex().getVertex(titleSt);
 								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.OnlineArticle().name());
+								vertexIndexCalls.add(2);
 
 								if(optionalOnlineArticle.isPresent() && optionalReference.isPresent()){
 
@@ -1377,20 +1479,24 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+										edgeCounter.add(1);
 									}
 									//---consortiums association----
 									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
 										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
+										edgeCounter.add(1);
 									}
 
 									//------online journal-----------
 									if (!nameSt.equals("")) {
 
 										Optional<OnlineJournal<I,RV,RVT,RE,RET>> optionalOnlineJournal = graph.onlineJournalNameIndex().getVertex(nameSt);
+										vertexIndexCalls.add(1);
 
 										if(optionalOnlineJournal.isPresent()){
 											OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> onlineArticleOnlineJournal = onlineArticle.addOutEdge(graph.OnlineArticleOnlineJournal(), optionalOnlineJournal.get());
 											onlineArticleOnlineJournal.set(graph.OnlineArticleOnlineJournal().locator, locatorSt);
+											edgeCounter.add(1);
 										}
 
 									}
@@ -1398,6 +1504,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									//protein citation
 									protein.addOutEdge(graph.ProteinReference(), reference);
+									edgeCounter.add(1);
 
 								}
 							}
@@ -1440,6 +1547,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 								Optional<Article<I,RV,RVT,RE,RET>> optionalArticle = graph.articleTitleIndex().getVertex(titleSt);
 								Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(titleSt + graph.Article().name());
+								vertexIndexCalls.add(2);
 
 								if(optionalArticle.isPresent() && optionalReference.isPresent()){
 
@@ -1456,34 +1564,41 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 									if(pubmedId != ""){
 										Optional<Pubmed<I,RV,RVT,RE,RET>> optionalPubmed = graph.pubmedIdIndex().getVertex(pubmedId);
+										vertexIndexCalls.add(1);
 										if(optionalPubmed.isPresent()){
 											article.addOutEdge(graph.ArticlePubmed(), optionalPubmed.get());
+											edgeCounter.add(1);
 										}
 									}
 
 									//---authors association-----
 									for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 										reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+										edgeCounter.add(1);
 									}
 									//---consortiums association----
 									for(Consortium<I,RV,RVT,RE,RET> consortium : authorsConsortium){
 										reference.addOutEdge(graph.ReferenceAuthorConsortium(), consortium);
+										edgeCounter.add(1);
 									}
 
 									//------journal-----------
 									if (!journalNameSt.equals("")) {
 										Optional<Journal<I,RV,RVT,RE,RET>> optionalJournal = graph.journalNameIndex().getVertex(journalNameSt);
+										vertexIndexCalls.add(1);
 										if(optionalJournal.isPresent()){
 											ArticleJournal<I,RV,RVT,RE,RET> articleJournal = article.addOutEdge(graph.ArticleJournal(), optionalJournal.get());
 											articleJournal.set(graph.ArticleJournal().volume, volumeSt);
 											articleJournal.set(graph.ArticleJournal().first, firstSt);
 											articleJournal.set(graph.ArticleJournal().last, lastSt);
+											edgeCounter.add(1);
 										}
 									}
 									//----------------------------
 
 									//protein citation
 									protein.addOutEdge(graph.ProteinReference(), reference);
+									edgeCounter.add(1);
 								}
 							}
 						}
@@ -1509,14 +1624,17 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 							Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
 							reference.set(graph.Reference().date, dateSt);
 							reference.addOutEdge(graph.ReferenceUnpublishedObservation(), unpublishedObservation);
+							edgeCounter.add(1);
 
 							//---authors association-----
 							for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
 								reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
+								edgeCounter.add(1);
 							}
 
 							//protein citation
 							protein.addOutEdge(graph.ProteinReference(), reference);
+							edgeCounter.add(1);
 
 						}
 						break;
