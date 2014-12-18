@@ -508,7 +508,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 						if ((proteinCounter % limitForPrintingOut) == 0) {
 							String logSt = proteinCounter + " proteins inserted!!";
 							logSt += "\n" + edgeCounter + " edges were created so far...";
-							logSt += "\n" + vertexIndexCalls + " queries were performed to vertex indices..."
+							logSt += "\n" + vertexIndexCalls + " queries were performed to vertex indices...";
 							logger.log(Level.INFO, logSt);
 							graph.raw().commit();
 						}
