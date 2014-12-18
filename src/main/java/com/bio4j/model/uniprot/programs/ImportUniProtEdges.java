@@ -506,8 +506,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 						proteinCounter++;
 						if ((proteinCounter % limitForPrintingOut) == 0) {
-							String countProteinsSt = proteinCounter + " proteins inserted!!";
-							logger.log(Level.INFO, countProteinsSt);
+							String logSt = proteinCounter + " proteins inserted!!";
+							logSt += "\n" + edgeCounter + " edges were created so far...";
+							logSt += "\n" + vertexIndexCalls + " queries were performed to vertex indices..."
+							logger.log(Level.INFO, logSt);
 							graph.raw().commit();
 						}
 
@@ -540,6 +542,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
 					statsBuff.write("Statistics for program ImportUniProtEdges:\nInput file: " + inFile.getName()
 							+ "\nThere were " + proteinCounter + " proteins inserted.\n"
+							+ "\nThere were " + edgeCounter + " edges created.\n"
+							+ "\nThere were " + vertexIndexCalls + " vertex index calls on the whole process.\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---
