@@ -32,25 +32,27 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
 	public static final String COMMENT_TYPE_INTERACTION = "interaction";
 
-	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	protected void importProteinInteractions(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
 			String currentAccessionId = "";
 
 			//-------creating graph handlers---------------------
-			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 

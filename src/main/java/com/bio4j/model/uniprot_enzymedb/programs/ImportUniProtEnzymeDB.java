@@ -24,7 +24,7 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 	private static final Logger logger = Logger.getLogger("ImportUniProtEnzymeDB");
 	private static FileHandler fh;
 
-	protected abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public static final String ENTRY_TAG_NAME = "entry";
 	public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
@@ -36,19 +36,20 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 
 	public void importUniProtEnzymeDB(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
-
-			UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniprotEnzymeDBGraph = config(dbFolder);
+			UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniprotEnzymeDBGraph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 

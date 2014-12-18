@@ -20,24 +20,25 @@ public abstract class ImportGenInfoNCBITaxonIndex<I extends UntypedGraph<RV,RVT,
 	private static final Logger logger = Logger.getLogger("ImportGenInfoNCBITaxonIndex");
 	private static FileHandler fh;
 
-	protected abstract NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 
 	public void importGenInfoNCBITaxonIndex(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. GI tax Id association filename \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
-
-			NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGenInfoGraph = config(dbFolder);
+			NCBITaxonomyGenInfoGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGenInfoGraph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 			BufferedWriter incorrectPairsBuff = null;

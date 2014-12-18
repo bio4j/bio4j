@@ -36,7 +36,7 @@ public abstract class ImportUniProtGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 	public static final String GO_DB_REFERENCE_TYPE = "GO";
 	public static final String EVIDENCE_TYPE_ATTRIBUTE = "evidence";
 
-	protected abstract UniProtGoGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGoGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 
 	public void importUniProtGo(String[] args) {
@@ -44,16 +44,17 @@ public abstract class ImportUniProtGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 		if (args.length != 2) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
-
-			UniProtGoGraph<I,RV,RVT,RE,RET> uniprotGoGraph = config(dbFolder);
+			UniProtGoGraph<I,RV,RVT,RE,RET> uniprotGoGraph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 

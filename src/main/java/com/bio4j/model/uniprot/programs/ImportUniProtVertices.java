@@ -133,27 +133,29 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	HashSet<String> thesisTitleSet;
 	HashSet<String> uniGeneIdSet;
 
-	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	protected void importUniProtVertices(String[] args) {
 
-		if (args.length != 3) {
+		if (args.length != 4) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n"
-					+ "3. Config XML file");
+					+ "3. Config XML file \n"
+					+ "4. DB properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
-			File configFile = new File(args[2]);
 			String dbFolder = args[1];
+			File configFile = new File(args[2]);
+			String propertiesFile = args[3];
 
 			String currentAccessionId = "";
 
 			//-------creating graph handlers---------------------
-			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
 
 			//------Initializing hash sets---------------
 			alternativeProductTypeNameSet = new HashSet<String>();

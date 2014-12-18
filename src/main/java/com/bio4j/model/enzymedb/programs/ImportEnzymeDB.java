@@ -49,14 +49,15 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 	private static final Logger logger = Logger.getLogger("ImportEnzymeDB");
 	private static FileHandler fh;
 
-	protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public void importEnzymeDB(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. Enzyme DB data file (.dat) \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 
 		} else {
 
@@ -64,10 +65,11 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
 			BufferedWriter statsBuff = null;
 
-			EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder);
+			EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder, propertiesFile);
 
 			int enzymeCounter = 0;
 

@@ -34,16 +34,17 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 	private static final Logger logger = Logger.getLogger("ImportUniProtUniRef");
 	private static FileHandler fh;
 
-	protected abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public void importUniProtUniRef(String[] args) {
 
-		if (args.length != 4) {
+		if (args.length != 5) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniRef 100 xml filename \n"
 					+ "2. UniRef 90 xml filename \n"
 					+ "3. UniRef 50 xml filename \n"
-					+ "4. Bio4j DB folder");
+					+ "4. Bio4j DB folder \n"
+					+ "5. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
@@ -52,8 +53,9 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			File uniref90File = new File(args[1]);
 			File uniref50File = new File(args[2]);
 			String dbFolder = args[3];
+			String propertiesFile = args[4];
 
-			UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(dbFolder);
+			UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 
