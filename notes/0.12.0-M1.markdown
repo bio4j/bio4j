@@ -1,0 +1,3 @@
+This is a first milestone for 0.12.0. In terms of code, it should be pretty close to the final 0.12.0 version; only docs and similar stuff is left. We will have proper release notes for the stable version, for now take a look at
+
+- [bio4j 0.12.0 milestone](https://github.com/bio4j/bio4j/milestones/bio4j%200.12.0)
