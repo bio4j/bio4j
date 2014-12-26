@@ -181,7 +181,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                 UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
                 reader = new BufferedReader(new FileReader(inFile));
                 StringBuilder entryStBuilder = new StringBuilder();
