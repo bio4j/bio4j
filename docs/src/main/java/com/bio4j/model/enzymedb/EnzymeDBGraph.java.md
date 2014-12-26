@@ -71,7 +71,7 @@ public abstract class EnzymeDBGraph<
         return raw;
     }
 
-	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
 
 	// types
 	// vertices
@@ -83,7 +83,7 @@ public abstract class EnzymeDBGraph<
 
 	public final class EnzymeType
 			extends
-			EnzymeVertexType<
+			EnzymeDBVertexType<
 					Enzyme<I, RV, RVT, RE, RET>,
 					EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType
 					> {
@@ -112,7 +112,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class id
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
 			public id() {
 				super(EnzymeType.this);
 			}
@@ -124,7 +124,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class cofactors
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
 			public cofactors() {
 				super(EnzymeType.this);
 			}
@@ -136,7 +136,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class comment
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
 			public comment() {
 				super(EnzymeType.this);
 			}
@@ -148,7 +148,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class officialName
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
 			public officialName() {
 				super(EnzymeType.this);
 			}
@@ -160,7 +160,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class alternateNames
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
 			public alternateNames() {
 				super(EnzymeType.this);
 			}
@@ -172,7 +172,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class catalyticActivity
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
 			public catalyticActivity() {
 				super(EnzymeType.this);
 			}
@@ -184,7 +184,7 @@ public abstract class EnzymeDBGraph<
 
 		public final class prositeCrossReferences
 				extends
-				EnzymeVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
+				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
 			public prositeCrossReferences() {
 				super(EnzymeType.this);
 			}
@@ -199,16 +199,16 @@ public abstract class EnzymeDBGraph<
 	////////////////////////////////////////////////////////////////////////////////////////////////////////
 	// helper classes
 
-	public abstract class EnzymeVertexProperty<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>,
-			P extends EnzymeVertexProperty<V, VT, P, PV>,
+	public abstract class EnzymeDBVertexProperty<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
+			P extends EnzymeDBVertexProperty<V, VT, P, PV>,
 			PV
 			>
 			implements
 			Property<V, VT, P, PV, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-		protected EnzymeVertexProperty(VT type) {
+		protected EnzymeDBVertexProperty(VT type) {
 
 			this.type = type;
 		}
@@ -221,9 +221,9 @@ public abstract class EnzymeDBGraph<
 		}
 	}
 
-	public abstract static class EnzymeVertex<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>,
+	public abstract static class EnzymeDBVertex<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
@@ -232,7 +232,7 @@ public abstract class EnzymeDBGraph<
 		private RV vertex;
 		private VT type;
 
-		protected EnzymeVertex(RV vertex, VT type) {
+		protected EnzymeDBVertex(RV vertex, VT type) {
 
 			this.vertex = vertex;
 			this.type = type;
@@ -254,16 +254,16 @@ public abstract class EnzymeDBGraph<
 		}
 	}
 
-	abstract class EnzymeVertexType<
-			V extends EnzymeVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<V, VT>
+	abstract class EnzymeDBVertexType<
+			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
+			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>
 			>
 			implements
 			TypedVertex.Type<V, VT, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
 		private RVT raw;
 
-		protected EnzymeVertexType(RVT raw) {
+		protected EnzymeDBVertexType(RVT raw) {
 			this.raw = raw;
 		}
 
@@ -279,12 +279,12 @@ public abstract class EnzymeDBGraph<
 	}
 
 	public abstract static class EnzymeEdge<
-			S extends EnzymeVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<S, ST>,
+			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
 			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
 			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<T, TT>,
+			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>,
 			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
 			>
 			implements
@@ -320,12 +320,12 @@ public abstract class EnzymeDBGraph<
 	}
 
 	abstract class EnzymeEdgeType<
-			S extends EnzymeVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<S, ST>,
+			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
+			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
 			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
 			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeVertexType<T, TT>
+			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
+			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>
 			>
 			implements
 			TypedEdge.Type<
@@ -447,6 +447,7 @@ public abstract class EnzymeDBGraph<
                 + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
                 + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
                 + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
+                + [ProteinInterPro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]
                 + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
                 + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
                 + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
@@ -464,6 +465,7 @@ public abstract class EnzymeDBGraph<
                 + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
                 + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
                 + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
+                + [ProteinGeneName.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]
                 + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
                 + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
                 + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
@@ -482,7 +484,6 @@ public abstract class EnzymeDBGraph<
                 + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
                 + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
                 + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
-                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
                 + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
                 + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
                 + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
@@ -498,6 +499,7 @@ public abstract class EnzymeDBGraph<
                 + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
                 + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
                 + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
+                + [InterPro.java][main/java/com/bio4j/model/uniprot/vertices/InterPro.java]
                 + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
                 + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
                 + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
@@ -509,6 +511,7 @@ public abstract class EnzymeDBGraph<
                 + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
                 + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
                 + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
+                + [GeneName.java][main/java/com/bio4j/model/uniprot/vertices/GeneName.java]
                 + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
                 + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
                 + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
@@ -523,12 +526,12 @@ public abstract class EnzymeDBGraph<
                 + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
                 + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
                 + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
-                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
                 + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
                 + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
                 + [ImportProteinInteractions.java][main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]
@@ -600,6 +603,7 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: ../uniprot/edges/ProteinFeature.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: ../uniprot/edges/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]: ../uniprot/edges/ProteinInterPro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: ../uniprot/edges/ReferenceThesis.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: ../uniprot/edges/ArticlePubmed.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: ../uniprot/edges/ReferenceAuthorConsortium.java.md
@@ -617,6 +621,7 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: ../uniprot/edges/ProteinPfam.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: ../uniprot/edges/ProteinEnsembl.java.md
 [main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: ../uniprot/edges/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]: ../uniprot/edges/ProteinGeneName.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: ../uniprot/edges/ProteinComment.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: ../uniprot/edges/ArticleJournal.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: ../uniprot/edges/ProteinPIR.java.md
@@ -635,7 +640,6 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: ../uniprot/edges/ProteinIsoformInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: ../uniprot/edges/ReferenceArticle.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: ../uniprot/edges/ProteinInterpro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: ../uniprot/edges/ProteinEMBL.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: ../uniprot/edges/ProteinSequenceCaution.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../uniprot/edges/ReferenceAuthorPerson.java.md
@@ -650,6 +654,7 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: ../uniprot/vertices/FeatureType.java.md
 [main/java/com/bio4j/model/uniprot/vertices/PIR.java]: ../uniprot/vertices/PIR.java.md
+[main/java/com/bio4j/model/uniprot/vertices/InterPro.java]: ../uniprot/vertices/InterPro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: ../uniprot/vertices/ReactomeTerm.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: ../uniprot/vertices/Thesis.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: ../uniprot/vertices/Ensembl.java.md
@@ -661,6 +666,7 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/vertices/Reference.java]: ../uniprot/vertices/Reference.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: ../uniprot/vertices/UniGene.java.md
 [main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: ../uniprot/vertices/SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/vertices/GeneName.java]: ../uniprot/vertices/GeneName.java.md
 [main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: ../uniprot/vertices/EMBL.java.md
 [main/java/com/bio4j/model/uniprot/vertices/DB.java]: ../uniprot/vertices/DB.java.md
 [main/java/com/bio4j/model/uniprot/vertices/City.java]: ../uniprot/vertices/City.java.md
@@ -675,11 +681,11 @@ public abstract class EnzymeDBGraph<
 [main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: ../uniprot/vertices/OnlineJournal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Patent.java]: ../uniprot/vertices/Patent.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: ../uniprot/vertices/UnpublishedObservation.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: ../uniprot/vertices/Interpro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Organism.java]: ../uniprot/vertices/Organism.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../uniprot/vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../uniprot/vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../uniprot/vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../uniprot/programs/ImportIsoformSequences.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../uniprot/programs/ImportProteinInteractions.java.md

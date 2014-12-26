@@ -58,10 +58,10 @@ The following properties are stored at the `Keyword` vertex:
 - `id`
 - `name`
 
-### Interpro motifs
+### InterPro motifs
 
-Connected to `Protein` vertices via `ProteinInterpro` edges.
-The following properties are stored at the `Interpro` vertex:
+Connected to `Protein` vertices via `ProteinInterPro` edges.
+The following properties are stored at the `InterPro` vertex:
 
 - `id`
 - `name`
@@ -410,10 +410,10 @@ public abstract class UniProtGraph<
         return raw;
     }
 
-	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniprotUniRefGraph();
-	public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniprotGoGraph();
-	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniprotEnzymeDBGraph();
-	public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniprotNCBITaxonomyGraph();
+	public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniProtUniRefGraph();
+	public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniProtGoGraph();
+	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
+	public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniProtNCBITaxonomyGraph();
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -438,6 +438,16 @@ public abstract class UniProtGraph<
 			I, RV, RVT, RE, RET
 			>
 	geneLocationNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			GeneName<I, RV, RVT, RE, RET>, GeneNameType,
+			// property
+			GeneNameType.name, String,
+			// graph
+			UniProtGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	geneNameNameIndex();
     public abstract TypedVertexIndex.Unique <
 		    // vertex
 		    Disease<I, RV, RVT, RE, RET>, DiseaseType,
@@ -740,9 +750,9 @@ public abstract class UniProtGraph<
     keywordIdIndex();
     public abstract TypedVertexIndex.Unique <
             // vertex
-            Interpro<I, RV, RVT, RE, RET>, InterproType,
+            InterPro<I, RV, RVT, RE, RET>, InterProType,
             // property
-            InterproType.id, String,
+            InterProType.id, String,
             // graph
 		    UniProtGraph<I, RV, RVT, RE, RET>,
             I, RV, RVT, RE, RET
@@ -833,9 +843,11 @@ public abstract class UniProtGraph<
 
 	public abstract GeneLocationType GeneLocation();
 
+	public abstract GeneNameType GeneName();
+
 	public abstract InstituteType Institute();
 
-	public abstract InterproType Interpro();
+	public abstract InterProType InterPro();
 
 	public abstract IsoformType Isoform();
 
@@ -920,7 +932,9 @@ public abstract class UniProtGraph<
 
 	public abstract ProteinGeneLocationType ProteinGeneLocation();
 
-	public abstract ProteinInterproType ProteinInterpro();
+	public abstract ProteinGeneNameType ProteinGeneName();
+
+	public abstract ProteinInterProType ProteinInterPro();
 
 	public abstract ProteinKeggType ProteinKegg();
 
@@ -1609,35 +1623,72 @@ public abstract class UniProtGraph<
 
 	}
 
-	public final class InterproType
+	public final class GeneNameType
 			extends
 			UniProtVertexType<
-					Interpro<I, RV, RVT, RE, RET>,
-					UniProtGraph<I, RV, RVT, RE, RET>.InterproType
+					GeneName<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
+					> {
+
+		public final name name = new name();
+
+		public GeneNameType(RVT raw) {
+			super(raw);
+		}
+
+		@Override
+		public GeneNameType value() {
+			return graph().GeneName();
+		}
+
+		@Override
+		public GeneName<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new GeneName<I, RV, RVT, RE, RET>(vertex, this);
+		}
+
+		public final class name
+				extends
+				UniProtVertexProperty<GeneName<I, RV, RVT, RE, RET>, GeneNameType, name, String> {
+			public name() {
+				super(GeneNameType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
+	public final class InterProType
+			extends
+			UniProtVertexType<
+					InterPro<I, RV, RVT, RE, RET>,
+					UniProtGraph<I, RV, RVT, RE, RET>.InterProType
 					> {
 
 		public final name name = new name();
 		public final id id = new id();
 
-        public InterproType(RVT raw) {
+        public InterProType(RVT raw) {
 			super(raw);
 		}
 
 		@Override
-		public InterproType value() {
-			return graph().Interpro();
+		public InterProType value() {
+			return graph().InterPro();
 		}
 
 		@Override
-		public Interpro<I, RV, RVT, RE, RET> from(RV vertex) {
-			return new Interpro<I, RV, RVT, RE, RET>(vertex, this);
+		public InterPro<I, RV, RVT, RE, RET> from(RV vertex) {
+			return new InterPro<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
 		public final class name
 				extends
-				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, name, String> {
+				UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, name, String> {
 			public name() {
-				super(InterproType.this);
+				super(InterProType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -1646,9 +1697,9 @@ public abstract class UniProtGraph<
 		}
 		public final class id
 				extends
-				UniProtVertexProperty<Interpro<I, RV, RVT, RE, RET>, InterproType, id, String> {
+				UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, id, String> {
 			public id() {
-				super(InterproType.this);
+				super(InterProType.this);
 			}
 
 			public Class<String> valueClass() {
@@ -3778,6 +3829,52 @@ public abstract class UniProtGraph<
 
 	}
 
+	public final class ProteinGeneNameType
+			extends
+			UniProtEdgeType<
+					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+					ProteinGeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinGeneNameType,
+					GeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
+					>
+			implements
+			TypedEdge.Type.ManyToMany {
+
+		public final geneNameType geneNameType = new geneNameType();
+
+		public ProteinGeneNameType(RET raw) {
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.GeneName());
+		}
+
+		@Override
+		public ProteinGeneNameType value() {
+			return graph().ProteinGeneName();
+		}
+
+		@Override
+		public ProteinGeneName<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinGeneName<I, RV, RVT, RE, RET>(edge, this);
+		}
+
+		public final class geneNameType
+				extends
+				UniProtEdgeProperty<
+						Protein<I, RV, RVT, RE, RET>, ProteinType,
+						ProteinGeneName<I, RV, RVT, RE, RET>, ProteinGeneNameType,
+						GeneName<I, RV, RVT, RE, RET>, GeneNameType,
+						geneNameType, String
+						>
+		{
+			public geneNameType() {
+				super(ProteinGeneNameType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+
+	}
+
 	public final class IsoformEventGeneratorType
 			extends
 			UniProtEdgeType<
@@ -3803,28 +3900,28 @@ public abstract class UniProtGraph<
 		}
 	}
 
-	public final class ProteinInterproType
+	public final class ProteinInterProType
 			extends
 			UniProtEdgeType<
 					Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-					ProteinInterpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterproType,
-					Interpro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterproType
+					ProteinInterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterProType,
+					InterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterProType
 					>
 			implements
 			TypedEdge.Type.ManyToMany {
 
-		public ProteinInterproType(RET raw) {
-			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Interpro());
+		public ProteinInterProType(RET raw) {
+			super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.InterPro());
 		}
 
 		@Override
-		public ProteinInterproType value() {
-			return graph().ProteinInterpro();
+		public ProteinInterProType value() {
+			return graph().ProteinInterPro();
 		}
 
 		@Override
-		public ProteinInterpro<I, RV, RVT, RE, RET> from(RE edge) {
-			return new ProteinInterpro<I, RV, RVT, RE, RET>(edge, this);
+		public ProteinInterPro<I, RV, RVT, RE, RET> from(RE edge) {
+			return new ProteinInterPro<I, RV, RVT, RE, RET>(edge, this);
 		}
 	}
 
@@ -5315,6 +5412,7 @@ public abstract class UniProtGraph<
                 + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
                 + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
                 + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
+                + [ProteinInterPro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]
                 + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
                 + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
                 + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
@@ -5332,6 +5430,7 @@ public abstract class UniProtGraph<
                 + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
                 + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
                 + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
+                + [ProteinGeneName.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]
                 + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
                 + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
                 + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
@@ -5350,7 +5449,6 @@ public abstract class UniProtGraph<
                 + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
                 + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
                 + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
-                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
                 + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
                 + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
                 + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
@@ -5366,6 +5464,7 @@ public abstract class UniProtGraph<
                 + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
                 + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
                 + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
+                + [InterPro.java][main/java/com/bio4j/model/uniprot/vertices/InterPro.java]
                 + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
                 + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
                 + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
@@ -5377,6 +5476,7 @@ public abstract class UniProtGraph<
                 + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
                 + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
                 + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
+                + [GeneName.java][main/java/com/bio4j/model/uniprot/vertices/GeneName.java]
                 + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
                 + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
                 + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
@@ -5391,12 +5491,12 @@ public abstract class UniProtGraph<
                 + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
                 + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
                 + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
-                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
                 + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
                 + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
                 + [ImportProteinInteractions.java][main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]
@@ -5468,6 +5568,7 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: edges/ProteinFeature.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: edges/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]: edges/ProteinInterPro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: edges/ReferenceThesis.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: edges/ArticlePubmed.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: edges/ReferenceAuthorConsortium.java.md
@@ -5485,6 +5586,7 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: edges/ProteinPfam.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: edges/ProteinEnsembl.java.md
 [main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: edges/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]: edges/ProteinGeneName.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: edges/ProteinComment.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: edges/ArticleJournal.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: edges/ProteinPIR.java.md
@@ -5503,7 +5605,6 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: edges/ProteinIsoformInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: edges/ReferenceArticle.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: edges/ProteinInterpro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: edges/ProteinEMBL.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: edges/ProteinSequenceCaution.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: edges/ReferenceAuthorPerson.java.md
@@ -5518,6 +5619,7 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: vertices/FeatureType.java.md
 [main/java/com/bio4j/model/uniprot/vertices/PIR.java]: vertices/PIR.java.md
+[main/java/com/bio4j/model/uniprot/vertices/InterPro.java]: vertices/InterPro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: vertices/ReactomeTerm.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: vertices/Thesis.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: vertices/Ensembl.java.md
@@ -5529,6 +5631,7 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/vertices/Reference.java]: vertices/Reference.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: vertices/UniGene.java.md
 [main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: vertices/SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/vertices/GeneName.java]: vertices/GeneName.java.md
 [main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: vertices/EMBL.java.md
 [main/java/com/bio4j/model/uniprot/vertices/DB.java]: vertices/DB.java.md
 [main/java/com/bio4j/model/uniprot/vertices/City.java]: vertices/City.java.md
@@ -5543,11 +5646,11 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: vertices/OnlineJournal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Patent.java]: vertices/Patent.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: vertices/UnpublishedObservation.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: vertices/Interpro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Organism.java]: vertices/Organism.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: programs/ImportIsoformSequences.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: programs/ImportProteinInteractions.java.md

@@ -398,20 +398,9 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                         }
 
 
-//						proteinProperties.put(ProteinNode.ENSEMBL_PLANTS_REFERENCES_PROPERTY, convertToStringArray(ensemblPlantsReferences));
-
 
                         // TODO we need to decide how to store this
-//						//---------------gene-names-------------------
-//						Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-//						ArrayList<String> geneNames = new ArrayList<>();
-//						if (geneElement != null) {
-//							List<Element> genesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-//							for (Element geneNameElem : genesList) {
-//								geneNames.add(geneNameElem.getText());
-//							}
-//						}
-//						//-----------------------------------------
+
 
 
                         //--------------reactome associations----------------
@@ -502,10 +491,10 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                 if (uniprotDataXML.getInterpro()) {
                                     String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-                                    Interpro<I,RV,RVT,RE,RET> interpro = null;
-                                    Optional<Interpro<I,RV,RVT,RE,RET>> optionalInterpro = graph.interproIdIndex().getVertex(interproId);
+                                    InterPro<I,RV,RVT,RE,RET> interpro = null;
+                                    Optional<InterPro<I,RV,RVT,RE,RET>> optionalInterPro = graph.interproIdIndex().getVertex(interproId);
 
-                                    if (!optionalInterpro.isPresent()) {
+                                    if (!optionalInterPro.isPresent()) {
 
                                         String interproEntryNameSt = "";
                                         List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
@@ -516,15 +505,15 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                                             }
                                         }
 
-                                        interpro = graph.addVertex(graph.Interpro());
-                                        interpro.set(graph.Interpro().id, interproId);
-                                        interpro.set(graph.Interpro().name, interproEntryNameSt);
+                                        interpro = graph.addVertex(graph.InterPro());
+                                        interpro.set(graph.InterPro().id, interproId);
+                                        interpro.set(graph.InterPro().name, interproEntryNameSt);
                                         graph.raw().commit();
                                     }else{
-                                        interpro = optionalInterpro.get();
+                                        interpro = optionalInterPro.get();
                                     }
 
-                                    protein.addOutEdge(graph.ProteinInterpro(), interpro);
+                                    protein.addOutEdge(graph.ProteinInterPro(), interpro);
                                 }
 
                             } //-------------------------------PFAM------------------------------------------------------
@@ -593,6 +582,31 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 		                    ProteinGeneLocation<I,RV,RVT,RE,RET> proteinGeneLocation = protein.addOutEdge(graph.ProteinGeneLocation(), geneLocation);
 		                    proteinGeneLocation.set(graph.ProteinGeneLocation().name, geneLocationNameSt);
 	                    }
+
+
+                        //---------------------------------------------------------------------------------------
+                        //--------------------------------gene names-------------------------------------------
+
+                        Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+                        if (geneElement != null) {
+                            List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
+
+                            for (Element geneNameElem : geneNamesList) {
+                                String geneNameSt = geneNameElem.getText();
+                                String typeSt = geneNameElem.getAttributeValue("type");
+
+                                Optional<GeneName<I,RV,RVT,RE,RET>> optionalGeneName = graph.geneNameNameIndex().getVertex(geneNameSt);
+
+                                if(optionalGeneName.isPresent()){
+                                    GeneName<I,RV,RVT,RE,RET> geneName = optionalGeneName.get();
+                                    ProteinGeneName<I,RV,RVT,RE,RET> proteinGeneName = protein.addOutEdge(graph.ProteinGeneName(), geneName);
+                                    proteinGeneName.set(graph.ProteinGeneName().geneNameType, typeSt);
+                                }
+
+                            }
+                        }
+                        //---------------------------------------------------------------------------------------
+
 
                         //---------------------------------------------------------------------------------------
                         //--------------------------------organism-----------------------------------------------
@@ -2098,6 +2112,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [ProteinIsoform.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]
                 + [ProteinFeature.java][main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]
                 + [ProteinKeyword.java][main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]
+                + [ProteinInterPro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]
                 + [ReferenceThesis.java][main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]
                 + [ArticlePubmed.java][main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]
                 + [ReferenceAuthorConsortium.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]
@@ -2115,6 +2130,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [ProteinPfam.java][main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]
                 + [ProteinEnsembl.java][main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]
                 + [SubcellularLocationParent.java][main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]
+                + [ProteinGeneName.java][main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]
                 + [ProteinComment.java][main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]
                 + [ArticleJournal.java][main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]
                 + [ProteinPIR.java][main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]
@@ -2133,7 +2149,6 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [IsoformProteinInteraction.java][main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]
                 + [ProteinIsoformInteraction.java][main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]
                 + [ReferenceArticle.java][main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]
-                + [ProteinInterpro.java][main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]
                 + [ProteinEMBL.java][main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]
                 + [ProteinSequenceCaution.java][main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]
                 + [ReferenceAuthorPerson.java][main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]
@@ -2149,6 +2164,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [SubcellularLocation.java][main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]
                 + [FeatureType.java][main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]
                 + [PIR.java][main/java/com/bio4j/model/uniprot/vertices/PIR.java]
+                + [InterPro.java][main/java/com/bio4j/model/uniprot/vertices/InterPro.java]
                 + [ReactomeTerm.java][main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]
                 + [Thesis.java][main/java/com/bio4j/model/uniprot/vertices/Thesis.java]
                 + [Ensembl.java][main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]
@@ -2160,6 +2176,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [Reference.java][main/java/com/bio4j/model/uniprot/vertices/Reference.java]
                 + [UniGene.java][main/java/com/bio4j/model/uniprot/vertices/UniGene.java]
                 + [SequenceCaution.java][main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]
+                + [GeneName.java][main/java/com/bio4j/model/uniprot/vertices/GeneName.java]
                 + [EMBL.java][main/java/com/bio4j/model/uniprot/vertices/EMBL.java]
                 + [DB.java][main/java/com/bio4j/model/uniprot/vertices/DB.java]
                 + [City.java][main/java/com/bio4j/model/uniprot/vertices/City.java]
@@ -2174,12 +2191,12 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [OnlineJournal.java][main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]
                 + [Patent.java][main/java/com/bio4j/model/uniprot/vertices/Patent.java]
                 + [UnpublishedObservation.java][main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]
-                + [Interpro.java][main/java/com/bio4j/model/uniprot/vertices/Interpro.java]
                 + [Organism.java][main/java/com/bio4j/model/uniprot/vertices/Organism.java]
                 + [Dataset.java][main/java/com/bio4j/model/uniprot/vertices/Dataset.java]
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
                 + [ImportProteinInteractions.java][main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]
@@ -2251,6 +2268,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinFeature.java]: ../edges/ProteinFeature.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinKeyword.java]: ../edges/ProteinKeyword.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinInterPro.java]: ../edges/ProteinInterPro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceThesis.java]: ../edges/ReferenceThesis.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticlePubmed.java]: ../edges/ArticlePubmed.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorConsortium.java]: ../edges/ReferenceAuthorConsortium.java.md
@@ -2268,6 +2286,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/edges/ProteinPfam.java]: ../edges/ProteinPfam.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEnsembl.java]: ../edges/ProteinEnsembl.java.md
 [main/java/com/bio4j/model/uniprot/edges/SubcellularLocationParent.java]: ../edges/SubcellularLocationParent.java.md
+[main/java/com/bio4j/model/uniprot/edges/ProteinGeneName.java]: ../edges/ProteinGeneName.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinComment.java]: ../edges/ProteinComment.java.md
 [main/java/com/bio4j/model/uniprot/edges/ArticleJournal.java]: ../edges/ArticleJournal.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinPIR.java]: ../edges/ProteinPIR.java.md
@@ -2286,7 +2305,6 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoformInteraction.java]: ../edges/ProteinIsoformInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceArticle.java]: ../edges/ReferenceArticle.java.md
-[main/java/com/bio4j/model/uniprot/edges/ProteinInterpro.java]: ../edges/ProteinInterpro.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinEMBL.java]: ../edges/ProteinEMBL.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSequenceCaution.java]: ../edges/ProteinSequenceCaution.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../edges/ReferenceAuthorPerson.java.md
@@ -2301,6 +2319,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/FeatureType.java]: ../vertices/FeatureType.java.md
 [main/java/com/bio4j/model/uniprot/vertices/PIR.java]: ../vertices/PIR.java.md
+[main/java/com/bio4j/model/uniprot/vertices/InterPro.java]: ../vertices/InterPro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/ReactomeTerm.java]: ../vertices/ReactomeTerm.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Thesis.java]: ../vertices/Thesis.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Ensembl.java]: ../vertices/Ensembl.java.md
@@ -2312,6 +2331,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/vertices/Reference.java]: ../vertices/Reference.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UniGene.java]: ../vertices/UniGene.java.md
 [main/java/com/bio4j/model/uniprot/vertices/SequenceCaution.java]: ../vertices/SequenceCaution.java.md
+[main/java/com/bio4j/model/uniprot/vertices/GeneName.java]: ../vertices/GeneName.java.md
 [main/java/com/bio4j/model/uniprot/vertices/EMBL.java]: ../vertices/EMBL.java.md
 [main/java/com/bio4j/model/uniprot/vertices/DB.java]: ../vertices/DB.java.md
 [main/java/com/bio4j/model/uniprot/vertices/City.java]: ../vertices/City.java.md
@@ -2326,11 +2346,11 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/vertices/OnlineJournal.java]: ../vertices/OnlineJournal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Patent.java]: ../vertices/Patent.java.md
 [main/java/com/bio4j/model/uniprot/vertices/UnpublishedObservation.java]: ../vertices/UnpublishedObservation.java.md
-[main/java/com/bio4j/model/uniprot/vertices/Interpro.java]: ../vertices/Interpro.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Organism.java]: ../vertices/Organism.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ImportIsoformSequences.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ImportProteinInteractions.java.md
