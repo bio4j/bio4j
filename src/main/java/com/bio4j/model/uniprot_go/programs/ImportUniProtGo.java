@@ -41,7 +41,7 @@ public abstract class ImportUniProtGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
 
 	public void importUniProtGo(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n"
