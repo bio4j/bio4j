@@ -174,12 +174,17 @@ public abstract class UniRefGraph<
 					UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType
 					> {
 
-		public final id id = new id();
-		public final name name = new name();
-		public final updatedDate updatedDate = new updatedDate();
+		public final id id;
+		public final name name;
+		public final updatedDate updatedDate;
 
 		public UniRef90ClusterType(RVT raw) {
+
 			super(raw);
+
+			id = new id(this);
+			name = new name(this);
+			updatedDate = new updatedDate(this);
 		}
 
 		@Override
@@ -195,8 +200,9 @@ public abstract class UniRefGraph<
 		public final class id
 				extends
 				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, id, String> {
-			public id() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
+			public id(UniRef90ClusterType vt) {
+				
+				super(vt);
 			}
 
 			public Class<String> valueClass() {
@@ -206,8 +212,8 @@ public abstract class UniRefGraph<
 		public final class name
 				extends
 				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, name, String> {
-			public name() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
+			public name(UniRef90ClusterType vt) {
+				super(vt);
 			}
 
 			public Class<String> valueClass() {
@@ -217,8 +223,9 @@ public abstract class UniRefGraph<
 		public final class updatedDate
 				extends
 				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, updatedDate, String> {
-			public updatedDate() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
+			public updatedDate(UniRef90ClusterType vt) {
+				
+				super(vt);
 			}
 
 			public Class<String> valueClass() {
@@ -229,18 +236,24 @@ public abstract class UniRefGraph<
 	}
 
 	public final class UniRef100ClusterType
-			extends
+		extends
 			UniRefVertexType<
-					UniRef100Cluster<I, RV, RVT, RE, RET>,
-					UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType
-					> {
-
-		public final id id = new id();
-		public final name name = new name();
-		public final updatedDate updatedDate = new updatedDate();
+				UniRef100Cluster<I, RV, RVT, RE, RET>,
+				UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType
+			>
+	{
+		public final id id;
+		public final name name;
+		public final updatedDate updatedDate;
 
 		public UniRef100ClusterType(RVT raw) {
+
 			super(raw);
+
+			// init props
+			id = new id(this);
+			name = new name(this);
+			updatedDate = new updatedDate(this);
 		}
 
 		@Override
@@ -254,39 +267,28 @@ public abstract class UniRefGraph<
 		}
 
 		public final class id
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, id, String> {
-			public id() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, id, String>
+		{
+			public id(UniRef100ClusterType vt) { super(vt); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class name
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, name, String> {
-			public name() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, name, String> 
+		{
+			public name(UniRef100ClusterType vt) { super(vt); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class updatedDate
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, updatedDate, String> {
-			public updatedDate() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, updatedDate, String>
+		{	
+			public updatedDate(UniRef100ClusterType vt) { super(vt); }
+			public Class<String> valueClass() { return String.class; }
 		}
-
 	}
 
 
