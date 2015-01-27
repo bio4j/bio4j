@@ -1,0 +1,1 @@
+This is the first release candidate for `0.12`, which is going to be the base for `1.0`. We are in the process of having a first full data import with this code and the corresponding one in [bio4j/bio4j-titan](https://github.com/bio4j/bio4j-titan).
