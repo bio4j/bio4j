@@ -22,16 +22,17 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 	private static final Logger logger = Logger.getLogger("ImportNCBITaxonomy");
 	private static FileHandler fh;
 
-	protected abstract NCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract NCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public void importNCBITaxonomy(String[] args) {
 
-		if (args.length != 4) {
+		if (args.length != 5) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. Nodes DMP filename \n"
 					+ "2. Names DMP filename \n"
 					+ "3. Merged DMP filename \n"
-					+ "4. Bio4j DB folder \n");
+					+ "4. Bio4j DB folder \n"
+					+ "5. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
@@ -44,10 +45,11 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 			File nodesDumpFile = new File(args[0]);
 			File namesDumpFile = new File(args[1]);
 			String dbFolder = args[3];
+			String propertiesFile = args[4];
 
 			logger.log(Level.INFO, "creating manager...");
 
-			NCBITaxonomyGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGraph = config(dbFolder);
+			NCBITaxonomyGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGraph = config(dbFolder, propertiesFile);
 
 
 			try {
@@ -369,6 +371,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -523,6 +526,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../../uniprot/vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../../uniprot/vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../../uniprot/vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md

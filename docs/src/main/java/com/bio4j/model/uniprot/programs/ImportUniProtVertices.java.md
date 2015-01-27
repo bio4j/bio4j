@@ -135,27 +135,29 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 	HashSet<String> thesisTitleSet;
 	HashSet<String> uniGeneIdSet;
 
-	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	protected void importUniProtVertices(String[] args) {
 
-		if (args.length != 3) {
+		if (args.length != 4) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
 					+ "2. Bio4j DB folder \n"
-					+ "3. Config XML file");
+					+ "3. Config XML file \n"
+					+ "4. DB properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
-			File configFile = new File(args[2]);
 			String dbFolder = args[1];
+			File configFile = new File(args[2]);
+			String propertiesFile = args[3];
 
 			String currentAccessionId = "";
 
 			//-------creating graph handlers---------------------
-			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
 
 			//------Initializing hash sets---------------
 			alternativeProductTypeNameSet = new HashSet<String>();
@@ -198,7 +200,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 			uniGeneIdSet = new HashSet<String>();
 			//-------------------------------------------------------------------------
 
-			BufferedWriter enzymeIdsNotFoundBuff = null;
 			BufferedWriter statsBuff = null;
 
 			int proteinCounter = 0;
@@ -228,7 +229,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 				UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
 				reader = new BufferedReader(new FileReader(inFile));
 				StringBuilder entryStBuilder = new StringBuilder();
@@ -1047,6 +1048,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 									if(!graph.thesisTitleIndex().getVertex(titleSt).isPresent()){
 										Thesis<I,RV,RVT,RE,RET> thesis = graph.addVertex(graph.Thesis());
 										thesis.set(graph.Thesis().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + graph.Thesis().name());
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceThesis(), thesis);
 									}
 
 									//-----------institute-----------------------------
@@ -1101,6 +1112,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 										Patent<I,RV,RVT,RE,RET> patent = graph.addVertex(graph.Patent());
 										patent.set(graph.Patent().number, numberSt);
 										patent.set(graph.Patent().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, numberSt + graph.Patent().name());
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferencePatent(), patent);
 									}
 								}
 							}
@@ -1123,6 +1144,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 									if(!graph.submissionTitleIndex().getVertex(titleSt).isPresent()){
 										Submission<I,RV,RVT,RE,RET> submission = graph.addVertex(graph.Submission());
 										submission.set(graph.Submission().title, titleSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + graph.Submission().name());
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceSubmission(), submission);
 									}
 
 									if (dbSt != null) {
@@ -1168,6 +1199,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 
 									Book<I,RV,RVT,RE,RET> book = graph.addVertex(graph.Book());
 									book.set(graph.Book().name, nameSt);
+
+									String dateSt = citation.getAttributeValue("date");
+									if (dateSt == null) {
+										dateSt = "";
+									}
+
+									Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+									reference.set(graph.Reference().id, nameSt + graph.Book().name());
+									reference.set(graph.Reference().date, dateSt);
+									reference.addOutEdge(graph.ReferenceBook(), book);
 
 									//---editor association-----
 									Element editorListElem = citation.getChild("editorList");
@@ -1239,6 +1280,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 										OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = graph.addVertex(graph.OnlineArticle());
 										onlineArticle.set(graph.OnlineArticle().title, titleSt);
 
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + graph.OnlineArticle().name());
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+
 										//------online journal-----------
 										if (!nameSt.equals("")) {
 
@@ -1302,6 +1353,16 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 										Article<I,RV,RVT,RE,RET> article = graph.addVertex(graph.Article());
 										article.set(graph.Article().title, titleSt);
 										article.set(graph.Article().doId, doiSt);
+
+										String dateSt = citation.getAttributeValue("date");
+										if (dateSt == null) {
+											dateSt = "";
+										}
+
+										Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+										reference.set(graph.Reference().id, titleSt + graph.Article().name());
+										reference.set(graph.Reference().date, dateSt);
+										reference.addOutEdge(graph.ReferenceArticle(), article);
 
 										if(pubmedId != ""){
 
@@ -1511,6 +1572,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -1665,6 +1727,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ImportIsoformSequences.java.md

@@ -130,30 +130,30 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
 	protected SimpleDateFormat dateFormat;
 
 
-    protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+    protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
     protected void importUniProt(String[] args) {
 
-        if (args.length != 3) {
+        if (args.length != 4) {
             System.out.println("This program expects the following parameters: \n"
                     + "1. UniProt xml filename \n"
                     + "2. Bio4j DB folder \n"
-                    + "3. Config XML file");
+                    + "3. Config XML file \n"
+                    + "4. DB properties file (.properties)");
         } else {
 
             long initTime = System.nanoTime();
 
             File inFile = new File(args[0]);
-            File configFile = new File(args[2]);
             String dbFolder = args[1];
+            File configFile = new File(args[2]);
+            String propertiesFile = args[3];
 
             String currentAccessionId = "";
 
             //-------creating graph handlers---------------------
-            UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
+            UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
 
-
-            BufferedWriter enzymeIdsNotFoundBuff = null;
             BufferedWriter statsBuff = null;
 
             int proteinCounter = 0;
@@ -183,7 +183,7 @@ public abstract class ImportUniProt<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT
                 UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtStats_" + inFile.getName().split("\\.")[0] + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
                 reader = new BufferedReader(new FileReader(inFile));
                 StringBuilder entryStBuilder = new StringBuilder();
@@ -1436,6 +1436,8 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 					}else{
 						person = optionalPerson.get();
 					}
+
+                    authorsPerson.add(person);
 				}
 
 				for (Element consortiumElement : authorConsortiumElems) {
@@ -1450,6 +1452,8 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 					}else{
 						consortium = optionalConsortium.get();
 					}
+
+                    authorsConsortium.add(consortium);
 				}
 				//----------------------------------------------------------------------------
 				//-----------------------------THESIS-----------------------------------------
@@ -2196,6 +2200,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -2350,6 +2355,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ImportIsoformSequences.java.md

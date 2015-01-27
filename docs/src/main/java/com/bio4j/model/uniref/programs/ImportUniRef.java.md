@@ -31,16 +31,17 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 	private static final Logger logger = Logger.getLogger("ImportUniRef");
 	private static FileHandler fh;
 
-	protected abstract UniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public void importUniRef(String[] args) {
 
-		if (args.length != 4) {
+		if (args.length != 5) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniRef 100 xml filename \n"
 					+ "2. UniRef 90 xml filename \n"
 					+ "3. UniRef 50 xml filename \n"
-					+ "4. Bio4j DB folder");
+					+ "4. Bio4j DB folder \n"
+					+ "5. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
@@ -49,6 +50,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 			File uniref90File = new File(args[1]);
 			File uniref50File = new File(args[2]);
 			String dbFolder = args[3];
+			String propertiesFile = args[4];
 
 			BufferedWriter statsBuff = null;
 
@@ -56,7 +58,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 
 			logger.log(Level.INFO, "creating manager...");
 
-			UniRefGraph<I,RV,RVT,RE,RET> uniRefGraph = config(dbFolder);
+			UniRefGraph<I,RV,RVT,RE,RET> uniRefGraph = config(dbFolder, propertiesFile);
 
 			try {
 
@@ -369,6 +371,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -523,6 +526,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../../uniprot/vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../../uniprot/vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../../uniprot/vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
