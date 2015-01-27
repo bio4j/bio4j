@@ -24,26 +24,28 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 	private static final Logger logger = Logger.getLogger("ImportIsoformSequences");
 	private static FileHandler fh;
 
-	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 	public void importIsoformSequences(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects two parameters: \n"
 					+ "1. Fasta file including all isoforms \n"
-					+ "2. Bio4j DB folder");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
 			String isoformIdSt = null;
 
 			BufferedWriter statsBuff = null;
 
-			UniProtGraph<I,RV,RVT,RE,RET> uniProtGraph = config(dbFolder);
+			UniProtGraph<I,RV,RVT,RE,RET> uniProtGraph = config(dbFolder, propertiesFile);
 
 			int isoformCounter = 0;
 
@@ -312,6 +314,7 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -466,6 +469,7 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ImportIsoformSequences.java.md

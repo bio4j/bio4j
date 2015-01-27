@@ -218,6 +218,7 @@ public final class Disease <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -372,6 +373,7 @@ public final class Disease <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../programs/ImportIsoformSequences.java.md

@@ -36,55 +36,50 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 	private static final Logger logger = Logger.getLogger("ImportUniProtUniRef");
 	private static FileHandler fh;
 
-	protected abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> config(String propertiesFile);
 
 	public void importUniProtUniRef(String[] args) {
 
-		if (args.length != 4) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
-					+ "1. UniRef 100 xml filename \n"
-					+ "2. UniRef 90 xml filename \n"
-					+ "3. UniRef 50 xml filename \n"
-					+ "4. Bio4j DB folder");
+					+ "1. UniRef XML filename \n"
+					+ "2. UniRef type (50/90/100) \n"
+					+ "5. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
-			File uniref100File = new File(args[0]);
-			File uniref90File = new File(args[1]);
-			File uniref50File = new File(args[2]);
-			String dbFolder = args[3];
+			File uniRefFile = new File(args[0]);
+			String uniRefType = args[1];
+			String propertiesFile = args[2];
 
-			UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(dbFolder);
+			UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph = config(propertiesFile);
 
 			BufferedWriter statsBuff = null;
 
-			int uniref100EntryCounter =0, uniref90EntryCounter = 0, uniref50EntryCounter = 0;
+			int unirefEntryCounter = 0;
 
 			try {
 
 				// This block configure the logger with handler and formatter
-				fh = new FileHandler("ImportUniProtUniRefTitan.log", true);
+				fh = new FileHandler("ImportUniProtUniRef" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 				SimpleFormatter formatter = new SimpleFormatter();
 				fh.setFormatter(formatter);
 				logger.addHandler(fh);
 				logger.setLevel(Level.ALL);
 
 				//---creating writer for stats file-----
-				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUniRefStats.txt")));
+				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUniRefStats" + uniRefFile.getName().split("\\.")[0] + ".txt")));
 
-				//------------------- UNIREF 100----------------------------
-				System.out.println("Reading UniRef 100 file...");
-				uniref100EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref100File, 100);
-				System.out.println("Done! :)");
-				//------------------- UNIREF 90----------------------------
-				System.out.println("Reading UniRef 90 file...");
-				uniref90EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref90File, 90);
-				System.out.println("Done! :)");
-				//------------------- UNIREF 50----------------------------
-				System.out.println("Reading UniRef 50 file...");
-				uniref50EntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniref50File, 50);
-				System.out.println("Done! :)");
+				if(!uniRefType.equals("50") || !uniRefType.equals("90") || !uniRefType.equals("100")){
+
+					logger.log(Level.SEVERE, "The value for the UniRef type is not right, it should be one of the following values: 50, 90, 100");
+
+				}else{
+					logger.log(Level.INFO, "Reading UniRef file...");
+					unirefEntryCounter = importUniProtUniRefFile(uniprotUniRefGraph, uniRefFile, uniRefType);
+					logger.log(Level.INFO, "Done! :)");
+				}
 
 
 			} catch (Exception ex) {
@@ -110,13 +105,9 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					long seconds = (elapsedSeconds % 3600) % 60;
 
 					statsBuff.write("Statistics for program ImportUniProtUniRefTitan:\nInput files: " +
-							"\nUniRef 100 file: " + uniref100File.getName() +
-							"\nUniRef 90 file: " + uniref90File.getName() +
-							"\nUniRef 50 file: " + uniref50File.getName()
+							"\nUniRef file: " + uniRefFile.getName()
 							+ "\nThe following number of entries was parsed:\n"
-							+ "UniRef 100 --> " + uniref100EntryCounter + " entries\n"
-							+ "UniRef 90 --> " + uniref90EntryCounter + " entries\n"
-							+ "UniRef 50 --> " + uniref50EntryCounter + " entries\n"
+							+ unirefEntryCounter + " entries\n"
 							+ "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
 					//---closing stats writer---
@@ -153,7 +144,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
 	private int importUniProtUniRefFile(UniProtUniRefGraph<I,RV,RVT,RE,RET> uniprotUniRefGraph,
 	                                           File unirefFile,
-	                                           int unirefClusterNumber) throws Exception {
+	                                           String unirefClusterNumber) throws Exception {
 
 		StringBuilder entryStBuilder = new StringBuilder();
 
@@ -202,7 +193,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				}
 				//-----------------------------------------------------
 
-				if(unirefClusterNumber == 50){
+				if(unirefClusterNumber.equals("50")){
 					Optional<UniRef50Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef50ClusterIdIndex().getVertex(representantAccession);
 					if(optionalCluster.isPresent()){
 						UniRef50Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
@@ -226,7 +217,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
 					}
 
-				}else if(unirefClusterNumber == 90){
+				}else if(unirefClusterNumber.equals("90")){
 					Optional<UniRef90Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef90ClusterIdIndex().getVertex(representantAccession);
 					if(optionalCluster.isPresent()){
 						UniRef90Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
@@ -250,7 +241,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
 					}
 
-				}else if(unirefClusterNumber == 100){
+				}else if(unirefClusterNumber.equals("100")){
 					Optional<UniRef100Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef100ClusterIdIndex().getVertex(representantAccession);
 					if(optionalCluster.isPresent()){
 						UniRef100Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
@@ -452,6 +443,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -606,6 +598,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../../uniprot/vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../../uniprot/vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../../uniprot/vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md

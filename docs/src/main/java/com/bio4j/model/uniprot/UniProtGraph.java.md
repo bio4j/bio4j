@@ -808,6 +808,16 @@ public abstract class UniProtGraph<
 			I, RV, RVT, RE, RET
 			>
 	commentTypeNameIndex();
+	public abstract TypedVertexIndex.Unique <
+			// vertex
+			Reference<I, RV, RVT, RE, RET>, ReferenceType,
+			// property
+			ReferenceType.id, String,
+			// graph
+			UniProtGraph<I, RV, RVT, RE, RET>,
+			I, RV, RVT, RE, RET
+			>
+	referenceIdIndex();
 
 
 
@@ -2527,6 +2537,7 @@ public abstract class UniProtGraph<
 					UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
 					> {
 
+		public final id id = new id();
 		public final date date = new date();
 
         public ReferenceType(RVT raw) {
@@ -2543,6 +2554,17 @@ public abstract class UniProtGraph<
 			return new Reference<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
+		public final class id
+				extends
+				UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, id, String> {
+			public id() {
+				super(ReferenceType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
 		public final class date
 				extends
 				UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
@@ -5496,6 +5518,7 @@ public abstract class UniProtGraph<
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -5650,6 +5673,7 @@ public abstract class UniProtGraph<
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: programs/ImportIsoformSequences.java.md

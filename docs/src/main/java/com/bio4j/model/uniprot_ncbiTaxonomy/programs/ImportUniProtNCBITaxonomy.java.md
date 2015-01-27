@@ -37,24 +37,25 @@ public abstract class ImportUniProtNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 	public static final String DB_REFERENCE_ID_ATTRIBUTE = "id";
 	public static final String NCBI_TAXONOMY_TYPE = "NCBI Taxonomy";
 
-	protected abstract UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder);
+	protected abstract UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
 
 	public void importUniProtNCBITaxonomy(String[] args) {
 
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniProt xml filename \n"
-					+ "2. Bio4j DB folder \n");
+					+ "2. Bio4j DB folder \n"
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
 
 			File inFile = new File(args[0]);
 			String dbFolder = args[1];
+			String propertiesFile = args[2];
 
-
-			UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniprotNCBITaxonomyGraph = config(dbFolder);
+			UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniprotNCBITaxonomyGraph = config(dbFolder, propertiesFile);
 
 			BufferedWriter statsBuff = null;
 
@@ -337,6 +338,7 @@ public abstract class ImportUniProtNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
                 + [Journal.java][main/java/com/bio4j/model/uniprot/vertices/Journal.java]
                 + [Country.java][main/java/com/bio4j/model/uniprot/vertices/Country.java]
               + programs
+                + [ImportUniProtEdges.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]
                 + [ImportUniProtVertices.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]
                 + [ImportUniProt.java][main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]
                 + [ImportIsoformSequences.java][main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]
@@ -491,6 +493,7 @@ public abstract class ImportUniProtNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE
 [main/java/com/bio4j/model/uniprot/vertices/Dataset.java]: ../../uniprot/vertices/Dataset.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Journal.java]: ../../uniprot/vertices/Journal.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Country.java]: ../../uniprot/vertices/Country.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
