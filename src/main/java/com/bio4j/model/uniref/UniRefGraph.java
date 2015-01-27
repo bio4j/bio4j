@@ -106,24 +106,21 @@ public abstract class UniRefGraph<
 	// Vertex types
 
 	public final class UniRef50ClusterType
-			extends
+		extends
 			UniRefVertexType<
-					UniRef50Cluster<I, RV, RVT, RE, RET>,
-					UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType
-					> {
+				UniRef50Cluster<I, RV, RVT, RE, RET>,
+				UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType
+			>
+	{
 
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
 
-		public UniRef50ClusterType(RVT raw) {
-			super(raw);
-		}
+		public UniRef50ClusterType(RVT raw) { super(raw); }
 
 		@Override
-		public UniRef50ClusterType value() {
-			return graph().UniRef50Cluster();
-		}
+		public UniRef50ClusterType value() { return graph().UniRef50Cluster(); }
 
 		@Override
 		public UniRef50Cluster<I, RV, RVT, RE, RET> from(RV vertex) {
@@ -131,162 +128,124 @@ public abstract class UniRefGraph<
 		}
 
 		public final class id
-				extends
-				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, id, String> {
-			public id() {
-				super(UniRef50ClusterType.this.graph().UniRef50Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, id, String>
+		{
+			public id() { super(UniRef50ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class name
-				extends
-				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, name, String> {
-			public name() {
-				super(UniRef50ClusterType.this.graph().UniRef50Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, name, String> 
+		{	
+			public name() { super(UniRef50ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class updatedDate
-				extends
-				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, updatedDate, String> {
-			public updatedDate() {
-				super(UniRef50ClusterType.this.graph().UniRef50Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, updatedDate, String>
+		{
+			public updatedDate() { super(UniRef50ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
-
-
 	}
 
 	public final class UniRef90ClusterType
-			extends
+		extends
 			UniRefVertexType<
-					UniRef90Cluster<I, RV, RVT, RE, RET>,
-					UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType
-					> {
+				UniRef90Cluster<I, RV, RVT, RE, RET>,
+				UniRefGraph<I, RV, RVT, RE, RET>.UniRef90ClusterType
+			>
+	{
 
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
 
-		public UniRef90ClusterType(RVT raw) {
-			super(raw);
-		}
+		public UniRef90ClusterType(RVT raw) { super(raw); }
 
 		@Override
-		public UniRef90ClusterType value() {
-			return graph().UniRef90Cluster();
-		}
+		public UniRef90ClusterType value() { return graph().UniRef90Cluster(); }
 
 		@Override
-		public UniRef90Cluster<I, RV, RVT, RE, RET> from(RV vertex) {
+		public UniRef90Cluster<I, RV, RVT, RE, RET> from(RV vertex) { 
+
 			return new UniRef90Cluster<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
 		public final class id
-				extends
-				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, id, String> {
-			public id() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
-			}
+			extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, id, String> 
+		{
 
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			public id() { super(UniRef90ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class name
-				extends
-				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, name, String> {
-			public name() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, name, String> 
+		{
+			public name() { super(UniRef90ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class updatedDate
-				extends
-				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, updatedDate, String> {
-			public updatedDate() {
-				super(UniRef90ClusterType.this.graph().UniRef90Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, updatedDate, String> 
+		{
+			public updatedDate() { super(UniRef90ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
-
 	}
 
 	public final class UniRef100ClusterType
-			extends
+		extends
 			UniRefVertexType<
-					UniRef100Cluster<I, RV, RVT, RE, RET>,
-					UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType
-					> {
-
+				UniRef100Cluster<I, RV, RVT, RE, RET>,
+				UniRefGraph<I, RV, RVT, RE, RET>.UniRef100ClusterType
+			>
+	{
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
 
-		public UniRef100ClusterType(RVT raw) {
-			super(raw);
-		}
+		public UniRef100ClusterType(RVT raw) { super(raw); }
 
 		@Override
-		public UniRef100ClusterType value() {
-			return graph().UniRef100Cluster();
-		}
+		public UniRef100ClusterType value() { return graph().UniRef100Cluster(); }
 
 		@Override
 		public UniRef100Cluster<I, RV, RVT, RE, RET> from(RV vertex) {
+
 			return new UniRef100Cluster<I, RV, RVT, RE, RET>(vertex, this);
 		}
 
 		public final class id
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, id, String> {
-			public id() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, id, String>
+		{
+			public id() { super(UniRef100ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class name
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, name, String> {
-			public name() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, name, String> 
+		{
+			public name() { super(UniRef100ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
+
 		public final class updatedDate
-				extends
-				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, updatedDate, String> {
-			public updatedDate() {
-				super(UniRef100ClusterType.this.graph().UniRef100Cluster());
-			}
-
-			public Class<String> valueClass() {
-				return String.class;
-			}
+			extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, updatedDate, String>
+		{	
+			public updatedDate() { super(UniRef100ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
 		}
-
 	}
 
 
