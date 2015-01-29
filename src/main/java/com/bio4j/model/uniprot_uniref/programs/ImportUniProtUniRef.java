@@ -169,6 +169,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				ArrayList<String> membersAccessionList = new ArrayList<String>();
 				Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
 				String representantAccession = getRepresentantAccession(representativeMember);
+				String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
 				//----obtaining cluster members---
 				List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
 				for (Element member : members) {
@@ -192,7 +193,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				//-----------------------------------------------------
 
 				if(unirefClusterNumber.equals("50")){
-					Optional<UniRef50Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef50ClusterIdIndex().getVertex(representantAccession);
+					Optional<UniRef50Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef50ClusterIdIndex().getVertex(entryId);
 					if(optionalCluster.isPresent()){
 						UniRef50Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
@@ -216,7 +217,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					}
 
 				}else if(unirefClusterNumber.equals("90")){
-					Optional<UniRef90Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef90ClusterIdIndex().getVertex(representantAccession);
+					Optional<UniRef90Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef90ClusterIdIndex().getVertex(entryId);
 					if(optionalCluster.isPresent()){
 						UniRef90Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
@@ -240,7 +241,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 					}
 
 				}else if(unirefClusterNumber.equals("100")){
-					Optional<UniRef100Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef100ClusterIdIndex().getVertex(representantAccession);
+					Optional<UniRef100Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef100ClusterIdIndex().getVertex(entryId);
 					if(optionalCluster.isPresent()){
 						UniRef100Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
 
