@@ -42,7 +42,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 			System.out.println("This program expects the following parameters: \n"
 					+ "1. UniRef XML filename \n"
 					+ "2. UniRef type (50/90/100) \n"
-					+ "5. DB Properties file (.properties)");
+					+ "3. DB Properties file (.properties)");
 		} else {
 
 			long initTime = System.nanoTime();
@@ -69,7 +69,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				//---creating writer for stats file-----
 				statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtUniRefStats" + uniRefFile.getName().split("\\.")[0] + ".txt")));
 
-				if(!uniRefType.equals("50") || !uniRefType.equals("90") || !uniRefType.equals("100")){
+				if(!uniRefType.equals("50") && !uniRefType.equals("90") && !uniRefType.equals("100")){
 
 					logger.log(Level.SEVERE, "The value for the UniRef type is not right, it should be one of the following values: 50, 90, 100");
 
