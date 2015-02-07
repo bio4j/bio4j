@@ -215,7 +215,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 							}
 
 						}else{
-							logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
 						}
 
 					}else if(unirefClusterNumber.equals("90")){
@@ -239,7 +239,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 							}
 
 						}else{
-							logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
 						}
 
 					}else if(unirefClusterNumber.equals("100")){
@@ -263,7 +263,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 							}
 
 						}else{
-							logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
 						}
 					}
 				}
