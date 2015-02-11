@@ -5,6 +5,17 @@
 - **Literate programming style documentation**: under [docs/src](src/) You will find here the Bio4j model code together with how this corresponds to the integrated data sources, the meaning of vertices and relationships, etc.
 - **Javadocs** If you _really_ want them, they are under `http://bio4j.com/bio4j/docs/api/<version>/`
 
+### Use Bio4j
+
+In not so precise terms, Bio4j is both an API and a database; this means that writing code using that API and executing it against a particular Bio4j distance are completely independent tasks.
+
+#### Using Bio4j in your code
+
+_TODO_
+
+#### Importing and using Bio4j data
+
+_TODO_ 
 
 <!-- Old stuf: do something with it
 
