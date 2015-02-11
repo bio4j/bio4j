@@ -17,6 +17,10 @@ libraryDependencies += Seq(
 ) 
 ```
 
+### Maven
+
+> If someone knows how this works, add it here!
+
 ## Developing Bio4j
 
 We use [sbt](https://www.scala-sbt.org) for everything related with building code, publishing artifacts, writing github releases, etc. Almost everything is already set up and configured for you at the level of an sbt plugin from the fine folks at _oh no sequences!_
