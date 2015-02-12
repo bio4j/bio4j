@@ -58,9 +58,11 @@ implements
 ```
 
 
-	### Indices
 
-	`Enzyme`s are indexed for unique id matches.
+### Indices
+
+`Enzyme`s are indexed for unique id matches.
+
 
 
 ```java
@@ -74,9 +76,11 @@ implements
 ```
 
 
-	### Extensions
 
-	You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java) for more.
+### Extensions
+
+You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java) for more.
+
 
 
 ```java
@@ -84,15 +88,17 @@ implements
 ```
 
 
-	### Types
 
-	This graph has only vertices.
+### Types
 
-	#### Vertices 
+This graph has only vertices.
 
-	One vertex type for enzyme vertices:
+#### Vertices 
 
-	##### EnzymeType
+One vertex type for enzyme vertices:
+
+##### EnzymeType
+
 
 
 ```java
@@ -108,7 +114,9 @@ implements
 ```
 
 
-		##### EnzymeType Properties
+
+##### EnzymeType Properties
+
 
 
 ```java
@@ -184,9 +192,11 @@ implements
 ```
 
 
-	### Helper classes
 
-	These classes are used to bound all the types and implementation that is generic for every type of this graph: the `graph()` reference of types, vertex, property, edge types should be members of this graph, etc.
+### Helper classes
+
+These classes are used to bound all the types and implementation that is generic for every type of this graph: the `graph()` reference of types, vertex, property, edge types should be members of this graph, etc.
+
 
 
 ```java
