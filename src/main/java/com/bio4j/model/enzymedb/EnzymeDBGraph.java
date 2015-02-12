@@ -51,11 +51,11 @@ implements
 		this.raw = graph;
   }
 
-  /*
-	### Indices
+/*
+### Indices
 
-	`Enzyme`s are indexed for unique id matches.
-  */
+`Enzyme`s are indexed for unique id matches.
+*/
 	public abstract TypedVertexIndex.Unique <
 		Enzyme<I,RV,RVT,RE,RET>, EnzymeType,
 		EnzymeType.id, String,
@@ -64,24 +64,24 @@ implements
 	>
 	enzymeIdIndex();
 
-	/*
-	### Extensions
+/*
+### Extensions
 
-	You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [[../uniprot_enzymedb/UniProtEnzymeDBGraph.java]] for more.
-	*/
+You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [[../uniprot_enzymedb/UniProtEnzymeDBGraph.java]] for more.
+*/
 	public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
 
-	/*
-	### Types
+/*
+### Types
 
-	This graph has only vertices.
+This graph has only vertices.
 
-	#### Vertices 
+#### Vertices 
 
-	One vertex type for enzyme vertices:
+One vertex type for enzyme vertices:
 
-	##### EnzymeType
-	*/
+##### EnzymeType
+*/
 	public abstract EnzymeType Enzyme();
 
 	public final class EnzymeType
