@@ -76,7 +76,7 @@ implements
 
 ### Extensions
 
-You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [[../uniprot_enzymedb/UniProtEnzymeDBGraph.java]] for more.
+You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java) for more.
 
 
 ```java
@@ -106,6 +106,7 @@ One vertex type for enzyme vertices:
 		>
 	{
 ```
+
 
 
 		##### EnzymeType Properties
