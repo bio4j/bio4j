@@ -6,6 +6,7 @@ Bio4j provides a completely new and powerful **framework for protein related inf
 Since it relies on a high-performance graph engine, data is stored in a way that semantically represents its own structure. 
 On the contrary, traditional relational databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bio4j/bio4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ### Scalability
 
@@ -64,7 +65,11 @@ libraryDependencies += "bio4j" % "bio4j" % "0.11.0"
 
 ## Community
 
-### Mail list
+### Gitter chat
+
+The easiest and fastest way to contact developers is the [Gitter chat](https://gitter.im/bio4j/bio4j).
+
+### Mailing list
 There is a [google user group](http://groups.google.com/group/bio4j-user) available for Bio4j. Here you can post any question or general issue you may have related to Bio4j project. 
 
 ### Twitter
