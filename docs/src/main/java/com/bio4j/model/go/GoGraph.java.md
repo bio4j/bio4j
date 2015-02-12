@@ -266,7 +266,7 @@ implements
   extends
     GoEdgeType <
       GoTerm<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.GoTermType,
-      PartOf<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.PartOfType,
+      HasPartOf<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.HasPartOfType,
       GoTerm<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.GoTermType
     >
   implements
@@ -375,8 +375,8 @@ implements
   extends
     GoEdgeType <
       GoTerm<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.GoTermType,
-      Regulates<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.RegulatesType,
-      GoTerm<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.GoTermType
+      SubOntology<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.SubOntologyType,
+      SubOntologies<I,RV,RVT,RE,RET>,GoGraph<I,RV,RVT,RE,RET>.SubOntologiesType
     >
   implements
     TypedEdge.Type.ManyToOne
