@@ -1,26 +1,24 @@
 Nice.javaProject
 
-javaVersion := "1.8"
+name          := "bio4j"
+organization  := "bio4j"
+description   := "Bio4j data model and generic API"
 
-organization := "bio4j"
-
-name := "bio4j"
-
-description := "Bio4j abstract model"
-
-bucketSuffix := "era7.com"
+javaVersion   := "1.8"
 
 libraryDependencies ++= Seq(
-  "bio4j" % "angulillos" % "0.4.1",
-  "ohnosequences" % "bioinfo-util" % "1.4.2"
+  "bio4j"         % "angulillos"    % "0.4.1",
+  "ohnosequences" % "bioinfo-util"  % "1.4.2"
 )
 
 dependencyOverrides ++= Set(
-  "commons-codec" % "commons-codec" % "1.7",
-  "com.fasterxml.jackson.core" % "jackson-core" % "2.1.2",
-  "com.fasterxml.jackson.core" % "jackson-databind" % "2.1.2",
-  "com.fasterxml.jackson.core" % "jackson-annotations" % "2.1.1",
-  "commons-beanutils" % "commons-beanutils" % "1.8.3",
-  "commons-beanutils" % "commons-beanutils-core" % "1.8.3",
-  "net.sf.opencsv" % "opencsv" % "2.3"
+  "com.fasterxml.jackson.core"  % "jackson-core"            % "2.1.2",
+  "com.fasterxml.jackson.core"  % "jackson-databind"        % "2.1.2",
+  "com.fasterxml.jackson.core"  % "jackson-annotations"     % "2.1.1",
+  "commons-codec"               % "commons-codec"           % "1.7",
+  "commons-beanutils"           % "commons-beanutils"       % "1.8.3",
+  "commons-beanutils"           % "commons-beanutils-core"  % "1.8.3",
+  "net.sf.opencsv"              % "opencsv"                 % "2.3"
 )
+
+bucketSuffix := "era7.com"
