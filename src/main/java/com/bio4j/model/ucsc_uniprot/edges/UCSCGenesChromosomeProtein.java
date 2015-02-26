@@ -5,12 +5,8 @@ import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
 import com.bio4j.model.ucsc_uniprot.UCSCGenesUniProtGraph;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniProtNCBITaxonomyGraph;
 import com.bio4j.angulillos.UntypedGraph;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
 public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
         extends
         UCSCGenesUniProtGraph.UCSCGenesUniProtEdge<
@@ -27,8 +23,7 @@ public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE
                 UniProtGraph<I, RV, RVT, RE, RET>,
                 // raw stuff
                 I, RV, RVT, RE, RET
-                >
-{
+                > {
 
     public UCSCGenesChromosomeProtein(RE edge, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeProteinType type) {
 

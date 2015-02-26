@@ -3,10 +3,7 @@ package com.bio4j.model.ucsc_uniprot.programs;
 import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
 import com.bio4j.model.ucsc_uniprot.UCSCGenesUniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_go.UniProtGoGraph;
 import com.bio4j.angulillos.UntypedGraph;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniProtNCBITaxonomyGraph;
-
 
 import java.io.*;
 import java.util.List;
@@ -18,9 +15,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.zip.GZIPInputStream;
 
-/**
- * @author Evdokim Kovach</a>
- */
 public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET> {
 
     private static final Logger logger = Logger.getLogger("ImportUCSCGenesUniProt");
