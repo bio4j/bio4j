@@ -61,6 +61,7 @@ public abstract class UCSCGenesUniProtGraph<
             implements
             TypedEdge.Type.OneToMany {
 
+
         public UCSCGenesChromosomeProteinType(RET raw) {
 
             super(
@@ -70,6 +71,7 @@ public abstract class UCSCGenesUniProtGraph<
             );
         }
 
+
         @Override
         public UCSCGenesChromosomeProteinType value() {
             return graph().UCSCGenesChromosomeProtein();
@@ -78,6 +80,162 @@ public abstract class UCSCGenesUniProtGraph<
         @Override
         public UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET> from(RE edge) {
             return new UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>(edge, this);
+        }
+
+        public final alignID alignID = new alignID();
+        public final class alignID
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        alignID,
+                        String> {
+
+            public alignID() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+
+        public final txStart txStart = new txStart();
+        public final class txStart
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        txStart,
+                        Long> {
+
+            public txStart() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<Long> valueClass() {
+                return Long.class;
+            }
+        }
+
+        public final txEnd txEnd = new txEnd();
+        public final class txEnd
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        txEnd,
+                        Long> {
+
+            public txEnd() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<Long> valueClass() {
+                return Long.class;
+            }
+        }
+
+        public final cdsStart cdsStart = new cdsStart();
+        public final class cdsStart
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        cdsStart,
+                        Long> {
+
+            public cdsStart() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<Long> valueClass() {
+                return Long.class;
+            }
+        }
+
+        public final csdEnd csdEnd = new csdEnd();
+        public final class csdEnd
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        csdEnd,
+                        Long> {
+
+            public csdEnd() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<Long> valueClass() {
+                return Long.class;
+            }
+        }
+
+        public final strand strand = new strand();
+        public final class strand
+                extends
+                UCSCGenesUniProtEdgeProperty<
+                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
+                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+
+                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCGenesChromosomeProteinType,
+
+                        Protein<I, RV, RVT, RE, RET>,
+                        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+                        UniProtGraph<I, RV, RVT, RE, RET>,
+                        strand,
+                        String> {
+
+            public strand() {
+                super(UCSCGenesChromosomeProteinType.this);
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
         }
     }
 
@@ -258,6 +416,36 @@ public abstract class UCSCGenesUniProtGraph<
         @Override
         public final UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> graph() {
             return UCSCGenesUniProtGraph.this;
+        }
+    }
+
+    public abstract class UCSCGenesUniProtEdgeProperty<
+            // src
+            S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
+            ST extends TypedVertex.Type<S, ST, SG, I, RV, RVT, RE, RET>,
+            SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
+            E extends UCSCGenesUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
+            ET extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
+            // tgt
+            T extends TypedVertex<T, TT, TG, I, RV, RVT, RE, RET>,
+            TT extends TypedVertex.Type<T, TT, TG, I, RV, RVT, RE, RET>,
+            TG extends TypedGraph<TG, I, RV, RVT, RE, RET>,
+            P extends UCSCGenesUniProtEdgeProperty<S, ST, SG, E, ET, T, TT, TG, P, PE>,
+            PE
+            >
+            implements
+            Property<E, ET, P, PE, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+
+        protected UCSCGenesUniProtEdgeProperty(ET type) {
+
+            this.type = type;
+        }
+
+        private ET type;
+
+        @Override
+        public final ET elementType() {
+            return type;
         }
     }
 }

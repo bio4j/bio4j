@@ -30,6 +30,32 @@ public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE
         super(edge, type);
     }
 
+    public String alignID() {
+        return get(type().alignID);
+    }
+
+    public Long cdsStart() {
+        return get(type().cdsStart);
+    }
+
+
+    public Long csdEnd() {
+        return get(type().csdEnd);
+    }
+
+
+    public Long txStart() {
+        return get(type().txStart);
+    }
+
+    public Long txEnd() {
+        return get(type().txEnd);
+    }
+
+    public String strand() {
+        return get(type().strand);
+    }
+
     @Override
     public UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET> self() {
         return this;

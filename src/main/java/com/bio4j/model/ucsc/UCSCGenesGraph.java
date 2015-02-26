@@ -1,5 +1,7 @@
 package com.bio4j.model.ucsc;
 
+import com.bio4j.model.ucsc.edges.UCSCGenesAssemblyChromosome;
+import com.bio4j.model.ucsc.vertices.UCSCGenesAssembly;
 import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
 import com.bio4j.model.ucsc_uniprot.UCSCGenesUniProtGraph;
 import com.bio4j.angulillos.*;
@@ -41,14 +43,15 @@ public abstract class UCSCGenesGraph<
     ucscGenesChromosomeIdIndex();
 
     public abstract UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> ucscGenesUniProtGraph();
-    //public abstract UCSCGenesGenInfoGraph<I, RV, RVT, RE, RET> UCSCGenesGenInfoGraph();
 
     // types
     // vertices
     public abstract UCSCGenesChromosomeType UCSCGenesChromosome();
+    public abstract UCSCGenesAssemblyType UCSCGenesAssembly();
+
 
     // edges
-
+    public abstract UCSCGenesAssemblyChromosomeType UCSCGenesAssemblyChromosome();
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Vertex types
@@ -87,6 +90,83 @@ public abstract class UCSCGenesGraph<
             public Class<String> valueClass() {
                 return String.class;
             }
+        }
+
+    }
+
+    public final class UCSCGenesAssemblyType
+            extends
+            UCSCGenesVertexType<
+                    UCSCGenesAssembly<I, RV, RVT, RE, RET>,
+                    UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesAssemblyType
+                    > {
+
+        public final id id = new id();
+
+
+        public UCSCGenesAssemblyType(RVT raw) {
+            super(raw);
+        }
+
+        @Override
+        public UCSCGenesAssemblyType value() {
+            return graph().UCSCGenesAssembly();
+        }
+
+        @Override
+        public UCSCGenesAssembly<I, RV, RVT, RE, RET> from(RV vertex) {
+            return new UCSCGenesAssembly<I, RV, RVT, RE, RET>(vertex, this);
+        }
+
+        public final class id
+                extends
+                UCSCGenesVertexProperty<UCSCGenesAssembly<I, RV, RVT, RE, RET>, UCSCGenesAssemblyType, id, String> {
+            public id() {
+                super(UCSCGenesAssemblyType.this);
+            }
+
+            public Class<String> valueClass() {
+                return String.class;
+            }
+        }
+
+    }
+
+    public final class UCSCGenesAssemblyChromosomeType
+            extends
+            UCSCGenesEdgeType<
+                    // src
+                    UCSCGenesAssembly<I, RV, RVT, RE, RET>,
+                    UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesAssemblyType,
+                    // edge
+                    UCSCGenesAssemblyChromosome<I, RV, RVT, RE, RET>,
+                    UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesAssemblyChromosomeType,
+                    // tgt
+                    UCSCGenesChromosome<I, RV, RVT, RE, RET>,
+                    UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType
+                    >
+            implements
+            TypedEdge.Type.OneToMany {
+
+
+        public UCSCGenesAssemblyChromosomeType(RET raw) {
+
+            super(
+                    UCSCGenesGraph.this.UCSCGenesAssembly(),
+                    raw,
+                    UCSCGenesGraph.this.UCSCGenesChromosome()
+            );
+        }
+
+
+        @Override
+        public UCSCGenesAssemblyChromosomeType value() {
+            return graph().UCSCGenesAssemblyChromosome();
+        }
+
+        @Override
+        public UCSCGenesAssemblyChromosome<I, RV, RVT, RE, RET> from(RE edge) {
+            return new UCSCGenesAssemblyChromosome<I, RV, RVT, RE, RET>(edge, this);
         }
 
     }
@@ -177,10 +257,13 @@ public abstract class UCSCGenesGraph<
     public abstract static class UCSCGenesEdge<
             S extends UCSCGenesVertex<S, ST, I, RV, RVT, RE, RET>,
             ST extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesVertexType<S, ST>,
+
             E extends UCSCGenesEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
             ET extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesEdgeType<S, ST, E, ET, T, TT>,
+
             T extends UCSCGenesVertex<T, TT, I, RV, RVT, RE, RET>,
             TT extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesVertexType<T, TT>,
+
             I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
             >
             implements
@@ -218,8 +301,10 @@ public abstract class UCSCGenesGraph<
     abstract class UCSCGenesEdgeType<
             S extends UCSCGenesVertex<S, ST, I, RV, RVT, RE, RET>,
             ST extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesVertexType<S, ST>,
+
             E extends UCSCGenesEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
             ET extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesEdgeType<S, ST, E, ET, T, TT>,
+
             T extends UCSCGenesVertex<T, TT, I, RV, RVT, RE, RET>,
             TT extends UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesVertexType<T, TT>
             >
@@ -261,5 +346,7 @@ public abstract class UCSCGenesGraph<
             return UCSCGenesGraph.this;
         }
     }
+
+
 
 }
