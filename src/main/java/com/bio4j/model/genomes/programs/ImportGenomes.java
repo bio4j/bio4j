@@ -1,4 +1,4 @@
-package com.bio4j.model.ucsc.programs;
+package com.bio4j.model.genomes.programs;
 
 import java.io.*;
 import java.util.logging.FileHandler;
@@ -8,18 +8,18 @@ import java.util.logging.SimpleFormatter;
 
 
 import com.bio4j.angulillos.UntypedGraph;
-import com.bio4j.model.ucsc.UCSCGenesGraph;
-import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
+import com.bio4j.model.genomes.GenomesGraph;
+import com.bio4j.model.genomes.vertices.GenomesChromosome;
 
 
-public abstract class ImportUCSCGenes<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET> {
+public abstract class ImportGenomes<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET> {
 
-    private static final Logger logger = Logger.getLogger("ImportUCSCGenes");
+    private static final Logger logger = Logger.getLogger("ImportUCSC");
     private static FileHandler fh;
 
-    protected abstract UCSCGenesGraph<I, RV, RVT, RE, RET> config(String dbFolder, String propertiesFile);
+    protected abstract GenomesGraph<I, RV, RVT, RE, RET> config(String dbFolder, String propertiesFile);
 
-    public void importUCSCGenes(String[] args) {
+    public void importUCSC(String[] args) {
 
         if (args.length != 3) {
             System.out.println("This program expects the following parameters: \n"
@@ -41,20 +41,20 @@ public abstract class ImportUCSCGenes<I extends UntypedGraph<RV, RVT, RE, RET>, 
 
             logger.log(Level.INFO, "creating manager...");
 
-            UCSCGenesGraph<I, RV, RVT, RE, RET> ucscGenesGraph = config(dbFolder, propertiesFile);
+            GenomesGraph<I, RV, RVT, RE, RET> GenomesGraph = config(dbFolder, propertiesFile);
 
 
             try {
 
                 // This block configure the logger with handler and formatter
-                fh = new FileHandler("ImportUCSCGenes.log", true);
+                fh = new FileHandler("ImportUCSC.log", true);
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
                 logger.addHandler(fh);
                 logger.setLevel(Level.ALL);
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUCSCGenesStats.txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUCSCStats.txt")));
 
                 BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
                 String line;
@@ -64,33 +64,33 @@ public abstract class ImportUCSCGenes<I extends UntypedGraph<RV, RVT, RE, RET>, 
 
                 for (int i = 1; i <= 22; i++) {
 
-                    UCSCGenesChromosome<I, RV, RVT, RE, RET> chromosome = ucscGenesGraph.addVertex(ucscGenesGraph.UCSCGenesChromosome());
-                    chromosome.set(ucscGenesGraph.UCSCGenesChromosome().id, "chr" + i);
+                    GenomesChromosome<I, RV, RVT, RE, RET> chromosome = GenomesGraph.addVertex(GenomesGraph.GenomesChromosome());
+                    chromosome.set(GenomesGraph.GenomesChromosome().id, "chr" + i);
 
                     chromosomeCounter++;
 
                     if ((chromosomeCounter % limitForTransaction) == 0) {
-                        ucscGenesGraph.raw().commit();
+                        GenomesGraph.raw().commit();
                     }
                 }
 
                 reader.close();
-                ucscGenesGraph.raw().commit();
+                GenomesGraph.raw().commit();
                 logger.log(Level.INFO, "done!");
 
 
             } catch (Exception ex) {
-                Logger.getLogger(ImportUCSCGenes.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ImportGenomes.class.getName()).log(Level.SEVERE, null, ex);
 
             } finally {
 
                 //committing last transaction
-                ucscGenesGraph.raw().commit();
+                GenomesGraph.raw().commit();
                 //closing logger file handler
                 fh.close();
                 logger.log(Level.INFO, "Closing up inserter and index service....");
                 // shutdown, makes sure all changes are written to disk
-                ucscGenesGraph.raw().shutdown();
+                GenomesGraph.raw().shutdown();
 
                 try {
 
@@ -101,7 +101,7 @@ public abstract class ImportUCSCGenes<I extends UntypedGraph<RV, RVT, RE, RET>, 
                     long minutes = (elapsedSeconds % 3600) / 60;
                     long seconds = (elapsedSeconds % 3600) % 60;
 
-                    statsBuff.write("Statistics for program ImportUCSCGenes:\nInput file: " + nodesDumpFile.getName()
+                    statsBuff.write("Statistics for program ImportUCSC:\nInput file: " + nodesDumpFile.getName()
                             + "\nThere were " + chromosomeCounter + " chromosome units inserted.\n"
                             + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 

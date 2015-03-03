@@ -1,7 +1,7 @@
 package com.bio4j.model.ucsc_uniprot.programs;
 
-import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
-import com.bio4j.model.ucsc_uniprot.UCSCGenesUniProtGraph;
+import com.bio4j.model.ucsc.vertices.UCSCChromosome;
+import com.bio4j.model.ucsc_uniprot.UCSCUniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.angulillos.UntypedGraph;
 
@@ -15,16 +15,16 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.zip.GZIPInputStream;
 
-public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET> {
+public abstract class ImportUCSCUniProt<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET> {
 
-    private static final Logger logger = Logger.getLogger("ImportUCSCGenesUniProt");
+    private static final Logger logger = Logger.getLogger("ImportUCSCUniProt");
     private static FileHandler fh;
 
 
-    protected abstract UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> config(String dbFolder, String propertiesFile);
+    protected abstract UCSCUniProtGraph<I, RV, RVT, RE, RET> config(String dbFolder, String propertiesFile);
 
 
-    public void importUCSCGenesUniProt(String[] args) {
+    public void importUCSCUniProt(String[] args) {
 
         if (args.length != 3) {
             System.out.println("This program expects the following parameters: \n"
@@ -39,7 +39,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
             String dbFolder = args[1];
             String propertiesFile = args[2];
 
-            UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> ucscGenesUniProtGraph = config(dbFolder, propertiesFile);
+            UCSCUniProtGraph<I, RV, RVT, RE, RET> UCSCUniProtGraph = config(dbFolder, propertiesFile);
 
             BufferedWriter statsBuff = null;
 
@@ -49,7 +49,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
             try {
 
                 // This block configures the logger with handler and formatter
-                fh = new FileHandler("ImportUCSCGenesUniProt" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+                fh = new FileHandler("ImportUCSCUniProt" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
                 SimpleFormatter formatter = new SimpleFormatter();
                 fh.setFormatter(formatter);
@@ -57,7 +57,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
                 logger.setLevel(Level.ALL);
 
                 //---creating writer for stats file-----
-                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUCSCGenesUniProtStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+                statsBuff = new BufferedWriter(new FileWriter(new File("ImportUCSCUniProtStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new GZIPInputStream(new FileInputStream(inFile))));
                 StringBuilder entryStBuilder = new StringBuilder();
@@ -81,14 +81,14 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
 
                     if (!proteinID.isEmpty() && !chrom.isEmpty()) {
 
-                        Optional<Protein<I, RV, RVT, RE, RET>> proteinOptional = ucscGenesUniProtGraph.uniProtGraph().proteinAccessionIndex().getVertex(proteinID);
+                        Optional<Protein<I, RV, RVT, RE, RET>> proteinOptional = UCSCUniProtGraph.uniProtGraph().proteinAccessionIndex().getVertex(proteinID);
                         if (proteinOptional.isPresent()) {
 
                             Protein<I, RV, RVT, RE, RET> protein = proteinOptional.get();
 
-                            Optional<UCSCGenesChromosome<I, RV, RVT, RE, RET>> ucscGenesChromosomeOptional = ucscGenesUniProtGraph.ucscGenesGraph().ucscGenesChromosomeIdIndex().getVertex(chrom);
-                            if (ucscGenesChromosomeOptional.isPresent()) {
-                                ucscGenesChromosomeOptional.get().addOutEdge(ucscGenesUniProtGraph.UCSCGenesChromosomeProtein(), protein);
+                            Optional<UCSCChromosome<I, RV, RVT, RE, RET>> UCSCChromosomeOptional = UCSCUniProtGraph.UCSCGraph().UCSCChromosomeIdIndex().getVertex(chrom);
+                            if (UCSCChromosomeOptional.isPresent()) {
+                                UCSCChromosomeOptional.get().addOutEdge(UCSCUniProtGraph.UCSCChromosomeProtein(), protein);
                                 chromosomeProteinCounter++;
                             } else {
                                 logger.warning("chromosome " + chrom + " not found");
@@ -118,7 +118,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
                     //------closing writers-------
 
                     // shutdown, makes sure all changes are written to disk
-                    ucscGenesUniProtGraph.raw().shutdown();
+                    UCSCUniProtGraph.raw().shutdown();
 
                     // closing logger file handler
                     fh.close();
@@ -130,7 +130,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
                     long minutes = (elapsedSeconds % 3600) / 60;
                     long seconds = (elapsedSeconds % 3600) % 60;
 
-                    statsBuff.write("Statistics for program ImportUCSCGenesUniProt:\nInput file: " + inFile.getName()
+                    statsBuff.write("Statistics for program ImportUCSCUniProt:\nInput file: " + inFile.getName()
                             + "\nThere were " + chromosomeProteinCounter + " positions inserted.\n"
                             + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
@@ -139,7 +139,7 @@ public abstract class ImportUCSCGenesUniProt<I extends UntypedGraph<RV, RVT, RE,
 
 
                 } catch (IOException ex) {
-                    Logger.getLogger(ImportUCSCGenesUniProt.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ImportUCSCUniProt.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }

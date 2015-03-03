@@ -1,15 +1,15 @@
 package com.bio4j.model.ucsc_uniprot;
 
 
-import com.bio4j.model.ucsc.UCSCGenesGraph;
-import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
-import com.bio4j.model.ucsc_uniprot.edges.UCSCGenesChromosomeProtein;
+import com.bio4j.model.ucsc.UCSCGraph;
+import com.bio4j.model.ucsc.vertices.UCSCChromosome;
+import com.bio4j.model.ucsc_uniprot.edges.UCSCChromosomeProtein;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.angulillos.*;
 
 
-public abstract class UCSCGenesUniProtGraph<
+public abstract class UCSCUniProtGraph<
         // untyped graph
         I extends UntypedGraph<RV, RVT, RE, RET>,
         // vertices
@@ -19,13 +19,13 @@ public abstract class UCSCGenesUniProtGraph<
         >
         implements
         TypedGraph<
-                UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtGraph<I, RV, RVT, RE, RET>,
                 I, RV, RVT, RE, RET
                 > {
 
     protected I raw = null;
 
-    public UCSCGenesUniProtGraph(I graph) {
+    public UCSCUniProtGraph(I graph) {
         raw = graph;
     }
 
@@ -35,24 +35,24 @@ public abstract class UCSCGenesUniProtGraph<
 
     public abstract UniProtGraph<I, RV, RVT, RE, RET> uniProtGraph();
 
-    public abstract UCSCGenesGraph<I, RV, RVT, RE, RET> ucscGenesGraph();
+    public abstract UCSCGraph<I, RV, RVT, RE, RET> UCSCGraph();
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // edges
-    public abstract UCSCGenesChromosomeProteinType UCSCGenesChromosomeProtein();
+    public abstract UCSCChromosomeProteinType UCSCChromosomeProtein();
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Edge types
-    public final class UCSCGenesChromosomeProteinType
+    public final class UCSCChromosomeProteinType
             extends
-            UCSCGenesUniProtEdgeType<
+            UCSCUniProtEdgeType<
                     // src
-                    UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                    UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                    UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                    UCSCChromosome<I, RV, RVT, RE, RET>,
+                    UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                    UCSCGraph<I, RV, RVT, RE, RET>,
                     // edge
-                    UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                    UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeProteinType,
+                    UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                    UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCChromosomeProteinType,
                     // tgt
                     Protein<I, RV, RVT, RE, RET>,
                     UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -62,36 +62,36 @@ public abstract class UCSCGenesUniProtGraph<
             TypedEdge.Type.OneToMany {
 
 
-        public UCSCGenesChromosomeProteinType(RET raw) {
+        public UCSCChromosomeProteinType(RET raw) {
 
             super(
-                    UCSCGenesUniProtGraph.this.ucscGenesGraph().UCSCGenesChromosome(),
+                    UCSCUniProtGraph.this.UCSCGraph().UCSCChromosome(),
                     raw,
-                    UCSCGenesUniProtGraph.this.uniProtGraph().Protein()
+                    UCSCUniProtGraph.this.uniProtGraph().Protein()
             );
         }
 
 
         @Override
-        public UCSCGenesChromosomeProteinType value() {
-            return graph().UCSCGenesChromosomeProtein();
+        public UCSCChromosomeProteinType value() {
+            return graph().UCSCChromosomeProtein();
         }
 
         @Override
-        public UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET> from(RE edge) {
-            return new UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>(edge, this);
+        public UCSCChromosomeProtein<I, RV, RVT, RE, RET> from(RE edge) {
+            return new UCSCChromosomeProtein<I, RV, RVT, RE, RET>(edge, this);
         }
 
         public final alignID alignID = new alignID();
         public final class alignID
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -100,7 +100,7 @@ public abstract class UCSCGenesUniProtGraph<
                         String> {
 
             public alignID() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<String> valueClass() {
@@ -111,13 +111,13 @@ public abstract class UCSCGenesUniProtGraph<
         public final txStart txStart = new txStart();
         public final class txStart
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -126,7 +126,7 @@ public abstract class UCSCGenesUniProtGraph<
                         Long> {
 
             public txStart() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<Long> valueClass() {
@@ -137,13 +137,13 @@ public abstract class UCSCGenesUniProtGraph<
         public final txEnd txEnd = new txEnd();
         public final class txEnd
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -152,7 +152,7 @@ public abstract class UCSCGenesUniProtGraph<
                         Long> {
 
             public txEnd() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<Long> valueClass() {
@@ -163,13 +163,13 @@ public abstract class UCSCGenesUniProtGraph<
         public final cdsStart cdsStart = new cdsStart();
         public final class cdsStart
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -178,7 +178,7 @@ public abstract class UCSCGenesUniProtGraph<
                         Long> {
 
             public cdsStart() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<Long> valueClass() {
@@ -189,13 +189,13 @@ public abstract class UCSCGenesUniProtGraph<
         public final csdEnd csdEnd = new csdEnd();
         public final class csdEnd
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -204,7 +204,7 @@ public abstract class UCSCGenesUniProtGraph<
                         Long> {
 
             public csdEnd() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<Long> valueClass() {
@@ -215,13 +215,13 @@ public abstract class UCSCGenesUniProtGraph<
         public final strand strand = new strand();
         public final class strand
                 extends
-                UCSCGenesUniProtEdgeProperty<
-                        UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                        UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCUniProtEdgeProperty<
+                        UCSCChromosome<I, RV, RVT, RE, RET>,
+                        UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                        UCSCGraph<I, RV, RVT, RE, RET>,
 
-                        UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                        UCSCGenesChromosomeProteinType,
+                        UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                        UCSCChromosomeProteinType,
 
                         Protein<I, RV, RVT, RE, RET>,
                         UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -230,7 +230,7 @@ public abstract class UCSCGenesUniProtGraph<
                         String> {
 
             public strand() {
-                super(UCSCGenesChromosomeProteinType.this);
+                super(UCSCChromosomeProteinType.this);
             }
 
             public Class<String> valueClass() {
@@ -242,16 +242,16 @@ public abstract class UCSCGenesUniProtGraph<
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
     // helper classes
 
-    public abstract class UCSCGenesUniProtVertexProperty<
-            V extends UCSCGenesUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-            VT extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtVertexType<V, VT>,
-            P extends UCSCGenesUniProtVertexProperty<V, VT, P, PV>,
+    public abstract class UCSCUniProtVertexProperty<
+            V extends UCSCUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+            VT extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtVertexType<V, VT>,
+            P extends UCSCUniProtVertexProperty<V, VT, P, PV>,
             PV
             >
             implements
-            Property<V, VT, P, PV, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+            Property<V, VT, P, PV, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-        protected UCSCGenesUniProtVertexProperty(VT type) {
+        protected UCSCUniProtVertexProperty(VT type) {
 
             this.type = type;
         }
@@ -264,25 +264,25 @@ public abstract class UCSCGenesUniProtGraph<
         }
     }
 
-    public abstract static class UCSCGenesUniProtVertex<
-            V extends UCSCGenesUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-            VT extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtVertexType<V, VT>,
+    public abstract static class UCSCUniProtVertex<
+            V extends UCSCUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+            VT extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtVertexType<V, VT>,
             I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
             >
             implements
-            TypedVertex<V, VT, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+            TypedVertex<V, VT, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
         private RV vertex;
         private VT type;
 
-        protected UCSCGenesUniProtVertex(RV vertex, VT type) {
+        protected UCSCUniProtVertex(RV vertex, VT type) {
 
             this.vertex = vertex;
             this.type = type;
         }
 
         @Override
-        public UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> graph() {
+        public UCSCUniProtGraph<I, RV, RVT, RE, RET> graph() {
             return type().graph();
         }
 
@@ -297,16 +297,16 @@ public abstract class UCSCGenesUniProtGraph<
         }
     }
 
-    abstract class UCSCGenesUniProtVertexType<
-            V extends UCSCGenesUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-            VT extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtVertexType<V, VT>
+    abstract class UCSCUniProtVertexType<
+            V extends UCSCUniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+            VT extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtVertexType<V, VT>
             >
             implements
-            TypedVertex.Type<V, VT, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+            TypedVertex.Type<V, VT, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
         private RVT raw;
 
-        protected UCSCGenesUniProtVertexType(RVT raw) {
+        protected UCSCUniProtVertexType(RVT raw) {
             this.raw = raw;
         }
 
@@ -316,19 +316,19 @@ public abstract class UCSCGenesUniProtGraph<
         }
 
         @Override
-        public final UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> graph() {
-            return UCSCGenesUniProtGraph.this;
+        public final UCSCUniProtGraph<I, RV, RVT, RE, RET> graph() {
+            return UCSCUniProtGraph.this;
         }
     }
 
-    public abstract static class UCSCGenesUniProtEdge<
+    public abstract static class UCSCUniProtEdge<
             // src
             S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
             ST extends TypedVertex.Type<S, ST, SG, I, RV, RVT, RE, RET>,
             SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
             // edge
-            E extends UCSCGenesUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
-            ET extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
+            E extends UCSCUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
+            ET extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
             // tgt
             T extends TypedVertex<T, TT, TG, I, RV, RVT, RE, RET>,
             TT extends TypedVertex.Type<T, TT, TG, I, RV, RVT, RE, RET>,
@@ -338,21 +338,21 @@ public abstract class UCSCGenesUniProtGraph<
             implements
             TypedEdge<
                     S, ST, SG,
-                    E, ET, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+                    E, ET, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
                     T, TT, TG
                     > {
 
         private RE edge;
         private ET type;
 
-        protected UCSCGenesUniProtEdge(RE edge, ET type) {
+        protected UCSCUniProtEdge(RE edge, ET type) {
 
             this.edge = edge;
             this.type = type;
         }
 
         @Override
-        public UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> graph() {
+        public UCSCUniProtGraph<I, RV, RVT, RE, RET> graph() {
             return type().graph();
         }
 
@@ -367,14 +367,14 @@ public abstract class UCSCGenesUniProtGraph<
         }
     }
 
-    abstract class UCSCGenesUniProtEdgeType<
+    abstract class UCSCUniProtEdgeType<
             // src
             S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
             ST extends TypedVertex.Type<S, ST, SG, I, RV, RVT, RE, RET>,
             SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
             // edge
-            E extends UCSCGenesUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
-            ET extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
+            E extends UCSCUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
+            ET extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
             // tgt
             T extends TypedVertex<T, TT, TG, I, RV, RVT, RE, RET>,
             TT extends TypedVertex.Type<T, TT, TG, I, RV, RVT, RE, RET>,
@@ -383,7 +383,7 @@ public abstract class UCSCGenesUniProtGraph<
             implements
             TypedEdge.Type<
                     S, ST, SG,
-                    E, ET, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
+                    E, ET, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
                     T, TT, TG
                     > {
 
@@ -391,7 +391,7 @@ public abstract class UCSCGenesUniProtGraph<
         private ST srcT;
         private TT tgtT;
 
-        protected UCSCGenesUniProtEdgeType(ST srcT, RET raw, TT tgtT) {
+        protected UCSCUniProtEdgeType(ST srcT, RET raw, TT tgtT) {
 
             this.raw = raw;
             this.srcT = srcT;
@@ -414,29 +414,29 @@ public abstract class UCSCGenesUniProtGraph<
         }
 
         @Override
-        public final UCSCGenesUniProtGraph<I, RV, RVT, RE, RET> graph() {
-            return UCSCGenesUniProtGraph.this;
+        public final UCSCUniProtGraph<I, RV, RVT, RE, RET> graph() {
+            return UCSCUniProtGraph.this;
         }
     }
 
-    public abstract class UCSCGenesUniProtEdgeProperty<
+    public abstract class UCSCUniProtEdgeProperty<
             // src
             S extends TypedVertex<S, ST, SG, I, RV, RVT, RE, RET>,
             ST extends TypedVertex.Type<S, ST, SG, I, RV, RVT, RE, RET>,
             SG extends TypedGraph<SG, I, RV, RVT, RE, RET>,
-            E extends UCSCGenesUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
-            ET extends UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
+            E extends UCSCUniProtEdge<S, ST, SG, E, ET, T, TT, TG, I, RV, RVT, RE, RET>,
+            ET extends UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCUniProtEdgeType<S, ST, SG, E, ET, T, TT, TG>,
             // tgt
             T extends TypedVertex<T, TT, TG, I, RV, RVT, RE, RET>,
             TT extends TypedVertex.Type<T, TT, TG, I, RV, RVT, RE, RET>,
             TG extends TypedGraph<TG, I, RV, RVT, RE, RET>,
-            P extends UCSCGenesUniProtEdgeProperty<S, ST, SG, E, ET, T, TT, TG, P, PE>,
+            P extends UCSCUniProtEdgeProperty<S, ST, SG, E, ET, T, TT, TG, P, PE>,
             PE
             >
             implements
-            Property<E, ET, P, PE, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+            Property<E, ET, P, PE, UCSCUniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-        protected UCSCGenesUniProtEdgeProperty(ET type) {
+        protected UCSCUniProtEdgeProperty(ET type) {
 
             this.type = type;
         }

@@ -1,22 +1,22 @@
 package com.bio4j.model.ucsc_uniprot.edges;
 
-import com.bio4j.model.ucsc.UCSCGenesGraph;
-import com.bio4j.model.ucsc.vertices.UCSCGenesChromosome;
-import com.bio4j.model.ucsc_uniprot.UCSCGenesUniProtGraph;
+import com.bio4j.model.ucsc.UCSCGraph;
+import com.bio4j.model.ucsc.vertices.UCSCChromosome;
+import com.bio4j.model.ucsc_uniprot.UCSCUniProtGraph;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.angulillos.UntypedGraph;
 
-public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
+public final class UCSCChromosomeProtein<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
         extends
-        UCSCGenesUniProtGraph.UCSCGenesUniProtEdge<
+        UCSCUniProtGraph.UCSCUniProtEdge<
                 // src
-                UCSCGenesChromosome<I, RV, RVT, RE, RET>,
-                UCSCGenesGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeType,
-                UCSCGenesGraph<I, RV, RVT, RE, RET>,
+                UCSCChromosome<I, RV, RVT, RE, RET>,
+                UCSCGraph<I, RV, RVT, RE, RET>.UCSCChromosomeType,
+                UCSCGraph<I, RV, RVT, RE, RET>,
                 // edge
-                UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET>,
-                UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeProteinType,
+                UCSCChromosomeProtein<I, RV, RVT, RE, RET>,
+                UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCChromosomeProteinType,
                 //tgt
                 Protein<I, RV, RVT, RE, RET>,
                 UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
@@ -25,7 +25,7 @@ public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE
                 I, RV, RVT, RE, RET
                 > {
 
-    public UCSCGenesChromosomeProtein(RE edge, UCSCGenesUniProtGraph<I, RV, RVT, RE, RET>.UCSCGenesChromosomeProteinType type) {
+    public UCSCChromosomeProtein(RE edge, UCSCUniProtGraph<I, RV, RVT, RE, RET>.UCSCChromosomeProteinType type) {
 
         super(edge, type);
     }
@@ -57,7 +57,7 @@ public final class UCSCGenesChromosomeProtein<I extends UntypedGraph<RV, RVT, RE
     }
 
     @Override
-    public UCSCGenesChromosomeProtein<I, RV, RVT, RE, RET> self() {
+    public UCSCChromosomeProtein<I, RV, RVT, RE, RET> self() {
         return this;
     }
 }
