@@ -66,6 +66,9 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Integer length() {
 		return get(type().length);
 	}
+	public String uniRef100ClusterId(){return get(type().uniRef100ClusterId);}
+	public String uniRef90ClusterId(){return get(type().uniRef90ClusterId);}
+	public String uniRef50ClusterId(){return get(type().uniRef50ClusterId);}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 

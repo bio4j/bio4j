@@ -116,6 +116,8 @@ public abstract class UniRefGraph<
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
+		public final representantAccession representantAccession = new representantAccession();
+		public final members members = new members();
 
 		public UniRef50ClusterType(RVT raw) { super(raw); }
 
@@ -150,6 +152,22 @@ public abstract class UniRefGraph<
 			public updatedDate() { super(UniRef50ClusterType.this); }
 			public Class<String> valueClass() { return String.class; }
 		}
+
+		public final class representantAccession
+				extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, representantAccession, String>
+		{
+			public representantAccession() { super(UniRef50ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
+		}
+
+		public final class members
+				extends
+				UniRefVertexProperty<UniRef50Cluster<I, RV, RVT, RE, RET>, UniRef50ClusterType, members, String[]>
+		{
+			public members() { super(UniRef50ClusterType.this); }
+			public Class<String[]> valueClass() { return String[].class; }
+		}
 	}
 
 	public final class UniRef90ClusterType
@@ -163,6 +181,8 @@ public abstract class UniRefGraph<
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
+		public final representantAccession representantAccession = new representantAccession();
+		public final members members = new members();
 
 		public UniRef90ClusterType(RVT raw) { super(raw); }
 
@@ -199,6 +219,22 @@ public abstract class UniRefGraph<
 			public updatedDate() { super(UniRef90ClusterType.this); }
 			public Class<String> valueClass() { return String.class; }
 		}
+
+		public final class representantAccession
+				extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, representantAccession, String>
+		{
+			public representantAccession() { super(UniRef90ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
+		}
+
+		public final class members
+				extends
+				UniRefVertexProperty<UniRef90Cluster<I, RV, RVT, RE, RET>, UniRef90ClusterType, members, String[]>
+		{
+			public members() { super(UniRef90ClusterType.this); }
+			public Class<String[]> valueClass() { return String[].class; }
+		}
 	}
 
 	public final class UniRef100ClusterType
@@ -211,6 +247,8 @@ public abstract class UniRefGraph<
 		public final id id = new id();
 		public final name name = new name();
 		public final updatedDate updatedDate = new updatedDate();
+		public final representantAccession representantAccession = new representantAccession();
+		public final members members = new members();
 
 		public UniRef100ClusterType(RVT raw) { super(raw); }
 
@@ -245,6 +283,22 @@ public abstract class UniRefGraph<
 		{	
 			public updatedDate() { super(UniRef100ClusterType.this); }
 			public Class<String> valueClass() { return String.class; }
+		}
+
+		public final class representantAccession
+				extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, representantAccession, String>
+		{
+			public representantAccession() { super(UniRef100ClusterType.this); }
+			public Class<String> valueClass() { return String.class; }
+		}
+
+		public final class members
+				extends
+				UniRefVertexProperty<UniRef100Cluster<I, RV, RVT, RE, RET>, UniRef100ClusterType, members, String[]>
+		{
+			public members() { super(UniRef100ClusterType.this); }
+			public Class<String[]> valueClass() { return String[].class; }
 		}
 	}
 

@@ -164,6 +164,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				entryStBuilder.append(line);
 
 				XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+				//freeing up memory
 				entryStBuilder.delete(0, entryStBuilder.length());
 
 				ArrayList<String> membersAccessionList = new ArrayList<String>();
@@ -270,6 +271,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
 
 			}
+
 
 			entryCounter++;
 			if ((entryCounter % limitForPrintingOut) == 0) {

@@ -38,6 +38,8 @@ public final class UniRef100Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, R
 	public String updatedDate() {
 		return get(type().updatedDate);
 	}
+	public String representantAccession() { return get(type().representantAccession);}
+	public String[] members() { return get(type().members);}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
