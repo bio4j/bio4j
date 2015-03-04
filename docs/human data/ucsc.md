@@ -6,19 +6,20 @@ http://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/hg38.agp.gz
 
 Schema:
 
-```
-field	example	SQL type	info	description
-bin	585	smallint(6)	range	Indexing field to speed chromosome range queries.
-chrom	chr1	varchar(255)	values	Reference sequence chromosome or scaffold
-chromStart	10000	int(10) unsigned	range	start position in chromosome
-chromEnd	10615	int(10) unsigned	range	end position in chromosome
-ix	2	int(11)	range	ix of this fragment (useless)
-type	F	char(1)	values	(W)GS contig, (P)redraft, (D)raft, (F)inished or (O)ther
-frag	AP006221.1	varchar(255)	values	which fragment
-fragStart	36116	int(10) unsigned	range	start position in frag
-fragEnd	36731	int(10) unsigned	range	end position in frag
-strand	-	char(1)	values	+ or - (orientation of fragment)
-```
+
+|field	    |example	  |SQL type	      |info	                                  |description                |UCSCChromosomeFragment edge property     |
+|-----------|:----------|:--------------|:--------------------------------------|:--------|:------|
+|bin	      |585	      |smallint(6)	  |range	                                |Indexing field to speed chromosome range queries.|  |
+|chrom	    |chr1	      |varchar(255)	  |values	                                |Reference sequence chromosome or scaffold|chrom|
+|chromStart	|10000	    |int(10) unsigned|range	                                |start position in chromosome|chromStart|
+|chromEnd	  |10615	    |int(10) unsigned|range	                                |end position in chromosome|chromEnd|
+|ix	        |2	        |int(11)	      |range	                                |ix of this fragment (useless)||
+|type	      |F	        |char(1)	      |values	                                |(W)GS contig, (P)redraft, (D)raft, (F)inished or (O)ther|fragmentType|
+|frag	      |AP006221.1	|varchar(255)	  |values	                                |which fragment|frag|
+|fragStart	|36116	    |int(10) unsigned|range	                                |start position in frag|fragStart|
+|fragEnd	  |36731	    |int(10) unsigned|range	                                |end position in frag|fragEnd|
+|strand	    |- 	        |char(1)	      |values	                               |+ or - (orientation of fragment)|strand|
+
 
 We are going to ignore all information related to "chrUn_*".
 
