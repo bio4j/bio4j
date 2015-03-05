@@ -177,24 +177,28 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
 				Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
 				String representantAccession = getRepresentantAccession(representativeMember);
 
-				if(unirefClusterNumber == 50){
-					UniRef50Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef50Cluster());
-					cluster.set(uniRefGraph.UniRef50Cluster().id, entryId);
-					cluster.set(uniRefGraph.UniRef50Cluster().updatedDate, updatedDate);
-					cluster.set(uniRefGraph.UniRef50Cluster().name, name);
-					cluster.set(uniRefGraph.UniRef50Cluster().representantAccession, representantAccession);
-				}else if(unirefClusterNumber == 90){
-					UniRef90Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef90Cluster());
-					cluster.set(uniRefGraph.UniRef90Cluster().id, entryId);
-					cluster.set(uniRefGraph.UniRef90Cluster().updatedDate, updatedDate);
-					cluster.set(uniRefGraph.UniRef90Cluster().name, name);
-					cluster.set(uniRefGraph.UniRef90Cluster().representantAccession, representantAccession);
-				}else if(unirefClusterNumber == 100){
-					UniRef100Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef100Cluster());
-					cluster.set(uniRefGraph.UniRef100Cluster().id, entryId);
-					cluster.set(uniRefGraph.UniRef100Cluster().updatedDate, updatedDate);
-					cluster.set(uniRefGraph.UniRef100Cluster().name, name);
-					cluster.set(uniRefGraph.UniRef100Cluster().representantAccession, representantAccession);
+				if(representantAccession != null){
+					if(unirefClusterNumber == 50){
+						UniRef50Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef50Cluster());
+						cluster.set(uniRefGraph.UniRef50Cluster().id, entryId);
+						cluster.set(uniRefGraph.UniRef50Cluster().updatedDate, updatedDate);
+						cluster.set(uniRefGraph.UniRef50Cluster().name, name);
+						cluster.set(uniRefGraph.UniRef50Cluster().representantAccession, representantAccession);
+					}else if(unirefClusterNumber == 90){
+						UniRef90Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef90Cluster());
+						cluster.set(uniRefGraph.UniRef90Cluster().id, entryId);
+						cluster.set(uniRefGraph.UniRef90Cluster().updatedDate, updatedDate);
+						cluster.set(uniRefGraph.UniRef90Cluster().name, name);
+						cluster.set(uniRefGraph.UniRef90Cluster().representantAccession, representantAccession);
+					}else if(unirefClusterNumber == 100){
+						UniRef100Cluster<I,RV,RVT,RE,RET> cluster = uniRefGraph.addVertex(uniRefGraph.UniRef100Cluster());
+						cluster.set(uniRefGraph.UniRef100Cluster().id, entryId);
+						cluster.set(uniRefGraph.UniRef100Cluster().updatedDate, updatedDate);
+						cluster.set(uniRefGraph.UniRef100Cluster().name, name);
+						cluster.set(uniRefGraph.UniRef100Cluster().representantAccession, representantAccession);
+					}
+				}else{
+					logger.log(Level.INFO, (entryId + " cluster does not have a valid representant value, it won't be stored... :("));
 				}
 
 			}
