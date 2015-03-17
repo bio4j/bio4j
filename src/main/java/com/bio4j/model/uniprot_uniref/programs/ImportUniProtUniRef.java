@@ -169,6 +169,11 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
 				ArrayList<String> membersAccessionList = new ArrayList<String>();
 				String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
+				Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+				String representantAccession = getRepresentantAccession(representativeMember);
+				if(representantAccession != null){
+					membersAccessionList.add(representantAccession);
+				}
 
 				if(entryId != null){
 					//----obtaining cluster members---
