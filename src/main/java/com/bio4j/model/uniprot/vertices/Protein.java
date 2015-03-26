@@ -329,6 +329,15 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 		return outManyOptionalV(graph().ProteinGeneLocation());
 	}
 
+	// proteinGeneName
+	// outgoing
+	public Optional<Stream<ProteinGeneName<I, RV, RVT, RE, RET>>> proteinGeneName_out(){
+		return outManyOptional(graph().ProteinGeneName());
+	}
+	public Optional<Stream<GeneName<I, RV, RVT, RE, RET>>> proteinGeneName_outV(){
+		return outManyOptionalV(graph().ProteinGeneName());
+	}
+
 	// proteinProteinInteraction
 	// outgoing
 	public Optional<Stream<ProteinProteinInteraction<I, RV, RVT, RE, RET>>> proteinProteinInteraction_out(){
