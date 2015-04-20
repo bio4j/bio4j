@@ -25,11 +25,11 @@ for the exact incantation that you need, depending on your build system. Once yo
 
 We provide a pre-imported full Bio4j Titan distribution, available through S3. If you can use Amazon Web Services (or is already part of your infrastructure) this your best option: you don't need to worry about loading data, and you can easily spin an EC2 instance with everything already configured and ready to use. The docs for this:
 
-- [Bio4j and AWS](bio4j-and-aws)
+- [Bio4j and AWS](https://github.com/bio4j/bio4j-titan/blob/master/docs/Bio4jAWSReleases.md)
 
 If for whatever reason you cannot (or just don't want to) use AWS, you can always download the raw data and run the import code on your own infrastructure. If that's what you want:
 
-- [Bio4j on your own](bio4j-on-your-own)
+- [Bio4j on your own](https://github.com/bio4j/bio4j-titan/blob/master/docs/ImportingTitanBio4j.md)
 
 <!-- Old stuf: do something with it
 
