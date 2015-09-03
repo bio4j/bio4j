@@ -32,7 +32,7 @@ implements
 
 /*
 
-## Vertices 
+## Vertices
 
 ### Enzyme
 
@@ -41,13 +41,13 @@ implements
 
   public final class EnzymeType
   extends
-  EnzymeDBVertexType <
-    Enzyme<I,RV,RVT,RE,RET>,
-    EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType
-  >
+    EnzymeDBVertexType <
+      Enzyme<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType
+    >
   {
 
-/* 
+/*
 #### Enzyme id
 
 The EnzymeDB id of this enzyme, as a `String`.
@@ -59,7 +59,7 @@ The EnzymeDB id of this enzyme, as a `String`.
     public id() { super(EnzymeType.this); }
     public final Class<String> valueClass() { return String.class; }
   }
-/* 
+/*
 #### Enzyme cofactors
 
 The cofactors ids? for this enzyme, stored in an array of `String`s.
@@ -71,7 +71,7 @@ The cofactors ids? for this enzyme, stored in an array of `String`s.
     public cofactors() { super(EnzymeType.this); }
     public final Class<String[]> valueClass() { return String[].class; }
   }
-/* 
+/*
 #### Enzyme comments
 
 Enzymes have sometimes a text comment; this property will have as value that comment stored in one `String`, which will be empty if there's no such comment.
@@ -122,7 +122,7 @@ _TO DO_ explain this.
 /*
 #### Enzyme cross-references to ProSite
 
-_TO DO_ explain this. 
+_TO DO_ explain this.
 */
   public final class prositeCrossReferences
   extends
@@ -143,25 +143,25 @@ _TO DO_ explain this.
   public EnzymeType(RVT raw) { super(raw); }
 
   public final EnzymeType value() { return graph().Enzyme(); }
-  public final Enzyme<I,RV,RVT,RE,RET> from(RV vertex) { return new Enzyme<I,RV,RVT,RE,RET>(vertex, this); }  
+  public final Enzyme<I,RV,RVT,RE,RET> from(RV vertex) { return new Enzyme<I,RV,RVT,RE,RET>(vertex, this); }
   }
 
 /*
 ----
 */
 
-/*
+  /*
 
-## Indices
+  ## Indices
 
-`Enzyme`s are indexed for **unique** id matches.
+  `Enzyme`s are indexed for **unique** id matches.
 
-*/
+  */
   public abstract TypedVertexIndex.Unique <
-  Enzyme<I,RV,RVT,RE,RET>, EnzymeType,
-  EnzymeType.id, String,
-  EnzymeDBGraph<I,RV,RVT,RE,RET>,
-  I,RV,RVT,RE,RET
+    Enzyme<I,RV,RVT,RE,RET>, EnzymeType,
+    EnzymeType.id, String,
+    EnzymeDBGraph<I,RV,RVT,RE,RET>,
+    I,RV,RVT,RE,RET
   >
   enzymeIdIndex();
 
@@ -178,7 +178,7 @@ _TO DO_ explain this.
 You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins, representing _TO DO: What?_. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md) for more.
 
 */
-  
+
   public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
 
 /*
@@ -194,7 +194,7 @@ You can extend the EnzymeDB graph with a graph adding an edge to UniProt protein
   public I raw() { return raw; }
 
   public EnzymeDBGraph(I graph) {
-    
+
   this.raw = graph;
   }
 
@@ -271,7 +271,7 @@ These classes are used to bound all the types and implementation that is generic
   public final VT elementType() { return type; }
   }
 
-  
+
 
   public abstract static class EnzymeDBEdge <
   S extends EnzymeDBVertex<S, ST,I,RV,RVT,RE,RET>,

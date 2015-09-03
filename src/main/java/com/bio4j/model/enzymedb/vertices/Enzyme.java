@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class Enzyme<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET>
-extends 
+extends
   EnzymeDBGraph.EnzymeDBVertex <
   Enzyme<I,RV,RVT,RE,RET>,
   EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType,
@@ -36,10 +36,10 @@ extends
   // incoming
   public Optional<Stream<EnzymaticActivity<I,RV,RVT,RE,RET>>> enzymaticActivity_in() {
 
-  return inManyOptional(graph().uniProtEnzymeDBGraph().EnzymaticActivity());
+    return inManyOptional(graph().uniProtEnzymeDBGraph().EnzymaticActivity());
   }
-  public Optional<Stream<Protein<I,RV,RVT,RE,RET>>> enzymaticActivity_inV() { 
+  public Optional<Stream<Protein<I,RV,RVT,RE,RET>>> enzymaticActivity_inV() {
 
-  return inManyOptionalV(graph().uniProtEnzymeDBGraph().EnzymaticActivity());
+    return inManyOptionalV(graph().uniProtEnzymeDBGraph().EnzymaticActivity());
   }
 }
