@@ -8,357 +8,344 @@ import com.bio4j.angulillos.*;
 
 # ExPASy Enzyme DB graph
 
-This graph includes all Enzyme terms that are included in ExPASy database but those that have been either transferred or deleted.
-You can check more information about Enzyme database [here](http://enzyme.expasy.org/)
+This graph includes all Enzyme terms that are included in the ExPASy ENZYME database but **not** those that have been either _transferred_ or _deleted_.
 
-## data model
+You can get more information about the Enzyme database from its [website](http://enzyme.expasy.org/), in particular
 
-It only consists of the vertices of Enzyme type.
+- **[Enzyme description and sample entry](http://enzyme.expasy.org/enzyme_details.html)**
+- the **[User manual](http://enzyme.expasy.org/enzuser.txt)**, which contains a more precise description of the data model
 
-### Enzymes
+This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
 
-We have a `Enzyme` vertex which contains property data present for each term.
+*/
+public abstract class EnzymeDBGraph <
+  I extends UntypedGraph<RV,RVT,RE,RET>,
+  RV,RVT,
+  RE,RET
+>
+implements
+  TypedGraph <
+    EnzymeDBGraph<I,RV,RVT,RE,RET>,
+    I,RV,RVT,RE,RET
+  >
+{
 
-##### Enzyme properties stored
+/*
 
-- id
-- official name
-- cofactors _(stored as a flatten String array)_
-- prosite cross references _(stored as a flatten String array)_
-- catalytic activity
-- comment
+## Vertices 
 
+### Enzyme
 
- */
-public abstract class EnzymeDBGraph<
-		// untyped graph
-		I extends UntypedGraph<RV, RVT, RE, RET>,
-		// vertices
-		RV, RVT,
-		// edges
-		RE, RET
-		>
-		implements
-		TypedGraph<
-				EnzymeDBGraph<I, RV, RVT, RE, RET>,
-				I, RV, RVT, RE, RET
-				> {
+*/
+  public abstract EnzymeType Enzyme();
 
-	// indices
-	public abstract TypedVertexIndex.Unique <
-			// vertex
-			Enzyme<I, RV, RVT, RE, RET>, EnzymeType,
-			// property
-			EnzymeType.id, String,
-			// graph
-			EnzymeDBGraph<I, RV, RVT, RE, RET>,
-			I, RV, RVT, RE, RET
-			>
-	enzymeIdIndex();
+  public final class EnzymeType
+  extends
+    EnzymeDBVertexType <
+      Enzyme<I,RV,RVT,RE,RET>,
+      EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeType
+    >
+  {
 
-    protected I raw = null;
+/* 
+#### Enzyme id
 
-    public EnzymeDBGraph(I graph){
-        raw = graph;
+The EnzymeDB id of this enzyme, as a `String`.
+*/
+    public final class id
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,id,String>
+    {
+      public id() { super(EnzymeType.this); }
+      public final Class<String> valueClass() { return String.class; }
+    }
+/* 
+#### Enzyme cofactors
+
+The cofactors ids? for this enzyme, stored in an array of `String`s.
+*/
+    public final class cofactors
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,cofactors,String[]>
+    {
+      public cofactors() { super(EnzymeType.this); }
+      public final Class<String[]> valueClass() { return String[].class; }
+    }
+/* 
+#### Enzyme comments
+
+Enzymes have sometimes a text comment; this property will have as value that comment stored in one `String`, which will be empty if there's no such comment.
+*/
+    public final class comment
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,comment,String>
+    {
+      public comment() { super(EnzymeType.this); }
+      public final Class<String> valueClass() { return String.class; }
+    }
+/*
+#### Enzyme official name
+
+_TO DO_ link to somewhere
+*/
+    public final class officialName
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,officialName,String>
+    {
+      public officialName() { super(EnzymeType.this); }
+      public final Class<String> valueClass() { return String.class; }
+    }
+/*
+#### Enzyme alternate names
+
+Sometimes enzymes have alternate names (synonyms?). They are available here as an array of `String`s.
+*/
+    public final class alternateNames
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,alternateNames,String[]>
+    {
+      public alternateNames() { super(EnzymeType.this); }
+      public final Class<String[]> valueClass() { return String[].class; }
+    }
+/*
+#### Enzyme catalytic activity
+
+_TO DO_ explain this.
+*/
+    public final class catalyticActivity
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,catalyticActivity,String>
+    {
+      public catalyticActivity() { super(EnzymeType.this); }
+      public final Class<String> valueClass() { return String.class; }
+    }
+/*
+#### Enzyme cross-references to ProSite
+
+_TO DO_ explain this. 
+*/
+    public final class prositeCrossReferences
+    extends
+      EnzymeDBVertexProperty<Enzyme<I,RV,RVT,RE,RET>,EnzymeType,prositeCrossReferences,String[]>
+    {
+      public prositeCrossReferences() { super(EnzymeType.this); }
+      public final Class<String[]> valueClass() { return String[].class; }
     }
 
-    public I raw(){
-        return raw;
+    public final id id = new id();
+    public final cofactors cofactors = new cofactors();
+    public final comment comment = new comment();
+    public final officialName officialName = new officialName();
+    public final alternateNames alternateNames = new alternateNames();
+    public final catalyticActivity catalyticActivity = new catalyticActivity();
+    public final prositeCrossReferences prositeCrossReferences = new prositeCrossReferences();
+
+    public EnzymeType(RVT raw) { super(raw); }
+
+    public final EnzymeType value() { return graph().Enzyme(); }
+    public final Enzyme<I,RV,RVT,RE,RET> from(RV vertex) { return new Enzyme<I,RV,RVT,RE,RET>(vertex, this); }    
+  }
+
+/*
+----
+*/
+
+/*
+
+## Indices
+
+`Enzyme`s are indexed for **unique** id matches.
+
+*/
+  public abstract TypedVertexIndex.Unique <
+    Enzyme<I,RV,RVT,RE,RET>, EnzymeType,
+    EnzymeType.id, String,
+    EnzymeDBGraph<I,RV,RVT,RE,RET>,
+    I,RV,RVT,RE,RET
+  >
+  enzymeIdIndex();
+
+/*
+----
+*/
+
+/*
+
+## Graph extensions
+
+### Link enzymes with UniProt proteins
+
+You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins, representing _TO DO: What?_. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md) for more.
+
+*/
+  
+  public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
+
+/*
+----
+*/
+
+/*
+  ## Auxiliary code and helper classes
+
+  This section is only relevant if you want to implement this graph and/or understand the code.
+*/
+  protected I raw = null;
+  public I raw() { return raw; }
+
+  public EnzymeDBGraph(I graph) {
+      
+    this.raw = graph;
+  }
+
+/*
+
+### Helper classes
+
+These classes are used to bound all the types and implementation that is generic for every type of this graph: the `graph()` reference of types, vertex, property, edge types should be members of this graph, etc.
+
+*/
+  public abstract static class EnzymeDBVertex <
+    V extends EnzymeDBVertex<V,VT,I,RV,RVT,RE,RET>,
+    VT extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<V,VT>,
+    I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET
+  >
+  implements
+    TypedVertex<V,VT,EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET>
+  {
+
+    private RV vertex;
+    private VT type;
+
+    protected EnzymeDBVertex(RV vertex, VT type) {
+      this.vertex = vertex;
+      this.type = type;
     }
 
-	public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
+    @Override
+    public final EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { return type().graph(); }
 
-	// types
-	// vertices
-	public abstract EnzymeType Enzyme();
+    @Override
+    public final RV raw() { return this.vertex; }
+
+    @Override
+    public final VT type() { return type; }
+  }
+
+  public abstract class EnzymeDBVertexType <
+    V extends EnzymeDBVertex<V,VT,I,RV,RVT,RE,RET>,
+    VT extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<V,VT>
+  >
+  implements
+    TypedVertex.Type<V,VT,EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET>
+  {
+
+    private RVT raw;
+
+    protected EnzymeDBVertexType(RVT raw) { this.raw = raw; }
+
+    @Override
+    public final RVT raw() { return raw; }
+
+    @Override
+    public final EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { return EnzymeDBGraph.this; }
+  }
 
 
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// Vertex types
 
-	public final class EnzymeType
-			extends
-			EnzymeDBVertexType<
-					Enzyme<I, RV, RVT, RE, RET>,
-					EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeType
-					> {
+  public abstract class EnzymeDBVertexProperty <
+    V extends EnzymeDBVertex<V,VT,I,RV,RVT,RE,RET>,
+    VT extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<V,VT>,
+    P extends EnzymeDBVertexProperty<V,VT,P,PV>,
+    PV
+  >
+  implements
+    Property<V,VT,P,PV,EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET>
+  {
 
-		public final id id = new id();
-		public final cofactors cofactors = new cofactors();
-		public final comment comment = new comment();
-		public final officialName officialName = new officialName();
-		public final alternateNames alternateNames = new alternateNames();
-		public final catalyticActivity catalyticActivity = new catalyticActivity();
-		public final prositeCrossReferences prositeCrossReferences = new prositeCrossReferences();
+    private VT type;
 
-		public EnzymeType(RVT raw) {
-			super(raw);
-		}
+    protected EnzymeDBVertexProperty(VT type) { this.type = type; }
 
-		@Override
-		public EnzymeType value() {
-			return graph().Enzyme();
-		}
+    @Override
+    public final VT elementType() { return type; }
+  }
 
-		@Override
-		public Enzyme<I, RV, RVT, RE, RET> from(RV vertex) {
-			return new Enzyme<I, RV, RVT, RE, RET>(vertex, this);
-		}
+  
 
-		public final class id
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, id, String> {
-			public id() {
-				super(EnzymeType.this);
-			}
+  public abstract static class EnzymeDBEdge <
+    S extends EnzymeDBVertex<S, ST,I,RV,RVT,RE,RET>,
+    ST extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<S, ST>,
+    E extends EnzymeDBEdge<S,ST,E,ET,T,TT,I,RV,RVT,RE,RET>,
+    ET extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBEdgeType<S,ST,E,ET,T,TT>,
+    T extends EnzymeDBVertex<T, TT,I,RV,RVT,RE,RET>,
+    TT extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<T, TT>,
+    I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT,RE,RET
+  >
+  implements
+    TypedEdge <
+      S,ST,EnzymeDBGraph<I,RV,RVT,RE,RET>,
+      E,ET,EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET,
+      T,TT,EnzymeDBGraph<I,RV,RVT,RE,RET>
+    >
+  {
 
-			public Class<String> valueClass() {
-				return String.class;
-			}
-		}
+    private RE edge;
+    private ET type;
 
-		public final class cofactors
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, cofactors, String[]> {
-			public cofactors() {
-				super(EnzymeType.this);
-			}
+    protected EnzymeDBEdge(RE edge, ET type) {
 
-			public Class<String[]> valueClass() {
-				return String[].class;
-			}
-		}
+      this.edge = edge;
+      this.type = type;
+    }
 
-		public final class comment
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, comment, String> {
-			public comment() {
-				super(EnzymeType.this);
-			}
+    @Override
+    public final EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { return type().graph(); }
 
-			public Class<String> valueClass() {
-				return String.class;
-			}
-		}
+    @Override
+    public RE raw() { return this.edge; }
 
-		public final class officialName
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, officialName, String> {
-			public officialName() {
-				super(EnzymeType.this);
-			}
+    @Override
+    public ET type() { return type; }
+  }
 
-			public Class<String> valueClass() {
-				return String.class;
-			}
-		}
+  public abstract class EnzymeDBEdgeType <
+    S extends EnzymeDBVertex<S, ST,I,RV,RVT,RE,RET>,
+    ST extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<S, ST>,
+    E extends EnzymeDBEdge<S,ST,E,ET,T,TT,I,RV,RVT,RE,RET>,
+    ET extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBEdgeType<S,ST,E,ET,T,TT>,
+    T extends EnzymeDBVertex<T, TT,I,RV,RVT,RE,RET>,
+    TT extends EnzymeDBGraph<I,RV,RVT,RE,RET>.EnzymeDBVertexType<T, TT>
+  >
+  implements
+    TypedEdge.Type<
+      S,ST,EnzymeDBGraph<I,RV,RVT,RE,RET>,
+      E,ET,EnzymeDBGraph<I,RV,RVT,RE,RET>,I,RV,RVT,RE,RET,
+      T,TT,EnzymeDBGraph<I,RV,RVT,RE,RET>
+    >
+  {
 
-		public final class alternateNames
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, alternateNames, String[]> {
-			public alternateNames() {
-				super(EnzymeType.this);
-			}
+    private RET raw;
+    private ST srcT;
+    private TT tgtT;
 
-			public Class<String[]> valueClass() {
-				return String[].class;
-			}
-		}
+    protected EnzymeDBEdgeType(ST srcT, RET raw, TT tgtT) {
 
-		public final class catalyticActivity
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, catalyticActivity, String> {
-			public catalyticActivity() {
-				super(EnzymeType.this);
-			}
+      this.raw = raw;
+      this.srcT = srcT;
+      this.tgtT = tgtT;
+    }
 
-			public Class<String> valueClass() {
-				return String.class;
-			}
-		}
+    @Override
+    public final ST sourceType() { return srcT; }
 
-		public final class prositeCrossReferences
-				extends
-				EnzymeDBVertexProperty<Enzyme<I, RV, RVT, RE, RET>, EnzymeType, prositeCrossReferences, String[]> {
-			public prositeCrossReferences() {
-				super(EnzymeType.this);
-			}
+    @Override
+    public final TT targetType() { return tgtT; }
 
-			public Class<String[]> valueClass() {
-				return String[].class;
-			}
-		}
+    @Override
+    public final RET raw() { return raw; }
 
-	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// helper classes
-
-	public abstract class EnzymeDBVertexProperty<
-			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
-			P extends EnzymeDBVertexProperty<V, VT, P, PV>,
-			PV
-			>
-			implements
-			Property<V, VT, P, PV, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		protected EnzymeDBVertexProperty(VT type) {
-
-			this.type = type;
-		}
-
-		private VT type;
-
-		@Override
-		public final VT elementType() {
-			return type;
-		}
-	}
-
-	public abstract static class EnzymeDBVertex<
-			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>,
-			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
-			TypedVertex<V, VT, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		private RV vertex;
-		private VT type;
-
-		protected EnzymeDBVertex(RV vertex, VT type) {
-
-			this.vertex = vertex;
-			this.type = type;
-		}
-
-		@Override
-		public EnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return type().graph();
-		}
-
-		@Override
-		public RV raw() {
-			return this.vertex;
-		}
-
-		@Override
-		public VT type() {
-			return type;
-		}
-	}
-
-	abstract class EnzymeDBVertexType<
-			V extends EnzymeDBVertex<V, VT, I, RV, RVT, RE, RET>,
-			VT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<V, VT>
-			>
-			implements
-			TypedVertex.Type<V, VT, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
-
-		private RVT raw;
-
-		protected EnzymeDBVertexType(RVT raw) {
-			this.raw = raw;
-		}
-
-		@Override
-		public final RVT raw() {
-			return raw;
-		}
-
-		@Override
-		public final EnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return EnzymeDBGraph.this;
-		}
-	}
-
-	public abstract static class EnzymeEdge<
-			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
-			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>,
-			I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-			>
-			implements
-			TypedEdge<
-					S, ST, EnzymeDBGraph<I, RV, RVT, RE, RET>,
-					E, ET, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, EnzymeDBGraph<I, RV, RVT, RE, RET>
-					> {
-
-		private RE edge;
-		private ET type;
-
-		protected EnzymeEdge(RE edge, ET type) {
-
-			this.edge = edge;
-			this.type = type;
-		}
-
-		@Override
-		public EnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return type().graph();
-		}
-
-		@Override
-		public RE raw() {
-			return this.edge;
-		}
-
-		@Override
-		public ET type() {
-			return type;
-		}
-	}
-
-	abstract class EnzymeEdgeType<
-			S extends EnzymeDBVertex<S, ST, I, RV, RVT, RE, RET>,
-			ST extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<S, ST>,
-			E extends EnzymeEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-			ET extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeEdgeType<S, ST, E, ET, T, TT>,
-			T extends EnzymeDBVertex<T, TT, I, RV, RVT, RE, RET>,
-			TT extends EnzymeDBGraph<I, RV, RVT, RE, RET>.EnzymeDBVertexType<T, TT>
-			>
-			implements
-			TypedEdge.Type<
-					S, ST, EnzymeDBGraph<I, RV, RVT, RE, RET>,
-					E, ET, EnzymeDBGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-					T, TT, EnzymeDBGraph<I, RV, RVT, RE, RET>
-					> {
-
-		private RET raw;
-		private ST srcT;
-		private TT tgtT;
-
-		protected EnzymeEdgeType(ST srcT, RET raw, TT tgtT) {
-
-			this.raw = raw;
-			this.srcT = srcT;
-			this.tgtT = tgtT;
-		}
-
-		@Override
-		public final ST sourceType() {
-			return srcT;
-		}
-
-		@Override
-		public final TT targetType() {
-			return tgtT;
-		}
-
-		@Override
-		public final RET raw() {
-			return raw;
-		}
-
-		@Override
-		public final EnzymeDBGraph<I, RV, RVT, RE, RET> graph() {
-			return EnzymeDBGraph.this;
-		}
-	}
-
+    @Override
+    public final EnzymeDBGraph<I,RV,RVT,RE,RET> graph() { return EnzymeDBGraph.this; }
+  }
 }

@@ -1,43 +1,59 @@
-## Bio4j
+# Bio4j
 
-Bio4j is a bioinformatics graph based DB including most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bio4j/bio4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
+Bio4j is a bioinformatics graph data platform, integrating most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
 
 Bio4j provides a completely new and powerful **framework for protein related information querying and management**. 
-Since it relies on a high-performance graph engine, data is stored in a way that semantically represents its own structure. 
-On the contrary, traditional relational databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
+The use of a graph-based data model makes possible to store and query data in a way that semantically represents its own structure. On the contrary, traditional relational models and databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
 
+## Project structure and overview
+<!-- TODO: add a diagram here, I think it would help -->
 
-### Scalability
+Bio4j can look a bit intimidating at first, with all those repositories with kind of similar names; here you have a guided tour around:
 
-* First of all, Bio4j has an [**Abstract Domain Model**](docs/domain-model.md), which allows you to use it without binding to a particular backend implementation.
+#### bio4j/bio4j
 
-* Next, it has an intermediate [**Blueprints layer**](https://github.com/bio4j/blueprints), which allows us to make a default implementation of the abstract interface using [Tinkerpop Blueprints API](https://github.com/tinkerpop/blueprints/wiki) and at the same time stay independent from the choice of database technology.
+In this repository [bio4j/bio4j](https://github.com/bio4j/bio4j) you will find the generic Bio4j model and API. Entities, relationships and their properties are modeled using a typed [property graph](https://github.com/tinkerpop/blueprints/wiki/property-graph-model) model. For example, there are vertex types for `Protein` or `GoTerm`, and a `GoAnnotation` edge type going from `Protein` to `GoTerm`. This graph schema is separated into different graphs, corresponding to the different data sources (`UniProt`, `Go`, `UniRef`, ...) and connections between them (`UniProtGo`, `UniProtUniRef`, ...).
 
-* And finally, there are technology specific versions:
-  - [**Titan DB implementation**](https://github.com/bio4j/bio4j-titan)
-  - [**Neo4j DB implementation**](https://github.com/bio4j/bio4j-neo4j)
+The API, based on [bio4j/angulillos](https://github.com/bio4j/angulillos), lets you write generic typed traversals over this graph schema:
 
-### Modularity
+``` Java
+protein.uniref50Member_outV()
+  .map( 
+    UniRef50Cluster::uniRef50Member_inV
+  )
+  .map( 
+    prts -> prts.map(
+      Protein::goAnnotation_outV
+    )
+  );
+```
 
-Bio4j includes a few different data sources and you may not always be interested in having all of them together. That’s why the importing process is modular and customizable, allowing you to import just the data you are interested in.
+which can later be executed on a particular backend. Generic data import code is also here, which can be used to load the data using any implementation of angulillos.
 
-Also, Bio4j has [Statika-based module system](https://github.com/bio4j/modules), which dramatically simplifies the process of building and deploying custom releases of Bio4j.
+#### bio4j/angulillos
 
-### Performance
+You can think of [bio4j/angulillos](https://github.com/bio4j/angulillos) as a strongly typed version of the property graph model. You can describe graph schemas and write generic traversals over them which are guranteed to be well-typed in that for example
 
-In Bio4j data is organized in a way semantically equivalent to what it represents thanks to the graph structure. That means that queries which would even be impossible to perform with a standard Relational DB, can be feasible with Bio4j obtaining good performance results.
+- you cannot retrieve the outgoing edges of and edge
+- and you can get the tweets that a user tweeted, but not the users that a tweet follows!
 
-###  Licensing
+#### bio4j/bio4j-titan
 
-Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.org/licenses/agpl.html).
+In [bio4j/bio4j-titan](https://github.com/bio4j/bio4j-titan) you will find a [Titan](https://github.com/thinkaurelius/titan/)-based Bio4j distribution. This is the the default standard distribution, and we also provide through AWS S3 the database binaries with all data already loaded. Go there if you want to stop reading and use Bio4j now!
 
+#### bio4j/angulillos-titan
 
------
+[bio4j/angulillos-titan](https://github.com/bio4j/angulillos-titan) is an implementation of the angulillos API using [Titan](https://github.com/thinkaurelius/titan/).
 
+<!-- TODO: add more repos -->
 
 ## Documentation
 
-* [Getting started](docs/getting-started.md)
+_TODO_
+
+<!-- * [Getting started](docs/getting-started.md)
 * [Domain model](docs/domain-model.md)
 * [Bio4j modules](docs/bio4j-modules.md)
 * [Importing Bio4j](docs/importing-bio4j.md)
@@ -45,35 +61,16 @@ Bio4j is an **open source** platform released under [**AGPLv3**](http://www.gnu.
   - [Auxiliary relationships](docs/auxiliary-relationships.md)
   - [Node indexing](docs/node-indexing.md)
 * [FAQ](docs/faq.md)
-* API Docs: [v0.11.0](http://bio4j.com/bio4j/docs/api/0.11.0)
-* [Examples](docs/examples.md)
+* API Docs: [v0.12.0-RC1](http://bio4j.com/bio4j/docs/api/0.12.0-RC1)
+* [Examples](docs/examples.md) -->
 
+## Community and contact
 
-### SBT dependency
+- **[Gitter chat](https://gitter.im/bio4j/bio4j)** _The easiest and fastest way to contact developers and ask for help_
+- **[bio4j-user](http://groups.google.com/group/bio4j-user)** _Google group / mailing list_
+- **[@bio4j](http://twitter.com/bio4j)** _Twitter_
+- **[Bio4j](http://www.linkedin.com/groups/Bio4j-3890937)** _LinkedIn_
 
-To use it in your sbt-project, add this to `build.sbt`:
+##  Licensing
 
-```scala
-resolvers += "Era7 maven releases" at "http://releases.era7.com.s3.amazonaws.com"
-
-libraryDependencies += "bio4j" % "bio4j" % "0.11.0"
-```
-
------
-
-
-## Community
-
-### Mail list
-There is a [google user group](http://groups.google.com/group/bio4j-user) available for Bio4j. Here you can post any question or general issue you may have related to Bio4j project. 
-
-### Twitter
-Bio4j twitter account [@bio4j](http://twitter.com/bio4j) is quite active, follow us if you want to be up to date with new features and project versions.
-
-### LinkedIn
-
-Bio4j [LinkedIn group](http://www.linkedin.com/groups/Bio4j-3890937) 
-
-### Github issues
-
-You can check or open new issues in the Bio4j repository [issue tracker](https://github.com/bio4j/bio4j/issues).
+Bio4j is an **open source** platform released under the [**AGPLv3**](http://www.gnu.org/licenses/agpl.html) license.

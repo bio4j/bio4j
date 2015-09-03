@@ -164,108 +164,78 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 				entryStBuilder.append(line);
 
 				XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+				//freeing up memory
 				entryStBuilder.delete(0, entryStBuilder.length());
 
 				ArrayList<String> membersAccessionList = new ArrayList<String>();
+				String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
 				Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
 				String representantAccession = getRepresentantAccession(representativeMember);
-				String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
-				//----obtaining cluster members---
-				List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
-				for (Element member : members) {
-					Element memberDbReference = member.getChild("dbReference");
-					List<Element> memberProperties = memberDbReference.getChildren("property");
-					for (Element prop : memberProperties) {
-						if (prop.getAttributeValue("type").equals("UniProtKB accession")) {
-							String memberAccession = prop.getAttributeValue("value");
-							membersAccessionList.add(memberAccession);
+				if(representantAccession != null){
+					membersAccessionList.add(representantAccession);
+				}
+
+				if(entryId != null){
+					//----obtaining cluster members---
+					List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
+					for (Element member : members) {
+						Element memberDbReference = member.getChild("dbReference");
+						List<Element> memberProperties = memberDbReference.getChildren("property");
+						for (Element prop : memberProperties) {
+							if (prop.getAttributeValue("type").equals("UniProtKB accession")) {
+								String memberAccession = prop.getAttributeValue("value");
+								membersAccessionList.add(memberAccession);
+							}
+						}
+					}
+					//----retrieving TitanProtein members----
+					for (String proteinAccession : membersAccessionList){
+						Optional<Protein<I,RV,RVT,RE,RET>> optionalProtein = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(proteinAccession);
+						if(optionalProtein.isPresent()){
+							Protein<I,RV,RVT,RE,RET> protein = optionalProtein.get();
+							if(unirefClusterNumber.equals("50")){
+								protein.set(uniprotUniRefGraph.uniProtGraph().Protein().uniRef50ClusterId, entryId);
+							}else if(unirefClusterNumber.equals("90")){
+								protein.set(uniprotUniRefGraph.uniProtGraph().Protein().uniRef90ClusterId, entryId);
+							}else if(unirefClusterNumber.equals("100")){
+								protein.set(uniprotUniRefGraph.uniProtGraph().Protein().uniRef100ClusterId, entryId);
+							}
+						}
+					}
+					//-----------------------------------------------------
+
+					if(unirefClusterNumber.equals("50")){
+						Optional<UniRef50Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef50ClusterIdIndex().getVertex(entryId);
+						if(optionalCluster.isPresent()){
+							UniRef50Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
+							cluster.set(uniprotUniRefGraph.uniRefGraph().UniRef50Cluster().members, membersAccessionList.toArray(new String[membersAccessionList.size()]));
+						}else{
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
+						}
+
+					}else if(unirefClusterNumber.equals("90")){
+						Optional<UniRef90Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef90ClusterIdIndex().getVertex(entryId);
+						if(optionalCluster.isPresent()){
+							UniRef90Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
+							cluster.set(uniprotUniRefGraph.uniRefGraph().UniRef90Cluster().members, membersAccessionList.toArray(new String[membersAccessionList.size()]));
+						}else{
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
+						}
+
+					}else if(unirefClusterNumber.equals("100")){
+						Optional<UniRef100Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef100ClusterIdIndex().getVertex(entryId);
+						if(optionalCluster.isPresent()){
+							UniRef100Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
+							cluster.set(uniprotUniRefGraph.uniRefGraph().UniRef100Cluster().members, membersAccessionList.toArray(new String[membersAccessionList.size()]));
+						}else{
+							logger.log(Level.INFO, (entryId + " cluster not found... :|"));
 						}
 					}
 				}
-				//----retrieving TitanProtein members----
-				List<Protein<I,RV,RVT,RE,RET>> proteinMembers = new LinkedList<>();
-				for (String proteinAccession : membersAccessionList){
-					Optional<Protein<I,RV,RVT,RE,RET>> optionalProtein = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(proteinAccession);
-					if(optionalProtein.isPresent()){
-						proteinMembers.add(optionalProtein.get());
-					}
-				}
-				//-----------------------------------------------------
 
-				if(unirefClusterNumber.equals("50")){
-					Optional<UniRef50Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef50ClusterIdIndex().getVertex(entryId);
-					if(optionalCluster.isPresent()){
-						UniRef50Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
-
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
-						if(optionalRepresentant.isPresent()){
-							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-
-							UniRef50Member<I,RV,RVT,RE,RET> uniRef50Member = representant.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
-							uniRef50Member.set(uniprotUniRefGraph.UniRef50Member().proteinAccession, representant.accession());
-
-							UniRef50Representant<I,RV,RVT,RE,RET> uniRef50Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef50Representant(), cluster);
-							uniRef50Representant.set(uniprotUniRefGraph.UniRef50Representant().proteinAccession, representant.accession());
-						}
-						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							UniRef50Member<I,RV,RVT,RE,RET> uniRef50Member = protein.addOutEdge(uniprotUniRefGraph.UniRef50Member(), cluster);
-							uniRef50Member.set(uniprotUniRefGraph.UniRef50Member().proteinAccession, protein.accession());
-						}
-
-					}else{
-						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
-					}
-
-				}else if(unirefClusterNumber.equals("90")){
-					Optional<UniRef90Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef90ClusterIdIndex().getVertex(entryId);
-					if(optionalCluster.isPresent()){
-						UniRef90Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
-
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
-						if(optionalRepresentant.isPresent()){
-							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-
-							UniRef90Member<I,RV,RVT,RE,RET> uniRef90Member = representant.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
-							uniRef90Member.set(uniprotUniRefGraph.UniRef90Member().proteinAccession, representant.accession());
-
-							UniRef90Representant<I,RV,RVT,RE,RET> uniRef90Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef90Representant(), cluster);
-							uniRef90Representant.set(uniprotUniRefGraph.UniRef90Representant().proteinAccession, representant.accession());
-						}
-						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							UniRef90Member<I,RV,RVT,RE,RET> uniRef90Member = protein.addOutEdge(uniprotUniRefGraph.UniRef90Member(), cluster);
-							uniRef90Member.set(uniprotUniRefGraph.UniRef90Member().proteinAccession, protein.accession());
-						}
-
-					}else{
-						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
-					}
-
-				}else if(unirefClusterNumber.equals("100")){
-					Optional<UniRef100Cluster<I,RV,RVT,RE,RET>> optionalCluster = uniprotUniRefGraph.uniRefGraph().uniRef100ClusterIdIndex().getVertex(entryId);
-					if(optionalCluster.isPresent()){
-						UniRef100Cluster<I,RV,RVT,RE,RET> cluster = optionalCluster.get();
-
-						Optional<Protein<I,RV,RVT,RE,RET>> optionalRepresentant = uniprotUniRefGraph.uniProtGraph().proteinAccessionIndex().getVertex(representantAccession);
-						if(optionalRepresentant.isPresent()){
-							Protein<I,RV,RVT,RE,RET> representant = optionalRepresentant.get();
-
-							UniRef100Member<I,RV,RVT,RE,RET> uniRef100Member = representant.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
-							uniRef100Member.set(uniprotUniRefGraph.UniRef100Member().proteinAccession, representant.accession());
-
-							UniRef100Representant<I,RV,RVT,RE,RET> uniRef100Representant = representant.addOutEdge(uniprotUniRefGraph.UniRef100Representant(), cluster);
-							uniRef100Representant.set(uniprotUniRefGraph.UniRef100Representant().proteinAccession, representant.accession());
-						}
-						for (Protein<I,RV,RVT,RE,RET> protein : proteinMembers){
-							UniRef100Member<I,RV,RVT,RE,RET> uniRef100Member = protein.addOutEdge(uniprotUniRefGraph.UniRef100Member(), cluster);
-							uniRef100Member.set(uniprotUniRefGraph.UniRef100Member().proteinAccession, protein.accession());
-						}
-
-					}else{
-						logger.log(Level.INFO, (representantAccession + " cluster not found... :|"));
-					}
-				}
 
 			}
+
 
 			entryCounter++;
 			if ((entryCounter % limitForPrintingOut) == 0) {

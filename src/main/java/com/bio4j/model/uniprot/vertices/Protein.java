@@ -66,6 +66,9 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	public Integer length() {
 		return get(type().length);
 	}
+	public String uniRef100ClusterId(){return get(type().uniRef100ClusterId);}
+	public String uniRef90ClusterId(){return get(type().uniRef90ClusterId);}
+	public String uniRef50ClusterId(){return get(type().uniRef50ClusterId);}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -324,6 +327,15 @@ public final class Protein <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, R
 	}
 	public Optional<Stream<GeneLocation<I, RV, RVT, RE, RET>>> proteinGeneLocation_outV(){
 		return outManyOptionalV(graph().ProteinGeneLocation());
+	}
+
+	// proteinGeneName
+	// outgoing
+	public Optional<Stream<ProteinGeneName<I, RV, RVT, RE, RET>>> proteinGeneName_out(){
+		return outManyOptional(graph().ProteinGeneName());
+	}
+	public Optional<Stream<GeneName<I, RV, RVT, RE, RET>>> proteinGeneName_outV(){
+		return outManyOptionalV(graph().ProteinGeneName());
 	}
 
 	// proteinProteinInteraction

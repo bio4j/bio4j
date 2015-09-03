@@ -2312,6 +2312,9 @@ public abstract class UniProtGraph<
 		public final mass mass = new mass();
 		public final version version = new version();
 		public final length length = new length();
+		public final uniRef100ClusterId uniRef100ClusterId = new uniRef100ClusterId();
+		public final uniRef90ClusterId uniRef90ClusterId = new uniRef90ClusterId();
+		public final uniRef50ClusterId uniRef50ClusterId = new uniRef50ClusterId();
 
 
         public ProteinType(RVT raw) {
@@ -2436,6 +2439,39 @@ public abstract class UniProtGraph<
 
 			public Class<Integer> valueClass() {
 				return Integer.class;
+			}
+		}
+		public final class uniRef100ClusterId
+				extends
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef100ClusterId, String> {
+			public uniRef100ClusterId() {
+				super(ProteinType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class uniRef90ClusterId
+				extends
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef90ClusterId, String> {
+			public uniRef90ClusterId() {
+				super(ProteinType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
+			}
+		}
+		public final class uniRef50ClusterId
+				extends
+				UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef50ClusterId, String> {
+			public uniRef50ClusterId() {
+				super(ProteinType.this);
+			}
+
+			public Class<String> valueClass() {
+				return String.class;
 			}
 		}
 
