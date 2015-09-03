@@ -10,9 +10,9 @@ package com.bio4j.model.go.edges.goSlims;
 //   @Override public default Type type() { return TYPE; }
 
 //   public static enum Type implements GoSlim.Type<PlantSlim, PlantSlim.Type> {
-    
-//     plantSlim;
+  
+//   plantSlim;
 
-//     @Override public Type value() { return plantSlim; }
+//   @Override public Type value() { return plantSlim; }
 //   }
 // }

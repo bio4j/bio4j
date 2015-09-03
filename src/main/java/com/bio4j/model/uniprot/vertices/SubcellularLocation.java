@@ -11,56 +11,56 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class SubcellularLocation <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniProtVertex<
-		SubcellularLocation<I, RV, RVT, RE, RET>,
-		UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
-		I, RV, RVT, RE, RET
-		> {
+  extends UniProtGraph.UniProtVertex<
+  SubcellularLocation<I, RV, RVT, RE, RET>,
+  UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
+  I, RV, RVT, RE, RET
+  > {
 
-	public SubcellularLocation(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType type) {
-		super(vertex, type);
-	}
+  public SubcellularLocation(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType type) {
+  super(vertex, type);
+  }
 
-	@Override
-	public SubcellularLocation<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
+  @Override
+  public SubcellularLocation<I, RV, RVT, RE, RET> self() {
+  return this;
+  }
 
-	// properties
-	public String name() {
-		return get(type().name);
-	}
+  // properties
+  public String name() {
+  return get(type().name);
+  }
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-	// relationships
+  // relationships
 
-	// proteinSubcellularLocation
-	// ingoing
-	public Stream<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_in(){
-		return inMany(graph().ProteinSubcellularLocation());
-	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinSubcellularLocation_inV(){
-		return inManyV(graph().ProteinSubcellularLocation());
-	}
+  // proteinSubcellularLocation
+  // ingoing
+  public Stream<ProteinSubcellularLocation<I, RV, RVT, RE, RET>> proteinSubcellularLocation_in(){
+  return inMany(graph().ProteinSubcellularLocation());
+  }
+  public Stream<Protein<I, RV, RVT, RE, RET>> proteinSubcellularLocation_inV(){
+  return inManyV(graph().ProteinSubcellularLocation());
+  }
 
-	// subcellularLocationParent
-	// ingoing
-	public Stream<SubcellularLocationParent<I, RV, RVT, RE, RET>> subcellularLocationParent_in(){
-		return inMany(graph().SubcellularLocationParent());
-	}
-	public Stream<SubcellularLocation<I, RV, RVT, RE, RET>> subcellularLocationParent_inV(){
-		return inManyV(graph().SubcellularLocationParent());
-	}
+  // subcellularLocationParent
+  // ingoing
+  public Stream<SubcellularLocationParent<I, RV, RVT, RE, RET>> subcellularLocationParent_in(){
+  return inMany(graph().SubcellularLocationParent());
+  }
+  public Stream<SubcellularLocation<I, RV, RVT, RE, RET>> subcellularLocationParent_inV(){
+  return inManyV(graph().SubcellularLocationParent());
+  }
 
-	// subcellularLocationParent
-	// outgoing
-	public SubcellularLocationParent<I, RV, RVT, RE, RET> subcellularLocationParent_out(){
-		return outOne(graph().SubcellularLocationParent());
-	}
-	public SubcellularLocation<I, RV, RVT, RE, RET> subcellularLocationParent_outV(){
-		return outOneV(graph().SubcellularLocationParent());
-	}
+  // subcellularLocationParent
+  // outgoing
+  public SubcellularLocationParent<I, RV, RVT, RE, RET> subcellularLocationParent_out(){
+  return outOne(graph().SubcellularLocationParent());
+  }
+  public SubcellularLocation<I, RV, RVT, RE, RET> subcellularLocationParent_outV(){
+  return outOneV(graph().SubcellularLocationParent());
+  }
 
 
 }

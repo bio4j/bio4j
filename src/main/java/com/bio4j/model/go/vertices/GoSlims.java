@@ -7,13 +7,13 @@ public final class GoSlims<I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT,RE,RET>
 extends GoGraph.GoVertex<
   GoSlims<I,RV,RVT,RE,RET>,
   GoGraph<I,RV,RVT,RE,RET>.GoSlimsType,
-  I,RV,RVT,RE,RET  
-> 
+  I,RV,RVT,RE,RET
+>
 {
 
   public GoSlims(RV vertex, GoGraph<I,RV,RVT,RE,RET>.GoSlimsType type) {
 
-    super(vertex, type);
+  super(vertex, type);
   }
 
   @Override
@@ -44,11 +44,11 @@ extends GoGraph.GoVertex<
 //  * Relationships into this singleton node represent GO Slims.
 //  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
 //  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
- 
+
 // public interface GoSlims <
 //   N extends GoSlims<N,NT>,
 //   NT extends GoSlimsType<N,NT>
-// > 
+// >
 //   extends Node<N,NT>
 // {
 

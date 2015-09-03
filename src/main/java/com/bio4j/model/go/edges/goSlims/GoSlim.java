@@ -18,17 +18,17 @@ package com.bio4j.model.go.edges.goSlims;
 //   @Override public GoSlims target();
 
 //   public interface Type <
-//     GSO extends Relationship<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>,
-//     GSOT extends Enum<GSOT> & Relationship.Type<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>
+//   GSO extends Relationship<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>,
+//   GSOT extends Enum<GSOT> & Relationship.Type<Term,TermType, GSO,GSOT, GoSlims,GoSlimsType>
 //   > 
 //   extends Relationship.Type.ManyToOne <
-//     Term, TermType,
-//     GSO, GSOT,
-//     GoSlims, GoSlimsType
+//   Term, TermType,
+//   GSO, GSOT,
+//   GoSlims, GoSlimsType
 //   >
 //   {
 
-//     @Override public default TermType sourceType() { return Term.TYPE; }
-//     @Override public default GoSlimsType targetType() { return GoSlims.TYPE; }
+//   @Override public default TermType sourceType() { return Term.TYPE; }
+//   @Override public default GoSlimsType targetType() { return GoSlims.TYPE; }
 //   }
 // }

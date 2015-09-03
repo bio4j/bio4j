@@ -10,38 +10,38 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class Journal <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniProtVertex<
-		Journal<I, RV, RVT, RE, RET>,
-		UniProtGraph<I, RV, RVT, RE, RET>.JournalType,
-		I, RV, RVT, RE, RET
-		> {
+  extends UniProtGraph.UniProtVertex<
+  Journal<I, RV, RVT, RE, RET>,
+  UniProtGraph<I, RV, RVT, RE, RET>.JournalType,
+  I, RV, RVT, RE, RET
+  > {
 
-	public Journal(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.JournalType type) {
-		super(vertex, type);
-	}
+  public Journal(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.JournalType type) {
+  super(vertex, type);
+  }
 
-	@Override
-	public Journal<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
+  @Override
+  public Journal<I, RV, RVT, RE, RET> self() {
+  return this;
+  }
 
-	// properties
-	public String name() {
-		return get(type().name);
-	}
+  // properties
+  public String name() {
+  return get(type().name);
+  }
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-	// relationships
+  // relationships
 
-	// articleJournal
-	// ingoing
-	public Stream<ArticleJournal<I, RV, RVT, RE, RET>> articleJournal_in(){
-		return inMany(graph().ArticleJournal());
-	}
-	public Stream<Article<I, RV, RVT, RE, RET>> articleJournal_inV(){
-		return inManyV(graph().ArticleJournal());
-	}
+  // articleJournal
+  // ingoing
+  public Stream<ArticleJournal<I, RV, RVT, RE, RET>> articleJournal_in(){
+  return inMany(graph().ArticleJournal());
+  }
+  public Stream<Article<I, RV, RVT, RE, RET>> articleJournal_inV(){
+  return inManyV(graph().ArticleJournal());
+  }
 
 
 }
