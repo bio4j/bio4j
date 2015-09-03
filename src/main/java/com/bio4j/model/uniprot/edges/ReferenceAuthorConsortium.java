@@ -9,21 +9,21 @@ import com.bio4j.angulillos.UntypedGraph;
  * Created by ppareja on 9/9/2014.
  */
 public final class ReferenceAuthorConsortium <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends
-		UniProtGraph.UniProtEdge<
-				Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-				ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
-				Consortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType,
-				I, RV, RVT, RE, RET
-				> {
+  extends
+  UniProtGraph.UniProtEdge<
+    Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+    ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
+    Consortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType,
+    I, RV, RVT, RE, RET
+    > {
 
-	public ReferenceAuthorConsortium(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType type) {
+  public ReferenceAuthorConsortium(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType type) {
 
-		super(edge, type);
-	}
+  super(edge, type);
+  }
 
-	@Override
-	public ReferenceAuthorConsortium<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
+  @Override
+  public ReferenceAuthorConsortium<I, RV, RVT, RE, RET> self() {
+  return this;
+  }
 }

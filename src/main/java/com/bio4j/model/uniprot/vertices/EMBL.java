@@ -10,44 +10,44 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class EMBL <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniProtGraph.UniProtVertex<
-		EMBL<I, RV, RVT, RE, RET>,
-		UniProtGraph<I, RV, RVT, RE, RET>.EMBLType,
-		I, RV, RVT, RE, RET
-		> {
+  extends UniProtGraph.UniProtVertex<
+  EMBL<I, RV, RVT, RE, RET>,
+  UniProtGraph<I, RV, RVT, RE, RET>.EMBLType,
+  I, RV, RVT, RE, RET
+  > {
 
-	public EMBL(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.EMBLType type) {
-		super(vertex, type);
-	}
+  public EMBL(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.EMBLType type) {
+  super(vertex, type);
+  }
 
-	@Override
-	public EMBL<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
+  @Override
+  public EMBL<I, RV, RVT, RE, RET> self() {
+  return this;
+  }
 
-	// properties
-	public String id() {
-		return get(type().id);
-	}
-	public String proteinSequenceId() {
-		return get(type().proteinSequenceId);
-	}
-	public String moleculeType() {
-		return get(type().moleculeType);
-	}
+  // properties
+  public String id() {
+  return get(type().id);
+  }
+  public String proteinSequenceId() {
+  return get(type().proteinSequenceId);
+  }
+  public String moleculeType() {
+  return get(type().moleculeType);
+  }
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-	// relationships
+  // relationships
 
-	// proteinEMBL
-	// ingoing
-	public Stream<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_in(){
-		return inMany(graph().ProteinEMBL());
-	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> proteinEMBL_inV(){
-		return inManyV(graph().ProteinEMBL());
-	}
+  // proteinEMBL
+  // ingoing
+  public Stream<ProteinEMBL<I, RV, RVT, RE, RET>> proteinEMBL_in(){
+  return inMany(graph().ProteinEMBL());
+  }
+  public Stream<Protein<I, RV, RVT, RE, RET>> proteinEMBL_inV(){
+  return inManyV(graph().ProteinEMBL());
+  }
 
 
 }

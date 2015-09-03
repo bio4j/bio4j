@@ -1,0 +1,16 @@
+This is the second release candidate for `0.12`, which is going to be the base for `1.0`. We are in the process of testing a first full data import with this code and the corresponding one in [bio4j/bio4j-titan](https://github.com/bio4j/bio4j-titan). Everyone should update to this release from `0.12.0-RC1`.
+
+### Fixes
+
+UniRef related:
+
+- #84 a bug in the UniRef import (the cluster type was checked erroneously)
+- #90 id in ImportUniRef logs was wrong
+- #88 more null safety in ImportUniRef
+- #97 The representant accession of the cluster was not included in the members array property
+
+UniProt:
+
+- #98 `proteinGeneName` was missing from `Protein`
+
+We also improved documentation a bit, preparing for what would be done before `1.0`. Another mostly cosmetic change is moving from tabs to spaces, as (among other things) the code displays awfully in github.

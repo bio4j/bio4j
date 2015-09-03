@@ -13,54 +13,54 @@ import java.util.stream.Stream;
  * Created by ppareja on 7/23/2014.
  */
 public final class UniRef50Cluster <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-		extends UniRefGraph.UniRefVertex<
-		UniRef50Cluster<I, RV, RVT, RE, RET>,
-		UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
-		I, RV, RVT, RE, RET
-		> {
+  extends UniRefGraph.UniRefVertex<
+  UniRef50Cluster<I, RV, RVT, RE, RET>,
+  UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType,
+  I, RV, RVT, RE, RET
+  > {
 
-	public UniRef50Cluster(RV vertex, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType type) {
-		super(vertex, type);
-	}
+  public UniRef50Cluster(RV vertex, UniRefGraph<I, RV, RVT, RE, RET>.UniRef50ClusterType type) {
+  super(vertex, type);
+  }
 
-	@Override
-	public UniRef50Cluster<I, RV, RVT, RE, RET> self() {
-		return this;
-	}
+  @Override
+  public UniRef50Cluster<I, RV, RVT, RE, RET> self() {
+  return this;
+  }
 
-	// properties
-	public String id() {
-		return get(type().id);
-	}
-	public String name() {
-		return get(type().name);
-	}
-	public String updatedDate() {
-		return get(type().updatedDate);
-	}
-	public String representantAccession() { return get(type().representantAccession);}
-	public String[] members() { return get(type().members);}
+  // properties
+  public String id() {
+  return get(type().id);
+  }
+  public String name() {
+  return get(type().name);
+  }
+  public String updatedDate() {
+  return get(type().updatedDate);
+  }
+  public String representantAccession() { return get(type().representantAccession);}
+  public String[] members() { return get(type().members);}
 
-	//////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////
 
-	// relationships
-	//uniRef50Representant
-	// ingoing
-	public UniRef50Representant<I, RV, RVT, RE, RET> uniRef50Representant_in(){
-		return inOne(graph().uniProtUniRefGraph().UniRef50Representant());
-	}
-	public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inV(){
-		return inOneV(graph().uniProtUniRefGraph().UniRef50Representant());
-	}
+  // relationships
+  //uniRef50Representant
+  // ingoing
+  public UniRef50Representant<I, RV, RVT, RE, RET> uniRef50Representant_in(){
+  return inOne(graph().uniProtUniRefGraph().UniRef50Representant());
+  }
+  public Protein<I, RV, RVT, RE, RET> uniRef50Representant_inV(){
+  return inOneV(graph().uniProtUniRefGraph().UniRef50Representant());
+  }
 
-	//uniRef50Member
-	// ingoing
-	public Stream<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
-		return inMany(graph().uniProtUniRefGraph().UniRef50Member());
-	}
-	public Stream<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inV(){
-		return inManyV(graph().uniProtUniRefGraph().UniRef50Member());
-	}
+  //uniRef50Member
+  // ingoing
+  public Stream<UniRef50Member<I, RV, RVT, RE, RET>> uniRef50Member_in(){
+  return inMany(graph().uniProtUniRefGraph().UniRef50Member());
+  }
+  public Stream<Protein<I, RV, RVT, RE, RET>> uniRef50Member_inV(){
+  return inManyV(graph().uniProtUniRefGraph().UniRef50Member());
+  }
 
 
 
