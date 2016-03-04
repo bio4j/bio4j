@@ -93,7 +93,6 @@ public abstract class NCBITaxonomyGraph<
 
   public final id id = new id();
   public final name name = new name();
-  public final comment comment = new comment();
   public final taxonomicRank taxonomicRank = new taxonomicRank();
 
   public NCBITaxonType(RVT raw) {
@@ -126,18 +125,6 @@ public abstract class NCBITaxonomyGraph<
     extends
     NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, name, String> {
     public name() {
-    super(NCBITaxonType.this);
-    }
-
-    public Class<String> valueClass() {
-    return String.class;
-    }
-  }
-
-  public final class comment
-    extends
-    NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, comment, String> {
-    public comment() {
     super(NCBITaxonType.this);
     }
 
