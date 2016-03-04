@@ -104,23 +104,23 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
       String[] columns = line.split("\\|");
 
-      if (columns[columns.length - 1].trim().equals("scientific name")) {
+      if (columns[3].trim().equals("scientific name")) {
 
-      String taxId = columns[0].trim();
-      String scientificNameSt = columns[1].trim();
+        String taxId = columns[0].trim();
+        String scientificNameSt = columns[1].trim();
 
-      Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(taxId);
-      if(optionalTaxon.isPresent()){
-        NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
-        taxon.set(ncbiTaxonomyGraph.NCBITaxon().scientificName, scientificNameSt);
-      }else{
-        Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
-      }
+        Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(taxId);
+        if(optionalTaxon.isPresent()){
+          NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
+          taxon.set(ncbiTaxonomyGraph.NCBITaxon().scientificName, scientificNameSt);
+        }else{
+          Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
+        }
 
-      linesCounter++;
-      if((linesCounter % limitForTransaction) == 0){
-        ncbiTaxonomyGraph.raw().commit();
-      }
+        linesCounter++;
+        if((linesCounter % limitForTransaction) == 0){
+          ncbiTaxonomyGraph.raw().commit();
+        }
 
       }
 
