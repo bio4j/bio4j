@@ -41,10 +41,6 @@ public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
   return get(type().comment);
   }
 
-  public String scientificName() {
-  return get(type().scientificName);
-  }
-
   public String taxonomicRank() {
   return get(type().taxonomicRank);
   }

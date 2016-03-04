@@ -107,12 +107,12 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
       if (columns[3].trim().equals("scientific name")) {
 
         String taxId = columns[0].trim();
-        String scientificNameSt = columns[1].trim();
+        String taxName = columns[1].trim();
 
         Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(taxId);
         if(optionalTaxon.isPresent()){
           NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
-          taxon.set(ncbiTaxonomyGraph.NCBITaxon().scientificName, scientificNameSt);
+          taxon.set(ncbiTaxonomyGraph.NCBITaxon().name, taxName);
         }else{
           Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
         }
