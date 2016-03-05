@@ -1,13 +1,18 @@
-# Bio4j
+# Bio4j bioinformatics graph data platform
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bio4j/bio4j?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![](https://travis-ci.org/bio4j/bio4j.svg?branch=master)](https://travis-ci.org/bio4j/bio4j)
+[![](http://github-release-version.herokuapp.com/github/bio4j/bio4j/release.svg)](https://github.com/bio4j/bio4j/releases/latest)
+[![](https://img.shields.io/badge/license-AGPLv3-blue.svg)](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-%28agpl-3.0%29)
+[![](https://img.shields.io/badge/contact-gitter_chat-dd1054.svg)](https://gitter.im/bio4j/bio4j)
 
-Bio4j is a bioinformatics graph data platform, integrating most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/). 
 
-Bio4j provides a completely new and powerful **framework for protein related information querying and management**. 
+Bio4j is a bioinformatics graph data platform, integrating most data available in [**Uniprot KB**](http://www.uniprot.org/) (SwissProt + Trembl), [**Gene Ontology**](http://www.geneontology.org/) (GO), [**UniRef**](http://www.ebi.ac.uk/uniref/) (50,90,100), [**NCBI Taxonomy**](http://www.ncbi.nlm.nih.gov/Taxonomy/), and [**Expasy Enzyme DB**](http://enzyme.expasy.org/).
+
+Bio4j provides a completely new and powerful **framework for protein related information querying and management**.
 The use of a graph-based data model makes possible to store and query data in a way that semantically represents its own structure. On the contrary, traditional relational models and databases must flatten the data they represent into tables, creating _artificial_ ids in order to connect the different tuples; which can in some cases eventually lead to domain models that have almost nothing to do with the actual structure of data.
 
 ## Project structure and overview
+
 <!-- TODO: add a diagram here, I think it would help -->
 
 Bio4j can look a bit intimidating at first, with all those repositories with kind of similar names; here you have a guided tour around:
@@ -20,10 +25,10 @@ The API, based on [bio4j/angulillos](https://github.com/bio4j/angulillos), lets 
 
 ``` Java
 protein.uniref50Member_outV()
-  .map( 
+  .map(
     UniRef50Cluster::uniRef50Member_inV
   )
-  .map( 
+  .map(
     prts -> prts.map(
       Protein::goAnnotation_outV
     )
@@ -51,7 +56,9 @@ In [bio4j/bio4j-titan](https://github.com/bio4j/bio4j-titan) you will find a [Ti
 
 ## Documentation
 
-_TODO_
+* General docs: [docs/](docs/)
+* Code docs: [docs/src/](docs/src/main/java/com/bio4j/model/)
+* API Docs: [v0.12.0](http://bio4j.com/bio4j/docs/api/0.12.0/)
 
 <!-- * [Getting started](docs/getting-started.md)
 * [Domain model](docs/domain-model.md)
@@ -61,8 +68,8 @@ _TODO_
   - [Auxiliary relationships](docs/auxiliary-relationships.md)
   - [Node indexing](docs/node-indexing.md)
 * [FAQ](docs/faq.md)
-* API Docs: [v0.12.0-RC1](http://bio4j.com/bio4j/docs/api/0.12.0-RC1)
 * [Examples](docs/examples.md) -->
+
 
 ## Community and contact
 
