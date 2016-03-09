@@ -30,17 +30,15 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 
-/**
- * Imports Expasy Enzyme DB into Bio4j
- *
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
+/*
+  ## ENZYME data import
+
+  This class will import [ENZYME](http://enzyme.expasy.org/) into Bio4j assuming an implementation of the ENZYME Bio4j graph.
+*/
 public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
   /*
     ### ENZYME raw data
-
-    [ENZYME]()
 
     This code assumes a fixed-width-like format, corresponding to that of the `.dat` distribution of ENZYME data:
 
@@ -341,7 +339,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
           statsBuff.close();
         }
         catch (Exception e) {
-          
+
           logger.log(Level.SEVERE, e.getMessage());
           StackTraceElement[] trace = e.getStackTrace();
 
