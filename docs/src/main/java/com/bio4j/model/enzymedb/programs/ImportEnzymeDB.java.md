@@ -152,6 +152,8 @@ DR   P39450, FRMA_PHODP ;  Q3Z550, FRMA_SHISS ;  P73138, FRMA_SYNY3 ;
 DR   P71017, GBSB_BACSU ;  P33010, TERPD_PSESP;  O07737, Y1895_MYCTU;
 ```
 
+Again, these are the tags identifying the data found in each line:
+
 
 ```java
   public static final String IDENTIFICATION_LINE_CODE               = "ID";
