@@ -55,7 +55,7 @@ This format is described in the ENZYME documentation:
 
 A sample entry looks like this:
 
-```
+``` txt
 ID   1.1.1.1
 DE   Alcohol dehydrogenase.
 AN   Aldehyde reductase.

@@ -50,7 +50,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 
     A sample entry looks like this:
 
-    ```
+    ``` txt
     ID   1.1.1.1
     DE   Alcohol dehydrogenase.
     AN   Aldehyde reductase.
