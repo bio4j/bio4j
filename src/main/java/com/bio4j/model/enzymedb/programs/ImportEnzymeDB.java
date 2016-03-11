@@ -202,7 +202,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
 
         System.out.println("Reading file "+inFile.toString());
 
-        while( (line = reader.readLine()) != null ) {
+        while((line = reader.readLine()) != null) {
 
           if(line.startsWith(IDENTIFICATION_LINE_CODE)) {
             enzymeFound = true;
@@ -210,7 +210,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
           }
           else if(enzymeFound) {
 
-            if( line.startsWith(OFFICIAL_NAME_LINE_CODE) ) {
+            if(line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
 
               officialName += line.substring(5).trim();
 
@@ -290,7 +290,7 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
         /* close the file reader */
         reader.close();
       }
-      catch (Exception e) {
+      catch(Exception e) {
 
         logger.log(Level.SEVERE, e.getMessage());
         StackTraceElement[] trace = e.getStackTrace();
@@ -323,12 +323,12 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
           //---closing stats writer---
           statsBuff.close();
         }
-        catch (Exception e) {
+        catch(Exception e) {
 
           logger.log(Level.SEVERE, e.getMessage());
           StackTraceElement[] trace = e.getStackTrace();
 
-          for (StackTraceElement stackTraceElement : trace) {
+          for(StackTraceElement stackTraceElement: trace) {
             logger.log(Level.SEVERE, stackTraceElement.toString());
           }
         }

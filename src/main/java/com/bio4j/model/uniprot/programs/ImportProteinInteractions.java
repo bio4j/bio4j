@@ -3,6 +3,9 @@ package com.bio4j.model.uniprot.programs;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
+
+import static com.bio4j.model.uniprot.programs.XMLConstants.*;
+
 import com.bio4j.angulillos.UntypedGraph;
 import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
@@ -21,16 +24,6 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
   private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
   private static FileHandler fh;
-
-  public static final String ENTRY_TAG_NAME = "entry";
-  public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
-
-  public static final String COMMENT_TAG_NAME = "comment";
-  public static final String COMMENT_TYPE_ATTRIBUTE = "type";
-  public static final String LOCATION_TAG_NAME = "location";
-  public static final String COMMENT_TEXT_TAG_NAME = "text";
-
-  public static final String COMMENT_TYPE_INTERACTION = "interaction";
 
   protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
@@ -116,16 +109,16 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           String organismsDifferSt = "";
           String experimentsSt = "";
           if (intactId1St == null) {
-          intactId1St = "";
+            intactId1St = "";
           }
           if (intactId2St == null) {
-          intactId2St = "";
+            intactId2St = "";
           }
           if (organismsDiffer != null) {
-          organismsDifferSt = organismsDiffer.getText();
+            organismsDifferSt = organismsDiffer.getText();
           }
           if (experiments != null) {
-          experimentsSt = experiments.getText();
+            experimentsSt = experiments.getText();
           }
 
           //----now we try to retrieve the interactant 2 accession--
@@ -135,20 +128,20 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
           Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
 
-          if(!protein2Optional.isPresent()){
+          if(!protein2Optional.isPresent()) {
 
             Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
 
-            if(isoformOptional.isPresent()){
+            if(isoformOptional.isPresent()) {
 
-            ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-            proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-            proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-            proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-            proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
+              ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
             }
-
-          }else{
+          }
+          else {
 
             ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
             proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
