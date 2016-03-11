@@ -5,7 +5,11 @@ package com.bio4j.model.uniprot.programs;
 import com.bio4j.model.uniprot.UniProtGraph;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
+
+import static com.bio4j.model.uniprot.programs.XMLConstants.*;
+
 import com.bio4j.angulillos.UntypedGraph;
+
 import com.ohnosequences.xml.api.model.XMLElement;
 import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
 import org.jdom2.Element;
@@ -19,133 +23,66 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
+
 public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+
+  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
   private static final Logger logger = Logger.getLogger("ImportUniProtVertices");
   private static FileHandler fh;
 
-  public static final String ENTRY_TAG_NAME = "entry";
-  public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
-  public static final String ENTRY_NAME_TAG_NAME = "name";
-  public static final String ENTRY_MODIFIED_DATE_ATTRIBUTE = "modified";
-  public static final String ENTRY_CREATED_DATE_ATTRIBUTE = "created";
-  public static final String ENTRY_VERSION_ATTRIBUTE = "version";
-  public static final String ENTRY_DATASET_ATTRIBUTE = "dataset";
-  public static final String ENTRY_SEQUENCE_TAG_NAME = "sequence";
-
-  public static final String KEYWORD_TAG_NAME = "keyword";
-  public static final String KEYWORD_ID_ATTRIBUTE = "id";
-
-  public static final String REFERENCE_TAG_NAME = "reference";
-  public static final String CITATION_TAG_NAME = "citation";
-
-  public static final String GENE_LOCATION_TAG_NAME = "geneLocation";
-
-  public static final String ORGANISM_TAG_NAME = "organism";
-  public static final String ORGANISM_NAME_TAG_NAME = "name";
-  public static final String ORGANISM_NAME_TYPE_ATTRIBUTE = "type";
-  public static final String ORGANISM_SCIENTIFIC_NAME_TYPE = "scientific";
-  public static final String ORGANISM_COMMON_NAME_TYPE = "common";
-  public static final String ORGANISM_SYNONYM_NAME_TYPE = "synonym";
-
-  public static final String DB_REFERENCE_TAG_NAME = "dbReference";
-  public static final String DB_REFERENCE_TYPE_ATTRIBUTE = "type";
-  public static final String DB_REFERENCE_ID_ATTRIBUTE = "id";
-  public static final String DB_REFERENCE_VALUE_ATTRIBUTE = "value";
-  public static final String DB_REFERENCE_PROPERTY_TAG_NAME = "property";
-
-  public static final String INTERPRO_DB_REFERENCE_TYPE = "InterPro";
-  public static final String INTERPRO_ENTRY_NAME = "entry name";
-
-  public static final String EVIDENCE_TYPE_ATTRIBUTE = "evidence";
-
-  public static final String SEQUENCE_MASS_ATTRIBUTE = "mass";
-  public static final String SEQUENCE_LENGTH_ATTRIBUTE = "length";
-  public static final String PROTEIN_TAG_NAME = "protein";
-  public static final String PROTEIN_RECOMMENDED_NAME_TAG_NAME = "recommendedName";
-  public static final String PROTEIN_FULL_NAME_TAG_NAME = "fullName";
-  public static final String PROTEIN_SHORT_NAME_TAG_NAME = "shortName";
-  public static final String GENE_TAG_NAME = "gene";
-  public static final String GENE_NAME_TAG_NAME = "name";
-  public static final String COMMENT_TAG_NAME = "comment";
-  public static final String COMMENT_TYPE_ATTRIBUTE = "type";
-  public static final String COMMENT_ALTERNATIVE_PRODUCTS_TYPE = "alternative products";
-  public static final String COMMENT_SEQUENCE_CAUTION_TYPE = "sequence caution";
-  public static final String SUBCELLULAR_LOCATION_TAG_NAME = "subcellularLocation";
-  public static final String LOCATION_TAG_NAME = "location";
-  public static final String COMMENT_TEXT_TAG_NAME = "text";
-  public static final String FEATURE_TAG_NAME = "feature";
-  public static final String FEATURE_TYPE_ATTRIBUTE = "type";
-  public static final String FEATURE_DESCRIPTION_ATTRIBUTE = "description";
-  public static final String STATUS_ATTRIBUTE = "status";
-  public static final String EVIDENCE_ATTRIBUTE = "evidence";
-
-  public static final String THESIS_CITATION_TYPE = "thesis";
-  public static final String PATENT_CITATION_TYPE = "patent";
-  public static final String SUBMISSION_CITATION_TYPE = "submission";
-  public static final String ARTICLE_CITATION_TYPE = "journal article";
-  public static final String ONLINE_ARTICLE_CITATION_TYPE = "online journal article";
-  public static final String BOOK_CITATION_TYPE = "book";
-
-  public static final String COMMENT_TYPE_DISEASE = "disease";
-  public static final String COMMENT_TYPE_SUBCELLULAR_LOCATION = "subcellular location";
-
   protected SimpleDateFormat dateFormat;
 
-  //---------------Sets where IDs already stored in the DB are temporarily saved-----------------
-  HashSet<String> alternativeProductTypeNameSet;
-  HashSet<String> articleTitleNameSet;
-  HashSet<String> bookNameSet;
-  HashSet<String> cityNameSet;
-  HashSet<String> commentTypeNameSet;
-  HashSet<String> consortiumNameSet;
-  HashSet<String> countryNameSet;
-  HashSet<String> datasetNameSet;
-  HashSet<String> dbNameSet;
-  HashSet<String> diseaseIdSet;
-  HashSet<String> eMBLIdSet;
-  HashSet<String> ensemblIdSet;
-  HashSet<String> featureTypeNameSet;
-  HashSet<String> geneLocationNameSet;
-  HashSet<String> geneNameSet;
-  HashSet<String> instituteNameSet;
-  HashSet<String> interproIdSet;
-  HashSet<String> isoformIdSet;
-  HashSet<String> journalNameSet;
-  HashSet<String> keggIdSet;
-  HashSet<String> keywordIdSet;
-  HashSet<String> onlineArticleTitleSet;
-  HashSet<String> onlineJournalNameSet;
-  HashSet<String> organismScientificNameSet;
-  HashSet<String> patentNumberSet;
-  HashSet<String> personNameSet;
-  HashSet<String> pfamIdSet;
-  HashSet<String> pIRIdSet;
-  HashSet<String> publisherNameSet;
-  HashSet<String> pubmedIdSet;
-  HashSet<String> reactomeTermIdSet;
-  HashSet<String> refSeqIdSet;
-  HashSet<String> sequenceCautionNameSet;
-  HashSet<String> subcellularLocationNameSet;
-  HashSet<String> submissionTitleSet;
-  HashSet<String> taxonNameSet;
-  HashSet<String> thesisTitleSet;
-  HashSet<String> uniGeneIdSet;
-
-  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  final HashSet<String> alternativeProductTypeNameSet = new HashSet<String>();
+  final HashSet<String> articleTitleNameSet           = new HashSet<String>();
+  final HashSet<String> bookNameSet                   = new HashSet<String>();
+  final HashSet<String> cityNameSet                   = new HashSet<String>();
+  final HashSet<String> commentTypeNameSet            = new HashSet<String>();
+  final HashSet<String> consortiumNameSet             = new HashSet<String>();
+  final HashSet<String> countryNameSet                = new HashSet<String>();
+  final HashSet<String> datasetNameSet                = new HashSet<String>();
+  final HashSet<String> dbNameSet                     = new HashSet<String>();
+  final HashSet<String> diseaseIdSet                  = new HashSet<String>();
+  final HashSet<String> eMBLIdSet                     = new HashSet<String>();
+  final HashSet<String> ensemblIdSet                  = new HashSet<String>();
+  final HashSet<String> featureTypeNameSet            = new HashSet<String>();
+  final HashSet<String> geneLocationNameSet           = new HashSet<String>();
+  final HashSet<String> geneNameSet                   = new HashSet<String>();
+  final HashSet<String> instituteNameSet              = new HashSet<String>();
+  final HashSet<String> interproIdSet                 = new HashSet<String>();
+  final HashSet<String> isoformIdSet                  = new HashSet<String>();
+  final HashSet<String> journalNameSet                = new HashSet<String>();
+  final HashSet<String> keggIdSet                     = new HashSet<String>();
+  final HashSet<String> keywordIdSet                  = new HashSet<String>();
+  final HashSet<String> onlineArticleTitleSet         = new HashSet<String>();
+  final HashSet<String> onlineJournalNameSet          = new HashSet<String>();
+  final HashSet<String> organismScientificNameSet     = new HashSet<String>();
+  final HashSet<String> patentNumberSet               = new HashSet<String>();
+  final HashSet<String> personNameSet                 = new HashSet<String>();
+  final HashSet<String> pfamIdSet                     = new HashSet<String>();
+  final HashSet<String> pIRIdSet                      = new HashSet<String>();
+  final HashSet<String> publisherNameSet              = new HashSet<String>();
+  final HashSet<String> pubmedIdSet                   = new HashSet<String>();
+  final HashSet<String> reactomeTermIdSet             = new HashSet<String>();
+  final HashSet<String> refSeqIdSet                   = new HashSet<String>();
+  final HashSet<String> sequenceCautionNameSet        = new HashSet<String>();
+  final HashSet<String> subcellularLocationNameSet    = new HashSet<String>();
+  final HashSet<String> submissionTitleSet            = new HashSet<String>();
+  final HashSet<String> taxonNameSet                  = new HashSet<String>();
+  final HashSet<String> thesisTitleSet                = new HashSet<String>();
+  final HashSet<String> uniGeneIdSet                  = new HashSet<String>();
 
   protected void importUniProtVertices(String[] args) {
 
   if (args.length != 4) {
+
     System.out.println("This program expects the following parameters: \n"
       + "1. UniProt xml filename \n"
       + "2. Bio4j DB folder \n"
       + "3. Config XML file \n"
       + "4. DB properties file (.properties)");
-  } else {
+  }
+  else {
 
     long initTime = System.nanoTime();
 
@@ -156,49 +93,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     String currentAccessionId = "";
 
-    //-------creating graph handlers---------------------
     UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
-
-    //------Initializing hash sets---------------
-    alternativeProductTypeNameSet = new HashSet<String>();
-    articleTitleNameSet = new HashSet<String>();
-    bookNameSet = new HashSet<String>();
-    cityNameSet = new HashSet<String>();
-    commentTypeNameSet = new HashSet<String>();
-    consortiumNameSet = new HashSet<String>();
-    countryNameSet = new HashSet<String>();
-    datasetNameSet = new HashSet<String>();
-    dbNameSet = new HashSet<String>();
-    diseaseIdSet = new HashSet<String>();
-    eMBLIdSet = new HashSet<String>();
-    ensemblIdSet = new HashSet<String>();
-    featureTypeNameSet = new HashSet<String>();
-    geneLocationNameSet = new HashSet<String>();
-    geneNameSet = new HashSet<String>();
-    instituteNameSet = new HashSet<String>();
-    interproIdSet = new HashSet<String>();
-    isoformIdSet = new HashSet<String>();
-    journalNameSet = new HashSet<String>();
-    keggIdSet = new HashSet<String>();
-    keywordIdSet = new HashSet<String>();
-    onlineArticleTitleSet = new HashSet<String>();
-    onlineJournalNameSet = new HashSet<String>();
-    organismScientificNameSet = new HashSet<String>();
-    patentNumberSet = new HashSet<String>();
-    personNameSet = new HashSet<String>();
-    pfamIdSet = new HashSet<String>();
-    pIRIdSet = new HashSet<String>();
-    publisherNameSet = new HashSet<String>();
-    pubmedIdSet = new HashSet<String>();
-    reactomeTermIdSet = new HashSet<String>();
-    refSeqIdSet = new HashSet<String>();
-    sequenceCautionNameSet = new HashSet<String>();
-    subcellularLocationNameSet = new HashSet<String>();
-    submissionTitleSet = new HashSet<String>();
-    taxonNameSet = new HashSet<String>();
-    thesisTitleSet = new HashSet<String>();
-    uniGeneIdSet = new HashSet<String>();
-    //-------------------------------------------------------------------------
 
     BufferedWriter statsBuff = null;
 
@@ -209,528 +104,535 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     try {
 
-    // This block configures the logger with handler and formatter
-    fh = new FileHandler("ImportUniProtVertices" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+      // This block configures the logger with handler and formatter
+      fh = new FileHandler("ImportUniProtVertices" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
 
-    SimpleFormatter formatter = new SimpleFormatter();
-    fh.setFormatter(formatter);
-    logger.addHandler(fh);
-    logger.setLevel(Level.ALL);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 
-    System.out.println("Reading conf file...");
-    BufferedReader reader = new BufferedReader(new FileReader(configFile));
-    String line;
-    StringBuilder stBuilder = new StringBuilder();
-    while ((line = reader.readLine()) != null) {
-      stBuilder.append(line);
-    }
-    reader.close();
-
-    UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
-
-    //---creating writer for stats file-----
-    statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
-
-    reader = new BufferedReader(new FileReader(inFile));
-    StringBuilder entryStBuilder = new StringBuilder();
-
-    while ((line = reader.readLine()) != null) {
-      if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
-
-      while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-        entryStBuilder.append(line);
-        line = reader.readLine();
+      System.out.println("reading configuration file");
+      BufferedReader reader = new BufferedReader(new FileReader(configFile));
+      String line;
+      StringBuilder stBuilder = new StringBuilder();
+      while((line = reader.readLine()) != null) {
+        stBuilder.append(line);
       }
-      //linea final del organism
-      entryStBuilder.append(line);
-      //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
-      XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-      entryStBuilder.delete(0, entryStBuilder.length());
+      reader.close();
 
-      String modifiedDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_MODIFIED_DATE_ATTRIBUTE);
-      String createdDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_CREATED_DATE_ATTRIBUTE);
-      Integer version = Integer.parseInt(entryXMLElem.asJDomElement().getAttributeValue(ENTRY_VERSION_ATTRIBUTE));
+      UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
 
-      String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
-      String nameSt = entryXMLElem.asJDomElement().getChildText(ENTRY_NAME_TAG_NAME);
-      String fullNameSt = getProteinFullName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
-      String shortNameSt = getProteinShortName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
+      //---creating writer for stats file-----
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-      if (shortNameSt == null) {
-        shortNameSt = "";
-      }
-      if (fullNameSt == null) {
-        fullNameSt = "";
-      }
+      reader = new BufferedReader(new FileReader(inFile));
+      StringBuilder entryStBuilder = new StringBuilder();
 
-      currentAccessionId = accessionSt;
+      while((line = reader.readLine()) != null) {
 
-      Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY_SEQUENCE_TAG_NAME);
-      String sequenceSt = sequenceElem.getText();
-      int seqLength = Integer.parseInt(sequenceElem.getAttributeValue(SEQUENCE_LENGTH_ATTRIBUTE));
-      float seqMass = Float.parseFloat(sequenceElem.getAttributeValue(SEQUENCE_MASS_ATTRIBUTE));
+        if(line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
+
+          while(!line.trim().startsWith("</"+ENTRY_TAG_NAME+">")) {
+
+            entryStBuilder.append(line);
+            line = reader.readLine();
+          }
+          entryStBuilder.append(line);
+
+          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          entryStBuilder.delete(0, entryStBuilder.length());
+
+          final String modifiedDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_MODIFIED_DATE_ATTRIBUTE);
+          final String createdDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_CREATED_DATE_ATTRIBUTE);
+          final Integer version = Integer.parseInt(entryXMLElem.asJDomElement().getAttributeValue(ENTRY_VERSION_ATTRIBUTE));
+
+          final String accessionSt  = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+          currentAccessionId = accessionSt;
+
+          final String nameSt       = entryXMLElem.asJDomElement().getChildText(ENTRY_NAME_TAG_NAME);
+
+          String fullNameSt   = getProteinFullName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
+          if(fullNameSt == null) { fullNameSt = ""; }
+
+          String shortNameSt  = getProteinShortName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
+          if(shortNameSt == null) { shortNameSt = ""; }
+
+          final Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY_SEQUENCE_TAG_NAME);
+          final String sequenceSt = sequenceElem.getText();
+          final int seqLength = Integer.parseInt(sequenceElem.getAttributeValue(SEQUENCE_LENGTH_ATTRIBUTE));
+          final float seqMass = Float.parseFloat(sequenceElem.getAttributeValue(SEQUENCE_MASS_ATTRIBUTE));
 
 
-      Protein<I,RV,RVT,RE,RET> protein = graph.addVertex(graph.Protein());
+          Protein<I,RV,RVT,RE,RET> protein = graph.addVertex(graph.Protein());
 
-      protein.set(graph.Protein().modifiedDate, parseDate(modifiedDateSt));
-      protein.set(graph.Protein().createdDate, parseDate(createdDateSt));
-      protein.set(graph.Protein().accession, accessionSt);
-      protein.set(graph.Protein().name, nameSt);
-      protein.set(graph.Protein().fullName, fullNameSt);
-      protein.set(graph.Protein().shortName, shortNameSt);
-      protein.set(graph.Protein().sequence, sequenceSt);
-      protein.set(graph.Protein().length, seqLength);
-      protein.set(graph.Protein().mass, String.valueOf(seqMass));
-      protein.set(graph.Protein().version, version);
+          protein.set(graph.Protein().modifiedDate, parseDate(modifiedDateSt));
+          protein.set(graph.Protein().createdDate, parseDate(createdDateSt));
+          protein.set(graph.Protein().accession, accessionSt);
+          protein.set(graph.Protein().name, nameSt);
+          protein.set(graph.Protein().fullName, fullNameSt);
+          protein.set(graph.Protein().shortName, shortNameSt);
+          protein.set(graph.Protein().sequence, sequenceSt);
+          protein.set(graph.Protein().length, seqLength);
+          protein.set(graph.Protein().mass, String.valueOf(seqMass));
+          protein.set(graph.Protein().version, version);
 
-      //-----db references-------------
-      List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+          //-----db references-------------
+          final List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
 
-      for (Element dbReferenceElem : dbReferenceList) {
-        String refId = dbReferenceElem.getAttributeValue("id");
-        switch (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE)) {
+          for (Element dbReferenceElem: dbReferenceList) {
 
-        case "Ensembl":
+            String refId = dbReferenceElem.getAttributeValue("id");
 
-          //looking for Ensembl vertex
-          if(!ensemblIdSet.contains(refId)){
+            switch(dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE)) {
 
-          ensemblIdSet.add(refId);
+              case "Ensembl": {
 
-          if(!graph.ensemblIdIndex().getVertex(refId).isPresent()){
-            String moleculeIdSt = "";
-            String proteinSequenceIdSt = "";
-            String geneIdSt = "";
-            List<Element> children = dbReferenceElem.getChildren("property");
-            for (Element propertyElem : children) {
-            if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
-              proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+                // looking for Ensembl vertex
+                if(!ensemblIdSet.contains(refId)) {
+
+                  ensemblIdSet.add(refId);
+
+                  if(!graph.ensemblIdIndex().getVertex(refId).isPresent()) {
+
+                    String moleculeIdSt = "";
+                    String proteinSequenceIdSt = "";
+                    String geneIdSt = "";
+
+                    List<Element> children = dbReferenceElem.getChildren("property");
+
+                    for (Element propertyElem: children) {
+
+                      if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
+                        proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+                      }
+                      if (propertyElem.getAttributeValue("type").equals("gene ID")) {
+                        geneIdSt = propertyElem.getAttributeValue("value");
+                      }
+                    }
+
+                    Element moleculeTag = dbReferenceElem.getChild("molecule");
+
+                    if(moleculeTag != null) {
+
+                      moleculeIdSt = moleculeTag.getAttributeValue("id");
+
+                      if(moleculeIdSt == null) {
+
+                        moleculeTag.getText();
+
+                        if(moleculeIdSt == null) {
+
+                          moleculeIdSt = "";
+                        }
+                      }
+                    }
+
+                    Ensembl<I,RV,RVT,RE,RET> ensembl = graph.addVertex(graph.Ensembl());
+                    ensembl.set(graph.Ensembl().id, refId);
+                    ensembl.set(graph.Ensembl().proteinSequenceId, proteinSequenceIdSt);
+                    ensembl.set(graph.Ensembl().moleculeId, moleculeIdSt);
+                    ensembl.set(graph.Ensembl().geneId, geneIdSt);
+                  }
+                }
+
+                break;
+              }
+              case "PIR": {
+
+                if(!pIRIdSet.contains(refId)){
+
+                pIRIdSet.add(refId);
+
+                if(!graph.pIRIdIndex().getVertex(refId).isPresent()){
+                  String entryNameSt = "";
+                  List<Element> children = dbReferenceElem.getChildren("property");
+                  for (Element propertyElem : children) {
+                  if (propertyElem.getAttributeValue("type").equals("entry name")) {
+                    entryNameSt = propertyElem.getAttributeValue("value");
+                  }
+                  }
+                  PIR<I,RV,RVT,RE,RET> pIR = graph.addVertex(graph.PIR());
+                  pIR.set(graph.PIR().entryName, entryNameSt);
+                  pIR.set(graph.PIR().id, refId);
+                }
+                }
+
+                break;
+              }
+              case "UniGene":
+
+                //looking for UniGene vertex
+                if(!uniGeneIdSet.contains(refId)){
+
+                uniGeneIdSet.add(refId);
+
+                if(!graph.uniGeneIdIndex().getVertex(refId).isPresent()){
+                  UniGene<I,RV,RVT,RE,RET> uniGene = graph.addVertex(graph.UniGene());
+                  uniGene.set(graph.UniGene().id, refId);
+                }
+                }
+                break;
+              case "KEGG":
+
+                //looking for Kegg vertex
+                if(!keggIdSet.contains(refId)){
+
+                keggIdSet.add(refId);
+
+                if(!graph.keggIdIndex().getVertex(refId).isPresent()){
+                  Kegg<I,RV,RVT,RE,RET> kegg = graph.addVertex(graph.Kegg());
+                  kegg.set(graph.Kegg().id, refId);
+                }
+              }
+              break;
+            case "EMBL":
+
+              //looking for EMBL vertex
+
+              if(!eMBLIdSet.contains(refId)){
+
+              eMBLIdSet.add(refId);
+
+              if(!graph.eMBLIdIndex().getVertex(refId).isPresent()){
+
+                String moleculeTypeSt = "";
+                String proteinSequenceIdSt = "";
+                List<Element> children = dbReferenceElem.getChildren("property");
+                for (Element propertyElem : children) {
+                if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
+                  proteinSequenceIdSt = propertyElem.getAttributeValue("value");
+                }
+                if (propertyElem.getAttributeValue("type").equals("molecule type")) {
+                  moleculeTypeSt = propertyElem.getAttributeValue("value");
+                }
+                }
+
+                EMBL<I,RV,RVT,RE,RET> embl = graph.addVertex(graph.EMBL());
+                embl.set(graph.EMBL().id, refId);
+                embl.set(graph.EMBL().proteinSequenceId, proteinSequenceIdSt);
+                embl.set(graph.EMBL().moleculeType, moleculeTypeSt);
+              }
+              }
+              break;
+
+            case "RefSeq":
+
+              //looking for RefSeq vertex
+
+              if(!refSeqIdSet.contains(refId)){
+
+              refSeqIdSet.add(refId);
+
+              if(!graph.refSeqIdIndex().getVertex(refId).isPresent()){
+                String nucleotideSequenceIdSt = "";
+                List<Element> children = dbReferenceElem.getChildren("property");
+                for (Element propertyElem : children) {
+                if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
+                  nucleotideSequenceIdSt = propertyElem.getAttributeValue("value");
+                }
+                }
+
+                RefSeq<I,RV,RVT,RE,RET> refSeq = graph.addVertex(graph.RefSeq());
+                refSeq.set(graph.RefSeq().id, refId);
+                refSeq.set(graph.RefSeq().nucleotideSequenceId, nucleotideSequenceIdSt);
+              }
+              }
+
+              break;
+
+            case "Reactome":
+
+
+              if (!reactomeTermIdSet.contains(refId)) {
+
+              reactomeTermIdSet.add(refId);
+
+              if(!graph.reactomeTermIdIndex().getVertex(refId).isPresent()){
+
+                Element propertyElem = dbReferenceElem.getChild("property");
+                String pathwayName = "";
+                if (propertyElem.getAttributeValue("type").equals("pathway name")) {
+                pathwayName = propertyElem.getAttributeValue("value");
+                }
+
+
+                ReactomeTerm<I,RV,RVT,RE,RET> reactomeTerm = graph.addVertex(graph.ReactomeTerm());
+                reactomeTerm.set(graph.ReactomeTerm().id, refId);
+                reactomeTerm.set(graph.ReactomeTerm().pathwayName, pathwayName);
+              }
+              }
+
+              break;
             }
-            if (propertyElem.getAttributeValue("type").equals("gene ID")) {
-              geneIdSt = propertyElem.getAttributeValue("value");
+
+          }
+
+
+          //-----comments import---
+          if (uniprotDataXML.getComments()) {
+            importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
+          }
+
+          //-----features import----
+          if (uniprotDataXML.getFeatures()) {
+            importProteinFeatures(entryXMLElem, graph, protein);
+          }
+
+          //--------------------------------datasets--------------------------------------------------
+          String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
+
+          if (!datasetNameSet.contains(proteinDataSetSt)) {
+
+            datasetNameSet.add(proteinDataSetSt);
+
+            if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()){
+            Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
+            dataset.set(graph.Dataset().name, proteinDataSetSt);
             }
-            }
-            Element moleculeTag = dbReferenceElem.getChild("molecule");
-            if(moleculeTag != null){
-            moleculeIdSt = moleculeTag.getAttributeValue("id");
-            if(moleculeIdSt == null){
-              moleculeTag.getText();
-              if(moleculeIdSt == null){
-              moleculeIdSt = "";
+          }
+          //---------------------------------------------------------------------------------------------
+
+
+          if (uniprotDataXML.getCitations()) {
+            importProteinCitations(entryXMLElem,
+              graph,
+              protein,
+              uniprotDataXML);
+          }
+
+
+          //-------------------------------keywords------------------------------------------------------
+          if (uniprotDataXML.getKeywords()) {
+            List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
+            for (Element keywordElem : keywordsList) {
+            String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
+
+            if (!keywordIdSet.contains(keywordId)) {
+
+              keywordIdSet.add(keywordId);
+
+              if(graph.keywordIdIndex().getVertex(keywordId).isPresent()){
+              String keywordName = keywordElem.getText();
+              Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
+              keyword.set(graph.Keyword().id, keywordId);
+              keyword.set(graph.Keyword().name, keywordName);
               }
             }
             }
-
-            Ensembl<I,RV,RVT,RE,RET> ensembl = graph.addVertex(graph.Ensembl());
-            ensembl.set(graph.Ensembl().id, refId);
-            ensembl.set(graph.Ensembl().proteinSequenceId, proteinSequenceIdSt);
-            ensembl.set(graph.Ensembl().moleculeId, moleculeIdSt);
-            ensembl.set(graph.Ensembl().geneId, geneIdSt);
           }
+          //---------------------------------------------------------------------------------------
 
-          }
-          break;
 
-        case "PIR":
+          for (Element dbReferenceElem : dbReferenceList) {
 
-          //looking for PIR vertex
+            //-------------------------------INTERPRO------------------------------------------------------
+            if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_DB_REFERENCE_TYPE)) {
 
-          if(!pIRIdSet.contains(refId)){
+            if (uniprotDataXML.getInterpro()) {
+              String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-          pIRIdSet.add(refId);
+              if (!interproIdSet.contains(interproId)) {
 
-          if(!graph.pIRIdIndex().getVertex(refId).isPresent()){
-            String entryNameSt = "";
-            List<Element> children = dbReferenceElem.getChildren("property");
-            for (Element propertyElem : children) {
-            if (propertyElem.getAttributeValue("type").equals("entry name")) {
-              entryNameSt = propertyElem.getAttributeValue("value");
-            }
-            }
-            PIR<I,RV,RVT,RE,RET> pIR = graph.addVertex(graph.PIR());
-            pIR.set(graph.PIR().entryName, entryNameSt);
-            pIR.set(graph.PIR().id, refId);
-          }
-          }
+              interproIdSet.add(interproId);
 
-          break;
+              if(!graph.interproIdIndex().getVertex(interproId).isPresent()){
 
-        case "UniGene":
-
-          //looking for UniGene vertex
-          if(!uniGeneIdSet.contains(refId)){
-
-          uniGeneIdSet.add(refId);
-
-          if(!graph.uniGeneIdIndex().getVertex(refId).isPresent()){
-            UniGene<I,RV,RVT,RE,RET> uniGene = graph.addVertex(graph.UniGene());
-            uniGene.set(graph.UniGene().id, refId);
-          }
-          }
-          break;
-
-        case "KEGG":
-
-          //looking for Kegg vertex
-          if(!keggIdSet.contains(refId)){
-
-          keggIdSet.add(refId);
-
-          if(!graph.keggIdIndex().getVertex(refId).isPresent()){
-            Kegg<I,RV,RVT,RE,RET> kegg = graph.addVertex(graph.Kegg());
-            kegg.set(graph.Kegg().id, refId);
-          }
-          }
-          break;
-
-        case "EMBL":
-
-          //looking for EMBL vertex
-
-          if(!eMBLIdSet.contains(refId)){
-
-          eMBLIdSet.add(refId);
-
-          if(!graph.eMBLIdIndex().getVertex(refId).isPresent()){
-
-            String moleculeTypeSt = "";
-            String proteinSequenceIdSt = "";
-            List<Element> children = dbReferenceElem.getChildren("property");
-            for (Element propertyElem : children) {
-            if (propertyElem.getAttributeValue("type").equals("protein sequence ID")) {
-              proteinSequenceIdSt = propertyElem.getAttributeValue("value");
-            }
-            if (propertyElem.getAttributeValue("type").equals("molecule type")) {
-              moleculeTypeSt = propertyElem.getAttributeValue("value");
-            }
+                String interproEntryNameSt = "";
+                List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
+                for (Element prop : properties) {
+                if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_ENTRY_NAME)) {
+                  interproEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
+                  break;
+                }
+                }
+                InterPro<I,RV,RVT,RE,RET> interpro = graph.addVertex(graph.InterPro());
+                interpro.set(graph.InterPro().id, interproId);
+                interpro.set(graph.InterPro().name, interproEntryNameSt);
+              }
+              }
             }
 
-            EMBL<I,RV,RVT,RE,RET> embl = graph.addVertex(graph.EMBL());
-            embl.set(graph.EMBL().id, refId);
-            embl.set(graph.EMBL().proteinSequenceId, proteinSequenceIdSt);
-            embl.set(graph.EMBL().moleculeType, moleculeTypeSt);
+            } //-------------------------------PFAM------------------------------------------------------
+            else if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("Pfam")) {
+
+            if (uniprotDataXML.getPfam()) {
+
+              String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+
+              if (!pfamIdSet.contains(pfamId)) {
+
+              pfamIdSet.add(pfamId);
+
+              if(!graph.pfamIdIndex().getVertex(pfamId).isPresent()){
+
+                String pfamEntryNameSt = "";
+                List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
+                for (Element prop : properties) {
+                if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
+                  pfamEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
+                  break;
+                }
+                }
+
+                Pfam<I,RV,RVT,RE,RET> pfam = graph.addVertex(graph.Pfam());
+                pfam.set(graph.Pfam().id, pfamId);
+                pfam.set(graph.Pfam().name, pfamEntryNameSt);
+              }
+              }
+            }
+            }
           }
-          }
-          break;
+          //---------------------------------------------------------------------------------------
 
-        case "RefSeq":
+          //---------------------------------------------------------------------------------------
+          //--------------------------------geneLocation-------------------------------------------
+          List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
 
-          //looking for RefSeq vertex
+          for (Element geneLocationElem : geneLocationElements){
 
-          if(!refSeqIdSet.contains(refId)){
+            String geneLocationTypeSt = geneLocationElem.getAttributeValue("type");
 
-          refSeqIdSet.add(refId);
+            if(!geneLocationNameSet.contains(geneLocationTypeSt)){
 
-          if(!graph.refSeqIdIndex().getVertex(refId).isPresent()){
-            String nucleotideSequenceIdSt = "";
-            List<Element> children = dbReferenceElem.getChildren("property");
-            for (Element propertyElem : children) {
-            if (propertyElem.getAttributeValue("type").equals("nucleotide sequence ID")) {
-              nucleotideSequenceIdSt = propertyElem.getAttributeValue("value");
+            geneLocationNameSet.add(geneLocationTypeSt);
+
+            if(!graph.geneLocationNameIndex().getVertex(geneLocationTypeSt).isPresent()){
+              GeneLocation<I,RV,RVT,RE,RET> geneLocation = graph.addVertex(graph.GeneLocation());
+              geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
             }
             }
 
-            RefSeq<I,RV,RVT,RE,RET> refSeq = graph.addVertex(graph.RefSeq());
-            refSeq.set(graph.RefSeq().id, refId);
-            refSeq.set(graph.RefSeq().nucleotideSequenceId, nucleotideSequenceIdSt);
-          }
           }
 
-          break;
+          //---------------------------------------------------------------------------------------
+          //--------------------------------gene names-------------------------------------------
 
-        case "Reactome":
+          Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+          if (geneElement != null) {
+            List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
 
+            for (Element geneNameElem : geneNamesList) {
+            String geneNameSt = geneNameElem.getText();
+            String typeSt = geneNameElem.getAttributeValue("type");
+            if(!geneNameSet.contains(geneNameSt)){
 
-          if (!reactomeTermIdSet.contains(refId)) {
+              geneNameSet.add(geneNameSt);
 
-          reactomeTermIdSet.add(refId);
-
-          if(!graph.reactomeTermIdIndex().getVertex(refId).isPresent()){
-
-            Element propertyElem = dbReferenceElem.getChild("property");
-            String pathwayName = "";
-            if (propertyElem.getAttributeValue("type").equals("pathway name")) {
-            pathwayName = propertyElem.getAttributeValue("value");
+              if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()){
+              GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
+              geneName.set(graph.GeneName().name, geneNameSt);
+              }
             }
 
-
-            ReactomeTerm<I,RV,RVT,RE,RET> reactomeTerm = graph.addVertex(graph.ReactomeTerm());
-            reactomeTerm.set(graph.ReactomeTerm().id, refId);
-            reactomeTerm.set(graph.ReactomeTerm().pathwayName, pathwayName);
+            }
           }
-          }
+          //---------------------------------------------------------------------------------------
 
-          break;
-        }
+          //---------------------------------------------------------------------------------------
+          //--------------------------------organism-----------------------------------------------
 
-      }
+          String scName, commName, synName;
+          scName = "";
+          commName = "";
+          synName = "";
 
+          Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
 
-      //-----comments import---
-      if (uniprotDataXML.getComments()) {
-        importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
-      }
-
-      //-----features import----
-      if (uniprotDataXML.getFeatures()) {
-        importProteinFeatures(entryXMLElem, graph, protein);
-      }
-
-      //--------------------------------datasets--------------------------------------------------
-      String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-
-      if (!datasetNameSet.contains(proteinDataSetSt)) {
-
-        datasetNameSet.add(proteinDataSetSt);
-
-        if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()){
-        Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
-        dataset.set(graph.Dataset().name, proteinDataSetSt);
-        }
-      }
-      //---------------------------------------------------------------------------------------------
-
-
-      if (uniprotDataXML.getCitations()) {
-        importProteinCitations(entryXMLElem,
-          graph,
-          protein,
-          uniprotDataXML);
-      }
-
-
-      //-------------------------------keywords------------------------------------------------------
-      if (uniprotDataXML.getKeywords()) {
-        List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
-        for (Element keywordElem : keywordsList) {
-        String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
-
-        if (!keywordIdSet.contains(keywordId)) {
-
-          keywordIdSet.add(keywordId);
-
-          if(graph.keywordIdIndex().getVertex(keywordId).isPresent()){
-          String keywordName = keywordElem.getText();
-          Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
-          keyword.set(graph.Keyword().id, keywordId);
-          keyword.set(graph.Keyword().name, keywordName);
-          }
-        }
-        }
-      }
-      //---------------------------------------------------------------------------------------
-
-
-      for (Element dbReferenceElem : dbReferenceList) {
-
-        //-------------------------------INTERPRO------------------------------------------------------
-        if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_DB_REFERENCE_TYPE)) {
-
-        if (uniprotDataXML.getInterpro()) {
-          String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-
-          if (!interproIdSet.contains(interproId)) {
-
-          interproIdSet.add(interproId);
-
-          if(!graph.interproIdIndex().getVertex(interproId).isPresent()){
-
-            String interproEntryNameSt = "";
-            List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-            for (Element prop : properties) {
-            if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_ENTRY_NAME)) {
-              interproEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
+          List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
+          for (Element element : organismNames) {
+            String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
+            switch (type) {
+            case ORGANISM_SCIENTIFIC_NAME_TYPE:
+              scName = element.getText();
+              break;
+            case ORGANISM_COMMON_NAME_TYPE:
+              commName = element.getText();
+              break;
+            case ORGANISM_SYNONYM_NAME_TYPE:
+              synName = element.getText();
               break;
             }
-            }
-            InterPro<I,RV,RVT,RE,RET> interpro = graph.addVertex(graph.InterPro());
-            interpro.set(graph.InterPro().id, interproId);
-            interpro.set(graph.InterPro().name, interproEntryNameSt);
           }
-          }
-        }
 
-        } //-------------------------------PFAM------------------------------------------------------
-        else if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("Pfam")) {
+          if (!organismScientificNameSet.contains(scName)) {
 
-        if (uniprotDataXML.getPfam()) {
+            organismScientificNameSet.add(scName);
 
-          String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+            if(!graph.organismScientificNameIndex().getVertex(scName).isPresent()){
 
-          if (!pfamIdSet.contains(pfamId)) {
-
-          pfamIdSet.add(pfamId);
-
-          if(!graph.pfamIdIndex().getVertex(pfamId).isPresent()){
-
-            String pfamEntryNameSt = "";
-            List<Element> properties = dbReferenceElem.getChildren(DB_REFERENCE_PROPERTY_TAG_NAME);
-            for (Element prop : properties) {
-            if (prop.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("entry name")) {
-              pfamEntryNameSt = prop.getAttributeValue(DB_REFERENCE_VALUE_ATTRIBUTE);
-              break;
-            }
-            }
-
-            Pfam<I,RV,RVT,RE,RET> pfam = graph.addVertex(graph.Pfam());
-            pfam.set(graph.Pfam().id, pfamId);
-            pfam.set(graph.Pfam().name, pfamEntryNameSt);
-          }
-          }
-        }
-        }
-      }
-      //---------------------------------------------------------------------------------------
-
-      //---------------------------------------------------------------------------------------
-      //--------------------------------geneLocation-------------------------------------------
-      List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
-
-      for (Element geneLocationElem : geneLocationElements){
-
-        String geneLocationTypeSt = geneLocationElem.getAttributeValue("type");
-
-        if(!geneLocationNameSet.contains(geneLocationTypeSt)){
-
-        geneLocationNameSet.add(geneLocationTypeSt);
-
-        if(!graph.geneLocationNameIndex().getVertex(geneLocationTypeSt).isPresent()){
-          GeneLocation<I,RV,RVT,RE,RET> geneLocation = graph.addVertex(graph.GeneLocation());
-          geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
-        }
-        }
-
-      }
-
-      //---------------------------------------------------------------------------------------
-      //--------------------------------gene names-------------------------------------------
-
-      Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-      if (geneElement != null) {
-        List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-
-        for (Element geneNameElem : geneNamesList) {
-        String geneNameSt = geneNameElem.getText();
-        String typeSt = geneNameElem.getAttributeValue("type");
-        if(!geneNameSet.contains(geneNameSt)){
-
-          geneNameSet.add(geneNameSt);
-
-          if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()){
-          GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
-          geneName.set(graph.GeneName().name, geneNameSt);
-          }
-        }
-
-        }
-      }
-      //---------------------------------------------------------------------------------------
-
-      //---------------------------------------------------------------------------------------
-      //--------------------------------organism-----------------------------------------------
-
-      String scName, commName, synName;
-      scName = "";
-      commName = "";
-      synName = "";
-
-      Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
-
-      List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
-      for (Element element : organismNames) {
-        String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-        switch (type) {
-        case ORGANISM_SCIENTIFIC_NAME_TYPE:
-          scName = element.getText();
-          break;
-        case ORGANISM_COMMON_NAME_TYPE:
-          commName = element.getText();
-          break;
-        case ORGANISM_SYNONYM_NAME_TYPE:
-          synName = element.getText();
-          break;
-        }
-      }
-
-      if (!organismScientificNameSet.contains(scName)) {
-
-        organismScientificNameSet.add(scName);
-
-        if(!graph.organismScientificNameIndex().getVertex(scName).isPresent()){
-
-        Organism<I,RV,RVT,RE,RET> organism = graph.addVertex(graph.Organism());
-        organism.set(graph.Organism().scientificName, scName);
-        organism.set(graph.Organism().commonName, commName);
-        organism.set(graph.Organism().synonymName, synName);
+            Organism<I,RV,RVT,RE,RET> organism = graph.addVertex(graph.Organism());
+            organism.set(graph.Organism().scientificName, scName);
+            organism.set(graph.Organism().commonName, commName);
+            organism.set(graph.Organism().synonymName, synName);
 ```
 
 TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or also store
-          the id as an attribute
+              the id as an attribute
 
 
 ```java
-  //        List<Element> organismDbRefElems = organismElem.getChildren(DB_REFERENCE_TAG_NAME);
-  //        boolean ncbiIdFound = false;
-  //        if (organismDbRefElems != null) {
-  //        for (Element dbRefElem : organismDbRefElems) {
-  //          String t = dbRefElem.getAttributeValue("type");
-  //          if (t.equals("NCBI Taxonomy")) {
-  //          organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
-  //          ncbiIdFound = true;
-  //          break;
-  //          }
-  //        }
-  //        }
-  //        if (!ncbiIdFound) {
-  //        organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
-  //        }
+      //        List<Element> organismDbRefElems = organismElem.getChildren(DB_REFERENCE_TAG_NAME);
+      //        boolean ncbiIdFound = false;
+      //        if (organismDbRefElems != null) {
+      //        for (Element dbRefElem : organismDbRefElems) {
+      //          String t = dbRefElem.getAttributeValue("type");
+      //          if (t.equals("NCBI Taxonomy")) {
+      //          organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
+      //          ncbiIdFound = true;
+      //          break;
+      //          }
+      //        }
+      //        }
+      //        if (!ncbiIdFound) {
+      //        organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
+      //        }
 
-        Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
-        List<Element> taxons = lineage.getChildren("taxon");
+            Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
+            List<Element> taxons = lineage.getChildren("taxon");
 
-        Element firstTaxonElem = taxons.get(0);
+            Element firstTaxonElem = taxons.get(0);
 
-        if (!taxonNameSet.contains(firstTaxonElem.getText())) {
+            if (!taxonNameSet.contains(firstTaxonElem.getText())) {
 
-          taxonNameSet.add(firstTaxonElem.getText());
+              taxonNameSet.add(firstTaxonElem.getText());
 
-          if(!graph.taxonNameIndex().getVertex(firstTaxonElem.getText()).isPresent()){
-          String firstTaxonName = firstTaxonElem.getText();
-          Taxon<I,RV,RVT,RE,RET> firstTaxon = graph.addVertex(graph.Taxon());
-          firstTaxon.set(graph.Taxon().name, firstTaxonName);
+              if(!graph.taxonNameIndex().getVertex(firstTaxonElem.getText()).isPresent()){
+              String firstTaxonName = firstTaxonElem.getText();
+              Taxon<I,RV,RVT,RE,RET> firstTaxon = graph.addVertex(graph.Taxon());
+              firstTaxon.set(graph.Taxon().name, firstTaxonName);
+              }
+            }
+
+
+            for (int i = 1; i < taxons.size(); i++) {
+              String taxonName = taxons.get(i).getText();
+
+              if (!taxonNameSet.contains(taxonName)) {
+
+              taxonNameSet.add(taxonName);
+
+              if(!graph.taxonNameIndex().getVertex(taxonName).isPresent()){
+                Taxon<I,RV,RVT,RE,RET> currentTaxon = graph.addVertex(graph.Taxon());
+                currentTaxon.set(graph.Taxon().name, taxonName);
+              }
+              }
+            }
+            }
           }
-        }
 
+          //---------------------------------------------------------------------------------------
+          //---------------------------------------------------------------------------------------
 
-        for (int i = 1; i < taxons.size(); i++) {
-          String taxonName = taxons.get(i).getText();
-
-          if (!taxonNameSet.contains(taxonName)) {
-
-          taxonNameSet.add(taxonName);
-
-          if(!graph.taxonNameIndex().getVertex(taxonName).isPresent()){
-            Taxon<I,RV,RVT,RE,RET> currentTaxon = graph.addVertex(graph.Taxon());
-            currentTaxon.set(graph.Taxon().name, taxonName);
+          proteinCounter++;
+          if ((proteinCounter % limitForPrintingOut) == 0) {
+            String countProteinsSt = proteinCounter + " proteins inserted!!";
+            logger.log(Level.INFO, countProteinsSt);
+            graph.raw().commit();
           }
-          }
-        }
+
         }
       }
-
-      //---------------------------------------------------------------------------------------
-      //---------------------------------------------------------------------------------------
-
-      proteinCounter++;
-      if ((proteinCounter % limitForPrintingOut) == 0) {
-        String countProteinsSt = proteinCounter + " proteins inserted!!";
-        logger.log(Level.INFO, countProteinsSt);
-        graph.raw().commit();
-      }
-
-      }
-    }
 
     } catch (Exception e) {
     logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
@@ -1441,8 +1343,6 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/go/edges/IsA.java]: ../../go/edges/IsA.java.md
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../../go/edges/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../../go/edges/goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
@@ -1509,6 +1409,7 @@ TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ImportUniProtEdges.java.md
+[main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: XMLConstants.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: ../edges/ProteinOrganism.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: ../edges/ProteinRefSeq.java.md

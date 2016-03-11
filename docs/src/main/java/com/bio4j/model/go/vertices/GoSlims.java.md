@@ -22,45 +22,6 @@ extends GoGraph.GoVertex<
   public GoSlims<I,RV,RVT,RE,RET> self() { return this; }
 }
 
-
-
-
-
-
-
-
-
-
-// package com.bio4j.model.go.nodes;
-
-// import java.util.List;
-// import java.util.stream.Stream;
-
-
-// import com.bio4j.angulillos.Node;
-
-// import com.bio4j.model.go.GoGraph.GoSlimsType;
-
-
-// *
-//  * Relationships into this singleton node represent GO Slims.
-//  * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
-//  * @author <a href="mailto:eparejatobes@ohnosequences.com">Eduardo Pareja-Tobes</a>
-
-// public interface GoSlims <
-//   N extends GoSlims<N,NT>,
-//   NT extends GoSlimsType<N,NT>
-// >
-//   extends Node<N,NT>
-// {
-
-//   // plantSlim
-//   // incoming
-//   // public Stream<? extends PlantSlim> plantSlim_in();
-//   // public Stream<? extends Term> plantSlim_inNodes();
-//   // TODO same for the other GoSlims
-// }
-
 ```
 
 
@@ -93,8 +54,6 @@ extends GoGraph.GoVertex<
 [main/java/com/bio4j/model/go/edges/IsA.java]: ../edges/IsA.java.md
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../edges/PartOf.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../edges/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../edges/goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../GoGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
@@ -161,6 +120,7 @@ extends GoGraph.GoVertex<
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
+[main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: ../../uniprot/edges/ProteinOrganism.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: ../../uniprot/edges/ProteinRefSeq.java.md

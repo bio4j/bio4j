@@ -2,214 +2,112 @@
 ```java
 package com.bio4j.model.uniprot.programs;
 
-import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.vertices.*;
-import com.bio4j.model.uniprot.edges.*;
+public final class XMLConstants {
 
-import static com.bio4j.model.uniprot.programs.XMLConstants.*;
+  public static final String ENTRY_TAG_NAME                 = "entry";
+  public static final String ENTRY_ACCESSION_TAG_NAME       = "accession";
+  public static final String ENTRY_NAME_TAG_NAME            = "name";
+  public static final String ENTRY_MODIFIED_DATE_ATTRIBUTE  = "modified";
+  public static final String ENTRY_CREATED_DATE_ATTRIBUTE   = "created";
+  public static final String ENTRY_VERSION_ATTRIBUTE        = "version";
+  public static final String ENTRY_DATASET_ATTRIBUTE        = "dataset";
+  public static final String ENTRY_SEQUENCE_TAG_NAME        = "sequence";
 
-import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
-import org.jdom2.Element;
+  public static final String KEYWORD_TAG_NAME     = "keyword";
+  public static final String KEYWORD_ID_ATTRIBUTE = "id";
 
-import java.io.*;
-import java.util.*;
-import java.util.logging.FileHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
+  public static final String REFERENCE_TAG_NAME = "reference";
+  public static final String CITATION_TAG_NAME  = "citation";
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
-public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
+  public static final String GENE_LOCATION_TAG_NAME = "geneLocation";
 
-  private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
-  private static FileHandler fh;
+  public static final String ORGANISM_TAG_NAME              = "organism";
+  public static final String ORGANISM_NAME_TAG_NAME         = "name";
+  public static final String ORGANISM_NAME_TYPE_ATTRIBUTE   = "type";
+  public static final String ORGANISM_SCIENTIFIC_NAME_TYPE  = "scientific";
+  public static final String ORGANISM_COMMON_NAME_TYPE      = "common";
+  public static final String ORGANISM_SYNONYM_NAME_TYPE     = "synonym";
 
-  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  public static final String DB_REFERENCE_TAG_NAME          = "dbReference";
+  public static final String DB_REFERENCE_TYPE_ATTRIBUTE    = "type";
+  public static final String DB_REFERENCE_ID_ATTRIBUTE      = "id";
+  public static final String DB_REFERENCE_VALUE_ATTRIBUTE   = "value";
+  public static final String DB_REFERENCE_PROPERTY_TAG_NAME = "property";
 
-  protected void importProteinInteractions(String[] args) {
+  public static final String INTERPRO_DB_REFERENCE_TYPE = "InterPro";
+  public static final String INTERPRO_ENTRY_NAME        = "entry name";
 
-  if (args.length != 3) {
-    System.out.println("This program expects the following parameters: \n"
-      + "1. UniProt xml filename \n"
-      + "2. Bio4j DB folder \n"
-      + "3. DB Properties file (.properties)");
-  } else {
+  public static final String GO_DB_REFERENCE_TYPE     = "GO";
+  public static final String EVIDENCE_TYPE_ATTRIBUTE  = "evidence";
 
-    long initTime = System.nanoTime();
+  public static final String SEQUENCE_MASS_ATTRIBUTE    = "mass";
+  public static final String SEQUENCE_LENGTH_ATTRIBUTE  = "length";
 
-    File inFile = new File(args[0]);
-    String dbFolder = args[1];
-    String propertiesFile = args[2];
+  public static final String PROTEIN_TAG_NAME                   = "protein";
+  public static final String PROTEIN_RECOMMENDED_NAME_TAG_NAME  = "recommendedName";
+  public static final String PROTEIN_FULL_NAME_TAG_NAME         = "fullName";
+  public static final String PROTEIN_SHORT_NAME_TAG_NAME        = "shortName"
+  ;
+  public static final String GENE_TAG_NAME        = "gene";
+  public static final String GENE_NAME_TAG_NAME   = "name";
 
-    String currentAccessionId = "";
+  public static final String COMMENT_TAG_NAME                   = "comment";
+  public static final String COMMENT_TYPE_ATTRIBUTE             = "type";
+  public static final String COMMENT_ALTERNATIVE_PRODUCTS_TYPE  = "alternative products";
+  public static final String COMMENT_SEQUENCE_CAUTION_TYPE      = "sequence caution";
+  public static final String SUBCELLULAR_LOCATION_TAG_NAME      = "subcellularLocation";
 
-    //-------creating graph handlers---------------------
-    UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
+  public static final String LOCATION_TAG_NAME                    = "location";
+  public static final String COMMENT_TEXT_TAG_NAME                = "text";
+  public static final String FEATURE_TAG_NAME                     = "feature";
+  public static final String FEATURE_TYPE_ATTRIBUTE               = "type";
+  public static final String FEATURE_DESCRIPTION_ATTRIBUTE        = "description";
+  public static final String STATUS_ATTRIBUTE                     = "status";
+  public static final String FEATURE_REF_ATTRIBUTE                = "ref";
+  public static final String FEATURE_ID_ATTRIBUTE                 = "id";
+  public static final String EVIDENCE_ATTRIBUTE                   = "evidence";
+  public static final String FEATURE_LOCATION_TAG_NAME            = "location";
+  public static final String FEATURE_ORIGINAL_TAG_NAME            = "original";
+  public static final String FEATURE_VARIATION_TAG_NAME           = "variation";
+  public static final String FEATURE_POSITION_TAG_NAME            = "position";
+  public static final String FEATURE_LOCATION_BEGIN_TAG_NAME      = "begin";
+  public static final String FEATURE_LOCATION_END_TAG_NAME        = "end";
+  public static final String FEATURE_LOCATION_POSITION_ATTRIBUTE  = "position";
+  public static final String FEATURE_POSITION_POSITION_ATTRIBUTE  = "position";
 
-    BufferedWriter statsBuff = null;
+  public static final String THESIS_CITATION_TYPE                   = "thesis";
+  public static final String PATENT_CITATION_TYPE                   = "patent";
+  public static final String SUBMISSION_CITATION_TYPE               = "submission";
+  public static final String ARTICLE_CITATION_TYPE                  = "journal article";
+  public static final String ONLINE_ARTICLE_CITATION_TYPE           = "online journal article";
+  public static final String BOOK_CITATION_TYPE                     = "book";
+  public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE  = "unpublished observations";
 
-    int proteinCounter = 0;
-    int limitForPrintingOut = 10000;
-
-    try {
-
-    // This block configures the logger with handler and formatter
-    fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
-
-    SimpleFormatter formatter = new SimpleFormatter();
-    fh.setFormatter(formatter);
-    logger.addHandler(fh);
-    logger.setLevel(Level.ALL);
-
-    //---creating writer for stats file-----
-    statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
-
-    BufferedReader reader = new BufferedReader(new FileReader(inFile));
-    StringBuilder entryStBuilder = new StringBuilder();
-    String line;
-
-    while ((line = reader.readLine()) != null) {
-      if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
-
-      while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-        entryStBuilder.append(line);
-        line = reader.readLine();
-      }
-      //linea final del organism
-      entryStBuilder.append(line);
-      //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
-      XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-      entryStBuilder.delete(0, entryStBuilder.length());
-
-      String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
-
-      Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = graph.proteinAccessionIndex().getVertex(accessionSt);
-
-      if(proteinOptional.isPresent()){
-
-        Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
-
-        List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
-
-        for (Element commentElem : comments) {
-
-        String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
-
-        //----------interaction----------------
-        if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
-
-          List<Element> interactants = commentElem.getChildren("interactant");
-          Element interactant1 = interactants.get(0);
-          Element interactant2 = interactants.get(1);
-          Element organismsDiffer = commentElem.getChild("organismsDiffer");
-          Element experiments = commentElem.getChild("experiments");
-          String intactId1St = interactant1.getAttributeValue("intactId");
-          String intactId2St = interactant2.getAttributeValue("intactId");
-          String organismsDifferSt = "";
-          String experimentsSt = "";
-          if (intactId1St == null) {
-            intactId1St = "";
-          }
-          if (intactId2St == null) {
-            intactId2St = "";
-          }
-          if (organismsDiffer != null) {
-            organismsDifferSt = organismsDiffer.getText();
-          }
-          if (experiments != null) {
-            experimentsSt = experiments.getText();
-          }
-
-          //----now we try to retrieve the interactant 2 accession--
-          String interactant2AccessionSt = interactant2.getChildText("id");
-          long protein2Id = -1;
-          if (interactant2AccessionSt != null) {
-
-          Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
-
-          if(!protein2Optional.isPresent()) {
-
-            Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
-
-            if(isoformOptional.isPresent()) {
-
-              ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
-            }
-          }
-          else {
-
-            ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
-          }
-
-          }
-
-        }
-
-        }
-
-        proteinCounter++;
-        if ((proteinCounter % limitForPrintingOut) == 0) {
-        logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
-        }
-
-      }
-
-
-      }
-    }
-
-    } catch (Exception e) {
-    logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
-    logger.log(Level.SEVERE, e.getMessage());
-    StackTraceElement[] trace = e.getStackTrace();
-    for (StackTraceElement stackTraceElement : trace) {
-      logger.log(Level.SEVERE, stackTraceElement.toString());
-    }
-    } finally {
-
-    try {
-
-      // shutdown, makes sure all changes are written to disk
-      graph.raw().shutdown();
-
-      // closing logger file handler
-      fh.close();
-
-      //-----------------writing stats file---------------------
-      long elapsedTime = System.nanoTime() - initTime;
-      long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-      long hours = elapsedSeconds / 3600;
-      long minutes = (elapsedSeconds % 3600) / 60;
-      long seconds = (elapsedSeconds % 3600) % 60;
-
-      statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
-        + "\nThere were " + proteinCounter + " proteins inserted.\n"
-        + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
-
-      //---closing stats writer---
-      statsBuff.close();
-
-
-    } catch (IOException ex) {
-      Logger.getLogger(ImportUniProt.class.getName()).log(Level.SEVERE, null, ex);
-    }
-
-    }
-  }
-
-  }
-
+  public static final String COMMENT_TYPE_DISEASE                         = "disease";
+  public static final String COMMENT_TYPE_FUNCTION                        = "function";
+  public static final String COMMENT_TYPE_COFACTOR                        = "cofactor";
+  public static final String COMMENT_TYPE_CATALYTIC_ACTIVITY              = "catalytic activity";
+  public static final String COMMENT_TYPE_ENZYME_REGULATION               = "enzyme regulation";
+  public static final String COMMENT_TYPE_BIOPHYSICOCHEMICAL_PROPERTIES   = "biophysicochemical properties";
+  public static final String COMMENT_TYPE_SUBUNIT                         = "subunit";
+  public static final String COMMENT_TYPE_PATHWAY                         = "pathway";
+  public static final String COMMENT_TYPE_SUBCELLULAR_LOCATION            = "subcellular location";
+  public static final String COMMENT_TYPE_TISSUE_SPECIFICITY              = "tissue specificity";
+  public static final String COMMENT_TYPE_DEVELOPMENTAL_STAGE             = "developmental stage";
+  public static final String COMMENT_TYPE_INDUCTION                       = "induction";
+  public static final String COMMENT_TYPE_DOMAIN                          = "domain";
+  public static final String COMMENT_TYPE_POST_TRANSLATIONAL_MODIFICATION = "PTM";
+  public static final String COMMENT_TYPE_RNA_EDITING                     = "RNA editing";
+  public static final String COMMENT_TYPE_MASS_SPECTROMETRY               = "mass spectrometry";
+  public static final String COMMENT_TYPE_POLYMORPHISM                    = "polymorphism";
+  public static final String COMMENT_TYPE_DISRUPTION_PHENOTYPE            = "disruption phenotype";
+  public static final String COMMENT_TYPE_ALLERGEN                        = "allergen";
+  public static final String COMMENT_TYPE_TOXIC_DOSE                      = "toxic dose";
+  public static final String COMMENT_TYPE_BIOTECHNOLOGY                   = "biotechnology";
+  public static final String COMMENT_TYPE_PHARMACEUTICAL                  = "pharmaceutical";
+  public static final String COMMENT_TYPE_MISCELLANEOUS                   = "miscellaneous";
+  public static final String COMMENT_TYPE_SIMILARITY                      = "similarity";
+  public static final String COMMENT_TYPE_INTERACTION                     = "interaction";
 }
 
 ```

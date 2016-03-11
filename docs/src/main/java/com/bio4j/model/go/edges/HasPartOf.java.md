@@ -13,19 +13,19 @@ public final class HasPartOf<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
     HasPartOf<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.HasPartOfType,
     GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType,
     I, RV, RVT, RE, RET
-    > {
+  >
+{
 
   public HasPartOf(RE edge, GoGraph<I, RV, RVT, RE, RET>.HasPartOfType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
-  public HasPartOf<I, RV, RVT, RE, RET> self() {
-  return this;
+  public final HasPartOf<I, RV, RVT, RE, RET> self() {
+    return this;
   }
 }
-
 
 ```
 
@@ -59,8 +59,6 @@ public final class HasPartOf<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 [main/java/com/bio4j/model/go/edges/IsA.java]: IsA.java.md
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: PartOf.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../GoGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
@@ -127,6 +125,7 @@ public final class HasPartOf<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
+[main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../../uniprot/programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: ../../uniprot/edges/ProteinOrganism.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: ../../uniprot/edges/ProteinRefSeq.java.md

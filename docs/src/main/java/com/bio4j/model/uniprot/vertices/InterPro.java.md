@@ -83,8 +83,6 @@ public final class InterPro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 [main/java/com/bio4j/model/go/edges/IsA.java]: ../../go/edges/IsA.java.md
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/PlantSlim.java]: ../../go/edges/goSlims/PlantSlim.java.md
-[main/java/com/bio4j/model/go/edges/goSlims/GoSlim.java]: ../../go/edges/goSlims/GoSlim.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
@@ -151,6 +149,7 @@ public final class InterPro <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../programs/ImportUniProtEdges.java.md
+[main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../programs/XMLConstants.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtVertices.java]: ../programs/ImportUniProtVertices.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinOrganism.java]: ../edges/ProteinOrganism.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinRefSeq.java]: ../edges/ProteinRefSeq.java.md
