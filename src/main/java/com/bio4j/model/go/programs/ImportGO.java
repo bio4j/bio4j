@@ -153,7 +153,7 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
             if (defElem != null) {
               Element defstrElem = defElem.getChild(DEFSTR_TAG_NAME);
               if (defstrElem != null) {
-              goDefinition = defstrElem.getText();
+                goDefinition = defstrElem.getText();
               }
             }
             /* term comment, which again can be null */
@@ -166,11 +166,13 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
             String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
             if (goIsObsolete == null) {
               goIsObsolete = "";
-            } else {
+            }
+            else {
               if (goIsObsolete.equals("1")) {
-              goIsObsolete = "true";
-              } else {
-              goIsObsolete = "false";
+                goIsObsolete = "true";
+              }
+              else {
+                goIsObsolete = "false";
               }
             }
 
@@ -359,7 +361,8 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
         logger.log(Level.INFO, "Done! :)");
 
 
-        } catch (Exception e) {
+      }
+      catch (Exception e) {
         logger.log(Level.SEVERE, e.getMessage());
         StackTraceElement[] trace = e.getStackTrace();
         for (StackTraceElement stackTraceElement : trace) {
@@ -376,11 +379,11 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
           goGraph.raw().shutdown();
 
           //-----------------writing stats file---------------------
-          long elapsedTime = System.nanoTime() - initTime;
-          long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-          long hours = elapsedSeconds / 3600;
-          long minutes = (elapsedSeconds % 3600) / 60;
-          long seconds = (elapsedSeconds % 3600) % 60;
+          long elapsedTime      = System.nanoTime() - initTime;
+          long elapsedSeconds   = Math.round((elapsedTime / 1000000000.0));
+          long hours            = elapsedSeconds / 3600;
+          long minutes          = (elapsedSeconds % 3600) / 60;
+          long seconds          = (elapsedSeconds % 3600) % 60;
 
           statsBuff.write("Statistics for program ImportGeneOntology:\nInput file: " + inFile.getName()
             + "\nThere were " + termCounter + " terms inserted.\n"
@@ -388,8 +391,6 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
           //---closing stats writer---
           statsBuff.close();
-
-
         }
         catch (Exception e) {
           logger.log(Level.SEVERE, e.getMessage());

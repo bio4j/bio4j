@@ -12,15 +12,16 @@ public final class SubOntology<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
     SubOntology<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.SubOntologyType,
     SubOntologies<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.SubOntologiesType,
     I, RV, RVT, RE, RET
-    > {
+  >
+{
 
   public SubOntology(RE edge, GoGraph<I, RV, RVT, RE, RET>.SubOntologyType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
-  public SubOntology<I, RV, RVT, RE, RET> self() {
-  return this;
+  public final SubOntology<I, RV, RVT, RE, RET> self() {
+    return this;
   }
 }
