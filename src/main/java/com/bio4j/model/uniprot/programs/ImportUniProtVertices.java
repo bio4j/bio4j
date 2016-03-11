@@ -24,7 +24,7 @@ import java.util.logging.SimpleFormatter;
 
 public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
-  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
   private static final Logger logger = Logger.getLogger("ImportUniProtVertices");
   private static FileHandler fh;
@@ -70,28 +70,13 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   final HashSet<String> thesisTitleSet                = new HashSet<String>();
   final HashSet<String> uniGeneIdSet                  = new HashSet<String>();
 
-  protected void importUniProtVertices(String[] args) {
-
-  if (args.length != 4) {
-
-    System.out.println("This program expects the following parameters: \n"
-      + "1. UniProt xml filename \n"
-      + "2. Bio4j DB folder \n"
-      + "3. Config XML file \n"
-      + "4. DB properties file (.properties)");
-  }
-  else {
+  protected void importUniProtVertices(File inFile, File dbFolder) {
 
     long initTime = System.nanoTime();
 
-    File inFile = new File(args[0]);
-    String dbFolder = args[1];
-    File configFile = new File(args[2]);
-    String propertiesFile = args[3];
-
     String currentAccessionId = "";
 
-    UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
+    UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
     BufferedWriter statsBuff = null;
 
@@ -103,28 +88,18 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     try {
 
       // This block configures the logger with handler and formatter
-      fh = new FileHandler("ImportUniProtVertices" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+      fh = new FileHandler("ImportUniProtVertices.log", false);
 
       SimpleFormatter formatter = new SimpleFormatter();
       fh.setFormatter(formatter);
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
 
-      System.out.println("reading configuration file");
-      BufferedReader reader = new BufferedReader(new FileReader(configFile));
-      String line;
-      StringBuilder stBuilder = new StringBuilder();
-      while((line = reader.readLine()) != null) {
-        stBuilder.append(line);
-      }
-      reader.close();
-
-      UniprotDataXML uniprotDataXML = new UniprotDataXML(stBuilder.toString());
-
       //---creating writer for stats file-----
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-      reader = new BufferedReader(new FileReader(inFile));
+      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      String line;
       StringBuilder entryStBuilder = new StringBuilder();
 
       while((line = reader.readLine()) != null) {
@@ -367,15 +342,10 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           }
 
 
-          //-----comments import---
-          if (uniprotDataXML.getComments()) {
-            importProteinComments(entryXMLElem, graph, protein, sequenceSt, uniprotDataXML);
-          }
 
-          //-----features import----
-          if (uniprotDataXML.getFeatures()) {
+            importProteinComments(entryXMLElem, graph, protein, sequenceSt);
+
             importProteinFeatures(entryXMLElem, graph, protein);
-          }
 
           //--------------------------------datasets--------------------------------------------------
           String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
@@ -392,16 +362,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           //---------------------------------------------------------------------------------------------
 
 
-          if (uniprotDataXML.getCitations()) {
             importProteinCitations(entryXMLElem,
               graph,
-              protein,
-              uniprotDataXML);
-          }
-
+              protein
+            );
 
           //-------------------------------keywords------------------------------------------------------
-          if (uniprotDataXML.getKeywords()) {
             List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
             for (Element keywordElem : keywordsList) {
             String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
@@ -418,7 +384,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
               }
             }
             }
-          }
+
           //---------------------------------------------------------------------------------------
 
 
@@ -427,7 +393,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
             //-------------------------------INTERPRO------------------------------------------------------
             if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals(INTERPRO_DB_REFERENCE_TYPE)) {
 
-            if (uniprotDataXML.getInterpro()) {
               String interproId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
               if (!interproIdSet.contains(interproId)) {
@@ -449,12 +414,9 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
                 interpro.set(graph.InterPro().name, interproEntryNameSt);
               }
               }
-            }
 
             } //-------------------------------PFAM------------------------------------------------------
             else if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).equals("Pfam")) {
-
-            if (uniprotDataXML.getPfam()) {
 
               String pfamId = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
@@ -478,7 +440,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
                 pfam.set(graph.Pfam().name, pfamEntryNameSt);
               }
               }
-            }
+
             }
           }
           //---------------------------------------------------------------------------------------
@@ -666,7 +628,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     }
 
     }
-  }
 
   }
 
@@ -698,8 +659,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   private void importProteinComments(XMLElement entryXMLElem,
                    UniProtGraph<I,RV,RVT,RE,RET> graph,
                    Protein<I,RV,RVT,RE,RET> protein,
-                   String proteinSequence,
-                   UniprotDataXML uniprotDataXML) {
+                   String proteinSequence) {
 
 
   List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
@@ -753,7 +713,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     case COMMENT_TYPE_SUBCELLULAR_LOCATION:
 
-      if (uniprotDataXML.getSubcellularLocations()) {
       List<Element> subcLocations = commentElem.getChildren(SUBCELLULAR_LOCATION_TAG_NAME);
 
       for (Element subcLocation : subcLocations) {
@@ -776,11 +735,10 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         }
         }
       }
-      }
+
       break;
     case COMMENT_ALTERNATIVE_PRODUCTS_TYPE:
 
-      if (uniprotDataXML.getIsoforms()) {
       List<Element> eventList = commentElem.getChildren("event");
       List<Element> isoformList = commentElem.getChildren("isoform");
 
@@ -833,7 +791,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         }
 
       }
-      }
+
       break;
     case COMMENT_SEQUENCE_CAUTION_TYPE:
 
@@ -885,418 +843,450 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
 
-  private void importProteinCitations(XMLElement entryXMLElem,
-                    UniProtGraph<I,RV,RVT,RE,RET> graph,
-                    Protein<I,RV,RVT,RE,RET> protein,
-                    UniprotDataXML uniprotDataXML) {
+  private void importProteinCitations(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph,
+    Protein<I,RV,RVT,RE,RET> protein
+  )
+  {
 
-  List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
+    final List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
 
-  for (Element referenceElement : referenceList) {
-    List<Element> citationsList = referenceElement.getChildren(CITATION_TAG_NAME);
-    for (Element citation : citationsList) {
+    for(Element referenceElement: referenceList) {
 
-    String citationType = citation.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE);
+      List<Element> citationsList = referenceElement.getChildren(CITATION_TAG_NAME);
 
-    List<Person<I,RV,RVT,RE,RET>> authorsPerson = new ArrayList<>();
-    List<Consortium<I,RV,RVT,RE,RET>> authorsConsortium = new ArrayList<>();
+      for(Element citation: citationsList) {
 
-    List<Element> authorPersonElems = citation.getChild("authorList").getChildren("person");
-    List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
+        String citationType = citation.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE);
 
-    for (Element personElement : authorPersonElems) {
+        List<Person<I,RV,RVT,RE,RET>> authorsPerson         = new ArrayList<>();
+        List<Consortium<I,RV,RVT,RE,RET>> authorsConsortium = new ArrayList<>();
 
-      String personName = personElement.getAttributeValue("name");
-      if(!personNameSet.contains(personName)){
-      personNameSet.add(personName);
-      if(!graph.personNameIndex().getVertex(personName).isPresent()){
-        Person<I,RV,RVT,RE,RET> person = graph.addVertex(graph.Person());
-        person.set(graph.Person().name, personName);
-      }
-      }
-    }
+        List<Element> authorPersonElems     = citation.getChild("authorList").getChildren("person");
+        List<Element> authorConsortiumElems = citation.getChild("authorList").getChildren("consortium");
 
-    for (Element consortiumElement : authorConsortiumElems) {
+        for(Element personElement: authorPersonElems) {
 
-      String consortiumName = consortiumElement.getAttributeValue("name");
+          final String personName = personElement.getAttributeValue("name");
 
-      if(!consortiumNameSet.contains(consortiumName)){
-      consortiumNameSet.add(consortiumName);
-      if(!graph.consortiumNameIndex().getVertex(consortiumName).isPresent()){
-        Consortium<I,RV,RVT,RE,RET> consortium = graph.addVertex(graph.Consortium());
-        consortium.set(graph.Consortium().name, consortiumName);
-      }
-      }
-    }
-    //----------------------------------------------------------------------------
-    //-----------------------------THESIS-----------------------------------------
-    switch (citationType) {
-      case THESIS_CITATION_TYPE:
-      if (uniprotDataXML.getThesis()) {
-        String titleSt = citation.getChildText("title");
-        if (titleSt == null) {
-        titleSt = "";
-        }else{
+          if(!personNameSet.contains(personName)) {
 
-        if(!thesisTitleSet.contains(titleSt)){
-
-          thesisTitleSet.add(titleSt);
-
-          if(!graph.thesisTitleIndex().getVertex(titleSt).isPresent()){
-          Thesis<I,RV,RVT,RE,RET> thesis = graph.addVertex(graph.Thesis());
-          thesis.set(graph.Thesis().title, titleSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-            dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, titleSt + graph.Thesis().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferenceThesis(), thesis);
-          }
-
-          //-----------institute-----------------------------
-          String instituteSt = citation.getAttributeValue("institute");
-          String countrySt = citation.getAttributeValue("country");
-
-          if (instituteSt != null) {
-          if(!instituteNameSet.contains(instituteSt)){
-
-            instituteNameSet.add(instituteSt);
-
-            if(!graph.instituteNameIndex().getVertex(instituteSt).isPresent()){
-            Institute<I,RV,RVT,RE,RET> institute = graph.addVertex(graph.Institute());
-            institute.set(graph.Institute().name, instituteSt);
-            }
-          }
-
-          if (countrySt != null) {
-
-            if(!countryNameSet.contains(countrySt)){
-            countryNameSet.add(countrySt);
-            if(!graph.countryNameIndex().getVertex(countrySt).isPresent()){
-              Country<I,RV,RVT,RE,RET> country = graph.addVertex(graph.Country());
-              country.set(graph.Country().name, countrySt);
-            }
-            }
-          }
-          }
-        }
-        }
-      }
-
-      //----------------------------------------------------------------------------
-      //-----------------------------PATENT-----------------------------------------
-      break;
-      case PATENT_CITATION_TYPE:
-      if (uniprotDataXML.getPatents()) {
-        String numberSt = citation.getAttributeValue("number");
-        String titleSt = citation.getChildText("title");
-        if (titleSt == null) {
-        titleSt = "";
-        }
-        if (numberSt == null) {
-        numberSt = "";
-        }
-
-        if (!numberSt.equals("")) {
-        if(!patentNumberSet.contains(numberSt)){
-          patentNumberSet.add(numberSt);
-
-          if(!graph.patentNumberIndex().getVertex(numberSt).isPresent()){
-          Patent<I,RV,RVT,RE,RET> patent = graph.addVertex(graph.Patent());
-          patent.set(graph.Patent().number, numberSt);
-          patent.set(graph.Patent().title, titleSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-            dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, numberSt + graph.Patent().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferencePatent(), patent);
-          }
-        }
-        }
-      }
-
-      //----------------------------------------------------------------------------
-      //-----------------------------SUBMISSION-----------------------------------------
-      break;
-      case SUBMISSION_CITATION_TYPE:
-      if (uniprotDataXML.getSubmissions()) {
-        String titleSt = citation.getChildText("title");
-        String dbSt = citation.getAttributeValue("db");
-        if (titleSt == null) {
-        titleSt = "";
-        }else{
-
-        if(!submissionTitleSet.contains(titleSt)){
-          submissionTitleSet.add(titleSt);
-
-          if(!graph.submissionTitleIndex().getVertex(titleSt).isPresent()){
-          Submission<I,RV,RVT,RE,RET> submission = graph.addVertex(graph.Submission());
-          submission.set(graph.Submission().title, titleSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-            dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, titleSt + graph.Submission().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferenceSubmission(), submission);
-          }
-
-          if (dbSt != null) {
-          if(!dbNameSet.contains(dbSt)){
-            dbNameSet.add(dbSt);
-            if(!graph.dbNameIndex().getVertex(dbSt).isPresent()){
-            DB<I,RV,RVT,RE,RET> db = graph.addVertex(graph.DB());
-            db.set(graph.DB().name, dbSt);
-            }
-          }
-          }
-        }
-        }
-      }
-
-      //----------------------------------------------------------------------------
-      //-----------------------------BOOK-----------------------------------------
-      break;
-      case BOOK_CITATION_TYPE:
-      if (uniprotDataXML.getBooks()) {
-        String nameSt = citation.getAttributeValue("name");
-        String titleSt = citation.getChildText("title");
-        String publisherSt = citation.getAttributeValue("publisher");
-        String citySt = citation.getAttributeValue("city");
-        if (nameSt == null) {
-        nameSt = "";
-        }
-        if (titleSt == null) {
-        titleSt = "";
-        }
-        if (publisherSt == null) {
-        publisherSt = "";
-        }
-        if (citySt == null) {
-        citySt = "";
-        }
-
-        if(!bookNameSet.contains(nameSt)){
-
-        bookNameSet.add(nameSt);
-
-        if(!graph.bookNameIndex().getVertex(nameSt).isPresent()){
-
-          Book<I,RV,RVT,RE,RET> book = graph.addVertex(graph.Book());
-          book.set(graph.Book().name, nameSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-          dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, nameSt + graph.Book().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferenceBook(), book);
-
-          //---editor association-----
-          Element editorListElem = citation.getChild("editorList");
-          if (editorListElem != null) {
-          List<Element> editorsElems = editorListElem.getChildren("person");
-          for (Element personElement : editorsElems) {
-            String personName = personElement.getAttributeValue("name");
-
-            if(!personNameSet.contains(personName)){
             personNameSet.add(personName);
-            if(!graph.personNameIndex().getVertex(personName).isPresent()){
-              Person<I,RV,RVT,RE,RET> editor = graph.addVertex(graph.Person());
-              editor.set(graph.Person().name, personName);
-            }
-            }
-          }
-          }
 
-          //----publisher--
-          if (!publisherSt.equals("")) {
-          if(!publisherNameSet.contains(publisherSt)){
-            publisherNameSet.add(publisherSt);
+            if(!graph.personNameIndex().getVertex(personName).isPresent()) {
 
-            if(!graph.publisherNameIndex().getVertex(publisherSt).isPresent()){
-            Publisher<I,RV,RVT,RE,RET> publisher = graph.addVertex(graph.Publisher());
-            publisher.set(graph.Publisher().name, publisherSt);
+              final Person<I,RV,RVT,RE,RET> person = graph.addVertex(graph.Person());
+              person.set(graph.Person().name, personName);
             }
-          }
-          }
-
-          //-----city-----
-          if (!citySt.equals("")) {
-          if(!cityNameSet.contains(citySt)){
-            cityNameSet.add(citySt);
-
-            if(!graph.cityNameIndex().getVertex(citySt).isPresent()){
-            City<I,RV,RVT,RE,RET> city = graph.addVertex(graph.City());
-            city.set(graph.City().name, citySt);
-            }
-          }
           }
         }
 
+        for(Element consortiumElement: authorConsortiumElems) {
+
+          final String consortiumName = consortiumElement.getAttributeValue("name");
+
+          if(!consortiumNameSet.contains(consortiumName)) {
+
+            consortiumNameSet.add(consortiumName);
+
+            if(!graph.consortiumNameIndex().getVertex(consortiumName).isPresent()) {
+
+              final Consortium<I,RV,RVT,RE,RET> consortium = graph.addVertex(graph.Consortium());
+              consortium.set(graph.Consortium().name, consortiumName);
+            }
+          }
+        }
+        //----------------------------------------------------------------------------
+        //-----------------------------THESIS-----------------------------------------
+        // start the dance on citation type
+        switch (citationType) {
+          case THESIS_CITATION_TYPE: {
+
+            String titleSt = citation.getChildText("title");
+
+            if(titleSt == null) {
+
+              titleSt = "";
+            }
+            else {
+
+              if(!thesisTitleSet.contains(titleSt)) {
+
+                thesisTitleSet.add(titleSt);
+
+                if(!graph.thesisTitleIndex().getVertex(titleSt).isPresent()) {
+
+                  final Thesis<I,RV,RVT,RE,RET> thesis = graph.addVertex(graph.Thesis());
+                  thesis.set(graph.Thesis().title, titleSt);
+
+                  String dateSt = citation.getAttributeValue("date");
+
+                  if (dateSt == null) {
+
+                    dateSt = "";
+                  }
+
+                  Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+                  reference.set(graph.Reference().id, titleSt + graph.Thesis().name());
+                  reference.set(graph.Reference().date, dateSt);
+                  reference.addOutEdge(graph.ReferenceThesis(), thesis);
+                }
+
+                //-----------institute-----------------------------
+                String instituteSt = citation.getAttributeValue("institute");
+                String countrySt = citation.getAttributeValue("country");
+
+                if (instituteSt != null) {
+
+                  if(!instituteNameSet.contains(instituteSt)) {
+
+                    instituteNameSet.add(instituteSt);
+
+                    if(!graph.instituteNameIndex().getVertex(instituteSt).isPresent()) {
+                      Institute<I,RV,RVT,RE,RET> institute = graph.addVertex(graph.Institute());
+                      institute.set(graph.Institute().name, instituteSt);
+                    }
+                  }
+
+                  if(countrySt != null) {
+
+                    if(!countryNameSet.contains(countrySt)) {
+
+                      countryNameSet.add(countrySt);
+
+                      if(!graph.countryNameIndex().getVertex(countrySt).isPresent()) {
+
+                        Country<I,RV,RVT,RE,RET> country = graph.addVertex(graph.Country());
+                        country.set(graph.Country().name, countrySt);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            break;
+          }
+          //----------------------------------------------------------------------------
+          //-----------------------------PATENT-----------------------------------------
+          case PATENT_CITATION_TYPE: {
+
+            String numberSt = citation.getAttributeValue("number");
+            String titleSt  = citation.getChildText("title");
+
+            if(titleSt == null) {
+              titleSt = "";
+            }
+            if(numberSt == null) {
+              numberSt = "";
+            }
+
+            if (!numberSt.equals("")) {
+
+              if(!patentNumberSet.contains(numberSt)) {
+
+                patentNumberSet.add(numberSt);
+
+                if(!graph.patentNumberIndex().getVertex(numberSt).isPresent()) {
+
+                  Patent<I,RV,RVT,RE,RET> patent = graph.addVertex(graph.Patent());
+                  patent.set(graph.Patent().number, numberSt);
+                  patent.set(graph.Patent().title, titleSt);
+
+                  String dateSt = citation.getAttributeValue("date");
+                  if (dateSt == null) {
+                    dateSt = "";
+                  }
+
+                  Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+                  reference.set(graph.Reference().id, numberSt + graph.Patent().name());
+                  reference.set(graph.Reference().date, dateSt);
+                  reference.addOutEdge(graph.ReferencePatent(), patent);
+                }
+              }
+            }
+
+            break;
+          }
+
+          //----------------------------------------------------------------------------
+          //-----------------------------SUBMISSION-----------------------------------------
+          case SUBMISSION_CITATION_TYPE: {
+
+            String titleSt = citation.getChildText("title");
+            String dbSt = citation.getAttributeValue("db");
+            if (titleSt == null) {
+              titleSt = "";
+            }
+            else {
+
+              if(!submissionTitleSet.contains(titleSt)) {
+
+                submissionTitleSet.add(titleSt);
+
+                if(!graph.submissionTitleIndex().getVertex(titleSt).isPresent()) {
+
+                  Submission<I,RV,RVT,RE,RET> submission = graph.addVertex(graph.Submission());
+                  submission.set(graph.Submission().title, titleSt);
+
+                  String dateSt = citation.getAttributeValue("date");
+                  if(dateSt == null) {
+                    dateSt = "";
+                  }
+
+                  Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+                  reference.set(graph.Reference().id, titleSt + graph.Submission().name());
+                  reference.set(graph.Reference().date, dateSt);
+                  reference.addOutEdge(graph.ReferenceSubmission(), submission);
+                }
+
+                if(dbSt != null) {
+
+                  if(!dbNameSet.contains(dbSt)) {
+
+                    dbNameSet.add(dbSt);
+
+                    if(!graph.dbNameIndex().getVertex(dbSt).isPresent()) {
+
+                      DB<I,RV,RVT,RE,RET> db = graph.addVertex(graph.DB());
+                      db.set(graph.DB().name, dbSt);
+                    }
+                  }
+                }
+              }
+            }
+
+            break;
+          }
+
+          //----------------------------------------------------------------------------
+          //-----------------------------BOOK-----------------------------------------
+          case BOOK_CITATION_TYPE: {
+
+            String nameSt = citation.getAttributeValue("name");
+            String titleSt = citation.getChildText("title");
+            String publisherSt = citation.getAttributeValue("publisher");
+            String citySt = citation.getAttributeValue("city");
+            if (nameSt == null) {
+            nameSt = "";
+            }
+            if (titleSt == null) {
+            titleSt = "";
+            }
+            if (publisherSt == null) {
+            publisherSt = "";
+            }
+            if (citySt == null) {
+            citySt = "";
+            }
+
+            if(!bookNameSet.contains(nameSt)){
+
+            bookNameSet.add(nameSt);
+
+            if(!graph.bookNameIndex().getVertex(nameSt).isPresent()){
+
+              Book<I,RV,RVT,RE,RET> book = graph.addVertex(graph.Book());
+              book.set(graph.Book().name, nameSt);
+
+              String dateSt = citation.getAttributeValue("date");
+              if (dateSt == null) {
+              dateSt = "";
+              }
+
+              Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+              reference.set(graph.Reference().id, nameSt + graph.Book().name());
+              reference.set(graph.Reference().date, dateSt);
+              reference.addOutEdge(graph.ReferenceBook(), book);
+
+              //---editor association-----
+              Element editorListElem = citation.getChild("editorList");
+              if (editorListElem != null) {
+              List<Element> editorsElems = editorListElem.getChildren("person");
+              for (Element personElement : editorsElems) {
+                String personName = personElement.getAttributeValue("name");
+
+                if(!personNameSet.contains(personName)){
+                personNameSet.add(personName);
+                if(!graph.personNameIndex().getVertex(personName).isPresent()){
+                  Person<I,RV,RVT,RE,RET> editor = graph.addVertex(graph.Person());
+                  editor.set(graph.Person().name, personName);
+                }
+                }
+              }
+              }
+
+              //----publisher--
+              if (!publisherSt.equals("")) {
+              if(!publisherNameSet.contains(publisherSt)){
+                publisherNameSet.add(publisherSt);
+
+                if(!graph.publisherNameIndex().getVertex(publisherSt).isPresent()){
+                Publisher<I,RV,RVT,RE,RET> publisher = graph.addVertex(graph.Publisher());
+                publisher.set(graph.Publisher().name, publisherSt);
+                }
+              }
+              }
+
+              //-----city-----
+              if (!citySt.equals("")) {
+              if(!cityNameSet.contains(citySt)){
+                cityNameSet.add(citySt);
+
+                if(!graph.cityNameIndex().getVertex(citySt).isPresent()){
+                City<I,RV,RVT,RE,RET> city = graph.addVertex(graph.City());
+                city.set(graph.City().name, citySt);
+                }
+              }
+              }
+            }
+
+            }
+
+          //----------------------------------------------------------------------------
+          //-----------------------------ONLINE ARTICLE-----------------------------------------
+          break;
+          }
+
+          case ONLINE_ARTICLE_CITATION_TYPE: {
+            String nameSt = citation.getAttributeValue("name");
+            String titleSt = citation.getChildText("title");
+
+            if (titleSt == null) {
+            titleSt = "";
+            }
+            if (nameSt == null) {
+            nameSt = "";
+            }
+
+            if (!titleSt.equals("")) {
+
+            if(!onlineArticleTitleSet.contains(titleSt)){
+
+              onlineArticleTitleSet.add(titleSt);
+
+              if(!graph.onlineArticleTitleIndex().getVertex(titleSt).isPresent()){
+              OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = graph.addVertex(graph.OnlineArticle());
+              onlineArticle.set(graph.OnlineArticle().title, titleSt);
+
+              String dateSt = citation.getAttributeValue("date");
+              if (dateSt == null) {
+                dateSt = "";
+              }
+
+              Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+              reference.set(graph.Reference().id, titleSt + graph.OnlineArticle().name());
+              reference.set(graph.Reference().date, dateSt);
+              reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
+
+              //------online journal-----------
+              if (!nameSt.equals("")) {
+
+                if(!onlineJournalNameSet.contains(nameSt)){
+                onlineJournalNameSet.add(nameSt);
+
+                if(!graph.onlineJournalNameIndex().getVertex(nameSt).isPresent()){
+                  OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = graph.addVertex(graph.OnlineJournal());
+                  onlineJournal.set(graph.OnlineJournal().name, nameSt);
+                }
+                }
+              }
+              //----------------------------
+              }
+            }
+            }
+
+          //----------------------------------------------------------------------------
+          //-----------------------------ARTICLE-----------------------------------------
+          break;
+          }
+
+          case ARTICLE_CITATION_TYPE: {
+
+            String journalNameSt = citation.getAttributeValue("name");
+            String titleSt = citation.getChildText("title");
+            String doiSt = "";
+            String medlineSt = "";
+            String pubmedId = "";
+
+            if (journalNameSt == null) {
+            journalNameSt = "";
+            }
+            if (titleSt == null) {
+            titleSt = "";
+            }
+
+            List<Element> dbReferences = citation.getChildren("dbReference");
+            for (Element tempDbRef : dbReferences) {
+            switch (tempDbRef.getAttributeValue("type")) {
+              case "DOI":
+              doiSt = tempDbRef.getAttributeValue("id");
+              break;
+              case "MEDLINE":
+              medlineSt = tempDbRef.getAttributeValue("id");
+              break;
+              case "PubMed":
+              pubmedId = tempDbRef.getAttributeValue("id");
+              break;
+            }
+            }
+
+            if (titleSt != "") {
+
+            if(!articleTitleNameSet.contains(titleSt)){
+              articleTitleNameSet.add(titleSt);
+
+              if(!graph.articleTitleIndex().getVertex(titleSt).isPresent()){
+
+              Article<I,RV,RVT,RE,RET> article = graph.addVertex(graph.Article());
+              article.set(graph.Article().title, titleSt);
+              article.set(graph.Article().doId, doiSt);
+
+              String dateSt = citation.getAttributeValue("date");
+              if (dateSt == null) {
+                dateSt = "";
+              }
+
+              Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
+              reference.set(graph.Reference().id, titleSt + graph.Article().name());
+              reference.set(graph.Reference().date, dateSt);
+              reference.addOutEdge(graph.ReferenceArticle(), article);
+
+              if(pubmedId != ""){
+
+                if(!pubmedIdSet.contains(pubmedId)){
+                pubmedIdSet.add(pubmedId);
+
+                if(!graph.pubmedIdIndex().getVertex(pubmedId).isPresent()){
+                  Pubmed<I,RV,RVT,RE,RET> pubmed = graph.addVertex(graph.Pubmed());
+                  pubmed.set(graph.Pubmed().id, pubmedId);
+                }
+
+                }
+              }
+
+              //------journal-----------
+              if (!journalNameSt.equals("")) {
+
+                if(!journalNameSet.contains(journalNameSt)){
+                journalNameSet.add(journalNameSt);
+                if(!graph.journalNameIndex().getVertex(journalNameSt).isPresent()){
+                  Journal<I,RV,RVT,RE,RET> journal = graph.addVertex(graph.Journal());
+                  journal.set(graph.Journal().name, journalNameSt);
+                }
+                }
+              }
+              //----------------------------
+              }
+            }
+            }
+          //----------------------------------------------------------------------------
+          //----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
+          break;
+          }
         }
       }
-
-      //----------------------------------------------------------------------------
-      //-----------------------------ONLINE ARTICLE-----------------------------------------
-      break;
-      case ONLINE_ARTICLE_CITATION_TYPE:
-      if (uniprotDataXML.getOnlineArticles()) {
-        String nameSt = citation.getAttributeValue("name");
-        String titleSt = citation.getChildText("title");
-
-        if (titleSt == null) {
-        titleSt = "";
-        }
-        if (nameSt == null) {
-        nameSt = "";
-        }
-
-        if (!titleSt.equals("")) {
-
-        if(!onlineArticleTitleSet.contains(titleSt)){
-
-          onlineArticleTitleSet.add(titleSt);
-
-          if(!graph.onlineArticleTitleIndex().getVertex(titleSt).isPresent()){
-          OnlineArticle<I,RV,RVT,RE,RET> onlineArticle = graph.addVertex(graph.OnlineArticle());
-          onlineArticle.set(graph.OnlineArticle().title, titleSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-            dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, titleSt + graph.OnlineArticle().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferenceOnlineArticle(), onlineArticle);
-
-          //------online journal-----------
-          if (!nameSt.equals("")) {
-
-            if(!onlineJournalNameSet.contains(nameSt)){
-            onlineJournalNameSet.add(nameSt);
-
-            if(!graph.onlineJournalNameIndex().getVertex(nameSt).isPresent()){
-              OnlineJournal<I,RV,RVT,RE,RET> onlineJournal = graph.addVertex(graph.OnlineJournal());
-              onlineJournal.set(graph.OnlineJournal().name, nameSt);
-            }
-            }
-          }
-          //----------------------------
-          }
-        }
-        }
-      }
-
-      //----------------------------------------------------------------------------
-      //-----------------------------ARTICLE-----------------------------------------
-      break;
-      case ARTICLE_CITATION_TYPE:
-
-      if (uniprotDataXML.getArticles()) {
-
-        String journalNameSt = citation.getAttributeValue("name");
-        String titleSt = citation.getChildText("title");
-        String doiSt = "";
-        String medlineSt = "";
-        String pubmedId = "";
-
-        if (journalNameSt == null) {
-        journalNameSt = "";
-        }
-        if (titleSt == null) {
-        titleSt = "";
-        }
-
-        List<Element> dbReferences = citation.getChildren("dbReference");
-        for (Element tempDbRef : dbReferences) {
-        switch (tempDbRef.getAttributeValue("type")) {
-          case "DOI":
-          doiSt = tempDbRef.getAttributeValue("id");
-          break;
-          case "MEDLINE":
-          medlineSt = tempDbRef.getAttributeValue("id");
-          break;
-          case "PubMed":
-          pubmedId = tempDbRef.getAttributeValue("id");
-          break;
-        }
-        }
-
-        if (titleSt != "") {
-
-        if(!articleTitleNameSet.contains(titleSt)){
-          articleTitleNameSet.add(titleSt);
-
-          if(!graph.articleTitleIndex().getVertex(titleSt).isPresent()){
-
-          Article<I,RV,RVT,RE,RET> article = graph.addVertex(graph.Article());
-          article.set(graph.Article().title, titleSt);
-          article.set(graph.Article().doId, doiSt);
-
-          String dateSt = citation.getAttributeValue("date");
-          if (dateSt == null) {
-            dateSt = "";
-          }
-
-          Reference<I,RV,RVT,RE,RET> reference = graph.addVertex(graph.Reference());
-          reference.set(graph.Reference().id, titleSt + graph.Article().name());
-          reference.set(graph.Reference().date, dateSt);
-          reference.addOutEdge(graph.ReferenceArticle(), article);
-
-          if(pubmedId != ""){
-
-            if(!pubmedIdSet.contains(pubmedId)){
-            pubmedIdSet.add(pubmedId);
-
-            if(!graph.pubmedIdIndex().getVertex(pubmedId).isPresent()){
-              Pubmed<I,RV,RVT,RE,RET> pubmed = graph.addVertex(graph.Pubmed());
-              pubmed.set(graph.Pubmed().id, pubmedId);
-            }
-
-            }
-          }
-
-          //------journal-----------
-          if (!journalNameSt.equals("")) {
-
-            if(!journalNameSet.contains(journalNameSt)){
-            journalNameSet.add(journalNameSt);
-            if(!graph.journalNameIndex().getVertex(journalNameSt).isPresent()){
-              Journal<I,RV,RVT,RE,RET> journal = graph.addVertex(graph.Journal());
-              journal.set(graph.Journal().name, journalNameSt);
-            }
-            }
-          }
-          //----------------------------
-          }
-        }
-        }
-      }
-
-      //----------------------------------------------------------------------------
-      //----------------------UNPUBLISHED OBSERVATIONS-----------------------------------------
-      break;
     }
-    }
-  }
 
 
   }
