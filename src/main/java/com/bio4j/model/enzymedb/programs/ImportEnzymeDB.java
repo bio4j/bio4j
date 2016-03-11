@@ -147,190 +147,173 @@ public abstract class ImportEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RV
   private static FileHandler fh;
 
   /* Implementing classes need to provide a means of instantiating a ENZYME graph from a file */
-  protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
-  public final void importEnzymeDB(String[] args) {
+  public final void importEnzymeDB(File inFile, File dbFolder) {
 
-    if (args.length != 3) {
-      System.out.println(
-          "This program expects the following parameters: \n"
-        + "1. Enzyme DB data file (ftp://ftp.expasy.org/databases/enzyme/enzyme.dat)\n"
-        + "2. Bio4j DB folder\n"
-        + "3. DB Properties file (.properties)\n"
-      );
-    }
-    else {
+    /* Create the graph instance */
+    EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder);
 
-      /* get arguments, create variables */
-      File inFile           = new File(args[0]);
-      String dbFolder       = args[1];
-      String propertiesFile = args[2];
+    BufferedWriter statsBuff = null;
+    long initTime = System.nanoTime();
+    int enzymeCounter = 0;
 
-      /* Create the graph instance */
-      EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder, propertiesFile);
+    try {
 
+      /* logging configuration */
+      fh = new FileHandler("ImportEnzymeDB.log", true);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 
-      BufferedWriter statsBuff = null;
-      long initTime = System.nanoTime();
-      int enzymeCounter = 0;
+      /* Initialize the stats writer */
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBStats.txt")));
 
-      try {
+      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      String line;
 
-        /* logging configuration */
-        fh = new FileHandler("ImportEnzymeDB.log", true);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        logger.addHandler(fh);
-        logger.setLevel(Level.ALL);
+      /* These variables correspond to the current ENZYME entry */
+      boolean enzymeFound           = false;
+      String officialName           = "";
+      String enzymeId               = "";
+      String commentsSt             = "";
+      String catalyticActivity      = "";
+      List<String> cofactors        = new LinkedList<>();
+      List<String> prositeCrossRefs = new LinkedList<>();
+      boolean deletedEntry          = false;
+      boolean transferredEntry      = false;
 
-        /* Initialize the stats writer */
-        statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBStats.txt")));
+      System.out.println("Reading file "+inFile.toString());
 
-        BufferedReader reader = new BufferedReader(new FileReader(inFile));
-        String line;
+      while((line = reader.readLine()) != null) {
 
-        /* These variables correspond to the current ENZYME entry */
-        boolean enzymeFound           = false;
-        String officialName           = "";
-        String enzymeId               = "";
-        String commentsSt             = "";
-        String catalyticActivity      = "";
-        List<String> cofactors        = new LinkedList<>();
-        List<String> prositeCrossRefs = new LinkedList<>();
-        boolean deletedEntry          = false;
-        boolean transferredEntry      = false;
+        if(line.startsWith(IDENTIFICATION_LINE_CODE)) {
+          enzymeFound = true;
+          enzymeId = line.substring(5).trim();
+        }
+        else if(enzymeFound) {
 
-        System.out.println("Reading file "+inFile.toString());
+          if(line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
 
-        while((line = reader.readLine()) != null) {
+            officialName += line.substring(5).trim();
 
-          if(line.startsWith(IDENTIFICATION_LINE_CODE)) {
-            enzymeFound = true;
-            enzymeId = line.substring(5).trim();
+            if(officialName.contains("Deleted entry.")) {
+              deletedEntry = true;
+            }
+            else if(officialName.contains("Transferred entry:")) {
+              transferredEntry = true;
+            }
           }
-          else if(enzymeFound) {
+          else if(line.startsWith(COFACTORS_LINE_CODE)) {
 
-            if(line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
+            String[] cofs = line.substring(5).trim().split(";");
+            for (String cofactorSt : cofs) {
+              cofactors.add(cofactorSt.trim());
+            }
+          }
+          else if(line.startsWith(PROSITE_CROSS_REFERENCES_LINE_CODE)) {
 
-              officialName += line.substring(5).trim();
+            String[] proRefs = line.substring(5).trim().split(";");
 
-              if(officialName.contains("Deleted entry.")) {
-                deletedEntry = true;
+            for (String prositeSt: proRefs) {
+              if (!prositeSt.equals("PROSITE")) { prositeCrossRefs.add(prositeSt.trim()); }
+            }
+          }
+          else if(line.startsWith(COMMENTS_LINE_CODE)) {
+
+            commentsSt += line.substring(5).trim() + " ";
+          }
+          else if(line.startsWith(CATALYTIC_ACTIVITY_LINE_CODE)) {
+
+            catalyticActivity += line.substring(5).trim() + " ";
+          }
+          else if(line.startsWith(TERMINATION_LINE_CODE)) {
+
+            if(enzymeFound) {
+
+              if(deletedEntry) {
+
+                logger.log(Level.INFO, ("Entry with id " + enzymeId + " was deleted. It won't be stored..."));
+                deletedEntry = false;
               }
-              else if(officialName.contains("Transferred entry:")) {
-                transferredEntry = true;
-              }
-            }
-            else if(line.startsWith(COFACTORS_LINE_CODE)) {
+              else if(transferredEntry) {
 
-              String[] cofs = line.substring(5).trim().split(";");
-              for (String cofactorSt : cofs) {
-                cofactors.add(cofactorSt.trim());
-              }
-            }
-            else if(line.startsWith(PROSITE_CROSS_REFERENCES_LINE_CODE)) {
-
-              String[] proRefs = line.substring(5).trim().split(";");
-
-              for (String prositeSt: proRefs) {
-                if (!prositeSt.equals("PROSITE")) { prositeCrossRefs.add(prositeSt.trim()); }
-              }
-            }
-            else if(line.startsWith(COMMENTS_LINE_CODE)) {
-
-              commentsSt += line.substring(5).trim() + " ";
-            }
-            else if(line.startsWith(CATALYTIC_ACTIVITY_LINE_CODE)) {
-
-              catalyticActivity += line.substring(5).trim() + " ";
-            }
-            else if(line.startsWith(TERMINATION_LINE_CODE)) {
-
-              if(enzymeFound) {
-
-                if(deletedEntry) {
-
-                  logger.log(Level.INFO, ("Entry with id " + enzymeId + " was deleted. It won't be stored..."));
-                  deletedEntry = false;
-                }
-                else if(transferredEntry) {
-
-                  logger.log(Level.INFO, ("Entry with id " + enzymeId + " was transferred. It won't be stored..."));
-                  transferredEntry = false;
-                }
-
-                /* at this point we know we have an enzyme. Let's create a new vertex */
-                Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
-                /* and then set its properties */
-                enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
-                enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);
-                enzyme.set(enzymeDBGraph.Enzyme().cofactors, cofactors.toArray(new String[0]));
-                enzyme.set(enzymeDBGraph.Enzyme().prositeCrossReferences, prositeCrossRefs.toArray(new String[0]));
-                enzyme.set(enzymeDBGraph.Enzyme().catalyticActivity, catalyticActivity);
-                enzyme.set(enzymeDBGraph.Enzyme().comment, commentsSt);
-
-                /* we got an enzyme inserted, increase the counter */
-                enzymeCounter++;
-                /* println every 100 enzymes */
-                if(enzymeCounter % 100 == 0) { System.out.println(enzymeCounter + " enzymes inserted"); }
+                logger.log(Level.INFO, ("Entry with id " + enzymeId + " was transferred. It won't be stored..."));
+                transferredEntry = false;
               }
 
-              /* reset loop state */
-              enzymeFound         = false;
-              officialName        = "";
-              enzymeId            = "";
-              commentsSt          = "";
-              catalyticActivity   = "";
-              cofactors.clear();
-              prositeCrossRefs.clear();
+              /* at this point we know we have an enzyme. Let's create a new vertex */
+              Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
+              /* and then set its properties */
+              enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
+              enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);
+              enzyme.set(enzymeDBGraph.Enzyme().cofactors, cofactors.toArray(new String[0]));
+              enzyme.set(enzymeDBGraph.Enzyme().prositeCrossReferences, prositeCrossRefs.toArray(new String[0]));
+              enzyme.set(enzymeDBGraph.Enzyme().catalyticActivity, catalyticActivity);
+              enzyme.set(enzymeDBGraph.Enzyme().comment, commentsSt);
+
+              /* we got an enzyme inserted, increase the counter */
+              enzymeCounter++;
+              /* println every 100 enzymes */
+              if(enzymeCounter % 100 == 0) { System.out.println(enzymeCounter + " enzymes inserted"); }
             }
+
+            /* reset loop state */
+            enzymeFound         = false;
+            officialName        = "";
+            enzymeId            = "";
+            commentsSt          = "";
+            catalyticActivity   = "";
+            cofactors.clear();
+            prositeCrossRefs.clear();
           }
         }
+      }
 
-        /* close the file reader */
-        reader.close();
+      /* close the file reader */
+      reader.close();
+    }
+    catch(Exception e) {
+
+      logger.log(Level.SEVERE, e.getMessage());
+      StackTraceElement[] trace = e.getStackTrace();
+
+      for (StackTraceElement stackTraceElement : trace) {
+        logger.log(Level.SEVERE, stackTraceElement.toString());
+      }
+    }
+    finally {
+
+      try {
+        //closing logger file handler
+        fh.close();
+        logger.log(Level.INFO, "Closing up graph service");
+        // shutdown, makes sure all changes are written to disk
+        enzymeDBGraph.raw().shutdown();
+
+        //-----------------writing stats file---------------------
+        long elapsedTime    = System.nanoTime() - initTime;
+        long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+
+        long hours    = elapsedSeconds/3600;
+        long minutes  = (elapsedSeconds % 3600)/60;
+        long seconds  = (elapsedSeconds % 3600)%60;
+
+        statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
+          + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
+          "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+        //---closing stats writer---
+        statsBuff.close();
       }
       catch(Exception e) {
 
         logger.log(Level.SEVERE, e.getMessage());
         StackTraceElement[] trace = e.getStackTrace();
 
-        for (StackTraceElement stackTraceElement : trace) {
+        for(StackTraceElement stackTraceElement: trace) {
           logger.log(Level.SEVERE, stackTraceElement.toString());
-        }
-      }
-      finally {
-
-        try {
-          //closing logger file handler
-          fh.close();
-          logger.log(Level.INFO, "Closing up graph service");
-          // shutdown, makes sure all changes are written to disk
-          enzymeDBGraph.raw().shutdown();
-
-          //-----------------writing stats file---------------------
-          long elapsedTime    = System.nanoTime() - initTime;
-          long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-
-          long hours    = elapsedSeconds/3600;
-          long minutes  = (elapsedSeconds % 3600)/60;
-          long seconds  = (elapsedSeconds % 3600)%60;
-
-          statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
-            + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
-            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
-
-          //---closing stats writer---
-          statsBuff.close();
-        }
-        catch(Exception e) {
-
-          logger.log(Level.SEVERE, e.getMessage());
-          StackTraceElement[] trace = e.getStackTrace();
-
-          for(StackTraceElement stackTraceElement: trace) {
-            logger.log(Level.SEVERE, stackTraceElement.toString());
-          }
         }
       }
     }
