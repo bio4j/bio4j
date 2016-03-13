@@ -8,27 +8,27 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Created by ppareja on 7/29/2014.
- */
+* Created by ppareja on 7/29/2014.
+*/
 public final class Reference <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-  extends UniProtGraph.UniProtVertex<
-  Reference<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  I, RV, RVT, RE, RET
-  > {
+extends UniProtGraph.UniProtVertex<
+Reference<I, RV, RVT, RE, RET>,
+UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
+I, RV, RVT, RE, RET
+> {
 
   public Reference(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType type) {
-  super(vertex, type);
+    super(vertex, type);
   }
 
   @Override
   public Reference<I, RV, RVT, RE, RET> self() {
-  return this;
+    return this;
   }
 
   // properties
   public String date() {
-  return get(type().date);
+    return get(type().date);
   }
   public String id(){ return get(type().id); }
 
@@ -40,7 +40,7 @@ public final class Reference <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT,
   // ingoing
   public Stream<ProteinReference<I, RV, RVT, RE, RET>> proteinReference_in(){  return inMany(graph().ProteinReference());  }
   public Stream<Protein<I, RV, RVT, RE, RET>> proteinReference_inV(){
-  return inManyV(graph().ProteinReference());
+    return inManyV(graph().ProteinReference());
   }
   // referenceArticle
   // outgoing

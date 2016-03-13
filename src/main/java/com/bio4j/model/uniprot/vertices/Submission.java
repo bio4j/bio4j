@@ -8,27 +8,27 @@ import com.bio4j.angulillos.UntypedGraph;
 import java.util.Optional;
 
 /**
- * Created by ppareja on 7/23/2014.
- */
+* Created by ppareja on 7/23/2014.
+*/
 public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-  extends UniProtGraph.UniProtVertex<
-  Submission<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
-  I, RV, RVT, RE, RET
-  >  {
+extends UniProtGraph.UniProtVertex<
+Submission<I, RV, RVT, RE, RET>,
+UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
+I, RV, RVT, RE, RET
+>  {
 
   public Submission(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType type) {
-  super(vertex, type);
+    super(vertex, type);
   }
 
   @Override
   public Submission<I, RV, RVT, RE, RET> self() {
-  return this;
+    return this;
   }
 
   // properties
   public String title() {
-  return get(type().title);
+    return get(type().title);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,10 +38,10 @@ public final class Submission <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT
   // submissionDB
   // outgoing
   public Optional<SubmissionDB<I, RV, RVT, RE, RET>> submissionDB_out(){
-  return outOneOptional(graph().SubmissionDB());
+    return outOneOptional(graph().SubmissionDB());
   }
   public Optional<DB<I, RV, RVT, RE, RET>> submissionDB_outV(){
-  return outOneOptionalV(graph().SubmissionDB());
+    return outOneOptionalV(graph().SubmissionDB());
   }
 
   // referenceSubmission

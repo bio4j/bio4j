@@ -85,11 +85,12 @@ public abstract class NCBITaxonomyGraph<
   // Vertex types
 
   public final class NCBITaxonType
-    extends
+  extends
     NCBITaxonomyVertexType<
       NCBITaxon<I, RV, RVT, RE, RET>,
       NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType
-      > {
+    >
+{
 
   public final id id = new id();
   public final name name = new name();
@@ -100,80 +101,81 @@ public abstract class NCBITaxonomyGraph<
   }
 
   @Override
-  public NCBITaxonType value() {
+  public final NCBITaxonType value() {
     return graph().NCBITaxon();
   }
 
   @Override
-  public NCBITaxon<I, RV, RVT, RE, RET> from(RV vertex) {
+  public final NCBITaxon<I, RV, RVT, RE, RET> from(RV vertex) {
     return new NCBITaxon<I, RV, RVT, RE, RET>(vertex, this);
   }
 
   public final class id
-    extends
+  extends
     NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, id, String> {
+
     public id() {
-    super(NCBITaxonType.this);
+      super(NCBITaxonType.this);
     }
 
     public Class<String> valueClass() {
-    return String.class;
+      return String.class;
     }
   }
 
   public final class name
-    extends
+  extends
     NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, name, String> {
+
     public name() {
-    super(NCBITaxonType.this);
+      super(NCBITaxonType.this);
     }
 
     public Class<String> valueClass() {
-    return String.class;
+      return String.class;
     }
   }
 
   public final class taxonomicRank
-    extends
+  extends
     NCBITaxonomyVertexProperty<NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonType, taxonomicRank, String> {
-    public taxonomicRank() {
-    super(NCBITaxonType.this);
+
+      public taxonomicRank() {
+        super(NCBITaxonType.this);
+      }
+
+      public Class<String> valueClass() {
+        return String.class;
+      }
     }
-
-    public Class<String> valueClass() {
-    return String.class;
-    }
-  }
-
-
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Edge types
 
   public final class NCBITaxonParentType
-    extends
+  extends
     NCBITaxonomyEdgeType<
       NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
       NCBITaxonParent<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonParentType,
       NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType
-      >
-    implements
+    >
+  implements
     TypedEdge.Type.OneToMany {
 
-  public NCBITaxonParentType(RET raw) {
-    super(NCBITaxonomyGraph.this.NCBITaxon(), raw, NCBITaxonomyGraph.this.NCBITaxon());
-  }
+    public NCBITaxonParentType(RET raw) {
+      super(NCBITaxonomyGraph.this.NCBITaxon(), raw, NCBITaxonomyGraph.this.NCBITaxon());
+    }
 
-  @Override
-  public NCBITaxonParentType value() {
-    return graph().NCBITaxonParent();
-  }
+    @Override
+    public final NCBITaxonParentType value() {
+      return graph().NCBITaxonParent();
+    }
 
-  @Override
-  public NCBITaxonParent<I, RV, RVT, RE, RET> from(RE edge) {
-    return new NCBITaxonParent<I, RV, RVT, RE, RET>(edge, this);
-  }
+    @Override
+    public final NCBITaxonParent<I, RV, RVT, RE, RET> from(RE edge) {
+      return new NCBITaxonParent<I, RV, RVT, RE, RET>(edge, this);
+    }
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,74 +190,74 @@ public abstract class NCBITaxonomyGraph<
     implements
     Property<V, VT, P, PV, NCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-  protected NCBITaxonomyVertexProperty(VT type) {
+      protected NCBITaxonomyVertexProperty(VT type) {
 
-    this.type = type;
-  }
+        this.type = type;
+      }
 
-  private VT type;
+    private VT type;
 
-  @Override
-  public final VT elementType() {
-    return type;
-  }
+    @Override
+    public final VT elementType() {
+      return type;
+    }
   }
 
   public abstract static class NCBITaxonomyVertex<
     V extends NCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
     VT extends NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonomyVertexType<V, VT>,
     I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-    >
-    implements
+  >
+  implements
     TypedVertex<V, VT, NCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-  private RV vertex;
-  private VT type;
+    private RV vertex;
+    private VT type;
 
-  protected NCBITaxonomyVertex(RV vertex, VT type) {
+    protected NCBITaxonomyVertex(RV vertex, VT type) {
 
-    this.vertex = vertex;
-    this.type = type;
-  }
+      this.vertex = vertex;
+      this.type = type;
+    }
 
-  @Override
-  public NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-    return type().graph();
-  }
+    @Override
+    public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+      return type().graph();
+    }
 
-  @Override
-  public RV raw() {
-    return this.vertex;
-  }
+    @Override
+    public final RV raw() {
+      return this.vertex;
+    }
 
-  @Override
-  public VT type() {
-    return type;
-  }
+    @Override
+    public final VT type() {
+      return type;
+    }
   }
 
   abstract class NCBITaxonomyVertexType<
     V extends NCBITaxonomyVertex<V, VT, I, RV, RVT, RE, RET>,
     VT extends NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonomyVertexType<V, VT>
-    >
-    implements
+  >
+  implements
     TypedVertex.Type<V, VT, NCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
-  private RVT raw;
+    private RVT raw;
 
-  protected NCBITaxonomyVertexType(RVT raw) {
-    this.raw = raw;
-  }
+    protected NCBITaxonomyVertexType(RVT raw) {
+      this.raw = raw;
+    }
 
-  @Override
-  public final RVT raw() {
-    return raw;
-  }
+    @Override
+    public final RVT raw() {
+      return raw;
+    }
 
-  @Override
-  public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-    return NCBITaxonomyGraph.this;
-  }
+    @Override
+    public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+      return NCBITaxonomyGraph.this;
+    }
   }
 
   public abstract static class NCBITaxonomyEdge<
@@ -266,37 +268,38 @@ public abstract class NCBITaxonomyGraph<
     T extends NCBITaxonomyVertex<T, TT, I, RV, RVT, RE, RET>,
     TT extends NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonomyVertexType<T, TT>,
     I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
-    >
-    implements
+  >
+  implements
     TypedEdge<
       S, ST, NCBITaxonomyGraph<I, RV, RVT, RE, RET>,
       E, ET, NCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
       T, TT, NCBITaxonomyGraph<I, RV, RVT, RE, RET>
-      > {
+    >
+  {
 
-  private RE edge;
-  private ET type;
+    private RE edge;
+    private ET type;
 
-  protected NCBITaxonomyEdge(RE edge, ET type) {
+    protected NCBITaxonomyEdge(RE edge, ET type) {
 
-    this.edge = edge;
-    this.type = type;
-  }
+      this.edge = edge;
+      this.type = type;
+    }
 
-  @Override
-  public NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-    return type().graph();
-  }
+    @Override
+    public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+      return type().graph();
+    }
 
-  @Override
-  public RE raw() {
-    return this.edge;
-  }
+    @Override
+    public final RE raw() {
+      return this.edge;
+    }
 
-  @Override
-  public ET type() {
-    return type;
-  }
+    @Override
+    public final ET type() {
+      return type;
+    }
   }
 
   abstract class NCBITaxonomyEdgeType<
@@ -306,44 +309,44 @@ public abstract class NCBITaxonomyGraph<
     ET extends NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonomyEdgeType<S, ST, E, ET, T, TT>,
     T extends NCBITaxonomyVertex<T, TT, I, RV, RVT, RE, RET>,
     TT extends NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonomyVertexType<T, TT>
-    >
-    implements
+  >
+  implements
     TypedEdge.Type<
       S, ST, NCBITaxonomyGraph<I, RV, RVT, RE, RET>,
       E, ET, NCBITaxonomyGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
       T, TT, NCBITaxonomyGraph<I, RV, RVT, RE, RET>
-      > {
+    >
+  {
 
-  private RET raw;
-  private ST srcT;
-  private TT tgtT;
+    private RET raw;
+    private ST srcT;
+    private TT tgtT;
 
-  protected NCBITaxonomyEdgeType(ST srcT, RET raw, TT tgtT) {
+    protected NCBITaxonomyEdgeType(ST srcT, RET raw, TT tgtT) {
 
-    this.raw = raw;
-    this.srcT = srcT;
-    this.tgtT = tgtT;
+      this.raw = raw;
+      this.srcT = srcT;
+      this.tgtT = tgtT;
+    }
+
+    @Override
+    public final ST sourceType() {
+      return srcT;
+    }
+
+    @Override
+    public final TT targetType() {
+      return tgtT;
+    }
+
+    @Override
+    public final RET raw() {
+      return raw;
+    }
+
+    @Override
+    public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
+      return NCBITaxonomyGraph.this;
+    }
   }
-
-  @Override
-  public final ST sourceType() {
-    return srcT;
-  }
-
-  @Override
-  public final TT targetType() {
-    return tgtT;
-  }
-
-  @Override
-  public final RET raw() {
-    return raw;
-  }
-
-  @Override
-  public final NCBITaxonomyGraph<I, RV, RVT, RE, RET> graph() {
-    return NCBITaxonomyGraph.this;
-  }
-  }
-
 }

@@ -11,15 +11,16 @@ public final class PositivelyRegulates<I extends UntypedGraph<RV, RVT, RE, RET>,
     PositivelyRegulates<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.PositivelyRegulatesType,
     GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType,
     I, RV, RVT, RE, RET
-    > {
+  >
+{
 
   public PositivelyRegulates(RE edge, GoGraph<I, RV, RVT, RE, RET>.PositivelyRegulatesType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
-  public PositivelyRegulates<I, RV, RVT, RE, RET> self() {
-  return this;
+  public final PositivelyRegulates<I, RV, RVT, RE, RET> self() {
+    return this;
   }
 }

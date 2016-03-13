@@ -11,16 +11,16 @@ public final class NCBITaxonParent<I extends UntypedGraph<RV, RVT, RE, RET>, RV,
     NCBITaxonParent<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonParentType,
     NCBITaxon<I, RV, RVT, RE, RET>, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
     I, RV, RVT, RE, RET
-    > {
+  >
+{
 
   public NCBITaxonParent(RE edge, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonParentType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
-  public NCBITaxonParent<I, RV, RVT, RE, RET> self() {
-  return this;
+  public final NCBITaxonParent<I, RV, RVT, RE, RET> self() {
+    return this;
   }
 }
-

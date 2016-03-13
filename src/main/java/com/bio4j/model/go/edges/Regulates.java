@@ -11,15 +11,16 @@ public final class Regulates<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
     Regulates<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.RegulatesType,
     GoTerm<I, RV, RVT, RE, RET>, GoGraph<I, RV, RVT, RE, RET>.GoTermType,
     I, RV, RVT, RE, RET
-    > {
+  >
+{
 
   public Regulates(RE edge, GoGraph<I, RV, RVT, RE, RET>.RegulatesType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
-  public Regulates<I, RV, RVT, RE, RET> self() {
-  return this;
+  public final Regulates<I, RV, RVT, RE, RET> self() {
+    return this;
   }
 }
