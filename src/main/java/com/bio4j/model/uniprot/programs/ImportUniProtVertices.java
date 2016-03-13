@@ -78,235 +78,68 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     final UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
+    // TODO there should be a better way of initializing these things
     Protein<I,RV,RVT,RE,RET> protein = null;
-
     BufferedWriter statsBuff = null;
 
     int proteinCounter      = 0;
-    int limitForPrintingOut = 10000;
+    final int limitForPrintingOut = 10000;
 
     try {
 
       // This block configures the logger with handler and formatter
       fh = new FileHandler("ImportUniProtVertices.log", false);
 
-      SimpleFormatter formatter = new SimpleFormatter();
+      final SimpleFormatter formatter = new SimpleFormatter();
       fh.setFormatter(formatter);
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
 
-      //---creating writer for stats file-----
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
+
       String line;
       StringBuilder entryStBuilder = new StringBuilder();
 
-      while((line = reader.readLine()) != null) {
+      /* Iterate over the input file lines */
+      while((line = inFileReader.readLine()) != null) {
 
         if(line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
 
           while(!line.trim().startsWith("</"+ENTRY_TAG_NAME+">")) {
 
             entryStBuilder.append(line);
-            line = reader.readLine();
+            line = inFileReader.readLine();
           }
           entryStBuilder.append(line);
 
           XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
-          /* Now we import the protein using the XML element and the graph */
+          /* Import the protein vertex and its properties using the XML element and the graph */
           protein = importProteinFrom(entryXMLElem, graph);
 
-          /* now protein crossrefs */
+          /* Protein crossreference vertices */
           importProteinReferences(entryXMLElem, graph);
 
-          /* Protein comments */
+          /* Protein comments vertices */
           importProteinComments(entryXMLElem, graph, protein, protein.sequence());
 
-          /* Protein features */
+          /* Protein features vertices */
           importProteinFeatures(entryXMLElem, graph, protein);
 
-          //--------------------------------datasets--------------------------------------------------
-          String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-
-          if(!datasetNameSet.contains(proteinDataSetSt)) {
-
-            datasetNameSet.add(proteinDataSetSt);
-
-            if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
-
-              Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
-              dataset.set(graph.Dataset().name, proteinDataSetSt);
-            }
-          }
-          //---------------------------------------------------------------------------------------------
+          importProteinDatasets(entryXMLElem, graph);
 
           importProteinCitations(entryXMLElem, graph, protein);
 
-          //-------------------------------keywords------------------------------------------------------
-          List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
-          for (Element keywordElem : keywordsList) {
+          importProteinKeywords(entryXMLElem, graph);
 
-            final String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
+          importProteinGeneLocation(entryXMLElem, graph);
 
-            if(!keywordIdSet.contains(keywordId)) {
+          importProteinGeneNames(entryXMLElem, graph);
 
-              keywordIdSet.add(keywordId);
-
-              if(graph.keywordIdIndex().getVertex(keywordId).isPresent()) {
-
-                String keywordName = keywordElem.getText();
-                Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
-                keyword.set(graph.Keyword().id, keywordId);
-                keyword.set(graph.Keyword().name, keywordName);
-              }
-            }
-          }
-
-          //---------------------------------------------------------------------------------------
-          //--------------------------------geneLocation-------------------------------------------
-          List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
-
-          for(Element geneLocationElem: geneLocationElements){
-
-            String geneLocationTypeSt = geneLocationElem.getAttributeValue("type");
-
-            if(!geneLocationNameSet.contains(geneLocationTypeSt)) {
-
-              geneLocationNameSet.add(geneLocationTypeSt);
-
-              if(!graph.geneLocationNameIndex().getVertex(geneLocationTypeSt).isPresent()) {
-
-                GeneLocation<I,RV,RVT,RE,RET> geneLocation = graph.addVertex(graph.GeneLocation());
-                geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
-              }
-            }
-          }
-
-          //---------------------------------------------------------------------------------------
-          //--------------------------------gene names-------------------------------------------
-          final Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-
-          if(geneElement != null) {
-
-            final List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-
-            for(Element geneNameElem: geneNamesList) {
-
-              final String geneNameSt = geneNameElem.getText();
-              final String typeSt     = geneNameElem.getAttributeValue("type");
-
-              if(!geneNameSet.contains(geneNameSt)) {
-
-                geneNameSet.add(geneNameSt);
-
-                if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()) {
-
-                  GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
-                  geneName.set(graph.GeneName().name, geneNameSt);
-                }
-              }
-            }
-          }
-          //---------------------------------------------------------------------------------------
-
-          //---------------------------------------------------------------------------------------
-          //--------------------------------organism-----------------------------------------------
-
-          String scName, commName, synName;
-          scName    = "";
-          commName  = "";
-          synName   = "";
-
-          final Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
-
-          List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
-
-          for(Element element: organismNames) {
-
-            final String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-
-            switch(type) {
-
-              case ORGANISM_SCIENTIFIC_NAME_TYPE:
-              scName = element.getText();
-              break;
-              case ORGANISM_COMMON_NAME_TYPE:
-              commName = element.getText();
-              break;
-              case ORGANISM_SYNONYM_NAME_TYPE:
-              synName = element.getText();
-              break;
-            }
-          }
-
-          if(!organismScientificNameSet.contains(scName)) {
-
-            organismScientificNameSet.add(scName);
-
-            if(!graph.organismScientificNameIndex().getVertex(scName).isPresent()) {
-
-              final Organism<I,RV,RVT,RE,RET> organism = graph.addVertex(graph.Organism());
-              organism.set(graph.Organism().scientificName, scName);
-              organism.set(graph.Organism().commonName, commName);
-              organism.set(graph.Organism().synonymName, synName);
-
-              // TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or also store the id as an attribute
-              //  List<Element> organismDbRefElems = organismElem.getChildren(DB_REFERENCE_TAG_NAME);
-              //  boolean ncbiIdFound = false;
-              //  if (organismDbRefElems != null) {
-              //  for (Element dbRefElem : organismDbRefElems) {
-              //    String t = dbRefElem.getAttributeValue("type");
-              //    if (t.equals("NCBI Taxonomy")) {
-              //    organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
-              //    ncbiIdFound = true;
-              //    break;
-              //    }
-              //  }
-              //  }
-              //  if (!ncbiIdFound) {
-              //  organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
-              //  }
-
-              final Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
-              List<Element> taxons = lineage.getChildren("taxon");
-
-              final Element firstTaxonElem = taxons.get(0);
-
-              if(!taxonNameSet.contains(firstTaxonElem.getText())) {
-
-                taxonNameSet.add(firstTaxonElem.getText());
-
-                if(!graph.taxonNameIndex().getVertex(firstTaxonElem.getText()).isPresent()) {
-
-                  final String firstTaxonName = firstTaxonElem.getText();
-
-                  final Taxon<I,RV,RVT,RE,RET> firstTaxon = graph.addVertex(graph.Taxon());
-                  firstTaxon.set(graph.Taxon().name, firstTaxonName);
-                }
-              }
-
-              for(int i = 1; i < taxons.size(); i++) {
-
-                final String taxonName = taxons.get(i).getText();
-
-                if(!taxonNameSet.contains(taxonName)) {
-
-                  taxonNameSet.add(taxonName);
-
-                  if(!graph.taxonNameIndex().getVertex(taxonName).isPresent()){
-                    Taxon<I,RV,RVT,RE,RET> currentTaxon = graph.addVertex(graph.Taxon());
-                    currentTaxon.set(graph.Taxon().name, taxonName);
-                  }
-                }
-              }
-            }
-          }
-
-          //---------------------------------------------------------------------------------------
-          //---------------------------------------------------------------------------------------
+          importProteinOrganisms(entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -336,13 +169,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
       try {
 
-        // shutdown, makes sure all changes are written to disk
+        /* This should write everything */
         graph.raw().shutdown();
 
         // closing logger file handler
         fh.close();
 
-        //-----------------writing stats file---------------------
         long elapsedTime        = System.nanoTime() - initTime;
         long elapsedSeconds     = Math.round((elapsedTime / 1000000000.0));
         long hours              = elapsedSeconds / 3600;
@@ -353,7 +185,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         + "\nThere were " + proteinCounter + " proteins inserted.\n"
         + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
-        //---closing stats writer---
         statsBuff.close();
       }
       catch (IOException ex) {
@@ -364,7 +195,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   /*
-  This method gets the protein data from the corresponding XML element and writes it to the graph
+    This method gets the protein data from the corresponding XML element and writes it to the graph
   */
   private Protein<I,RV,RVT,RE,RET> importProteinFrom(
   XMLElement entryXMLElem,
@@ -409,8 +240,8 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinReferences(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
     //-----db references-------------
@@ -693,10 +524,29 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     }
   }
 
+  private void importProteinDatasets(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
+  )
+  {
+    final String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
+
+    if(!datasetNameSet.contains(proteinDataSetSt)) {
+
+      datasetNameSet.add(proteinDataSetSt);
+
+      if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
+
+        final Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
+        dataset.set(graph.Dataset().name, proteinDataSetSt);
+      }
+    }
+  }
+
   private void importProteinFeatures(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph,
+    Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
@@ -720,11 +570,191 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     }
   }
 
+  private void importProteinKeywords(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
+  )
+  {
+
+    final List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
+
+    for(Element keywordElem: keywordsList) {
+
+      final String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
+
+      if(!keywordIdSet.contains(keywordId)) {
+
+        keywordIdSet.add(keywordId);
+
+        if(graph.keywordIdIndex().getVertex(keywordId).isPresent()) {
+
+          final String keywordName = keywordElem.getText();
+          final Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
+          keyword.set(graph.Keyword().id, keywordId);
+          keyword.set(graph.Keyword().name, keywordName);
+        }
+      }
+    }
+
+  }
+
+  private void importProteinGeneLocation(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
+  )
+  {
+    final List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
+
+    for(Element geneLocationElem: geneLocationElements) {
+
+      final String geneLocationTypeSt = geneLocationElem.getAttributeValue("type");
+
+      if(!geneLocationNameSet.contains(geneLocationTypeSt)) {
+
+        geneLocationNameSet.add(geneLocationTypeSt);
+
+        if(!graph.geneLocationNameIndex().getVertex(geneLocationTypeSt).isPresent()) {
+
+          GeneLocation<I,RV,RVT,RE,RET> geneLocation = graph.addVertex(graph.GeneLocation());
+          geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
+        }
+      }
+    }
+  }
+
+  private void importProteinGeneNames(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
+  )
+  {
+
+    final Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+
+    if(geneElement != null) {
+
+      final List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
+
+      for(Element geneNameElem: geneNamesList) {
+
+        final String geneNameSt = geneNameElem.getText();
+        final String typeSt     = geneNameElem.getAttributeValue("type");
+
+        if(!geneNameSet.contains(geneNameSt)) {
+
+          geneNameSet.add(geneNameSt);
+
+          if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()) {
+
+            final GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
+            geneName.set(graph.GeneName().name, geneNameSt);
+          }
+        }
+      }
+    }
+  }
+
+  private void importProteinOrganisms(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
+  )
+  {
+
+    String scName, commName, synName;
+    scName    = "";
+    commName  = "";
+    synName   = "";
+
+    final Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
+    final List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
+
+    for(Element element: organismNames) {
+
+      final String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
+
+      switch(type) {
+
+        case ORGANISM_SCIENTIFIC_NAME_TYPE:
+        scName = element.getText();
+        break;
+        case ORGANISM_COMMON_NAME_TYPE:
+        commName = element.getText();
+        break;
+        case ORGANISM_SYNONYM_NAME_TYPE:
+        synName = element.getText();
+        break;
+      }
+    }
+
+    if(!organismScientificNameSet.contains(scName)) {
+
+      organismScientificNameSet.add(scName);
+
+      if(!graph.organismScientificNameIndex().getVertex(scName).isPresent()) {
+
+        final Organism<I,RV,RVT,RE,RET> organism = graph.addVertex(graph.Organism());
+        organism.set(graph.Organism().scientificName, scName);
+        organism.set(graph.Organism().commonName, commName);
+        organism.set(graph.Organism().synonymName, synName);
+
+        // TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or also store the id as an attribute
+        //  List<Element> organismDbRefElems = organismElem.getChildren(DB_REFERENCE_TAG_NAME);
+        //  boolean ncbiIdFound = false;
+        //  if (organismDbRefElems != null) {
+        //  for (Element dbRefElem : organismDbRefElems) {
+        //    String t = dbRefElem.getAttributeValue("type");
+        //    if (t.equals("NCBI Taxonomy")) {
+        //    organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
+        //    ncbiIdFound = true;
+        //    break;
+        //    }
+        //  }
+        //  }
+        //  if (!ncbiIdFound) {
+        //  organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
+        //  }
+
+        final Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
+        final List<Element> taxons = lineage.getChildren("taxon");
+
+        final Element firstTaxonElem = taxons.get(0);
+
+        if(!taxonNameSet.contains(firstTaxonElem.getText())) {
+
+          taxonNameSet.add(firstTaxonElem.getText());
+
+          if(!graph.taxonNameIndex().getVertex(firstTaxonElem.getText()).isPresent()) {
+
+            final String firstTaxonName = firstTaxonElem.getText();
+
+            final Taxon<I,RV,RVT,RE,RET> firstTaxon = graph.addVertex(graph.Taxon());
+            firstTaxon.set(graph.Taxon().name, firstTaxonName);
+          }
+        }
+
+        for(int i = 1; i < taxons.size(); i++) {
+
+          final String taxonName = taxons.get(i).getText();
+
+          if(!taxonNameSet.contains(taxonName)) {
+
+            taxonNameSet.add(taxonName);
+
+            if(!graph.taxonNameIndex().getVertex(taxonName).isPresent()) {
+
+              final Taxon<I,RV,RVT,RE,RET> currentTaxon = graph.addVertex(graph.Taxon());
+              currentTaxon.set(graph.Taxon().name, taxonName);
+            }
+          }
+        }
+      }
+    }
+  }
+
   private void importProteinComments(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein,
-  String proteinSequence
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph,
+    Protein<I,RV,RVT,RE,RET> protein,
+    String proteinSequence
   )
   {
 
@@ -905,9 +935,9 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinCitations(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph,
+    Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
@@ -1372,7 +1402,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   /*
   ### Random helper methods
   */
-
   private Date parseDate(String date) throws ParseException {
 
     return dateFormat.parse(date);
