@@ -200,7 +200,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
 
         } catch (IOException ex) {
-          Logger.getLogger(ImportUniProt.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
         }
 
       }
