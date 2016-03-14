@@ -17,195 +17,182 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
-* @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
-*/
 public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
   private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
   private static FileHandler fh;
 
-  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
-  protected void importProteinInteractions(String[] args) {
+  protected void importProteinInteractions(File inFile, File dbFolder) {
 
-    if (args.length != 3) {
-      System.out.println("This program expects the following parameters: \n"
-      + "1. UniProt xml filename \n"
-      + "2. Bio4j DB folder \n"
-      + "3. DB Properties file (.properties)");
-    } else {
+    final long initTime = System.nanoTime();
 
-      long initTime = System.nanoTime();
+    final UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
-      File inFile = new File(args[0]);
-      String dbFolder = args[1];
-      String propertiesFile = args[2];
+    String currentAccessionId = "";
 
-      String currentAccessionId = "";
+    BufferedWriter statsBuff = null;
 
-      //-------creating graph handlers---------------------
-      UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder, propertiesFile);
+    int proteinCounter = 0;
+    int limitForPrintingOut = 10000;
 
-      BufferedWriter statsBuff = null;
+    try {
 
-      int proteinCounter = 0;
-      int limitForPrintingOut = 10000;
+      // This block configures the logger with handler and formatter
+      fh = new FileHandler("ImportProteinInteractions.log", false);
 
-      try {
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 
-        // This block configures the logger with handler and formatter
-        fh = new FileHandler("ImportProteinInteractions" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+      //---creating writer for stats file-----
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        logger.addHandler(fh);
-        logger.setLevel(Level.ALL);
 
-        //---creating writer for stats file-----
-        statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-        BufferedReader reader = new BufferedReader(new FileReader(inFile));
-        StringBuilder entryStBuilder = new StringBuilder();
-        String line;
 
-        while ((line = reader.readLine()) != null) {
-          if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
 
-            while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-              entryStBuilder.append(line);
-              line = reader.readLine();
-            }
-            //linea final del organism
+
+      final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
+
+      String line;
+      StringBuilder entryStBuilder = new StringBuilder();
+
+      /* Iterate over the input file lines */
+      while((line = inFileReader.readLine()) != null) {
+
+        if(line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
+
+          while(!line.trim().startsWith("</"+ENTRY_TAG_NAME+">")) {
+
             entryStBuilder.append(line);
-            //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
-            XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-            entryStBuilder.delete(0, entryStBuilder.length());
+            line = inFileReader.readLine();
+          }
+          entryStBuilder.append(line);
 
-            String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          entryStBuilder.delete(0, entryStBuilder.length());
 
-            Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = graph.proteinAccessionIndex().getVertex(accessionSt);
+          String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
 
-            if(proteinOptional.isPresent()){
+          Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = graph.proteinAccessionIndex().getVertex(accessionSt);
 
-              Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
+          if(proteinOptional.isPresent()){
 
-              List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+            Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
 
-              for (Element commentElem : comments) {
+            List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
 
-                String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
+            for (Element commentElem : comments) {
 
-                //----------interaction----------------
-                if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
+              String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
 
-                  List<Element> interactants = commentElem.getChildren("interactant");
-                  Element interactant1 = interactants.get(0);
-                  Element interactant2 = interactants.get(1);
-                  Element organismsDiffer = commentElem.getChild("organismsDiffer");
-                  Element experiments = commentElem.getChild("experiments");
-                  String intactId1St = interactant1.getAttributeValue("intactId");
-                  String intactId2St = interactant2.getAttributeValue("intactId");
-                  String organismsDifferSt = "";
-                  String experimentsSt = "";
-                  if (intactId1St == null) {
-                    intactId1St = "";
-                  }
-                  if (intactId2St == null) {
-                    intactId2St = "";
-                  }
-                  if (organismsDiffer != null) {
-                    organismsDifferSt = organismsDiffer.getText();
-                  }
-                  if (experiments != null) {
-                    experimentsSt = experiments.getText();
-                  }
+              //----------interaction----------------
+              if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
 
-                  //----now we try to retrieve the interactant 2 accession--
-                  String interactant2AccessionSt = interactant2.getChildText("id");
-                  long protein2Id = -1;
-                  if (interactant2AccessionSt != null) {
+                List<Element> interactants = commentElem.getChildren("interactant");
+                Element interactant1 = interactants.get(0);
+                Element interactant2 = interactants.get(1);
+                Element organismsDiffer = commentElem.getChild("organismsDiffer");
+                Element experiments = commentElem.getChild("experiments");
+                String intactId1St = interactant1.getAttributeValue("intactId");
+                String intactId2St = interactant2.getAttributeValue("intactId");
+                String organismsDifferSt = "";
+                String experimentsSt = "";
+                if (intactId1St == null) {
+                  intactId1St = "";
+                }
+                if (intactId2St == null) {
+                  intactId2St = "";
+                }
+                if (organismsDiffer != null) {
+                  organismsDifferSt = organismsDiffer.getText();
+                }
+                if (experiments != null) {
+                  experimentsSt = experiments.getText();
+                }
 
-                    Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
+                //----now we try to retrieve the interactant 2 accession--
+                String interactant2AccessionSt = interactant2.getChildText("id");
+                long protein2Id = -1;
+                if (interactant2AccessionSt != null) {
 
-                    if(!protein2Optional.isPresent()) {
+                  Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
 
-                      Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
+                  if(!protein2Optional.isPresent()) {
 
-                      if(isoformOptional.isPresent()) {
+                    Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
 
-                        ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-                        proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-                        proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-                        proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-                        proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
-                      }
+                    if(isoformOptional.isPresent()) {
+
+                      ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
+                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
+                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
+                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
+                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
                     }
-                    else {
+                  }
+                  else {
 
-                      ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
-                      proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
-                      proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
-                      proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
-                      proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
-                    }
-
+                    ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
+                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
+                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
+                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
+                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
                   }
 
                 }
 
               }
 
-              proteinCounter++;
-              if ((proteinCounter % limitForPrintingOut) == 0) {
-                logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
-              }
-
             }
 
-
+            proteinCounter++;
+            if ((proteinCounter % limitForPrintingOut) == 0) {
+              logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
+            }
           }
         }
-
-      } catch (Exception e) {
-        logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
-        logger.log(Level.SEVERE, e.getMessage());
-        StackTraceElement[] trace = e.getStackTrace();
-        for (StackTraceElement stackTraceElement : trace) {
-          logger.log(Level.SEVERE, stackTraceElement.toString());
-        }
-      } finally {
-
-        try {
-
-          // shutdown, makes sure all changes are written to disk
-          graph.raw().shutdown();
-
-          // closing logger file handler
-          fh.close();
-
-          //-----------------writing stats file---------------------
-          long elapsedTime = System.nanoTime() - initTime;
-          long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-          long hours = elapsedSeconds / 3600;
-          long minutes = (elapsedSeconds % 3600) / 60;
-          long seconds = (elapsedSeconds % 3600) % 60;
-
-          statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
-          + "\nThere were " + proteinCounter + " proteins inserted.\n"
-          + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
-
-          //---closing stats writer---
-          statsBuff.close();
-
-
-        } catch (IOException ex) {
-          Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
       }
+
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
+      logger.log(Level.SEVERE, e.getMessage());
+      StackTraceElement[] trace = e.getStackTrace();
+      for (StackTraceElement stackTraceElement : trace) {
+        logger.log(Level.SEVERE, stackTraceElement.toString());
+      }
+    } finally {
+
+      try {
+
+        // shutdown, makes sure all changes are written to disk
+        graph.raw().shutdown();
+
+        // closing logger file handler
+        fh.close();
+
+        //-----------------writing stats file---------------------
+        long elapsedTime = System.nanoTime() - initTime;
+        long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+        long hours = elapsedSeconds / 3600;
+        long minutes = (elapsedSeconds % 3600) / 60;
+        long seconds = (elapsedSeconds % 3600) % 60;
+
+        statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
+        + "\nThere were " + proteinCounter + " proteins inserted.\n"
+        + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+        //---closing stats writer---
+        statsBuff.close();
+
+
+      } catch (IOException ex) {
+        Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
     }
-
   }
-
 }

@@ -74,8 +74,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     final long initTime = System.nanoTime();
 
-    // String currentAccessionId = "";
-
     final UniProtGraph<I,RV,RVT,RE,RET> graph = config(dbFolder);
 
     // TODO there should be a better way of initializing these things
