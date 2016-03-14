@@ -22,6 +22,8 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
   private static final Logger logger = Logger.getLogger("ImportProteinInteractions");
   private static FileHandler fh;
 
+  final int limitForPrintingOut = 10000;
+
   protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
   protected void importProteinInteractions(File inFile, File dbFolder) {
@@ -35,7 +37,6 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
     BufferedWriter statsBuff = null;
 
     int proteinCounter = 0;
-    int limitForPrintingOut = 10000;
 
     try {
 
@@ -50,15 +51,10 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
       //---creating writer for stats file-----
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportProteinInteractionsStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-
-
-
-
-
       final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
 
       String line;
-      StringBuilder entryStBuilder = new StringBuilder();
+      final StringBuilder entryStBuilder = new StringBuilder();
 
       /* Iterate over the input file lines */
       while((line = inFileReader.readLine()) != null) {
@@ -72,99 +68,33 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           }
           entryStBuilder.append(line);
 
-          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          final XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
-          String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+          graph.proteinAccessionIndex()
+            .getVertex(entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME))
+            .ifPresent(
+              protein -> importProteinInteractionsWithSource(entryXMLElem, graph, protein)
+            );
 
-          Optional<Protein<I,RV,RVT,RE,RET>> proteinOptional = graph.proteinAccessionIndex().getVertex(accessionSt);
+          proteinCounter++;
 
-          if(proteinOptional.isPresent()){
+          if((proteinCounter % limitForPrintingOut) == 0) {
 
-            Protein<I,RV,RVT,RE,RET> protein = proteinOptional.get();
-
-            List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
-
-            for (Element commentElem : comments) {
-
-              String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
-
-              //----------interaction----------------
-              if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
-
-                List<Element> interactants = commentElem.getChildren("interactant");
-                Element interactant1 = interactants.get(0);
-                Element interactant2 = interactants.get(1);
-                Element organismsDiffer = commentElem.getChild("organismsDiffer");
-                Element experiments = commentElem.getChild("experiments");
-                String intactId1St = interactant1.getAttributeValue("intactId");
-                String intactId2St = interactant2.getAttributeValue("intactId");
-                String organismsDifferSt = "";
-                String experimentsSt = "";
-                if (intactId1St == null) {
-                  intactId1St = "";
-                }
-                if (intactId2St == null) {
-                  intactId2St = "";
-                }
-                if (organismsDiffer != null) {
-                  organismsDifferSt = organismsDiffer.getText();
-                }
-                if (experiments != null) {
-                  experimentsSt = experiments.getText();
-                }
-
-                //----now we try to retrieve the interactant 2 accession--
-                String interactant2AccessionSt = interactant2.getChildText("id");
-                long protein2Id = -1;
-                if (interactant2AccessionSt != null) {
-
-                  Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
-
-                  if(!protein2Optional.isPresent()) {
-
-                    Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
-
-                    if(isoformOptional.isPresent()) {
-
-                      ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-                      proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
-                    }
-                  }
-                  else {
-
-                    ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
-                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
-                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
-                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
-                    proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
-                  }
-
-                }
-
-              }
-
-            }
-
-            proteinCounter++;
-            if ((proteinCounter % limitForPrintingOut) == 0) {
-              logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
-            }
+            logger.log(Level.INFO, (proteinCounter + " proteins updated with interactions!!"));
           }
         }
       }
-
-    } catch (Exception e) {
+    }
+    catch(Exception e) {
       logger.log(Level.SEVERE, ("Exception retrieving protein " + currentAccessionId));
       logger.log(Level.SEVERE, e.getMessage());
       StackTraceElement[] trace = e.getStackTrace();
       for (StackTraceElement stackTraceElement : trace) {
         logger.log(Level.SEVERE, stackTraceElement.toString());
       }
-    } finally {
+    }
+    finally {
 
       try {
 
@@ -175,11 +105,11 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
         fh.close();
 
         //-----------------writing stats file---------------------
-        long elapsedTime = System.nanoTime() - initTime;
+        long elapsedTime    = System.nanoTime() - initTime;
         long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-        long hours = elapsedSeconds / 3600;
-        long minutes = (elapsedSeconds % 3600) / 60;
-        long seconds = (elapsedSeconds % 3600) % 60;
+        long hours          = elapsedSeconds / 3600;
+        long minutes        = (elapsedSeconds % 3600) / 60;
+        long seconds        = (elapsedSeconds % 3600) % 60;
 
         statsBuff.write("Statistics for program ImportProteinInteractions:\nInput file: " + inFile.getName()
         + "\nThere were " + proteinCounter + " proteins inserted.\n"
@@ -188,11 +118,82 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
         //---closing stats writer---
         statsBuff.close();
 
-
       } catch (IOException ex) {
+
         Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
       }
 
+    }
+  }
+
+  private void importProteinInteractionsWithSource(
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph,
+    Protein<I,RV,RVT,RE,RET> protein
+  )
+  {
+
+    List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+
+    for (Element commentElem: comments) {
+
+      String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
+
+      //----------interaction----------------
+      if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
+
+        List<Element> interactants = commentElem.getChildren("interactant");
+        Element interactant1 = interactants.get(0);
+        Element interactant2 = interactants.get(1);
+        Element organismsDiffer = commentElem.getChild("organismsDiffer");
+        Element experiments = commentElem.getChild("experiments");
+        String intactId1St = interactant1.getAttributeValue("intactId");
+        String intactId2St = interactant2.getAttributeValue("intactId");
+        String organismsDifferSt = "";
+        String experimentsSt = "";
+        if (intactId1St == null) {
+          intactId1St = "";
+        }
+        if (intactId2St == null) {
+          intactId2St = "";
+        }
+        if (organismsDiffer != null) {
+          organismsDifferSt = organismsDiffer.getText();
+        }
+        if (experiments != null) {
+          experimentsSt = experiments.getText();
+        }
+
+        //----now we try to retrieve the interactant 2 accession--
+        String interactant2AccessionSt = interactant2.getChildText("id");
+        long protein2Id = -1;
+        if (interactant2AccessionSt != null) {
+
+          Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
+
+          if(!protein2Optional.isPresent()) {
+
+            Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
+
+            if(isoformOptional.isPresent()) {
+
+              ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
+              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
+            }
+          }
+          else {
+
+            ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
+            proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
+            proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
+            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
+            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
+          }
+        }
+      }
     }
   }
 }

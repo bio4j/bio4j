@@ -113,31 +113,19 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           entryStBuilder.append(line);
 
           XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-          entryStBuilder.delete(0, entryStBuilder.length());
+          entryStBuilder.delete       (0, entryStBuilder.length());
 
-          /* Import the protein vertex and its properties using the XML element and the graph */
-          protein = importProteinFrom(entryXMLElem, graph);
+          protein = importProteinFrom (entryXMLElem, graph);
 
-          /* Protein crossreference vertices */
-          importProteinReferences(entryXMLElem, graph);
-
-          /* Protein comments vertices */
-          importProteinComments(entryXMLElem, graph, protein, protein.sequence());
-
-          /* Protein features vertices */
-          importProteinFeatures(entryXMLElem, graph, protein);
-
-          importProteinDatasets(entryXMLElem, graph);
-
-          importProteinCitations(entryXMLElem, graph, protein);
-
-          importProteinKeywords(entryXMLElem, graph);
-
-          importProteinGeneLocation(entryXMLElem, graph);
-
-          importProteinGeneNames(entryXMLElem, graph);
-
-          importProteinOrganisms(entryXMLElem, graph);
+          importProteinReferences   (entryXMLElem, graph);
+          importProteinComments     (entryXMLElem, graph, protein, protein.sequence());
+          importProteinFeatures     (entryXMLElem, graph, protein);
+          importProteinDatasets     (entryXMLElem, graph);
+          importProteinCitations    (entryXMLElem, graph, protein);
+          importProteinKeywords     (entryXMLElem, graph);
+          importProteinGeneLocation (entryXMLElem, graph);
+          importProteinGeneNames    (entryXMLElem, graph);
+          importProteinOrganisms    (entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -196,8 +184,8 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     This method gets the protein data from the corresponding XML element and writes it to the graph
   */
   private Protein<I,RV,RVT,RE,RET> importProteinFrom(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph
+    XMLElement entryXMLElem,
+    UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   throws ParseException {
 
