@@ -71,11 +71,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           final XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
-          graph.proteinAccessionIndex()
-            .getVertex(entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME))
-            .ifPresent(
-              protein -> importProteinInteractionsWithSource(entryXMLElem, graph, protein)
-            );
+          importProteinInteractionsWithSource(entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -122,78 +118,118 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
         Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
       }
-
     }
   }
 
   private void importProteinInteractionsWithSource(
     XMLElement entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph,
-    Protein<I,RV,RVT,RE,RET> protein
+    UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
+    // get elements
+    entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME)
+      .stream()
+      .filter(
+        commentElem -> commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE).equals(COMMENT_TYPE_INTERACTION)
+      )
+      .forEach(
 
-    List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+        commentElem -> {
 
-    for (Element commentElem: comments) {
+          final Element srcInteractant  = commentElem.getChildren("interactant").get(0);
+          final String srcInteractantId = srcInteractant.getChildText("id");
 
-      String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
+          final Element tgtInteractant  = commentElem.getChildren("interactant").get(1);
+          final String tgtInteractantId = tgtInteractant.getChildText("id");
 
-      //----------interaction----------------
-      if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
+          final Optional<Protein<I,RV,RVT,RE,RET>> optionalSrcProtein =
+            graph.proteinAccessionIndex().getVertex(srcInteractantId);
 
-        List<Element> interactants = commentElem.getChildren("interactant");
-        Element interactant1 = interactants.get(0);
-        Element interactant2 = interactants.get(1);
-        Element organismsDiffer = commentElem.getChild("organismsDiffer");
-        Element experiments = commentElem.getChild("experiments");
-        String intactId1St = interactant1.getAttributeValue("intactId");
-        String intactId2St = interactant2.getAttributeValue("intactId");
-        String organismsDifferSt = "";
-        String experimentsSt = "";
-        if (intactId1St == null) {
-          intactId1St = "";
-        }
-        if (intactId2St == null) {
-          intactId2St = "";
-        }
-        if (organismsDiffer != null) {
-          organismsDifferSt = organismsDiffer.getText();
-        }
-        if (experiments != null) {
-          experimentsSt = experiments.getText();
-        }
+          // src is a protein
+          if(optionalSrcProtein.isPresent()) {
 
-        //----now we try to retrieve the interactant 2 accession--
-        String interactant2AccessionSt = interactant2.getChildText("id");
-        long protein2Id = -1;
-        if (interactant2AccessionSt != null) {
+            final Optional<Protein<I,RV,RVT,RE,RET>> optionalTgtProtein = graph.proteinAccessionIndex()
+              .getVertex(tgtInteractantId);
 
-          Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
+            // tgt is a protein
+            if(optionalTgtProtein.isPresent()) {
 
-          if(!protein2Optional.isPresent()) {
+              // create edge, set properties
+              final ProteinProteinInteraction<I,RV,RVT,RE,RET> edge =
+                optionalSrcProtein.get().addOutEdge(graph.ProteinProteinInteraction(), optionalTgtProtein.get());
 
-            Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
+              Optional.ofNullable( commentElem.getChild("organismsDiffer") ).ifPresent(
+                elem -> edge.set(edge.type().organismsDiffer, elem.getText())
+              );
+              Optional.ofNullable( commentElem.getChild("experiments") ).ifPresent(
+                elem -> edge.set(edge.type().experiments, elem.getText())
+              );
+              edge.set(edge.type().intActId1, srcInteractantId);
+              edge.set(edge.type().intActId2, tgtInteractantId);
+            }
+            // tgt is an isoform, or just crap
+            else {
 
-            if(isoformOptional.isPresent()) {
+              graph.isoformIdIndex()
+                .getVertex(tgtInteractantId)
+                .ifPresent(
+                  tgtIsoform -> {
+                    // create edge, set properties
+                    final ProteinIsoformInteraction<I,RV,RVT,RE,RET> edge =
+                      optionalSrcProtein.get().addOutEdge(graph.ProteinIsoformInteraction(), tgtIsoform);
 
-              ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
+                    Optional.ofNullable( commentElem.getChild("organismsDiffer") ).ifPresent(
+                      elem -> edge.set(edge.type().organismsDiffer, elem.getText())
+                    );
+                    Optional.ofNullable( commentElem.getChild("experiments") ).ifPresent(
+                      elem -> edge.set(edge.type().experiments, elem.getText())
+                    );
+                    edge.set(edge.type().intActId1, srcInteractantId);
+                    edge.set(edge.type().intActId2, tgtInteractantId);
+                  }
+                );
             }
           }
+          // src is an isoform, or just crap
           else {
 
-            ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
+            graph.isoformIdIndex()
+              .getVertex(srcInteractantId)
+              .ifPresent(
+                srcIsoform -> {
+
+                  final Optional<Protein<I,RV,RVT,RE,RET>> optionalTgtProtein = graph.proteinAccessionIndex()
+                    .getVertex(tgtInteractantId);
+
+                  // tgt is a protein
+                  if(optionalTgtProtein.isPresent()) {
+
+                    // create edge, set properties
+                    final IsoformProteinInteraction<I,RV,RVT,RE,RET> edge =
+                      srcIsoform.addOutEdge(graph.IsoformProteinInteraction(), optionalTgtProtein.get());
+
+                    Optional.ofNullable( commentElem.getChild("organismsDiffer") ).ifPresent(
+                      elem -> edge.set(edge.type().organismsDiffer, elem.getText())
+                    );
+                    Optional.ofNullable( commentElem.getChild("experiments") ).ifPresent(
+                      elem -> edge.set(edge.type().experiments, elem.getText())
+                    );
+                    edge.set(edge.type().intActId1, srcInteractantId);
+                    edge.set(edge.type().intActId2, tgtInteractantId);
+                  }
+                  // tgt is an isoform, or just crap
+                  else {
+                    graph.isoformIdIndex()
+                      .getVertex(tgtInteractantId)
+                      .ifPresent(
+                        // TODO what's up with IsoformIsoformInteraction?
+                        tgtIsoform -> {}
+                      );
+                  }
+                }
+              );
           }
-        }
       }
-    }
+    );
   }
 }
