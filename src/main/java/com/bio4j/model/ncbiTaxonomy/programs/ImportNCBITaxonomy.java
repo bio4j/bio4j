@@ -85,6 +85,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
       reader = new BufferedReader(new FileReader(namesDumpFile));
 
       int linesCounter = 0;
+      
       while((line = reader.readLine()) != null) {
 
         final String[] columns = line.split("\\|");
@@ -165,8 +166,8 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
       ncbiTaxonomyGraph.raw().commit();
       logger.log(Level.INFO, "Done!");
     }
-    catch (Exception ex) {
-      
+    catch(Exception ex) {
+
       Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
     }
     finally {
@@ -195,7 +196,9 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
         //---closing stats writer---
         statsBuff.close();
 
-      } catch (Exception e) {
+      }
+      catch(Exception e) {
+
         e.printStackTrace();
       }
     }
