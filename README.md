@@ -1,6 +1,7 @@
 # Bio4j bioinformatics graph data platform
 
 [![](https://travis-ci.org/bio4j/bio4j.svg?branch=master)](https://travis-ci.org/bio4j/bio4j)
+[![](https://img.shields.io/codacy/a580b554490b42969eec4ab82d8463a0.svg)](https://www.codacy.com/app/era7/bio4j)
 [![](http://github-release-version.herokuapp.com/github/bio4j/bio4j/release.svg)](https://github.com/bio4j/bio4j/releases/latest)
 [![](https://img.shields.io/badge/license-AGPLv3-blue.svg)](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-%28agpl-3.0%29)
 [![](https://img.shields.io/badge/contact-gitter_chat-dd1054.svg)](https://gitter.im/bio4j/bio4j)
