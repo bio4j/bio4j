@@ -4101,6 +4101,18 @@ I, RV, RVT, RE, RET
     }
   }
 
+  /*
+    This edge corresponds to a protein-protein interaction, as found in the comments section of the UniProt XML.
+
+    By direct inspection of UniProt XML file I have concluded that:
+
+    1. the source id is always a protein, I don't know why
+    2. target can be either an isoform or a protein, and the id is in `interactant/id`. Isoform ids *look* to be `${protein.id}-{number}`
+
+    #### Remark
+
+    Again based on manual inspection it looks like protein-protein interactions are **not** *duplicated* in the UniProt XML file. I do not know if this implies a semantic direction or not. So, if you want to get all proteins with which a given protein interacts, you need to get both inV and outV of protein-protein interaction edges.
+  */
   public final class ProteinProteinInteractionType
   extends
   UniProtEdgeType<
@@ -4200,6 +4212,16 @@ I, RV, RVT, RE, RET
     }
   }
 
+  /*
+    This edge corresponds to a protein-isoform interaction, as found in the comments section of the UniProt XML.
+
+    By direct inspection of UniProt XML file we have concluded that:
+
+    1. the source id is always a protein, I don't know why
+    2. target can be either an isoform or a protein, and the id is in `interactant/id`. Isoform ids *look* to be `${protein.id}-{number}`
+
+    We don't know if there are interactions between isoforms.
+  */
   public final class ProteinIsoformType
   extends
   UniProtEdgeType<
