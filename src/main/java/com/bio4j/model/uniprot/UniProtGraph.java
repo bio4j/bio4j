@@ -814,8 +814,6 @@ I, RV, RVT, RE, RET
   >
   referenceIdIndex();
 
-
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // types
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1030,7 +1028,7 @@ I, RV, RVT, RE, RET
         super(AlternativeProductType.this);
       }
 
-      public Class<String> valueClass() {
+      public final Class<String> valueClass() {
         return String.class;
       }
     }
@@ -2294,44 +2292,48 @@ I, RV, RVT, RE, RET
 
 
   public final class ProteinType
-  extends
-  UniProtVertexType<
-  Protein<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
-  > {
+    extends
+      UniProtVertexType<
+        Protein<I, RV, RVT, RE, RET>,
+        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
+      >
+  {
 
-    public final accession accession = new accession();
-    public final shortName shortName = new shortName();
-    public final sequence sequence = new sequence();
-    public final name name = new name();
-    public final fullName fullName = new fullName();
-    public final modifiedDate modifiedDate = new modifiedDate();
-    public final createdDate createdDate = new createdDate();
-    public final mass mass = new mass();
-    public final version version = new version();
-    public final length length = new length();
-    public final uniRef100ClusterId uniRef100ClusterId = new uniRef100ClusterId();
-    public final uniRef90ClusterId uniRef90ClusterId = new uniRef90ClusterId();
-    public final uniRef50ClusterId uniRef50ClusterId = new uniRef50ClusterId();
+    public final accession accession  = new accession();
+    public final name name            = new name();
+    public final shortName shortName  = new shortName();
+    public final fullName fullName    = new fullName();
+    public final sequence sequence    = new sequence();
+    public final length length        = new length();
+    public final mass mass            = new mass();
 
+    public final version version            = new version();
+    public final createdDate createdDate    = new createdDate();
+    public final modifiedDate modifiedDate  = new modifiedDate();
+
+    public final uniRef100ClusterId uniRef100ClusterId  = new uniRef100ClusterId();
+    public final uniRef90ClusterId uniRef90ClusterId    = new uniRef90ClusterId();
+    public final uniRef50ClusterId uniRef50ClusterId    = new uniRef50ClusterId();
 
     public ProteinType(RVT raw) {
       super(raw);
     }
 
     @Override
-    public ProteinType value() {
+    public final ProteinType value() {
       return graph().Protein();
     }
 
     @Override
-    public Protein<I, RV, RVT, RE, RET> from(RV vertex) {
+    public final Protein<I, RV, RVT, RE, RET> from(RV vertex) {
       return new Protein<I, RV, RVT, RE, RET>(vertex, this);
     }
 
+    /* This property is always present, and identifies the protein. */
     public final class accession
-    extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String> {
+      extends
+        UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String>
+    {
       public accession() {
         super(ProteinType.this);
       }
@@ -2340,6 +2342,7 @@ I, RV, RVT, RE, RET
         return String.class;
       }
     }
+    /* This property is **optional**. */
     public final class shortName
     extends
     UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
@@ -2362,6 +2365,7 @@ I, RV, RVT, RE, RET
         return String.class;
       }
     }
+    /* This property is **always present**. It is normally larger and more descriptive than `name`. */
     public final class fullName
     extends
     UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
@@ -2408,13 +2412,12 @@ I, RV, RVT, RE, RET
     }
     public final class mass
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, String> {
+    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, Integer> {
       public mass() {
         super(ProteinType.this);
       }
-
-      public Class<String> valueClass() {
-        return String.class;
+      public Class<Integer> valueClass() {
+        return Integer.class;
       }
     }
     public final class version
@@ -5105,13 +5108,13 @@ I, RV, RVT, RE, RET
   // helper classes
 
   public abstract class UniProtVertexProperty<
-  V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-  VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
-  P extends UniProtVertexProperty<V, VT, P, PV>,
-  PV
+    V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
+    VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
+    P extends UniProtVertexProperty<V, VT, P, PV>,
+    PV
   >
   implements
-  Property<V, VT, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+    Property<V, VT, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
 
     protected UniProtVertexProperty(VT type) {
 

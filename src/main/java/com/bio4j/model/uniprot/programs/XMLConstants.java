@@ -82,15 +82,22 @@ public final class XMLConstants {
   public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE  = "unpublished observations";
 
   // this is a static representation of the entry XML structure
-  interface ENTRY {
-    String element = "entry";
-    interface ACCESSION {
-      String element = "accession";
+  interface ENTRY               { String element = "entry";
+    interface ACCESSION         { String element = "accession"; }
+    interface PROTEIN           { String element = "protein";
+      interface RECOMMENDEDNAME { String element = "recommendedName";
+        interface FULLNAME      { String element = "fullName"; }
+      }
+      interface ALTERNATIVENAME { String element = "alternativeName";
+        interface FULLNAME      { String element = "fullName"; }
+      }
     }
-    interface COMMENT {
-      String element = "comment";
-      interface TYPE {
-        String attribute = "type";
+    interface SEQUENCE          { String element = "sequence";
+      interface LENGTH          { String attribute = "length"; }
+      interface MASS            { String attribute = "mass";   }
+    }
+    interface COMMENT           { String element = "comment";
+      interface TYPE            { String attribute = "type";
         String ALLERGEN                       = "allergen";
         String ALTERNATIVE_PRODUCTS           = "alternative products";
         String BIOTECHNOLOGY                  = "biotechnology";
@@ -122,8 +129,8 @@ public final class XMLConstants {
         String INTERACTION                    = "interaction";
       }
       interface INTERACTANT     { String element = "interactant";
-        interface INTACTID  { String attribute  = "intactId"; }
-        interface ID        { String element    = "id";       }
+        interface INTACTID      { String attribute  = "intactId"; }
+        interface ID            { String element    = "id";       }
       }
       interface ORGANISMSDIFFER { String element    = "organismsDiffer";  }
       interface EXPERIMENTS     { String element    = "experiments";      }
