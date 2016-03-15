@@ -147,26 +147,26 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
     optionalSrcProtein.ifPresent(
       srcProtein -> {
-        entryXMLElem.asJDomElement().getChildren(COMMENT.element)
+        entryXMLElem.asJDomElement().getChildren(ENTRY.COMMENT.element)
           .stream()
           .filter(
             commentElem ->
-              commentElem.getAttributeValue(COMMENT.TYPE.attribute).equals(COMMENT.TYPE.INTERACTION)
+              commentElem.getAttributeValue(ENTRY.COMMENT.TYPE.attribute).equals(ENTRY.COMMENT.TYPE.INTERACTION)
           )
           .forEach(
             commentElem -> {
               /* these two elements are required by the schema */
               final Element srcInteractant  = commentElem
-                .getChildren(COMMENT.INTERACTANT.element).get(0);
+                .getChildren(ENTRY.COMMENT.INTERACTANT.element).get(0);
               final String srcInteractantId = srcInteractant
-                .getAttributeValue(COMMENT.INTERACTANT.INTACTID.attribute);
+                .getAttributeValue(ENTRY.COMMENT.INTERACTANT.INTACTID.attribute);
               final Element tgtInteractant  = commentElem
-                .getChildren(COMMENT.INTERACTANT.element).get(1);
+                .getChildren(ENTRY.COMMENT.INTERACTANT.element).get(1);
               final String tgtInteractantId = tgtInteractant
-                .getAttributeValue(COMMENT.INTERACTANT.INTACTID.attribute);
+                .getAttributeValue(ENTRY.COMMENT.INTERACTANT.INTACTID.attribute);
               /* this is always there, but it is not documented */
               final String tgtId = tgtInteractant
-                .getChildText(COMMENT.INTERACTANT.ID.element);
+                .getChildText(ENTRY.COMMENT.INTERACTANT.ID.element);
               /* we now try to get the target protein from the accession index; if it's there, create a protein-protein interaction edge, otherwise a protein-isoform one */
               final Optional<Protein<I,RV,RVT,RE,RET>> optionalTgtProtein = graph.proteinAccessionIndex()
                 .getVertex(tgtId);
@@ -175,10 +175,10 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
                 // create edge, set properties
                 final ProteinProteinInteraction<I,RV,RVT,RE,RET> edge =
                   srcProtein.addOutEdge(graph.ProteinProteinInteraction(), optionalTgtProtein.get());
-                Optional.ofNullable( commentElem.getChild(COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
+                Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
                   elem -> edge.set(edge.type().organismsDiffer, elem.getText())
                 );
-                Optional.ofNullable( commentElem.getChild(COMMENT.EXPERIMENTS.element) ).ifPresent(
+                Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
                   elem -> edge.set(edge.type().experiments, elem.getText())
                 );
                 edge.set(edge.type().intActId1, srcInteractantId);
@@ -193,10 +193,10 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
                       // create edge, set properties
                       final ProteinIsoformInteraction<I,RV,RVT,RE,RET> edge =
                         optionalSrcProtein.get().addOutEdge(graph.ProteinIsoformInteraction(), tgtIsoform);
-                      Optional.ofNullable( commentElem.getChild(COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
+                      Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
                         elem -> edge.set(edge.type().organismsDiffer, elem.getText())
                       );
-                      Optional.ofNullable( commentElem.getChild(COMMENT.EXPERIMENTS.element) ).ifPresent(
+                      Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
                         elem -> edge.set(edge.type().experiments, elem.getText())
                       );
                       edge.set(edge.type().intActId1, srcInteractantId);

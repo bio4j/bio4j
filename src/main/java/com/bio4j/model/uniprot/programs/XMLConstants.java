@@ -81,29 +81,28 @@ public final class XMLConstants {
   public static final String BOOK_CITATION_TYPE                     = "book";
   public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE  = "unpublished observations";
 
-
+  // this is a static representation of the entry XML structure
   interface ENTRY {
     String element = "entry";
     interface ACCESSION {
       String element = "accession";
     }
-  }
-  
-  interface COMMENT {
-    String element = "comment";
-    interface TYPE {
-      String attribute = "type";
-      // possible values
-      public static final String INTERACTION = "interaction";
-      // COMMMENT.TYPE.attr.equals(COMMMENT.TYPE.INTERACTION)
+    interface COMMENT {
+      String element = "comment";
+      interface TYPE {
+        String attribute = "type";
+        public static final String INTERACTION = "interaction";
+      }
+      interface INTERACTANT     { String element = "interactant";
+        interface INTACTID  { String attribute  = "intactId"; }
+        interface ID        { String element    = "id";       }
+      }
+      interface ORGANISMSDIFFER { String element    = "organismsDiffer";  }
+      interface EXPERIMENTS     { String element    = "experiments";      }
     }
-    interface INTERACTANT     { String element = "interactant";
-      interface INTACTID  { String attribute  = "intactId"; }
-      interface ID        { String element    = "id";       }
-    }
-    interface ORGANISMSDIFFER { String element    = "organismsDiffer";  }
-    interface EXPERIMENTS     { String element    = "experiments";      }
   }
+
+
 
   public static final String COMMENT_TYPE_DISEASE                         = "disease";
   public static final String COMMENT_TYPE_FUNCTION                        = "function";
