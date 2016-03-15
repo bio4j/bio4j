@@ -2,8 +2,10 @@
 ```java
 package com.bio4j.model.ncbiTaxonomy.vertices;
 
+import com.bio4j.model.geninfo.vertices.GenInfo;
 import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
+import com.bio4j.model.ncbiTaxonomy_geninfo.edges.GenInfoNCBITaxon;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.bio4j.angulillos.UntypedGraph;
@@ -13,56 +15,67 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-extends
-  NCBITaxonomyGraph.NCBITaxonomyVertex<
-    NCBITaxon<I, RV, RVT, RE, RET>,
-    NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
-    I, RV, RVT, RE, RET
-  >
-{
+  extends NCBITaxonomyGraph.NCBITaxonomyVertex<
+  NCBITaxon<I, RV, RVT, RE, RET>,
+  NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
+  I, RV, RVT, RE, RET
+  > {
 
   public NCBITaxon(RV vertex, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType type) {
-    super(vertex, type);
+  super(vertex, type);
   }
 
   @Override
-  public final NCBITaxon<I, RV, RVT, RE, RET> self() {
+  public NCBITaxon<I, RV, RVT, RE, RET> self() {
   return this;
   }
 
   // properties
-  public final String id() {
-    return get(type().id);
+  public String id() {
+  return get(type().id);
   }
 
-  public final String name() {
-    return get(type().name);
+  public String name() {
+  return get(type().name);
   }
 
-  public final String taxonomicRank() {
-    return get(type().taxonomicRank);
+  public String taxonomicRank() {
+  return get(type().taxonomicRank);
   }
 
-  public final Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in() {
-    return inOneOptional(graph().NCBITaxonParent());
+  //----ncbiTaxonParent-------
+  // ingoing
+  public Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in(){
+  return inOneOptional(graph().NCBITaxonParent());
   }
-  public final Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV() {
-    return inOneOptionalV(graph().NCBITaxonParent());
-  }
-
-  public final Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_out() {
-    return outManyOptional(graph().NCBITaxonParent());
-  }
-  public final Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_outV() {
-    return outManyOptionalV(graph().NCBITaxonParent());
+  public Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV(){
+  return inOneOptionalV(graph().NCBITaxonParent());
   }
 
-  public final Optional<Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>>> proteinNCBITaxon_in() {
-    return inManyOptional(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
+  //----ncbiTaxonParent-------
+  // outgoing
+  public Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_out(){
+  return outManyOptional(graph().NCBITaxonParent());
   }
-  public final Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinNCBITaxon_inV() {
-    return inManyOptionalV(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
+  public Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_outV(){
+  return outManyOptionalV(graph().NCBITaxonParent());
   }
+
+  //----proteinNCBITaxon-------
+  // ingoing
+  public Optional<Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>>> proteinNCBITaxon_in(){
+  return inManyOptional(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
+  }
+  public Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinNCBITaxon_inV(){
+  return inManyOptionalV(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
+  }
+
+  //-----genInfoNCBITaxon----
+  // ingoing
+  public Optional<Stream<GenInfoNCBITaxon<I, RV, RVT, RE, RET>>> genInfoNCBITaxon_in(){   return inManyOptional(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+  public Optional<Stream<GenInfo<I, RV, RVT, RE, RET>>> genInfoNCBITaxon_inV(){   return inManyOptionalV(graph().ncbiTaxonomyGenInfoGraph().GenInfoNCBITaxon());}
+
+
 }
 
 ```
@@ -98,6 +111,9 @@ extends
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -105,6 +121,9 @@ extends
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -154,6 +173,7 @@ extends
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../../uniprot/vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
@@ -173,6 +193,7 @@ extends
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../../uniprot/edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../../uniprot/edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../../uniprot/edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../../uniprot/edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../../uniprot/edges/ReferencePatent.java.md

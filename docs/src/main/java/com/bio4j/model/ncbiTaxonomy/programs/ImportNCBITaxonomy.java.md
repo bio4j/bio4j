@@ -13,198 +13,200 @@ import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
 import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
 import com.bio4j.angulillos.UntypedGraph;
 
+
+/**
+ * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
+ */
 public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
   private static final Logger logger = Logger.getLogger("ImportNCBITaxonomy");
   private static FileHandler fh;
 
-  final int limitForTransaction = 1000;
-  final HashMap<String, String> nodeParentMap = new HashMap<>();
+  protected abstract NCBITaxonomyGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
-  protected abstract NCBITaxonomyGraph<I,RV,RVT,RE,RET> config(File dbFolder);
+  public void importNCBITaxonomy(String[] args) {
 
-  public void importNCBITaxonomy(File inFile, File dbFolder) {
+  if (args.length != 5) {
+    System.out.println("This program expects the following parameters: \n"
+      + "1. Nodes DMP filename \n"
+      + "2. Names DMP filename \n"
+      + "3. Merged DMP filename \n"
+      + "4. Bio4j DB folder \n"
+      + "5. DB Properties file (.properties)");
+  } else {
 
     long initTime = System.nanoTime();
 
-    // create input files
-    final File nodesDumpFile  = new File(inFile, "nodes.dmp");
-    final File namesDumpFile  = new File(inFile, "names.dmp");
-    final File mergedDumpFile = new File(inFile, "merged.dmp");
-
     int taxonCounter = 0;
+    int limitForTransaction = 1000;
+
     BufferedWriter statsBuff = null;
 
-    NCBITaxonomyGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGraph = config(dbFolder);
+    File nodesDumpFile = new File(args[0]);
+    File namesDumpFile = new File(args[1]);
+    String dbFolder = args[3];
+    String propertiesFile = args[4];
+
+    logger.log(Level.INFO, "creating manager...");
+
+    NCBITaxonomyGraph<I,RV,RVT,RE,RET> ncbiTaxonomyGraph = config(dbFolder, propertiesFile);
+
 
     try {
 
-      // This block configure the logger with handler and formatter
-      fh = new FileHandler("ImportNCBITaxonomy.log", true);
-      SimpleFormatter formatter = new SimpleFormatter();
-      fh.setFormatter(formatter);
-      logger.addHandler(fh);
-      logger.setLevel(Level.ALL);
+    // This block configure the logger with handler and formatter
+    fh = new FileHandler("ImportNCBITaxonomy.log", true);
+    SimpleFormatter formatter = new SimpleFormatter();
+    fh.setFormatter(formatter);
+    logger.addHandler(fh);
+    logger.setLevel(Level.ALL);
 
-      statsBuff = new BufferedWriter(new FileWriter(new File("ImportNCBITaxonomyStats.txt")));
+    //---creating writer for stats file-----
+    statsBuff = new BufferedWriter(new FileWriter(new File("ImportNCBITaxonomyStats.txt")));
 
-      BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
-      String line;
+    BufferedReader reader = new BufferedReader(new FileReader(nodesDumpFile));
+    String line;
 
-      logger.log(Level.INFO, "reading nodes file...");
 
-      while((line = reader.readLine()) != null) {
+    HashMap<String, String> nodeParentMap = new HashMap<>();
 
-        if(line.trim().length() > 0) {
+    logger.log(Level.INFO, "reading nodes file...");
 
-          final String[] columns = line.split("\\|");
+    while ((line = reader.readLine()) != null) {
+      if (line.trim().length() > 0) {
+      String[] columns = line.split("\\|");
 
-          final String id               = columns[0].trim();
-          final String taxonomicRankSt  = columns[2].trim();
+      String id = columns[0].trim();
+      String taxonomicRankSt = columns[2].trim();
 
-          NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.addVertex(ncbiTaxonomyGraph.NCBITaxon());
-          ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
-          ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRankSt);
-          //node.setEmblCode(columns[3].trim()); TODO add emblCode??
-          // saving the parent of the node for later
-          nodeParentMap.put(id, columns[1].trim());
+      NCBITaxon<I,RV,RVT,RE,RET> ncbiTaxon = ncbiTaxonomyGraph.addVertex(ncbiTaxonomyGraph.NCBITaxon());
+      ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().id, id);
+      ncbiTaxon.set(ncbiTaxonomyGraph.NCBITaxon().taxonomicRank, taxonomicRankSt);
+      //node.setEmblCode(columns[3].trim()); TODO add emblCode??
 
-          taxonCounter++;
+      //saving the parent of the node for later
+      nodeParentMap.put(id, columns[1].trim());
 
-          if((taxonCounter % limitForTransaction) == 0) {
+      taxonCounter++;
 
-            ncbiTaxonomyGraph.raw().commit();
-          }
-        }
+      if((taxonCounter % limitForTransaction) == 0){
+        ncbiTaxonomyGraph.raw().commit();
       }
-
-      reader.close();
-      ncbiTaxonomyGraph.raw().commit();
-      logger.log(Level.INFO, "done!");
-
-      logger.log(Level.INFO, "reading names file...");
-      //------------reading names file-----------------
-      reader = new BufferedReader(new FileReader(namesDumpFile));
-
-      int linesCounter = 0;
-      
-      while((line = reader.readLine()) != null) {
-
-        final String[] columns = line.split("\\|");
-
-        if(columns[3].trim().equals("scientific name")) {
-
-          final String taxId    = columns[0].trim();
-          final String taxName  = columns[1].trim();
-
-          Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(taxId);
-
-          if(optionalTaxon.isPresent()) {
-            NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
-            taxon.set(ncbiTaxonomyGraph.NCBITaxon().name, taxName);
-          }
-          else {
-            Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
-          }
-
-          linesCounter++;
-
-          if((linesCounter % limitForTransaction) == 0) {
-
-            ncbiTaxonomyGraph.raw().commit();
-          }
-        }
       }
-
-      reader.close();
-      ncbiTaxonomyGraph.raw().commit();
-      logger.log(Level.INFO, "done!");
-
-      logger.log(Level.INFO, "storing relationships...");
-
-      linesCounter = 0;
-
-      final Set<String> nodesSet = nodeParentMap.keySet();
-
-      for(String nodeTaxId: nodesSet) {
-
-        final String parentTaxId = nodeParentMap.get(nodeTaxId);
-
-        Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(nodeTaxId);
-        // NCBITaxon<I,RV,RVT,RE,RET> taxon = null;
-
-        if(!optionalTaxon.isPresent()) {
-
-          Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
-        }
-        else {
-
-          final NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
-
-          if(!nodeTaxId.equals(parentTaxId)) {
-
-            Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalParentTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(parentTaxId);
-
-            NCBITaxon<I,RV,RVT,RE,RET> parentTaxon;
-
-            if(!optionalParentTaxon.isPresent()) {
-              Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
-            }
-            else {
-
-              parentTaxon = optionalParentTaxon.get();
-              parentTaxon.addOutEdge(ncbiTaxonomyGraph.NCBITaxonParent(), taxon);
-            }
-          }
-
-          linesCounter++;
-          if((linesCounter % limitForTransaction) == 0) {
-
-            ncbiTaxonomyGraph.raw().commit();
-          }
-        }
-      }
-
-      ncbiTaxonomyGraph.raw().commit();
-      logger.log(Level.INFO, "Done!");
     }
-    catch(Exception ex) {
+    reader.close();
+    ncbiTaxonomyGraph.raw().commit();
+    logger.log(Level.INFO, "done!");
 
-      Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
+    logger.log(Level.INFO, "reading names file...");
+    //------------reading names file-----------------
+    reader = new BufferedReader(new FileReader(namesDumpFile));
+    int linesCounter = 0;
+    while ((line = reader.readLine()) != null) {
+
+      String[] columns = line.split("\\|");
+
+      if (columns[3].trim().equals("scientific name")) {
+
+        String taxId = columns[0].trim();
+        String taxName = columns[1].trim();
+
+        Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(taxId);
+        if(optionalTaxon.isPresent()){
+          NCBITaxon<I,RV,RVT,RE,RET> taxon = optionalTaxon.get();
+          taxon.set(ncbiTaxonomyGraph.NCBITaxon().name, taxName);
+        }else{
+          Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + taxId + " was not found and its name could not be added... :(");
+        }
+
+        linesCounter++;
+        if((linesCounter % limitForTransaction) == 0){
+          ncbiTaxonomyGraph.raw().commit();
+        }
+
+      }
+
     }
-    finally {
+    reader.close();
+    ncbiTaxonomyGraph.raw().commit();
+    logger.log(Level.INFO, "done!");
 
-      //committing last transaction
-      ncbiTaxonomyGraph.raw().commit();
-      //closing logger file handler
-      fh.close();
-      logger.log(Level.INFO, "Closing up inserter and index service....");
-      // shutdown, makes sure all changes are written to disk
-      ncbiTaxonomyGraph.raw().shutdown();
+    logger.log(Level.INFO, "storing relationships...");
 
-      try {
+    linesCounter = 0;
+    Set<String> nodesSet = nodeParentMap.keySet();
+    for (String nodeTaxId : nodesSet) {
 
-        //-----------------writing stats file---------------------
-        long elapsedTime      = System.nanoTime() - initTime;
-        long elapsedSeconds   = Math.round((elapsedTime / 1000000000.0));
-        long hours            = elapsedSeconds / 3600;
-        long minutes          = (elapsedSeconds % 3600) / 60;
-        long seconds          = (elapsedSeconds % 3600) % 60;
+      String parentTaxId = nodeParentMap.get(nodeTaxId);
 
-        statsBuff.write("Statistics for program ImportNCBITaxonomy:\nInput file: " + nodesDumpFile.getName()
+      Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(nodeTaxId);
+      NCBITaxon<I,RV,RVT,RE,RET> taxon = null;
+
+      if(!optionalTaxon.isPresent()){
+      Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
+      }else{
+      taxon = optionalTaxon.get();
+      if (!nodeTaxId.equals(parentTaxId)) {
+        Optional<NCBITaxon<I,RV,RVT,RE,RET>> optionalParentTaxon = ncbiTaxonomyGraph.nCBITaxonIdIndex().getVertex(parentTaxId);
+        NCBITaxon<I,RV,RVT,RE,RET> parentTaxon;
+        if(!optionalParentTaxon.isPresent()){
+        Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.INFO, "Taxon with id: " + nodeTaxId + " could not be found... :(");
+        }else{
+        parentTaxon = optionalParentTaxon.get();
+        parentTaxon.addOutEdge(ncbiTaxonomyGraph.NCBITaxonParent(), taxon);
+        }
+
+      }
+
+      linesCounter++;
+      if((linesCounter % limitForTransaction) == 0){
+        ncbiTaxonomyGraph.raw().commit();
+      }
+      }
+
+    }
+    ncbiTaxonomyGraph.raw().commit();
+
+    logger.log(Level.INFO, "Done!");
+
+
+    } catch (Exception ex) {
+    Logger.getLogger(ImportNCBITaxonomy.class.getName()).log(Level.SEVERE, null, ex);
+
+    } finally {
+
+    //committing last transaction
+    ncbiTaxonomyGraph.raw().commit();
+    //closing logger file handler
+    fh.close();
+    logger.log(Level.INFO, "Closing up inserter and index service....");
+    // shutdown, makes sure all changes are written to disk
+    ncbiTaxonomyGraph.raw().shutdown();
+
+    try {
+
+      //-----------------writing stats file---------------------
+      long elapsedTime = System.nanoTime() - initTime;
+      long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+      long hours = elapsedSeconds / 3600;
+      long minutes = (elapsedSeconds % 3600) / 60;
+      long seconds = (elapsedSeconds % 3600) % 60;
+
+      statsBuff.write("Statistics for program ImportNCBITaxonomy:\nInput file: " + nodesDumpFile.getName()
         + "\nThere were " + taxonCounter + " taxonomic units inserted.\n"
         + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
-        //---closing stats writer---
-        statsBuff.close();
+      //---closing stats writer---
+      statsBuff.close();
 
-      }
-      catch(Exception e) {
-
-        e.printStackTrace();
-      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    }
+
   }
+  }
+
 }
 
 ```
@@ -240,6 +242,9 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -247,6 +252,9 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -296,6 +304,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../../uniprot/vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
@@ -315,6 +324,7 @@ public abstract class ImportNCBITaxonomy<I extends UntypedGraph<RV,RVT,RE,RET>,R
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../../uniprot/edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../../uniprot/edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../../uniprot/edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../../uniprot/edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../../uniprot/edges/ReferencePatent.java.md

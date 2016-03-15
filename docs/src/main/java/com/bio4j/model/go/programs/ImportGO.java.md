@@ -54,56 +54,68 @@ These global constants correspond to the GO XML file which we use as input.
   private static final Logger logger = Logger.getLogger("ImportGO");
   private static FileHandler fh;
 
-  protected abstract GoGraph<I,RV,RVT,RE,RET> config(File dbFolder);
+  protected abstract GoGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
 
-  public final void importGO(File inFile, File dbFolder) {
+  public final void importGO(String[] args) {
 
-    int termCounter         = 0;
-    int limitForPrintingOut = 100;
-    long initTime           = System.nanoTime();
+    if (args.length != 3) {
+      System.out.println("This program expects the following parameters: \n"
+        + "1. Gene ontology xml filename \n"
+        + "2. Bio4j DB folder \n"
+        + "3. DB Properties file (.properties)");
+    }
+    else {
 
-    BufferedWriter statsBuff = null;
+      int termCounter         = 0;
+      int limitForPrintingOut = 100;
+      long initTime           = System.nanoTime();
 
-    GoGraph<I,RV,RVT,RE,RET> goGraph = config(dbFolder);
+      File inFile           = new File(args[0]);
+      String dbFolder       = args[1];
+      String propertiesFile = args[2];
 
-    try {
+      BufferedWriter statsBuff = null;
 
-      //This block configures the logger with handler and formatter
-      fh = new FileHandler("ImportGO.log", true);
-      SimpleFormatter formatter = new SimpleFormatter();
-      fh.setFormatter(formatter);
-      logger.addHandler(fh);
-      logger.setLevel(Level.ALL);
+      GoGraph<I,RV,RVT,RE,RET> goGraph = config(dbFolder, propertiesFile);
 
-      //---creating writer for stats file-----
-      statsBuff = new BufferedWriter(new FileWriter(new File("ImportGOStats.txt")));
+      try {
 
-      Map<String, ArrayList<String>> termParentsMap         = new HashMap<>();
-      Map<String, ArrayList<String>> regulatesMap           = new HashMap<>();
-      Map<String, ArrayList<String>> negativelyRegulatesMap = new HashMap<>();
-      Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<>();
-      Map<String, ArrayList<String>> partOfMap              = new HashMap<>();
-      Map<String, ArrayList<String>> hasPartMap             = new HashMap<>();
+        //This block configures the logger with handler and formatter
+        fh = new FileHandler("ImportGO.log", true);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
+        logger.addHandler(fh);
+        logger.setLevel(Level.ALL);
 
-      BufferedReader reader = new BufferedReader(new FileReader(inFile));
-      String line;
+        //---creating writer for stats file-----
+        statsBuff = new BufferedWriter(new FileWriter(new File("ImportGOStats.txt")));
 
-      StringBuilder termStBuilder = new StringBuilder();
+        Map<String, ArrayList<String>> termParentsMap         = new HashMap<>();
+        Map<String, ArrayList<String>> regulatesMap           = new HashMap<>();
+        Map<String, ArrayList<String>> negativelyRegulatesMap = new HashMap<>();
+        Map<String, ArrayList<String>> positivelyRegulatesMap = new HashMap<>();
+        Map<String, ArrayList<String>> partOfMap              = new HashMap<>();
+        Map<String, ArrayList<String>> hasPartMap             = new HashMap<>();
 
-      logger.log(Level.INFO, "inserting subontologies nodes");
+        BufferedReader reader = new BufferedReader(new FileReader(inFile));
+        String line;
 
-      SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.addVertex(goGraph.SubOntologies());
-      subOntologiesBP.set(goGraph.SubOntologies().name, "biological_process");
+        StringBuilder termStBuilder = new StringBuilder();
 
-      SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.addVertex(goGraph.SubOntologies());
-      subOntologiesCC.set(goGraph.SubOntologies().name, "cellular_component");
+        logger.log(Level.INFO, "inserting subontologies nodes");
 
-      SubOntologies<I,RV,RVT,RE,RET> subOntologiesMM = goGraph.addVertex(goGraph.SubOntologies());
-      subOntologiesMM.set(goGraph.SubOntologies().name, "molecular_function");
+        SubOntologies<I,RV,RVT,RE,RET> subOntologiesBP = goGraph.addVertex(goGraph.SubOntologies());
+        subOntologiesBP.set(goGraph.SubOntologies().name, "biological_process");
 
-      logger.log(Level.INFO, "inserting term nodes");
+        SubOntologies<I,RV,RVT,RE,RET> subOntologiesCC = goGraph.addVertex(goGraph.SubOntologies());
+        subOntologiesCC.set(goGraph.SubOntologies().name, "cellular_component");
 
-      while((line = reader.readLine()) != null) {
+        SubOntologies<I,RV,RVT,RE,RET> subOntologiesMM = goGraph.addVertex(goGraph.SubOntologies());
+        subOntologiesMM.set(goGraph.SubOntologies().name, "molecular_function");
+
+        logger.log(Level.INFO, "inserting term nodes");
+
+        while((line = reader.readLine()) != null) {
 ```
 
 
@@ -114,31 +126,31 @@ We stop first at those lines which mark the beginning of a GO term.
 In this we have the beginning of a term
 
 ```java
-        if(line.trim().startsWith("<" + TERM_TAG_NAME)) {
+          if(line.trim().startsWith("<" + TERM_TAG_NAME)) {
 ```
 
 accumulate lines for the term, and advance to the next line
 
 ```java
-          while(!line.trim().startsWith("</"+TERM_TAG_NAME+">")) {
+            while(!line.trim().startsWith("</"+TERM_TAG_NAME+">")) {
 
+              termStBuilder.append(line);
+              line = reader.readLine();
+            }
+            // add organism line
             termStBuilder.append(line);
-            line = reader.readLine();
-          }
-          // add organism line
-          termStBuilder.append(line);
 ```
 
 We now build an XML element representing this term
 
 ```java
-          XMLElement termXMLElement = new XMLElement(termStBuilder.toString());
+            XMLElement termXMLElement = new XMLElement(termStBuilder.toString());
 ```
 
 release the StringBuilder
 
 ```java
-          termStBuilder.delete(0, termStBuilder.length());
+            termStBuilder.delete(0, termStBuilder.length());
 ```
 
 
@@ -148,137 +160,137 @@ release the StringBuilder
 term id
 
 ```java
-          final String goId = termXMLElement.asJDomElement().getChildText(ID_TAG_NAME);
+            final String goId = termXMLElement.asJDomElement().getChildText(ID_TAG_NAME);
 ```
 
 term name, which can be null
 
 ```java
-          String goName = termXMLElement.asJDomElement().getChildText(NAME_TAG_NAME);
-          if (goName == null) {
-            goName = "";
-          }
+            String goName = termXMLElement.asJDomElement().getChildText(NAME_TAG_NAME);
+            if (goName == null) {
+              goName = "";
+            }
 ```
 
 term namespace, which can be null
 
 ```java
-          String goNamespace = termXMLElement.asJDomElement().getChildText(NAMESPACE_TAG_NAME);
-          if (goNamespace == null) {
-            goNamespace = "";
-          }
+            String goNamespace = termXMLElement.asJDomElement().getChildText(NAMESPACE_TAG_NAME);
+            if (goNamespace == null) {
+              goNamespace = "";
+            }
 ```
 
 term definition, which can be null in several ways
 
 ```java
-          String goDefinition = "";
-          Element defElem = termXMLElement.asJDomElement().getChild(DEF_TAG_NAME);
-          if (defElem != null) {
-            Element defstrElem = defElem.getChild(DEFSTR_TAG_NAME);
-            if (defstrElem != null) {
-              goDefinition = defstrElem.getText();
+            String goDefinition = "";
+            Element defElem = termXMLElement.asJDomElement().getChild(DEF_TAG_NAME);
+            if (defElem != null) {
+              Element defstrElem = defElem.getChild(DEFSTR_TAG_NAME);
+              if (defstrElem != null) {
+                goDefinition = defstrElem.getText();
+              }
             }
-          }
 ```
 
 term comment, which again can be null
 
 ```java
-          String goComment = termXMLElement.asJDomElement().getChildText(COMMENT_TAG_NAME);
-          if (goComment == null) {
-            goComment = "";
-          }
+            String goComment = termXMLElement.asJDomElement().getChildText(COMMENT_TAG_NAME);
+            if (goComment == null) {
+              goComment = "";
+            }
 ```
 
 term obsolescence, which again can be null
 
 ```java
-          // TODO simply drop obsolete terms
-          String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
-          if (goIsObsolete == null) {
-            goIsObsolete = "";
-          }
-          else {
-            if (goIsObsolete.equals("1")) {
-              goIsObsolete = "true";
+            // TODO simply drop obsolete terms
+            String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
+            if (goIsObsolete == null) {
+              goIsObsolete = "";
             }
             else {
-              goIsObsolete = "false";
-            }
-          }
-
-          //----term parents----
-          List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_OBOXML_RELATIONSHIP_NAME);
-          ArrayList<String> array = new ArrayList<>();
-          for (Element elem: termParentTerms) {
-            array.add(elem.getText().trim());
-          }
-          termParentsMap.put(goId, array);
-          //---------------------
-
-          //-------relationship tags-----------
-          List<Element> relationshipTags = termXMLElement.asJDomElement().getChildren(RELATIONSHIP_TAG_NAME);
-
-          for (Element relationshipTag: relationshipTags) {
-
-            String relType  = relationshipTag.getChildText("type");
-            String toSt     = relationshipTag.getChildText("to");
-
-            if (relType.equals(REGULATES_OBOXML_RELATIONSHIP_NAME)) {
-
-              ArrayList<String> tempArray = regulatesMap.get(goId);
-              if(tempArray == null) {
-                tempArray = new ArrayList<>();
-                regulatesMap.put(goId, tempArray);
+              if (goIsObsolete.equals("1")) {
+                goIsObsolete = "true";
               }
-              tempArray.add(toSt);
-            }
-            else if(relType.equals(POSITIVELY_REGULATES_OBOXML_RELATIONSHIP_NAME)) {
-
-              ArrayList<String> tempArray = positivelyRegulatesMap.get(goId);
-
-              if(tempArray == null) {
-                tempArray = new ArrayList<>();
-                positivelyRegulatesMap.put(goId, tempArray);
+              else {
+                goIsObsolete = "false";
               }
-
-              tempArray.add(toSt);
             }
-            else if(relType.equals(NEGATIVELY_REGULATES_OBOXML_RELATIONSHIP_NAME)) {
 
-              ArrayList<String> tempArray = negativelyRegulatesMap.get(goId);
+            //----term parents----
+            List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_OBOXML_RELATIONSHIP_NAME);
+            ArrayList<String> array = new ArrayList<>();
+            for (Element elem: termParentTerms) {
+              array.add(elem.getText().trim());
+            }
+            termParentsMap.put(goId, array);
+            //---------------------
 
-              if (tempArray == null) {
-                tempArray = new ArrayList<>();
-                negativelyRegulatesMap.put(goId, tempArray);
+            //-------relationship tags-----------
+            List<Element> relationshipTags = termXMLElement.asJDomElement().getChildren(RELATIONSHIP_TAG_NAME);
+
+            for (Element relationshipTag: relationshipTags) {
+
+              String relType  = relationshipTag.getChildText("type");
+              String toSt     = relationshipTag.getChildText("to");
+
+              if (relType.equals(REGULATES_OBOXML_RELATIONSHIP_NAME)) {
+
+                ArrayList<String> tempArray = regulatesMap.get(goId);
+                if(tempArray == null) {
+                  tempArray = new ArrayList<>();
+                  regulatesMap.put(goId, tempArray);
+                }
+                tempArray.add(toSt);
               }
+              else if(relType.equals(POSITIVELY_REGULATES_OBOXML_RELATIONSHIP_NAME)) {
 
-              tempArray.add(toSt);
-            }
-            else if (relType.equals(PART_OF_OBOXML_RELATIONSHIP_NAME)) {
+                ArrayList<String> tempArray = positivelyRegulatesMap.get(goId);
 
-              ArrayList<String> tempArray = partOfMap.get(goId);
+                if(tempArray == null) {
+                  tempArray = new ArrayList<>();
+                  positivelyRegulatesMap.put(goId, tempArray);
+                }
 
-              if (tempArray == null) {
-                tempArray = new ArrayList<>();
-                partOfMap.put(goId, tempArray);
+                tempArray.add(toSt);
               }
+              else if(relType.equals(NEGATIVELY_REGULATES_OBOXML_RELATIONSHIP_NAME)) {
 
-              tempArray.add(toSt);
-            }
-            else if (relType.equals(HAS_PART_OF_OBOXML_RELATIONSHIP_NAME)) {
+                ArrayList<String> tempArray = negativelyRegulatesMap.get(goId);
 
-              ArrayList<String> tempArray = hasPartMap.get(goId);
+                if (tempArray == null) {
+                  tempArray = new ArrayList<>();
+                  negativelyRegulatesMap.put(goId, tempArray);
+                }
 
-              if (tempArray == null) {
-                tempArray = new ArrayList<>();
-                hasPartMap.put(goId, tempArray);
+                tempArray.add(toSt);
               }
+              else if (relType.equals(PART_OF_OBOXML_RELATIONSHIP_NAME)) {
 
-              tempArray.add(toSt);
+                ArrayList<String> tempArray = partOfMap.get(goId);
+
+                if (tempArray == null) {
+                  tempArray = new ArrayList<>();
+                  partOfMap.put(goId, tempArray);
+                }
+
+                tempArray.add(toSt);
+              }
+              else if (relType.equals(HAS_PART_OF_OBOXML_RELATIONSHIP_NAME)) {
+
+                ArrayList<String> tempArray = hasPartMap.get(goId);
+
+                if (tempArray == null) {
+                  tempArray = new ArrayList<>();
+                  hasPartMap.put(goId, tempArray);
+                }
+
+                tempArray.add(toSt);
+              }
             }
-          }
 ```
 
 
@@ -286,153 +298,154 @@ term obsolescence, which again can be null
 
 
 ```java
-          GoTerm<I,RV,RVT,RE,RET> term = goGraph.addVertex(goGraph.GoTerm());
+            GoTerm<I,RV,RVT,RE,RET> term = goGraph.addVertex(goGraph.GoTerm());
 
-          term.set(goGraph.GoTerm().id, goId);
-          term.set(goGraph.GoTerm().name, goName);
-          term.set(goGraph.GoTerm().definition, goDefinition);
-          term.set(goGraph.GoTerm().obsolete, goIsObsolete);
-          term.set(goGraph.GoTerm().comment, goComment);
+            term.set(goGraph.GoTerm().id, goId);
+            term.set(goGraph.GoTerm().name, goName);
+            term.set(goGraph.GoTerm().definition, goDefinition);
+            term.set(goGraph.GoTerm().obsolete, goIsObsolete);
+            term.set(goGraph.GoTerm().comment, goComment);
 
-          goGraph.raw().commit();
-          //----namespace---
-          SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace).get();
-          goGraph.addEdge(term,goGraph.SubOntology(), tmpSubontologies);
+            goGraph.raw().commit();
+            //----namespace---
+            SubOntologies<I,RV,RVT,RE,RET> tmpSubontologies = goGraph.subontologiesNameIndex().getVertex(goNamespace).get();
+            goGraph.addEdge(term,goGraph.SubOntology(), tmpSubontologies);
+          }
+
+          termCounter++;
+
+          if((termCounter % limitForPrintingOut) == 0) {
+            logger.log(Level.INFO, (termCounter+" GO terms inserted"));
+          }
         }
 
-        termCounter++;
+        reader.close();
 
-        if((termCounter % limitForPrintingOut) == 0) {
-          logger.log(Level.INFO, (termCounter+" GO terms inserted"));
-        }
-      }
+        //----committing transaction---
+        // TODO we commit here, and again inside the loop with every insertion. Why?
+        goGraph.raw().commit();
 
-      reader.close();
+        //-----------------------------------------------------------------------
 
-      //----committing transaction---
-      // TODO we commit here, and again inside the loop with every insertion. Why?
-      goGraph.raw().commit();
+        logger.log(Level.INFO, "Inserting relationships....");
+        logger.log(Level.INFO, "'is_a' relationships....");
 
-      //-----------------------------------------------------------------------
+        //-------------------'is_a' relationships-----------------
+        Set<String> keys = termParentsMap.keySet();
+        for(String key: keys) {
 
-      logger.log(Level.INFO, "Inserting relationships....");
-      logger.log(Level.INFO, "'is_a' relationships....");
-
-      //-------------------'is_a' relationships-----------------
-      Set<String> keys = termParentsMap.keySet();
-      for(String key: keys) {
-
-        // TODO get on option
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = termParentsMap.get(key);
-
-        for (String string : tempArray) {
           // TODO get on option
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm,goGraph.IsA(), tempGoTerm2);
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = termParentsMap.get(key);
+
+          for (String string : tempArray) {
+            // TODO get on option
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm,goGraph.IsA(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "'regulates' relationships....");
-      //-------------------'regulates' relationships----------------------
-      keys = regulatesMap.keySet();
-      for (String key: keys) {
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = regulatesMap.get(key);
-        for (String string : tempArray) {
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm, goGraph.Regulates(), tempGoTerm2);
+        logger.log(Level.INFO, "'regulates' relationships....");
+        //-------------------'regulates' relationships----------------------
+        keys = regulatesMap.keySet();
+        for (String key: keys) {
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = regulatesMap.get(key);
+          for (String string : tempArray) {
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm, goGraph.Regulates(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "'negatively_regulates' relationships....");
-      //-------------------'negatively regulates' relationships----------------------
-      keys = negativelyRegulatesMap.keySet();
+        logger.log(Level.INFO, "'negatively_regulates' relationships....");
+        //-------------------'negatively regulates' relationships----------------------
+        keys = negativelyRegulatesMap.keySet();
 
-      for (String key: keys) {
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
-        for (String string: tempArray) {
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm, goGraph.NegativelyRegulates(), tempGoTerm2);
+        for (String key: keys) {
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = negativelyRegulatesMap.get(key);
+          for (String string: tempArray) {
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm, goGraph.NegativelyRegulates(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "'positively_regulates' relationships....");
-      //-------------------'positively regulates' relationships----------------------
-      keys = positivelyRegulatesMap.keySet();
-      for (String key: keys) {
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm =  goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
-        for (String string : tempArray) {
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 =  goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm, goGraph.PositivelyRegulates(), tempGoTerm2);
+        logger.log(Level.INFO, "'positively_regulates' relationships....");
+        //-------------------'positively regulates' relationships----------------------
+        keys = positivelyRegulatesMap.keySet();
+        for (String key: keys) {
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm =  goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = positivelyRegulatesMap.get(key);
+          for (String string : tempArray) {
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 =  goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm, goGraph.PositivelyRegulates(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "'part_of' relationships....");
-      //-------------------'parf of' relationships----------------------
-      keys = partOfMap.keySet();
-      for (String key: keys) {
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = partOfMap.get(key);
-        for (String string : tempArray) {
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm, goGraph.PartOf(), tempGoTerm2);
+        logger.log(Level.INFO, "'part_of' relationships....");
+        //-------------------'parf of' relationships----------------------
+        keys = partOfMap.keySet();
+        for (String key: keys) {
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = partOfMap.get(key);
+          for (String string : tempArray) {
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm, goGraph.PartOf(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "'has_part_of' relationships....");
-      //-------------------'has part of' relationships----------------------
-      keys = hasPartMap.keySet();
-      for (String key : keys) {
-        GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
-        ArrayList<String> tempArray = hasPartMap.get(key);
-        for (String string : tempArray) {
-          GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
-          goGraph.addEdge(tempGoTerm, goGraph.HasPartOf(), tempGoTerm2);
+        logger.log(Level.INFO, "'has_part_of' relationships....");
+        //-------------------'has part of' relationships----------------------
+        keys = hasPartMap.keySet();
+        for (String key : keys) {
+          GoTerm<I,RV,RVT,RE,RET> tempGoTerm = goGraph.goTermIdIndex().getVertex(key).get();
+          ArrayList<String> tempArray = hasPartMap.get(key);
+          for (String string : tempArray) {
+            GoTerm<I,RV,RVT,RE,RET> tempGoTerm2 = goGraph.goTermIdIndex().getVertex(string).get();
+            goGraph.addEdge(tempGoTerm, goGraph.HasPartOf(), tempGoTerm2);
+          }
         }
-      }
 
-      logger.log(Level.INFO, "Done! :)");
+        logger.log(Level.INFO, "Done! :)");
 
 
-    }
-    catch (Exception e) {
-      logger.log(Level.SEVERE, e.getMessage());
-      StackTraceElement[] trace = e.getStackTrace();
-      for (StackTraceElement stackTraceElement : trace) {
-        logger.log(Level.SEVERE, stackTraceElement.toString());
-      }
-    }
-    finally {
-
-      try {
-        //closing logger file handler
-        fh.close();
-        logger.log(Level.INFO, "Closing up manager....");
-        //shutdown, makes sure all changes are written to disk
-        goGraph.raw().shutdown();
-
-        //-----------------writing stats file---------------------
-        long elapsedTime      = System.nanoTime() - initTime;
-        long elapsedSeconds   = Math.round((elapsedTime / 1000000000.0));
-        long hours            = elapsedSeconds / 3600;
-        long minutes          = (elapsedSeconds % 3600) / 60;
-        long seconds          = (elapsedSeconds % 3600) % 60;
-
-        statsBuff.write("Statistics for program ImportGeneOntology:\nInput file: " + inFile.getName()
-          + "\nThere were " + termCounter + " terms inserted.\n"
-          + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
-
-        //---closing stats writer---
-        statsBuff.close();
       }
       catch (Exception e) {
         logger.log(Level.SEVERE, e.getMessage());
         StackTraceElement[] trace = e.getStackTrace();
         for (StackTraceElement stackTraceElement : trace) {
           logger.log(Level.SEVERE, stackTraceElement.toString());
+        }
+      }
+      finally {
+
+        try {
+          //closing logger file handler
+          fh.close();
+          logger.log(Level.INFO, "Closing up manager....");
+          //shutdown, makes sure all changes are written to disk
+          goGraph.raw().shutdown();
+
+          //-----------------writing stats file---------------------
+          long elapsedTime      = System.nanoTime() - initTime;
+          long elapsedSeconds   = Math.round((elapsedTime / 1000000000.0));
+          long hours            = elapsedSeconds / 3600;
+          long minutes          = (elapsedSeconds % 3600) / 60;
+          long seconds          = (elapsedSeconds % 3600) % 60;
+
+          statsBuff.write("Statistics for program ImportGeneOntology:\nInput file: " + inFile.getName()
+            + "\nThere were " + termCounter + " terms inserted.\n"
+            + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+          //---closing stats writer---
+          statsBuff.close();
+        }
+        catch (Exception e) {
+          logger.log(Level.SEVERE, e.getMessage());
+          StackTraceElement[] trace = e.getStackTrace();
+          for (StackTraceElement stackTraceElement : trace) {
+            logger.log(Level.SEVERE, stackTraceElement.toString());
+          }
         }
       }
     }
@@ -472,6 +485,9 @@ term obsolescence, which again can be null
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../GoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -479,6 +495,9 @@ term obsolescence, which again can be null
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -528,6 +547,7 @@ term obsolescence, which again can be null
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../../uniprot/vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
@@ -547,6 +567,7 @@ term obsolescence, which again can be null
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../../uniprot/edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../../uniprot/edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../../uniprot/edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../../uniprot/edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../../uniprot/edges/ReferencePatent.java.md

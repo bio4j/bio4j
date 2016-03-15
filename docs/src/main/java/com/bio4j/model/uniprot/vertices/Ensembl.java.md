@@ -9,36 +9,36 @@ import com.bio4j.angulillos.UntypedGraph;
 import java.util.stream.Stream;
 
 /**
-* Created by ppareja on 7/29/2014.
-*/
+ * Created by ppareja on 7/29/2014.
+ */
 public final class Ensembl <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-extends UniProtGraph.UniProtVertex<
-Ensembl<I, RV, RVT, RE, RET>,
-UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
-I, RV, RVT, RE, RET
-> {
+  extends UniProtGraph.UniProtVertex<
+  Ensembl<I, RV, RVT, RE, RET>,
+  UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
+  I, RV, RVT, RE, RET
+  > {
 
   public Ensembl(RV vertex, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType type) {
-    super(vertex, type);
+  super(vertex, type);
   }
 
   @Override
   public Ensembl<I, RV, RVT, RE, RET> self() {
-    return this;
+  return this;
   }
 
   // properties
   public String id() {
-    return get(type().id);
+  return get(type().id);
   }
   public String proteinSequenceId() {
-    return get(type().proteinSequenceId);
+  return get(type().proteinSequenceId);
   }
   public String moleculeId() {
-    return get(type().moleculeId);
+  return get(type().moleculeId);
   }
   public String geneId() {
-    return get(type().geneId);
+  return get(type().geneId);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,15 +48,14 @@ I, RV, RVT, RE, RET
   // proteinEnsembl
   // ingoing
   public Stream<ProteinEnsembl<I, RV, RVT, RE, RET>> proteinEnsembl_in(){
-    return inMany(graph().ProteinEnsembl());
+  return inMany(graph().ProteinEnsembl());
   }
   public Stream<Protein<I, RV, RVT, RE, RET>> proteinEnsembl_inV(){
-    return inManyV(graph().ProteinEnsembl());
+  return inManyV(graph().ProteinEnsembl());
   }
 
 
 }
-
 ```
 
 
@@ -90,6 +89,9 @@ I, RV, RVT, RE, RET
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -97,6 +99,9 @@ I, RV, RVT, RE, RET
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
+[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
+[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -146,6 +151,7 @@ I, RV, RVT, RE, RET
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../programs/ImportIsoformSequences.java.md
+[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../programs/XMLConstants.java.md
@@ -165,6 +171,7 @@ I, RV, RVT, RE, RET
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../edges/ProteinSubcellularLocation.java.md
+[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../edges/ReferencePatent.java.md

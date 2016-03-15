@@ -134,10 +134,6 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
     3. the `intactId`s have nothing to do with UniProt, and should be dropped
 
     Note that because of 1. it would be easier if we passed the protein as an argument.
-
-    #### Remark
-
-    Again based on manual inspection it looks like protein-protein interactions are **not** *duplicated* in the UniProt XML file. I do not know if this implies a semantic direction or not. So, if you want to get all with which a given protein interacts, you need to get both inV and outV of protein-protein interaction edges.
   */
   private void importProteinInteractionsWithSource(
     XMLElement entryXMLElem,
