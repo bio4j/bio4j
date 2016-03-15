@@ -23,16 +23,16 @@ I, RV, RVT, RE, RET
   }
 
   // properties
-  public String experiments() {
-    return get(type().experiments);
-  }
-  public String organismsDiffer() {  return get(type().organismsDiffer);  }
-  public String intActId1() {
-    return get(type().intActId1);
-  }
-  public String intActId2() {
-    return get(type().intActId2);
-  }
+  // public String experiments() {
+  //   return get(type().experiments);
+  // }
+  // public String organismsDiffer() {  return get(type().organismsDiffer);  }
+  // public String intActId1() {
+  //   return get(type().intActId1);
+  // }
+  // public String intActId2() {
+  //   return get(type().intActId2);
+  // }
 
   @Override
   public ProteinIsoformInteraction<I, RV, RVT, RE, RET> self() {

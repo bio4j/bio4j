@@ -4138,15 +4138,15 @@ I, RV, RVT, RE, RET
     Protein<I, RV, RVT, RE, RET>, ProteinType,
     ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
     Protein<I, RV, RVT, RE, RET>, ProteinType,
-    experiments, String
+    experiments, Integer
     >
     {
       public experiments() {
         super(ProteinProteinInteractionType.this);
       }
 
-      public Class<String> valueClass() {
-        return String.class;
+      public Class<Integer> valueClass() {
+        return Integer.class;
       }
     }
     public final class organismsDiffer
@@ -4155,15 +4155,15 @@ I, RV, RVT, RE, RET
     Protein<I, RV, RVT, RE, RET>, ProteinType,
     ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
     Protein<I, RV, RVT, RE, RET>, ProteinType,
-    organismsDiffer, String
+    organismsDiffer, Boolean
     >
     {
       public organismsDiffer() {
         super(ProteinProteinInteractionType.this);
       }
 
-      public Class<String> valueClass() {
-        return String.class;
+      public Class<Boolean> valueClass() {
+        return Boolean.class;
       }
     }
     public final class intActId1
@@ -4263,15 +4263,15 @@ I, RV, RVT, RE, RET
     Protein<I, RV, RVT, RE, RET>, ProteinType,
     ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
     Isoform<I, RV, RVT, RE, RET>, IsoformType,
-    experiments, String
+    experiments, Integer
     >
     {
       public experiments() {
         super(ProteinIsoformInteractionType.this);
       }
 
-      public Class<String> valueClass() {
-        return String.class;
+      public Class<Integer> valueClass() {
+        return Integer.class;
       }
     }
     public final class organismsDiffer
@@ -4280,15 +4280,15 @@ I, RV, RVT, RE, RET
     Protein<I, RV, RVT, RE, RET>, ProteinType,
     ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
     Isoform<I, RV, RVT, RE, RET>, IsoformType,
-    organismsDiffer, String
+    organismsDiffer, Boolean
     >
     {
       public organismsDiffer() {
         super(ProteinIsoformInteractionType.this);
       }
 
-      public Class<String> valueClass() {
-        return String.class;
+      public Class<Boolean> valueClass() {
+        return Boolean.class;
       }
     }
     public final class intActId1

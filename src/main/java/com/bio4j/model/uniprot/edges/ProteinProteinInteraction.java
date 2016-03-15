@@ -22,16 +22,16 @@ I, RV, RVT, RE, RET
   }
 
   // properties
-  public String experiments() {
-    return get(type().experiments);
-  }
-  public String organismsDiffer() {  return get(type().organismsDiffer);  }
-  public String intActId1() {
-    return get(type().intActId1);
-  }
-  public String intActId2() {
-    return get(type().intActId2);
-  }
+  // public Integer experiments() {
+  //   return get(type().experiments);
+  // }
+  // public String organismsDiffer() {  return get(type().organismsDiffer);  }
+  // public String intActId1() {
+  //   return get(type().intActId1);
+  // }
+  // public String intActId2() {
+  //   return get(type().intActId2);
+  // }
 
   @Override
   public ProteinProteinInteraction<I, RV, RVT, RE, RET> self() {

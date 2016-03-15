@@ -176,10 +176,16 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
                 final ProteinProteinInteraction<I,RV,RVT,RE,RET> edge =
                   srcProtein.addOutEdge(graph.ProteinProteinInteraction(), optionalTgtProtein.get());
                 Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
-                  elem -> edge.set(edge.type().organismsDiffer, elem.getText())
+                  elem -> edge.set(
+                    edge.type().organismsDiffer,
+                    Boolean.parseBoolean(elem.getText())
+                  )
                 );
                 Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
-                  elem -> edge.set(edge.type().experiments, elem.getText())
+                  elem -> edge.set(
+                    edge.type().experiments,
+                    Integer.parseInt(elem.getText())
+                  )
                 );
                 edge.set(edge.type().intActId1, srcInteractantId);
                 edge.set(edge.type().intActId2, tgtInteractantId);
@@ -194,10 +200,16 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
                       final ProteinIsoformInteraction<I,RV,RVT,RE,RET> edge =
                         optionalSrcProtein.get().addOutEdge(graph.ProteinIsoformInteraction(), tgtIsoform);
                       Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
-                        elem -> edge.set(edge.type().organismsDiffer, elem.getText())
+                        elem -> edge.set(
+                          edge.type().organismsDiffer,
+                          Boolean.parseBoolean(elem.getText())
+                        )
                       );
                       Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
-                        elem -> edge.set(edge.type().experiments, elem.getText())
+                        elem -> edge.set(
+                          edge.type().experiments,
+                          Integer.parseInt(elem.getText())
+                        )
                       );
                       edge.set(edge.type().intActId1, srcInteractantId);
                       edge.set(edge.type().intActId2, tgtInteractantId);
