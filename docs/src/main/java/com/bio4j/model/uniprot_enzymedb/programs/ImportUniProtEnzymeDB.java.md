@@ -18,40 +18,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-/**
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
 public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
   private static final Logger logger = Logger.getLogger("ImportUniProtEnzymeDB");
   private static FileHandler fh;
 
-  protected abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
-  public static final String ENTRY_TAG_NAME = "entry";
-  public static final String ENTRY_ACCESSION_TAG_NAME = "accession";
-  public static final String DB_REFERENCE_TAG_NAME = "dbReference";
-  public static final String DB_REFERENCE_TYPE_ATTRIBUTE = "type";
-  public static final String DB_REFERENCE_ID_ATTRIBUTE = "id";
-  public static final String ENZYME_REFERENCE_TYPE = "EC";
+  public static final String ENTRY_TAG_NAME               = "entry";
+  public static final String ENTRY_ACCESSION_TAG_NAME     = "accession";
+  public static final String DB_REFERENCE_TAG_NAME        = "dbReference";
+  public static final String DB_REFERENCE_TYPE_ATTRIBUTE  = "type";
+  public static final String DB_REFERENCE_ID_ATTRIBUTE    = "id";
+  public static final String ENZYME_REFERENCE_TYPE        = "EC";
 
-
-  public void importUniProtEnzymeDB(String[] args) {
-
-  if (args.length != 3) {
-    System.out.println("This program expects the following parameters: \n"
-      + "1. UniProt xml filename \n"
-      + "2. Bio4j DB folder \n"
-      + "3. DB Properties file (.properties)");
-  } else {
+  public void importUniProtEnzymeDB(File inFile, File dbFolder) {
 
     long initTime = System.nanoTime();
 
-    File inFile = new File(args[0]);
-    String dbFolder = args[1];
-    String propertiesFile = args[2];
-
-    UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniprotEnzymeDBGraph = config(dbFolder, propertiesFile);
+    final UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniprotEnzymeDBGraph = config(dbFolder);
 
     BufferedWriter statsBuff = null;
 
@@ -60,124 +45,126 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 
     try {
 
-    // This block configures the logger with handler and formatter
-    fh = new FileHandler("ImportUniProtEnzymeDB" + args[0].split("\\.")[0].replaceAll("/", "_") + ".log", false);
+      // This block configures the logger with handler and formatter
+      fh = new FileHandler("ImportUniProtEnzymeDB.log", false);
 
-    SimpleFormatter formatter = new SimpleFormatter();
-    fh.setFormatter(formatter);
-    logger.addHandler(fh);
-    logger.setLevel(Level.ALL);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 
-    //---creating writer for stats file-----
-    statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtEnzymeDBStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+      //---creating writer for stats file-----
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtEnzymeDBStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
-    BufferedReader reader = new BufferedReader(new FileReader(inFile));
-    StringBuilder entryStBuilder = new StringBuilder();
-    String line;
+      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      StringBuilder entryStBuilder = new StringBuilder();
+      String line;
 
-    while ((line = reader.readLine()) != null) {
-      if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
+      while ((line = reader.readLine()) != null) {
 
-      while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-        entryStBuilder.append(line);
-        line = reader.readLine();
-      }
-      //linea final del organism
-      entryStBuilder.append(line);
-      //System.out.println("organismStBuilder.toString() = " + organismStBuilder.toString());
-      XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-      entryStBuilder.delete(0, entryStBuilder.length());
+        if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
 
-      String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
-
-      Protein<I,RV,RVT,RE,RET> protein = null;
-
-      //-----db references-------------
-      List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
-
-      for (Element dbReferenceElem : dbReferenceList) {
-
-        //-------------------ENZYME DB -----------------------------
-        if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
-
-        if(protein == null){
-          protein = uniprotEnzymeDBGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt).get();
-        }
-
-        String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-
-        if(enzymeID != null){
-
-          //uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
-
-          Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
-
-          if(enzymeOptional.isPresent()){
-          protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
-          }else{
-          logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
+          while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
+            entryStBuilder.append(line);
+            line = reader.readLine();
           }
-        }else{
-          logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
+          entryStBuilder.append(line);
+
+          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          entryStBuilder.delete(0, entryStBuilder.length());
+
+          String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+
+          Protein<I,RV,RVT,RE,RET> protein = null;
+
+          //-----db references-------------
+          List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+
+          for (Element dbReferenceElem: dbReferenceList) {
+
+            //-------------------ENZYME DB -----------------------------
+            if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
+
+              if(protein == null) {
+                protein = uniprotEnzymeDBGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+              }
+
+              String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
+
+              if(enzymeID != null) {
+
+                //uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
+
+                Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
+
+                if(enzymeOptional.isPresent()) {
+                  protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
+                }
+                else {
+
+                  logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
+                }
+              }
+              else {
+
+                logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
+              }
+            }
+          }
+          //---------------------------------------------------------------------------------------
+
+
+          proteinCounter++;
+          if ((proteinCounter % limitForPrintingOut) == 0) {
+
+            String countProteinsSt = proteinCounter + " proteins updated!!";
+            logger.log(Level.INFO, countProteinsSt);
+          }
         }
-
-        }
-
-      }
-      //---------------------------------------------------------------------------------------
-
-
-      proteinCounter++;
-      if ((proteinCounter % limitForPrintingOut) == 0) {
-        String countProteinsSt = proteinCounter + " proteins updated!!";
-        logger.log(Level.INFO, countProteinsSt);
-      }
-
       }
     }
+    catch (Exception e) {
 
-    } catch (Exception e) {
-    logger.log(Level.SEVERE, e.getMessage());
-    StackTraceElement[] trace = e.getStackTrace();
-    for (StackTraceElement stackTraceElement : trace) {
-      logger.log(Level.SEVERE, stackTraceElement.toString());
+      logger.log(Level.SEVERE, e.getMessage());
+      StackTraceElement[] trace = e.getStackTrace();
+      for (StackTraceElement stackTraceElement : trace) {
+        logger.log(Level.SEVERE, stackTraceElement.toString());
+      }
     }
-    } finally {
+    finally {
 
-    try {
-      //------closing writers-------
+      try {
+        //------closing writers-------
 
-      // shutdown, makes sure all changes are written to disk
-      uniprotEnzymeDBGraph.raw().shutdown();
+        // shutdown, makes sure all changes are written to disk
+        uniprotEnzymeDBGraph.raw().shutdown();
 
-      // closing logger file handler
-      fh.close();
+        // closing logger file handler
+        fh.close();
 
-      //-----------------writing stats file---------------------
-      long elapsedTime = System.nanoTime() - initTime;
-      long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-      long hours = elapsedSeconds / 3600;
-      long minutes = (elapsedSeconds % 3600) / 60;
-      long seconds = (elapsedSeconds % 3600) % 60;
+        //-----------------writing stats file---------------------
+        long elapsedTime      = System.nanoTime() - initTime;
+        long elapsedSeconds   = Math.round((elapsedTime / 1000000000.0));
+        long hours            = elapsedSeconds / 3600;
+        long minutes          = (elapsedSeconds % 3600) / 60;
+        long seconds          = (elapsedSeconds % 3600) % 60;
 
-      statsBuff.write("Statistics for program ImportUniProtEnzymeDB:\nInput file: " + inFile.getName()
+        statsBuff.write("Statistics for program ImportUniProtEnzymeDB:\nInput file: " + inFile.getName()
         + "\nThere were " + proteinCounter + " proteins analyzed.\n"
         + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
-      //---closing stats writer---
-      statsBuff.close();
+        //---closing stats writer---
+        statsBuff.close();
 
+      }
+      catch (IOException ex) {
 
-    } catch (IOException ex) {
-      Logger.getLogger(ImportUniProtEnzymeDB.class.getName()).log(Level.SEVERE, null, ex);
-    }
-
+        Logger.getLogger(ImportUniProtEnzymeDB.class.getName()).log(Level.SEVERE, null, ex);
+      }
     }
   }
-
-  }
-
 }
+
 ```
 
 
@@ -211,9 +198,6 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -221,9 +205,6 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
-[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -273,7 +254,6 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../../uniprot/vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
@@ -293,7 +273,6 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../../uniprot/edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../../uniprot/edges/ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../../uniprot/edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../../uniprot/edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../../uniprot/edges/ReferencePatent.java.md

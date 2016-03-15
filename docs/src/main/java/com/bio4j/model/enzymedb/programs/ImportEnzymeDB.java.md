@@ -161,225 +161,205 @@ Configure the file used for logging
 Implementing classes need to provide a means of instantiating a ENZYME graph from a file
 
 ```java
-  protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract EnzymeDBGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
-  public final void importEnzymeDB(String[] args) {
-
-    if (args.length != 3) {
-      System.out.println(
-          "This program expects the following parameters: \n"
-        + "1. Enzyme DB data file (ftp://ftp.expasy.org/databases/enzyme/enzyme.dat)\n"
-        + "2. Bio4j DB folder\n"
-        + "3. DB Properties file (.properties)\n"
-      );
-    }
-    else {
-```
-
-get arguments, create variables
-
-```java
-      File inFile           = new File(args[0]);
-      String dbFolder       = args[1];
-      String propertiesFile = args[2];
+  public final void importEnzymeDB(File inFile, File dbFolder) {
 ```
 
 Create the graph instance
 
 ```java
-      EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder, propertiesFile);
+    EnzymeDBGraph<I,RV,RVT,RE,RET> enzymeDBGraph = config(dbFolder);
 
+    BufferedWriter statsBuff = null;
+    long initTime = System.nanoTime();
+    int enzymeCounter = 0;
 
-      BufferedWriter statsBuff = null;
-      long initTime = System.nanoTime();
-      int enzymeCounter = 0;
-
-      try {
+    try {
 ```
 
 logging configuration
 
 ```java
-        fh = new FileHandler("ImportEnzymeDB.log", true);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fh.setFormatter(formatter);
-        logger.addHandler(fh);
-        logger.setLevel(Level.ALL);
+      fh = new FileHandler("ImportEnzymeDB.log", true);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 ```
 
 Initialize the stats writer
 
 ```java
-        statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBStats.txt")));
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportEnzymeDBStats.txt")));
 
-        BufferedReader reader = new BufferedReader(new FileReader(inFile));
-        String line;
+      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      String line;
 ```
 
 These variables correspond to the current ENZYME entry
 
 ```java
-        boolean enzymeFound           = false;
-        String officialName           = "";
-        String enzymeId               = "";
-        String commentsSt             = "";
-        String catalyticActivity      = "";
-        List<String> cofactors        = new LinkedList<>();
-        List<String> prositeCrossRefs = new LinkedList<>();
-        boolean deletedEntry          = false;
-        boolean transferredEntry      = false;
+      boolean enzymeFound           = false;
+      String officialName           = "";
+      String enzymeId               = "";
+      String commentsSt             = "";
+      String catalyticActivity      = "";
+      List<String> cofactors        = new LinkedList<>();
+      List<String> prositeCrossRefs = new LinkedList<>();
+      boolean deletedEntry          = false;
+      boolean transferredEntry      = false;
 
-        System.out.println("Reading file "+inFile.toString());
+      System.out.println("Reading file "+inFile.toString());
 
-        while((line = reader.readLine()) != null) {
+      while((line = reader.readLine()) != null) {
 
-          if(line.startsWith(IDENTIFICATION_LINE_CODE)) {
-            enzymeFound = true;
-            enzymeId = line.substring(5).trim();
+        if(line.startsWith(IDENTIFICATION_LINE_CODE)) {
+          enzymeFound = true;
+          enzymeId = line.substring(5).trim();
+        }
+        else if(enzymeFound) {
+
+          if(line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
+
+            officialName += line.substring(5).trim();
+
+            if(officialName.contains("Deleted entry.")) {
+              deletedEntry = true;
+            }
+            else if(officialName.contains("Transferred entry:")) {
+              transferredEntry = true;
+            }
           }
-          else if(enzymeFound) {
+          else if(line.startsWith(COFACTORS_LINE_CODE)) {
 
-            if(line.startsWith(OFFICIAL_NAME_LINE_CODE)) {
+            String[] cofs = line.substring(5).trim().split(";");
+            for (String cofactorSt : cofs) {
+              cofactors.add(cofactorSt.trim());
+            }
+          }
+          else if(line.startsWith(PROSITE_CROSS_REFERENCES_LINE_CODE)) {
 
-              officialName += line.substring(5).trim();
+            String[] proRefs = line.substring(5).trim().split(";");
 
-              if(officialName.contains("Deleted entry.")) {
-                deletedEntry = true;
+            for (String prositeSt: proRefs) {
+              if (!prositeSt.equals("PROSITE")) { prositeCrossRefs.add(prositeSt.trim()); }
+            }
+          }
+          else if(line.startsWith(COMMENTS_LINE_CODE)) {
+
+            commentsSt += line.substring(5).trim() + " ";
+          }
+          else if(line.startsWith(CATALYTIC_ACTIVITY_LINE_CODE)) {
+
+            catalyticActivity += line.substring(5).trim() + " ";
+          }
+          else if(line.startsWith(TERMINATION_LINE_CODE)) {
+
+            if(enzymeFound) {
+
+              if(deletedEntry) {
+
+                logger.log(Level.INFO, ("Entry with id " + enzymeId + " was deleted. It won't be stored..."));
+                deletedEntry = false;
               }
-              else if(officialName.contains("Transferred entry:")) {
-                transferredEntry = true;
+              else if(transferredEntry) {
+
+                logger.log(Level.INFO, ("Entry with id " + enzymeId + " was transferred. It won't be stored..."));
+                transferredEntry = false;
               }
-            }
-            else if(line.startsWith(COFACTORS_LINE_CODE)) {
-
-              String[] cofs = line.substring(5).trim().split(";");
-              for (String cofactorSt : cofs) {
-                cofactors.add(cofactorSt.trim());
-              }
-            }
-            else if(line.startsWith(PROSITE_CROSS_REFERENCES_LINE_CODE)) {
-
-              String[] proRefs = line.substring(5).trim().split(";");
-
-              for (String prositeSt: proRefs) {
-                if (!prositeSt.equals("PROSITE")) { prositeCrossRefs.add(prositeSt.trim()); }
-              }
-            }
-            else if(line.startsWith(COMMENTS_LINE_CODE)) {
-
-              commentsSt += line.substring(5).trim() + " ";
-            }
-            else if(line.startsWith(CATALYTIC_ACTIVITY_LINE_CODE)) {
-
-              catalyticActivity += line.substring(5).trim() + " ";
-            }
-            else if(line.startsWith(TERMINATION_LINE_CODE)) {
-
-              if(enzymeFound) {
-
-                if(deletedEntry) {
-
-                  logger.log(Level.INFO, ("Entry with id " + enzymeId + " was deleted. It won't be stored..."));
-                  deletedEntry = false;
-                }
-                else if(transferredEntry) {
-
-                  logger.log(Level.INFO, ("Entry with id " + enzymeId + " was transferred. It won't be stored..."));
-                  transferredEntry = false;
-                }
 ```
 
 at this point we know we have an enzyme. Let's create a new vertex
 
 ```java
-                Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
+              Enzyme<I,RV,RVT,RE,RET> enzyme = enzymeDBGraph.addVertex(enzymeDBGraph.Enzyme());
 ```
 
 and then set its properties
 
 ```java
-                enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
-                enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);
-                enzyme.set(enzymeDBGraph.Enzyme().cofactors, cofactors.toArray(new String[0]));
-                enzyme.set(enzymeDBGraph.Enzyme().prositeCrossReferences, prositeCrossRefs.toArray(new String[0]));
-                enzyme.set(enzymeDBGraph.Enzyme().catalyticActivity, catalyticActivity);
-                enzyme.set(enzymeDBGraph.Enzyme().comment, commentsSt);
+              enzyme.set(enzymeDBGraph.Enzyme().id, enzymeId);
+              enzyme.set(enzymeDBGraph.Enzyme().officialName, officialName);
+              enzyme.set(enzymeDBGraph.Enzyme().cofactors, cofactors.toArray(new String[0]));
+              enzyme.set(enzymeDBGraph.Enzyme().prositeCrossReferences, prositeCrossRefs.toArray(new String[0]));
+              enzyme.set(enzymeDBGraph.Enzyme().catalyticActivity, catalyticActivity);
+              enzyme.set(enzymeDBGraph.Enzyme().comment, commentsSt);
 ```
 
 we got an enzyme inserted, increase the counter
 
 ```java
-                enzymeCounter++;
+              enzymeCounter++;
 ```
 
 println every 100 enzymes
 
 ```java
-                if(enzymeCounter % 100 == 0) { System.out.println(enzymeCounter + " enzymes inserted"); }
-              }
+              if(enzymeCounter % 100 == 0) { System.out.println(enzymeCounter + " enzymes inserted"); }
+            }
 ```
 
 reset loop state
 
 ```java
-              enzymeFound         = false;
-              officialName        = "";
-              enzymeId            = "";
-              commentsSt          = "";
-              catalyticActivity   = "";
-              cofactors.clear();
-              prositeCrossRefs.clear();
-            }
+            enzymeFound         = false;
+            officialName        = "";
+            enzymeId            = "";
+            commentsSt          = "";
+            catalyticActivity   = "";
+            cofactors.clear();
+            prositeCrossRefs.clear();
           }
         }
+      }
 ```
 
 close the file reader
 
 ```java
-        reader.close();
+      reader.close();
+    }
+    catch(Exception e) {
+
+      logger.log(Level.SEVERE, e.getMessage());
+      StackTraceElement[] trace = e.getStackTrace();
+
+      for (StackTraceElement stackTraceElement : trace) {
+        logger.log(Level.SEVERE, stackTraceElement.toString());
+      }
+    }
+    finally {
+
+      try {
+        //closing logger file handler
+        fh.close();
+        logger.log(Level.INFO, "Closing up graph service");
+        // shutdown, makes sure all changes are written to disk
+        enzymeDBGraph.raw().shutdown();
+
+        //-----------------writing stats file---------------------
+        long elapsedTime    = System.nanoTime() - initTime;
+        long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+
+        long hours    = elapsedSeconds/3600;
+        long minutes  = (elapsedSeconds % 3600)/60;
+        long seconds  = (elapsedSeconds % 3600)%60;
+
+        statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
+          + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
+          "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
+
+        //---closing stats writer---
+        statsBuff.close();
       }
       catch(Exception e) {
 
         logger.log(Level.SEVERE, e.getMessage());
         StackTraceElement[] trace = e.getStackTrace();
 
-        for (StackTraceElement stackTraceElement : trace) {
+        for(StackTraceElement stackTraceElement: trace) {
           logger.log(Level.SEVERE, stackTraceElement.toString());
-        }
-      }
-      finally {
-
-        try {
-          //closing logger file handler
-          fh.close();
-          logger.log(Level.INFO, "Closing up graph service");
-          // shutdown, makes sure all changes are written to disk
-          enzymeDBGraph.raw().shutdown();
-
-          //-----------------writing stats file---------------------
-          long elapsedTime    = System.nanoTime() - initTime;
-          long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-
-          long hours    = elapsedSeconds/3600;
-          long minutes  = (elapsedSeconds % 3600)/60;
-          long seconds  = (elapsedSeconds % 3600)%60;
-
-          statsBuff.write("Statistics for program ImportEnzymeDB:\nInput file: " + inFile.getName()
-            + "\nThere were " + enzymeCounter + " enzymes inserted.\n" +
-            "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
-
-          //---closing stats writer---
-          statsBuff.close();
-        }
-        catch(Exception e) {
-
-          logger.log(Level.SEVERE, e.getMessage());
-          StackTraceElement[] trace = e.getStackTrace();
-
-          for(StackTraceElement stackTraceElement: trace) {
-            logger.log(Level.SEVERE, stackTraceElement.toString());
-          }
         }
       }
     }
@@ -419,9 +399,6 @@ close the file reader
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -429,9 +406,6 @@ close the file reader
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
-[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -481,7 +455,6 @@ close the file reader
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../../uniprot/vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../../uniprot/vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../../uniprot/programs/ImportIsoformSequences.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../../uniprot/programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../../uniprot/programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../../uniprot/programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../../uniprot/programs/XMLConstants.java.md
@@ -501,7 +474,6 @@ close the file reader
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../../uniprot/edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../../uniprot/edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../../uniprot/edges/ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../../uniprot/edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../../uniprot/edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../../uniprot/edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../../uniprot/edges/ReferencePatent.java.md

@@ -8,37 +8,38 @@ import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.angulillos.UntypedGraph;
 
 /**
- * Created by ppareja on 7/28/2014.
- */
+* Created by ppareja on 7/28/2014.
+*/
 public final class ProteinDisease <I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-  extends
-  UniProtGraph.UniProtEdge<
-    Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-    ProteinDisease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
-    Disease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType,
-    I, RV, RVT, RE, RET
-    > {
+extends
+UniProtGraph.UniProtEdge<
+Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
+ProteinDisease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
+Disease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType,
+I, RV, RVT, RE, RET
+> {
 
   public String status() {
-  return get(type().status);
+    return get(type().status);
   }
   public String text() {
-  return get(type().text);
+    return get(type().text);
   }
   public String evidence() {
-  return get(type().evidence);
+    return get(type().evidence);
   }
 
   public ProteinDisease(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType type) {
 
-  super(edge, type);
+    super(edge, type);
   }
 
   @Override
   public ProteinDisease<I, RV, RVT, RE, RET> self() {
-  return this;
+    return this;
   }
 }
+
 ```
 
 
@@ -72,9 +73,6 @@ public final class ProteinDisease <I extends UntypedGraph<RV, RVT, RE, RET>, RV,
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -82,9 +80,6 @@ public final class ProteinDisease <I extends UntypedGraph<RV, RVT, RE, RET>, RV,
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
-[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -134,7 +129,6 @@ public final class ProteinDisease <I extends UntypedGraph<RV, RVT, RE, RET>, RV,
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ../programs/ImportIsoformSequences.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ../programs/ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ../programs/ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ../programs/ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: ../programs/XMLConstants.java.md
@@ -154,7 +148,6 @@ public final class ProteinDisease <I extends UntypedGraph<RV, RVT, RE, RET>, RV,
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ReferencePatent.java.md

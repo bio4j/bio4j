@@ -13,144 +13,141 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-
-/**
- * Imports the sequences of isoforms into Bio4j
- *
- * @author <a href="mailto:ppareja@era7.com">Pablo Pareja Tobes</a>
- */
 public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
   private static final Logger logger = Logger.getLogger("ImportIsoformSequences");
   private static FileHandler fh;
 
-  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(String dbFolder, String propertiesFile);
+  protected abstract UniProtGraph<I,RV,RVT,RE,RET> config(File dbFolder);
 
-  public void importIsoformSequences(String[] args) {
+  public void importIsoformSequences(File inFile, File dbFolder) {
 
-  if (args.length != 3) {
-    System.out.println("This program expects two parameters: \n"
-      + "1. Fasta file including all isoforms \n"
-      + "2. Bio4j DB folder \n"
-      + "3. DB Properties file (.properties)");
-  } else {
-
-    long initTime = System.nanoTime();
-
-    File inFile = new File(args[0]);
-    String dbFolder = args[1];
-    String propertiesFile = args[2];
-
-    String isoformIdSt = null;
-
-    BufferedWriter statsBuff = null;
-
-    UniProtGraph<I,RV,RVT,RE,RET> uniProtGraph = config(dbFolder, propertiesFile);
+    final long initTime = System.nanoTime();
 
     int isoformCounter = 0;
 
+    UniProtGraph<I,RV,RVT,RE,RET> uniProtGraph = config(dbFolder);
+
+    String isoformIdSt = null;
+    BufferedWriter statsBuff = null;
+
     try {
 
-    // This block configures the logger with handler and formatter
-    fh = new FileHandler("ImporIsoformSequences.log", true);
-    SimpleFormatter formatter = new SimpleFormatter();
-    fh.setFormatter(formatter);
-    logger.addHandler(fh);
-    logger.setLevel(Level.ALL);
+      // This block configures the logger with handler and formatter
+      fh = new FileHandler("ImporIsoformSequences.log", true);
+      SimpleFormatter formatter = new SimpleFormatter();
+      fh.setFormatter(formatter);
+      logger.addHandler(fh);
+      logger.setLevel(Level.ALL);
 
-    //---creating writer for stats file-----
-    statsBuff = new BufferedWriter(new FileWriter(new File("ImportIsoformSequencesStats.txt")));
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportIsoformSequencesStats.txt")));
 
-    BufferedReader reader = new BufferedReader(new FileReader(inFile));
-    String line;
-    StringBuilder seqStBuilder = new StringBuilder();
+      BufferedReader reader = new BufferedReader(new FileReader(inFile));
+      String line;
+      StringBuilder seqStBuilder = new StringBuilder();
 
-    logger.log(Level.INFO, "updating isoforms data....");
+      logger.log(Level.INFO, "updating isoforms data");
 
-    while ((line = reader.readLine()) != null) {
-      if (line.trim().startsWith(">")) {
+      // this parses a fasta file I guess
+      while((line = reader.readLine()) != null) {
 
-      String[] columns = line.split("\\|");
-      isoformIdSt = columns[1];
-      String isoformNameSt = columns[2].split("OS=")[0].trim();
+        // got the header
+        if(line.trim().startsWith(">")) {
 
-      //sequence read line
-      line = reader.readLine();
+          String[] columns = line.split("\\|");
 
-      while (!line.trim().startsWith(">")) {
-        seqStBuilder.append(line);
-        line = reader.readLine();
-        if (line == null) {
-        break;
+          isoformIdSt = columns[1];
+
+          String isoformNameSt = columns[2].split("OS=")[0].trim();
+
+          //sequence read line
+          line = reader.readLine();
+
+          // accumulate the sequence lines
+          // TODO I *think* that this will skip every other isoform
+          while (!line.trim().startsWith(">")) {
+
+            seqStBuilder.append(line);
+            line = reader.readLine();
+
+            if (line == null) {
+              break;
+            }
+          }
+
+          final String sequence = seqStBuilder.toString();
+          seqStBuilder.delete(0, seqStBuilder.length());
+
+          // TODO clean this a bit
+          uniProtGraph.isoformIdIndex()
+            .getVertex(isoformIdSt)
+            .ifPresent(
+              isoform -> {
+
+                isoform.set(uniProtGraph.Isoform().sequence, sequence);
+                isoform.set(uniProtGraph.Isoform().name, isoformNameSt);
+
+                // isoformCounter++;
+              }
+            );
+        }
+
+        if(line == null) {
+
+          break;
         }
       }
 
-      String sequence = seqStBuilder.toString();
-      seqStBuilder.delete(0, seqStBuilder.length());
+      reader.close();
 
-      Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = uniProtGraph.isoformIdIndex().getVertex(isoformIdSt);
-
-      if(isoformOptional.isPresent()){
-        Isoform<I,RV,RVT,RE,RET> isoform = isoformOptional.get();
-        isoform.set(uniProtGraph.Isoform().sequence, sequence);
-        isoform.set(uniProtGraph.Isoform().name, isoformNameSt);
-        System.out.println("Setting name for: " + isoform.id());
-        isoformCounter++;
-      }
-
-      }
-
-      if (line == null) {
-      break;
-      }
+      logger.log(Level.INFO, "Done! :)");
 
     }
+    catch(Exception e) {
 
-    reader.close();
+      logger.log(Level.INFO, ("Exception retrieving isoform " + isoformIdSt));
+      logger.log(Level.SEVERE, e.getMessage());
+      StackTraceElement[] trace = e.getStackTrace();
+      for (StackTraceElement stackTraceElement: trace) {
 
-    logger.log(Level.INFO, "Done! :)");
-
-    } catch (Exception e) {
-    logger.log(Level.INFO, ("Exception retrieving isoform " + isoformIdSt));
-    logger.log(Level.SEVERE, e.getMessage());
-    StackTraceElement[] trace = e.getStackTrace();
-    for (StackTraceElement stackTraceElement : trace) {
-      logger.log(Level.SEVERE, stackTraceElement.toString());
+        logger.log(Level.SEVERE, stackTraceElement.toString());
+      }
     }
-    } finally {
+    finally {
 
-    uniProtGraph.raw().commit();
+      uniProtGraph.raw().commit();
 
-    //closing logger file handler
-    fh.close();
-    logger.log(Level.INFO, "Closing up graph....");
-    // shutdown, makes sure all changes are written to disk
-    uniProtGraph.raw().shutdown();
+      //closing logger file handler
+      fh.close();
+      logger.log(Level.INFO, "Closing up graph....");
+      // shutdown, makes sure all changes are written to disk
+      uniProtGraph.raw().shutdown();
 
-    try {
+      try {
 
-      //-----------------writing stats file---------------------
-      long elapsedTime = System.nanoTime() - initTime;
-      long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
-      long hours = elapsedSeconds / 3600;
-      long minutes = (elapsedSeconds % 3600) / 60;
-      long seconds = (elapsedSeconds % 3600) % 60;
+        //-----------------writing stats file---------------------
+        long elapsedTime    = System.nanoTime() - initTime;
+        long elapsedSeconds = Math.round((elapsedTime / 1000000000.0));
+        long hours          = elapsedSeconds / 3600;
+        long minutes        = (elapsedSeconds % 3600) / 60;
+        long seconds        = (elapsedSeconds % 3600) % 60;
 
-      statsBuff.write("Statistics for program ImportIsoformSequences:\nInput file: " + inFile.getName()
+        statsBuff.write("Statistics for program ImportIsoformSequences:\nInput file: " + inFile.getName()
         + "\nThere were " + isoformCounter + " isoforms updated.\n"
         + "The elapsed time was: " + hours + "h " + minutes + "m " + seconds + "s\n");
 
-      //---closing stats writer---
-      statsBuff.close();
+        //---closing stats writer---
+        statsBuff.close();
 
-    }catch(Exception e){
-      e.printStackTrace();
-    }
+      }
+      catch(Exception e) {
 
+        e.printStackTrace();
+      }
     }
-  }
   }
 }
+
 ```
 
 
@@ -184,9 +181,6 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 [main/java/com/bio4j/model/go/edges/NegativelyRegulates.java]: ../../go/edges/NegativelyRegulates.java.md
 [main/java/com/bio4j/model/go/edges/PartOf.java]: ../../go/edges/PartOf.java.md
 [main/java/com/bio4j/model/go/GoGraph.java]: ../../go/GoGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java]: ../../ncbiTaxonomy_geninfo/programs/ImportGenInfoNCBITaxonIndex.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java]: ../../ncbiTaxonomy_geninfo/edges/GenInfoNCBITaxon.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java]: ../../ncbiTaxonomy_geninfo/NCBITaxonomyGenInfoGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java]: ../../uniprot_ncbiTaxonomy/programs/ImportUniProtNCBITaxonomy.java.md
 [main/java/com/bio4j/model/uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java]: ../../uniprot_ncbiTaxonomy/edges/ProteinNCBITaxon.java.md
@@ -194,9 +188,6 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 [main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../../ncbiTaxonomy/NCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/programs/ImportNCBITaxonomy.java]: ../../ncbiTaxonomy/programs/ImportNCBITaxonomy.java.md
 [main/java/com/bio4j/model/ncbiTaxonomy/edges/NCBITaxonParent.java]: ../../ncbiTaxonomy/edges/NCBITaxonParent.java.md
-[main/java/com/bio4j/model/geninfo/vertices/GenInfo.java]: ../../geninfo/vertices/GenInfo.java.md
-[main/java/com/bio4j/model/geninfo/GenInfoGraph.java]: ../../geninfo/GenInfoGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/tests/ImportUniProtGoTest.java]: ../../uniprot_go/tests/ImportUniProtGoTest.java.md
 [main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../../uniprot_go/UniProtGoGraph.java.md
 [main/java/com/bio4j/model/uniprot_go/programs/ImportUniProtGo.java]: ../../uniprot_go/programs/ImportUniProtGo.java.md
 [main/java/com/bio4j/model/uniprot_go/edges/GoAnnotation.java]: ../../uniprot_go/edges/GoAnnotation.java.md
@@ -246,7 +237,6 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 [main/java/com/bio4j/model/uniprot/vertices/SubcellularLocation.java]: ../vertices/SubcellularLocation.java.md
 [main/java/com/bio4j/model/uniprot/vertices/Person.java]: ../vertices/Person.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportIsoformSequences.java]: ImportIsoformSequences.java.md
-[main/java/com/bio4j/model/uniprot/programs/ImportUniProt.java]: ImportUniProt.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportProteinInteractions.java]: ImportProteinInteractions.java.md
 [main/java/com/bio4j/model/uniprot/programs/ImportUniProtEdges.java]: ImportUniProtEdges.java.md
 [main/java/com/bio4j/model/uniprot/programs/XMLConstants.java]: XMLConstants.java.md
@@ -266,7 +256,6 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 [main/java/com/bio4j/model/uniprot/edges/BookEditor.java]: ../edges/BookEditor.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinIsoform.java]: ../edges/ProteinIsoform.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinSubcellularLocation.java]: ../edges/ProteinSubcellularLocation.java.md
-[main/java/com/bio4j/model/uniprot/edges/IsoformProteinInteraction.java]: ../edges/IsoformProteinInteraction.java.md
 [main/java/com/bio4j/model/uniprot/edges/ProteinDataset.java]: ../edges/ProteinDataset.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferenceAuthorPerson.java]: ../edges/ReferenceAuthorPerson.java.md
 [main/java/com/bio4j/model/uniprot/edges/ReferencePatent.java]: ../edges/ReferencePatent.java.md
