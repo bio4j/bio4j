@@ -141,6 +141,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
   )
   {
 
+    /* We first get the protein from the entry xml element accession */
     final Optional<Protein<I,RV,RVT,RE,RET>> optionalSrcProtein = graph.proteinAccessionIndex()
       .getVertex(entryXMLElem.asJDomElement().getChildren(ENTRY.ACCESSION.element).get(0).getText());
 
@@ -154,32 +155,26 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           )
           .forEach(
             commentElem -> {
-
               /* these two elements are required by the schema */
               final Element srcInteractant  = commentElem
                 .getChildren(COMMENT.INTERACTANT.element).get(0);
               final String srcInteractantId = srcInteractant
                 .getAttributeValue(COMMENT.INTERACTANT.INTACTID.attribute);
-
               final Element tgtInteractant  = commentElem
                 .getChildren(COMMENT.INTERACTANT.element).get(1);
               final String tgtInteractantId = tgtInteractant
                 .getAttributeValue(COMMENT.INTERACTANT.INTACTID.attribute);
-
               /* this is always there, but it is not documented */
               final String tgtId = tgtInteractant
                 .getChildText(COMMENT.INTERACTANT.ID.element);
-
+              /* we now try to get the target protein from the accession index; if it's there, create a protein-protein interaction edge, otherwise a protein-isoform one */
               final Optional<Protein<I,RV,RVT,RE,RET>> optionalTgtProtein = graph.proteinAccessionIndex()
                 .getVertex(tgtId);
-
               // tgt is a protein
               if(optionalTgtProtein.isPresent()) {
-
                 // create edge, set properties
                 final ProteinProteinInteraction<I,RV,RVT,RE,RET> edge =
                   srcProtein.addOutEdge(graph.ProteinProteinInteraction(), optionalTgtProtein.get());
-
                 Optional.ofNullable( commentElem.getChild(COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
                   elem -> edge.set(edge.type().organismsDiffer, elem.getText())
                 );
@@ -191,7 +186,6 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
               }
               // tgt is an isoform, or just crap
               else {
-
                 graph.isoformIdIndex()
                   .getVertex(tgtInteractantId)
                   .ifPresent(
@@ -199,7 +193,6 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
                       // create edge, set properties
                       final ProteinIsoformInteraction<I,RV,RVT,RE,RET> edge =
                         optionalSrcProtein.get().addOutEdge(graph.ProteinIsoformInteraction(), tgtIsoform);
-
                       Optional.ofNullable( commentElem.getChild(COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
                         elem -> edge.set(edge.type().organismsDiffer, elem.getText())
                       );
@@ -213,9 +206,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
               }
             }
         );
-
       }
     );
-    // get elements
   }
 }
