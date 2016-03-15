@@ -761,19 +761,19 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   {
 
     Optional.ofNullable(entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME))
-    .ifPresent(
-    geneElement -> geneElement.getChildren(GENE_NAME_TAG_NAME)
-    .stream()
-    .forEach(
-    geneNameElem -> {
-      graph.geneNameNameIndex().getVertex(geneNameElem.getText()).ifPresent(
-      geneName ->
-      protein.addOutEdge(graph.ProteinGeneName(), geneName)
-      .set(graph.ProteinGeneName().geneNameType, geneNameElem.getAttributeValue("type"))
+      .ifPresent(
+        geneElement -> geneElement.getChildren(GENE_NAME_TAG_NAME)
+          .stream()
+          .forEach(
+            geneNameElem -> {
+              graph.geneNameNameIndex().getVertex(geneNameElem.getText()).ifPresent(
+                geneName ->
+                protein.addOutEdge(graph.ProteinGeneName(), geneName)
+                  .set(graph.ProteinGeneName().geneNameType, geneNameElem.getAttributeValue("type"))
+              );
+            }
+          )
       );
-    }
-    )
-    );
 
     // Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
     // if (geneElement != null) {

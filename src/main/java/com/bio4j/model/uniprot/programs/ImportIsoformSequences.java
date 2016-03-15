@@ -54,6 +54,7 @@ public abstract class ImportIsoformSequences<I extends UntypedGraph<RV,RVT,RE,RE
 
           String[] columns = line.split("\\|");
 
+          // the second 
           isoformIdSt = columns[1];
 
           String isoformNameSt = columns[2].split("OS=")[0].trim();

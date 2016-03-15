@@ -11,6 +11,9 @@ import com.ohnosequences.xml.api.model.XMLElement;
 import org.jdom2.Element;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -56,7 +59,9 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
       String line;
       final StringBuilder entryStBuilder = new StringBuilder();
 
-      /* Iterate over the input file lines */
+      /*
+        Iterate over the input file lines. We'd like to replace this with a `Stream<String>`-based solution, but there's no easy lazy way of partitioning streams (going from lines to `XMLElement` entries).
+      */
       while((line = inFileReader.readLine()) != null) {
 
         if(line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
@@ -71,11 +76,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           final XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
-          graph.proteinAccessionIndex()
-            .getVertex(entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME))
-            .ifPresent(
-              protein -> importProteinInteractionsWithSource(entryXMLElem, graph, protein)
-            );
+          importProteinInteractionsWithSource(entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -122,78 +123,106 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
 
         Logger.getLogger(ImportProteinInteractions.class.getName()).log(Level.SEVERE, null, ex);
       }
-
     }
   }
 
+  /*
+    By direct inspection of UniProt XML file I have concluded that:
+
+    1. the source id is always a protein, I don't know why
+    2. target can be either an isoform or a protein, and the id is in `interactant/id`. Isoform ids *look* to be `${protein.id}-{number}`
+    3. the `intactId`s have nothing to do with UniProt, and should be dropped
+
+    Note that because of 1. it would be easier if we passed the protein as an argument.
+
+    #### Remark
+
+    Again based on manual inspection it looks like protein-protein interactions are **not** *duplicated* in the UniProt XML file. I do not know if this implies a semantic direction or not. So, if you want to get all with which a given protein interacts, you need to get both inV and outV of protein-protein interaction edges.
+  */
   private void importProteinInteractionsWithSource(
     XMLElement entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph,
-    Protein<I,RV,RVT,RE,RET> protein
+    UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
 
-    List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+    /* We first get the protein from the entry xml element accession */
+    final Optional<Protein<I,RV,RVT,RE,RET>> optionalSrcProtein = graph.proteinAccessionIndex()
+      .getVertex(entryXMLElem.asJDomElement().getChildren(ENTRY.ACCESSION.element).get(0).getText());
 
-    for (Element commentElem: comments) {
-
-      String commentTypeSt = commentElem.getAttributeValue(COMMENT_TYPE_ATTRIBUTE);
-
-      //----------interaction----------------
-      if (commentTypeSt.equals(COMMENT_TYPE_INTERACTION)) {
-
-        List<Element> interactants = commentElem.getChildren("interactant");
-        Element interactant1 = interactants.get(0);
-        Element interactant2 = interactants.get(1);
-        Element organismsDiffer = commentElem.getChild("organismsDiffer");
-        Element experiments = commentElem.getChild("experiments");
-        String intactId1St = interactant1.getAttributeValue("intactId");
-        String intactId2St = interactant2.getAttributeValue("intactId");
-        String organismsDifferSt = "";
-        String experimentsSt = "";
-        if (intactId1St == null) {
-          intactId1St = "";
-        }
-        if (intactId2St == null) {
-          intactId2St = "";
-        }
-        if (organismsDiffer != null) {
-          organismsDifferSt = organismsDiffer.getText();
-        }
-        if (experiments != null) {
-          experimentsSt = experiments.getText();
-        }
-
-        //----now we try to retrieve the interactant 2 accession--
-        String interactant2AccessionSt = interactant2.getChildText("id");
-        long protein2Id = -1;
-        if (interactant2AccessionSt != null) {
-
-          Optional<Protein<I,RV,RVT,RE,RET>> protein2Optional = graph.proteinAccessionIndex().getVertex(interactant2AccessionSt);
-
-          if(!protein2Optional.isPresent()) {
-
-            Optional<Isoform<I,RV,RVT,RE,RET>> isoformOptional = graph.isoformIdIndex().getVertex(interactant2AccessionSt);
-
-            if(isoformOptional.isPresent()) {
-
-              ProteinIsoformInteraction<I,RV,RVT,RE,RET> proteinIsoformInteraction = protein.addOutEdge(graph.ProteinIsoformInteraction(), isoformOptional.get());
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().experiments, experimentsSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().organismsDiffer, organismsDifferSt);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId1, intactId1St);
-              proteinIsoformInteraction.set(graph.ProteinIsoformInteraction().intActId2, intactId2St);
+    optionalSrcProtein.ifPresent(
+      srcProtein -> {
+        entryXMLElem.asJDomElement().getChildren(ENTRY.COMMENT.element)
+          .stream()
+          .filter(
+            commentElem ->
+              commentElem.getAttributeValue(ENTRY.COMMENT.TYPE.attribute).equals(ENTRY.COMMENT.TYPE.INTERACTION)
+          )
+          .forEach(
+            commentElem -> {
+              /* these two elements are required by the schema */
+              final Element srcInteractant  = commentElem
+                .getChildren(ENTRY.COMMENT.INTERACTANT.element).get(0);
+              final String srcInteractantId = srcInteractant
+                .getAttributeValue(ENTRY.COMMENT.INTERACTANT.INTACTID.attribute);
+              final Element tgtInteractant  = commentElem
+                .getChildren(ENTRY.COMMENT.INTERACTANT.element).get(1);
+              final String tgtInteractantId = tgtInteractant
+                .getAttributeValue(ENTRY.COMMENT.INTERACTANT.INTACTID.attribute);
+              /* this is always there, but it is not documented */
+              final String tgtId = tgtInteractant
+                .getChildText(ENTRY.COMMENT.INTERACTANT.ID.element);
+              /* we now try to get the target protein from the accession index; if it's there, create a protein-protein interaction edge, otherwise a protein-isoform one */
+              final Optional<Protein<I,RV,RVT,RE,RET>> optionalTgtProtein = graph.proteinAccessionIndex()
+                .getVertex(tgtId);
+              // tgt is a protein
+              if(optionalTgtProtein.isPresent()) {
+                // create edge, set properties
+                final ProteinProteinInteraction<I,RV,RVT,RE,RET> edge =
+                  srcProtein.addOutEdge(graph.ProteinProteinInteraction(), optionalTgtProtein.get());
+                Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
+                  elem -> edge.set(
+                    edge.type().organismsDiffer,
+                    Boolean.parseBoolean(elem.getText())
+                  )
+                );
+                Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
+                  elem -> edge.set(
+                    edge.type().experiments,
+                    Integer.parseInt(elem.getText())
+                  )
+                );
+                edge.set(edge.type().intActId1, srcInteractantId);
+                edge.set(edge.type().intActId2, tgtInteractantId);
+              }
+              // tgt is an isoform, or just crap
+              else {
+                graph.isoformIdIndex()
+                  .getVertex(tgtInteractantId)
+                  .ifPresent(
+                    tgtIsoform -> {
+                      // create edge, set properties
+                      final ProteinIsoformInteraction<I,RV,RVT,RE,RET> edge =
+                        optionalSrcProtein.get().addOutEdge(graph.ProteinIsoformInteraction(), tgtIsoform);
+                      Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.ORGANISMSDIFFER.element) ).ifPresent(
+                        elem -> edge.set(
+                          edge.type().organismsDiffer,
+                          Boolean.parseBoolean(elem.getText())
+                        )
+                      );
+                      Optional.ofNullable( commentElem.getChild(ENTRY.COMMENT.EXPERIMENTS.element) ).ifPresent(
+                        elem -> edge.set(
+                          edge.type().experiments,
+                          Integer.parseInt(elem.getText())
+                        )
+                      );
+                      edge.set(edge.type().intActId1, srcInteractantId);
+                      edge.set(edge.type().intActId2, tgtInteractantId);
+                    }
+                  );
+              }
             }
-          }
-          else {
-
-            ProteinProteinInteraction<I,RV,RVT,RE,RET> proteinProteinInteraction = protein.addOutEdge(graph.ProteinProteinInteraction(), protein2Optional.get());
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().experiments, experimentsSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().organismsDiffer, organismsDifferSt);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId1, intactId1St);
-            proteinProteinInteraction.set(graph.ProteinProteinInteraction().intActId2, intactId2St);
-          }
-        }
+        );
       }
-    }
+    );
   }
 }
