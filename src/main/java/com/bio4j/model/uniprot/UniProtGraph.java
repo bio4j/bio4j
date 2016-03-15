@@ -4212,16 +4212,6 @@ I, RV, RVT, RE, RET
     }
   }
 
-  /*
-    This edge corresponds to a protein-isoform interaction, as found in the comments section of the UniProt XML.
-
-    By direct inspection of UniProt XML file we have concluded that:
-
-    1. the source id is always a protein, I don't know why
-    2. target can be either an isoform or a protein, and the id is in `interactant/id`. Isoform ids *look* to be `${protein.id}-{number}`
-
-    We don't know if there are interactions between isoforms.
-  */
   public final class ProteinIsoformType
   extends
   UniProtEdgeType<
@@ -4245,9 +4235,18 @@ I, RV, RVT, RE, RET
     public ProteinIsoform<I, RV, RVT, RE, RET> from(RE edge) {
       return new ProteinIsoform<I, RV, RVT, RE, RET>(edge, this);
     }
-
   }
 
+  /*
+    This edge corresponds to a protein-isoform interaction, as found in the comments section of the UniProt XML.
+
+    By direct inspection of UniProt XML file we have concluded that:
+
+    1. the source id is always a protein, I don't know why
+    2. target can be either an isoform or a protein, and the id is in `interactant/id`. Isoform ids *look* to be `${protein.id}-{number}`
+
+    We don't know if there are interactions between isoforms.
+  */
   public final class ProteinIsoformInteractionType
   extends
   UniProtEdgeType<
