@@ -4,6 +4,7 @@ public final class XMLConstants {
 
   // this is a static representation of the entry XML structure
   interface ENTRY               { String element = "entry";
+    interface DATASET           { String attribute = "dataset"; }
     interface ACCESSION         { String element = "accession"; }
     interface NAME              { String element = "name"; }
     interface PROTEIN           { String element = "protein";

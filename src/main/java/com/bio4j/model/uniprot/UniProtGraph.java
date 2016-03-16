@@ -9,6 +9,7 @@ import com.bio4j.model.uniprot_uniref.UniProtUniRefGraph;
 import com.bio4j.angulillos.*;
 
 import java.util.Date;
+import java.util.Optional;
 
 /*
 
@@ -410,7 +411,6 @@ I, RV, RVT, RE, RET
   public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
   public abstract UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniProtNCBITaxonomyGraph();
 
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // indices
   public abstract TypedVertexIndex.Unique <
@@ -725,16 +725,6 @@ I, RV, RVT, RE, RET
   reactomeTermIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Dataset<I,RV,RVT,RE,RET>, DatasetType,
-  // property
-  DatasetType.name, String,
-  // graph
-  UniProtGraph<I,RV,RVT,RE,RET>,
-  I, RV, RVT, RE, RET
-  >
-  datasetNameIndex();
-  public abstract TypedVertexIndex.Unique <
-  // vertex
   Keyword<I,RV,RVT,RE,RET>, KeywordType,
   // property
   KeywordType.id, String,
@@ -832,8 +822,6 @@ I, RV, RVT, RE, RET
 
   public abstract ConsortiumType Consortium();
 
-  public abstract DatasetType Dataset();
-
   public abstract CountryType Country();
 
   public abstract DBType DB();
@@ -923,8 +911,6 @@ I, RV, RVT, RE, RET
 
   public abstract ProteinCommentType ProteinComment();
 
-  public abstract ProteinDatasetType ProteinDataset();
-
   public abstract ProteinDiseaseType ProteinDisease();
 
   public abstract ProteinEMBLType ProteinEMBL();
@@ -997,6 +983,23 @@ I, RV, RVT, RE, RET
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Vertex types
+
+  public static enum Dataset {
+    swissProt("Swiss-Prot"),
+    trembl("TrEMBL");
+
+    Dataset(String repr) { this.repr = repr; }
+    public final String repr;
+
+    public static final Optional<Dataset> fromRepr(String v) {
+
+      switch(v) {
+        case "Swiss-Prot":  { return Optional.of(swissProt); }
+        case "TrEMBL":      { return Optional.of(trembl);    }
+        default:            { return Optional.empty();       }
+      }
+    }
+  }
 
   public final class AlternativeProductType
   extends
@@ -1262,43 +1265,6 @@ I, RV, RVT, RE, RET
     UniProtVertexProperty<Country<I,RV,RVT,RE,RET>, CountryType, name, String> {
       public name() {
         super(CountryType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-
-  }
-
-  public final class DatasetType
-  extends
-  UniProtVertexType<
-  Dataset<I,RV,RVT,RE,RET>,
-  UniProtGraph<I,RV,RVT,RE,RET>.DatasetType
-  > {
-
-    public final name name = new name();
-
-    public DatasetType(RVT raw) {
-      super(raw);
-    }
-
-    @Override
-    public DatasetType value() {
-      return graph().Dataset();
-    }
-
-    @Override
-    public Dataset<I,RV,RVT,RE,RET> from(RV vertex) {
-      return new Dataset<I,RV,RVT,RE,RET>(vertex, this);
-    }
-
-    public final class name
-    extends
-    UniProtVertexProperty<Dataset<I,RV,RVT,RE,RET>, DatasetType, name, String> {
-      public name() {
-        super(DatasetType.this);
       }
 
       public Class<String> valueClass() {
@@ -2298,13 +2264,14 @@ I, RV, RVT, RE, RET
         UniProtGraph<I,RV,RVT,RE,RET>.ProteinType
       >
   {
-
     public final accession accession  = new accession();
+    public final dataset dataset      = new dataset();
     public final entryName entryName  = new entryName();
     public final fullName fullName    = new fullName();
     public final sequence sequence    = new sequence();
     public final length length        = new length();
     public final mass mass            = new mass();
+    public final geneName geneName    = new geneName();
 
     public final uniRef100ClusterId uniRef100ClusterId  = new uniRef100ClusterId();
     public final uniRef90ClusterId uniRef90ClusterId    = new uniRef90ClusterId();
@@ -2325,6 +2292,12 @@ I, RV, RVT, RE, RET
     {
       public accession() { super(ProteinType.this); }
       public Class<String> valueClass() { return String.class; }
+    }
+    /* This property is always present */
+    public final class dataset extends UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, dataset, Dataset>
+    {
+      public dataset() { super(ProteinType.this); }
+      public Class<Dataset> valueClass() { return Dataset.class; }
     }
     /* This property is **optional**. */
     public final class shortName extends UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, shortName, String>
@@ -2350,6 +2323,13 @@ I, RV, RVT, RE, RET
       public entryName() { super(ProteinType.this); }
       public Class<String> valueClass() { return String.class; }
     }
+    /* The gene name, as displayed on the UniProt website */
+    public final class geneName extends UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, geneName, String>
+    {
+      public geneName() { super(ProteinType.this); }
+      public Class<String> valueClass() { return String.class; }
+    }
+
     public final class mass extends UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, mass, Integer>
     {
       public mass() { super(ProteinType.this); }
@@ -3406,31 +3386,6 @@ I, RV, RVT, RE, RET
       public Class<String> valueClass() {
         return String.class;
       }
-    }
-  }
-
-  public final class ProteinDatasetType
-  extends
-  UniProtEdgeType<
-  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
-  ProteinDataset<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinDatasetType,
-  Dataset<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.DatasetType
-  >
-  implements
-  TypedEdge.Type.ManyToOne {
-
-    public ProteinDatasetType(RET raw) {
-      super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Dataset());
-    }
-
-    @Override
-    public ProteinDatasetType value() {
-      return graph().ProteinDataset();
-    }
-
-    @Override
-    public ProteinDataset<I,RV,RVT,RE,RET> from(RE edge) {
-      return new ProteinDataset<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 

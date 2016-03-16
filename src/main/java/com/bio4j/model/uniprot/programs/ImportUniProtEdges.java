@@ -689,11 +689,11 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
-    final String dataSetName = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-
-    graph.datasetNameIndex().getVertex(dataSetName).map(
-    dataset -> protein.addOutEdge(graph.ProteinDataset(), dataset)
-    );
+    // final String dataSetName = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
+    //
+    // graph.datasetNameIndex().getVertex(dataSetName).map(
+    // dataset -> protein.addOutEdge(graph.ProteinDataset(), dataset)
+    // );
   }
 
   private void importProteinKeywordsEdges(

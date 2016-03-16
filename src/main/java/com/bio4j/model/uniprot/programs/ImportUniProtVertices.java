@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniProtGraph;
+import com.bio4j.model.uniprot.UniProtGraph.Dataset;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
 
@@ -38,7 +39,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   final HashSet<String> commentTypeNameSet            = new HashSet<String>();
   final HashSet<String> consortiumNameSet             = new HashSet<String>();
   final HashSet<String> countryNameSet                = new HashSet<String>();
-  final HashSet<String> datasetNameSet                = new HashSet<String>();
+  final HashSet<String> NameSet                = new HashSet<String>();
   final HashSet<String> dbNameSet                     = new HashSet<String>();
   final HashSet<String> diseaseIdSet                  = new HashSet<String>();
   final HashSet<String> eMBLIdSet                     = new HashSet<String>();
@@ -198,7 +199,13 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     final String entryNameV = entryXMLElem.asJDomElement().getChildText(ENTRY.NAME.element);
     p.set( p.type().entryName, entryNameV );
-    
+
+    final String datasetStr = entryXMLElem.asJDomElement().getAttributeValue(ENTRY.DATASET.attribute);
+    final Optional<Dataset> optDatasetV = Dataset.fromRepr(datasetStr);
+    optDatasetV.ifPresent(
+      datasetV -> p.set( p.type().dataset, datasetV )
+    );
+
     final Element proteinElem = entryXMLElem.asJDomElement().getChild(ENTRY.PROTEIN.element);
     final String fullNameV = proteinElem
       .getChild(ENTRY.PROTEIN.RECOMMENDEDNAME.element)
@@ -509,18 +516,18 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
-    final String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-
-    if(!datasetNameSet.contains(proteinDataSetSt)) {
-
-      datasetNameSet.add(proteinDataSetSt);
-
-      if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
-
-        final Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
-        dataset.set(graph.Dataset().name, proteinDataSetSt);
-      }
-    }
+    // final String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
+    //
+    // if(!datasetNameSet.contains(proteinDataSetSt)) {
+    //
+    //   datasetNameSet.add(proteinDataSetSt);
+    //
+    //   if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
+    //
+    //     final Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
+    //     dataset.set(graph.Dataset().name, proteinDataSetSt);
+    //   }
+    // }
   }
 
   private void importProteinFeatures(
