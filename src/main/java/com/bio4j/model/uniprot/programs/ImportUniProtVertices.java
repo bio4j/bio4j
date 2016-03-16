@@ -93,7 +93,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
 
-      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats.txt")));
 
       final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
 
@@ -187,7 +187,8 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     XMLElement entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> g
   )
-  throws ParseException {
+    throws ParseException
+  {
 
     // known to be there according to the schema
     final String accessionV = entryXMLElem.asJDomElement().getChildText(ENTRY.ACCESSION.element);
@@ -195,6 +196,9 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     Protein<I,RV,RVT,RE,RET> p = g.addVertex(g.Protein());
     p.set( g.Protein().accession, accessionV );
 
+    final String entryNameV = entryXMLElem.asJDomElement().getChildText(ENTRY.NAME.element);
+    p.set( p.type().entryName, entryNameV );
+    
     final Element proteinElem = entryXMLElem.asJDomElement().getChild(ENTRY.PROTEIN.element);
     final String fullNameV = proteinElem
       .getChild(ENTRY.PROTEIN.RECOMMENDEDNAME.element)

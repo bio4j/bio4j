@@ -986,14 +986,14 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
             if (!numberSt.equals("")) {
 
-              Optional<Reference<I, RV, RVT, RE, RET>> optionalReference = graph.referenceIdIndex().getVertex(numberSt + graph.Patent().name());
+              Optional<Reference<I,RV,RVT,RE,RET>> optionalReference = graph.referenceIdIndex().getVertex(numberSt + graph.Patent().name());
 
               if (optionalReference.isPresent()) {
 
-                Reference<I, RV, RVT, RE, RET> reference = optionalReference.get();
+                Reference<I,RV,RVT,RE,RET> reference = optionalReference.get();
 
                 //---authors association-----
-                for (Person<I, RV, RVT, RE, RET> person : authorsPerson) {
+                for (Person<I,RV,RVT,RE,RET> person : authorsPerson) {
                   reference.addOutEdge(graph.ReferenceAuthorPerson(), person);
                 }
 

@@ -2,6 +2,63 @@ package com.bio4j.model.uniprot.programs;
 
 public final class XMLConstants {
 
+  // this is a static representation of the entry XML structure
+  interface ENTRY               { String element = "entry";
+    interface ACCESSION         { String element = "accession"; }
+    interface NAME              { String element = "name"; }
+    interface PROTEIN           { String element = "protein";
+      interface RECOMMENDEDNAME { String element = "recommendedName";
+        interface FULLNAME      { String element = "fullName"; }
+      }
+      interface ALTERNATIVENAME { String element = "alternativeName";
+        interface FULLNAME      { String element = "fullName"; }
+      }
+    }
+    interface SEQUENCE          { String element = "sequence";
+      interface LENGTH          { String attribute = "length"; }
+      interface MASS            { String attribute = "mass";   }
+    }
+    interface COMMENT           { String element = "comment";
+      interface TYPE            { String attribute = "type";
+        String ALLERGEN                       = "allergen";
+        String ALTERNATIVE_PRODUCTS           = "alternative products";
+        String BIOTECHNOLOGY                  = "biotechnology";
+        String BIOPHYSICOCHEMICAL_PROPERTIES  = "biophysicochemical properties";
+        String CATALYTIC_ACTIVITY             = "catalytic activity";
+        String CAUTION                        = "caution";
+        String COFACTOR                       = "cofactor";
+        String DEVELOPMENTAL_STAGE            = "developmental stage";
+        String DISEASE                        = "disease";
+        String DOMAIN                         = "domain";
+        String DISRUPTION_PHENOTYPE           = "disruption phenotype";
+        String ENZYME_REGULATION              = "enzyme regulation";
+        String FUNCTION                       = "function";
+        String INDUCTION                      = "induction";
+        String MISCELLANEOUS                  = "miscellaneous";
+        String PATHWAY                        = "pathway";
+        String PHARMACEUTICAL                 = "pharmaceutical";
+        String POLYMORPHISM                   = "polymorphism";
+        String PTM                            = "PTM";
+        String RNA_EDITING                    = "RNA editing";
+        String SIMILARITY                     = "similarity";
+        String SUBCELLULAR_LOCATION           = "subcellular location";
+        String SEQUENCE_CAUTION               = "sequence caution";
+        String SUBUNIT                        = "subunit";
+        String TISSUE_SPECIFITY               = "tissue specificity";
+        String TOXIC_DOSE                     = "toxic dose";
+        String ONLINE_INFORMATION             = "online information";
+        String MASS_SPECTROMETRY              = "mass spectrometry";
+        String INTERACTION                    = "interaction";
+      }
+      interface INTERACTANT     { String element = "interactant";
+        interface INTACTID      { String attribute  = "intactId"; }
+        interface ID            { String element    = "id";       }
+      }
+      interface ORGANISMSDIFFER { String element    = "organismsDiffer";  }
+      interface EXPERIMENTS     { String element    = "experiments";      }
+    }
+  }
+
   public static final String ENTRY_TAG_NAME                 = "entry";
   public static final String ENTRY_ACCESSION_TAG_NAME       = "accession";
   public static final String ENTRY_NAME_TAG_NAME            = "name";
@@ -80,62 +137,6 @@ public final class XMLConstants {
   public static final String ONLINE_ARTICLE_CITATION_TYPE           = "online journal article";
   public static final String BOOK_CITATION_TYPE                     = "book";
   public static final String UNPUBLISHED_OBSERVATION_CITATION_TYPE  = "unpublished observations";
-
-  // this is a static representation of the entry XML structure
-  interface ENTRY               { String element = "entry";
-    interface ACCESSION         { String element = "accession"; }
-    interface PROTEIN           { String element = "protein";
-      interface RECOMMENDEDNAME { String element = "recommendedName";
-        interface FULLNAME      { String element = "fullName"; }
-      }
-      interface ALTERNATIVENAME { String element = "alternativeName";
-        interface FULLNAME      { String element = "fullName"; }
-      }
-    }
-    interface SEQUENCE          { String element = "sequence";
-      interface LENGTH          { String attribute = "length"; }
-      interface MASS            { String attribute = "mass";   }
-    }
-    interface COMMENT           { String element = "comment";
-      interface TYPE            { String attribute = "type";
-        String ALLERGEN                       = "allergen";
-        String ALTERNATIVE_PRODUCTS           = "alternative products";
-        String BIOTECHNOLOGY                  = "biotechnology";
-        String BIOPHYSICOCHEMICAL_PROPERTIES  = "biophysicochemical properties";
-        String CATALYTIC_ACTIVITY             = "catalytic activity";
-        String CAUTION                        = "caution";
-        String COFACTOR                       = "cofactor";
-        String DEVELOPMENTAL_STAGE            = "developmental stage";
-        String DISEASE                        = "disease";
-        String DOMAIN                         = "domain";
-        String DISRUPTION_PHENOTYPE           = "disruption phenotype";
-        String ENZYME_REGULATION              = "enzyme regulation";
-        String FUNCTION                       = "function";
-        String INDUCTION                      = "induction";
-        String MISCELLANEOUS                  = "miscellaneous";
-        String PATHWAY                        = "pathway";
-        String PHARMACEUTICAL                 = "pharmaceutical";
-        String POLYMORPHISM                   = "polymorphism";
-        String PTM                            = "PTM";
-        String RNA_EDITING                    = "RNA editing";
-        String SIMILARITY                     = "similarity";
-        String SUBCELLULAR_LOCATION           = "subcellular location";
-        String SEQUENCE_CAUTION               = "sequence caution";
-        String SUBUNIT                        = "subunit";
-        String TISSUE_SPECIFITY               = "tissue specificity";
-        String TOXIC_DOSE                     = "toxic dose";
-        String ONLINE_INFORMATION             = "online information";
-        String MASS_SPECTROMETRY              = "mass spectrometry";
-        String INTERACTION                    = "interaction";
-      }
-      interface INTERACTANT     { String element = "interactant";
-        interface INTACTID      { String attribute  = "intactId"; }
-        interface ID            { String element    = "id";       }
-      }
-      interface ORGANISMSDIFFER { String element    = "organismsDiffer";  }
-      interface EXPERIMENTS     { String element    = "experiments";      }
-    }
-  }
 
   public static final String COMMENT_TYPE_DISEASE                         = "disease";
   public static final String COMMENT_TYPE_FUNCTION                        = "function";

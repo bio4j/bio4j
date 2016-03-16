@@ -391,7 +391,7 @@ RE, RET
 >
 implements
 TypedGraph<
-UniProtGraph<I, RV, RVT, RE, RET>,
+UniProtGraph<I,RV,RVT,RE,RET>,
 I, RV, RVT, RE, RET
 > {
 
@@ -405,411 +405,411 @@ I, RV, RVT, RE, RET
     return raw;
   }
 
-  public abstract UniProtUniRefGraph<I, RV, RVT, RE, RET> uniProtUniRefGraph();
-  public abstract UniProtGoGraph<I, RV, RVT, RE, RET> uniProtGoGraph();
-  public abstract UniProtEnzymeDBGraph<I, RV, RVT, RE, RET> uniProtEnzymeDBGraph();
-  public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniProtNCBITaxonomyGraph();
+  public abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> uniProtUniRefGraph();
+  public abstract UniProtGoGraph<I,RV,RVT,RE,RET> uniProtGoGraph();
+  public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
+  public abstract UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniProtNCBITaxonomyGraph();
 
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // indices
   public abstract TypedVertexIndex.Unique <
   // vertex
-  AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType,
+  AlternativeProduct<I,RV,RVT,RE,RET>, AlternativeProductType,
   // property
   AlternativeProductType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   alternativeProductNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+  GeneLocation<I,RV,RVT,RE,RET>, GeneLocationType,
   // property
   GeneLocationType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   geneLocationNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  GeneName<I, RV, RVT, RE, RET>, GeneNameType,
+  GeneName<I,RV,RVT,RE,RET>, GeneNameType,
   // property
   GeneNameType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   geneNameNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Disease<I, RV, RVT, RE, RET>, DiseaseType,
+  Disease<I,RV,RVT,RE,RET>, DiseaseType,
   // property
   DiseaseType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   diseaseIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Journal<I, RV, RVT, RE, RET>, JournalType,
+  Journal<I,RV,RVT,RE,RET>, JournalType,
   // property
   JournalType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   journalNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Article<I, RV, RVT, RE, RET>, ArticleType,
+  Article<I,RV,RVT,RE,RET>, ArticleType,
   // property
   ArticleType.title, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   articleTitleIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
+  OnlineJournal<I,RV,RVT,RE,RET>, OnlineJournalType,
   // property
   OnlineJournalType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   onlineJournalNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType,
+  OnlineArticle<I,RV,RVT,RE,RET>, OnlineArticleType,
   // property
   OnlineArticleType.title, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   onlineArticleTitleIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  City<I, RV, RVT, RE, RET>, CityType,
+  City<I,RV,RVT,RE,RET>, CityType,
   // property
   CityType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   cityNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Publisher<I, RV, RVT, RE, RET>, PublisherType,
+  Publisher<I,RV,RVT,RE,RET>, PublisherType,
   // property
   PublisherType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   publisherNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Book<I, RV, RVT, RE, RET>, BookType,
+  Book<I,RV,RVT,RE,RET>, BookType,
   // property
   BookType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   bookNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  DB<I, RV, RVT, RE, RET>, DBType,
+  DB<I,RV,RVT,RE,RET>, DBType,
   // property
   DBType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   dbNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Country<I, RV, RVT, RE, RET>, CountryType,
+  Country<I,RV,RVT,RE,RET>, CountryType,
   // property
   CountryType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   countryNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Patent<I, RV, RVT, RE, RET>, PatentType,
+  Patent<I,RV,RVT,RE,RET>, PatentType,
   // property
   PatentType.number, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   patentNumberIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+  SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
   // property
   SequenceCautionType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   sequenceCautionNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Submission<I, RV, RVT, RE, RET>, SubmissionType,
+  Submission<I,RV,RVT,RE,RET>, SubmissionType,
   // property
   SubmissionType.title, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   submissionTitleIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+  SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType,
   // property
   SubcellularLocationType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   subcellularLocationNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Institute<I, RV, RVT, RE, RET>, InstituteType,
+  Institute<I,RV,RVT,RE,RET>, InstituteType,
   // property
   InstituteType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   instituteNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Isoform<I, RV, RVT, RE, RET>, IsoformType,
+  Isoform<I,RV,RVT,RE,RET>, IsoformType,
   // property
   IsoformType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   isoformIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Consortium<I, RV, RVT, RE, RET>, ConsortiumType,
+  Consortium<I,RV,RVT,RE,RET>, ConsortiumType,
   // property
   ConsortiumType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   consortiumNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Thesis<I, RV, RVT, RE, RET>, ThesisType,
+  Thesis<I,RV,RVT,RE,RET>, ThesisType,
   // property
   ThesisType.title, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   thesisTitleIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Person<I, RV, RVT, RE, RET>, PersonType,
+  Person<I,RV,RVT,RE,RET>, PersonType,
   // property
   PersonType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   personNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Protein<I, RV, RVT, RE, RET>, ProteinType,
+  Protein<I,RV,RVT,RE,RET>, ProteinType,
   // property
   ProteinType.accession, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   proteinAccessionIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Ensembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType,
+  Ensembl<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.EnsemblType,
   // property
-  UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType.id, String,
+  UniProtGraph<I,RV,RVT,RE,RET>.EnsemblType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   ensemblIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  PIR<I, RV, RVT, RE, RET>, PIRType,
+  PIR<I,RV,RVT,RE,RET>, PIRType,
   // property
   PIRType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   pIRIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Pubmed<I, RV, RVT, RE, RET>, PubmedType,
+  Pubmed<I,RV,RVT,RE,RET>, PubmedType,
   // property
   PubmedType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   pubmedIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  UniGene<I, RV, RVT, RE, RET>, UniGeneType,
+  UniGene<I,RV,RVT,RE,RET>, UniGeneType,
   // property
   UniGeneType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   uniGeneIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Kegg<I, RV, RVT, RE, RET>, KeggType,
+  Kegg<I,RV,RVT,RE,RET>, KeggType,
   // property
   KeggType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   keggIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  EMBL<I, RV, RVT, RE, RET>, EMBLType,
+  EMBL<I,RV,RVT,RE,RET>, EMBLType,
   // property
   EMBLType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   eMBLIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  RefSeq<I, RV, RVT, RE, RET>, RefSeqType,
+  RefSeq<I,RV,RVT,RE,RET>, RefSeqType,
   // property
   RefSeqType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   refSeqIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType,
+  ReactomeTerm<I,RV,RVT,RE,RET>, ReactomeTermType,
   // property
   ReactomeTermType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   reactomeTermIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Dataset<I, RV, RVT, RE, RET>, DatasetType,
+  Dataset<I,RV,RVT,RE,RET>, DatasetType,
   // property
   DatasetType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   datasetNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Keyword<I, RV, RVT, RE, RET>, KeywordType,
+  Keyword<I,RV,RVT,RE,RET>, KeywordType,
   // property
   KeywordType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   keywordIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  InterPro<I, RV, RVT, RE, RET>, InterProType,
+  InterPro<I,RV,RVT,RE,RET>, InterProType,
   // property
   InterProType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   interproIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Pfam<I, RV, RVT, RE, RET>, PfamType,
+  Pfam<I,RV,RVT,RE,RET>, PfamType,
   // property
   PfamType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   pfamIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Organism<I, RV, RVT, RE, RET>, OrganismType,
+  Organism<I,RV,RVT,RE,RET>, OrganismType,
   // property
   OrganismType.scientificName, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   organismScientificNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Taxon<I, RV, RVT, RE, RET>, TaxonType,
+  Taxon<I,RV,RVT,RE,RET>, TaxonType,
   // property
   TaxonType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   taxonNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+  FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
   // property
   FeatureTypeType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   featureTypeNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+  CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
   // property
   CommentTypeType.name, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   commentTypeNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Reference<I, RV, RVT, RE, RET>, ReferenceType,
+  Reference<I,RV,RVT,RE,RET>, ReferenceType,
   // property
   ReferenceType.id, String,
   // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>,
   I, RV, RVT, RE, RET
   >
   referenceIdIndex();
@@ -1001,8 +1001,8 @@ I, RV, RVT, RE, RET
   public final class AlternativeProductType
   extends
   UniProtVertexType<
-  AlternativeProduct<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+  AlternativeProduct<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.AlternativeProductType
   > {
 
     public final name name = new name();
@@ -1017,13 +1017,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public AlternativeProduct<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new AlternativeProduct<I, RV, RVT, RE, RET>(vertex, this);
+    public AlternativeProduct<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new AlternativeProduct<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<AlternativeProduct<I, RV, RVT, RE, RET>, AlternativeProductType, name, String> {
+    UniProtVertexProperty<AlternativeProduct<I,RV,RVT,RE,RET>, AlternativeProductType, name, String> {
       public name() {
         super(AlternativeProductType.this);
       }
@@ -1038,8 +1038,8 @@ I, RV, RVT, RE, RET
   public final class ArticleType
   extends
   UniProtVertexType<
-  Article<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ArticleType
+  Article<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.ArticleType
   > {
 
     public final doId doId = new doId();
@@ -1055,13 +1055,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Article<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Article<I, RV, RVT, RE, RET>(vertex, this);
+    public Article<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Article<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class doId
     extends
-    UniProtVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, doId, String> {
+    UniProtVertexProperty<Article<I,RV,RVT,RE,RET>, ArticleType, doId, String> {
       public doId() {
         super(ArticleType.this);
       }
@@ -1073,7 +1073,7 @@ I, RV, RVT, RE, RET
 
     public final class title
     extends
-    UniProtVertexProperty<Article<I, RV, RVT, RE, RET>, ArticleType, title, String> {
+    UniProtVertexProperty<Article<I,RV,RVT,RE,RET>, ArticleType, title, String> {
       public title() {
         super(ArticleType.this);
       }
@@ -1089,8 +1089,8 @@ I, RV, RVT, RE, RET
   public final class BookType
   extends
   UniProtVertexType<
-  Book<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.BookType
+  Book<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.BookType
   > {
 
     public final name name = new name();
@@ -1105,13 +1105,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Book<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Book<I, RV, RVT, RE, RET>(vertex, this);
+    public Book<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Book<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Book<I, RV, RVT, RE, RET>, BookType, name, String> {
+    UniProtVertexProperty<Book<I,RV,RVT,RE,RET>, BookType, name, String> {
       public name() {
         super(BookType.this);
       }
@@ -1126,8 +1126,8 @@ I, RV, RVT, RE, RET
   public final class CityType
   extends
   UniProtVertexType<
-  City<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.CityType
+  City<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.CityType
   > {
 
     public final name name = new name();
@@ -1142,13 +1142,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public City<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new City<I, RV, RVT, RE, RET>(vertex, this);
+    public City<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new City<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<City<I, RV, RVT, RE, RET>, CityType, name, String> {
+    UniProtVertexProperty<City<I,RV,RVT,RE,RET>, CityType, name, String> {
       public name() {
         super(CityType.this);
       }
@@ -1163,8 +1163,8 @@ I, RV, RVT, RE, RET
   public final class ConsortiumType
   extends
   UniProtVertexType<
-  Consortium<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType
+  Consortium<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.ConsortiumType
   > {
 
     public final name name = new name();
@@ -1179,13 +1179,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Consortium<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Consortium<I, RV, RVT, RE, RET>(vertex, this);
+    public Consortium<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Consortium<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Consortium<I, RV, RVT, RE, RET>, ConsortiumType, name, String> {
+    UniProtVertexProperty<Consortium<I,RV,RVT,RE,RET>, ConsortiumType, name, String> {
       public name() {
         super(ConsortiumType.this);
       }
@@ -1200,8 +1200,8 @@ I, RV, RVT, RE, RET
   public final class CommentTypeType
   extends
   UniProtVertexType<
-  CommentType<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.CommentTypeType
+  CommentType<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.CommentTypeType
   > {
 
     public final name name = new name();
@@ -1216,13 +1216,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public CommentType<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new CommentType<I, RV, RVT, RE, RET>(vertex, this);
+    public CommentType<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new CommentType<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<CommentType<I, RV, RVT, RE, RET>, CommentTypeType, name, String> {
+    UniProtVertexProperty<CommentType<I,RV,RVT,RE,RET>, CommentTypeType, name, String> {
       public name() {
         super(CommentTypeType.this);
       }
@@ -1237,8 +1237,8 @@ I, RV, RVT, RE, RET
   public final class CountryType
   extends
   UniProtVertexType<
-  Country<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.CountryType
+  Country<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.CountryType
   > {
 
     public final name name = new name();
@@ -1253,13 +1253,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Country<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Country<I, RV, RVT, RE, RET>(vertex, this);
+    public Country<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Country<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Country<I, RV, RVT, RE, RET>, CountryType, name, String> {
+    UniProtVertexProperty<Country<I,RV,RVT,RE,RET>, CountryType, name, String> {
       public name() {
         super(CountryType.this);
       }
@@ -1274,8 +1274,8 @@ I, RV, RVT, RE, RET
   public final class DatasetType
   extends
   UniProtVertexType<
-  Dataset<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.DatasetType
+  Dataset<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.DatasetType
   > {
 
     public final name name = new name();
@@ -1290,13 +1290,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Dataset<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Dataset<I, RV, RVT, RE, RET>(vertex, this);
+    public Dataset<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Dataset<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Dataset<I, RV, RVT, RE, RET>, DatasetType, name, String> {
+    UniProtVertexProperty<Dataset<I,RV,RVT,RE,RET>, DatasetType, name, String> {
       public name() {
         super(DatasetType.this);
       }
@@ -1311,8 +1311,8 @@ I, RV, RVT, RE, RET
   public final class DBType
   extends
   UniProtVertexType<
-  DB<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.DBType
+  DB<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.DBType
   > {
 
     public final name name = new name();
@@ -1327,13 +1327,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public DB<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new DB<I, RV, RVT, RE, RET>(vertex, this);
+    public DB<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new DB<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<DB<I, RV, RVT, RE, RET>, DBType, name, String> {
+    UniProtVertexProperty<DB<I,RV,RVT,RE,RET>, DBType, name, String> {
       public name() {
         super(DBType.this);
       }
@@ -1348,8 +1348,8 @@ I, RV, RVT, RE, RET
   public final class DiseaseType
   extends
   UniProtVertexType<
-  Disease<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType
+  Disease<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.DiseaseType
   > {
 
     public final name name = new name();
@@ -1367,13 +1367,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Disease<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Disease<I, RV, RVT, RE, RET>(vertex, this);
+    public Disease<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Disease<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, name, String> {
+    UniProtVertexProperty<Disease<I,RV,RVT,RE,RET>, DiseaseType, name, String> {
       public name() {
         super(DiseaseType.this);
       }
@@ -1384,7 +1384,7 @@ I, RV, RVT, RE, RET
     }
     public final class id
     extends
-    UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, id, String> {
+    UniProtVertexProperty<Disease<I,RV,RVT,RE,RET>, DiseaseType, id, String> {
       public id() {
         super(DiseaseType.this);
       }
@@ -1395,7 +1395,7 @@ I, RV, RVT, RE, RET
     }
     public final class acronym
     extends
-    UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, acronym, String> {
+    UniProtVertexProperty<Disease<I,RV,RVT,RE,RET>, DiseaseType, acronym, String> {
       public acronym() {
         super(DiseaseType.this);
       }
@@ -1406,7 +1406,7 @@ I, RV, RVT, RE, RET
     }
     public final class description
     extends
-    UniProtVertexProperty<Disease<I, RV, RVT, RE, RET>, DiseaseType, description, String> {
+    UniProtVertexProperty<Disease<I,RV,RVT,RE,RET>, DiseaseType, description, String> {
       public description() {
         super(DiseaseType.this);
       }
@@ -1421,8 +1421,8 @@ I, RV, RVT, RE, RET
   public final class EMBLType
   extends
   UniProtVertexType<
-  EMBL<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.EMBLType
+  EMBL<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.EMBLType
   > {
 
     public final id id = new id();
@@ -1439,13 +1439,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public EMBL<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new EMBL<I, RV, RVT, RE, RET>(vertex, this);
+    public EMBL<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new EMBL<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, id, String> {
+    UniProtVertexProperty<EMBL<I,RV,RVT,RE,RET>, EMBLType, id, String> {
       public id() {
         super(EMBLType.this);
       }
@@ -1456,7 +1456,7 @@ I, RV, RVT, RE, RET
     }
     public final class proteinSequenceId
     extends
-    UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, proteinSequenceId, String> {
+    UniProtVertexProperty<EMBL<I,RV,RVT,RE,RET>, EMBLType, proteinSequenceId, String> {
       public proteinSequenceId() {
         super(EMBLType.this);
       }
@@ -1467,7 +1467,7 @@ I, RV, RVT, RE, RET
     }
     public final class moleculeType
     extends
-    UniProtVertexProperty<EMBL<I, RV, RVT, RE, RET>, EMBLType, moleculeType, String> {
+    UniProtVertexProperty<EMBL<I,RV,RVT,RE,RET>, EMBLType, moleculeType, String> {
       public moleculeType() {
         super(EMBLType.this);
       }
@@ -1482,8 +1482,8 @@ I, RV, RVT, RE, RET
   public final class EnsemblType
   extends
   UniProtVertexType<
-  Ensembl<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType
+  Ensembl<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.EnsemblType
   > {
 
     public final id id = new id();
@@ -1501,13 +1501,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Ensembl<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Ensembl<I, RV, RVT, RE, RET>(vertex, this);
+    public Ensembl<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Ensembl<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, id, String> {
+    UniProtVertexProperty<Ensembl<I,RV,RVT,RE,RET>, EnsemblType, id, String> {
       public id() {
         super(EnsemblType.this);
       }
@@ -1518,7 +1518,7 @@ I, RV, RVT, RE, RET
     }
     public final class proteinSequenceId
     extends
-    UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, proteinSequenceId, String> {
+    UniProtVertexProperty<Ensembl<I,RV,RVT,RE,RET>, EnsemblType, proteinSequenceId, String> {
       public proteinSequenceId() {
         super(EnsemblType.this);
       }
@@ -1529,7 +1529,7 @@ I, RV, RVT, RE, RET
     }
     public final class moleculeId
     extends
-    UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, moleculeId, String> {
+    UniProtVertexProperty<Ensembl<I,RV,RVT,RE,RET>, EnsemblType, moleculeId, String> {
       public moleculeId() {
         super(EnsemblType.this);
       }
@@ -1540,7 +1540,7 @@ I, RV, RVT, RE, RET
     }
     public final class geneId
     extends
-    UniProtVertexProperty<Ensembl<I, RV, RVT, RE, RET>, EnsemblType, geneId, String> {
+    UniProtVertexProperty<Ensembl<I,RV,RVT,RE,RET>, EnsemblType, geneId, String> {
       public geneId() {
         super(EnsemblType.this);
       }
@@ -1554,8 +1554,8 @@ I, RV, RVT, RE, RET
   public final class FeatureTypeType
   extends
   UniProtVertexType<
-  FeatureType<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+  FeatureType<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.FeatureTypeType
   > {
 
     public final name name = new name();
@@ -1570,13 +1570,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public FeatureType<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new FeatureType<I, RV, RVT, RE, RET>(vertex, this);
+    public FeatureType<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new FeatureType<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType, name, String> {
+    UniProtVertexProperty<FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType, name, String> {
       public name() {
         super(FeatureTypeType.this);
       }
@@ -1590,8 +1590,8 @@ I, RV, RVT, RE, RET
   public final class GeneLocationType
   extends
   UniProtVertexType<
-  GeneLocation<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType
+  GeneLocation<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.GeneLocationType
   > {
 
     public final name name = new name();
@@ -1606,13 +1606,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public GeneLocation<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new GeneLocation<I, RV, RVT, RE, RET>(vertex, this);
+    public GeneLocation<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new GeneLocation<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType, name, String> {
+    UniProtVertexProperty<GeneLocation<I,RV,RVT,RE,RET>, GeneLocationType, name, String> {
       public name() {
         super(GeneLocationType.this);
       }
@@ -1627,8 +1627,8 @@ I, RV, RVT, RE, RET
   public final class GeneNameType
   extends
   UniProtVertexType<
-  GeneName<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
+  GeneName<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.GeneNameType
   > {
 
     public final name name = new name();
@@ -1643,13 +1643,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public GeneName<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new GeneName<I, RV, RVT, RE, RET>(vertex, this);
+    public GeneName<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new GeneName<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<GeneName<I, RV, RVT, RE, RET>, GeneNameType, name, String> {
+    UniProtVertexProperty<GeneName<I,RV,RVT,RE,RET>, GeneNameType, name, String> {
       public name() {
         super(GeneNameType.this);
       }
@@ -1664,8 +1664,8 @@ I, RV, RVT, RE, RET
   public final class InterProType
   extends
   UniProtVertexType<
-  InterPro<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.InterProType
+  InterPro<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.InterProType
   > {
 
     public final name name = new name();
@@ -1681,13 +1681,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public InterPro<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new InterPro<I, RV, RVT, RE, RET>(vertex, this);
+    public InterPro<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new InterPro<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, name, String> {
+    UniProtVertexProperty<InterPro<I,RV,RVT,RE,RET>, InterProType, name, String> {
       public name() {
         super(InterProType.this);
       }
@@ -1698,7 +1698,7 @@ I, RV, RVT, RE, RET
     }
     public final class id
     extends
-    UniProtVertexProperty<InterPro<I, RV, RVT, RE, RET>, InterProType, id, String> {
+    UniProtVertexProperty<InterPro<I,RV,RVT,RE,RET>, InterProType, id, String> {
       public id() {
         super(InterProType.this);
       }
@@ -1712,8 +1712,8 @@ I, RV, RVT, RE, RET
   public final class InstituteType
   extends
   UniProtVertexType<
-  Institute<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.InstituteType
+  Institute<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.InstituteType
   > {
 
     public final name name = new name();
@@ -1728,13 +1728,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Institute<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Institute<I, RV, RVT, RE, RET>(vertex, this);
+    public Institute<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Institute<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Institute<I, RV, RVT, RE, RET>, InstituteType, name, String> {
+    UniProtVertexProperty<Institute<I,RV,RVT,RE,RET>, InstituteType, name, String> {
       public name() {
         super(InstituteType.this);
       }
@@ -1749,8 +1749,8 @@ I, RV, RVT, RE, RET
   public final class IsoformType
   extends
   UniProtVertexType<
-  Isoform<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
+  Isoform<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.IsoformType
   > {
 
     public final name name = new name();
@@ -1768,13 +1768,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Isoform<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Isoform<I, RV, RVT, RE, RET>(vertex, this);
+    public Isoform<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Isoform<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class sequence
     extends
-    UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, sequence, String> {
+    UniProtVertexProperty<Isoform<I,RV,RVT,RE,RET>, IsoformType, sequence, String> {
       public sequence() {
         super(IsoformType.this);
       }
@@ -1785,7 +1785,7 @@ I, RV, RVT, RE, RET
     }
     public final class note
     extends
-    UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, note, String> {
+    UniProtVertexProperty<Isoform<I,RV,RVT,RE,RET>, IsoformType, note, String> {
       public note() {
         super(IsoformType.this);
       }
@@ -1796,7 +1796,7 @@ I, RV, RVT, RE, RET
     }
     public final class id
     extends
-    UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, id, String> {
+    UniProtVertexProperty<Isoform<I,RV,RVT,RE,RET>, IsoformType, id, String> {
       public id() {
         super(IsoformType.this);
       }
@@ -1807,7 +1807,7 @@ I, RV, RVT, RE, RET
     }
     public final class name
     extends
-    UniProtVertexProperty<Isoform<I, RV, RVT, RE, RET>, IsoformType, name, String> {
+    UniProtVertexProperty<Isoform<I,RV,RVT,RE,RET>, IsoformType, name, String> {
       public name() {
         super(IsoformType.this);
       }
@@ -1822,8 +1822,8 @@ I, RV, RVT, RE, RET
   public final class JournalType
   extends
   UniProtVertexType<
-  Journal<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.JournalType
+  Journal<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.JournalType
   > {
 
     public final name name = new name();
@@ -1838,13 +1838,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Journal<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Journal<I, RV, RVT, RE, RET>(vertex, this);
+    public Journal<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Journal<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Journal<I, RV, RVT, RE, RET>, JournalType, name, String> {
+    UniProtVertexProperty<Journal<I,RV,RVT,RE,RET>, JournalType, name, String> {
       public name() {
         super(JournalType.this);
       }
@@ -1858,8 +1858,8 @@ I, RV, RVT, RE, RET
   public final class KeggType
   extends
   UniProtVertexType<
-  Kegg<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.KeggType
+  Kegg<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.KeggType
   > {
 
     public final id id = new id();
@@ -1874,13 +1874,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Kegg<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Kegg<I, RV, RVT, RE, RET>(vertex, this);
+    public Kegg<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Kegg<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<Kegg<I, RV, RVT, RE, RET>, KeggType, id, String> {
+    UniProtVertexProperty<Kegg<I,RV,RVT,RE,RET>, KeggType, id, String> {
       public id() {
         super(KeggType.this);
       }
@@ -1894,8 +1894,8 @@ I, RV, RVT, RE, RET
   public final class KeywordType
   extends
   UniProtVertexType<
-  Keyword<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.KeywordType
+  Keyword<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.KeywordType
   > {
 
     public final name name = new name();
@@ -1911,13 +1911,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Keyword<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Keyword<I, RV, RVT, RE, RET>(vertex, this);
+    public Keyword<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Keyword<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, name, String> {
+    UniProtVertexProperty<Keyword<I,RV,RVT,RE,RET>, KeywordType, name, String> {
       public name() {
         super(KeywordType.this);
       }
@@ -1928,7 +1928,7 @@ I, RV, RVT, RE, RET
     }
     public final class id
     extends
-    UniProtVertexProperty<Keyword<I, RV, RVT, RE, RET>, KeywordType, id, String> {
+    UniProtVertexProperty<Keyword<I,RV,RVT,RE,RET>, KeywordType, id, String> {
       public id() {
         super(KeywordType.this);
       }
@@ -1942,8 +1942,8 @@ I, RV, RVT, RE, RET
   public final class OnlineArticleType
   extends
   UniProtVertexType<
-  OnlineArticle<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+  OnlineArticle<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.OnlineArticleType
   > {
 
     public final title title = new title();
@@ -1958,13 +1958,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public OnlineArticle<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new OnlineArticle<I, RV, RVT, RE, RET>(vertex, this);
+    public OnlineArticle<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new OnlineArticle<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class title
     extends
-    UniProtVertexProperty<OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType, title, String> {
+    UniProtVertexProperty<OnlineArticle<I,RV,RVT,RE,RET>, OnlineArticleType, title, String> {
       public title() {
         super(OnlineArticleType.this);
       }
@@ -1978,8 +1978,8 @@ I, RV, RVT, RE, RET
   public final class OnlineJournalType
   extends
   UniProtVertexType<
-  OnlineJournal<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+  OnlineJournal<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.OnlineJournalType
   > {
 
     public final name name = new name();
@@ -1994,13 +1994,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public OnlineJournal<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new OnlineJournal<I, RV, RVT, RE, RET>(vertex, this);
+    public OnlineJournal<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new OnlineJournal<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType, name, String> {
+    UniProtVertexProperty<OnlineJournal<I,RV,RVT,RE,RET>, OnlineJournalType, name, String> {
       public name() {
         super(OnlineJournalType.this);
       }
@@ -2014,8 +2014,8 @@ I, RV, RVT, RE, RET
   public final class OrganismType
   extends
   UniProtVertexType<
-  Organism<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.OrganismType
+  Organism<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.OrganismType
   > {
 
     public final scientificName scientificName = new scientificName();
@@ -2032,13 +2032,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Organism<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Organism<I, RV, RVT, RE, RET>(vertex, this);
+    public Organism<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Organism<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class scientificName
     extends
-    UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, scientificName, String> {
+    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, scientificName, String> {
       public scientificName() {
         super(OrganismType.this);
       }
@@ -2049,7 +2049,7 @@ I, RV, RVT, RE, RET
     }
     public final class commonName
     extends
-    UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, commonName, String> {
+    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, commonName, String> {
       public commonName() {
         super(OrganismType.this);
       }
@@ -2060,7 +2060,7 @@ I, RV, RVT, RE, RET
     }
     public final class synonymName
     extends
-    UniProtVertexProperty<Organism<I, RV, RVT, RE, RET>, OrganismType, synonymName, String> {
+    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, synonymName, String> {
       public synonymName() {
         super(OrganismType.this);
       }
@@ -2074,8 +2074,8 @@ I, RV, RVT, RE, RET
   public final class PatentType
   extends
   UniProtVertexType<
-  Patent<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PatentType
+  Patent<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PatentType
   > {
 
     public final title title = new title();
@@ -2091,13 +2091,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Patent<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Patent<I, RV, RVT, RE, RET>(vertex, this);
+    public Patent<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Patent<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class title
     extends
-    UniProtVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, title, String> {
+    UniProtVertexProperty<Patent<I,RV,RVT,RE,RET>, PatentType, title, String> {
       public title() {
         super(PatentType.this);
       }
@@ -2109,7 +2109,7 @@ I, RV, RVT, RE, RET
 
     public final class number
     extends
-    UniProtVertexProperty<Patent<I, RV, RVT, RE, RET>, PatentType, number, String> {
+    UniProtVertexProperty<Patent<I,RV,RVT,RE,RET>, PatentType, number, String> {
       public number() {
         super(PatentType.this);
       }
@@ -2124,8 +2124,8 @@ I, RV, RVT, RE, RET
   public final class PersonType
   extends
   UniProtVertexType<
-  Person<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PersonType
+  Person<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PersonType
   > {
 
     public final name name = new name();
@@ -2140,13 +2140,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Person<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Person<I, RV, RVT, RE, RET>(vertex, this);
+    public Person<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Person<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Person<I, RV, RVT, RE, RET>, PersonType, name, String> {
+    UniProtVertexProperty<Person<I,RV,RVT,RE,RET>, PersonType, name, String> {
       public name() {
         super(PersonType.this);
       }
@@ -2161,8 +2161,8 @@ I, RV, RVT, RE, RET
   public final class PfamType
   extends
   UniProtVertexType<
-  Pfam<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PfamType
+  Pfam<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PfamType
   > {
 
     public final name name = new name();
@@ -2178,13 +2178,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Pfam<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Pfam<I, RV, RVT, RE, RET>(vertex, this);
+    public Pfam<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Pfam<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, name, String> {
+    UniProtVertexProperty<Pfam<I,RV,RVT,RE,RET>, PfamType, name, String> {
       public name() {
         super(PfamType.this);
       }
@@ -2195,7 +2195,7 @@ I, RV, RVT, RE, RET
     }
     public final class id
     extends
-    UniProtVertexProperty<Pfam<I, RV, RVT, RE, RET>, PfamType, id, String> {
+    UniProtVertexProperty<Pfam<I,RV,RVT,RE,RET>, PfamType, id, String> {
       public id() {
         super(PfamType.this);
       }
@@ -2209,8 +2209,8 @@ I, RV, RVT, RE, RET
   public final class PubmedType
   extends
   UniProtVertexType<
-  Pubmed<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PubmedType
+  Pubmed<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PubmedType
   > {
 
     public final id id = new id();
@@ -2225,13 +2225,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Pubmed<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Pubmed<I, RV, RVT, RE, RET>(vertex, this);
+    public Pubmed<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Pubmed<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<Pubmed<I, RV, RVT, RE, RET>, PubmedType, id, String> {
+    UniProtVertexProperty<Pubmed<I,RV,RVT,RE,RET>, PubmedType, id, String> {
       public id() {
         super(PubmedType.this);
       }
@@ -2245,8 +2245,8 @@ I, RV, RVT, RE, RET
   public final class PIRType
   extends
   UniProtVertexType<
-  PIR<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PIRType
+  PIR<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PIRType
   > {
 
     public final id id = new id();
@@ -2262,13 +2262,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public PIR<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new PIR<I, RV, RVT, RE, RET>(vertex, this);
+    public PIR<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new PIR<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, id, String> {
+    UniProtVertexProperty<PIR<I,RV,RVT,RE,RET>, PIRType, id, String> {
       public id() {
         super(PIRType.this);
       }
@@ -2279,7 +2279,7 @@ I, RV, RVT, RE, RET
     }
     public final class entryName
     extends
-    UniProtVertexProperty<PIR<I, RV, RVT, RE, RET>, PIRType, entryName, String> {
+    UniProtVertexProperty<PIR<I,RV,RVT,RE,RET>, PIRType, entryName, String> {
       public entryName() {
         super(PIRType.this);
       }
@@ -2293,14 +2293,14 @@ I, RV, RVT, RE, RET
 
   public final class ProteinType
     extends
-      UniProtVertexType<
-        Protein<I, RV, RVT, RE, RET>,
-        UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
+      UniProtVertexType <
+        Protein<I,RV,RVT,RE,RET>,
+        UniProtGraph<I,RV,RVT,RE,RET>.ProteinType
       >
   {
 
     public final accession accession  = new accession();
-    public final name name            = new name();
+    public final entryName entryName  = new entryName();
     public final shortName shortName  = new shortName();
     public final fullName fullName    = new fullName();
     public final sequence sequence    = new sequence();
@@ -2325,14 +2325,14 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public final Protein<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Protein<I, RV, RVT, RE, RET>(vertex, this);
+    public final Protein<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Protein<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     /* This property is always present, and identifies the protein. */
     public final class accession
       extends
-        UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, accession, String>
+        UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, accession, String>
     {
       public accession() {
         super(ProteinType.this);
@@ -2345,7 +2345,7 @@ I, RV, RVT, RE, RET
     /* This property is **optional**. */
     public final class shortName
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, shortName, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, shortName, String> {
       public shortName() {
         super(ProteinType.this);
       }
@@ -2356,7 +2356,7 @@ I, RV, RVT, RE, RET
     }
     public final class sequence
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, sequence, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, sequence, String> {
       public sequence() {
         super(ProteinType.this);
       }
@@ -2368,7 +2368,7 @@ I, RV, RVT, RE, RET
     /* This property is **always present**. It is normally larger and more descriptive than `name`. */
     public final class fullName
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, fullName, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, fullName, String> {
       public fullName() {
         super(ProteinType.this);
       }
@@ -2377,20 +2377,16 @@ I, RV, RVT, RE, RET
         return String.class;
       }
     }
-    public final class name
-    extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, name, String> {
-      public name() {
-        super(ProteinType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
+    public final class entryName
+      extends
+        UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, entryName, String>
+    {
+      public entryName() { super(ProteinType.this); }
+      public Class<String> valueClass() { return String.class; }
     }
     public final class modifiedDate
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, modifiedDate, Date> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, modifiedDate, Date> {
       public modifiedDate() {
         super(ProteinType.this);
       }
@@ -2401,7 +2397,7 @@ I, RV, RVT, RE, RET
     }
     public final class createdDate
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, createdDate, Date> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, createdDate, Date> {
       public createdDate() {
         super(ProteinType.this);
       }
@@ -2412,7 +2408,7 @@ I, RV, RVT, RE, RET
     }
     public final class mass
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, mass, Integer> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, mass, Integer> {
       public mass() {
         super(ProteinType.this);
       }
@@ -2422,7 +2418,7 @@ I, RV, RVT, RE, RET
     }
     public final class version
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, version, Integer> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, version, Integer> {
       public version() {
         super(ProteinType.this);
       }
@@ -2433,7 +2429,7 @@ I, RV, RVT, RE, RET
     }
     public final class length
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, length, Integer> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, length, Integer> {
       public length() {
         super(ProteinType.this);
       }
@@ -2444,7 +2440,7 @@ I, RV, RVT, RE, RET
     }
     public final class uniRef100ClusterId
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef100ClusterId, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, uniRef100ClusterId, String> {
       public uniRef100ClusterId() {
         super(ProteinType.this);
       }
@@ -2455,7 +2451,7 @@ I, RV, RVT, RE, RET
     }
     public final class uniRef90ClusterId
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef90ClusterId, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, uniRef90ClusterId, String> {
       public uniRef90ClusterId() {
         super(ProteinType.this);
       }
@@ -2466,7 +2462,7 @@ I, RV, RVT, RE, RET
     }
     public final class uniRef50ClusterId
     extends
-    UniProtVertexProperty<Protein<I, RV, RVT, RE, RET>, ProteinType, uniRef50ClusterId, String> {
+    UniProtVertexProperty<Protein<I,RV,RVT,RE,RET>, ProteinType, uniRef50ClusterId, String> {
       public uniRef50ClusterId() {
         super(ProteinType.this);
       }
@@ -2481,8 +2477,8 @@ I, RV, RVT, RE, RET
   public final class PublisherType
   extends
   UniProtVertexType<
-  Publisher<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.PublisherType
+  Publisher<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.PublisherType
   > {
 
     public final name name = new name();
@@ -2497,13 +2493,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Publisher<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Publisher<I, RV, RVT, RE, RET>(vertex, this);
+    public Publisher<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Publisher<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Publisher<I, RV, RVT, RE, RET>, PublisherType, name, String> {
+    UniProtVertexProperty<Publisher<I,RV,RVT,RE,RET>, PublisherType, name, String> {
       public name() {
         super(PublisherType.this);
       }
@@ -2517,8 +2513,8 @@ I, RV, RVT, RE, RET
   public final class ReactomeTermType
   extends
   UniProtVertexType<
-  ReactomeTerm<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+  ReactomeTerm<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.ReactomeTermType
   > {
 
     public final id id = new id();
@@ -2534,13 +2530,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReactomeTerm<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new ReactomeTerm<I, RV, RVT, RE, RET>(vertex, this);
+    public ReactomeTerm<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new ReactomeTerm<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, id, String> {
+    UniProtVertexProperty<ReactomeTerm<I,RV,RVT,RE,RET>, ReactomeTermType, id, String> {
       public id() {
         super(ReactomeTermType.this);
       }
@@ -2551,7 +2547,7 @@ I, RV, RVT, RE, RET
     }
     public final class pathwayName
     extends
-    UniProtVertexProperty<ReactomeTerm<I, RV, RVT, RE, RET>, ReactomeTermType, pathwayName, String> {
+    UniProtVertexProperty<ReactomeTerm<I,RV,RVT,RE,RET>, ReactomeTermType, pathwayName, String> {
       public pathwayName() {
         super(ReactomeTermType.this);
       }
@@ -2565,8 +2561,8 @@ I, RV, RVT, RE, RET
   public final class ReferenceType
   extends
   UniProtVertexType<
-  Reference<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
+  Reference<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType
   > {
 
     public final id id = new id();
@@ -2582,13 +2578,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Reference<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Reference<I, RV, RVT, RE, RET>(vertex, this);
+    public Reference<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Reference<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, id, String> {
+    UniProtVertexProperty<Reference<I,RV,RVT,RE,RET>, ReferenceType, id, String> {
       public id() {
         super(ReferenceType.this);
       }
@@ -2599,7 +2595,7 @@ I, RV, RVT, RE, RET
     }
     public final class date
     extends
-    UniProtVertexProperty<Reference<I, RV, RVT, RE, RET>, ReferenceType, date, String> {
+    UniProtVertexProperty<Reference<I,RV,RVT,RE,RET>, ReferenceType, date, String> {
       public date() {
         super(ReferenceType.this);
       }
@@ -2613,8 +2609,8 @@ I, RV, RVT, RE, RET
   public final class RefSeqType
   extends
   UniProtVertexType<
-  RefSeq<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.RefSeqType
+  RefSeq<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.RefSeqType
   > {
 
     public final id id = new id();
@@ -2630,13 +2626,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public RefSeq<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new RefSeq<I, RV, RVT, RE, RET>(vertex, this);
+    public RefSeq<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new RefSeq<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, id, String> {
+    UniProtVertexProperty<RefSeq<I,RV,RVT,RE,RET>, RefSeqType, id, String> {
       public id() {
         super(RefSeqType.this);
       }
@@ -2647,7 +2643,7 @@ I, RV, RVT, RE, RET
     }
     public final class nucleotideSequenceId
     extends
-    UniProtVertexProperty<RefSeq<I, RV, RVT, RE, RET>, RefSeqType, nucleotideSequenceId, String> {
+    UniProtVertexProperty<RefSeq<I,RV,RVT,RE,RET>, RefSeqType, nucleotideSequenceId, String> {
       public nucleotideSequenceId() {
         super(RefSeqType.this);
       }
@@ -2661,8 +2657,8 @@ I, RV, RVT, RE, RET
   public final class SequenceCautionType
   extends
   UniProtVertexType<
-  SequenceCaution<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+  SequenceCaution<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.SequenceCautionType
   > {
 
     public final name name = new name();
@@ -2677,13 +2673,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public SequenceCaution<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new SequenceCaution<I, RV, RVT, RE, RET>(vertex, this);
+    public SequenceCaution<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new SequenceCaution<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType, name, String> {
+    UniProtVertexProperty<SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType, name, String> {
       public name() {
         super(SequenceCautionType.this);
       }
@@ -2698,8 +2694,8 @@ I, RV, RVT, RE, RET
   public final class SubcellularLocationType
   extends
   UniProtVertexType<
-  SubcellularLocation<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+  SubcellularLocation<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.SubcellularLocationType
   > {
 
     public final name name = new name();
@@ -2714,13 +2710,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public SubcellularLocation<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new SubcellularLocation<I, RV, RVT, RE, RET>(vertex, this);
+    public SubcellularLocation<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new SubcellularLocation<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType, name, String> {
+    UniProtVertexProperty<SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType, name, String> {
       public name() {
         super(SubcellularLocationType.this);
       }
@@ -2734,8 +2730,8 @@ I, RV, RVT, RE, RET
   public final class SubmissionType
   extends
   UniProtVertexType<
-  Submission<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType
+  Submission<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.SubmissionType
   > {
 
     public final title title = new title();
@@ -2750,13 +2746,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Submission<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Submission<I, RV, RVT, RE, RET>(vertex, this);
+    public Submission<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Submission<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class title
     extends
-    UniProtVertexProperty<Submission<I, RV, RVT, RE, RET>, SubmissionType, title, String> {
+    UniProtVertexProperty<Submission<I,RV,RVT,RE,RET>, SubmissionType, title, String> {
       public title() {
         super(SubmissionType.this);
       }
@@ -2770,8 +2766,8 @@ I, RV, RVT, RE, RET
   public final class TaxonType
   extends
   UniProtVertexType<
-  Taxon<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
+  Taxon<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
   > {
 
     public final name name = new name();
@@ -2786,13 +2782,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Taxon<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Taxon<I, RV, RVT, RE, RET>(vertex, this);
+    public Taxon<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Taxon<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class name
     extends
-    UniProtVertexProperty<Taxon<I, RV, RVT, RE, RET>, TaxonType, name, String> {
+    UniProtVertexProperty<Taxon<I,RV,RVT,RE,RET>, TaxonType, name, String> {
       public name() {
         super(TaxonType.this);
       }
@@ -2807,8 +2803,8 @@ I, RV, RVT, RE, RET
   public final class ThesisType
   extends
   UniProtVertexType<
-  Thesis<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.ThesisType
+  Thesis<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.ThesisType
   > {
 
     public final title title = new title();
@@ -2823,13 +2819,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public Thesis<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new Thesis<I, RV, RVT, RE, RET>(vertex, this);
+    public Thesis<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new Thesis<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class title
     extends
-    UniProtVertexProperty<Thesis<I, RV, RVT, RE, RET>, ThesisType, title, String> {
+    UniProtVertexProperty<Thesis<I,RV,RVT,RE,RET>, ThesisType, title, String> {
       public title() {
         super(ThesisType.this);
       }
@@ -2844,8 +2840,8 @@ I, RV, RVT, RE, RET
   public final class UniGeneType
   extends
   UniProtVertexType<
-  UniGene<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.UniGeneType
+  UniGene<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.UniGeneType
   > {
 
     public final id id = new id();
@@ -2860,13 +2856,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public UniGene<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new UniGene<I, RV, RVT, RE, RET>(vertex, this);
+    public UniGene<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new UniGene<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class id
     extends
-    UniProtVertexProperty<UniGene<I, RV, RVT, RE, RET>, UniGeneType, id, String> {
+    UniProtVertexProperty<UniGene<I,RV,RVT,RE,RET>, UniGeneType, id, String> {
       public id() {
         super(UniGeneType.this);
       }
@@ -2880,8 +2876,8 @@ I, RV, RVT, RE, RET
   public final class UnpublishedObservationType
   extends
   UniProtVertexType<
-  UnpublishedObservation<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+  UnpublishedObservation<I,RV,RVT,RE,RET>,
+  UniProtGraph<I,RV,RVT,RE,RET>.UnpublishedObservationType
   > {
 
     public final scope scope = new scope();
@@ -2896,13 +2892,13 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public UnpublishedObservation<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new UnpublishedObservation<I, RV, RVT, RE, RET>(vertex, this);
+    public UnpublishedObservation<I,RV,RVT,RE,RET> from(RV vertex) {
+      return new UnpublishedObservation<I,RV,RVT,RE,RET>(vertex, this);
     }
 
     public final class scope
     extends
-    UniProtVertexProperty<UnpublishedObservation<I, RV, RVT, RE, RET>, UnpublishedObservationType, scope, String> {
+    UniProtVertexProperty<UnpublishedObservation<I,RV,RVT,RE,RET>, UnpublishedObservationType, scope, String> {
       public scope() {
         super(UnpublishedObservationType.this);
       }
@@ -2920,9 +2916,9 @@ I, RV, RVT, RE, RET
   public final class ArticleJournalType
   extends
   UniProtEdgeType<
-  Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
-  ArticleJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleJournalType,
-  Journal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.JournalType
+  Article<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ArticleType,
+  ArticleJournal<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ArticleJournalType,
+  Journal<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.JournalType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -2937,8 +2933,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ArticleJournal<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ArticleJournal<I, RV, RVT, RE, RET>(edge, this);
+    public ArticleJournal<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ArticleJournal<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final volume volume = new volume();
@@ -2948,9 +2944,9 @@ I, RV, RVT, RE, RET
     public final class volume
     extends
     UniProtEdgeProperty<
-    Article<I, RV, RVT, RE, RET>, ArticleType,
-    ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
-    Journal<I, RV, RVT, RE, RET>, JournalType,
+    Article<I,RV,RVT,RE,RET>, ArticleType,
+    ArticleJournal<I,RV,RVT,RE,RET>, ArticleJournalType,
+    Journal<I,RV,RVT,RE,RET>, JournalType,
     volume, String
     >
     {
@@ -2965,9 +2961,9 @@ I, RV, RVT, RE, RET
     public final class first
     extends
     UniProtEdgeProperty<
-    Article<I, RV, RVT, RE, RET>, ArticleType,
-    ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
-    Journal<I, RV, RVT, RE, RET>, JournalType,
+    Article<I,RV,RVT,RE,RET>, ArticleType,
+    ArticleJournal<I,RV,RVT,RE,RET>, ArticleJournalType,
+    Journal<I,RV,RVT,RE,RET>, JournalType,
     first, String
     >
     {
@@ -2982,9 +2978,9 @@ I, RV, RVT, RE, RET
     public final class last
     extends
     UniProtEdgeProperty<
-    Article<I, RV, RVT, RE, RET>, ArticleType,
-    ArticleJournal<I, RV, RVT, RE, RET>, ArticleJournalType,
-    Journal<I, RV, RVT, RE, RET>, JournalType,
+    Article<I,RV,RVT,RE,RET>, ArticleType,
+    ArticleJournal<I,RV,RVT,RE,RET>, ArticleJournalType,
+    Journal<I,RV,RVT,RE,RET>, JournalType,
     last, String
     >
     {
@@ -3002,9 +2998,9 @@ I, RV, RVT, RE, RET
   public final class ArticlePubmedType
   extends
   UniProtEdgeType<
-  Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType,
-  ArticlePubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticlePubmedType,
-  Pubmed<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PubmedType
+  Article<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ArticleType,
+  ArticlePubmed<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ArticlePubmedType,
+  Pubmed<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PubmedType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -3019,17 +3015,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ArticlePubmed<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ArticlePubmed<I, RV, RVT, RE, RET>(edge, this);
+    public ArticlePubmed<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ArticlePubmed<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class BookCityType
   extends
   UniProtEdgeType<
-  Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
-  BookCity<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookCityType,
-  City<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CityType
+  Book<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookType,
+  BookCity<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookCityType,
+  City<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.CityType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3044,17 +3040,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public BookCity<I, RV, RVT, RE, RET> from(RE edge) {
-      return new BookCity<I, RV, RVT, RE, RET>(edge, this);
+    public BookCity<I,RV,RVT,RE,RET> from(RE edge) {
+      return new BookCity<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class BookEditorType
   extends
   UniProtEdgeType<
-  Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
-  BookEditor<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookEditorType,
-  Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType
+  Book<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookType,
+  BookEditor<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookEditorType,
+  Person<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PersonType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3069,17 +3065,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public BookEditor<I, RV, RVT, RE, RET> from(RE edge) {
-      return new BookEditor<I, RV, RVT, RE, RET>(edge, this);
+    public BookEditor<I,RV,RVT,RE,RET> from(RE edge) {
+      return new BookEditor<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class BookPublisherType
   extends
   UniProtEdgeType<
-  Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
-  BookPublisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookPublisherType,
-  Publisher<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PublisherType
+  Book<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookType,
+  BookPublisher<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookPublisherType,
+  Publisher<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PublisherType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3094,17 +3090,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public BookPublisher<I, RV, RVT, RE, RET> from(RE edge) {
-      return new BookPublisher<I, RV, RVT, RE, RET>(edge, this);
+    public BookPublisher<I,RV,RVT,RE,RET> from(RE edge) {
+      return new BookPublisher<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class InstituteCountryType
   extends
   UniProtEdgeType<
-  Institute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteType,
-  InstituteCountry<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteCountryType,
-  Country<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CountryType
+  Institute<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.InstituteType,
+  InstituteCountry<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.InstituteCountryType,
+  Country<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.CountryType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3119,17 +3115,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public InstituteCountry<I, RV, RVT, RE, RET> from(RE edge) {
-      return new InstituteCountry<I, RV, RVT, RE, RET>(edge, this);
+    public InstituteCountry<I,RV,RVT,RE,RET> from(RE edge) {
+      return new InstituteCountry<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class OnlineArticleOnlineJournalType
   extends
   UniProtEdgeType<
-  OnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType,
-  OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleOnlineJournalType,
-  OnlineJournal<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineJournalType
+  OnlineArticle<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OnlineArticleType,
+  OnlineArticleOnlineJournal<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OnlineArticleOnlineJournalType,
+  OnlineJournal<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OnlineJournalType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3144,8 +3140,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> from(RE edge) {
-      return new OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>(edge, this);
+    public OnlineArticleOnlineJournal<I,RV,RVT,RE,RET> from(RE edge) {
+      return new OnlineArticleOnlineJournal<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final locator locator = new locator();
@@ -3153,9 +3149,9 @@ I, RV, RVT, RE, RET
     public final class locator
     extends
     UniProtEdgeProperty<
-    OnlineArticle<I, RV, RVT, RE, RET>, OnlineArticleType,
-    OnlineArticleOnlineJournal<I, RV, RVT, RE, RET>, OnlineArticleOnlineJournalType,
-    OnlineJournal<I, RV, RVT, RE, RET>, OnlineJournalType,
+    OnlineArticle<I,RV,RVT,RE,RET>, OnlineArticleType,
+    OnlineArticleOnlineJournal<I,RV,RVT,RE,RET>, OnlineArticleOnlineJournalType,
+    OnlineJournal<I,RV,RVT,RE,RET>, OnlineJournalType,
     locator, String
     >
     {
@@ -3172,9 +3168,9 @@ I, RV, RVT, RE, RET
   public final class OrganismTaxonType
   extends
   UniProtEdgeType<
-  Organism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType,
-  OrganismTaxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismTaxonType,
-  Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
+  Organism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismType,
+  OrganismTaxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismTaxonType,
+  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3189,17 +3185,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public OrganismTaxon<I, RV, RVT, RE, RET> from(RE edge) {
-      return new OrganismTaxon<I, RV, RVT, RE, RET>(edge, this);
+    public OrganismTaxon<I,RV,RVT,RE,RET> from(RE edge) {
+      return new OrganismTaxon<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinCommentType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinComment<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinCommentType,
-  CommentType<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.CommentTypeType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinComment<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinCommentType,
+  CommentType<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.CommentTypeType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3214,8 +3210,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinComment<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinComment<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinComment<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinComment<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final redoxPotentialEvidence redoxPotentialEvidence = new redoxPotentialEvidence();
@@ -3238,9 +3234,9 @@ I, RV, RVT, RE, RET
     public final class redoxPotentialEvidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     redoxPotentialEvidence, String
     >
     {
@@ -3255,9 +3251,9 @@ I, RV, RVT, RE, RET
     public final class redoxPotential
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     redoxPotential, String
     >
     {
@@ -3272,9 +3268,9 @@ I, RV, RVT, RE, RET
     public final class absorptionText
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     absorptionText, String
     >
     {
@@ -3289,9 +3285,9 @@ I, RV, RVT, RE, RET
     public final class absorptionMax
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     absorptionMax, String
     >
     {
@@ -3306,9 +3302,9 @@ I, RV, RVT, RE, RET
     public final class kineticsXML
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     kineticsXML, String
     >
     {
@@ -3323,9 +3319,9 @@ I, RV, RVT, RE, RET
     public final class phDependence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     phDependence, String
     >
     {
@@ -3340,9 +3336,9 @@ I, RV, RVT, RE, RET
     public final class temperatureDependence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     temperatureDependence, String
     >
     {
@@ -3357,9 +3353,9 @@ I, RV, RVT, RE, RET
     public final class position
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     position, String
     >
     {
@@ -3374,9 +3370,9 @@ I, RV, RVT, RE, RET
     public final class mass
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     mass, String
     >
     {
@@ -3391,9 +3387,9 @@ I, RV, RVT, RE, RET
     public final class method
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     method, String
     >
     {
@@ -3408,9 +3404,9 @@ I, RV, RVT, RE, RET
     public final class end
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     end, Integer
     >
     {
@@ -3425,9 +3421,9 @@ I, RV, RVT, RE, RET
     public final class begin
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     begin, Integer
     >
     {
@@ -3442,9 +3438,9 @@ I, RV, RVT, RE, RET
     public final class text
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     text, String
     >
     {
@@ -3459,9 +3455,9 @@ I, RV, RVT, RE, RET
     public final class status
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     status, String
     >
     {
@@ -3476,9 +3472,9 @@ I, RV, RVT, RE, RET
     public final class evidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinComment<I, RV, RVT, RE, RET>, ProteinCommentType,
-    CommentType<I, RV, RVT, RE, RET>, CommentTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinComment<I,RV,RVT,RE,RET>, ProteinCommentType,
+    CommentType<I,RV,RVT,RE,RET>, CommentTypeType,
     evidence, String
     >
     {
@@ -3495,9 +3491,9 @@ I, RV, RVT, RE, RET
   public final class ProteinDatasetType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinDataset<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDatasetType,
-  Dataset<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DatasetType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinDataset<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinDatasetType,
+  Dataset<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.DatasetType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -3512,17 +3508,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinDataset<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinDataset<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinDataset<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinDataset<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinDiseaseType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinDisease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType,
-  Disease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinDisease<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinDiseaseType,
+  Disease<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.DiseaseType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3541,16 +3537,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinDisease<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinDisease<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinDisease<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinDisease<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class text
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
-    Disease<I, RV, RVT, RE, RET>, DiseaseType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinDisease<I,RV,RVT,RE,RET>, ProteinDiseaseType,
+    Disease<I,RV,RVT,RE,RET>, DiseaseType,
     text, String
     >
     {
@@ -3565,9 +3561,9 @@ I, RV, RVT, RE, RET
     public final class status
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
-    Disease<I, RV, RVT, RE, RET>, DiseaseType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinDisease<I,RV,RVT,RE,RET>, ProteinDiseaseType,
+    Disease<I,RV,RVT,RE,RET>, DiseaseType,
     status, String
     >
     {
@@ -3582,9 +3578,9 @@ I, RV, RVT, RE, RET
     public final class evidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinDisease<I, RV, RVT, RE, RET>, ProteinDiseaseType,
-    Disease<I, RV, RVT, RE, RET>, DiseaseType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinDisease<I,RV,RVT,RE,RET>, ProteinDiseaseType,
+    Disease<I,RV,RVT,RE,RET>, DiseaseType,
     evidence, String
     >
     {
@@ -3601,9 +3597,9 @@ I, RV, RVT, RE, RET
   public final class ProteinEMBLType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinEMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinEMBLType,
-  EMBL<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EMBLType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinEMBL<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinEMBLType,
+  EMBL<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.EMBLType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3618,17 +3614,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinEMBL<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinEMBL<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinEMBL<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinEMBL<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinEnsemblType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinEnsembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinEnsemblType,
-  Ensembl<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.EnsemblType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinEnsembl<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinEnsemblType,
+  Ensembl<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.EnsemblType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3643,17 +3639,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinEnsembl<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinEnsembl<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinEnsembl<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinEnsembl<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinFeatureType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinFeature<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinFeatureType,
-  FeatureType<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.FeatureTypeType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinFeature<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinFeatureType,
+  FeatureType<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.FeatureTypeType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3678,16 +3674,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinFeature<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinFeature<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinFeature<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinFeature<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class description
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     description, String
     >
     {
@@ -3702,9 +3698,9 @@ I, RV, RVT, RE, RET
     public final class id
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     id, String
     >
     {
@@ -3719,9 +3715,9 @@ I, RV, RVT, RE, RET
     public final class evidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     evidence, String
     >
     {
@@ -3736,9 +3732,9 @@ I, RV, RVT, RE, RET
     public final class status
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     status, String
     >
     {
@@ -3753,9 +3749,9 @@ I, RV, RVT, RE, RET
     public final class begin
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     begin, Integer
     >
     {
@@ -3770,9 +3766,9 @@ I, RV, RVT, RE, RET
     public final class end
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     end, Integer
     >
     {
@@ -3787,9 +3783,9 @@ I, RV, RVT, RE, RET
     public final class original
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     original, String
     >
     {
@@ -3804,9 +3800,9 @@ I, RV, RVT, RE, RET
     public final class variation
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     variation, String
     >
     {
@@ -3821,9 +3817,9 @@ I, RV, RVT, RE, RET
     public final class ref
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinFeature<I, RV, RVT, RE, RET>, ProteinFeatureType,
-    FeatureType<I, RV, RVT, RE, RET>, FeatureTypeType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinFeature<I,RV,RVT,RE,RET>, ProteinFeatureType,
+    FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
     ref, String
     >
     {
@@ -3840,9 +3836,9 @@ I, RV, RVT, RE, RET
   public final class ProteinGeneLocationType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinGeneLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinGeneLocationType,
-  GeneLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.GeneLocationType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinGeneLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinGeneLocationType,
+  GeneLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.GeneLocationType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3859,16 +3855,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinGeneLocation<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinGeneLocation<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinGeneLocation<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinGeneLocation<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class name
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinGeneLocation<I, RV, RVT, RE, RET>, ProteinGeneLocationType,
-    GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinGeneLocation<I,RV,RVT,RE,RET>, ProteinGeneLocationType,
+    GeneLocation<I,RV,RVT,RE,RET>, GeneLocationType,
     name, String
     >
     {
@@ -3886,9 +3882,9 @@ I, RV, RVT, RE, RET
   public final class ProteinGeneNameType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinGeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinGeneNameType,
-  GeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinGeneName<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinGeneNameType,
+  GeneName<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.GeneNameType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3905,16 +3901,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinGeneName<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinGeneName<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinGeneName<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinGeneName<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class geneNameType
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinGeneName<I, RV, RVT, RE, RET>, ProteinGeneNameType,
-    GeneName<I, RV, RVT, RE, RET>, GeneNameType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinGeneName<I,RV,RVT,RE,RET>, ProteinGeneNameType,
+    GeneName<I,RV,RVT,RE,RET>, GeneNameType,
     geneNameType, String
     >
     {
@@ -3932,9 +3928,9 @@ I, RV, RVT, RE, RET
   public final class IsoformEventGeneratorType
   extends
   UniProtEdgeType<
-  Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType,
-  IsoformEventGenerator<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformEventGeneratorType,
-  AlternativeProduct<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.AlternativeProductType
+  Isoform<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.IsoformType,
+  IsoformEventGenerator<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.IsoformEventGeneratorType,
+  AlternativeProduct<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.AlternativeProductType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3949,17 +3945,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public IsoformEventGenerator<I, RV, RVT, RE, RET> from(RE edge) {
-      return new IsoformEventGenerator<I, RV, RVT, RE, RET>(edge, this);
+    public IsoformEventGenerator<I,RV,RVT,RE,RET> from(RE edge) {
+      return new IsoformEventGenerator<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinInterProType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinInterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinInterProType,
-  InterPro<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InterProType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinInterPro<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinInterProType,
+  InterPro<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.InterProType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3974,17 +3970,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinInterPro<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinInterPro<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinInterPro<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinInterPro<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinKeggType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinKegg<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinKeggType,
-  Kegg<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.KeggType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinKegg<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinKeggType,
+  Kegg<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.KeggType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -3999,17 +3995,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinKegg<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinKegg<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinKegg<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinKegg<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinKeywordType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinKeyword<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinKeywordType,
-  Keyword<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.KeywordType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinKeyword<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinKeywordType,
+  Keyword<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.KeywordType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4024,17 +4020,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinKeyword<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinKeyword<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinKeyword<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinKeyword<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinOrganismType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinOrganism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinOrganismType,
-  Organism<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OrganismType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinOrganism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinOrganismType,
+  Organism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -4049,17 +4045,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinOrganism<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinOrganism<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinOrganism<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinOrganism<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinPfamType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinPfam<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPfamType,
-  Pfam<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PfamType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinPfam<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinPfamType,
+  Pfam<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PfamType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4074,17 +4070,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinPfam<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinPfam<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinPfam<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinPfam<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinPIRType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinPIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinPIRType,
-  PIR<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PIRType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinPIR<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinPIRType,
+  PIR<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PIRType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4099,8 +4095,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinPIR<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinPIR<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinPIR<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinPIR<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
@@ -4119,9 +4115,9 @@ I, RV, RVT, RE, RET
   public final class ProteinProteinInteractionType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinProteinInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinProteinInteractionType,
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinProteinInteraction<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinProteinInteractionType,
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4136,8 +4132,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinProteinInteraction<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinProteinInteraction<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinProteinInteraction<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinProteinInteraction<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final experiments experiments = new experiments();
@@ -4148,9 +4144,9 @@ I, RV, RVT, RE, RET
     public final class experiments
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinProteinInteraction<I,RV,RVT,RE,RET>, ProteinProteinInteractionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
     experiments, Integer
     >
     {
@@ -4165,9 +4161,9 @@ I, RV, RVT, RE, RET
     public final class organismsDiffer
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinProteinInteraction<I,RV,RVT,RE,RET>, ProteinProteinInteractionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
     organismsDiffer, Boolean
     >
     {
@@ -4182,9 +4178,9 @@ I, RV, RVT, RE, RET
     public final class intActId1
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinProteinInteraction<I,RV,RVT,RE,RET>, ProteinProteinInteractionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
     intActId1, String
     >
     {
@@ -4199,9 +4195,9 @@ I, RV, RVT, RE, RET
     public final class intActId2
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinProteinInteraction<I, RV, RVT, RE, RET>, ProteinProteinInteractionType,
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinProteinInteraction<I,RV,RVT,RE,RET>, ProteinProteinInteractionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
     intActId2, String
     >
     {
@@ -4218,9 +4214,9 @@ I, RV, RVT, RE, RET
   public final class ProteinIsoformType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinIsoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinIsoformType,
-  Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinIsoform<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinIsoformType,
+  Isoform<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.IsoformType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4235,8 +4231,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinIsoform<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinIsoform<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinIsoform<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinIsoform<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
@@ -4253,9 +4249,9 @@ I, RV, RVT, RE, RET
   public final class ProteinIsoformInteractionType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinIsoformInteraction<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinIsoformInteractionType,
-  Isoform<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.IsoformType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinIsoformInteraction<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinIsoformInteractionType,
+  Isoform<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.IsoformType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4270,8 +4266,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinIsoformInteraction<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinIsoformInteraction<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinIsoformInteraction<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinIsoformInteraction<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final experiments experiments = new experiments();
@@ -4282,9 +4278,9 @@ I, RV, RVT, RE, RET
     public final class experiments
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
-    Isoform<I, RV, RVT, RE, RET>, IsoformType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinIsoformInteraction<I,RV,RVT,RE,RET>, ProteinIsoformInteractionType,
+    Isoform<I,RV,RVT,RE,RET>, IsoformType,
     experiments, Integer
     >
     {
@@ -4299,9 +4295,9 @@ I, RV, RVT, RE, RET
     public final class organismsDiffer
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
-    Isoform<I, RV, RVT, RE, RET>, IsoformType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinIsoformInteraction<I,RV,RVT,RE,RET>, ProteinIsoformInteractionType,
+    Isoform<I,RV,RVT,RE,RET>, IsoformType,
     organismsDiffer, Boolean
     >
     {
@@ -4316,9 +4312,9 @@ I, RV, RVT, RE, RET
     public final class intActId1
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
-    Isoform<I, RV, RVT, RE, RET>, IsoformType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinIsoformInteraction<I,RV,RVT,RE,RET>, ProteinIsoformInteractionType,
+    Isoform<I,RV,RVT,RE,RET>, IsoformType,
     intActId1, String
     >
     {
@@ -4333,9 +4329,9 @@ I, RV, RVT, RE, RET
     public final class intActId2
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinIsoformInteraction<I, RV, RVT, RE, RET>, ProteinIsoformInteractionType,
-    Isoform<I, RV, RVT, RE, RET>, IsoformType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinIsoformInteraction<I,RV,RVT,RE,RET>, ProteinIsoformInteractionType,
+    Isoform<I,RV,RVT,RE,RET>, IsoformType,
     intActId2, String
     >
     {
@@ -4352,9 +4348,9 @@ I, RV, RVT, RE, RET
   public final class ProteinReactomeTermType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinReactomeTerm<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinReactomeTermType,
-  ReactomeTerm<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReactomeTermType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinReactomeTerm<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinReactomeTermType,
+  ReactomeTerm<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReactomeTermType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4369,17 +4365,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinReactomeTerm<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinReactomeTerm<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinReactomeTerm<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinReactomeTerm<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinReferenceType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinReference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinReferenceType,
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinReference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinReferenceType,
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4394,17 +4390,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinReference<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinReference<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinReference<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinReference<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinRefSeqType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinRefSeq<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinRefSeqType,
-  RefSeq<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.RefSeqType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinRefSeq<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinRefSeqType,
+  RefSeq<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.RefSeqType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4419,17 +4415,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinRefSeq<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinRefSeq<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinRefSeq<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinRefSeq<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinSequenceCautionType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinSequenceCaution<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinSequenceCautionType,
-  SequenceCaution<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SequenceCautionType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinSequenceCaution<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinSequenceCautionType,
+  SequenceCaution<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SequenceCautionType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4452,16 +4448,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinSequenceCaution<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinSequenceCaution<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinSequenceCaution<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinSequenceCaution<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class position
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     position, String
     >
     {
@@ -4476,9 +4472,9 @@ I, RV, RVT, RE, RET
     public final class version
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     version, String
     >
     {
@@ -4493,9 +4489,9 @@ I, RV, RVT, RE, RET
     public final class resource
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     resource, String
     >
     {
@@ -4510,9 +4506,9 @@ I, RV, RVT, RE, RET
     public final class id
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     id, String
     >
     {
@@ -4527,9 +4523,9 @@ I, RV, RVT, RE, RET
     public final class evidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     evidence, String
     >
     {
@@ -4544,9 +4540,9 @@ I, RV, RVT, RE, RET
     public final class status
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     status, String
     >
     {
@@ -4561,9 +4557,9 @@ I, RV, RVT, RE, RET
     public final class text
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSequenceCaution<I, RV, RVT, RE, RET>, ProteinSequenceCautionType,
-    SequenceCaution<I, RV, RVT, RE, RET>, SequenceCautionType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSequenceCaution<I,RV,RVT,RE,RET>, ProteinSequenceCautionType,
+    SequenceCaution<I,RV,RVT,RE,RET>, SequenceCautionType,
     text, String
     >
     {
@@ -4580,9 +4576,9 @@ I, RV, RVT, RE, RET
   public final class ProteinSubcellularLocationType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinSubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType,
-  SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinSubcellularLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinSubcellularLocationType,
+  SubcellularLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubcellularLocationType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4595,9 +4591,9 @@ I, RV, RVT, RE, RET
     public final class topologyStatus
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
-    SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSubcellularLocation<I,RV,RVT,RE,RET>, ProteinSubcellularLocationType,
+    SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType,
     topologyStatus, String
     >
     {
@@ -4612,9 +4608,9 @@ I, RV, RVT, RE, RET
     public final class topology
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
-    SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSubcellularLocation<I,RV,RVT,RE,RET>, ProteinSubcellularLocationType,
+    SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType,
     topology, String
     >
     {
@@ -4629,9 +4625,9 @@ I, RV, RVT, RE, RET
     public final class evidence
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
-    SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSubcellularLocation<I,RV,RVT,RE,RET>, ProteinSubcellularLocationType,
+    SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType,
     evidence, String
     >
     {
@@ -4646,9 +4642,9 @@ I, RV, RVT, RE, RET
     public final class status
     extends
     UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinSubcellularLocation<I, RV, RVT, RE, RET>, ProteinSubcellularLocationType,
-    SubcellularLocation<I, RV, RVT, RE, RET>, SubcellularLocationType,
+    Protein<I,RV,RVT,RE,RET>, ProteinType,
+    ProteinSubcellularLocation<I,RV,RVT,RE,RET>, ProteinSubcellularLocationType,
+    SubcellularLocation<I,RV,RVT,RE,RET>, SubcellularLocationType,
     status, String
     >
     {
@@ -4671,17 +4667,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinSubcellularLocation<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinSubcellularLocation<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinSubcellularLocation<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinSubcellularLocation<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ProteinUniGeneType
   extends
   UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinUniGene<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinUniGeneType,
-  UniGene<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.UniGeneType
+  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
+  ProteinUniGene<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinUniGeneType,
+  UniGene<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.UniGeneType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4696,17 +4692,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ProteinUniGene<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinUniGene<I, RV, RVT, RE, RET>(edge, this);
+    public ProteinUniGene<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ProteinUniGene<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceAuthorConsortiumType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceAuthorConsortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorConsortiumType,
-  Consortium<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ConsortiumType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceAuthorConsortium<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceAuthorConsortiumType,
+  Consortium<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ConsortiumType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4721,17 +4717,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceAuthorConsortium<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceAuthorConsortium<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceAuthorConsortium<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceAuthorConsortium<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceAuthorPersonType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceAuthorPerson<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceAuthorPersonType,
-  Person<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PersonType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceAuthorPerson<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceAuthorPersonType,
+  Person<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PersonType
   >
   implements
   TypedEdge.Type.ManyToMany {
@@ -4746,17 +4742,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceAuthorPerson<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceAuthorPerson<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceAuthorPerson<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceAuthorPerson<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceArticleType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceArticleType,
-  Article<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ArticleType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceArticle<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceArticleType,
+  Article<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ArticleType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4771,17 +4767,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceArticle<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceArticle<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceArticle<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceArticle<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceBookType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceBook<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceBookType,
-  Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceBook<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceBookType,
+  Book<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.BookType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4801,16 +4797,16 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceBook<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceBook<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceBook<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceBook<I,RV,RVT,RE,RET>(edge, this);
     }
 
     public final class title
     extends
     UniProtEdgeProperty<
-    Reference<I, RV, RVT, RE, RET>, ReferenceType,
-    ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
-    Book<I, RV, RVT, RE, RET>, BookType,
+    Reference<I,RV,RVT,RE,RET>, ReferenceType,
+    ReferenceBook<I,RV,RVT,RE,RET>, ReferenceBookType,
+    Book<I,RV,RVT,RE,RET>, BookType,
     title, String
     >
     {
@@ -4826,9 +4822,9 @@ I, RV, RVT, RE, RET
     public final class volume
     extends
     UniProtEdgeProperty<
-    Reference<I, RV, RVT, RE, RET>, ReferenceType,
-    ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
-    Book<I, RV, RVT, RE, RET>, BookType,
+    Reference<I,RV,RVT,RE,RET>, ReferenceType,
+    ReferenceBook<I,RV,RVT,RE,RET>, ReferenceBookType,
+    Book<I,RV,RVT,RE,RET>, BookType,
     volume, String
     >
     {
@@ -4844,9 +4840,9 @@ I, RV, RVT, RE, RET
     public final class first
     extends
     UniProtEdgeProperty<
-    Reference<I, RV, RVT, RE, RET>, ReferenceType,
-    ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
-    Book<I, RV, RVT, RE, RET>, BookType,
+    Reference<I,RV,RVT,RE,RET>, ReferenceType,
+    ReferenceBook<I,RV,RVT,RE,RET>, ReferenceBookType,
+    Book<I,RV,RVT,RE,RET>, BookType,
     first, Integer
     >
     {
@@ -4862,9 +4858,9 @@ I, RV, RVT, RE, RET
     public final class last
     extends
     UniProtEdgeProperty<
-    Reference<I, RV, RVT, RE, RET>, ReferenceType,
-    ReferenceBook<I, RV, RVT, RE, RET>, ReferenceBookType,
-    Book<I, RV, RVT, RE, RET>, BookType,
+    Reference<I,RV,RVT,RE,RET>, ReferenceType,
+    ReferenceBook<I,RV,RVT,RE,RET>, ReferenceBookType,
+    Book<I,RV,RVT,RE,RET>, BookType,
     last, Integer
     >
     {
@@ -4881,9 +4877,9 @@ I, RV, RVT, RE, RET
   public final class ReferencePatentType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferencePatent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferencePatentType,
-  Patent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.PatentType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferencePatent<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferencePatentType,
+  Patent<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.PatentType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4898,17 +4894,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferencePatent<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferencePatent<I, RV, RVT, RE, RET>(edge, this);
+    public ReferencePatent<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferencePatent<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceThesisType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceThesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceThesisType,
-  Thesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceThesis<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceThesisType,
+  Thesis<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ThesisType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4923,17 +4919,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceThesis<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceThesis<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceThesis<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceThesis<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceSubmissionType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceSubmission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceSubmissionType,
-  Submission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceSubmission<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceSubmissionType,
+  Submission<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubmissionType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4948,17 +4944,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceSubmission<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceSubmission<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceSubmission<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceSubmission<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceUnpublishedObservationType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceUnpublishedObservationType,
-  UnpublishedObservation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.UnpublishedObservationType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceUnpublishedObservation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceUnpublishedObservationType,
+  UnpublishedObservation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.UnpublishedObservationType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4973,17 +4969,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceUnpublishedObservation<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceUnpublishedObservation<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceUnpublishedObservation<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceUnpublishedObservation<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ReferenceOnlineArticleType
   extends
   UniProtEdgeType<
-  Reference<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceType,
-  ReferenceOnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceOnlineArticleType,
-  OnlineArticle<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.OnlineArticleType
+  Reference<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceType,
+  ReferenceOnlineArticle<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ReferenceOnlineArticleType,
+  OnlineArticle<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OnlineArticleType
   >
   implements
   TypedEdge.Type.OneToOne {
@@ -4998,17 +4994,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ReferenceOnlineArticle<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ReferenceOnlineArticle<I, RV, RVT, RE, RET>(edge, this);
+    public ReferenceOnlineArticle<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ReferenceOnlineArticle<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class SubcellularLocationParentType
   extends
   UniProtEdgeType<
-  SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType,
-  SubcellularLocationParent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationParentType,
-  SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubcellularLocationType
+  SubcellularLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubcellularLocationType,
+  SubcellularLocationParent<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubcellularLocationParentType,
+  SubcellularLocation<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubcellularLocationType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -5023,17 +5019,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public SubcellularLocationParent<I, RV, RVT, RE, RET> from(RE edge) {
-      return new SubcellularLocationParent<I, RV, RVT, RE, RET>(edge, this);
+    public SubcellularLocationParent<I,RV,RVT,RE,RET> from(RE edge) {
+      return new SubcellularLocationParent<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class SubmissionDBType
   extends
   UniProtEdgeType<
-  Submission<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionType,
-  SubmissionDB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.SubmissionDBType,
-  DB<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DBType
+  Submission<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubmissionType,
+  SubmissionDB<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.SubmissionDBType,
+  DB<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.DBType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -5048,17 +5044,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public SubmissionDB<I, RV, RVT, RE, RET> from(RE edge) {
-      return new SubmissionDB<I, RV, RVT, RE, RET>(edge, this);
+    public SubmissionDB<I,RV,RVT,RE,RET> from(RE edge) {
+      return new SubmissionDB<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class TaxonParentType
   extends
   UniProtEdgeType<
-  Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType,
-  TaxonParent<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonParentType,
-  Taxon<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.TaxonType
+  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType,
+  TaxonParent<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonParentType,
+  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -5073,17 +5069,17 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public TaxonParent<I, RV, RVT, RE, RET> from(RE edge) {
-      return new TaxonParent<I, RV, RVT, RE, RET>(edge, this);
+    public TaxonParent<I,RV,RVT,RE,RET> from(RE edge) {
+      return new TaxonParent<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
   public final class ThesisInstituteType
   extends
   UniProtEdgeType<
-  Thesis<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisType,
-  ThesisInstitute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ThesisInstituteType,
-  Institute<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.InstituteType
+  Thesis<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ThesisType,
+  ThesisInstitute<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ThesisInstituteType,
+  Institute<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.InstituteType
   >
   implements
   TypedEdge.Type.ManyToOne {
@@ -5098,8 +5094,8 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public ThesisInstitute<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ThesisInstitute<I, RV, RVT, RE, RET>(edge, this);
+    public ThesisInstitute<I,RV,RVT,RE,RET> from(RE edge) {
+      return new ThesisInstitute<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
@@ -5109,33 +5105,28 @@ I, RV, RVT, RE, RET
 
   public abstract class UniProtVertexProperty<
     V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-    VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
+    VT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<V, VT>,
     P extends UniProtVertexProperty<V, VT, P, PV>,
     PV
   >
   implements
-    Property<V, VT, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+    Property<V, VT, P, PV, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET> {
 
-    protected UniProtVertexProperty(VT type) {
-
-      this.type = type;
-    }
+    protected UniProtVertexProperty(VT type) { this.type = type; }
 
     private VT type;
 
     @Override
-    public final VT elementType() {
-      return type;
-    }
+    public final VT elementType() { return type; }
   }
 
   public abstract class UniProtEdgeProperty<
   S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
-  ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+  ST extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<S, ST>,
   E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-  ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+  ET extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
   T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
-  TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>,
+  TT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<T, TT>,
   P extends UniProtEdgeProperty <
   S, ST,
   E, ET,
@@ -5145,7 +5136,7 @@ I, RV, RVT, RE, RET
   PV
   >
   implements
-  Property<E, ET, P, PV, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+  Property<E, ET, P, PV, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET> {
 
     protected UniProtEdgeProperty(ET type) {
 
@@ -5163,11 +5154,11 @@ I, RV, RVT, RE, RET
 
   public abstract static class UniProtVertex<
   V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-  VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>,
+  VT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<V, VT>,
   I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
   >
   implements
-  TypedVertex<V, VT, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+  TypedVertex<V, VT, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET> {
 
     private RV vertex;
     private VT type;
@@ -5179,7 +5170,7 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public UniProtGraph<I, RV, RVT, RE, RET> graph() {
+    public UniProtGraph<I,RV,RVT,RE,RET> graph() {
       return type().graph();
     }
 
@@ -5196,10 +5187,10 @@ I, RV, RVT, RE, RET
 
   abstract class UniProtVertexType<
   V extends UniProtVertex<V, VT, I, RV, RVT, RE, RET>,
-  VT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<V, VT>
+  VT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<V, VT>
   >
   implements
-  TypedVertex.Type<V, VT, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET> {
+  TypedVertex.Type<V, VT, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET> {
 
     private RVT raw;
 
@@ -5213,25 +5204,25 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public final UniProtGraph<I, RV, RVT, RE, RET> graph() {
+    public final UniProtGraph<I,RV,RVT,RE,RET> graph() {
       return UniProtGraph.this;
     }
   }
 
   public abstract static class UniProtEdge<
   S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
-  ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+  ST extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<S, ST>,
   E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-  ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+  ET extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
   T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
-  TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>,
+  TT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<T, TT>,
   I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET
   >
   implements
   TypedEdge<
-  S, ST, UniProtGraph<I, RV, RVT, RE, RET>,
-  E, ET, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-  T, TT, UniProtGraph<I, RV, RVT, RE, RET>
+  S, ST, UniProtGraph<I,RV,RVT,RE,RET>,
+  E, ET, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET,
+  T, TT, UniProtGraph<I,RV,RVT,RE,RET>
   > {
 
     private RE edge;
@@ -5244,7 +5235,7 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public UniProtGraph<I, RV, RVT, RE, RET> graph() {
+    public UniProtGraph<I,RV,RVT,RE,RET> graph() {
       return type().graph();
     }
 
@@ -5261,17 +5252,17 @@ I, RV, RVT, RE, RET
 
   abstract class UniProtEdgeType<
   S extends UniProtVertex<S, ST, I, RV, RVT, RE, RET>,
-  ST extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<S, ST>,
+  ST extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<S, ST>,
   E extends UniProtEdge<S, ST, E, ET, T, TT, I, RV, RVT, RE, RET>,
-  ET extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
+  ET extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtEdgeType<S, ST, E, ET, T, TT>,
   T extends UniProtVertex<T, TT, I, RV, RVT, RE, RET>,
-  TT extends UniProtGraph<I, RV, RVT, RE, RET>.UniProtVertexType<T, TT>
+  TT extends UniProtGraph<I,RV,RVT,RE,RET>.UniProtVertexType<T, TT>
   >
   implements
   TypedEdge.Type<
-  S, ST, UniProtGraph<I, RV, RVT, RE, RET>,
-  E, ET, UniProtGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
-  T, TT, UniProtGraph<I, RV, RVT, RE, RET>
+  S, ST, UniProtGraph<I,RV,RVT,RE,RET>,
+  E, ET, UniProtGraph<I,RV,RVT,RE,RET>, I, RV, RVT, RE, RET,
+  T, TT, UniProtGraph<I,RV,RVT,RE,RET>
   > {
 
     private RET raw;
@@ -5301,7 +5292,7 @@ I, RV, RVT, RE, RET
     }
 
     @Override
-    public final UniProtGraph<I, RV, RVT, RE, RET> graph() {
+    public final UniProtGraph<I,RV,RVT,RE,RET> graph() {
       return UniProtGraph.this;
     }
   }
