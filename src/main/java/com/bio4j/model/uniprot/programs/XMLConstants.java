@@ -15,6 +15,13 @@ public final class XMLConstants {
         interface FULLNAME      { String element = "fullName"; }
       }
     }
+    interface GENE              { String element = "gene";
+      interface NAME            { String element = "name";
+        interface TYPE          { String attribute = "type";
+                                  String PRIMARY   = "primary";
+        }
+      }
+    }
     interface SEQUENCE          { String element = "sequence";
       interface LENGTH          { String attribute = "length"; }
       interface MASS            { String attribute = "mass";   }

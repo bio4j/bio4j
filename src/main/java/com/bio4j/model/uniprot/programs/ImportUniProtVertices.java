@@ -206,6 +206,19 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
       datasetV -> p.set( p.type().dataset, datasetV )
     );
 
+    final Optional<String> optGeneName =
+      entryXMLElem.asJDomElement()
+        .getChild(ENTRY.GENE.element)
+        .getChildren(ENTRY.GENE.NAME.element)
+        .stream()
+        .filter( elem -> elem.getAttributeValue(ENTRY.GENE.NAME.TYPE.attribute).equals(ENTRY.GENE.NAME.TYPE.PRIMARY) )
+        .map( Element::getText )
+        .findFirst();
+
+    optGeneName.ifPresent(
+      geneNameV -> p.set( p.type().geneName, geneNameV )
+    );
+
     final Element proteinElem = entryXMLElem.asJDomElement().getChild(ENTRY.PROTEIN.element);
     final String fullNameV = proteinElem
       .getChild(ENTRY.PROTEIN.RECOMMENDEDNAME.element)
