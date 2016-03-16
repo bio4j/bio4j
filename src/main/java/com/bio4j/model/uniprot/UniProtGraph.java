@@ -985,11 +985,9 @@ I, RV, RVT, RE, RET
   // Vertex types
 
   public static enum Dataset {
-    swissProt("Swiss-Prot"),
-    trembl("TrEMBL");
 
-    Dataset(String repr) { this.repr = repr; }
-    public final String repr;
+    swissProt,
+    trembl;
 
     public static final Optional<Dataset> fromRepr(String v) {
 
@@ -997,6 +995,16 @@ I, RV, RVT, RE, RET
         case "Swiss-Prot":  { return Optional.of(swissProt); }
         case "TrEMBL":      { return Optional.of(trembl);    }
         default:            { return Optional.empty();       }
+      }
+    }
+
+    public static final String stringRepresentation(Dataset d) {
+
+      switch(d) {
+        case swissProt: { return "Swiss-Prot";  }
+        case trembl:    { return "TrEMBL";      }
+        // unreachable
+        default:        { return null;          }
       }
     }
   }
