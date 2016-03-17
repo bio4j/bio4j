@@ -435,16 +435,6 @@ I, RV, RVT, RE, RET
   geneLocationNameIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  GeneName<I, RV, RVT, RE, RET>, GeneNameType,
-  // property
-  GeneNameType.name, String,
-  // graph
-  UniProtGraph<I, RV, RVT, RE, RET>,
-  I, RV, RVT, RE, RET
-  >
-  geneNameNameIndex();
-  public abstract TypedVertexIndex.Unique <
-  // vertex
   Disease<I, RV, RVT, RE, RET>, DiseaseType,
   // property
   DiseaseType.id, String,
@@ -848,8 +838,6 @@ I, RV, RVT, RE, RET
 
   public abstract GeneLocationType GeneLocation();
 
-  public abstract GeneNameType GeneName();
-
   public abstract InstituteType Institute();
 
   public abstract InterProType InterPro();
@@ -936,8 +924,6 @@ I, RV, RVT, RE, RET
   public abstract ProteinFeatureType ProteinFeature();
 
   public abstract ProteinGeneLocationType ProteinGeneLocation();
-
-  public abstract ProteinGeneNameType ProteinGeneName();
 
   public abstract ProteinInterProType ProteinInterPro();
 
@@ -1617,43 +1603,6 @@ I, RV, RVT, RE, RET
     UniProtVertexProperty<GeneLocation<I, RV, RVT, RE, RET>, GeneLocationType, name, String> {
       public name() {
         super(GeneLocationType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-
-  }
-
-  public final class GeneNameType
-  extends
-  UniProtVertexType<
-  GeneName<I, RV, RVT, RE, RET>,
-  UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
-  > {
-
-    public final name name = new name();
-
-    public GeneNameType(RVT raw) {
-      super(raw);
-    }
-
-    @Override
-    public GeneNameType value() {
-      return graph().GeneName();
-    }
-
-    @Override
-    public GeneName<I, RV, RVT, RE, RET> from(RV vertex) {
-      return new GeneName<I, RV, RVT, RE, RET>(vertex, this);
-    }
-
-    public final class name
-    extends
-    UniProtVertexProperty<GeneName<I, RV, RVT, RE, RET>, GeneNameType, name, String> {
-      public name() {
-        super(GeneNameType.this);
       }
 
       public Class<String> valueClass() {
@@ -3871,52 +3820,6 @@ I, RV, RVT, RE, RET
     {
       public name() {
         super(ProteinGeneLocationType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-
-  }
-
-  public final class ProteinGeneNameType
-  extends
-  UniProtEdgeType<
-  Protein<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
-  ProteinGeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.ProteinGeneNameType,
-  GeneName<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.GeneNameType
-  >
-  implements
-  TypedEdge.Type.ManyToMany {
-
-    public final geneNameType geneNameType = new geneNameType();
-
-    public ProteinGeneNameType(RET raw) {
-      super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.GeneName());
-    }
-
-    @Override
-    public ProteinGeneNameType value() {
-      return graph().ProteinGeneName();
-    }
-
-    @Override
-    public ProteinGeneName<I, RV, RVT, RE, RET> from(RE edge) {
-      return new ProteinGeneName<I, RV, RVT, RE, RET>(edge, this);
-    }
-
-    public final class geneNameType
-    extends
-    UniProtEdgeProperty<
-    Protein<I, RV, RVT, RE, RET>, ProteinType,
-    ProteinGeneName<I, RV, RVT, RE, RET>, ProteinGeneNameType,
-    GeneName<I, RV, RVT, RE, RET>, GeneNameType,
-    geneNameType, String
-    >
-    {
-      public geneNameType() {
-        super(ProteinGeneNameType.this);
       }
 
       public Class<String> valueClass() {
