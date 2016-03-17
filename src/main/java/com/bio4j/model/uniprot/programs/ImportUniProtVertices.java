@@ -1,6 +1,7 @@
 package com.bio4j.model.uniprot.programs;
 
 import com.bio4j.model.uniprot.UniProtGraph;
+import com.bio4j.model.uniprot.UniProtGraph.Dataset;
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
 
@@ -38,7 +39,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   final HashSet<String> commentTypeNameSet            = new HashSet<String>();
   final HashSet<String> consortiumNameSet             = new HashSet<String>();
   final HashSet<String> countryNameSet                = new HashSet<String>();
-  final HashSet<String> datasetNameSet                = new HashSet<String>();
+  final HashSet<String> NameSet                = new HashSet<String>();
   final HashSet<String> dbNameSet                     = new HashSet<String>();
   final HashSet<String> diseaseIdSet                  = new HashSet<String>();
   final HashSet<String> eMBLIdSet                     = new HashSet<String>();
@@ -93,7 +94,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
 
-      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
+      statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats.txt")));
 
       final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
 
@@ -118,9 +119,8 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           protein = importProteinFrom (entryXMLElem, graph);
 
           importProteinReferences   (entryXMLElem, graph);
-          importProteinComments     (entryXMLElem, graph, protein, protein.sequence());
+          importProteinComments     (entryXMLElem, graph, protein, protein.get(protein.type().sequence));
           importProteinFeatures     (entryXMLElem, graph, protein);
-          importProteinDatasets     (entryXMLElem, graph);
           importProteinCitations    (entryXMLElem, graph, protein);
           importProteinKeywords     (entryXMLElem, graph);
           importProteinGeneLocation (entryXMLElem, graph);
@@ -141,7 +141,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     }
     catch (Exception e) {
 
-      logger.log(Level.SEVERE, ("Exception retrieving protein " + protein.accession()));
+      logger.log(Level.SEVERE, "Exception retrieving protein " + protein.get(protein.type().accession));
       logger.log(Level.SEVERE, e.getMessage());
 
       StackTraceElement[] trace = e.getStackTrace();
@@ -185,44 +185,59 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   */
   private Protein<I,RV,RVT,RE,RET> importProteinFrom(
     XMLElement entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
+    UniProtGraph<I,RV,RVT,RE,RET> g
   )
-  throws ParseException {
+    throws ParseException
+  {
 
-    final String modifiedDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_MODIFIED_DATE_ATTRIBUTE);
-    final String createdDateSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_CREATED_DATE_ATTRIBUTE);
-    final Integer version = Integer.parseInt(entryXMLElem.asJDomElement().getAttributeValue(ENTRY_VERSION_ATTRIBUTE));
+    // known to be there according to the schema
+    final String accessionV = entryXMLElem.asJDomElement().getChildText(ENTRY.ACCESSION.element);
 
-    final String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
-    final String currentAccessionId = accessionSt;
+    Protein<I,RV,RVT,RE,RET> p = g.addVertex(g.Protein());
+    p.set( g.Protein().accession, accessionV );
 
-    final String nameSt = entryXMLElem.asJDomElement().getChildText(ENTRY_NAME_TAG_NAME);
+    final String entryNameV = entryXMLElem.asJDomElement().getChildText(ENTRY.NAME.element);
+    p.set( p.type().entryName, entryNameV );
 
-    String fullNameSt = getProteinFullName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
-    if(fullNameSt == null) { fullNameSt = ""; }
+    final String datasetStr = entryXMLElem.asJDomElement().getAttributeValue(ENTRY.DATASET.attribute);
+    final Optional<Dataset> optDatasetV = Dataset.fromRepr(datasetStr);
+    optDatasetV.ifPresent(
+      datasetV -> p.set( p.type().dataset, datasetV )
+    );
 
-    String shortNameSt = getProteinShortName(entryXMLElem.asJDomElement().getChild(PROTEIN_TAG_NAME));
-    if(shortNameSt == null) { shortNameSt = ""; }
+    final Optional<String> optGeneName =
+      entryXMLElem.asJDomElement()
+        .getChild(ENTRY.GENE.element)
+        .getChildren(ENTRY.GENE.NAME.element)
+        .stream()
+        .filter( elem -> elem.getAttributeValue(ENTRY.GENE.NAME.TYPE.attribute).equals(ENTRY.GENE.NAME.TYPE.PRIMARY) )
+        .map( Element::getText )
+        .findFirst();
 
-    final Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY_SEQUENCE_TAG_NAME);
-    final String sequenceSt = sequenceElem.getText();
-    final int seqLength = Integer.parseInt(sequenceElem.getAttributeValue(SEQUENCE_LENGTH_ATTRIBUTE));
-    final float seqMass = Float.parseFloat(sequenceElem.getAttributeValue(SEQUENCE_MASS_ATTRIBUTE));
+    optGeneName.ifPresent(
+      geneNameV -> p.set( p.type().geneName, geneNameV )
+    );
 
-    Protein<I,RV,RVT,RE,RET> protein = graph.addVertex(graph.Protein());
+    final Element proteinElem = entryXMLElem.asJDomElement().getChild(ENTRY.PROTEIN.element);
+    final String fullNameV = proteinElem
+      .getChild(ENTRY.PROTEIN.RECOMMENDEDNAME.element)
+      .getChildText(ENTRY.PROTEIN.RECOMMENDEDNAME.FULLNAME.element);
 
-    protein.set(graph.Protein().modifiedDate, parseDate(modifiedDateSt));
-    protein.set(graph.Protein().createdDate, parseDate(createdDateSt));
-    protein.set(graph.Protein().accession, accessionSt);
-    protein.set(graph.Protein().name, nameSt);
-    protein.set(graph.Protein().fullName, fullNameSt);
-    protein.set(graph.Protein().shortName, shortNameSt);
-    protein.set(graph.Protein().sequence, sequenceSt);
-    protein.set(graph.Protein().length, seqLength);
-    protein.set(graph.Protein().mass, String.valueOf(seqMass));
-    protein.set(graph.Protein().version, version);
+    p.set( p.type().fullName, fullNameV );
 
-    return protein;
+    // TODO get all other names from the protein element
+
+    final Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY.SEQUENCE.element);
+
+    final String sequenceV  = sequenceElem.getText();
+    final Integer lengthV   = Integer.parseInt( sequenceElem.getAttributeValue(ENTRY.SEQUENCE.LENGTH.attribute) );
+    final Integer massV     = Integer.parseInt( sequenceElem.getAttributeValue(ENTRY.SEQUENCE.MASS.attribute) );
+
+    p.set( p.type().sequence, sequenceV );
+    p.set( p.type().length, lengthV );
+    p.set( p.type().mass, massV );
+
+    return p;
   }
 
   private void importProteinReferences(
@@ -506,25 +521,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
           break;
         }
-      }
-    }
-  }
-
-  private void importProteinDatasets(
-    XMLElement entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
-  )
-  {
-    final String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-
-    if(!datasetNameSet.contains(proteinDataSetSt)) {
-
-      datasetNameSet.add(proteinDataSetSt);
-
-      if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
-
-        final Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
-        dataset.set(graph.Dataset().name, proteinDataSetSt);
       }
     }
   }
