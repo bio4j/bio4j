@@ -11,15 +11,4 @@ libraryDependencies ++= Seq(
   "org.jdom"      % "jdom2"          % "2.0.6"
 )
 
-dependencyOverrides ++= Set(
-  "com.fasterxml.jackson.core"  % "jackson-core"            % "2.1.2",
-  "com.fasterxml.jackson.core"  % "jackson-databind"        % "2.1.2",
-  "com.fasterxml.jackson.core"  % "jackson-annotations"     % "2.1.1",
-  "commons-logging"             % "commons-logging"         % "1.2",
-  "commons-codec"               % "commons-codec"           % "1.7",
-  "commons-beanutils"           % "commons-beanutils"       % "1.8.3",
-  "commons-beanutils"           % "commons-beanutils-core"  % "1.8.3",
-  "net.sf.opencsv"              % "opencsv"                 % "2.3"
-)
-
 bucketSuffix := "era7.com"
