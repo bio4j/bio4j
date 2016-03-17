@@ -4,8 +4,9 @@ import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
 import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+import com.bio4j.xml.XMLUtils;
 
 import java.io.*;
 import java.util.List;
@@ -55,63 +56,52 @@ public abstract class ImportUniProtEnzymeDB<I extends UntypedGraph<RV,RVT,RE,RET
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtEnzymeDBStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
       BufferedReader reader = new BufferedReader(new FileReader(inFile));
-      StringBuilder entryStBuilder = new StringBuilder();
+
+      /* Iterate over the input file lines */
+      final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
       String line;
+      while((line = inFileReader.readLine()) != null && line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
+        // this will advance the reader until the next extry
+        final Element entryXMLElem = XMLUtils.uniProtEntryFrom(line, inFileReader);
 
-      while ((line = reader.readLine()) != null) {
+        String accessionSt = entryXMLElem.getChildText(ENTRY_ACCESSION_TAG_NAME);
 
-        if (line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
+        Protein<I,RV,RVT,RE,RET> protein = null;
 
-          while (!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-            entryStBuilder.append(line);
-            line = reader.readLine();
-          }
-          entryStBuilder.append(line);
+        //-----db references-------------
+        List<Element> dbReferenceList = entryXMLElem.getChildren(DB_REFERENCE_TAG_NAME);
 
-          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-          entryStBuilder.delete(0, entryStBuilder.length());
+        for (Element dbReferenceElem: dbReferenceList) {
 
-          String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+          //-------------------ENZYME DB -----------------------------
+          if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
 
-          Protein<I,RV,RVT,RE,RET> protein = null;
+            if(protein == null) {
+              protein = uniprotEnzymeDBGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt).get();
+            }
 
-          //-----db references-------------
-          List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+            String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
 
-          for (Element dbReferenceElem: dbReferenceList) {
+            if(enzymeID != null) {
 
-            //-------------------ENZYME DB -----------------------------
-            if (dbReferenceElem.getAttributeValue(DB_REFERENCE_TYPE_ATTRIBUTE).toUpperCase().equals(ENZYME_REFERENCE_TYPE)) {
+              //uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
 
-              if(protein == null) {
-                protein = uniprotEnzymeDBGraph.uniProtGraph().proteinAccessionIndex().getVertex(accessionSt).get();
-              }
+              Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
 
-              String enzymeID = dbReferenceElem.getAttributeValue(DB_REFERENCE_ID_ATTRIBUTE);
-
-              if(enzymeID != null) {
-
-                //uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex()
-
-                Optional<Enzyme<I,RV,RVT,RE,RET>> enzymeOptional = uniprotEnzymeDBGraph.enzymeDBGraph().enzymeIdIndex().getVertex(enzymeID);
-
-                if(enzymeOptional.isPresent()) {
-                  protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
-                }
-                else {
-
-                  logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
-                }
+              if(enzymeOptional.isPresent()) {
+                protein.addOutEdge(uniprotEnzymeDBGraph.EnzymaticActivity(), enzymeOptional.get());
               }
               else {
 
-                logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
+                logger.log(Level.INFO, "The enzyme with id: " + enzymeID + " could not be found... :|");
               }
+            }
+            else {
+
+              logger.log(Level.INFO, "Null enzyme id found for protein: " + accessionSt);
             }
           }
           //---------------------------------------------------------------------------------------
-
-
           proteinCounter++;
           if ((proteinCounter % limitForPrintingOut) == 0) {
 

@@ -8,7 +8,7 @@ javaVersion   := "1.8"
 
 libraryDependencies ++= Seq(
   "bio4j"         % "angulillos"    % "0.4.1",
-  "ohnosequences" % "bioinfo-util"  % "1.5.0"
+  "org.jdom"      % "jdom2"          % "2.0.6"
 )
 
 dependencyOverrides ++= Set(
