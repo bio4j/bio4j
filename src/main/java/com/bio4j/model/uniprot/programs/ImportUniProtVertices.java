@@ -121,7 +121,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           importProteinReferences   (entryXMLElem, graph);
           importProteinComments     (entryXMLElem, graph, protein, protein.get(protein.type().sequence));
           importProteinFeatures     (entryXMLElem, graph, protein);
-          importProteinDatasets     (entryXMLElem, graph);
           importProteinCitations    (entryXMLElem, graph, protein);
           importProteinKeywords     (entryXMLElem, graph);
           importProteinGeneLocation (entryXMLElem, graph);
@@ -225,6 +224,8 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
       .getChildText(ENTRY.PROTEIN.RECOMMENDEDNAME.FULLNAME.element);
 
     p.set( p.type().fullName, fullNameV );
+
+    // TODO get all other names from the protein element
 
     final Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY.SEQUENCE.element);
 
@@ -522,25 +523,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         }
       }
     }
-  }
-
-  private void importProteinDatasets(
-    XMLElement entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
-  )
-  {
-    // final String proteinDataSetSt = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
-    //
-    // if(!datasetNameSet.contains(proteinDataSetSt)) {
-    //
-    //   datasetNameSet.add(proteinDataSetSt);
-    //
-    //   if(!graph.datasetNameIndex().getVertex(proteinDataSetSt).isPresent()) {
-    //
-    //     final Dataset<I,RV,RVT,RE,RET> dataset = graph.addVertex(graph.Dataset());
-    //     dataset.set(graph.Dataset().name, proteinDataSetSt);
-    //   }
-    // }
   }
 
   private void importProteinFeatures(
