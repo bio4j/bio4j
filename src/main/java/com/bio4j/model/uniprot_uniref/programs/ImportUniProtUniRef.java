@@ -7,7 +7,7 @@ import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,7 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import org.jdom2.Element;
+import org.jdom2.*;
+import com.bio4j.xml.XMLUtils;
 
 public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET>  {
 
@@ -148,13 +149,13 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
         }
         entryStBuilder.append(line);
 
-        XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+        final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
         //freeing up memory
         entryStBuilder.delete(0, entryStBuilder.length());
 
         ArrayList<String> membersAccessionList = new ArrayList<String>();
-        String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
-        Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+        String entryId = entryXMLElem.getAttributeValue("id");
+        Element representativeMember = entryXMLElem.getChild("representativeMember");
         String representantAccession = getRepresentantAccession(representativeMember);
         if(representantAccession != null) {
 
@@ -163,7 +164,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
         if(entryId != null) {
           //----obtaining cluster members---
-          List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
+          List<Element> members = entryXMLElem.getChildren("member");
           for (Element member : members) {
             Element memberDbReference = member.getChild("dbReference");
             List<Element> memberProperties = memberDbReference.getChildren("property");
@@ -232,13 +233,13 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
         }
         entryStBuilder.append(line);
 
-        XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+        final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
         //freeing up memory
         entryStBuilder.delete(0, entryStBuilder.length());
 
         ArrayList<String> membersAccessionList = new ArrayList<String>();
-        String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
-        Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+        String entryId = entryXMLElem.getAttributeValue("id");
+        Element representativeMember = entryXMLElem.getChild("representativeMember");
         String representantAccession = getRepresentantAccession(representativeMember);
         if(representantAccession != null) {
 
@@ -247,7 +248,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
         if(entryId != null) {
           //----obtaining cluster members---
-          List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
+          List<Element> members = entryXMLElem.getChildren("member");
           for (Element member : members) {
             Element memberDbReference = member.getChild("dbReference");
             List<Element> memberProperties = memberDbReference.getChildren("property");
@@ -315,13 +316,13 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
         }
         entryStBuilder.append(line);
 
-        XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+        final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
         //freeing up memory
         entryStBuilder.delete(0, entryStBuilder.length());
 
         ArrayList<String> membersAccessionList = new ArrayList<String>();
-        String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
-        Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+        String entryId = entryXMLElem.getAttributeValue("id");
+        Element representativeMember = entryXMLElem.getChild("representativeMember");
         String representantAccession = getRepresentantAccession(representativeMember);
         if(representantAccession != null) {
 
@@ -330,7 +331,7 @@ public abstract class ImportUniProtUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,
 
         if(entryId != null) {
           //----obtaining cluster members---
-          List<Element> members = entryXMLElem.asJDomElement().getChildren("member");
+          List<Element> members = entryXMLElem.getChildren("member");
           for (Element member : members) {
             Element memberDbReference = member.getChild("dbReference");
             List<Element> memberProperties = memberDbReference.getChildren("property");

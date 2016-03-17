@@ -5,7 +5,7 @@ import com.bio4j.model.uniref.vertices.UniRef100Cluster;
 import com.bio4j.model.uniref.vertices.UniRef50Cluster;
 import com.bio4j.model.uniref.vertices.UniRef90Cluster;
 import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
+
 
 import java.io.*;
 import java.util.List;
@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import org.jdom2.Element;
+import com.bio4j.xml.XMLUtils;
 
 public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
@@ -77,7 +78,7 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
       }
     }
     finally {
-      
+
       try {
         uniRefGraph.raw().commit();
         //closing logger file handler
@@ -154,13 +155,13 @@ public abstract class ImportUniRef<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,
         //organism last line
         entryStBuilder.append(line);
 
-        XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+        final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
         entryStBuilder.delete(0, entryStBuilder.length());
 
-        String entryId = entryXMLElem.asJDomElement().getAttributeValue("id");
-        String updatedDate = entryXMLElem.asJDomElement().getAttributeValue("updated");
-        String name = entryXMLElem.asJDomElement().getChildText("name");
-        Element representativeMember = entryXMLElem.asJDomElement().getChild("representativeMember");
+        String entryId = entryXMLElem.getAttributeValue("id");
+        String updatedDate = entryXMLElem.getAttributeValue("updated");
+        String name = entryXMLElem.getChildText("name");
+        Element representativeMember = entryXMLElem.getChild("representativeMember");
         String representantAccession = getRepresentantAccession(representativeMember);
 
         if(representantAccession != null){
