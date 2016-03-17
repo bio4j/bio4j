@@ -9,9 +9,8 @@ import static com.bio4j.model.uniprot.programs.XMLConstants.*;
 
 import com.bio4j.angulillos.UntypedGraph;
 
-import com.ohnosequences.xml.api.model.XMLElement;
-import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
-import org.jdom2.Element;
+import org.jdom2.*;
+import com.bio4j.xml.XMLUtils;
 
 import java.io.*;
 import java.text.ParseException;
@@ -96,25 +95,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtVerticesStats.txt")));
 
-      final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
-
-      String line;
-      StringBuilder entryStBuilder = new StringBuilder();
-
       /* Iterate over the input file lines */
-      while((line = inFileReader.readLine()) != null) {
-
-        if(line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
-
-          while(!line.trim().startsWith("</"+ENTRY_TAG_NAME+">")) {
-
-            entryStBuilder.append(line);
-            line = inFileReader.readLine();
-          }
-          entryStBuilder.append(line);
-
-          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-          entryStBuilder.delete       (0, entryStBuilder.length());
+      final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
+      String line;
+      while((line = inFileReader.readLine()) != null && line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
+        // this will advance the reader until the next extry
+        final Element entryXMLElem = XMLUtils.uniProtEntryFrom(line, inFileReader);
 
           protein = importProteinFrom (entryXMLElem, graph);
 
@@ -136,7 +122,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
             logger.log(Level.INFO, countProteinsSt);
             graph.raw().commit();
           }
-        }
       }
     }
     catch (Exception e) {
@@ -184,29 +169,29 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     This method gets the protein data from the corresponding XML element and writes it to the graph
   */
   private Protein<I,RV,RVT,RE,RET> importProteinFrom(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> g
   )
     throws ParseException
   {
 
     // known to be there according to the schema
-    final String accessionV = entryXMLElem.asJDomElement().getChildText(ENTRY.ACCESSION.element);
+    final String accessionV = entryXMLElem.getChildText(ENTRY.ACCESSION.element);
 
     Protein<I,RV,RVT,RE,RET> p = g.addVertex(g.Protein());
     p.set( g.Protein().accession, accessionV );
 
-    final String entryNameV = entryXMLElem.asJDomElement().getChildText(ENTRY.NAME.element);
+    final String entryNameV = entryXMLElem.getChildText(ENTRY.NAME.element);
     p.set( p.type().entryName, entryNameV );
 
-    final String datasetStr = entryXMLElem.asJDomElement().getAttributeValue(ENTRY.DATASET.attribute);
+    final String datasetStr = entryXMLElem.getAttributeValue(ENTRY.DATASET.attribute);
     final Optional<Dataset> optDatasetV = Dataset.fromRepr(datasetStr);
     optDatasetV.ifPresent(
       datasetV -> p.set( p.type().dataset, datasetV )
     );
 
     final Optional<String> optGeneName =
-      entryXMLElem.asJDomElement()
+      entryXMLElem
         .getChild(ENTRY.GENE.element)
         .getChildren(ENTRY.GENE.NAME.element)
         .stream()
@@ -218,7 +203,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
       geneNameV -> p.set( p.type().geneName, geneNameV )
     );
 
-    final Element proteinElem = entryXMLElem.asJDomElement().getChild(ENTRY.PROTEIN.element);
+    final Element proteinElem = entryXMLElem.getChild(ENTRY.PROTEIN.element);
     final String fullNameV = proteinElem
       .getChild(ENTRY.PROTEIN.RECOMMENDEDNAME.element)
       .getChildText(ENTRY.PROTEIN.RECOMMENDEDNAME.FULLNAME.element);
@@ -227,7 +212,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
     // TODO get all other names from the protein element
 
-    final Element sequenceElem = entryXMLElem.asJDomElement().getChild(ENTRY.SEQUENCE.element);
+    final Element sequenceElem = entryXMLElem.getChild(ENTRY.SEQUENCE.element);
 
     final String sequenceV  = sequenceElem.getText();
     final Integer lengthV   = Integer.parseInt( sequenceElem.getAttributeValue(ENTRY.SEQUENCE.LENGTH.attribute) );
@@ -241,12 +226,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinReferences(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
     //-----db references-------------
-    final List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+    final List<Element> dbReferenceList = entryXMLElem.getChildren(DB_REFERENCE_TAG_NAME);
 
     for(Element dbReferenceElem: dbReferenceList) {
 
@@ -526,14 +511,14 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinFeatures(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph,
     Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
     //--------------------------------features----------------------------------------------------
-    final List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(FEATURE_TAG_NAME);
+    final List<Element> featuresList = entryXMLElem.getChildren(FEATURE_TAG_NAME);
 
     for(Element featureElem: featuresList) {
 
@@ -553,12 +538,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinKeywords(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
 
-    final List<Element> keywordsList = entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME);
+    final List<Element> keywordsList = entryXMLElem.getChildren(KEYWORD_TAG_NAME);
 
     for(Element keywordElem: keywordsList) {
 
@@ -581,11 +566,11 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinGeneLocation(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
-    final List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
+    final List<Element> geneLocationElements = entryXMLElem.getChildren(GENE_LOCATION_TAG_NAME);
 
     for(Element geneLocationElem: geneLocationElements) {
 
@@ -605,12 +590,12 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinGeneNames(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
 
-    final Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
+    final Element geneElement = entryXMLElem.getChild(GENE_TAG_NAME);
 
     if(geneElement != null) {
 
@@ -636,7 +621,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinOrganisms(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
@@ -646,7 +631,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     commName  = "";
     synName   = "";
 
-    final Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
+    final Element organismElem = entryXMLElem.getChild(ORGANISM_TAG_NAME);
     final List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
 
     for(Element element: organismNames) {
@@ -695,7 +680,7 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         //  organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
         //  }
 
-        final Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
+        final Element lineage = entryXMLElem.getChild("organism").getChild("lineage");
         final List<Element> taxons = lineage.getChildren("taxon");
 
         final Element firstTaxonElem = taxons.get(0);
@@ -733,14 +718,14 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinComments(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph,
     Protein<I,RV,RVT,RE,RET> protein,
     String proteinSequence
   )
   {
 
-    final List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+    final List<Element> comments = entryXMLElem.getChildren(COMMENT_TAG_NAME);
 
     for(Element commentElem: comments) {
 
@@ -917,13 +902,13 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
   }
 
   private void importProteinCitations(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph,
     Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    final List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
+    final List<Element> referenceList = entryXMLElem.getChildren(REFERENCE_TAG_NAME);
 
     for(Element referenceElement: referenceList) {
 
