@@ -1,6 +1,5 @@
 package com.bio4j.model.uniprot_go;
 
-
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.UniProtGraph;
@@ -58,11 +57,11 @@ public abstract class UniProtGoGraph<
   extends
   UniProtGoEdgeType <
     // src
-    Protein<I, RV, RVT, RE, RET>, 
+    Protein<I, RV, RVT, RE, RET>,
     UniProtGraph<I, RV, RVT, RE, RET>.ProteinType,
     UniProtGraph<I, RV, RVT, RE, RET>,
     // edge
-    GoAnnotation<I, RV, RVT, RE, RET>, 
+    GoAnnotation<I, RV, RVT, RE, RET>,
     UniProtGoGraph<I, RV, RVT, RE, RET>.GoAnnotationType,
     // tgt
     GoTerm<I, RV, RVT, RE, RET>,
@@ -70,14 +69,14 @@ public abstract class UniProtGoGraph<
     GoGraph<I, RV, RVT, RE, RET>
   >
   implements
-  TypedEdge.Type.ManyToMany 
+  TypedEdge.Type.ManyToMany
   {
 
   public GoAnnotationType(RET raw) {
 
     super(
     UniProtGoGraph.this.uniProtGraph().Protein(),
-    raw, 
+    raw,
     UniProtGoGraph.this.goGraph().GoTerm()
     );
   }
@@ -194,7 +193,7 @@ public abstract class UniProtGoGraph<
     S, ST, SG,
     E, ET, UniProtGoGraph<I, RV, RVT, RE, RET>, I, RV, RVT, RE, RET,
     T, TT, TG
-  > 
+  >
   {
 
   private RE edge;
