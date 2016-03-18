@@ -111,7 +111,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           importProteinKeywords     (entryXMLElem, graph);
           importProteinGeneLocation (entryXMLElem, graph);
           importProteinGeneNames    (entryXMLElem, graph);
-          importProteinOrganisms    (entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -614,103 +613,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
             final GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
             geneName.set(graph.GeneName().name, geneNameSt);
-          }
-        }
-      }
-    }
-  }
-
-  private void importProteinOrganisms(
-    Element entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
-  )
-  {
-
-    String scName, commName, synName;
-    scName    = "";
-    commName  = "";
-    synName   = "";
-
-    final Element organismElem = entryXMLElem.getChild(ORGANISM_TAG_NAME);
-    final List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
-
-    for(Element element: organismNames) {
-
-      final String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-
-      switch(type) {
-
-        case ORGANISM_SCIENTIFIC_NAME_TYPE:
-        scName = element.getText();
-        break;
-        case ORGANISM_COMMON_NAME_TYPE:
-        commName = element.getText();
-        break;
-        case ORGANISM_SYNONYM_NAME_TYPE:
-        synName = element.getText();
-        break;
-      }
-    }
-
-    if(!organismScientificNameSet.contains(scName)) {
-
-      organismScientificNameSet.add(scName);
-
-      if(!graph.organismScientificNameIndex().getVertex(scName).isPresent()) {
-
-        final Organism<I,RV,RVT,RE,RET> organism = graph.addVertex(graph.Organism());
-        organism.set(graph.Organism().scientificName, scName);
-        organism.set(graph.Organism().commonName, commName);
-        organism.set(graph.Organism().synonymName, synName);
-
-        // TODO see what to do with the NCBI taxonomy ID, just link to the NCBI tax node or also store the id as an attribute
-        //  List<Element> organismDbRefElems = organismElem.getChildren(DB_REFERENCE_TAG_NAME);
-        //  boolean ncbiIdFound = false;
-        //  if (organismDbRefElems != null) {
-        //  for (Element dbRefElem : organismDbRefElems) {
-        //    String t = dbRefElem.getAttributeValue("type");
-        //    if (t.equals("NCBI Taxonomy")) {
-        //    organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, dbRefElem.getAttributeValue("id"));
-        //    ncbiIdFound = true;
-        //    break;
-        //    }
-        //  }
-        //  }
-        //  if (!ncbiIdFound) {
-        //  organismProperties.put(OrganismNode.NCBI_TAXONOMY_ID_PROPERTY, "");
-        //  }
-
-        final Element lineage = entryXMLElem.getChild("organism").getChild("lineage");
-        final List<Element> taxons = lineage.getChildren("taxon");
-
-        final Element firstTaxonElem = taxons.get(0);
-
-        if(!taxonNameSet.contains(firstTaxonElem.getText())) {
-
-          taxonNameSet.add(firstTaxonElem.getText());
-
-          if(!graph.taxonNameIndex().getVertex(firstTaxonElem.getText()).isPresent()) {
-
-            final String firstTaxonName = firstTaxonElem.getText();
-
-            final Taxon<I,RV,RVT,RE,RET> firstTaxon = graph.addVertex(graph.Taxon());
-            firstTaxon.set(graph.Taxon().name, firstTaxonName);
-          }
-        }
-
-        for(int i = 1; i < taxons.size(); i++) {
-
-          final String taxonName = taxons.get(i).getText();
-
-          if(!taxonNameSet.contains(taxonName)) {
-
-            taxonNameSet.add(taxonName);
-
-            if(!graph.taxonNameIndex().getVertex(taxonName).isPresent()) {
-
-              final Taxon<I,RV,RVT,RE,RET> currentTaxon = graph.addVertex(graph.Taxon());
-              currentTaxon.set(graph.Taxon().name, taxonName);
-            }
           }
         }
       }
