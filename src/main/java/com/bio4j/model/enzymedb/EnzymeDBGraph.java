@@ -1,7 +1,6 @@
 package com.bio4j.model.enzymedb;
 
-import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
+import com.bio4j.model.enzymedb.vertices.*;
 import com.bio4j.angulillos.*;
 
 /*
@@ -164,22 +163,6 @@ _TO DO_ explain this.
     I,RV,RVT,RE,RET
   >
   enzymeIdIndex();
-
-/*
-----
-*/
-
-/*
-
-## Graph extensions
-
-### Link enzymes with UniProt proteins
-
-You can extend the EnzymeDB graph with a graph adding an edge to UniProt proteins, representing _TO DO: What?_. See [UniProtEnzymeDBGraph](../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md) for more.
-
-*/
-
-  public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
 
 /*
 ----

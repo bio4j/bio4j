@@ -1,8 +1,7 @@
 package com.bio4j.model.ncbiTaxonomy;
 
-import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.bio4j.model.ncbiTaxonomy.edges.NCBITaxonParent;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniProtNCBITaxonomyGraph;
+import com.bio4j.model.ncbiTaxonomy.vertices.*;
+import com.bio4j.model.ncbiTaxonomy.edges.*;
 import com.bio4j.angulillos.*;
 
 /*
@@ -70,12 +69,9 @@ public abstract class NCBITaxonomyGraph<
     >
   nCBITaxonIdIndex();
 
-  public abstract UniProtNCBITaxonomyGraph<I, RV, RVT, RE, RET> uniProtNCBITaxonomyGraph();
-
   // types
   // vertices
   public abstract NCBITaxonType NCBITaxon();
-
   // edges
   public abstract NCBITaxonParentType NCBITaxonParent();
 
