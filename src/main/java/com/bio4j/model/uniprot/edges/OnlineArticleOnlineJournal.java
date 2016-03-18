@@ -22,11 +22,6 @@ I, RV, RVT, RE, RET
     super(edge, type);
   }
 
-  // properties
-  public String locator() {
-    return get(type().locator);
-  }
-
   @Override
   public OnlineArticleOnlineJournal<I, RV, RVT, RE, RET> self() {
     return this;

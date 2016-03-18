@@ -426,10 +426,10 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
                   if(tempLocationOptional.isPresent()){
                     SubcellularLocation<I,RV,RVT,RE,RET> tempLocation = tempLocationOptional.get();
 
-                    if(!subcellularLocationParentEdgesAlreadyCreated.contains(tempLocation.name())){
-                      subcellularLocationParentEdgesAlreadyCreated.add(tempLocation.name());
+                    if(!subcellularLocationParentEdgesAlreadyCreated.contains(tempLocation.get(tempLocation.type().name))){
+                      subcellularLocationParentEdgesAlreadyCreated.add(tempLocation.get(tempLocation.type().name));
                       try{
-                        tempLocation.subcellularLocationParent_out();
+                        tempLocation.outV(graph.SubcellularLocationParent());
                       }catch (NoSuchElementException e){
                         tempLocation.addOutEdge(graph.SubcellularLocationParent(), lastLocation);
                       }
@@ -739,7 +739,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
     //   }
     // }
   }
-  
+
   private void importProteinCitations(
   Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,

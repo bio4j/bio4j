@@ -58,7 +58,7 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
 - part of
 - has part of
 - regulates
-  - negatively regulates 
+  - negatively regulates
   - positively regulates
 
 */
@@ -82,17 +82,17 @@ implements
   public abstract UniProtGoGraph<I,RV,RVT,RE,RET> uniProtGoGraph();
 
   public abstract TypedVertexIndex.Unique <
-  GoTerm<I,RV,RVT,RE,RET>,GoTermType, 
-  GoTermType.id, String, 
-  GoGraph<I,RV,RVT,RE,RET>, 
+  GoTerm<I,RV,RVT,RE,RET>,GoTermType,
+  GoTermType.id, String,
+  GoGraph<I,RV,RVT,RE,RET>,
   I,RV,RVT,RE,RET
-  >  
+  >
   goTermIdIndex();
 
   public abstract TypedVertexIndex.Unique <
   SubOntologies<I,RV,RVT,RE,RET>, SubOntologiesType,
-  SubOntologiesType.name, String, 
-  GoGraph<I,RV,RVT,RE,RET>, 
+  SubOntologiesType.name, String,
+  GoGraph<I,RV,RVT,RE,RET>,
   I,RV,RVT,RE,RET
   >
   subontologiesNameIndex();
@@ -158,7 +158,7 @@ implements
   public final class id
   extends
     GoVertexProperty<GoTerm<I,RV,RVT,RE,RET>,GoTermType,id,String>
-  {  
+  {
     public id() { super(GoTermType.this); }
     public final Class<String> valueClass() { return String.class; }
   }
@@ -166,7 +166,7 @@ implements
   public final class name
   extends
     GoVertexProperty<GoTerm<I,RV,RVT,RE,RET>,GoTermType,name,String>
-  {  
+  {
     public name() { super(GoTermType.this); }
     public Class<String> valueClass() { return String.class; }
   }
@@ -174,7 +174,7 @@ implements
   public final class definition
   extends
     GoVertexProperty<GoTerm<I,RV,RVT,RE,RET>,GoTermType,definition,String>
-  {   
+  {
     public definition() { super(GoTermType.this); }
     public Class<String> valueClass() { return String.class; }
   }
@@ -198,7 +198,7 @@ implements
   public final class synonym
   extends
     GoVertexProperty<GoTerm<I,RV,RVT,RE,RET>,GoTermType,synonym,String>
-  {  
+  {
     public synonym() { super(GoTermType.this); }
     public Class<String> valueClass() { return String.class; }
   }
@@ -267,7 +267,7 @@ implements
   implements
   TypedEdge.Type.ManyToMany
   {
-  
+
   public HasPartOfType(RET raw) { super(GoGraph.this.GoTerm(), raw, GoGraph.this.GoTerm()); }
 
   @Override
@@ -314,7 +314,7 @@ implements
   public NegativelyRegulatesType value() { return graph().NegativelyRegulates(); }
 
   @Override
-  public NegativelyRegulates<I,RV,RVT,RE,RET> from(RE edge) { 
+  public NegativelyRegulates<I,RV,RVT,RE,RET> from(RE edge) {
 
     return new NegativelyRegulates<I,RV,RVT,RE,RET>(edge, this);
   }
@@ -337,7 +337,7 @@ implements
   public final PositivelyRegulatesType value() { return graph().PositivelyRegulates(); }
 
   @Override
-  public final PositivelyRegulates<I,RV,RVT,RE,RET> from(RE edge) { 
+  public final PositivelyRegulates<I,RV,RVT,RE,RET> from(RE edge) {
 
     return new PositivelyRegulates<I,RV,RVT,RE,RET>(edge, this);
   }
@@ -360,7 +360,7 @@ implements
   public final RegulatesType value() { return graph().Regulates(); }
 
   @Override
-  public final Regulates<I,RV,RVT,RE,RET> from(RE edge) { 
+  public final Regulates<I,RV,RVT,RE,RET> from(RE edge) {
 
     return new Regulates<I,RV,RVT,RE,RET>(edge, this);
   }
@@ -415,37 +415,38 @@ implements
   }
   }
 
-  public abstract static class GoVertex<
+  public abstract static class GoVertex <
     V extends GoVertex<V, VT, I,RV,RVT,RE,RET>,
     VT extends GoGraph<I,RV,RVT,RE,RET>.GoVertexType<V, VT>,
     I extends UntypedGraph<RV,RVT,RE,RET>, RV,RVT,RE,RET
-    >
+  >
     implements
-    TypedVertex<V, VT, GoGraph<I,RV,RVT,RE,RET>, I,RV,RVT,RE,RET> {
+      TypedVertex<V, VT, GoGraph<I,RV,RVT,RE,RET>, I,RV,RVT,RE,RET>
+  {
 
-  private RV vertex;
-  private VT type;
+    private final RV vertex;
+    private final VT type;
 
-  protected GoVertex(RV vertex, VT type) {
+    protected GoVertex(RV vertex, VT type) {
 
-    this.vertex = vertex;
-    this.type = type;
-  }
+      this.vertex = vertex;
+      this.type   = type;
+    }
 
-  @Override
-  public GoGraph<I,RV,RVT,RE,RET> graph() {
-    return type().graph();
-  }
+    @Override
+    public GoGraph<I,RV,RVT,RE,RET> graph() {
+      return type().graph();
+    }
 
-  @Override
-  public RV raw() {
-    return this.vertex;
-  }
+    @Override
+    public RV raw() {
+      return this.vertex;
+    }
 
-  @Override
-  public VT type() {
-    return type;
-  }
+    @Override
+    public VT type() {
+      return type;
+    }
   }
 
   abstract class GoVertexType<

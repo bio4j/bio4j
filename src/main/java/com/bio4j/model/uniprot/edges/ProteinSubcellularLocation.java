@@ -17,16 +17,6 @@ SubcellularLocation<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.Subc
 I, RV, RVT, RE, RET
 > {
 
-  // properties
-  public String status() {
-    return get(type().status);
-  }
-  public String topology() {  return get(type().topology);  }
-  public String topologyStatus() {  return get(type().topologyStatus);  }
-  public String evidence() {
-    return get(type().evidence);
-  }
-
   public ProteinSubcellularLocation(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ProteinSubcellularLocationType type) {
 
     super(edge, type);
