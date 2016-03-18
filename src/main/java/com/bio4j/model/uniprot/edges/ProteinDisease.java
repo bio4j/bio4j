@@ -17,16 +17,6 @@ Disease<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.DiseaseType,
 I, RV, RVT, RE, RET
 > {
 
-  public String status() {
-    return get(type().status);
-  }
-  public String text() {
-    return get(type().text);
-  }
-  public String evidence() {
-    return get(type().evidence);
-  }
-
   public ProteinDisease(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ProteinDiseaseType type) {
 
     super(edge, type);

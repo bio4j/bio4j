@@ -26,7 +26,6 @@ I, RV, RVT, RE, RET
     return get(type().name);
   }
 
-
   @Override
   public ProteinGeneLocation<I, RV, RVT, RE, RET> self() {
     return this;

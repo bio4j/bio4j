@@ -17,18 +17,6 @@ Book<I, RV, RVT, RE, RET>, UniProtGraph<I, RV, RVT, RE, RET>.BookType,
 I, RV, RVT, RE, RET
 > {
 
-  // properties
-  public String title() {
-    return get(type().title);
-  }
-  public int first() {  return get(type().first);  }
-  public int last() {
-    return get(type().last);
-  }
-  public String volume() {
-    return get(type().volume);
-  }
-
   public ReferenceBook(RE edge, UniProtGraph<I, RV, RVT, RE, RET>.ReferenceBookType type) {
 
     super(edge, type);

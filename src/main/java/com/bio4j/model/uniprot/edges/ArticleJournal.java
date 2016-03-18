@@ -22,15 +22,6 @@ I, RV, RVT, RE, RET
     super(edge, type);
   }
 
-  // properties
-  public String volume() {
-    return get(type().volume);
-  }
-  public String first() {  return get(type().first);  }
-  public String last() {
-    return get(type().last);
-  }
-
   @Override
   public ArticleJournal<I, RV, RVT, RE, RET> self() {
     return this;
