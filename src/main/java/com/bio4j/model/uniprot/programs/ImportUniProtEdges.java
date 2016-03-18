@@ -88,7 +88,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
             importProteinCitations          (entryXMLElem, graph, protein);
             importProteinKeywordsEdges      (entryXMLElem, graph, protein);
             importProteinGeneLocationEdges  (entryXMLElem, graph, protein);
-            importProteinGeneNameEdges      (entryXMLElem, graph, protein);
           }
         );
 
@@ -740,50 +739,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
     //   }
     // }
   }
-
-  private void importProteinGeneNameEdges(
-  Element entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
-  )
-  {
-
-    Optional.ofNullable(entryXMLElem.getChild(GENE_TAG_NAME))
-      .ifPresent(
-        geneElement -> geneElement.getChildren(GENE_NAME_TAG_NAME)
-          .stream()
-          .forEach(
-            geneNameElem -> {
-              graph.geneNameNameIndex().getVertex(geneNameElem.getText()).ifPresent(
-                geneName ->
-                protein.addOutEdge(graph.ProteinGeneName(), geneName)
-                  .set(graph.ProteinGeneName().geneNameType, geneNameElem.getAttributeValue("type"))
-              );
-            }
-          )
-      );
-
-    // Element geneElement = entryXMLElem.getChild(GENE_TAG_NAME);
-    // if (geneElement != null) {
-    //   List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-    //
-    //   for (Element geneNameElem : geneNamesList) {
-    //     String geneNameSt = geneNameElem.getText();
-    //     String typeSt = geneNameElem.getAttributeValue("type");
-    //
-    //     Optional<GeneName<I,RV,RVT,RE,RET>> optionalGeneName = graph.geneNameNameIndex().getVertex(geneNameSt);
-    //     vertexIndexCalls.add(1);
-    //
-    //     if(optionalGeneName.isPresent()){
-    //       GeneName<I,RV,RVT,RE,RET> geneName = optionalGeneName.get();
-    //       ProteinGeneName<I,RV,RVT,RE,RET> proteinGeneName = protein.addOutEdge(graph.ProteinGeneName(), geneName);
-    //       edgeCounter.add(1);
-    //       proteinGeneName.set(graph.ProteinGeneName().geneNameType, typeSt);
-    //     }
-    //   }
-    // }
-  }
-
+  
   private void importProteinCitations(
   Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,

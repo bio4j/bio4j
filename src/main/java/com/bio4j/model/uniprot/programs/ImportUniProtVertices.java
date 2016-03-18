@@ -110,7 +110,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           importProteinCitations    (entryXMLElem, graph, protein);
           importProteinKeywords     (entryXMLElem, graph);
           importProteinGeneLocation (entryXMLElem, graph);
-          importProteinGeneNames    (entryXMLElem, graph);
 
           proteinCounter++;
 
@@ -583,37 +582,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
 
           GeneLocation<I,RV,RVT,RE,RET> geneLocation = graph.addVertex(graph.GeneLocation());
           geneLocation.set(graph.GeneLocation().name, geneLocationTypeSt);
-        }
-      }
-    }
-  }
-
-  private void importProteinGeneNames(
-    Element entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
-  )
-  {
-
-    final Element geneElement = entryXMLElem.getChild(GENE_TAG_NAME);
-
-    if(geneElement != null) {
-
-      final List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-
-      for(Element geneNameElem: geneNamesList) {
-
-        final String geneNameSt = geneNameElem.getText();
-        final String typeSt     = geneNameElem.getAttributeValue("type");
-
-        if(!geneNameSet.contains(geneNameSt)) {
-
-          geneNameSet.add(geneNameSt);
-
-          if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()) {
-
-            final GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
-            geneName.set(graph.GeneName().name, geneNameSt);
-          }
         }
       }
     }
