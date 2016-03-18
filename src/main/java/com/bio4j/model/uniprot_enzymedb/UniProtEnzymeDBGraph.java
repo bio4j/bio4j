@@ -1,6 +1,5 @@
 package com.bio4j.model.uniprot_enzymedb;
 
-
 import com.bio4j.model.enzymedb.EnzymeDBGraph;
 import com.bio4j.model.enzymedb.vertices.Enzyme;
 import com.bio4j.model.uniprot.UniProtGraph;

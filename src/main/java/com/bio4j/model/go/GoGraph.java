@@ -1,10 +1,7 @@
 package com.bio4j.model.go;
 
-import com.bio4j.model.go.vertices.GoSlims;
-import com.bio4j.model.go.vertices.GoTerm;
-import com.bio4j.model.go.vertices.SubOntologies;
+import com.bio4j.model.go.vertices.*;
 import com.bio4j.model.go.edges.*;
-import com.bio4j.model.uniprot_go.UniProtGoGraph;
 import com.bio4j.angulillos.*;
 
 /*
@@ -78,8 +75,6 @@ implements
   public GoGraph(I graph) { raw = graph; }
 
   public I raw() { return raw; }
-
-  public abstract UniProtGoGraph<I,RV,RVT,RE,RET> uniProtGoGraph();
 
   public abstract TypedVertexIndex.Unique <
   GoTerm<I,RV,RVT,RE,RET>,GoTermType,

@@ -2,10 +2,6 @@ package com.bio4j.model.uniprot;
 
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;
-import com.bio4j.model.uniprot_enzymedb.UniProtEnzymeDBGraph;
-import com.bio4j.model.uniprot_go.UniProtGoGraph;
-import com.bio4j.model.uniprot_ncbiTaxonomy.UniProtNCBITaxonomyGraph;
-import com.bio4j.model.uniprot_uniref.UniProtUniRefGraph;
 import com.bio4j.angulillos.*;
 
 import java.util.Date;
@@ -405,11 +401,6 @@ I, RV, RVT, RE, RET
   public I raw(){
     return raw;
   }
-
-  public abstract UniProtUniRefGraph<I,RV,RVT,RE,RET> uniProtUniRefGraph();
-  public abstract UniProtGoGraph<I,RV,RVT,RE,RET> uniProtGoGraph();
-  public abstract UniProtEnzymeDBGraph<I,RV,RVT,RE,RET> uniProtEnzymeDBGraph();
-  public abstract UniProtNCBITaxonomyGraph<I,RV,RVT,RE,RET> uniProtNCBITaxonomyGraph();
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   // indices
