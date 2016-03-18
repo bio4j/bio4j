@@ -587,37 +587,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
     }
   }
 
-  // private void importProteinGeneNames(
-  //   XMLElement entryXMLElem,
-  //   UniProtGraph<I,RV,RVT,RE,RET> graph
-  // )
-  // {
-  //
-  //   final Element geneElement = entryXMLElem.asJDomElement().getChild(GENE_TAG_NAME);
-  //
-  //   if(geneElement != null) {
-  //
-  //     final List<Element> geneNamesList = geneElement.getChildren(GENE_NAME_TAG_NAME);
-  //
-  //     for(Element geneNameElem: geneNamesList) {
-  //
-  //       final String geneNameSt = geneNameElem.getText();
-  //       final String typeSt     = geneNameElem.getAttributeValue("type");
-  //
-  //       if(!geneNameSet.contains(geneNameSt)) {
-  //
-  //         geneNameSet.add(geneNameSt);
-  //
-  //         if(!graph.geneNameNameIndex().getVertex(geneNameSt).isPresent()) {
-  //
-  //           final GeneName<I,RV,RVT,RE,RET> geneName = graph.addVertex(graph.GeneName());
-  //           geneName.set(graph.GeneName().name, geneNameSt);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
   private void importProteinComments(
     Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph,
