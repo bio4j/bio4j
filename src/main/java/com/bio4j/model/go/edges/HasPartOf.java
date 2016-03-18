@@ -14,13 +14,8 @@ public final class HasPartOf<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, 
   >
 {
 
-  public HasPartOf(RE edge, GoGraph<I, RV, RVT, RE, RET>.HasPartOfType type) {
-
-    super(edge, type);
-  }
+  public HasPartOf(RE edge, GoGraph<I, RV, RVT, RE, RET>.HasPartOfType type) { super(edge, type); }
 
   @Override
-  public final HasPartOf<I, RV, RVT, RE, RET> self() {
-    return this;
-  }
+  public final HasPartOf<I, RV, RVT, RE, RET> self() { return this; }
 }

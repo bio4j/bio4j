@@ -11,54 +11,16 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class NCBITaxon<I extends UntypedGraph<RV, RVT, RE, RET>, RV, RVT, RE, RET>
-extends
-  NCBITaxonomyGraph.NCBITaxonomyVertex<
-    NCBITaxon<I, RV, RVT, RE, RET>,
-    NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
-    I, RV, RVT, RE, RET
-  >
+  extends
+    NCBITaxonomyGraph.NCBITaxonomyVertex <
+      NCBITaxon<I, RV, RVT, RE, RET>,
+      NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType,
+      I, RV, RVT, RE, RET
+    >
 {
 
-  public NCBITaxon(RV vertex, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType type) {
-    super(vertex, type);
-  }
+  public NCBITaxon(RV vertex, NCBITaxonomyGraph<I, RV, RVT, RE, RET>.NCBITaxonType type) { super(vertex, type); }
 
   @Override
-  public final NCBITaxon<I, RV, RVT, RE, RET> self() {
-  return this;
-  }
-
-  // properties
-  public final String id() {
-    return get(type().id);
-  }
-
-  public final String name() {
-    return get(type().name);
-  }
-
-  public final String taxonomicRank() {
-    return get(type().taxonomicRank);
-  }
-
-  public final Optional<NCBITaxonParent<I, RV, RVT, RE, RET>> ncbiTaxonParent_in() {
-    return inOneOptional(graph().NCBITaxonParent());
-  }
-  public final Optional<NCBITaxon<I, RV, RVT, RE, RET>> ncbiTaxonParent_inV() {
-    return inOneOptionalV(graph().NCBITaxonParent());
-  }
-
-  public final Optional<Stream<NCBITaxonParent<I, RV, RVT, RE, RET>>> ncbiTaxonParent_out() {
-    return outManyOptional(graph().NCBITaxonParent());
-  }
-  public final Optional<Stream<NCBITaxon<I, RV, RVT, RE, RET>>> ncbiTaxonParent_outV() {
-    return outManyOptionalV(graph().NCBITaxonParent());
-  }
-
-  public final Optional<Stream<ProteinNCBITaxon<I, RV, RVT, RE, RET>>> proteinNCBITaxon_in() {
-    return inManyOptional(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
-  }
-  public final Optional<Stream<Protein<I, RV, RVT, RE, RET>>> proteinNCBITaxon_inV() {
-    return inManyOptionalV(graph().uniProtNCBITaxonomyGraph().ProteinNCBITaxon());
-  }
+  public final NCBITaxon<I, RV, RVT, RE, RET> self() { return this; }
 }
