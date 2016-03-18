@@ -8,10 +8,10 @@ import static com.bio4j.model.uniprot.programs.XMLConstants.*;
 
 import com.bio4j.angulillos.UntypedGraph;
 
-import com.ohnosequences.xml.api.model.XMLElement;
-import com.ohnosequences.xml.model.bio4j.UniprotDataXML;
 import org.apache.commons.lang.mutable.MutableInt;
+
 import org.jdom2.Element;
+import com.bio4j.xml.XMLUtils;
 
 import java.io.*;
 import java.text.ParseException;
@@ -65,31 +65,20 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
       logger.addHandler(fh);
       logger.setLevel(Level.ALL);
 
-      String line;
 
       //---creating writer for stats file-----
       statsBuff = new BufferedWriter(new FileWriter(new File("ImportUniProtEdgesStats_" + inFile.getName().split("\\.")[0].replaceAll("/", "_") + ".txt")));
 
+      /* Iterate over the input file lines */
       final BufferedReader inFileReader = new BufferedReader(new FileReader(inFile));
-      StringBuilder entryStBuilder = new StringBuilder();
+      String line;
+      while((line = inFileReader.readLine()) != null && line.trim().startsWith("<"+ENTRY_TAG_NAME)) {
+        // this will advance the reader until the next extry
+        final Element entryXMLElem = XMLUtils.uniProtEntryFrom(line, inFileReader);
 
-      while((line = inFileReader.readLine()) != null) {
-
-        if(line.trim().startsWith("<" + ENTRY_TAG_NAME)) {
-
-          while(!line.trim().startsWith("</" + ENTRY_TAG_NAME + ">")) {
-
-            entryStBuilder.append(line);
-            line = inFileReader.readLine();
-          }
-          entryStBuilder.append(line);
-
-          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
-          entryStBuilder.delete(0, entryStBuilder.length());
-
-          graph.proteinAccessionIndex()
-          .getVertex(entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME))
-          .ifPresent(
+        graph.proteinAccessionIndex()
+        .getVertex(entryXMLElem.getChildText(ENTRY_ACCESSION_TAG_NAME))
+        .ifPresent(
           protein -> {
 
             importProteinReferenceEdges     (entryXMLElem, graph, protein);
@@ -99,21 +88,18 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
             importProteinCitations          (entryXMLElem, graph, protein);
             importProteinKeywordsEdges      (entryXMLElem, graph, protein);
             importProteinGeneLocationEdges  (entryXMLElem, graph, protein);
-            // importProteinGeneNameEdges      (entryXMLElem, graph, protein);
-            importProteinOrganismsEdges     (entryXMLElem, graph, protein);
           }
-          );
+        );
 
-          proteinCounter++;
+        proteinCounter++;
 
-          if((proteinCounter % limitForPrintingOut) == 0) {
+        if((proteinCounter % limitForPrintingOut) == 0) {
 
-            String logSt = proteinCounter + " proteins inserted!!";
-            logSt += "\n" + edgeCounter + " edges were created so far...";
-            logSt += "\n" + vertexIndexCalls + " queries were performed to vertex indices...";
-            logger.log(Level.INFO, logSt);
-            graph.raw().commit();
-          }
+          String logSt = proteinCounter + " proteins inserted!!";
+          logSt += "\n" + edgeCounter + " edges were created so far...";
+          logSt += "\n" + vertexIndexCalls + " queries were performed to vertex indices...";
+          logger.log(Level.INFO, logSt);
+          graph.raw().commit();
         }
       }
     }
@@ -161,13 +147,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinFeatures(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    List<Element> featuresList = entryXMLElem.asJDomElement().getChildren(FEATURE_TAG_NAME);
+    List<Element> featuresList = entryXMLElem.getChildren(FEATURE_TAG_NAME);
 
     for (Element featureElem: featuresList) {
 
@@ -254,13 +240,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinComments(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    final List<Element> comments = entryXMLElem.asJDomElement().getChildren(COMMENT_TAG_NAME);
+    final List<Element> comments = entryXMLElem.getChildren(COMMENT_TAG_NAME);
 
     for (Element commentElem : comments) {
 
@@ -379,7 +365,8 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
           String kineticsSt = "";
           Element kineticsElem = commentElem.getChild("kinetics");
           if (kineticsElem != null) {
-            kineticsSt = new XMLElement(kineticsElem).toString();
+            // TODO check this
+            // kineticsSt = new Element(kineticsElem).toString();
           }
           String redoxPotentialSt = "";
           String redoxPotentialEvidenceSt = "";
@@ -684,12 +671,12 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinDatasetEdges(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
-    // final String dataSetName = entryXMLElem.asJDomElement().getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
+    // final String dataSetName = entryXMLElem.getAttributeValue(ENTRY_DATASET_ATTRIBUTE);
     //
     // graph.datasetNameIndex().getVertex(dataSetName).map(
     // dataset -> protein.addOutEdge(graph.ProteinDataset(), dataset)
@@ -697,13 +684,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinKeywordsEdges(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    entryXMLElem.asJDomElement().getChildren(KEYWORD_TAG_NAME).stream()
+    entryXMLElem.getChildren(KEYWORD_TAG_NAME).stream()
     .map(
     keywordElem -> graph.keywordIdIndex().getVertex(keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE))
     .map(
@@ -713,13 +700,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinGeneLocationEdges(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME).stream()
+    entryXMLElem.getChildren(GENE_LOCATION_TAG_NAME).stream()
     .forEach(
     geneLocationElem -> {
       graph.geneLocationNameIndex().getVertex(geneLocationElem.getAttributeValue("type"))
@@ -734,7 +721,7 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
 
     //////////////////
     //
-    // List<Element> geneLocationElements = entryXMLElem.asJDomElement().getChildren(GENE_LOCATION_TAG_NAME);
+    // List<Element> geneLocationElements = entryXMLElem.getChildren(GENE_LOCATION_TAG_NAME);
     //
     // for(Element geneLocationElem : geneLocationElements) {
     //
@@ -796,99 +783,14 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   //   // }
   // }
 
-  private void importProteinOrganismsEdges(
-  XMLElement entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
-  )
-  {
-
-    // final Optional<String> _scName =
-    //   entryXMLElem.asJDomElement()
-    //     .getChild(ORGANISM_TAG_NAME)
-    //     .getChildren(ORGANISM_NAME_TAG_NAME).stream()
-    //     .filter(element -> element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE).equals(ORGANISM_SCIENTIFIC_NAME_TYPE))
-    //     .map(Element::getText)
-    //     .findFirst();
-    //
-    // _scName.ifPresent(
-    //   scName -> graph.organismScientificNameIndex().getVertex(scName).ifPresent
-    //     organism -> {
-    //       protein.addOutEdge(graph.ProteinOrganism(), organism);
-    //       // TODO more stuff
-    //     }
-    //   )
-    // )
-
-    // TODO rewrite this in the style above
-    String scName = "";
-
-    Element organismElem = entryXMLElem.asJDomElement().getChild(ORGANISM_TAG_NAME);
-
-    List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
-    for (Element element : organismNames) {
-      String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-      if (type.equals(ORGANISM_SCIENTIFIC_NAME_TYPE)) {
-        scName = element.getText();
-      }
-    }
-
-    Optional<Organism<I,RV,RVT,RE,RET>> organismOptional = graph.organismScientificNameIndex().getVertex(scName);
-
-    if (organismOptional.isPresent()) {
-      Organism<I,RV,RVT,RE,RET> organism = organismOptional.get();
-
-      protein.addOutEdge(graph.ProteinOrganism(), organism);
-
-      Element lineage = entryXMLElem.asJDomElement().getChild("organism").getChild("lineage");
-      List<Element> taxons = lineage.getChildren("taxon");
-
-      Element firstTaxonElem = taxons.get(0);
-      Optional<Taxon<I,RV,RVT,RE,RET>> firstTaxonOptional = graph.taxonNameIndex().getVertex(firstTaxonElem.getText());
-
-      if (firstTaxonOptional.isPresent()) {
-        Taxon<I,RV,RVT,RE,RET> lastTaxon = firstTaxonOptional.get();
-
-        for (int i = 1; i < taxons.size(); i++) {
-          String taxonName = taxons.get(i).getText();
-          Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
-          Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
-
-          if(currentTaxonOptional.isPresent()){
-            currentTaxon = currentTaxonOptional.get();
-            if(!taxonParentEdgesAlreadyCreated.contains(currentTaxon.name())){
-              taxonParentEdgesAlreadyCreated.add(currentTaxon.name());
-              try{
-                currentTaxon.taxonParent_in();
-              }catch(NoSuchElementException e){
-                lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
-              }
-            }
-          }
-
-          lastTaxon = currentTaxon;
-        }
-
-        if(!organismTaxonEdgesAlreadyCreated.contains(organism.scientificName())) {
-          organismTaxonEdgesAlreadyCreated.add(organism.scientificName());
-          try{
-            organism.organismTaxon_out();
-          }catch(NoSuchElementException e){
-            organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
-          }
-        }
-      }
-    }
-  }
-
   private void importProteinCitations(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    final List<Element> referenceList = entryXMLElem.asJDomElement().getChildren(REFERENCE_TAG_NAME);
+    final List<Element> referenceList = entryXMLElem.getChildren(REFERENCE_TAG_NAME);
 
     for (Element referenceElement : referenceList) {
       List<Element> citationsList = referenceElement.getChildren(CITATION_TAG_NAME);
@@ -1320,13 +1222,13 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
   }
 
   private void importProteinReferenceEdges(
-  XMLElement entryXMLElem,
+  Element entryXMLElem,
   UniProtGraph<I,RV,RVT,RE,RET> graph,
   Protein<I,RV,RVT,RE,RET> protein
   )
   {
 
-    final List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+    final List<Element> dbReferenceList = entryXMLElem.getChildren(DB_REFERENCE_TAG_NAME);
     final ArrayList<String> ensemblPlantsReferences = new ArrayList<>();
     final HashMap<String, String> reactomeReferences = new HashMap<>();
 

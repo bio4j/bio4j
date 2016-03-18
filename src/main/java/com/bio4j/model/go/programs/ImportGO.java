@@ -3,8 +3,10 @@ package com.bio4j.model.go.programs;
 import com.bio4j.model.go.GoGraph;
 import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.go.vertices.SubOntologies;
-import com.ohnosequences.xml.api.model.XMLElement;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+
+import com.bio4j.xml.XMLUtils;
 
 import com.bio4j.angulillos.*;
 
@@ -115,7 +117,7 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
           termStBuilder.append(line);
 
           /* We now build an XML element representing this term */
-          XMLElement termXMLElement = new XMLElement(termStBuilder.toString());
+          Element termXMLElement = XMLUtils.parseXMLFrom(termStBuilder.toString());
           /* release the StringBuilder */
           termStBuilder.delete(0, termStBuilder.length());
 
@@ -124,20 +126,20 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
 
           */
           /* term id */
-          final String goId = termXMLElement.asJDomElement().getChildText(ID_TAG_NAME);
+          final String goId = termXMLElement.getChildText(ID_TAG_NAME);
           /* term name, which can be null */
-          String goName = termXMLElement.asJDomElement().getChildText(NAME_TAG_NAME);
+          String goName = termXMLElement.getChildText(NAME_TAG_NAME);
           if (goName == null) {
             goName = "";
           }
           /* term namespace, which can be null */
-          String goNamespace = termXMLElement.asJDomElement().getChildText(NAMESPACE_TAG_NAME);
+          String goNamespace = termXMLElement.getChildText(NAMESPACE_TAG_NAME);
           if (goNamespace == null) {
             goNamespace = "";
           }
           /* term definition, which can be null in several ways */
           String goDefinition = "";
-          Element defElem = termXMLElement.asJDomElement().getChild(DEF_TAG_NAME);
+          Element defElem = termXMLElement.getChild(DEF_TAG_NAME);
           if (defElem != null) {
             Element defstrElem = defElem.getChild(DEFSTR_TAG_NAME);
             if (defstrElem != null) {
@@ -145,13 +147,13 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
             }
           }
           /* term comment, which again can be null */
-          String goComment = termXMLElement.asJDomElement().getChildText(COMMENT_TAG_NAME);
+          String goComment = termXMLElement.getChildText(COMMENT_TAG_NAME);
           if (goComment == null) {
             goComment = "";
           }
           /* term obsolescence, which again can be null */
           // TODO simply drop obsolete terms
-          String goIsObsolete = termXMLElement.asJDomElement().getChildText(IS_OBSOLETE_TAG_NAME);
+          String goIsObsolete = termXMLElement.getChildText(IS_OBSOLETE_TAG_NAME);
           if (goIsObsolete == null) {
             goIsObsolete = "";
           }
@@ -165,7 +167,7 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
           }
 
           //----term parents----
-          List<Element> termParentTerms = termXMLElement.asJDomElement().getChildren(IS_A_OBOXML_RELATIONSHIP_NAME);
+          List<Element> termParentTerms = termXMLElement.getChildren(IS_A_OBOXML_RELATIONSHIP_NAME);
           ArrayList<String> array = new ArrayList<>();
           for (Element elem: termParentTerms) {
             array.add(elem.getText().trim());
@@ -174,7 +176,7 @@ abstract class ImportGO<I extends UntypedGraph<RV,RVT,RE,RET>,RV,RVT,RE,RET> {
           //---------------------
 
           //-------relationship tags-----------
-          List<Element> relationshipTags = termXMLElement.asJDomElement().getChildren(RELATIONSHIP_TAG_NAME);
+          List<Element> relationshipTags = termXMLElement.getChildren(RELATIONSHIP_TAG_NAME);
 
           for (Element relationshipTag: relationshipTags) {
 

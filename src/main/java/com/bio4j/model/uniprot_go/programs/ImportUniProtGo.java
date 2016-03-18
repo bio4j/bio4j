@@ -4,8 +4,9 @@ import com.bio4j.model.go.vertices.GoTerm;
 import com.bio4j.model.uniprot.vertices.Protein;
 import com.bio4j.model.uniprot_go.UniProtGoGraph;
 import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
+
 import org.jdom2.Element;
+import com.bio4j.xml.XMLUtils;
 
 import java.io.*;
 import java.util.List;
@@ -72,15 +73,15 @@ public abstract class ImportUniProtGo<I extends UntypedGraph<RV,RVT,RE,RET>,RV,R
           }
           entryStBuilder.append(line);
 
-          XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
-          String accessionSt = entryXMLElem.asJDomElement().getChildText(ENTRY_ACCESSION_TAG_NAME);
+          String accessionSt = entryXMLElem.getChildText(ENTRY_ACCESSION_TAG_NAME);
 
           Protein<I,RV,RVT,RE,RET> protein = null;
 
           //-----db references-------------
-          List<Element> dbReferenceList = entryXMLElem.asJDomElement().getChildren(DB_REFERENCE_TAG_NAME);
+          List<Element> dbReferenceList = entryXMLElem.getChildren(DB_REFERENCE_TAG_NAME);
 
           for (Element dbReferenceElem : dbReferenceList) {
 

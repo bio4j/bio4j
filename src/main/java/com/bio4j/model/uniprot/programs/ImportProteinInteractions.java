@@ -7,8 +7,9 @@ import com.bio4j.model.uniprot.edges.*;
 import static com.bio4j.model.uniprot.programs.XMLConstants.*;
 
 import com.bio4j.angulillos.UntypedGraph;
-import com.ohnosequences.xml.api.model.XMLElement;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+import com.bio4j.xml.XMLUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -73,7 +74,7 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
           }
           entryStBuilder.append(line);
 
-          final XMLElement entryXMLElem = new XMLElement(entryStBuilder.toString());
+          final Element entryXMLElem = XMLUtils.parseXMLFrom(entryStBuilder.toString());
           entryStBuilder.delete(0, entryStBuilder.length());
 
           importProteinInteractionsWithSource(entryXMLElem, graph);
@@ -140,18 +141,18 @@ public abstract class ImportProteinInteractions<I extends UntypedGraph<RV,RVT,RE
     Again based on manual inspection it looks like protein-protein interactions are **not** *duplicated* in the UniProt XML file. I do not know if this implies a semantic direction or not. So, if you want to get all with which a given protein interacts, you need to get both inV and outV of protein-protein interaction edges.
   */
   private void importProteinInteractionsWithSource(
-    XMLElement entryXMLElem,
+    Element entryXMLElem,
     UniProtGraph<I,RV,RVT,RE,RET> graph
   )
   {
 
     /* We first get the protein from the entry xml element accession */
     final Optional<Protein<I,RV,RVT,RE,RET>> optionalSrcProtein = graph.proteinAccessionIndex()
-      .getVertex(entryXMLElem.asJDomElement().getChildren(ENTRY.ACCESSION.element).get(0).getText());
+      .getVertex(entryXMLElem.getChildren(ENTRY.ACCESSION.element).get(0).getText());
 
     optionalSrcProtein.ifPresent(
       srcProtein -> {
-        entryXMLElem.asJDomElement().getChildren(ENTRY.COMMENT.element)
+        entryXMLElem.getChildren(ENTRY.COMMENT.element)
           .stream()
           .filter(
             commentElem ->
