@@ -79,18 +79,17 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
         graph.proteinAccessionIndex()
         .getVertex(entryXMLElem.getChildText(ENTRY_ACCESSION_TAG_NAME))
         .ifPresent(
-        protein -> {
+          protein -> {
 
-          importProteinReferenceEdges     (entryXMLElem, graph, protein);
-          importProteinComments           (entryXMLElem, graph, protein);
-          importProteinFeatures           (entryXMLElem, graph, protein);
-          importProteinDatasetEdges       (entryXMLElem, graph, protein);
-          importProteinCitations          (entryXMLElem, graph, protein);
-          importProteinKeywordsEdges      (entryXMLElem, graph, protein);
-          importProteinGeneLocationEdges  (entryXMLElem, graph, protein);
-          importProteinGeneNameEdges      (entryXMLElem, graph, protein);
-          importProteinOrganismsEdges     (entryXMLElem, graph, protein);
-        }
+            importProteinReferenceEdges     (entryXMLElem, graph, protein);
+            importProteinComments           (entryXMLElem, graph, protein);
+            importProteinFeatures           (entryXMLElem, graph, protein);
+            importProteinDatasetEdges       (entryXMLElem, graph, protein);
+            importProteinCitations          (entryXMLElem, graph, protein);
+            importProteinKeywordsEdges      (entryXMLElem, graph, protein);
+            importProteinGeneLocationEdges  (entryXMLElem, graph, protein);
+            importProteinGeneNameEdges      (entryXMLElem, graph, protein);
+          }
         );
 
         proteinCounter++;
@@ -783,91 +782,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
     //     }
     //   }
     // }
-  }
-
-  private void importProteinOrganismsEdges(
-  Element entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
-  )
-  {
-
-    // final Optional<String> _scName =
-    //   entryXMLElem
-    //     .getChild(ORGANISM_TAG_NAME)
-    //     .getChildren(ORGANISM_NAME_TAG_NAME).stream()
-    //     .filter(element -> element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE).equals(ORGANISM_SCIENTIFIC_NAME_TYPE))
-    //     .map(Element::getText)
-    //     .findFirst();
-    //
-    // _scName.ifPresent(
-    //   scName -> graph.organismScientificNameIndex().getVertex(scName).ifPresent
-    //     organism -> {
-    //       protein.addOutEdge(graph.ProteinOrganism(), organism);
-    //       // TODO more stuff
-    //     }
-    //   )
-    // )
-
-    // TODO rewrite this in the style above
-    String scName = "";
-
-    Element organismElem = entryXMLElem.getChild(ORGANISM_TAG_NAME);
-
-    List<Element> organismNames = organismElem.getChildren(ORGANISM_NAME_TAG_NAME);
-    for (Element element : organismNames) {
-      String type = element.getAttributeValue(ORGANISM_NAME_TYPE_ATTRIBUTE);
-      if (type.equals(ORGANISM_SCIENTIFIC_NAME_TYPE)) {
-        scName = element.getText();
-      }
-    }
-
-    Optional<Organism<I,RV,RVT,RE,RET>> organismOptional = graph.organismScientificNameIndex().getVertex(scName);
-
-    if (organismOptional.isPresent()) {
-      Organism<I,RV,RVT,RE,RET> organism = organismOptional.get();
-
-      protein.addOutEdge(graph.ProteinOrganism(), organism);
-
-      Element lineage = entryXMLElem.getChild("organism").getChild("lineage");
-      List<Element> taxons = lineage.getChildren("taxon");
-
-      Element firstTaxonElem = taxons.get(0);
-      Optional<Taxon<I,RV,RVT,RE,RET>> firstTaxonOptional = graph.taxonNameIndex().getVertex(firstTaxonElem.getText());
-
-      if (firstTaxonOptional.isPresent()) {
-        Taxon<I,RV,RVT,RE,RET> lastTaxon = firstTaxonOptional.get();
-
-        for (int i = 1; i < taxons.size(); i++) {
-          String taxonName = taxons.get(i).getText();
-          Taxon<I,RV,RVT,RE,RET> currentTaxon = null;
-          Optional<Taxon<I,RV,RVT,RE,RET>> currentTaxonOptional = graph.taxonNameIndex().getVertex(taxonName);
-
-          if(currentTaxonOptional.isPresent()){
-            currentTaxon = currentTaxonOptional.get();
-            if(!taxonParentEdgesAlreadyCreated.contains(currentTaxon.name())){
-              taxonParentEdgesAlreadyCreated.add(currentTaxon.name());
-              try{
-                currentTaxon.taxonParent_in();
-              }catch(NoSuchElementException e){
-                lastTaxon.addOutEdge(graph.TaxonParent(), currentTaxon);
-              }
-            }
-          }
-
-          lastTaxon = currentTaxon;
-        }
-
-        if(!organismTaxonEdgesAlreadyCreated.contains(organism.scientificName())) {
-          organismTaxonEdgesAlreadyCreated.add(organism.scientificName());
-          try{
-            organism.organismTaxon_out();
-          }catch(NoSuchElementException e){
-            organism.addOutEdge(graph.OrganismTaxon(), lastTaxon);
-          }
-        }
-      }
-    }
   }
 
   private void importProteinCitations(

@@ -755,26 +755,6 @@ I, RV, RVT, RE, RET
   pfamIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Organism<I,RV,RVT,RE,RET>, OrganismType,
-  // property
-  OrganismType.scientificName, String,
-  // graph
-  UniProtGraph<I,RV,RVT,RE,RET>,
-  I, RV, RVT, RE, RET
-  >
-  organismScientificNameIndex();
-  public abstract TypedVertexIndex.Unique <
-  // vertex
-  Taxon<I,RV,RVT,RE,RET>, TaxonType,
-  // property
-  TaxonType.name, String,
-  // graph
-  UniProtGraph<I,RV,RVT,RE,RET>,
-  I, RV, RVT, RE, RET
-  >
-  taxonNameIndex();
-  public abstract TypedVertexIndex.Unique <
-  // vertex
   FeatureType<I,RV,RVT,RE,RET>, FeatureTypeType,
   // property
   FeatureTypeType.name, String,
@@ -850,8 +830,6 @@ I, RV, RVT, RE, RET
 
   public abstract OnlineArticleType OnlineArticle();
 
-  public abstract OrganismType Organism();
-
   public abstract OnlineJournalType OnlineJournal();
 
   public abstract PatentType Patent();
@@ -880,8 +858,6 @@ I, RV, RVT, RE, RET
 
   public abstract SubmissionType Submission();
 
-  public abstract TaxonType Taxon();
-
   public abstract ThesisType Thesis();
 
   public abstract UniGeneType UniGene();
@@ -907,8 +883,6 @@ I, RV, RVT, RE, RET
 
   public abstract OnlineArticleOnlineJournalType OnlineArticleOnlineJournal();
 
-  public abstract OrganismTaxonType OrganismTaxon();
-
   public abstract ProteinCommentType ProteinComment();
 
   public abstract ProteinDiseaseType ProteinDisease();
@@ -928,8 +902,6 @@ I, RV, RVT, RE, RET
   public abstract ProteinKeggType ProteinKegg();
 
   public abstract ProteinKeywordType ProteinKeyword();
-
-  public abstract ProteinOrganismType ProteinOrganism();
 
   public abstract ProteinPfamType ProteinPfam();
 
@@ -974,8 +946,6 @@ I, RV, RVT, RE, RET
   public abstract SubmissionDBType SubmissionDB();
 
   public abstract SubcellularLocationParentType SubcellularLocationParent();
-
-  public abstract TaxonParentType TaxonParent();
 
   public abstract ThesisInstituteType ThesisInstitute();
 
@@ -1985,66 +1955,6 @@ I, RV, RVT, RE, RET
     }
   }
 
-  public final class OrganismType
-  extends
-  UniProtVertexType<
-  Organism<I,RV,RVT,RE,RET>,
-  UniProtGraph<I,RV,RVT,RE,RET>.OrganismType
-  > {
-
-    public final scientificName scientificName = new scientificName();
-    public final commonName commonName = new commonName();
-    public final synonymName synonymName = new synonymName();
-
-    public OrganismType(RVT raw) {
-      super(raw);
-    }
-
-    @Override
-    public OrganismType value() {
-      return graph().Organism();
-    }
-
-    @Override
-    public Organism<I,RV,RVT,RE,RET> from(RV vertex) {
-      return new Organism<I,RV,RVT,RE,RET>(vertex, this);
-    }
-
-    public final class scientificName
-    extends
-    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, scientificName, String> {
-      public scientificName() {
-        super(OrganismType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-    public final class commonName
-    extends
-    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, commonName, String> {
-      public commonName() {
-        super(OrganismType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-    public final class synonymName
-    extends
-    UniProtVertexProperty<Organism<I,RV,RVT,RE,RET>, OrganismType, synonymName, String> {
-      public synonymName() {
-        super(OrganismType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-  }
-
   public final class PatentType
   extends
   UniProtVertexType<
@@ -2672,43 +2582,6 @@ I, RV, RVT, RE, RET
     }
   }
 
-  public final class TaxonType
-  extends
-  UniProtVertexType<
-  Taxon<I,RV,RVT,RE,RET>,
-  UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
-  > {
-
-    public final name name = new name();
-
-    public TaxonType(RVT raw) {
-      super(raw);
-    }
-
-    @Override
-    public TaxonType value() {
-      return graph().Taxon();
-    }
-
-    @Override
-    public Taxon<I,RV,RVT,RE,RET> from(RV vertex) {
-      return new Taxon<I,RV,RVT,RE,RET>(vertex, this);
-    }
-
-    public final class name
-    extends
-    UniProtVertexProperty<Taxon<I,RV,RVT,RE,RET>, TaxonType, name, String> {
-      public name() {
-        super(TaxonType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-
-  }
-
   public final class ThesisType
   extends
   UniProtVertexType<
@@ -3071,31 +2944,6 @@ I, RV, RVT, RE, RET
       public Class<String> valueClass() {
         return String.class;
       }
-    }
-  }
-
-  public final class OrganismTaxonType
-  extends
-  UniProtEdgeType<
-  Organism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismType,
-  OrganismTaxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismTaxonType,
-  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
-  >
-  implements
-  TypedEdge.Type.ManyToOne {
-
-    public OrganismTaxonType(RET raw) {
-      super(UniProtGraph.this.Organism(), raw, UniProtGraph.this.Taxon());
-    }
-
-    @Override
-    public OrganismTaxonType value() {
-      return graph().OrganismTaxon();
-    }
-
-    @Override
-    public OrganismTaxon<I,RV,RVT,RE,RET> from(RE edge) {
-      return new OrganismTaxon<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
@@ -3906,31 +3754,6 @@ I, RV, RVT, RE, RET
     @Override
     public ProteinKeyword<I,RV,RVT,RE,RET> from(RE edge) {
       return new ProteinKeyword<I,RV,RVT,RE,RET>(edge, this);
-    }
-  }
-
-  public final class ProteinOrganismType
-  extends
-  UniProtEdgeType<
-  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
-  ProteinOrganism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinOrganismType,
-  Organism<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.OrganismType
-  >
-  implements
-  TypedEdge.Type.ManyToOne {
-
-    public ProteinOrganismType(RET raw) {
-      super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Organism());
-    }
-
-    @Override
-    public ProteinOrganismType value() {
-      return graph().ProteinOrganism();
-    }
-
-    @Override
-    public ProteinOrganism<I,RV,RVT,RE,RET> from(RE edge) {
-      return new ProteinOrganism<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
@@ -4930,31 +4753,6 @@ I, RV, RVT, RE, RET
     @Override
     public SubmissionDB<I,RV,RVT,RE,RET> from(RE edge) {
       return new SubmissionDB<I,RV,RVT,RE,RET>(edge, this);
-    }
-  }
-
-  public final class TaxonParentType
-  extends
-  UniProtEdgeType<
-  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType,
-  TaxonParent<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonParentType,
-  Taxon<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.TaxonType
-  >
-  implements
-  TypedEdge.Type.ManyToOne {
-
-    public TaxonParentType(RET raw) {
-      super(UniProtGraph.this.Taxon(), raw, UniProtGraph.this.Taxon());
-    }
-
-    @Override
-    public TaxonParentType value() {
-      return graph().TaxonParent();
-    }
-
-    @Override
-    public TaxonParent<I,RV,RVT,RE,RET> from(RE edge) {
-      return new TaxonParent<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 
