@@ -108,7 +108,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
           importProteinComments     (entryXMLElem, graph, protein, protein.get(protein.type().sequence));
           importProteinFeatures     (entryXMLElem, graph, protein);
           importProteinCitations    (entryXMLElem, graph, protein);
-          importProteinKeywords     (entryXMLElem, graph);
           importProteinGeneLocation (entryXMLElem, graph);
 
           proteinCounter++;
@@ -533,34 +532,6 @@ public abstract class ImportUniProtVertices<I extends UntypedGraph<RV,RVT,RE,RET
         }
       }
     }
-  }
-
-  private void importProteinKeywords(
-    Element entryXMLElem,
-    UniProtGraph<I,RV,RVT,RE,RET> graph
-  )
-  {
-
-    final List<Element> keywordsList = entryXMLElem.getChildren(KEYWORD_TAG_NAME);
-
-    for(Element keywordElem: keywordsList) {
-
-      final String keywordId = keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE);
-
-      if(!keywordIdSet.contains(keywordId)) {
-
-        keywordIdSet.add(keywordId);
-
-        if(graph.keywordIdIndex().getVertex(keywordId).isPresent()) {
-
-          final String keywordName = keywordElem.getText();
-          final Keyword<I,RV,RVT,RE,RET>  keyword = graph.addVertex(graph.Keyword());
-          keyword.set(graph.Keyword().id, keywordId);
-          keyword.set(graph.Keyword().name, keywordName);
-        }
-      }
-    }
-
   }
 
   private void importProteinGeneLocation(

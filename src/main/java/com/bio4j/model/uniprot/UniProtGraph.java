@@ -706,16 +706,6 @@ I, RV, RVT, RE, RET
   reactomeTermIdIndex();
   public abstract TypedVertexIndex.Unique <
   // vertex
-  Keyword<I,RV,RVT,RE,RET>, KeywordType,
-  // property
-  KeywordType.id, String,
-  // graph
-  UniProtGraph<I,RV,RVT,RE,RET>,
-  I, RV, RVT, RE, RET
-  >
-  keywordIdIndex();
-  public abstract TypedVertexIndex.Unique <
-  // vertex
   InterPro<I,RV,RVT,RE,RET>, InterProType,
   // property
   InterProType.id, String,
@@ -805,8 +795,6 @@ I, RV, RVT, RE, RET
 
   public abstract KeggType Kegg();
 
-  public abstract KeywordType Keyword();
-
   public abstract OnlineArticleType OnlineArticle();
 
   public abstract OnlineJournalType OnlineJournal();
@@ -877,8 +865,6 @@ I, RV, RVT, RE, RET
   public abstract ProteinInterProType ProteinInterPro();
 
   public abstract ProteinKeggType ProteinKegg();
-
-  public abstract ProteinKeywordType ProteinKeyword();
 
   public abstract ProteinPfamType ProteinPfam();
 
@@ -1767,54 +1753,6 @@ I, RV, RVT, RE, RET
     UniProtVertexProperty<Kegg<I,RV,RVT,RE,RET>, KeggType, id, String> {
       public id() {
         super(KeggType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-  }
-
-  public final class KeywordType
-  extends
-  UniProtVertexType<
-  Keyword<I,RV,RVT,RE,RET>,
-  UniProtGraph<I,RV,RVT,RE,RET>.KeywordType
-  > {
-
-    public final name name = new name();
-    public final id id = new id();
-
-    public KeywordType(RVT raw) {
-      super(raw);
-    }
-
-    @Override
-    public KeywordType value() {
-      return graph().Keyword();
-    }
-
-    @Override
-    public Keyword<I,RV,RVT,RE,RET> from(RV vertex) {
-      return new Keyword<I,RV,RVT,RE,RET>(vertex, this);
-    }
-
-    public final class name
-    extends
-    UniProtVertexProperty<Keyword<I,RV,RVT,RE,RET>, KeywordType, name, String> {
-      public name() {
-        super(KeywordType.this);
-      }
-
-      public Class<String> valueClass() {
-        return String.class;
-      }
-    }
-    public final class id
-    extends
-    UniProtVertexProperty<Keyword<I,RV,RVT,RE,RET>, KeywordType, id, String> {
-      public id() {
-        super(KeywordType.this);
       }
 
       public Class<String> valueClass() {
@@ -3623,31 +3561,6 @@ I, RV, RVT, RE, RET
     @Override
     public ProteinKegg<I,RV,RVT,RE,RET> from(RE edge) {
       return new ProteinKegg<I,RV,RVT,RE,RET>(edge, this);
-    }
-  }
-
-  public final class ProteinKeywordType
-  extends
-  UniProtEdgeType<
-  Protein<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinType,
-  ProteinKeyword<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.ProteinKeywordType,
-  Keyword<I,RV,RVT,RE,RET>, UniProtGraph<I,RV,RVT,RE,RET>.KeywordType
-  >
-  implements
-  TypedEdge.Type.ManyToMany {
-
-    public ProteinKeywordType(RET raw) {
-      super(UniProtGraph.this.Protein(), raw, UniProtGraph.this.Keyword());
-    }
-
-    @Override
-    public ProteinKeywordType value() {
-      return graph().ProteinKeyword();
-    }
-
-    @Override
-    public ProteinKeyword<I,RV,RVT,RE,RET> from(RE edge) {
-      return new ProteinKeyword<I,RV,RVT,RE,RET>(edge, this);
     }
   }
 

@@ -86,7 +86,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
             importProteinFeatures           (entryXMLElem, graph, protein);
             importProteinDatasetEdges       (entryXMLElem, graph, protein);
             importProteinCitations          (entryXMLElem, graph, protein);
-            importProteinKeywordsEdges      (entryXMLElem, graph, protein);
             importProteinGeneLocationEdges  (entryXMLElem, graph, protein);
           }
         );
@@ -681,22 +680,6 @@ public abstract class ImportUniProtEdges<I extends UntypedGraph<RV,RVT,RE,RET>,R
     // graph.datasetNameIndex().getVertex(dataSetName).map(
     // dataset -> protein.addOutEdge(graph.ProteinDataset(), dataset)
     // );
-  }
-
-  private void importProteinKeywordsEdges(
-  Element entryXMLElem,
-  UniProtGraph<I,RV,RVT,RE,RET> graph,
-  Protein<I,RV,RVT,RE,RET> protein
-  )
-  {
-
-    entryXMLElem.getChildren(KEYWORD_TAG_NAME).stream()
-    .map(
-    keywordElem -> graph.keywordIdIndex().getVertex(keywordElem.getAttributeValue(KEYWORD_ID_ATTRIBUTE))
-    .map(
-    keyword -> protein.addOutEdge(graph.ProteinKeyword(), keyword)
-    )
-    );
   }
 
   private void importProteinGeneLocationEdges(
