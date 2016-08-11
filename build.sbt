@@ -13,19 +13,21 @@ libraryDependencies ++= Seq(
 
 bucketSuffix := "era7.com"
 
-// tmp for this PR
-val srcPath = "src/main/java/com/bio4j/model"
+def pathContains(segment: String) = new FileFilter {
+  def accept(file: File) = file.getPath.split("/").contains(segment)
+}
 
 excludeFilter in unmanagedSources :=
   (excludeFilter in unmanagedSources).value ||
-  "*/programs/*.java"                       ||
-  "*/vertices/*.java"                       ||
-  "*/edges/*.java"                          ||
-  s"${srcPath}/go/*"                        ||
-  s"${srcPath}/unigene/*"                   ||
-  s"${srcPath}/uniprot/*"                   ||
-  s"${srcPath}/uniprot_enzymedb/*"          ||
-  s"${srcPath}/uniprot_go/*"                ||
-  s"${srcPath}/uniprot_ncbiTaxonomy/*"      ||
-  s"${srcPath}/uniprot_uniref/*"            ||
-  s"${srcPath}/uniref/*"
+  pathContains("vertices")                  ||
+  pathContains("edges")                     ||
+  pathContains("programs")                  ||
+  pathContains("go")                        ||
+  pathContains("unigene")                   ||
+  pathContains("uniprot")                   ||
+  pathContains("uniprot_enzymedb")          ||
+  pathContains("uniprot_go")                ||
+  pathContains("uniprot_ncbiTaxonomy")      ||
+  pathContains("uniprot_uniref")            ||
+  pathContains("uniref")                    ||
+  pathContains("xml")
