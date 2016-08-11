@@ -12,3 +12,20 @@ libraryDependencies ++= Seq(
 )
 
 bucketSuffix := "era7.com"
+
+// tmp for this PR
+val srcPath = "src/main/java/com/bio4j/model"
+
+excludeFilter in unmanagedSources :=
+  (excludeFilter in unmanagedSources).value ||
+  "*/programs/*.java"                       ||
+  "*/vertices/*.java"                       ||
+  "*/edges/*.java"                          ||
+  s"${srcPath}/go/*"                        ||
+  s"${srcPath}/unigene/*"                   ||
+  s"${srcPath}/uniprot/*"                   ||
+  s"${srcPath}/uniprot_enzymedb/*"          ||
+  s"${srcPath}/uniprot_go/*"                ||
+  s"${srcPath}/uniprot_ncbiTaxonomy/*"      ||
+  s"${srcPath}/uniprot_uniref/*"            ||
+  s"${srcPath}/uniref/*"
