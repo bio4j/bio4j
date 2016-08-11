@@ -1,11 +1,4 @@
-package com.bio4j.model.enzymedb;
-
-// import com.bio4j.model.enzymedb.vertices.*;
-import com.bio4j.angulillos.*;
-import com.bio4j.angulillos.Arity.*;
-
 /*
-
 # ExPASy Enzyme DB graph
 
 This graph includes all Enzyme terms that are included in the ExPASy ENZYME database but **not** those that have been either _transferred_ or _deleted_.
@@ -16,8 +9,12 @@ You can get more information about the Enzyme database from its [website](http:/
 - the **[User manual](http://enzyme.expasy.org/enzuser.txt)**, which contains a more precise description of the data model
 
 This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
-
 */
+package com.bio4j.model.enzymedb;
+
+import com.bio4j.angulillos.*;
+import com.bio4j.angulillos.Arity.*;
+
 public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E> {
 
   public EnzymeDBGraph(UntypedGraph<V,E> graph) { super(graph); }
@@ -38,6 +35,7 @@ public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E>
   }
 
   public final class EnzymeType extends VertexType<Enzyme> {
+    
     /*
       #### Enzyme id
 
@@ -51,6 +49,7 @@ public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E>
     public final class ById extends UniqueIndex<Id,String> {
       private ById() { super(id); }
     }
+
     /*
       #### Enzyme cofactors
 
