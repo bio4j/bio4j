@@ -1,38 +1,44 @@
-// package com.bio4j.model.ncbiTaxonomy;
+/*
+  # NCBI Taxonomy graph
+
+  This graph includes the whole NCBI taxonomy tree.
+  Files used in the importing process can be found [here](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz)
+
+  Once that information is extracted we are building the tree from the information included in the following files:
+
+  * **nodes.dmp**
+  * **names.dmp**
+
+  ## data model
+
+  It simply consists of the vertices of NCBITaxon type plus the hierarchical relationships represented as NCBITaxonParent edges.
+
+  ### NCBITaxons
+
+  We have a `NCBITaxon` vertex which contains property data present for each NCBI taxonomic unit.
+
+  ##### NCBITaxon properties stored
+
+  - id
+  - name
+  - comment
+  - scientific name
+  - taxonomic rank
+ */
+package com.bio4j.model.ncbiTaxonomy;
+
+import com.bio4j.angulillos.*;
+import com.bio4j.angulillos.Arity.*;
+
+public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V,E>,V,E> {
+
+  public NCBITaxonomyGraph(UntypedGraph<V,E> graph) { super(graph); }
+
+  @Override
+  public final NCBITaxonomyGraph<V,E> self() { return this; }
+}
 //
-// import com.bio4j.model.ncbiTaxonomy.vertices.*;
-// import com.bio4j.model.ncbiTaxonomy.edges.*;
-// import com.bio4j.angulillos.*;
 //
-// /*
-//
-// # NCBI Taxonomy graph
-//
-// This graph includes the whole NCBI taxonomy tree.
-// Files used in the importing process can be found [here](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz)
-//
-// Once that information is extracted we are building the tree from the information included in the following files:
-//
-// * **nodes.dmp**
-// * **names.dmp**
-//
-// ## data model
-//
-// It simply consists of the vertices of NCBITaxon type plus the hierarchical relationships represented as NCBITaxonParent edges.
-//
-// ### NCBITaxons
-//
-// We have a `NCBITaxon` vertex which contains property data present for each NCBI taxonomic unit.
-//
-// ##### NCBITaxon properties stored
-//
-// - id
-// - name
-// - comment
-// - scientific name
-// - taxonomic rank
-//
-//  */
 // public abstract class NCBITaxonomyGraph<
 //   // untyped graph
 //   I extends UntypedGraph<RV, RVT, RE, RET>,
