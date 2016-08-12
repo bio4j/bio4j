@@ -22,7 +22,6 @@ excludeFilter in unmanagedSources :=
   pathContains("vertices")                  ||
   pathContains("edges")                     ||
   pathContains("programs")                  ||
-  pathContains("go")                        ||
   pathContains("unigene")                   ||
   pathContains("uniprot")                   ||
   pathContains("uniprot_enzymedb")          ||
