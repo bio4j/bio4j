@@ -65,9 +65,9 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
 
       Values are, among others, *species*, *genus*, or *no rank*.
     */
-    public final class TaxonomicRank extends Property<String> implements FromAny, ToOne {
+    public final class TaxonomicRank extends Property<TaxonomicRanks> implements FromAny, ToOne {
 
-      private TaxonomicRank() { super(String.class); }
+      private TaxonomicRank() { super(TaxonomicRanks.class); }
     }
     public final TaxonomicRank taxonomicRank = new TaxonomicRank();
 
@@ -81,6 +81,14 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     private Taxon(V vertex) { super(vertex, taxon); }
     @Override
     public final Taxon self() { return this; }
+  }
+
+  public static enum TaxonomicRanks {
+
+    // TODO add everything here
+    species,
+    genus,
+    noRank;
   }
 
   /*
