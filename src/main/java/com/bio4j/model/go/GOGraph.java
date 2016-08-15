@@ -1,5 +1,4 @@
 /*
-
   # Gene Ontology graph
 
   This graph includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
@@ -7,17 +6,6 @@
   - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
 
   Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
-
-  ### GO Relationships
-
-  See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
-
-  - is a
-  - part of
-  - has part of
-  - regulates
-    - negatively regulates
-    - positively regulates
 */
 package com.bio4j.model.go;
 
@@ -26,6 +14,10 @@ import com.bio4j.angulillos.Arity.*;
 
 public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
 
+  /*
+    ## Vertices
+
+  */
   /*
     ### Terms
 
@@ -100,49 +92,69 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     molecularFunction;
   }
 
-  // TODO review below
-  public final PartOfType partOf = new PartOfType();
+  /*
+    ## Edges
+
+    See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
+
+    - is a
+    - part of
+    - has part of
+    - regulates
+      - negatively regulates
+      - positively regulates
+  */
   public final class PartOfType extends EdgeType<Term, PartOf, Term> implements FromAny, ToAny {
 
     private PartOfType() { super(term, term); }
     @Override
     public final PartOf fromRaw(E edge) { return new PartOf(edge); }
   }
-  public final IsAType isA = new IsAType();
+  public final PartOfType partOf = new PartOfType();
+
   public final class IsAType extends EdgeType<Term, IsA, Term> implements FromAny, ToAny {
     private IsAType() { super(term, term); }
     @Override
     public final IsA fromRaw(E edge) { return new IsA(edge); }
   }
-  public final HasPartOfType hasPartOf = new HasPartOfType();
+  public final IsAType isA = new IsAType();
+
   public final class HasPartOfType extends EdgeType<Term, HasPartOf, Term> implements FromAny, ToAny {
     private HasPartOfType() { super(term, term); }
     @Override
     public final HasPartOf fromRaw(E edge) { return new HasPartOf(edge); }
   }
-  public final RegulatesType regulates = new RegulatesType();
+  public final HasPartOfType hasPartOf = new HasPartOfType();
+
   public final class RegulatesType extends EdgeType<Term, Regulates, Term> implements FromAny, ToAny {
     private RegulatesType() { super(term, term); }
     @Override
     public final Regulates fromRaw(E edge) { return new Regulates(edge); }
   }
-  public final NegativelyRegulatesType negativelyRegulates = new NegativelyRegulatesType();
+  public final RegulatesType regulates = new RegulatesType();
+
   public final class NegativelyRegulatesType extends EdgeType<Term, NegativelyRegulates, Term> implements FromAny, ToAny {
     private NegativelyRegulatesType() { super(term, term); }
     @Override
     public final NegativelyRegulates fromRaw(E edge) { return new NegativelyRegulates(edge); }
   }
-  public final PositivelyRegulatesType positivelyRegulates = new PositivelyRegulatesType();
+  public final NegativelyRegulatesType negativelyRegulates = new NegativelyRegulatesType();
+
   public final class PositivelyRegulatesType extends EdgeType<Term, PositivelyRegulates, Term> implements FromAny, ToAny {
     private PositivelyRegulatesType() { super(term, term); }
     @Override
     public final PositivelyRegulates fromRaw(E edge) { return new PositivelyRegulates(edge); }
   }
+  public final PositivelyRegulatesType positivelyRegulates = new PositivelyRegulatesType();
 
   /*
     ## Auxiliary classes
-
   */
+  public final class Term extends Vertex<Term> {
+    private Term(V vertex) { super(vertex, term); }
+    @Override
+    public final Term self() { return this; }
+  }
   public final class PartOf extends Edge<Term, PartOf, Term> {
     private PartOf(E edge) { super(edge, partOf); }
     @Override
@@ -172,12 +184,6 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     private PositivelyRegulates(E edge) { super(edge, positivelyRegulates); }
     @Override
     public final PositivelyRegulates self() { return this; }
-  }
-
-  public final class Term extends Vertex<Term> {
-    private Term(V vertex) { super(vertex, term); }
-    @Override
-    public final Term self() { return this; }
   }
 
   public GOGraph(UntypedGraph<V,E> graph) { super(graph); }
