@@ -89,13 +89,6 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
   public final TermType term = new TermType();
 
   // TODO review below
-  public final class SlimsType extends VertexType<Slims> {
-
-    @Override
-    public final Slims fromRaw(V vertex) { return new Slims(vertex); }
-  }
-  public final SlimsType slims = new SlimsType();
-
   public final SubOntologiesType subOntologies = new SubOntologiesType();
   public final class SubOntologiesType extends VertexType<SubOntologies> {
 
@@ -204,12 +197,6 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     private Term(V vertex) { super(vertex, term); }
     @Override
     public final Term self() { return this; }
-  }
-
-  public final class Slims extends Vertex<Slims> {
-    private Slims(V vertex) { super(vertex, slims); }
-    @Override
-    public final Slims self() { return this; }
   }
 
   public final class SubOntologies extends Vertex<SubOntologies> {
