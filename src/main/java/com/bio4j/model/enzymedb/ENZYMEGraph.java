@@ -1,45 +1,34 @@
 /*
-# ExPASy Enzyme DB graph
+  # ENZYME graph
 
-This graph includes all Enzyme terms that are included in the ExPASy ENZYME database but **not** those that have been either _transferred_ or _deleted_.
+  This graph includes all Enzyme terms that are included in the ExPASy ENZYME database but **not** those that have been either _transferred_ or _deleted_.
 
-You can get more information about the Enzyme database from its [website](http://enzyme.expasy.org/), in particular
+  You can get more information about the Enzyme database from its [website](http://enzyme.expasy.org/), in particular
 
-- **[Enzyme description and sample entry](http://enzyme.expasy.org/enzyme_details.html)**
-- the **[User manual](http://enzyme.expasy.org/enzuser.txt)**, which contains a more precise description of the data model
+  - **[Enzyme description and sample entry](http://enzyme.expasy.org/enzyme_details.html)**
+  - the **[User manual](http://enzyme.expasy.org/enzuser.txt)**, which contains a more precise description of the data model
 
-This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
+  This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
 */
 package com.bio4j.model.enzymedb;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E> {
-
-  public EnzymeDBGraph(UntypedGraph<V,E> graph) { super(graph); }
-
-  @Override
-  public final EnzymeDBGraph<V,E> self() { return this; }
+public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
   /*
     ## Vertices
-
+  */
+  /*
     ### Enzyme
   */
-  public final EnzymeType enzyme = new EnzymeType();
-
-  public final class Enzyme extends Vertex<Enzyme> {
-    @Override public final Enzyme self() { return this; }
-    private Enzyme(V raw) { super(raw, enzyme); }
-  }
-
   public final class EnzymeType extends VertexType<Enzyme> {
-    
+
     /*
       #### Enzyme id
 
-      The EnzymeDB id of this enzyme, as a `String`. This property is indexed.
+      The ENZYME id of this enzyme, as a `String`. This property is indexed.
     */
     public final Id id = new Id();
     public final ById byId = new ById();
@@ -49,6 +38,7 @@ public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E>
     public final class ById extends UniqueIndex<Id,String> {
       private ById() { super(id); }
     }
+    public final EnzymeType enzyme = new EnzymeType();
 
     /*
       #### Enzyme cofactors
@@ -112,4 +102,15 @@ public final class EnzymeDBGraph<V,E> extends TypedGraph<EnzymeDBGraph<V,E>,V,E>
 
     public final Enzyme fromRaw(V raw) { return new Enzyme(raw); }
   }
+  public final EnzymeType enzyme = new EnzymeType();
+
+  public final class Enzyme extends Vertex<Enzyme> {
+    @Override public final Enzyme self() { return this; }
+    private Enzyme(V raw) { super(raw, enzyme); }
+  }
+
+  public ENZYMEGraph(UntypedGraph<V,E> graph) { super(graph); }
+
+  @Override
+  public final ENZYMEGraph<V,E> self() { return this; }
 }
