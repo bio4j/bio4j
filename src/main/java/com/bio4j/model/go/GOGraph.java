@@ -83,28 +83,24 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     }
     public final Synonyms synonyms = new Synonyms();
 
+    public final class Subontology extends Property<Subontologies> implements FromAny, ToOne {
+      private Subontology() { super(Subontologies.class); }
+    }
+    public final Subontology subOntology = new Subontology();
+
     @Override
     public final Term fromRaw(V vertex) { return new Term(vertex); }
   }
   public final TermType term = new TermType();
 
-  // TODO review below
-  public final SubOntologiesType subOntologies = new SubOntologiesType();
-  public final class SubOntologiesType extends VertexType<SubOntologies> {
+  public static enum Subontologies {
 
-    public final Name name = new Name();
-    public final ByName ByName = new ByName();
-    public final class Name extends Property<String> implements FromAtMostOne, ToOne {
-      private Name() { super(String.class); }
-    }
-    public final class ByName extends UniqueIndex<Name,String> {
-      private ByName() { super(name); }
-    }
-
-    @Override
-    public final SubOntologies fromRaw(V vertex) { return new SubOntologies(vertex); }
+    cellularComponent,
+    biologicalProcess,
+    molecularFunction;
   }
 
+  // TODO review below
   public final PartOfType partOf = new PartOfType();
   public final class PartOfType extends EdgeType<Term, PartOf, Term> implements FromAny, ToAny {
 
@@ -143,15 +139,6 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     public final PositivelyRegulates fromRaw(E edge) { return new PositivelyRegulates(edge); }
   }
 
-  public final SubOntologyType subOntology = new SubOntologyType();
-  public final class SubOntologyType extends EdgeType<Term, SubOntology, SubOntologies> implements FromAny, ToOne {
-
-    private SubOntologyType() { super(term, subOntologies); }
-    @Override
-    public final SubOntology fromRaw(E edge) { return new SubOntology(edge); }
-  }
-
-
   /*
     ## Auxiliary classes
 
@@ -187,22 +174,10 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     public final PositivelyRegulates self() { return this; }
   }
 
-  public final class SubOntology extends Edge<Term, SubOntology, SubOntologies> {
-    private SubOntology(E edge) { super(edge, subOntology); }
-    @Override
-    public final SubOntology self() { return this; }
-  }
-
   public final class Term extends Vertex<Term> {
     private Term(V vertex) { super(vertex, term); }
     @Override
     public final Term self() { return this; }
-  }
-
-  public final class SubOntologies extends Vertex<SubOntologies> {
-    private SubOntologies(V vertex) { super(vertex, subOntologies); }
-    @Override
-    public final SubOntologies self() { return this; }
   }
 
   public GOGraph(UntypedGraph<V,E> graph) { super(graph); }
