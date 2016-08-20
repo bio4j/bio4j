@@ -1,50 +1,58 @@
-/*
-  # Gene Ontology graph
 
-  This graph includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
+# Gene Ontology graph
 
-  - [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
+This graph includes all of the data from [Gene Ontology](http://www.geneontology.org). A good place to start reading about it is
 
-  Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
-*/
+- [Gene Ontology docs - Ontology Structure](http://www.geneontology.org/GO.ontology.structure.shtml)
+
+Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
+
+
+```java
 package com.bio4j.model.go;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
 public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
+```
 
-  /*
-    ## Vertices
 
-  */
-  /*
-    ### Terms
+## Vertices
 
-    We have a `Term` vertex which contains property data present for each term. Do note though that some of these properties are represented as edges. We keep all data corresponding to what is called in the GO docs [*essential elements*](http://www.geneontology.org/GO.ontology.structure.shtml#essential). The `namespace` is represented by relationships (one type per namespace) going out of the term node; see below.
 
-    About the so-called [*optional extras*](http://www.geneontology.org/GO.ontology.structure.shtml#opt):
 
-    - `secondary_ids` We drop this. It is just legacy data with no meaning.
-    - `synonyms` They are split into
-      + `exact`
-      + `broad`
-      + `narrow`
-      + `related`
+### Terms
 
-      We drop **all** of them **but** `exact`, and add an index over it.
-    - `cross_ref` an array of strings, property of the `GoTerm` rel. _TODO is this connected with the corresponding DBs?_
-    - `comment` a standard text field.
-    - `subset` an array of strings. Each of them corresponds to a particular GoSlim. As with namespaces, this is modeled as relations going from each term node to a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
-    - `obsolete` GoTerms marked as obsolete shoud be **dropped**.
-  */
+We have a `Term` vertex which contains property data present for each term. Do note though that some of these properties are represented as edges. We keep all data corresponding to what is called in the GO docs [*essential elements*](http://www.geneontology.org/GO.ontology.structure.shtml#essential). The `namespace` is represented by relationships (one type per namespace) going out of the term node; see below.
+
+About the so-called [*optional extras*](http://www.geneontology.org/GO.ontology.structure.shtml#opt):
+
+- `secondary_ids` We drop this. It is just legacy data with no meaning.
+- `synonyms` They are split into
+  + `exact`
+  + `broad`
+  + `narrow`
+  + `related`
+
+  We drop **all** of them **but** `exact`, and add an index over it.
+- `cross_ref` an array of strings, property of the `GoTerm` rel. _TODO is this connected with the corresponding DBs?_
+- `comment` a standard text field.
+- `subset` an array of strings. Each of them corresponds to a particular GoSlim. As with namespaces, this is modeled as relations going from each term node to a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
+- `obsolete` GoTerms marked as obsolete shoud be **dropped**.
+
+
+```java
   public final class TermType extends VertexType<Term> {
+```
 
-    /*
-      #### Id
 
-      The unique id of a term, indexed.
-    */
+#### Id
+
+The unique id of a term, indexed.
+
+
+```java
     public final class Id extends Property<String> implements FromAtMostOne, ToOne {
       private Id() { super(String.class); }
     }
@@ -91,19 +99,22 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     biologicalProcess,
     molecularFunction;
   }
+```
 
-  /*
-    ## Edges
 
-    See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
+## Edges
 
-    - is a
-    - part of
-    - has part of
-    - regulates
-      - negatively regulates
-      - positively regulates
-  */
+See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.shtml). They are obviously modeled as edges. We have
+
+- is a
+- part of
+- has part of
+- regulates
+  - negatively regulates
+  - positively regulates
+
+
+```java
   public final class PartOfType extends EdgeType<Term, PartOf, Term> implements FromAny, ToAny {
 
     private PartOfType() { super(term, term); }
@@ -146,10 +157,13 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
     public final PositivelyRegulates fromRaw(E edge) { return new PositivelyRegulates(edge); }
   }
   public final PositivelyRegulatesType positivelyRegulates = new PositivelyRegulatesType();
+```
 
-  /*
-    ## Auxiliary classes
-  */
+
+## Auxiliary classes
+
+
+```java
   public final class Term extends Vertex<Term> {
     private Term(V vertex) { super(vertex, term); }
     @Override
@@ -191,3 +205,19 @@ public final class GOGraph<V,E> extends TypedGraph<GOGraph<V,E>,V,E> {
   @Override
   public final GOGraph<V,E> self() { return this; }
 }
+
+```
+
+
+
+
+[main/java/com/bio4j/model/enzymedb/ENZYMEGraph.java]: ../enzymedb/ENZYMEGraph.java.md
+[main/java/com/bio4j/model/uniprot_uniref/UniProtUniRefGraph.java]: ../uniprot_uniref/UniProtUniRefGraph.java.md
+[main/java/com/bio4j/model/uniref/UniRefGraph.java]: ../uniref/UniRefGraph.java.md
+[main/java/com/bio4j/model/go/GOGraph.java]: GOGraph.java.md
+[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../ncbiTaxonomy/NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../uniprot_go/UniProtGoGraph.java.md
+[main/java/com/bio4j/model/unigene/UniGeneGraph.java]: ../unigene/UniGeneGraph.java.md
+[main/java/com/bio4j/model/uniprot_enzymedb/UniProtEnzymeDBGraph.java]: ../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md
+[main/java/com/bio4j/model/uniprot/UniProtGraph.java]: ../uniprot/UniProtGraph.java.md
