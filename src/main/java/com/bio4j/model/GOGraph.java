@@ -7,7 +7,7 @@
 
   Basically there are `Term` nodes and relationships between them. The modeling is straightforward, and as close as possible to the data model in GO.
 */
-package com.bio4j.model.go;
+package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;

@@ -10,7 +10,7 @@
 
   This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
 */
-package com.bio4j.model.enzymedb;
+package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;

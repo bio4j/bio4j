@@ -1,7 +1,6 @@
-package com.bio4j.model.unigene;
+package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
-import com.bio4j.model.unigene.vertices.*;
 
 public abstract class UniGeneGraph <
   I extends UntypedGraph<RV,RVT,RE,RET>,
