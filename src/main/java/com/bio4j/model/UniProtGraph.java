@@ -1,4 +1,4 @@
-package com.bio4j.model.uniprot;
+package com.bio4j.model;
 
 import com.bio4j.model.uniprot.vertices.*;
 import com.bio4j.model.uniprot.edges.*;

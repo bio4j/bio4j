@@ -1,6 +1,5 @@
-package com.bio4j.model.uniref;
+package com.bio4j.model;
 
-import com.bio4j.model.uniref.vertices.*;
 import com.bio4j.angulillos.*;
 
 /*
