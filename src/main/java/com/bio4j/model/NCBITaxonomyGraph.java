@@ -12,7 +12,7 @@
   * **nodes.dmp**
   * **names.dmp**
  */
-package com.bio4j.model.ncbiTaxonomy;
+package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;

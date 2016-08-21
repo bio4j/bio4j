@@ -1,10 +1,5 @@
-package com.bio4j.model.uniprot_enzymedb;
+package com.bio4j.model;
 
-import com.bio4j.model.enzymedb.EnzymeDBGraph;
-import com.bio4j.model.enzymedb.vertices.Enzyme;
-import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_enzymedb.edges.EnzymaticActivity;
 import com.bio4j.angulillos.*;
 
 /*

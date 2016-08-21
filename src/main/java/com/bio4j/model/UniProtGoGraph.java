@@ -1,10 +1,5 @@
-package com.bio4j.model.uniprot_go;
+package com.bio4j.model;
 
-import com.bio4j.model.go.GoGraph;
-import com.bio4j.model.go.vertices.GoTerm;
-import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_go.edges.GoAnnotation;
 import com.bio4j.angulillos.*;
 
 /*

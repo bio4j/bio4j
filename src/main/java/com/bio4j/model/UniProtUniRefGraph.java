@@ -1,10 +1,5 @@
-package com.bio4j.model.uniprot_uniref;
+package com.bio4j.model;
 
-import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniref.vertices.*;
-import com.bio4j.model.uniprot_uniref.edges.*;
-import com.bio4j.model.uniref.UniRefGraph;
 import com.bio4j.angulillos.*;
 
 /*

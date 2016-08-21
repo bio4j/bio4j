@@ -1,10 +1,5 @@
-package com.bio4j.model.uniprot_ncbiTaxonomy;
+package com.bio4j.model;
 
-import com.bio4j.model.ncbiTaxonomy.NCBITaxonomyGraph;
-import com.bio4j.model.ncbiTaxonomy.vertices.NCBITaxon;
-import com.bio4j.model.uniprot.UniProtGraph;
-import com.bio4j.model.uniprot.vertices.Protein;
-import com.bio4j.model.uniprot_ncbiTaxonomy.edges.ProteinNCBITaxon;
 import com.bio4j.angulillos.*;
 
 /*
