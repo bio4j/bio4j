@@ -15,7 +15,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   /*
     ## Proteins
 
-    The first thing to point out as clearly as possible is: `Protein`s **do not** correspond to UniProt entries; we create a protein for every isoform present in any UniProt entry.
+    The first thing to point out as clearly as possible is: `Protein`s **do not** correspond to UniProt entries; we create a protein for every isoform present in any UniProt entry. The protein which is usually identified with the entry has true `isCanonical`.
   */
   public final class Protein extends Vertex<Protein> {
 
