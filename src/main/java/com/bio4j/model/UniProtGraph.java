@@ -3,9 +3,6 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-import java.util.Date;
-import java.util.Optional;
-
 public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
   public UniProtGraph(UntypedGraph<V,E> graph) { super(graph); }
