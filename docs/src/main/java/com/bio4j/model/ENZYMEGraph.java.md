@@ -12,7 +12,7 @@ This graph has only vertices, of `Enzyme` type; There are other graphs which add
 
 
 ```java
-package com.bio4j.model.enzymedb;
+package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
@@ -146,13 +146,10 @@ _TO DO_ explain this. Shuold this be a crossref?
 
 
 
-[main/java/com/bio4j/model/enzymedb/ENZYMEGraph.java]: ENZYMEGraph.java.md
-[main/java/com/bio4j/model/uniprot_uniref/UniProtUniRefGraph.java]: ../uniprot_uniref/UniProtUniRefGraph.java.md
-[main/java/com/bio4j/model/uniref/UniRefGraph.java]: ../uniref/UniRefGraph.java.md
-[main/java/com/bio4j/model/go/GOGraph.java]: ../go/GOGraph.java.md
-[main/java/com/bio4j/model/uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java]: ../uniprot_ncbiTaxonomy/UniProtNCBITaxonomyGraph.java.md
-[main/java/com/bio4j/model/ncbiTaxonomy/NCBITaxonomyGraph.java]: ../ncbiTaxonomy/NCBITaxonomyGraph.java.md
-[main/java/com/bio4j/model/uniprot_go/UniProtGoGraph.java]: ../uniprot_go/UniProtGoGraph.java.md
-[main/java/com/bio4j/model/unigene/UniGeneGraph.java]: ../unigene/UniGeneGraph.java.md
-[main/java/com/bio4j/model/uniprot_enzymedb/UniProtEnzymeDBGraph.java]: ../uniprot_enzymedb/UniProtEnzymeDBGraph.java.md
-[main/java/com/bio4j/model/uniprot/UniProtGraph.java]: ../uniprot/UniProtGraph.java.md
+[main/java/com/bio4j/model/UniProtGraph.java]: UniProtGraph.java.md
+[main/java/com/bio4j/model/UniProtENZYMEGraph.java]: UniProtENZYMEGraph.java.md
+[main/java/com/bio4j/model/NCBITaxonomyGraph.java]: NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/ENZYMEGraph.java]: ENZYMEGraph.java.md
+[main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
+[main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
