@@ -101,6 +101,37 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   }
 
   /*
+    ## Isoforms
+
+    The role of isoforms in UniProt data is extremely confusing, and the "model" bad designed. To name a few of the issues we face:
+
+    1. All isoforms are declared *at least once* as part of an entry.
+    2. The *same* isoform can be the canonical isoform for one entry, and a secondary one in other
+    3. The "isoform of" relationship is not transitive; see [P42166](http://www.uniprot.org/uniprot/P42166#sequences) and [P42167](http://www.uniprot.org/uniprot/P42167#sequences) for example.
+    4. Annotations inside the entry sometimes refer to isoforms by name, not id. This means that in most cases comments just doesn't make any sense by themselves: See for example [P04150 xml](http://www.uniprot.org/uniprot/P04150.xml). In general, most comments do not have any connection to the isoform they refer to, only as part of the comment text. In other cases, there is a `<molecule>` element, but the isoform to which it refers is just written there like `"Isoform Alpha-B"`, not using its id
+    5. Differences between isoform sequences are not provided in any reasonable format
+
+    UniProt sparse documentation:
+
+    - [What is the canonical sequence? Are all isoforms described in one entry?](http://www.uniprot.org/help/canonical_and_isoforms)
+    - [Alternative products](http://www.uniprot.org/help/alternative_products)
+
+    Given all this, here we are doing the best we can which accommodates existing data: there are protein vertices, connected between themselves through isoform edges. Proteins (which are actually UniProt entries) are connected with their canonical protein product through this edge. It is important to note that most of the data from the entry actually refers to this canonical protein product.
+
+    Again, let me remark that the isoform relation in UniProt is not transitive; if you really want to get all isoforms of a protein you need to compute the transitive closure of this edge.
+  */
+  public final class Isoforms extends Edge<Protein, Isoforms, Protein> {
+    private Isoforms(E edge) { super(edge, isoforms); }
+    @Override public final Isoforms self() { return this; }
+  }
+
+  public final IsoformsType isoforms = new IsoformsType();
+  public final class IsoformsType extends EdgeType<Protein, Isoforms, Protein> implements FromAny, ToAny {
+    private IsoformsType() { super(protein, protein); }
+    @Override public final Isoforms fromRaw(E edge) { return new Isoforms(edge); }
+  }
+
+  /*
     ### Protein gene names
 
     A name for the (a) gene codifying the protein. Corresponds, as much as possible, to the primary name in UniProt data. Note that
@@ -111,7 +142,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     See [Uniprot help - gene name](http://www.uniprot.org/help/gene_name).
 
-    So, `GeneProducts` will give you all the proteins annotated with that gene name.
+    So, `GeneProducts` will give you all the proteins annotated with that gene name. We consider equivalent all synonyms, and drop ordered locus and ORF names. 
   */
   public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
 
@@ -416,28 +447,5 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     onlineInformation,
     massSpectrometry,
     interaction;
-  }
-
-  /*
-    ### Isoforms
-
-    See
-
-    1. http://www.uniprot.org/help/canonical_and_isoforms
-    2. http://www.uniprot.org/help/alternative_products
-
-    The role of isoforms in UniProt data is extremely confusing and bad designed. We are doing the best we can here which accommodates existing data: there are protein vertices, connected between themselves through isoform edges. Proteins (which are actually UniProt entries) are connected with their canonical protein product through this edge. It is important to note that most of the data from the entry actually refers to this canonical protein product.
-
-    The isoform relation in UniProt is not transitive; if you really want to get all isoforms of a protein you need to compute the transitive closure of this edge.
-  */
-  public final class Isoforms extends Edge<Protein, Isoforms, Protein> {
-    private Isoforms(E edge) { super(edge, isoforms); }
-    @Override public final Isoforms self() { return this; }
-  }
-
-  public final IsoformsType isoforms = new IsoformsType();
-  public final class IsoformsType extends EdgeType<Protein, Isoforms, Protein> implements FromAny, ToAny {
-    private IsoformsType() { super(protein, protein); }
-    @Override public final Isoforms fromRaw(E edge) { return new Isoforms(edge); }
   }
 }
