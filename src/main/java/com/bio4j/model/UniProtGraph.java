@@ -109,7 +109,6 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     2. The *same* isoform can be the canonical isoform for one entry, and a secondary one in other
     3. The "isoform of" relationship is not transitive; see [P42166](http://www.uniprot.org/uniprot/P42166#sequences) and [P42167](http://www.uniprot.org/uniprot/P42167#sequences) for example.
     4. Annotations inside the entry sometimes refer to isoforms by name, not id. This means that in most cases comments just doesn't make any sense by themselves: See for example [P04150 xml](http://www.uniprot.org/uniprot/P04150.xml). In general, most comments do not have any connection to the isoform they refer to, only as part of the comment text. In other cases, there is a `<molecule>` element, but the isoform to which it refers is just written there like `"Isoform Alpha-B"`, not using its id
-    5. Differences between isoform sequences are not provided in any reasonable format
 
     UniProt sparse documentation:
 
@@ -142,7 +141,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     See [Uniprot help - gene name](http://www.uniprot.org/help/gene_name).
 
-    So, `GeneProducts` will give you all the proteins annotated with that gene name. We consider equivalent all synonyms, and drop ordered locus and ORF names. 
+    So, `GeneProducts` will give you all the proteins annotated with that gene name. We consider equivalent all synonyms, and drop ordered locus and ORF names.
   */
   public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
 
