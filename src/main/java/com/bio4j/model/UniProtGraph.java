@@ -70,20 +70,6 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     }
 
     /*
-      #### Gene name
-
-      A name for the (a) gene codifying this protein. Corresponds to the primary name in UniProt data. Note that not all proteins have an associated gene name.
-    */
-    public final GeneName geneName = new GeneName();
-    public final class GeneName extends Property<String> implements FromAny {
-      private GeneName() { super(String.class); }
-      public final Index index = new Index();
-      public final class Index extends NonUniqueIndex<GeneName, String> {
-        private Index() { super(geneName); }
-      }
-    }
-
-    /*
       #### ORF name
 
       The name, if any, for the (a) ORF corresponding to this protein. ORF name in UniProt data.
@@ -124,6 +110,43 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     }
   }
 
+  /*
+    ### Protein gene names
+
+    A name for the (a) gene codifying the protein. Corresponds, as much as possible, to the primary name in UniProt data. Note that
+
+    1. not all proteins have an associated gene name
+    2. gene names are far from unique. For example, there are 12 entries (thus at least 12 isoforms) with primary gene name `APP`
+    3. *Different* genes can be connected with the same protein
+
+    See [Uniprot help - gene name](http://www.uniprot.org/help/gene_name).
+
+    So, `GeneProducts` will give you all the proteins annotated with that gene name.
+  */
+  public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
+
+    private GeneProducts(E edge) { super(edge, geneProducts); }
+    @Override public final GeneProducts self() { return this; }
+  }
+
+  public final GeneProductsType geneProducts = new GeneProductsType();
+  public final class GeneProductsType extends EdgeType<GeneName, GeneProducts, Protein> implements FromAny, ToAny {
+
+    private GeneProductsType() { super(geneName, protein); }
+    @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
+  }
+
+  public final class GeneName extends Vertex<GeneName> {
+
+    private GeneName(V vertex) { super(vertex, geneName); }
+    @Override public final GeneName self() { return this; }
+  }
+
+  public final GeneNameType geneName = new GeneNameType();
+  public final class GeneNameType extends VertexType<GeneName> {
+
+    @Override public final GeneName fromRaw(V vertex) { return new GeneName(vertex); }
+  }
   /*
     See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
   */
