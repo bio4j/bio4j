@@ -1,5 +1,4 @@
 /*
-
   # UniProt ENZYME annotations
 
   UniProt annotates *entries* with ENZYME (partial) codes. This graph adds an edge connecting the canonical protein of an entry with the ENZYME codes with which the entry is annotated.
