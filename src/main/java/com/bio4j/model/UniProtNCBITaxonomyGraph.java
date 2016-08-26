@@ -13,7 +13,7 @@ import com.bio4j.angulillos.Arity.*;
 
 public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBITaxonomyGraph<V,E>,V,E> {
 
-  public UniProtNCBITaxonomyGraph(UniProtGraph<V,E> uniProtGraph, ENZYMEGraph<V,E> ncbiTaxonomyGraph) {
+  public UniProtNCBITaxonomyGraph(UniProtGraph<V,E> uniProtGraph, NCBITaxonomyGraph<V,E> ncbiTaxonomyGraph) {
 
     super(uniProtGraph.raw());
     this.uniProtGraph = uniProtGraph;
