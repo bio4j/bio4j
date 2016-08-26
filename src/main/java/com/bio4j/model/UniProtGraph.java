@@ -82,10 +82,10 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     /*
       #### Sequence
 
-      Normalized to all-caps.
+      Normalized to all-caps. There are isoforms without sequence.
     */
     public final Sequence sequence = new Sequence();
-    public final class Sequence extends Property<String> implements FromAny, ToOne {
+    public final class Sequence extends Property<String> implements FromAny {
       private Sequence() { super(String.class); }
     }
 
@@ -201,81 +201,13 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   }
 
   /*
-    ### Keywords
+    ### Sequence Annotations (Features)
 
     See
 
-    1. http://www.uniprot.org/help/keywords
-    2. ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#KW_line
-    3. ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/keywlist.txt
-    4. http://geneontology.org/external2go/uniprotkb_kw2go
+    - [UniProt help - Sequence Annotation (Features)](http://www.uniprot.org/help/sequence_annotation)
 
-    Note that from http://www.uniprot.org/keywords/ you can download a `tsv` file with columns ID, description, category. If we also want the name I'm afraid we'll need to extract it from http://www.uniprot.org/docs/keywlist.
-  */
-  public final class Keyword extends Vertex<Keyword> {
-    private Keyword(V vertex) { super(vertex, keyword); }
-    @Override public final Keyword self() { return this; }
-  }
-  public final KeywordType keyword = new KeywordType();
-
-  public final class KeywordType extends VertexType<Keyword> {
-
-    @Override public final Keyword fromRaw(V vertex) { return new Keyword(vertex); }
-
-    public final Name name = new Name();
-    public final class Name extends Property<String> implements FromAny, ToOne {
-      private Name() { super(String.class); }
-    }
-
-    public final Definition definition = new Definition();
-    public final class Definition extends Property<String> implements FromAny, ToOne {
-      private Definition() { super(String.class); }
-    }
-
-    public final Category category = new Category();
-    public final class Category extends Property<KeywordCategories> implements FromAny, ToOne {
-      private Category() { super(KeywordCategories.class); }
-    }
-  }
-
-  /*
-    ### Keyword categories
-
-    Right now keyword categories are represented as an enum. There is a hierarchy though, similar to that found in GO, but with not a clear meaning. Given enough interest, keyword categories can be upgraded to vertices, with an edge representing this hierarchy.
-  */
-  public static enum KeywordCategories {
-
-    biologicalProcess,
-    cellularComponent,
-    codingSequenceDiversity,
-    developmentalStage,
-    disease,
-    domain,
-    ligand,
-    molecularFunction,
-    PTM,
-    technicalTerm;
-  }
-
-  /*
-    ### Protein keywords
-
-    An edge etc etc.
-  */
-  public final class Keywords extends Edge<Protein, Keywords, Keyword> {
-    private Keywords(E edge) { super(edge, keywords); }
-    @Override public final Keywords self() { return this; }
-  }
-  public final KeywordsType keywords = new KeywordsType();
-  public final class KeywordsType extends EdgeType<Protein, Keywords, Keyword> implements FromAtLeastOne, ToAny {
-    private KeywordsType() { super(protein, keyword); }
-    @Override public final Keywords fromRaw(E edge) { return new Keywords(edge); }
-  }
-
-  /*
-    ### Annotations (Features)
-
-    ...
+    There is a vertex for each annotation, with a property which determines its type. The location is encoded in the `annotations` edge going from proteins to annotations.
   */
   public final class Annotation extends Vertex<Annotation> {
     private Annotation(V vertex) { super(vertex, annotation); }
@@ -306,7 +238,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     /*
       Note that these properties are here in the edge because of the limitations of current graph databases; they should be part of the annotation vertex.
 
-      ##### UniProt data and this
+      ##### UniProt position data and this
 
       1. Everything here is **0-based**, with `[start, end[` intervals
       2. Those `<`, `>` symbols for positions are translated to `0` and `length`
@@ -446,5 +378,77 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     onlineInformation,
     massSpectrometry,
     interaction;
+  }
+
+  /*
+    ### Keywords
+
+    See
+
+    1. http://www.uniprot.org/help/keywords
+    2. ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#KW_line
+    3. ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/keywlist.txt
+    4. http://geneontology.org/external2go/uniprotkb_kw2go
+
+    Note that from http://www.uniprot.org/keywords/ you can download a `tsv` file with columns ID, description, category. If we also want the name I'm afraid we'll need to extract it from http://www.uniprot.org/docs/keywlist.
+  */
+  public final class Keyword extends Vertex<Keyword> {
+    private Keyword(V vertex) { super(vertex, keyword); }
+    @Override public final Keyword self() { return this; }
+  }
+  public final KeywordType keyword = new KeywordType();
+
+  public final class KeywordType extends VertexType<Keyword> {
+
+    @Override public final Keyword fromRaw(V vertex) { return new Keyword(vertex); }
+
+    public final Name name = new Name();
+    public final class Name extends Property<String> implements FromAny, ToOne {
+      private Name() { super(String.class); }
+    }
+
+    public final Definition definition = new Definition();
+    public final class Definition extends Property<String> implements FromAny, ToOne {
+      private Definition() { super(String.class); }
+    }
+
+    public final Category category = new Category();
+    public final class Category extends Property<KeywordCategories> implements FromAny, ToOne {
+      private Category() { super(KeywordCategories.class); }
+    }
+  }
+
+  /*
+    ### Keyword categories
+
+    Right now keyword categories are represented as an enum. There is a hierarchy though, similar to that found in GO, but with not a clear meaning. Given enough interest, keyword categories can be upgraded to vertices, with an edge representing this hierarchy.
+  */
+  public static enum KeywordCategories {
+
+    biologicalProcess,
+    cellularComponent,
+    codingSequenceDiversity,
+    developmentalStage,
+    disease,
+    domain,
+    ligand,
+    molecularFunction,
+    PTM,
+    technicalTerm;
+  }
+
+  /*
+    ### Protein keywords
+
+    An edge etc etc.
+  */
+  public final class Keywords extends Edge<Protein, Keywords, Keyword> {
+    private Keywords(E edge) { super(edge, keywords); }
+    @Override public final Keywords self() { return this; }
+  }
+  public final KeywordsType keywords = new KeywordsType();
+  public final class KeywordsType extends EdgeType<Protein, Keywords, Keyword> implements FromAtLeastOne, ToAny {
+    private KeywordsType() { super(protein, keyword); }
+    @Override public final Keywords fromRaw(E edge) { return new Keywords(edge); }
   }
 }
