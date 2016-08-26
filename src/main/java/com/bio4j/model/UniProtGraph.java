@@ -206,6 +206,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     See
 
     - [UniProt help - Sequence Annotation (Features)](http://www.uniprot.org/help/sequence_annotation)
+    - [UniProt user manual - Features](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#FT_keys)
 
     There is a vertex for each annotation, with a property which determines its type. The location is encoded in the `annotations` edge going from proteins to annotations.
   */
@@ -256,7 +257,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   }
 
   /*
-    ### Feature types
+    ### Sequence annotation types
 
     They are an enum. As for keywords, they can be upgraded to vertices.
   */
