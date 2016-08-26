@@ -70,16 +70,6 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     }
 
     /*
-      #### ORF name
-
-      The name, if any, for the (a) ORF corresponding to this protein. ORF name in UniProt data.
-    */
-    public final ORFName orfName = new ORFName();
-    public final class ORFName extends Property<String> implements FromAny {
-      private ORFName() { super(String.class); }
-    }
-
-    /*
       #### Existence
 
       How strong is the evidence for this protein existence. This is only available for proteins which are the canonical protein of some entry.
