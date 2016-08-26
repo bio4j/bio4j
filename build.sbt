@@ -18,11 +18,4 @@ def pathContains(segment: String) = new FileFilter {
 }
 
 excludeFilter in unmanagedSources :=
-  (excludeFilter in unmanagedSources).value     ||
-  pathContains("UniGeneGraph.java")             ||
-  pathContains("UniProtGraph.java")             ||
-  pathContains("UniProtEnzymeDBGraph.java")     ||
-  pathContains("UniProtGoGraph.java")           ||
-  pathContains("UniProtNCBITaxonomyGraph.java") ||
-  pathContains("UniProtUniRefGraph.java")       ||
-  pathContains("UniRefGraph.java")
+  (excludeFilter in unmanagedSources).value || pathContains("UniProtGoGraph.java")
