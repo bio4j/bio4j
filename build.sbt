@@ -1,5 +1,3 @@
-Nice.javaProject
-
 name          := "bio4j"
 organization  := "bio4j"
 description   := "Bio4j data model and generic API"
