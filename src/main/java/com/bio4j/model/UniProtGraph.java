@@ -344,6 +344,20 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private Text() { super(String.class); }
     }
   }
+  /*
+    #### Comments edge
+
+    Connects a protein with its commnents.
+  */
+  public final class Comments extends Edge<Protein, Comments, Comment> {
+    private Comments(E edge) { super(edge, comments); }
+    @Override public final Comments self() { return this; }
+  }
+  public final CommentsType comments = new CommentsType();
+  public final class CommentsType extends EdgeType<Protein, Comments, Comment> implements FromAtLeastOne, ToAny {
+    private CommentsType() { super(protein, comment); }
+    @Override public final Comments fromRaw(E edge) { return new Comments(edge); }
+  }
 
   /*
     This enum only contains those topics which do *not* give rise to specific vertex types.
