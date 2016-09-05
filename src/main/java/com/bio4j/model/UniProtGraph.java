@@ -166,6 +166,20 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   public final class GeneNameType extends VertexType<GeneName> {
 
     @Override public final GeneName fromRaw(V vertex) { return new GeneName(vertex); }
+
+    /*
+      #### Name
+
+      These vertices correspond to the values of their name property. It is indexed.
+    */
+    public final Name name = new Name();
+    public final class Name extends Property<String> implements FromAtMostOne, ToOne {
+      private Name() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<Name, String> {
+        private Index() { super(name); }
+      }
+    }
   }
   /*
     See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
