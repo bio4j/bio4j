@@ -238,6 +238,16 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     public final class FeatureType extends Property<FeatureTypes> implements FromAtLeastOne, ToOne {
       private FeatureType() { super(FeatureTypes.class); }
     }
+
+    /*
+      #### Description
+
+      Descriptions are not always present, but they do contain key information sometimes: the isoform corresponding to a sequence variant, or the allele which has it, for example.
+    */
+    public final Description description = new Description();
+    public final class Description extends Property<String> implements FromAny {
+      private Description() { super(String.class); }
+    }
   }
 
   public final class Annotations extends Edge<Protein, Annotations, Annotation> {
