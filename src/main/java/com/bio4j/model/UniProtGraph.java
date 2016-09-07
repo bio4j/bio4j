@@ -42,7 +42,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     /*
       #### Accession
 
-      Canonical isoforms (proteins) corresponding to an entry have an accession ID, which is the standard protein ID used almost everywhere. See http://www.uniprot.org/help/accession_numbers
+      Canonical isoforms (proteins) corresponding to an entry have an accession ID, which is the standard protein ID used almost everywhere. The presence of this property is equivalent to this protein having an UniProt entry. See http://www.uniprot.org/help/accession_numbers
     */
     public final Accession accession = new Accession();
     public final class Accession extends Property<String> implements FromAtMostOne, ToAtMostOne {
@@ -52,17 +52,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
         private Index() { super(accession); }
       }
     }
-
-    /*
-      #### Is canonical
-
-      Whether this protein is the canonical protein of an entry.
-    */
-    public final IsCanonical isCanonical = new IsCanonical();
-    public final class IsCanonical extends Property<Boolean> implements FromAtLeastOne, ToOne {
-      private IsCanonical() { super(Boolean.class); }
-    }
-
+    
     /*
       #### Full name
 
