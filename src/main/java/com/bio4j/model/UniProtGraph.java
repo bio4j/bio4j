@@ -26,16 +26,16 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     @Override public final Protein fromRaw(V vertex) { return new Protein(vertex); }
 
     /*
-      #### Accession
+      #### ID
 
-      Accessions are the primary IDs for UniProt proteins. See http://www.uniprot.org/help/accession_numbers. Note that this is *never* the *entry* accession, but the isoform id. Those isoforms which are the canonical sequence of an entry have `isCanonical` set to `true`.
+      Primary IDs correspond to the UniProt isoform ID. Note that this is *never* the *entry* accession; for that we have the `accession` property.
     */
-    public final Accession accession = new Accession();
-    public final class Accession extends Property<String> implements FromAtMostOne, ToOne {
-      private Accession() { super(String.class); }
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
       public final Index index = new Index();
-      public final class Index extends UniqueIndex<Accession, String> {
-        private Index() { super(accession); }
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(id); }
       }
     }
 
