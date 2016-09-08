@@ -448,6 +448,10 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     public final ID id = new ID();
     public final class ID extends Property<String> implements FromAtMostOne, ToOne {
       private ID() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(id); }
+      }
     }
 
     public final Definition definition = new Definition();
