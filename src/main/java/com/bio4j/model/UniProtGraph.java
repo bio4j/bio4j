@@ -145,7 +145,9 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     See [Uniprot help - gene name](http://www.uniprot.org/help/gene_name).
 
-    So, `GeneProducts` will give you all the proteins annotated with that gene name. We consider equivalent all synonyms, and drop ordered locus and ORF names.
+    We take the *first* primary name, or the the *first* ORF name if there are no primary names.
+
+    The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name.
   */
   public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
 
