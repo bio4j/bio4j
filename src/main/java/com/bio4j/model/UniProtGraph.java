@@ -52,7 +52,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
         private Index() { super(accession); }
       }
     }
-    
+
     /*
       #### Full name
 
@@ -445,9 +445,9 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     @Override public final Keyword fromRaw(V vertex) { return new Keyword(vertex); }
 
-    public final Name name = new Name();
-    public final class Name extends Property<String> implements FromAny, ToOne {
-      private Name() { super(String.class); }
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
     }
 
     public final Definition definition = new Definition();
