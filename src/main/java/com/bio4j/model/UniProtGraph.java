@@ -149,19 +149,6 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name.
   */
-  public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
-
-    private GeneProducts(E edge) { super(edge, geneProducts); }
-    @Override public final GeneProducts self() { return this; }
-  }
-
-  public final GeneProductsType geneProducts = new GeneProductsType();
-  public final class GeneProductsType extends EdgeType<GeneName, GeneProducts, Protein> implements FromAny, ToAny {
-
-    private GeneProductsType() { super(geneName, protein); }
-    @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
-  }
-
   public final class GeneName extends Vertex<GeneName> {
 
     private GeneName(V vertex) { super(vertex, geneName); }
@@ -186,6 +173,19 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
         private Index() { super(name); }
       }
     }
+  }
+
+  public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
+
+    private GeneProducts(E edge) { super(edge, geneProducts); }
+    @Override public final GeneProducts self() { return this; }
+  }
+
+  public final GeneProductsType geneProducts = new GeneProductsType();
+  public final class GeneProductsType extends EdgeType<GeneName, GeneProducts, Protein> implements FromAny, ToAny {
+
+    private GeneProductsType() { super(geneName, protein); }
+    @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
   }
   /*
     See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
