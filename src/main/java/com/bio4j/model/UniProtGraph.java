@@ -168,10 +168,12 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     public final Name name = new Name();
     public final class Name extends Property<String> implements FromAtMostOne, ToOne {
       private Name() { super(String.class); }
-      public final Index index = new Index();
-      public final class Index extends UniqueIndex<Name, String> {
-        private Index() { super(Name.this); }
-      }
+      public final NameIndex index = nameIndex;
+    }
+
+    private final NameIndex nameIndex = new NameIndex();
+    private final class NameIndex extends UniqueIndex<Name, String> {
+      private NameIndex() { super(name); }
     }
   }
 
