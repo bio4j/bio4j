@@ -170,7 +170,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private Name() { super(String.class); }
       public final Index index = new Index();
       public final class Index extends UniqueIndex<Name, String> {
-        private Index() { super(name); }
+        private Index() { super(Name.this); }
       }
     }
   }
