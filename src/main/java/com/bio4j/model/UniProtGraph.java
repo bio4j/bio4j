@@ -35,7 +35,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private ID() { super(String.class); }
       public final Index index = new Index();
       public final class Index extends UniqueIndex<ID, String> {
-        private Index() { super(id); }
+        private Index() { super(ID.this); }
       }
     }
 
@@ -49,7 +49,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private Accession() { super(String.class); }
       public final Index index = new Index();
       public final class Index extends UniqueIndex<Accession, String> {
-        private Index() { super(accession); }
+        private Index() { super(Accession.this); }
       }
     }
 
@@ -149,19 +149,6 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name.
   */
-  public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
-
-    private GeneProducts(E edge) { super(edge, geneProducts); }
-    @Override public final GeneProducts self() { return this; }
-  }
-
-  public final GeneProductsType geneProducts = new GeneProductsType();
-  public final class GeneProductsType extends EdgeType<GeneName, GeneProducts, Protein> implements FromAny, ToAny {
-
-    private GeneProductsType() { super(geneName, protein); }
-    @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
-  }
-
   public final class GeneName extends Vertex<GeneName> {
 
     private GeneName(V vertex) { super(vertex, geneName); }
@@ -183,9 +170,22 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private Name() { super(String.class); }
       public final Index index = new Index();
       public final class Index extends UniqueIndex<Name, String> {
-        private Index() { super(name); }
+        private Index() { super(Name.this); }
       }
     }
+  }
+
+  public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
+
+    private GeneProducts(E edge) { super(edge, geneProducts); }
+    @Override public final GeneProducts self() { return this; }
+  }
+
+  public final GeneProductsType geneProducts = new GeneProductsType();
+  public final class GeneProductsType extends EdgeType<GeneName, GeneProducts, Protein> implements FromAny, ToAny {
+
+    private GeneProductsType() { super(geneName, protein); }
+    @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
   }
   /*
     See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
@@ -452,7 +452,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
       private ID() { super(String.class); }
       public final Index index = new Index();
       public final class Index extends UniqueIndex<ID, String> {
-        private Index() { super(id); }
+        private Index() { super(ID.this); }
       }
     }
 
