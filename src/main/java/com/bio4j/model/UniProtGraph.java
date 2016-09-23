@@ -147,7 +147,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     We take the *first* primary name, or the the *first* ORF name if there are no primary names.
 
-    The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name.
+    The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name. This edge also contains gene location information, as a property. This is not a property of gene names due to the issues explained above.
   */
   public final class GeneName extends Vertex<GeneName> {
 
@@ -186,9 +186,14 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
 
     private GeneProductsType() { super(geneName, protein); }
     @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
+
+    public final Location location = new Location();
+    public final class Location extends Property<GeneLocations> implements FromAny, ToOne {
+      private Location() { super(GeneLocations.class); }
+    }
   }
   /*
-    See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
+    See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OG_line
   */
   public static enum GeneLocations {
 
