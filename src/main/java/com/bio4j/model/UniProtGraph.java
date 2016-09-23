@@ -188,7 +188,7 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
   }
   /*
-    See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
+    See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OG_line
   */
   public static enum GeneLocations {
 
