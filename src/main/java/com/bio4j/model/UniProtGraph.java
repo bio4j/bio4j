@@ -94,6 +94,16 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     }
 
     /*
+      #### Sequence length
+
+      The length of the sequence stored as a property.
+    */
+    public final SequenceLength sequenceLength = new SequenceLength();
+    public final class SequenceLength extends Property<Integer> implements FromAny {
+      private SequenceLength() { super(Integer.class); }
+    }
+
+    /*
       #### Sequence Mass
 
       I honestly don't know what's this.
