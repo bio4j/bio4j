@@ -108,7 +108,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   /*
     ## Cluster seeds
 
-    These edges connect clusters with the protein whose sequence served as their seed. Note that this is *not* in general the same as the cluster representative.
+    These edges connect clusters with the protein whose sequence served as their seed. Note that this is *not* in general the same as the cluster representative; what is true though is that seeds for UniRef90 and UniRef50 are always representatives of the immediate more specific partition (UniRef100 and UniRef90 respectively).
   */
   public final class UniRef100Seed extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
@@ -177,8 +177,11 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
 
+  /*
+    ## Cluster representatives
 
-
+    These edges connect each cluster with their representative sequence. Again, note that in general this is *not* the same as the seed used to generate that cluster.
+  */
   public final class UniRef100Representative extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Representative,
