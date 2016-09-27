@@ -1,3 +1,8 @@
+/*
+  # UniProt GO annotations
+
+  This graph contains an edge connecting a protein with their Gene Ontology annotations (terms).
+*/
 package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
