@@ -106,6 +106,78 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   /*
+    ## Cluster members
+
+    These edges connect clusters with their members. A cluster has at at least one member, and every protein is member of exactly one cluster.
+  */
+  public final class UniRef100Member extends LinkEdge<
+    UniRefGraph<V,E>, UniRef100Cluster,
+    UniRef100Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef100Member(E edge) { super(edge, uniRef100Member); }
+    @Override public final UniRef100Member self() { return this; }
+  }
+
+  public final UniRef100MemberType uniRef100Member = new UniRef100MemberType();
+  public final class UniRef100MemberType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef100Cluster,
+    UniRef100Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromOne, ToAtLeastOne {
+
+    private UniRef100MemberType() { super(uniRef100Cluster, uniProtGraph.protein); }
+    @Override public final UniRef100Member fromRaw(E edge) { return new UniRef100Member(edge); }
+  }
+
+  public final class UniRef90Member extends LinkEdge<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef90Member(E edge) { super(edge, uniRef90Member); }
+    @Override public final UniRef90Member self() { return this; }
+  }
+
+  public final UniRef90MemberType uniRef90Member = new UniRef90MemberType();
+  public final class UniRef90MemberType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromOne, ToAtLeastOne {
+
+    private UniRef90MemberType() { super(uniRef90Cluster, uniProtGraph.protein); }
+    @Override public final UniRef90Member fromRaw(E edge) { return new UniRef90Member(edge); }
+  }
+
+  public final class UniRef50Member extends LinkEdge<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef50Member(E edge) { super(edge, uniRef50Member); }
+    @Override public final UniRef50Member self() { return this; }
+  }
+
+  public final UniRef50MemberType uniRef50Member = new UniRef50MemberType();
+  public final class UniRef50MemberType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Member,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromOne, ToAtLeastOne {
+
+    private UniRef50MemberType() { super(uniRef50Cluster, uniProtGraph.protein); }
+    @Override public final UniRef50Member fromRaw(E edge) { return new UniRef50Member(edge); }
+  }
+
+
+  /*
     ## Cluster seeds
 
     These edges connect clusters with the protein whose sequence served as their seed. Note that this is *not* in general the same as the cluster representative; what is true though is that seeds for UniRef90 and UniRef50 are always representatives of the immediate more specific partition (UniRef100 and UniRef90 respectively).
