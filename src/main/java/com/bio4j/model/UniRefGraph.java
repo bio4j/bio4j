@@ -203,4 +203,48 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     private UniRef100RepresentativeType() { super(uniRef100Cluster, uniProtGraph.protein); }
     @Override public final UniRef100Representative fromRaw(E edge) { return new UniRef100Representative(edge); }
   }
+
+  public final class UniRef90Representative extends LinkEdge<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Representative,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef90Representative(E edge) { super(edge, uniRef90Representative); }
+    @Override public final UniRef90Representative self() { return this; }
+  }
+
+  public final UniRef90RepresentativeType uniRef90Representative = new UniRef90RepresentativeType();
+  public final class UniRef90RepresentativeType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Representative,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromAny, ToOne {
+
+    private UniRef90RepresentativeType() { super(uniRef90Cluster, uniProtGraph.protein); }
+    @Override public final UniRef90Representative fromRaw(E edge) { return new UniRef90Representative(edge); }
+  }
+
+  public final class UniRef50Representative extends LinkEdge<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Representative,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef50Representative(E edge) { super(edge, uniRef50Representative); }
+    @Override public final UniRef50Representative self() { return this; }
+  }
+
+  public final UniRef50RepresentativeType uniRef50Representative = new UniRef50RepresentativeType();
+  public final class UniRef50RepresentativeType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Representative,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromAny, ToOne {
+
+    private UniRef50RepresentativeType() { super(uniRef50Cluster, uniProtGraph.protein); }
+    @Override public final UniRef50Representative fromRaw(E edge) { return new UniRef50Representative(edge); }
+  }
 }
