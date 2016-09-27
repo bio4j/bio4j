@@ -149,7 +149,9 @@ _TO DO_ explain this. Shuold this be a crossref?
 [main/java/com/bio4j/model/UniProtGraph.java]: UniProtGraph.java.md
 [main/java/com/bio4j/model/UniProtENZYMEGraph.java]: UniProtENZYMEGraph.java.md
 [main/java/com/bio4j/model/NCBITaxonomyGraph.java]: NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/UniRefGraph.java]: UniRefGraph.java.md
 [main/java/com/bio4j/model/ENZYMEGraph.java]: ENZYMEGraph.java.md
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
+[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md

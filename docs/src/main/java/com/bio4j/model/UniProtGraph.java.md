@@ -32,32 +32,36 @@ The first thing to point out as clearly as possible is: `Protein`s **do not** co
 ```
 
 
-#### Accession
+#### ID
 
-Accessions are the primary IDs for UniProt proteins. See http://www.uniprot.org/help/accession_numbers. Note that this is *never* the *entry* accession, but the isoform id. Those isoforms which are the canonical sequence of an entry have `isCanonical` set to `true`.
+Primary IDs correspond to the UniProt isoform ID. Note that this is *never* the *entry* accession; for that we have the `accession` property.
 
 
 ```java
-    public final Accession accession = new Accession();
-    public final class Accession extends Property<String> implements FromAtMostOne, ToOne {
-      private Accession() { super(String.class); }
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
       public final Index index = new Index();
-      public final class Index extends UniqueIndex<Accession, String> {
-        private Index() { super(accession); }
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(ID.this); }
       }
     }
 ```
 
 
-#### Is canonical
+#### Accession
 
-Whether this protein is the canonical protein of an entry.
+Canonical isoforms (proteins) corresponding to an entry have an accession ID, which is the standard protein ID used almost everywhere. The presence of this property is equivalent to this protein having an UniProt entry. See http://www.uniprot.org/help/accession_numbers
 
 
 ```java
-    public final IsCanonical isCanonical = new IsCanonical();
-    public final class IsCanonical extends Property<Boolean> implements FromAtLeastOne, ToOne {
-      private IsCanonical() { super(Boolean.class); }
+    public final Accession accession = new Accession();
+    public final class Accession extends Property<String> implements FromAtMostOne, ToAtMostOne {
+      private Accession() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<Accession, String> {
+        private Index() { super(Accession.this); }
+      }
     }
 ```
 
@@ -110,6 +114,19 @@ Normalized to all-caps. There are isoforms without sequence.
     public final Sequence sequence = new Sequence();
     public final class Sequence extends Property<String> implements FromAny {
       private Sequence() { super(String.class); }
+    }
+```
+
+
+#### Sequence length
+
+The length of the sequence stored as a property.
+
+
+```java
+    public final SequenceLength sequenceLength = new SequenceLength();
+    public final class SequenceLength extends Property<Integer> implements FromAny {
+      private SequenceLength() { super(Integer.class); }
     }
 ```
 
@@ -171,10 +188,41 @@ A name for the (a) gene codifying the protein. Corresponds, as much as possible,
 
 See [Uniprot help - gene name](http://www.uniprot.org/help/gene_name).
 
-So, `GeneProducts` will give you all the proteins annotated with that gene name. We consider equivalent all synonyms, and drop ordered locus and ORF names.
+We take the *first* primary name, or the the *first* ORF name if there are no primary names.
+
+The `GeneProducts` edge will give you all the proteins with an entry annotated with that gene name. This edge also contains gene location information, as a property. This is not a property of gene names due to the issues explained above.
 
 
 ```java
+  public final class GeneName extends Vertex<GeneName> {
+
+    private GeneName(V vertex) { super(vertex, geneName); }
+    @Override public final GeneName self() { return this; }
+  }
+
+  public final GeneNameType geneName = new GeneNameType();
+  public final class GeneNameType extends VertexType<GeneName> {
+
+    @Override public final GeneName fromRaw(V vertex) { return new GeneName(vertex); }
+```
+
+
+#### Name
+
+These vertices correspond to the values of their name property. It is indexed.
+
+
+```java
+    public final Name name = new Name();
+    public final class Name extends Property<String> implements FromAtMostOne, ToOne {
+      private Name() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<Name, String> {
+        private Index() { super(Name.this); }
+      }
+    }
+  }
+
   public final class GeneProducts extends Edge<GeneName, GeneProducts, Protein> {
 
     private GeneProducts(E edge) { super(edge, geneProducts); }
@@ -186,23 +234,16 @@ So, `GeneProducts` will give you all the proteins annotated with that gene name.
 
     private GeneProductsType() { super(geneName, protein); }
     @Override public final GeneProducts fromRaw(E edge) { return new GeneProducts(edge); }
-  }
 
-  public final class GeneName extends Vertex<GeneName> {
-
-    private GeneName(V vertex) { super(vertex, geneName); }
-    @Override public final GeneName self() { return this; }
-  }
-
-  public final GeneNameType geneName = new GeneNameType();
-  public final class GeneNameType extends VertexType<GeneName> {
-
-    @Override public final GeneName fromRaw(V vertex) { return new GeneName(vertex); }
+    public final Location location = new Location();
+    public final class Location extends Property<GeneLocations> implements FromAny, ToOne {
+      private Location() { super(GeneLocations.class); }
+    }
   }
 ```
 
 
-See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OC_line
+See ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/userman.htm#OG_line
 
 
 ```java
@@ -262,6 +303,19 @@ There is a vertex for each annotation, with a property which determines its type
     public final FeatureType featureType = new FeatureType();
     public final class FeatureType extends Property<FeatureTypes> implements FromAtLeastOne, ToOne {
       private FeatureType() { super(FeatureTypes.class); }
+    }
+```
+
+
+#### Description
+
+Descriptions are not always present, but they do contain key information sometimes: the isoform corresponding to a sequence variant, or the allele which has it, for example.
+
+
+```java
+    public final Description description = new Description();
+    public final class Description extends Property<String> implements FromAny {
+      private Description() { super(String.class); }
     }
   }
 
@@ -401,6 +455,24 @@ This property contains the text of this comment.
 ```
 
 
+#### Comments edge
+
+Connects a protein with its commnents.
+
+
+```java
+  public final class Comments extends Edge<Protein, Comments, Comment> {
+    private Comments(E edge) { super(edge, comments); }
+    @Override public final Comments self() { return this; }
+  }
+  public final CommentsType comments = new CommentsType();
+  public final class CommentsType extends EdgeType<Protein, Comments, Comment> implements FromAtLeastOne, ToAny {
+    private CommentsType() { super(protein, comment); }
+    @Override public final Comments fromRaw(E edge) { return new Comments(edge); }
+  }
+```
+
+
 This enum only contains those topics which do *not* give rise to specific vertex types.
 
 
@@ -463,9 +535,13 @@ Note that from http://www.uniprot.org/keywords/ you can download a `tsv` file wi
 
     @Override public final Keyword fromRaw(V vertex) { return new Keyword(vertex); }
 
-    public final Name name = new Name();
-    public final class Name extends Property<String> implements FromAny, ToOne {
-      private Name() { super(String.class); }
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(ID.this); }
+      }
     }
 
     public final Definition definition = new Definition();
@@ -528,7 +604,9 @@ An edge etc etc.
 [main/java/com/bio4j/model/UniProtGraph.java]: UniProtGraph.java.md
 [main/java/com/bio4j/model/UniProtENZYMEGraph.java]: UniProtENZYMEGraph.java.md
 [main/java/com/bio4j/model/NCBITaxonomyGraph.java]: NCBITaxonomyGraph.java.md
+[main/java/com/bio4j/model/UniRefGraph.java]: UniRefGraph.java.md
 [main/java/com/bio4j/model/ENZYMEGraph.java]: ENZYMEGraph.java.md
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
+[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md
