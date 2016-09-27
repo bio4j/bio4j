@@ -105,6 +105,11 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     }
   }
 
+  /*
+    ## Cluster seeds
+
+    These edges connect clusters with the protein whose sequence served as their seed. Note that this is *not* in general the same as the cluster representative.
+  */
   public final class UniRef100Seed extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Seed,
@@ -126,6 +131,53 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     private UniRef100SeedType() { super(uniRef100Cluster, uniProtGraph.protein); }
     @Override public final UniRef100Seed fromRaw(E edge) { return new UniRef100Seed(edge); }
   }
+
+  public final class UniRef90Seed extends LinkEdge<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef90Seed(E edge) { super(edge, uniRef90Seed); }
+    @Override public final UniRef90Seed self() { return this; }
+  }
+
+  public final UniRef90SeedType uniRef90Seed = new UniRef90SeedType();
+  public final class UniRef90SeedType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef90Cluster,
+    UniRef90Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromAny, ToOne {
+
+    private UniRef90SeedType() { super(uniRef90Cluster, uniProtGraph.protein); }
+    @Override public final UniRef90Seed fromRaw(E edge) { return new UniRef90Seed(edge); }
+  }
+
+  public final class UniRef50Seed extends LinkEdge<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef50Seed(E edge) { super(edge, uniRef50Seed); }
+    @Override public final UniRef50Seed self() { return this; }
+  }
+
+  public final UniRef50SeedType uniRef50Seed = new UniRef50SeedType();
+  public final class UniRef50SeedType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef50Cluster,
+    UniRef50Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromAny, ToOne {
+
+    private UniRef50SeedType() { super(uniRef50Cluster, uniProtGraph.protein); }
+    @Override public final UniRef50Seed fromRaw(E edge) { return new UniRef50Seed(edge); }
+  }
+
+
+
 
   public final class UniRef100Representative extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
