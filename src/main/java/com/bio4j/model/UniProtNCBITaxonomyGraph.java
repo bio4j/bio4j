@@ -11,7 +11,7 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBITaxonomyGraph<V,E>,V,E> {
+public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITaxonomyGraph<V,E>,V,E> {
 
   public UniProtNCBITaxonomyGraph(UniProtGraph<V,E> uniProtGraph, NCBITaxonomyGraph<V,E> ncbiTaxonomyGraph) {
 
@@ -25,5 +25,47 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBIT
 
   @Override public final UniProtNCBITaxonomyGraph<V,E> self() { return this; }
 
-  // TODO add edges here: organism which is toOne, and host about which I'm not sure
+  public final class Organism extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Organism,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  {
+    private Organism(E edge) { super(edge, organism); }
+    @Override public final Organism self() { return this; }
+  }
+
+  public final OrganismType organism = new OrganismType();
+  public final class OrganismType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Organism,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  implements FromAny, ToOne {
+
+    private OrganismType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
+    @Override public final Organism fromRaw(E edge) { return new Organism(edge); }
+  }
+
+  public final class Host extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  {
+    private Host(E edge) { super(edge, host); }
+    @Override public final Host self() { return this; }
+  }
+
+  public final HostType host = new HostType();
+  public final class HostType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  implements FromAny, ToAny {
+
+    private HostType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
+    @Override public final Host fromRaw(E edge) { return new Host(edge); }
+  }
 }
