@@ -46,4 +46,26 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITa
     private OrganismType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
     @Override public final Organism fromRaw(E edge) { return new Organism(edge); }
   }
+
+  public final class Host extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  {
+    private Host(E edge) { super(edge, host); }
+    @Override public final Host self() { return this; }
+  }
+
+  public final HostType host = new HostType();
+  public final class HostType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  implements FromAny, ToAny {
+
+    private HostType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
+    @Override public final Host fromRaw(E edge) { return new Host(edge); }
+  }
 }
