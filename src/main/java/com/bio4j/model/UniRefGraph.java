@@ -63,6 +63,49 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     }
   }
 
+  public final class UniRef90Cluster extends Vertex<UniRef90Cluster> {
+
+    private UniRef90Cluster(V vertex) { super(vertex, uniRef90Cluster); }
+    @Override public final UniRef90Cluster self() { return this; }
+  }
+
+  public final UniRef90ClusterType uniRef90Cluster = new UniRef90ClusterType();
+  public final class UniRef90ClusterType extends VertexType<UniRef90Cluster> {
+
+    @Override public final UniRef90Cluster fromRaw(V vertex) { return new UniRef90Cluster(vertex); }
+
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(ID.this); }
+      }
+    }
+  }
+
+  public final class UniRef50Cluster extends Vertex<UniRef50Cluster> {
+
+    private UniRef50Cluster(V vertex) { super(vertex, uniRef50Cluster); }
+    @Override public final UniRef50Cluster self() { return this; }
+  }
+
+  public final UniRef50ClusterType uniRef50Cluster = new UniRef50ClusterType();
+  public final class UniRef50ClusterType extends VertexType<UniRef50Cluster> {
+
+    @Override public final UniRef50Cluster fromRaw(V vertex) { return new UniRef50Cluster(vertex); }
+
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+      private ID() { super(String.class); }
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID, String> {
+        private Index() { super(ID.this); }
+      }
+    }
+  }
+
+
   public final class UniRef100Representative extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Representative,
@@ -84,6 +127,4 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     private UniRef100RepresentativeType() { super(uniRef100Cluster, uniProtGraph.protein); }
     @Override public final UniRef100Representative fromRaw(E edge) { return new UniRef100Representative(edge); }
   }
-
-
 }
