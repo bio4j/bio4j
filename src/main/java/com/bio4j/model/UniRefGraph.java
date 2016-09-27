@@ -105,6 +105,27 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     }
   }
 
+  public final class UniRef100Seed extends LinkEdge<
+    UniRefGraph<V,E>, UniRef100Cluster,
+    UniRef100Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  {
+    private UniRef100Seed(E edge) { super(edge, uniRef100Seed); }
+    @Override public final UniRef100Seed self() { return this; }
+  }
+
+  public final UniRef100SeedType uniRef100Seed = new UniRef100SeedType();
+  public final class UniRef100SeedType extends LinkEdgeType<
+    UniRefGraph<V,E>, UniRef100Cluster,
+    UniRef100Seed,
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
+  >
+  implements FromAny, ToOne {
+
+    private UniRef100SeedType() { super(uniRef100Cluster, uniProtGraph.protein); }
+    @Override public final UniRef100Seed fromRaw(E edge) { return new UniRef100Seed(edge); }
+  }
 
   public final class UniRef100Representative extends LinkEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
