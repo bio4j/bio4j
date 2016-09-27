@@ -7,7 +7,7 @@
   2. UniRef90 clusters are *derived* from UniRef100 representatives, but their corresponding representatives are not; UniRef90 representatives are chosen between each cluster member through different criteria.
   3. UniRef50 clusters are **derived* from UniRef90 representatives, but their corresponding representatives are not; UniRef50 representatives are chosen between each cluster member through different criteria.
 
-  The average and maximum cluster size for UniRef50 (the one with the biggest clusters) are approximately `10` and `10^6`.
+  The average and maximum cluster size for UniRef50 (the one with the biggest clusters) are approximately `10` and `10^5`.
 
   If a cluster (of any paritition) contains a UniProt protein the its representative will be a UniProt protein. Note that the selection of representatives and the update procedures are somewhat arbitrary; quoting from the [UniRef clusters: a comprehensive and scalable alternative for improving sequence similarity searches](https://bioinformatics.oxfordjournals.org/content/31/6/926.full):
 
