@@ -22,7 +22,6 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
   @Override
   public final ENZYMEGraph<V,E> self() { return this; }
 
-
   /*
     ## Enzymes
   */
@@ -107,5 +106,47 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
       private CatalyticActivity() { super(String[].class); }
     }
+  }
+
+  /*
+    ## Enzyme classes, sub-classes, subsub-classes
+  */
+  public final class EnzymeClass extends Vertex<EnzymeClass> {
+
+    private EnzymeClass(V raw) { super(raw, enzymeClass); }
+
+    @Override public final EnzymeClass self() { return this; }
+  }
+
+  public final EnzymeClassType enzymeClass = new EnzymeClassType();
+  public final class EnzymeClassType extends VertexType<EnzymeClass> {
+
+    public final EnzymeClass fromRaw(V raw) { return new EnzymeClass(raw); }
+  }
+
+  public final class EnzymeSubClass extends Vertex<EnzymeSubClass> {
+
+    private EnzymeSubClass(V raw) { super(raw, enzymeSubClass); }
+
+    @Override public final EnzymeSubClass self() { return this; }
+  }
+
+  public final EnzymeSubClassType enzymeSubClass = new EnzymeSubClassType();
+  public final class EnzymeSubClassType extends VertexType<EnzymeSubClass> {
+
+    public final EnzymeSubClass fromRaw(V raw) { return new EnzymeSubClass(raw); }
+  }
+
+  public final class EnzymeSubSubClass extends Vertex<EnzymeSubSubClass> {
+
+    private EnzymeSubSubClass(V raw) { super(raw, enzymeSubSubClass); }
+
+    @Override public final EnzymeSubSubClass self() { return this; }
+  }
+
+  public final EnzymeSubSubClassType enzymeSubSubClass = new EnzymeSubSubClassType();
+  public final class EnzymeSubSubClassType extends VertexType<EnzymeSubSubClass> {
+
+    public final EnzymeSubSubClass fromRaw(V raw) { return new EnzymeSubSubClass(raw); }
   }
 }
