@@ -159,7 +159,7 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
   /*
     ### Sub-class, subsub-class edges
 
-    These edges go from an element to its members. The Enzyme ID structure `w.x.y.z` mirrors this structure, where each prefix ending in a dot determines one of these categories.
+    These edges go from an element to its members. The Enzyme ID structure `w.x.y.z` mirrors this structure, where each prefix ending in a dot determines one of these categories. Going up in this hierarchy corresponds to a less specific function. Note that annotations coming from other databases such as UniProt frequently point to enzyme classes, not enzymes themselves.
   */
   public final class SubClass extends Edge<EnzymeClass, SubClass, EnzymeSubClass> {
 
