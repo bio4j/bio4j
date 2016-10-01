@@ -49,5 +49,115 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
 
   @Override public final UniProtENZYMEGraph<V,E> self() { return this; }
 
-  // TODO add edge here
+  /*
+    ## Enzyme protein annotations
+
+    Edges going to
+
+    1. classes
+    2. subclasses
+    3. subsubclasses
+    4. enzymes
+
+    The names are in singular, start with Enzyme and correspond to the target type.
+  */
+  public final class EnzymeClass extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeClass
+  >
+  {
+
+    private EnzymeClass(E edge) { super(edge, enzymeClass); }
+
+    @Override public final EnzymeClass self() { return this; }
+  }
+
+  public final EnzymeClassType enzymeClass = new EnzymeClassType();
+  public final class EnzymeClassType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeClass
+  >
+  implements FromAny, ToAny {
+
+    private EnzymeClassType() { super(uniProtGraph.protein, enzymeGraph.enzymeClass); }
+
+    @Override public final EnzymeClass fromRaw(E edge) { return new EnzymeClass(edge); }
+  }
+
+  public final class EnzymeSubClass extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeSubClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubClass
+  >
+  {
+
+    private EnzymeSubClass(E edge) { super(edge, enzymeSubClass); }
+
+    @Override public final EnzymeSubClass self() { return this; }
+  }
+
+  public final EnzymeSubClassType enzymeSubClass = new EnzymeSubClassType();
+  public final class EnzymeSubClassType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeSubClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubClass
+  >
+  implements FromAny, ToAny {
+
+    private EnzymeSubClassType() { super(uniProtGraph.protein, enzymeGraph.enzymeSubClass); }
+
+    @Override public final EnzymeSubClass fromRaw(E edge) { return new EnzymeSubClass(edge); }
+  }
+
+  public final class EnzymeSubSubClass extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeSubSubClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubSubClass
+  >
+  {
+
+    private EnzymeSubSubClass(E edge) { super(edge, enzymeSubSubClass); }
+
+    @Override public final EnzymeSubSubClass self() { return this; }
+  }
+
+  public final EnzymeSubSubClassType enzymeSubSubClass = new EnzymeSubSubClassType();
+  public final class EnzymeSubSubClassType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    EnzymeSubSubClass,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubSubClass
+  >
+  implements FromAny, ToAny {
+
+    private EnzymeSubSubClassType() { super(uniProtGraph.protein, enzymeGraph.enzymeSubSubClass); }
+
+    @Override public final EnzymeSubSubClass fromRaw(E edge) { return new EnzymeSubSubClass(edge); }
+  }
+
+  public final class Enzyme extends LinkEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Enzyme,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.Enzyme
+  >
+  {
+
+    private Enzyme(E edge) { super(edge, enzyme); }
+
+    @Override public final Enzyme self() { return this; }
+  }
+
+  public final EnzymeType enzyme = new EnzymeType();
+  public final class EnzymeType extends LinkEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Enzyme,
+    ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.Enzyme
+  >
+  implements FromAny, ToAny {
+
+    private EnzymeType() { super(uniProtGraph.protein, enzymeGraph.enzyme); }
+
+    @Override public final Enzyme fromRaw(E edge) { return new Enzyme(edge); }
+  }
 }
