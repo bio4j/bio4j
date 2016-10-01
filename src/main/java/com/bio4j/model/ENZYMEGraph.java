@@ -149,4 +149,58 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
     public final EnzymeSubSubClass fromRaw(V raw) { return new EnzymeSubSubClass(raw); }
   }
+
+  /*
+    ### Sub-class, subsub-class edges
+  */
+  public final class SubClass extends Edge<EnzymeClass, SubClass, EnzymeSubClass> {
+
+    private SubClass(E edge) { super(edge, subClass); }
+
+    @Override
+    public final SubClass self() { return this; }
+  }
+
+  public final SubClassType subClass = new SubClassType();
+  public final class SubClassType extends EdgeType<EnzymeClass, SubClass, EnzymeSubClass> implements FromOne, ToAtLeastOne {
+
+    private SubClassType() { super(enzymeClass, enzymeSubClass); }
+
+    @Override
+    public final SubClass fromRaw(E edge) { return new SubClass(edge); }
+  }
+
+  public final class SubSubClass extends Edge<EnzymeSubClass, SubSubClass, EnzymeSubSubClass> {
+
+    private SubSubClass(E edge) { super(edge, subSubClass); }
+
+    @Override
+    public final SubSubClass self() { return this; }
+  }
+
+  public final SubSubClassType subSubClass = new SubSubClassType();
+  public final class SubSubClassType extends EdgeType<EnzymeSubClass, SubSubClass, EnzymeSubSubClass> implements FromOne, ToAtLeastOne {
+
+    private SubSubClassType() { super(enzymeSubClass, enzymeSubSubClass); }
+
+    @Override
+    public final SubSubClass fromRaw(E edge) { return new SubSubClass(edge); }
+  }
+
+  public final class Enzymes extends Edge<EnzymeSubSubClass, Enzymes, Enzyme> {
+
+    private Enzymes(E edge) { super(edge, enzymes); }
+
+    @Override
+    public final Enzymes self() { return this; }
+  }
+
+  public final EnzymesType enzymes = new EnzymesType();
+  public final class EnzymesType extends EdgeType<EnzymeSubSubClass, Enzymes, Enzyme> implements FromOne, ToAtLeastOne {
+
+    private EnzymesType() { super(enzymeSubSubClass, enzyme); }
+
+    @Override
+    public final Enzymes fromRaw(E edge) { return new Enzymes(edge); }
+  }
 }
