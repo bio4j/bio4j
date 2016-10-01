@@ -61,6 +61,7 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
     */
     public final Cofactors cofactors = new Cofactors();
     public final class Cofactors extends Property<String[]> implements FromAny {
+
       private Cofactors() { super(String[].class); }
     }
 
@@ -71,6 +72,7 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
     */
     public final Comments comments = new Comments();
     public final class Comments extends Property<String[]> implements FromAny {
+
       private Comments() { super(String[].class); }
     }
 
