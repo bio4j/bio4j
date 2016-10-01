@@ -1,5 +1,5 @@
 /*
-  # ENZYME graph
+  # ENZYME
 
   This graph includes all Enzyme terms that are included in the ExPASy ENZYME database but **not** those that have been either _transferred_ or _deleted_.
 
@@ -8,7 +8,7 @@
   - **[Enzyme description and sample entry](http://enzyme.expasy.org/enzyme_details.html)**
   - the **[User manual](http://enzyme.expasy.org/enzuser.txt)**, which contains a more precise description of the data model
 
-  This graph has only vertices, of `Enzyme` type; There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
+  The main entity here are `Enzyme`s, which are categorized into a hierarchy of classes. There are other graphs which add edges between `Enzyme`s and other entitities such as proteins.
 */
 package com.bio4j.model;
 
@@ -17,33 +17,48 @@ import com.bio4j.angulillos.Arity.*;
 
 public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
+  public ENZYMEGraph(UntypedGraph<V,E> graph) { super(graph); }
+
+  @Override
+  public final ENZYMEGraph<V,E> self() { return this; }
+
+
   /*
-    ## Vertices
+    ## Enzymes
   */
-  /*
-    ### Enzyme
-  */
+  public final class Enzyme extends Vertex<Enzyme> {
+
+    private Enzyme(V raw) { super(raw, enzyme); }
+
+    @Override public final Enzyme self() { return this; }
+  }
+
+  public final EnzymeType enzyme = new EnzymeType();
   public final class EnzymeType extends VertexType<Enzyme> {
 
-    /*
-      #### Enzyme id
+    public final Enzyme fromRaw(V raw) { return new Enzyme(raw); }
 
-      The ENZYME id of this enzyme, as a `String`. This property is indexed.
+    /*
+      ### ID
+
+      The ENZYME ID of this enzyme, as a `String`. This property is indexed for unique matches.
     */
-    public final Id id = new Id();
-    public final ById byId = new ById();
-    public final class Id extends Property<String> implements FromAtMostOne, ToOne {
-      private Id() { super(String.class); }
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+
+      private ID() { super(String.class); }
+
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID,String> {
+
+        private Index() { super(id); }
+      }
     }
-    public final class ById extends UniqueIndex<Id,String> {
-      private ById() { super(id); }
-    }
-    public final EnzymeType enzyme = new EnzymeType();
 
     /*
-      #### Enzyme cofactors
+      ### Cofactors
 
-      The cofactors ids? for this enzyme, stored in an array of `String`s.
+      The cofactors for this enzyme, stored in an array of `String`s.
     */
     public final Cofactors cofactors = new Cofactors();
     public final class Cofactors extends Property<String[]> implements FromAny {
@@ -51,9 +66,9 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
     }
 
     /*
-    #### Enzyme comments
+      ### Comment
 
-    Enzymes have sometimes a text comment; this property will have as value that comment stored in one `String`, which will be empty if there's no such comment.
+      Enzymes have sometimes a text comment; this property will have as value that comment stored in one `String`.
     */
     public final Comment comment = new Comment();
     public final class Comment extends Property<String> implements FromAny {
@@ -61,56 +76,36 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
     }
 
     /*
-      #### Enzyme official name
+      ### Name
 
-      _TO DO_ link to somewhere
+      The (official) name of this enzyme.
     */
-    public final OfficialName officialName = new OfficialName();
-    public final class OfficialName extends Property<String> implements FromAny, ToOne {
-      private OfficialName() { super(String.class); }
+    public final Name name = new Name();
+    public final class Name extends Property<String> implements FromAny, ToOne {
+
+      private Name() { super(String.class); }
     }
 
     /*
-      #### Enzyme alternate names
+      ### Alternate names
 
-      Sometimes enzymes have alternate names (synonyms?). They are available here as an array of `String`s.
+      Sometimes enzymes have alternate names; they are available here as an array of `String`s.
     */
     public final AlternateNames alternateNames = new AlternateNames();
     public final class AlternateNames extends Property<String[]> implements FromAny {
+
       private AlternateNames() { super(String[].class); }
     }
 
     /*
-      #### Enzyme catalytic activity
+      ### Catalytic activity
 
-      _TO DO_ explain this.
+      Reactions in which this enzyme takes part, described textually.
     */
     public final CatalyticActivity catalyticActivity = new CatalyticActivity();
-    public final class CatalyticActivity extends Property<String> implements FromAny {
-      private CatalyticActivity() { super(String.class); }
+    public final class CatalyticActivity extends Property<String[]> implements FromAny {
+
+      private CatalyticActivity() { super(String[].class); }
     }
-
-    /*
-      #### Enzyme cross-references to ProSite
-
-      _TO DO_ explain this. Shuold this be a crossref?
-    */
-    public final PrositeCrossReferences prositeCrossReferences = new PrositeCrossReferences();
-    public final class PrositeCrossReferences extends Property<String[]> implements FromAny {
-      private PrositeCrossReferences() { super(String[].class); }
-    }
-
-    public final Enzyme fromRaw(V raw) { return new Enzyme(raw); }
   }
-  public final EnzymeType enzyme = new EnzymeType();
-
-  public final class Enzyme extends Vertex<Enzyme> {
-    @Override public final Enzyme self() { return this; }
-    private Enzyme(V raw) { super(raw, enzyme); }
-  }
-
-  public ENZYMEGraph(UntypedGraph<V,E> graph) { super(graph); }
-
-  @Override
-  public final ENZYMEGraph<V,E> self() { return this; }
 }
