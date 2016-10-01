@@ -65,13 +65,13 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
     }
 
     /*
-      ### Comment
+      ### Comments
 
-      Enzymes have sometimes a text comment; this property will have as value that comment stored in one `String`.
+      Enzymes have sometimes text comments; this property will have them as value, stored in a `String` array.
     */
-    public final Comment comment = new Comment();
-    public final class Comment extends Property<String> implements FromAny {
-      private Comment() { super(String.class); }
+    public final Comments comments = new Comments();
+    public final class Comments extends Property<String[]> implements FromAny {
+      private Comments() { super(String[].class); }
     }
 
     /*
