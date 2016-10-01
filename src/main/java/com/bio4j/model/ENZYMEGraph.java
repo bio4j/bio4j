@@ -110,6 +110,10 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
   /*
     ## Enzyme classes, sub-classes, subsub-classes
+
+    Classes are a set of sub-classes, who are a set of subsub-classes, who are a set of enzymes.
+
+    They are defined in [enzclass.txt](ftp://ftp.expasy.org/databases/enzyme/enzclass.txt) from the ENZYME ftp.
   */
   public final class EnzymeClass extends Vertex<EnzymeClass> {
 
@@ -152,6 +156,8 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
   /*
     ### Sub-class, subsub-class edges
+
+    These edges go from an element to its members. The Enzyme ID structure `w.x.y.z` mirrors this structure, where each prefix ending in a dot determines one of these categories.
   */
   public final class SubClass extends Edge<EnzymeClass, SubClass, EnzymeSubClass> {
 
