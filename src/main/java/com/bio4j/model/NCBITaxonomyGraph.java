@@ -1,8 +1,11 @@
 /*
   # NCBI Taxonomy
 
-  Taxon vertices, with a *parent* edge corresponding to the tree structure.
- */
+  Taxon vertices, with a *parent* edge corresponding to the tree structure. for an up-to-date description of the data see
+
+  - [The NCBI Taxonomy database](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3245000/)
+  - [FTP dump readme](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump_readme.txt)
+*/
 package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
@@ -101,7 +104,7 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
   public final class Parent extends Edge<Taxon, Parent, Taxon> {
 
     private Parent(E edge) { super(edge, parent); }
-    
+
     @Override public final Parent self() { return this; }
   }
 
