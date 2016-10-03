@@ -8,7 +8,7 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class UniProtGOGraph<V,E> extends LinkGraph<UniProtGOGraph<V,E>,V,E> {
+public final class UniProtGOGraph<V,E> extends TypedGraph<UniProtGOGraph<V,E>,V,E> {
 
   public UniProtGOGraph(UniProtGraph<V,E> uniProtGraph, GOGraph<V,E> goGraph) {
 
@@ -22,7 +22,7 @@ public final class UniProtGOGraph<V,E> extends LinkGraph<UniProtGOGraph<V,E>,V,E
 
   @Override public final UniProtGOGraph<V,E> self() { return this; }
 
-  public final class Annotation extends LinkEdge<
+  public final class Annotation extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Annotation,
     GOGraph<V,E>, GOGraph<V,E>.Term
@@ -33,7 +33,7 @@ public final class UniProtGOGraph<V,E> extends LinkGraph<UniProtGOGraph<V,E>,V,E
   }
 
   public final AnnotationType annotation = new AnnotationType();
-  public final class AnnotationType extends LinkEdgeType<
+  public final class AnnotationType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Annotation,
     GOGraph<V,E>, GOGraph<V,E>.Term

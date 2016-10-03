@@ -11,7 +11,7 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITaxonomyGraph<V,E>,V,E> {
+public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBITaxonomyGraph<V,E>,V,E> {
 
   public UniProtNCBITaxonomyGraph(UniProtGraph<V,E> uniProtGraph, NCBITaxonomyGraph<V,E> ncbiTaxonomyGraph) {
 
@@ -25,7 +25,7 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITa
 
   @Override public final UniProtNCBITaxonomyGraph<V,E> self() { return this; }
 
-  public final class Organism extends LinkEdge<
+  public final class Organism extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Organism,
     NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
@@ -36,7 +36,7 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITa
   }
 
   public final OrganismType organism = new OrganismType();
-  public final class OrganismType extends LinkEdgeType<
+  public final class OrganismType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Organism,
     NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
@@ -47,7 +47,7 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITa
     @Override public final Organism fromRaw(E edge) { return new Organism(edge); }
   }
 
-  public final class Host extends LinkEdge<
+  public final class Host extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Host,
     NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
@@ -58,7 +58,7 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends LinkGraph<UniProtNCBITa
   }
 
   public final HostType host = new HostType();
-  public final class HostType extends LinkEdgeType<
+  public final class HostType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Host,
     NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon

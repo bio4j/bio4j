@@ -30,7 +30,7 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
+public final class UniRefGraph<V,E> extends TypedGraph<UniRefGraph<V,E>,V,E> {
 
   public UniRefGraph(UniProtGraph<V,E> uniProtGraph) {
 
@@ -110,7 +110,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
 
     These edges connect clusters with their members. A cluster has at at least one member, and every protein is member of exactly one cluster.
   */
-  public final class UniRef100Member extends LinkEdge<
+  public final class UniRef100Member extends GenericEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -121,7 +121,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef100MemberType uniRef100Member = new UniRef100MemberType();
-  public final class UniRef100MemberType extends LinkEdgeType<
+  public final class UniRef100MemberType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -132,7 +132,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef100Member fromRaw(E edge) { return new UniRef100Member(edge); }
   }
 
-  public final class UniRef90Member extends LinkEdge<
+  public final class UniRef90Member extends GenericEdge<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -143,7 +143,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef90MemberType uniRef90Member = new UniRef90MemberType();
-  public final class UniRef90MemberType extends LinkEdgeType<
+  public final class UniRef90MemberType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -154,7 +154,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef90Member fromRaw(E edge) { return new UniRef90Member(edge); }
   }
 
-  public final class UniRef50Member extends LinkEdge<
+  public final class UniRef50Member extends GenericEdge<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -165,7 +165,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef50MemberType uniRef50Member = new UniRef50MemberType();
-  public final class UniRef50MemberType extends LinkEdgeType<
+  public final class UniRef50MemberType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Member,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -182,7 +182,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
 
     These edges connect clusters with the protein whose sequence served as their seed. Note that this is *not* in general the same as the cluster representative; what is true though is that seeds for UniRef90 and UniRef50 are always representatives of the immediate more specific partition (UniRef100 and UniRef90 respectively).
   */
-  public final class UniRef100Seed extends LinkEdge<
+  public final class UniRef100Seed extends GenericEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -193,7 +193,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef100SeedType uniRef100Seed = new UniRef100SeedType();
-  public final class UniRef100SeedType extends LinkEdgeType<
+  public final class UniRef100SeedType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -204,7 +204,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef100Seed fromRaw(E edge) { return new UniRef100Seed(edge); }
   }
 
-  public final class UniRef90Seed extends LinkEdge<
+  public final class UniRef90Seed extends GenericEdge<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -215,7 +215,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef90SeedType uniRef90Seed = new UniRef90SeedType();
-  public final class UniRef90SeedType extends LinkEdgeType<
+  public final class UniRef90SeedType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -226,7 +226,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef90Seed fromRaw(E edge) { return new UniRef90Seed(edge); }
   }
 
-  public final class UniRef50Seed extends LinkEdge<
+  public final class UniRef50Seed extends GenericEdge<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -237,7 +237,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef50SeedType uniRef50Seed = new UniRef50SeedType();
-  public final class UniRef50SeedType extends LinkEdgeType<
+  public final class UniRef50SeedType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Seed,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -254,7 +254,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
 
     These edges connect each cluster with their representative sequence. Again, note that in general this is *not* the same as the seed used to generate that cluster.
   */
-  public final class UniRef100Representative extends LinkEdge<
+  public final class UniRef100Representative extends GenericEdge<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -265,7 +265,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef100RepresentativeType uniRef100Representative = new UniRef100RepresentativeType();
-  public final class UniRef100RepresentativeType extends LinkEdgeType<
+  public final class UniRef100RepresentativeType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef100Cluster,
     UniRef100Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -276,7 +276,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef100Representative fromRaw(E edge) { return new UniRef100Representative(edge); }
   }
 
-  public final class UniRef90Representative extends LinkEdge<
+  public final class UniRef90Representative extends GenericEdge<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -287,7 +287,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef90RepresentativeType uniRef90Representative = new UniRef90RepresentativeType();
-  public final class UniRef90RepresentativeType extends LinkEdgeType<
+  public final class UniRef90RepresentativeType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef90Cluster,
     UniRef90Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -298,7 +298,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
     @Override public final UniRef90Representative fromRaw(E edge) { return new UniRef90Representative(edge); }
   }
 
-  public final class UniRef50Representative extends LinkEdge<
+  public final class UniRef50Representative extends GenericEdge<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
@@ -309,7 +309,7 @@ public final class UniRefGraph<V,E> extends LinkGraph<UniRefGraph<V,E>,V,E> {
   }
 
   public final UniRef50RepresentativeType uniRef50Representative = new UniRef50RepresentativeType();
-  public final class UniRef50RepresentativeType extends LinkEdgeType<
+  public final class UniRef50RepresentativeType extends GenericEdgeType<
     UniRefGraph<V,E>, UniRef50Cluster,
     UniRef50Representative,
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein
