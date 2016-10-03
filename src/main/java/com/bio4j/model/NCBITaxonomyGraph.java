@@ -72,6 +72,9 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     }
   }
 
+  /*
+    The set of valid ranks is nowhere documented; this is just an approximation.
+  */
   public static enum TaxonomicRanks {
 
     noRank,
@@ -82,10 +85,15 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     subphylum,
     clazz, // reserved word
     subclass,
+    superclass,
+    infraclass,
     order,
+    parvorder,
     suborder,
+    infraorder,
     family,
     subfamily,
+    superfamily,
     tribe,
     subtribe,
     genus,
@@ -93,7 +101,10 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     speciesGroup,
     speciesSubgroup,
     species,
-    subspecies;
+    subspecies,
+    varietas,
+    forma,
+    thereIsAnIndeterminateNumberOfRanksAsATaxonomistMayInventANewRankAtWillAtAnyTimeIfTheyFeelThisIsNecessary;
   }
 
   /*
