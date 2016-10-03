@@ -27,7 +27,49 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBIT
 
   @Override public final UniProtNCBITaxonomyGraph<V,E> self() { return this; }
 
-  // TODO add edges here: organism which is toOne, and host about which I'm not sure
+  public final class Organism extends GenericEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Organism,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  {
+    private Organism(E edge) { super(edge, organism); }
+    @Override public final Organism self() { return this; }
+  }
+
+  public final OrganismType organism = new OrganismType();
+  public final class OrganismType extends GenericEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Organism,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  implements FromAny, ToOne {
+
+    private OrganismType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
+    @Override public final Organism fromRaw(E edge) { return new Organism(edge); }
+  }
+
+  public final class Host extends GenericEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  {
+    private Host(E edge) { super(edge, host); }
+    @Override public final Host self() { return this; }
+  }
+
+  public final HostType host = new HostType();
+  public final class HostType extends GenericEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Host,
+    NCBITaxonomyGraph<V,E>, NCBITaxonomyGraph<V,E>.Taxon
+  >
+  implements FromAny, ToAny {
+
+    private HostType() { super(uniProtGraph.protein, ncbiTaxonomyGraph.taxon); }
+    @Override public final Host fromRaw(E edge) { return new Host(edge); }
+  }
 }
 
 ```
@@ -43,4 +85,3 @@ public final class UniProtNCBITaxonomyGraph<V,E> extends TypedGraph<UniProtNCBIT
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
-[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md

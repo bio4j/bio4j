@@ -145,4 +145,3 @@ Every taxon *but* the root has *exactly one* parent.
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
-[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md

@@ -1,4 +1,9 @@
 
+# UniProt GO annotations
+
+This graph contains an edge connecting a protein with their Gene Ontology annotations (terms).
+
+
 ```java
 package com.bio4j.model;
 
@@ -19,7 +24,27 @@ public final class UniProtGOGraph<V,E> extends TypedGraph<UniProtGOGraph<V,E>,V,
 
   @Override public final UniProtGOGraph<V,E> self() { return this; }
 
-  // TODO add edge here
+  public final class Annotation extends GenericEdge<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Annotation,
+    GOGraph<V,E>, GOGraph<V,E>.Term
+  >
+  {
+    private Annotation(E edge) { super(edge, annotation); }
+    @Override public final Annotation self() { return this; }
+  }
+
+  public final AnnotationType annotation = new AnnotationType();
+  public final class AnnotationType extends GenericEdgeType<
+    UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
+    Annotation,
+    GOGraph<V,E>, GOGraph<V,E>.Term
+  >
+  implements FromAny, ToAny {
+
+    private AnnotationType() { super(uniProtGraph.protein, goGraph.term); }
+    @Override public final Annotation fromRaw(E edge) { return new Annotation(edge); }
+  }
 }
 
 ```
@@ -35,4 +60,3 @@ public final class UniProtGOGraph<V,E> extends TypedGraph<UniProtGOGraph<V,E>,V,
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
-[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md
