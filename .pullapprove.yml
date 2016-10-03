@@ -1,0 +1,39 @@
+# comment for approval
+approve_by_comment: true
+approve_regex: '^(:\+1:|Approved)|LGTM|:shipit:|:ship:'
+reject_regex: '^(:-1:|Rejected)'
+# one reject is enough for rejecting the PR
+reject_value: -99
+# what's going to be merged needs to be explicitly approved
+reset_on_push: true
+reset_on_reopened: true
+reviewers:
+    - # One of the maintainers has to approve everything that is merged to master
+        name: maintainer
+        required: 1
+        members:
+            - laughedelic
+            - eparejatobes
+        conditions:
+            branches:
+                - master
+    - # anybody from the repo collaborators needs to review a PR _with the label_
+        name: collaborators
+        required: 1
+        members: all
+        conditions:
+            labels:
+                - needs-review
+    - # all developers have to review PRs _merged to master_, _with the label_ and _changed sources_
+        name: developers
+        required: 1
+        members:
+            - laughedelic
+            - eparejatobes
+        conditions:
+            labels:
+                - needs-review
+            files:
+                - "*.java"
+            branches:
+                - master
