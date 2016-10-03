@@ -35,7 +35,7 @@ package com.bio4j.model;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
-public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<V,E>,V,E> {
+public final class UniProtENZYMEGraph<V,E> extends TypedGraph<UniProtENZYMEGraph<V,E>,V,E> {
 
   public UniProtENZYMEGraph(UniProtGraph<V,E> uniProtGraph, ENZYMEGraph<V,E> enzymeGraph) {
 
@@ -61,7 +61,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
 
     The names are in singular, start with Enzyme and correspond to the target type.
   */
-  public final class EnzymeClass extends LinkEdge<
+  public final class EnzymeClass extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeClass
@@ -74,7 +74,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
   }
 
   public final EnzymeClassType enzymeClass = new EnzymeClassType();
-  public final class EnzymeClassType extends LinkEdgeType<
+  public final class EnzymeClassType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeClass
@@ -86,7 +86,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
     @Override public final EnzymeClass fromRaw(E edge) { return new EnzymeClass(edge); }
   }
 
-  public final class EnzymeSubClass extends LinkEdge<
+  public final class EnzymeSubClass extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeSubClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubClass
@@ -99,7 +99,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
   }
 
   public final EnzymeSubClassType enzymeSubClass = new EnzymeSubClassType();
-  public final class EnzymeSubClassType extends LinkEdgeType<
+  public final class EnzymeSubClassType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeSubClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubClass
@@ -111,7 +111,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
     @Override public final EnzymeSubClass fromRaw(E edge) { return new EnzymeSubClass(edge); }
   }
 
-  public final class EnzymeSubSubClass extends LinkEdge<
+  public final class EnzymeSubSubClass extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeSubSubClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubSubClass
@@ -124,7 +124,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
   }
 
   public final EnzymeSubSubClassType enzymeSubSubClass = new EnzymeSubSubClassType();
-  public final class EnzymeSubSubClassType extends LinkEdgeType<
+  public final class EnzymeSubSubClassType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     EnzymeSubSubClass,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.EnzymeSubSubClass
@@ -136,7 +136,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
     @Override public final EnzymeSubSubClass fromRaw(E edge) { return new EnzymeSubSubClass(edge); }
   }
 
-  public final class Enzyme extends LinkEdge<
+  public final class Enzyme extends GenericEdge<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Enzyme,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.Enzyme
@@ -149,7 +149,7 @@ public final class UniProtENZYMEGraph<V,E> extends LinkGraph<UniProtENZYMEGraph<
   }
 
   public final EnzymeType enzyme = new EnzymeType();
-  public final class EnzymeType extends LinkEdgeType<
+  public final class EnzymeType extends GenericEdgeType<
     UniProtGraph<V,E>, UniProtGraph<V,E>.Protein,
     Enzyme,
     ENZYMEGraph<V,E>, ENZYMEGraph<V,E>.Enzyme
