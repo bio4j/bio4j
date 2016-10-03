@@ -29,18 +29,8 @@ We have a `Term` vertex which contains property data present for each term. Do n
 
 About the so-called [*optional extras*](http://www.geneontology.org/GO.ontology.structure.shtml#opt):
 
-- `secondary_ids` We drop this. It is just legacy data with no meaning.
-- `synonyms` They are split into
-  + `exact`
-  + `broad`
-  + `narrow`
-  + `related`
-
-  We drop **all** of them **but** `exact`, and add an index over it.
-- `cross_ref` an array of strings, property of the `GoTerm` rel. _TODO is this connected with the corresponding DBs?_
-- `comment` a standard text field.
-- `subset` an array of strings. Each of them corresponds to a particular GoSlim. As with namespaces, this is modeled as relations going from each term node to a `GoSlims` node. See [GO Slim](http://www.geneontology.org/GO.slims.shtml).
-- `obsolete` GoTerms marked as obsolete shoud be **dropped**.
+- `comment`: a standard text field.
+- `obsolete`: GoTerms marked as obsolete shoud be **dropped**.
 
 
 ```java
@@ -135,7 +125,7 @@ See [GO Ontology Relations](http://www.geneontology.org/GO.ontology.relations.sh
   public final class IsA extends Edge<Term, IsA, Term> {
 
     private IsA(E edge) { super(edge, isA); }
-    
+
     @Override
     public final IsA self() { return this; }
   }
