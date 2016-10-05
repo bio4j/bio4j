@@ -128,6 +128,18 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
   public final class EnzymeClassType extends VertexType<EnzymeClass> {
 
     public final EnzymeClass fromRaw(V raw) { return new EnzymeClass(raw); }
+
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+
+      private ID() { super(String.class); }
+
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID,String> {
+
+        private Index() { super(id); }
+      }
+    }
   }
 
   public final class EnzymeSubClass extends Vertex<EnzymeSubClass> {
@@ -141,6 +153,18 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
   public final class EnzymeSubClassType extends VertexType<EnzymeSubClass> {
 
     public final EnzymeSubClass fromRaw(V raw) { return new EnzymeSubClass(raw); }
+
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+
+      private ID() { super(String.class); }
+
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID,String> {
+
+        private Index() { super(id); }
+      }
+    }
   }
 
   public final class EnzymeSubSubClass extends Vertex<EnzymeSubSubClass> {
@@ -154,6 +178,18 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
   public final class EnzymeSubSubClassType extends VertexType<EnzymeSubSubClass> {
 
     public final EnzymeSubSubClass fromRaw(V raw) { return new EnzymeSubSubClass(raw); }
+
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
+
+      private ID() { super(String.class); }
+
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID,String> {
+
+        private Index() { super(id); }
+      }
+    }
   }
 
   /*
