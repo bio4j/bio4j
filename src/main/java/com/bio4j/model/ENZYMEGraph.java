@@ -104,9 +104,9 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
       Reactions in which this enzyme takes part, described textually.
     */
     public final CatalyticActivity catalyticActivity = new CatalyticActivity();
-    public final class CatalyticActivity extends Property<String[]> implements FromAny {
+    public final class CatalyticActivity extends Property<String> implements FromAny {
 
-      private CatalyticActivity() { super(String[].class); }
+      private CatalyticActivity() { super(String.class); }
     }
   }
 
