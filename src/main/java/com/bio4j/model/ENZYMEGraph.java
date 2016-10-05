@@ -197,38 +197,38 @@ public final class ENZYMEGraph<V,E> extends TypedGraph<ENZYMEGraph<V,E>,V,E> {
 
     These edges go from an element to its members. The Enzyme ID structure `w.x.y.z` mirrors this structure, where each prefix ending in a dot determines one of these categories. Going up in this hierarchy corresponds to a less specific function. Note that annotations coming from other databases such as UniProt frequently point to enzyme classes, not enzymes themselves.
   */
-  public final class SubClass extends Edge<EnzymeClass, SubClass, EnzymeSubClass> {
+  public final class SubClasses extends Edge<EnzymeClass, SubClasses, EnzymeSubClass> {
 
-    private SubClass(E edge) { super(edge, subClass); }
+    private SubClasses(E edge) { super(edge, subClasses); }
 
     @Override
-    public final SubClass self() { return this; }
+    public final SubClasses self() { return this; }
   }
 
-  public final SubClassType subClass = new SubClassType();
-  public final class SubClassType extends EdgeType<EnzymeClass, SubClass, EnzymeSubClass> implements FromOne, ToAtLeastOne {
+  public final SubClassesType subClasses = new SubClassesType();
+  public final class SubClassesType extends EdgeType<EnzymeClass, SubClasses, EnzymeSubClass> implements FromOne, ToAtLeastOne {
 
-    private SubClassType() { super(enzymeClass, enzymeSubClass); }
+    private SubClassesType() { super(enzymeClass, enzymeSubClass); }
 
     @Override
-    public final SubClass fromRaw(E edge) { return new SubClass(edge); }
+    public final SubClasses fromRaw(E edge) { return new SubClasses(edge); }
   }
 
-  public final class SubSubClass extends Edge<EnzymeSubClass, SubSubClass, EnzymeSubSubClass> {
+  public final class SubSubClasses extends Edge<EnzymeSubClass, SubSubClasses, EnzymeSubSubClass> {
 
-    private SubSubClass(E edge) { super(edge, subSubClass); }
+    private SubSubClasses(E edge) { super(edge, subSubClasses); }
 
     @Override
-    public final SubSubClass self() { return this; }
+    public final SubSubClasses self() { return this; }
   }
 
-  public final SubSubClassType subSubClass = new SubSubClassType();
-  public final class SubSubClassType extends EdgeType<EnzymeSubClass, SubSubClass, EnzymeSubSubClass> implements FromOne, ToAtLeastOne {
+  public final SubSubClassesType subSubClasses = new SubSubClassesType();
+  public final class SubSubClassesType extends EdgeType<EnzymeSubClass, SubSubClasses, EnzymeSubSubClass> implements FromOne, ToAtLeastOne {
 
-    private SubSubClassType() { super(enzymeSubClass, enzymeSubSubClass); }
+    private SubSubClassesType() { super(enzymeSubClass, enzymeSubSubClass); }
 
     @Override
-    public final SubSubClass fromRaw(E edge) { return new SubSubClass(edge); }
+    public final SubSubClasses fromRaw(E edge) { return new SubSubClasses(edge); }
   }
 
   public final class Enzymes extends Edge<EnzymeSubSubClass, Enzymes, Enzyme> {
