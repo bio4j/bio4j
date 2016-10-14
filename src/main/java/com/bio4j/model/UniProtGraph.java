@@ -498,7 +498,8 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     ligand,
     molecularFunction,
     PTM,
-    technicalTerm;
+    technicalTerm,
+    NULL;
   }
 
   /*
