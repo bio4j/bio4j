@@ -65,17 +65,17 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
 
       Values are, among others, *species*, *genus*, or *no rank*; see the enum below.
     */
-    public final TaxonomicRank taxonomicRank = new TaxonomicRank();
-    public final class TaxonomicRank extends Property<TaxonomicRanks> implements FromAny, ToOne {
+    public final Rank rank = new Rank();
+    public final class Rank extends Property<TaxonomicRank> implements FromAny, ToOne {
 
-      private TaxonomicRank() { super(TaxonomicRanks.class); }
+      private Rank() { super(TaxonomicRank.class); }
     }
   }
 
   /*
     The set of valid ranks is nowhere documented; this is just an approximation.
   */
-  public static enum TaxonomicRanks {
+  public static enum TaxonomicRank {
 
     noRank,
     superkingdom,
