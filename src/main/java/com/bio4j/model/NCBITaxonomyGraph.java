@@ -8,6 +8,8 @@
 */
 package com.bio4j.model;
 
+import java.util.Arrays;
+import java.util.Locale;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
 
@@ -77,34 +79,54 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
   */
   public static enum TaxonomicRank {
 
-    noRank,
-    superkingdom,
-    kingdom,
-    superphylum,
-    phylum,
-    subphylum,
-    clazz, // reserved word
-    subclass,
-    superclass,
-    infraclass,
-    order,
-    parvorder,
-    suborder,
-    infraorder,
-    family,
-    subfamily,
-    superfamily,
-    tribe,
-    subtribe,
-    genus,
-    subgenus,
-    speciesGroup,
-    speciesSubgroup,
-    species,
-    subspecies,
-    varietas,
-    forma,
-    thereIsAnIndeterminateNumberOfRanksAsATaxonomistMayInventANewRankAtWillAtAnyTimeIfTheyFeelThisIsNecessary;
+    Superkingdom,
+    Kingdom,
+    Superphylum,
+    Phylum,
+    Subphylum,
+    Class,
+    Subclass,
+    Superclass,
+    Infraclass,
+    Order,
+    Parvorder,
+    Suborder,
+    Infraorder,
+    Family,
+    Subfamily,
+    Superfamily,
+    Tribe,
+    Subtribe,
+    Genus,
+    Subgenus,
+    SpeciesGroup,
+    SpeciesSubgroup,
+    Species,
+    Subspecies,
+    Varietas,
+    Forma,
+    // "no rank" is a valid value
+    NoRank,
+    // NOTE: there is an indeterminate number of ranks as a taxonomist may invent a new rank at will at any time if they feel this is necessary; we reserve a special value for such cases:
+    UNKNOWN;
+
+
+    /* Converts values of the enum to lower-case strings, adds a space for NoRank */
+    @Override public String toString() {
+      switch(this) {
+        case NoRank:  return "no rank";
+        case UNKNOWN: return "UNKNOWN";
+        default:      return this.name().toLowerCase(Locale.ENGLISH);
+      }
+    }
+
+    /* Converts strings to enum values _ignoring case_; Uses UNKNOWN as a default value */
+    public static TaxonomicRank fromString(String name) {
+      return Arrays.stream(TaxonomicRank.values())
+        .filter(rank -> rank.toString().equalsIgnoreCase(name))
+        .findFirst()
+        .orElse(UNKNOWN);
+    }
   }
 
   /*
