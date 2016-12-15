@@ -104,7 +104,7 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
 
     /* Converts strings to enum values _ignoring case_, returns `Optional` */
     public static java.util.Optional<TaxonomicRanks> fromString(String name) {
-      return Arrays.stream(TaxonomicRanks.values())
+      return java.util.Arrays.stream(TaxonomicRanks.values())
         .filter(rank -> rank.toString().equalsIgnoreCase(name))
         .findFirst();
     }
