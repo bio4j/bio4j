@@ -9,6 +9,7 @@
 package com.bio4j.model;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Locale;
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
@@ -68,15 +69,13 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
       Values are, among others, *species*, *genus*, or *no rank*; see the enum below.
     */
     public final Rank rank = new Rank();
-    public final class Rank extends Property<TaxonomicRank> implements FromAny, ToOne {
+    public final class Rank extends Property<TaxonomicRank> implements FromAny, ToAtMostOne {
 
       private Rank() { super(TaxonomicRank.class); }
     }
   }
 
-  /*
-    The set of valid ranks is nowhere documented; this is just an approximation.
-  */
+  /* This is the set of ranks stored in Bio4j. There is no general list of valid ranks, because there is an indeterminate number of ranks as a taxonomist may invent a new rank at will at any time if they feel this is necessary. */
   public static enum TaxonomicRank {
 
     Superkingdom,
@@ -104,28 +103,18 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     Species,
     Subspecies,
     Varietas,
-    Forma,
-    // "no rank" is a valid value
-    NoRank,
-    // NOTE: there is an indeterminate number of ranks as a taxonomist may invent a new rank at will at any time if they feel this is necessary; we reserve a special value for such cases:
-    UNKNOWN;
+    Forma;
 
-
-    /* Converts values of the enum to lower-case strings, adds a space for NoRank */
+    /* Converts values of the enum to lower-case strings */
     @Override public String toString() {
-      switch(this) {
-        case NoRank:  return "no rank";
-        case UNKNOWN: return "UNKNOWN";
-        default:      return this.name().toLowerCase(Locale.ENGLISH);
-      }
+      return this.name().toLowerCase(Locale.ENGLISH);
     }
 
-    /* Converts strings to enum values _ignoring case_; Uses UNKNOWN as a default value */
-    public static TaxonomicRank fromString(String name) {
+    /* Converts strings to enum values _ignoring case_, returns `Optional` */
+    public static Optional<TaxonomicRank> fromString(String name) {
       return Arrays.stream(TaxonomicRank.values())
         .filter(rank -> rank.toString().equalsIgnoreCase(name))
-        .findFirst()
-        .orElse(UNKNOWN);
+        .findFirst();
     }
   }
 
