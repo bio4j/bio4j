@@ -498,14 +498,13 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
     ligand,
     molecularFunction,
     PTM,
-    technicalTerm,
-    NULL;
+    technicalTerm;
   }
 
   /*
     ### Protein keywords
 
-    An edge etc etc.
+    An edge linking a protein with its assigned keywords.
   */
   public final class Keywords extends Edge<Protein, Keywords, Keyword> {
     private Keywords(E edge) { super(edge, keywords); }
