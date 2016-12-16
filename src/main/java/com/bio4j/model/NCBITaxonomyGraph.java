@@ -10,6 +10,7 @@ package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
+import java.util.Optional;
 
 public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V,E>,V,E> {
 
@@ -65,46 +66,49 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
 
       Values are, among others, *species*, *genus*, or *no rank*; see the enum below.
     */
-    public final TaxonomicRank taxonomicRank = new TaxonomicRank();
-    public final class TaxonomicRank extends Property<TaxonomicRanks> implements FromAny, ToOne {
+    public final Rank rank = new Rank();
+    public final class Rank extends Property<TaxonomicRanks> implements FromAny, ToAtMostOne {
 
-      private TaxonomicRank() { super(TaxonomicRanks.class); }
+      private Rank() { super(TaxonomicRanks.class); }
     }
   }
 
-  /*
-    The set of valid ranks is nowhere documented; this is just an approximation.
-  */
+  /* This is the set of ranks stored in Bio4j. There is no general list of valid ranks, because there is an indeterminate number of ranks as a taxonomist may invent a new rank at will at any time if they feel this is necessary. */
   public static enum TaxonomicRanks {
 
-    noRank,
-    superkingdom,
-    kingdom,
-    superphylum,
-    phylum,
-    subphylum,
-    clazz, // reserved word
-    subclass,
-    superclass,
-    infraclass,
-    order,
-    parvorder,
-    suborder,
-    infraorder,
-    family,
-    subfamily,
-    superfamily,
-    tribe,
-    subtribe,
-    genus,
-    subgenus,
-    speciesGroup,
-    speciesSubgroup,
-    species,
-    subspecies,
-    varietas,
-    forma,
-    thereIsAnIndeterminateNumberOfRanksAsATaxonomistMayInventANewRankAtWillAtAnyTimeIfTheyFeelThisIsNecessary;
+    Superkingdom,
+    Kingdom,
+    Superphylum,
+    Phylum,
+    Subphylum,
+    Class,
+    Subclass,
+    Superclass,
+    Infraclass,
+    Order,
+    Parvorder,
+    Suborder,
+    Infraorder,
+    Family,
+    Subfamily,
+    Superfamily,
+    Tribe,
+    Subtribe,
+    Genus,
+    Subgenus,
+    SpeciesGroup,
+    SpeciesSubgroup,
+    Species,
+    Subspecies,
+    Varietas,
+    Forma;
+
+    /* Converts strings to enum values _ignoring case_, returns `Optional` */
+    public static Optional<TaxonomicRanks> fromString(String name) {
+      return java.util.Arrays.stream(TaxonomicRanks.values())
+        .filter(rank -> rank.toString().equalsIgnoreCase(name))
+        .findFirst();
+    }
   }
 
   /*

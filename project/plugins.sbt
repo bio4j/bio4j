@@ -3,4 +3,4 @@ resolvers ++= Seq(
   "repo.jenkins-ci.org" at "https://repo.jenkins-ci.org/public" // why??
 )
 
-addSbtPlugin("ohnosequences" % "nice-sbt-settings" % "0.8.0-RC3")
+addSbtPlugin("ohnosequences" % "nice-sbt-settings" % "0.8.0-RC5")
