@@ -1,16 +1,10 @@
 
-# NCBI Taxonomy graph
+# NCBI Taxonomy
 
-This graph models the NCBI taxonomy tree.
+Taxon vertices, with a *parent* edge corresponding to the tree structure. for an up-to-date description of the data see
 
-> This documentation will be part of the import code, which is going to be in a separate repository
-
-Files used in the importing process can be found [here](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump.tar.gz)
-
-Once that information is extracted we are building the tree from the information included in the following files:
-
-* **nodes.dmp**
-* **names.dmp**
+- [The NCBI Taxonomy database](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3245000/)
+- [FTP dump readme](ftp://ftp.ncbi.nih.gov/pub/taxonomy/taxdump_readme.txt)
 
 
 ```java
@@ -26,16 +20,15 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
 ```
 
 
-## Vertices
+## Taxon
 
-There is a single type of vertex, a taxon.
 
-### Taxon
 
 ```java
   public final class Taxon extends Vertex<Taxon> {
 
     private Taxon(V vertex) { super(vertex, taxon); }
+
     @Override public final Taxon self() { return this; }
   }
 
@@ -45,34 +38,30 @@ There is a single type of vertex, a taxon.
     @Override public final Taxon fromRaw(V vertex) { return new Taxon(vertex); }
 ```
 
-#### Id
+
+### ID
+
+Indexed for unique matches.
+
 
 ```java
-    public final Id id = new Id();
-    public final class Id extends Property<String> implements FromAtMostOne, ToOne {
+    public final ID id = new ID();
+    public final class ID extends Property<String> implements FromAtMostOne, ToOne {
 
-      private Id() { super(String.class); }
+      private ID() { super(String.class); }
+
+      public final Index index = new Index();
+      public final class Index extends UniqueIndex<ID, String> {
+
+        private Index() { super(id); }
+      }
     }
 ```
 
 
-#### ById
+### Name
 
-A unique index for taxa by id.
-
-
-```java
-    public final ById byId = new ById();
-    public final class ById extends UniqueIndex<Id, String> {
-
-      private ById() { super(id); }
-    }
-```
-
-
-#### Name
-
-This is the standard name of the taxon, like *Escherichia coli* or *Bacteria*.
+This is the standard name of the taxon, like *Escherichia coli* or *Bacteria*. Corresponds the the (non-unique) *scientific name* in NCBI taxonomy data.
 
 
 ```java
@@ -84,9 +73,9 @@ This is the standard name of the taxon, like *Escherichia coli* or *Bacteria*.
 ```
 
 
-#### Taxonomic rank
+### Taxonomic rank
 
-Values are, among others, *species*, *genus*, or *no rank*.
+Values are, among others, *species*, *genus*, or *no rank*; see the enum below.
 
 
 ```java
@@ -96,23 +85,48 @@ Values are, among others, *species*, *genus*, or *no rank*.
       private TaxonomicRank() { super(TaxonomicRanks.class); }
     }
   }
+```
 
+
+The set of valid ranks is nowhere documented; this is just an approximation.
+
+
+```java
   public static enum TaxonomicRanks {
 
-    // TODO add everything here
-    species,
+    noRank,
+    superkingdom,
+    kingdom,
+    superphylum,
+    phylum,
+    subphylum,
+    clazz, // reserved word
+    subclass,
+    superclass,
+    infraclass,
+    order,
+    parvorder,
+    suborder,
+    infraorder,
+    family,
+    subfamily,
+    superfamily,
+    tribe,
+    subtribe,
     genus,
-    noRank;
+    subgenus,
+    speciesGroup,
+    speciesSubgroup,
+    species,
+    subspecies,
+    varietas,
+    forma,
+    thereIsAnIndeterminateNumberOfRanksAsATaxonomistMayInventANewRankAtWillAtAnyTimeIfTheyFeelThisIsNecessary;
   }
 ```
 
 
-## Edges
-
-This graph has only one edge type, `parent`.
-
-
-### Parent
+### Parent taxon
 
 Every taxon *but* the root has *exactly one* parent.
 
@@ -121,6 +135,7 @@ Every taxon *but* the root has *exactly one* parent.
   public final class Parent extends Edge<Taxon, Parent, Taxon> {
 
     private Parent(E edge) { super(edge, parent); }
+
     @Override public final Parent self() { return this; }
   }
 
@@ -145,4 +160,3 @@ Every taxon *but* the root has *exactly one* parent.
 [main/java/com/bio4j/model/UniProtNCBITaxonomyGraph.java]: UniProtNCBITaxonomyGraph.java.md
 [main/java/com/bio4j/model/GOGraph.java]: GOGraph.java.md
 [main/java/com/bio4j/model/UniProtGOGraph.java]: UniProtGOGraph.java.md
-[main/java/com/bio4j/model/LinkGraph.java]: LinkGraph.java.md
