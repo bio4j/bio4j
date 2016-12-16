@@ -405,12 +405,14 @@ public final class UniProtGraph<V,E> extends TypedGraph<UniProtGraph<V,E>,V,E> {
   }
 
   /*
-    This enum only contains those topics which do *not* give rise to specific vertex types.
+    #### Comment topics
+
+    Note that this enum contains `alternativeProducts`, which won't ever be a value of the `Topic` property: alternative products are modeled as isoforms.
   */
   public static enum CommentTopics {
 
     allergen,
-    alternativeProducts, // TODO remove, isoforms
+    alternativeProducts,
     biotechnology,
     biophysicochemicalProperties,
     catalyticActivity,
