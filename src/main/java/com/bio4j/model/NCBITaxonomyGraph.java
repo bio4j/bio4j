@@ -10,6 +10,7 @@ package com.bio4j.model;
 
 import com.bio4j.angulillos.*;
 import com.bio4j.angulillos.Arity.*;
+import java.util.Optional;
 
 public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V,E>,V,E> {
 
@@ -103,7 +104,7 @@ public final class NCBITaxonomyGraph<V,E> extends TypedGraph<NCBITaxonomyGraph<V
     Forma;
 
     /* Converts strings to enum values _ignoring case_, returns `Optional` */
-    public static java.util.Optional<TaxonomicRanks> fromString(String name) {
+    public static Optional<TaxonomicRanks> fromString(String name) {
       return java.util.Arrays.stream(TaxonomicRanks.values())
         .filter(rank -> rank.toString().equalsIgnoreCase(name))
         .findFirst();
